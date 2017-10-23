@@ -2,6 +2,9 @@
   "name": "haste-preset-all",
   "version": "0.0.1",
   "main": "./src/index.js",
+  "scripts": {
+    "release": "wnpm-release --no-shrinkwrap"
+  },
   "dependencies": {
     "autoprefixer": "~7.1.2",
     "babel-jest": "~20.0.3",
@@ -81,7 +84,8 @@
     "webpack-hot-middleware": "~2.18.2",
     "wix-tpa-style-loader": "~1.0.8",
     "yoshi-runtime": "~1.0.0",
-    "yoshi-utils": "~1.0.0"
+    "yoshi-utils": "~1.0.0",
+    "wnpm-ci": "latest"
   },
   "publishConfig": {
     "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
