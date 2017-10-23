@@ -82,5 +82,8 @@
     "wix-tpa-style-loader": "~1.0.8",
     "yoshi-runtime": "~1.0.0",
     "yoshi-utils": "~1.0.0"
+  },
+  "publishConfig": {
+    "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
   }
 }

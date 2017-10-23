@@ -3,9 +3,6 @@
     "name": "wix-haste",
     "devDependencies": {
       "lerna": "^2.4.0"
-    },
-    "publishConfig": {
-      "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
     }
   }
   
