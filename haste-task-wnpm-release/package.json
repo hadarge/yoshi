@@ -1,16 +1,13 @@
 {
-  "name": "haste-plugin-wix-logger",
+  "name": "haste-task-wnpm-release",
   "version": "0.0.1",
   "main": "./src/index.js",
   "license": "MIT",
   "scripts": {
     "release": "wnpm-release --no-shrinkwrap"
   },
-  "devDependencies": {
-    "wnpm-ci": "latest"
-  },
   "dependencies": {
-    "chalk": "^2.1.0"
+    "wnpm-ci": "latest"
   },
   "publishConfig": {
     "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
