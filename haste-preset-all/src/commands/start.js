@@ -35,7 +35,7 @@ module.exports = async (configure) => {
           `${paths.src}/**/*.{css,json,d.ts}`,
         ]
       }),
-      write({ target: paths.build })
+      write({ target: paths.build }, { title: 'copy-server-assets' })
     ),
     run(
       read({
@@ -44,7 +44,7 @@ module.exports = async (configure) => {
           `${paths.src}/**/*.{ejs,html,vm}`,
         ]
       }),
-      write({ target: paths.statics })
+      write({ target: paths.statics }, { title: 'copy-static-assets' })
     ),
     run(webpackDevServer({ configPath: paths.config.webpack.development }))
   ]);
