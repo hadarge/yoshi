@@ -13,7 +13,7 @@ module.exports = async (configure) => {
   await run(
     read({ pattern: `${paths.src}/**/*.spec.js` }),
     mocha({
-      require: [require.resolve('../../config/test-setup')],
+      requireFiles: [require.resolve('../../config/test-setup')],
       timeout: 30000,
     })
   );
