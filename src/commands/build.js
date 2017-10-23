@@ -12,21 +12,39 @@ module.exports = async (configure) => {
 
   await run(clean({ pattern: `${paths.build}/*` }));
 
-  // await Promise.all([
-  //   run(
-  //     read({ pattern: `${paths.src}/**/*.js` }),
-  //     babel(),
-  //     write({ target: paths.build })
-  //   ),
-  //   run(
-  //     read({ pattern: `${paths.src}/**/*.scss` }),
-  //     sass(),
-  //     write({ target: paths.build })
-  //   ),
-  //   run(
-  //     read({ pattern: `${paths.assets}/**/*.*` }),
-  //     write({ target: paths.build })
-  //   ),
-  //   run(webpack({ configPath: paths.config.webpack.production }))
-  // ]);
+  await Promise.all([
+    run(
+      read({ pattern: `{${paths.src},${paths.test}}/**/*.js` }),
+      babel(),
+      write({ target: paths.build })
+    ),
+    run(
+      read({ pattern: `${paths.src}/**/*.scss` }),
+      sass({
+        includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
+      }),
+      write({ target: paths.build })
+    ),
+    run(
+      read({
+        pattern: [
+          `${paths.assets}/**/*.*`,
+          `${paths.src}/**/*.{ejs,html,vm}`,
+          `${paths.src}/**/*.{css,json,d.ts}`,
+        ]
+      }),
+      write({ target: paths.build }, { title: 'copy-server-assets' })
+    ),
+    run(
+      read({
+        pattern: [
+          `${paths.assets}/**/*.*`,
+          `${paths.src}/**/*.{ejs,html,vm}`,
+        ]
+      }),
+      write({ base: paths.src, target: paths.statics }, { title: 'copy-static-assets' })
+    ),
+    run(webpack({ configPath: paths.config.webpack.production }, { title: 'webpack-production' })),
+    run(webpack({ configPath: paths.config.webpack.development }, { title: 'webpack-development' }))
+  ]);
 };
