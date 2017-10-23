@@ -1,4 +1,4 @@
-const LoggerPlugin = require('haste-plugin-logger');
+const LoggerPlugin = require('haste-plugin-wix-logger');
 const paths = require('../../config/paths');
 
 module.exports = async (configure) => {
