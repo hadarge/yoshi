@@ -1,4 +1,4 @@
-const { mergeWith } = require('lodash/fp');
+const {mergeWith} = require('lodash/fp');
 const fs = require('fs');
 const process = require('process');
 const path = require('path');
@@ -25,7 +25,7 @@ module.exports.copyFile = (source, target) => new Promise((resolve, reject) => {
 
 const exists = module.exports.exists = patterns => !!readDir(patterns).length;
 
-const tryRequire = module.exports.tryRequire = (name) => {
+const tryRequire = module.exports.tryRequire = name => {
   try {
     return require(name);
   } catch (ex) {
@@ -54,7 +54,7 @@ module.exports.logIfAny = logIfAny;
 
 module.exports.mergeByConcat = mergeWith(concatCustomizer);
 
-module.exports.suffix = suffix => (str) => {
+module.exports.suffix = suffix => str => {
   const hasSuffix = str.lastIndexOf(suffix) === str.length - suffix.length;
   return hasSuffix ? str : str + suffix;
 };
@@ -73,7 +73,7 @@ module.exports.writeFile = (targetFileName, data) => {
 
 module.exports.isSingleEntry = entry => typeof entry === 'string' || Array.isArray(entry);
 
-module.exports.watchMode = (value) => {
+module.exports.watchMode = value => {
   if (value !== undefined) {
     process.env.WIX_NODE_BUILD_WATCH_MODE = value;
   }
@@ -85,8 +85,8 @@ module.exports.inTeamCity = () =>
 
 module.exports.isProduction = () => (process.env.NODE_ENV || '').toLowerCase() === 'production';
 
-module.exports.filterNoise = (comp) => {
-  comp.plugin('done', (stats) => {
+module.exports.filterNoise = comp => {
+  comp.plugin('done', stats => {
     logIfAny(stats.toString({
       colors: true,
       hash: false,
@@ -104,7 +104,7 @@ module.exports.filterNoise = (comp) => {
   return comp;
 };
 
-module.exports.shouldRunWebpack = (webpackConfig) => {
+module.exports.shouldRunWebpack = webpackConfig => {
   const defaultEntryPath = path.join(webpackConfig.context, project.defaultEntry());
   return project.entry() || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
 };

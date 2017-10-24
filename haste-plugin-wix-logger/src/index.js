@@ -1,13 +1,13 @@
 const chalk = require('chalk');
-const { format, delta, generateRunTitle } = require('./utils');
+const {format, delta, generateRunTitle} = require('./utils');
 
 module.exports = class LoggerPlugin {
   apply(runner) {
-    runner.plugin('start-worker', (worker) => {
+    runner.plugin('start-worker', worker => {
       ['stdout', 'stderr'].forEach(name => worker.child[name].pipe(process[name]));
     });
 
-    runner.plugin('start-run', (runPhase) => {
+    runner.plugin('start-run', runPhase => {
       if (runner.idle) {
         return;
       }

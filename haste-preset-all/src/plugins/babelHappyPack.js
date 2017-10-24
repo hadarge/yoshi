@@ -1,6 +1,6 @@
 const helpers = require('./happyPackHelpers');
 
-module.exports = (isAngularProject) => {
+module.exports = isAngularProject => {
   // we need to remove ng loader for non angular apps
   const loaders = [
     isAngularProject && {

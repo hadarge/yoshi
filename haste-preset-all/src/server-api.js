@@ -31,7 +31,7 @@ function resourceTimingMiddleware() {
   };
 }
 
-function start({ middlewares = [], host }) {
+function start({middlewares = [], host}) {
   const port = projectConfig.servers.cdn.port();
   const ssl = projectConfig.servers.cdn.ssl();
   const files = projectConfig.clientFilesPath();
@@ -71,4 +71,4 @@ function httpsServer(app) {
   return https.createServer(credentials, app);
 }
 
-module.exports = { start };
+module.exports = {start};

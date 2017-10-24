@@ -1,31 +1,31 @@
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const paths = require('../../config/paths');
 
-module.exports = async (configure) => {
-  const { run, watch, tasks } = configure({
+module.exports = async configure => {
+  const {run, watch, tasks} = configure({
     persistent: true,
     plugins: [
       new LoggerPlugin(),
     ],
   });
 
-  const { clean, read, write, babel, sass, webpackDevServer, server, mocha } = tasks;
+  const {clean, read, write, babel, sass, webpackDevServer, server, mocha} = tasks;
 
-  await run(clean({ pattern: `${paths.build}/*` }));
+  await run(clean({pattern: `${paths.build}/*`}));
 
   await Promise.all([
     run(
-      read({ pattern: `{${paths.src},${paths.test}}/**/*.js` }),
+      read({pattern: `{${paths.src},${paths.test}}/**/*.js`}),
       babel(),
-      write({ target: paths.build }),
-      server({ serverPath: 'index.js' })
+      write({target: paths.build}),
+      server({serverPath: 'index.js'})
     ),
     run(
-      read({ pattern: `${paths.src}/**/*.scss` }),
+      read({pattern: `${paths.src}/**/*.scss`}),
       sass({
         includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
       }),
-      write({ target: paths.build })
+      write({target: paths.build})
     ),
     run(
       read({
@@ -35,7 +35,7 @@ module.exports = async (configure) => {
           `${paths.src}/**/*.{css,json,d.ts}`,
         ]
       }),
-      write({ target: paths.build }, { title: 'copy-server-assets' })
+      write({target: paths.build}, {title: 'copy-server-assets'})
     ),
     run(
       read({
@@ -44,13 +44,13 @@ module.exports = async (configure) => {
           `${paths.src}/**/*.{ejs,html,vm}`,
         ]
       }),
-      write({ target: paths.statics }, { title: 'copy-static-assets' })
+      write({target: paths.statics}, {title: 'copy-static-assets'})
     ),
-    run(webpackDevServer({ configPath: paths.config.webpack.development }))
+    run(webpackDevServer({configPath: paths.config.webpack.development}))
   ]);
 
   await run(
-    read({ pattern: `${paths.src}/**/*.spec.js` }),
+    read({pattern: `${paths.src}/**/*.spec.js`}),
     mocha({
       requireFiles: [require.resolve('../../config/test-setup')],
       timeout: 30000,
@@ -59,31 +59,31 @@ module.exports = async (configure) => {
 
   watch([`${paths.assets}/**/*.*`, `${paths.src}/**/*.{ejs,html,vm}`, `${paths.src}/**/*.{css,json,d.ts}`], changed => run(
     read(changed),
-    write({ target: paths.build })
+    write({target: paths.build})
   ));
 
   watch([`${paths.assets}/**/*.*`, `${paths.src}/**/*.{ejs,html,vm}`], changed => run(
     read(changed),
-    write({ target: paths.statics })
+    write({target: paths.statics})
   ));
 
   watch(`${paths.src}/**/*.js`, changed => run(
-    read({ pattern: changed }),
+    read({pattern: changed}),
     babel(),
-    write({ target: paths.build }),
-    server({ serverPath: 'index.js' })
+    write({target: paths.build}),
+    server({serverPath: 'index.js'})
   ));
 
   watch(`${paths.src}/**/*.scss`, changed => run(
-    read({ pattern: changed }),
+    read({pattern: changed}),
     sass({
       includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
     }),
-    write({ target: paths.build })
+    write({target: paths.build})
   ));
 
   watch(`${paths.src}/**/*.js`, () => run(
-    read({ pattern: `${paths.src}/**/*.spec.js` }),
-    mocha({ timeout: 30000 })
+    read({pattern: `${paths.src}/**/*.spec.js`}),
+    mocha({timeout: 30000})
   ));
 };

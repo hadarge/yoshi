@@ -1,7 +1,7 @@
 const path = require('path');
-const { merge } = require('lodash/fp');
+const {merge} = require('lodash/fp');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const { cssModulesPattren } = require('yoshi-runtime');
+const {cssModulesPattren} = require('yoshi-runtime');
 
 module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
   const cssLoaderOptions = {
@@ -22,7 +22,7 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
 
   const getLessRule = (ruleConfig, loaderConfig) => merge(ruleConfig, {
     test: /\.less$/,
-    use: clientLoader(separateCss, { loader: 'style-loader', options: { singleton: true } }, [
+    use: clientLoader(separateCss, {loader: 'style-loader', options: {singleton: true}}, [
       {
         loader: 'css-loader',
         options: merge(cssLoaderOptions, loaderConfig)
@@ -46,8 +46,8 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
 
   return {
     client: [
-      getLessRule({ include: globalRegex }, { modules: false }),
-      getLessRule({ exclude: globalRegex })
+      getLessRule({include: globalRegex}, {modules: false}),
+      getLessRule({exclude: globalRegex})
     ],
     specs: {
       test: /\.less$/,
@@ -67,5 +67,5 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
 };
 
 function clientLoader(separateCss, l1, l2) {
-  return separateCss ? ExtractTextPlugin.extract({ fallback: l1, use: l2 }) : [l1].concat(l2);
+  return separateCss ? ExtractTextPlugin.extract({fallback: l1, use: l2}) : [l1].concat(l2);
 }

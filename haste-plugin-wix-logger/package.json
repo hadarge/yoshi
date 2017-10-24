@@ -4,10 +4,13 @@
   "main": "./src/index.js",
   "license": "MIT",
   "scripts": {
-    "release": "wnpm-release --no-shrinkwrap"
+	"release": "wnpm-release --no-shrinkwrap",
+	"build": "eslint ."
   },
   "devDependencies": {
-    "wnpm-ci": "latest"
+    "wnpm-ci": "latest",
+    "eslint": "^4.9.0",
+    "eslint-config-wix": "^1.1.16"
   },
   "dependencies": {
     "chalk": "^2.1.0"

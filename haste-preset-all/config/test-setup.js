@@ -1,5 +1,5 @@
 const path = require('path');
-const { tryRequire, isTypescriptProject } = require('../src/utils');
+const {tryRequire, isTypescriptProject} = require('../src/utils');
 
 const ext = isTypescriptProject() && !process.env.IN_WALLABY ? 'ts' : 'js';
 const mochaSetupPath = path.join(process.cwd(), 'test', `mocha-setup.${ext}`);

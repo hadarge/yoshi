@@ -1,4 +1,4 @@
-const { inTeamCity, isProduction } = require('../src/utils');
+const {inTeamCity, isProduction} = require('../src/utils');
 
 const productionPattern = '[hash:base64:5]';
 const devPattern = `[path][name]__[local]__${productionPattern}`;

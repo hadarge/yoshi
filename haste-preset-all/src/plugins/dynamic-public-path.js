@@ -4,7 +4,7 @@ module.exports = class DynamicPublicPath {
   }
 
   apply(compiler) {
-    compiler.plugin('compilation', (compilation) => {
+    compiler.plugin('compilation', compilation => {
       compilation.mainTemplate.plugin('startup', source => `${this._script}\n${source}`);
     });
   }

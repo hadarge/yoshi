@@ -53,7 +53,7 @@ module.exports = {
   externals: () => getConfig('externals', []),
   babel: () => _.get(packagejson, 'babel'),
   runIndividualTranspiler: () => getConfig('runIndividualTranspiler', true),
-  unprocessedModules: () => (path) => {
+  unprocessedModules: () => path => {
     const externalRegexList = externalUnprocessedModules
       .map(m => new RegExp(`node_modules/${m}`));
 

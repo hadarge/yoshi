@@ -1,6 +1,6 @@
 const sass = require('node-sass');
-const { tryRequire } = require('../src/utils');
-const { wixCssModulesRequireHook } = require('yoshi-runtime');
+const {tryRequire} = require('../src/utils');
+const {wixCssModulesRequireHook} = require('yoshi-runtime');
 
 // Private wix applitools key
 // skip wix' key for applitools
@@ -18,7 +18,7 @@ const path = require('path');
 const ld = require('lodash');
 const exists = require('../src/utils').exists;
 const inTeamCity = require('../src/utils').inTeamCity;
-const { start } = require('../src/server-api');
+const {start} = require('../src/server-api');
 const globs = require('../src/globs');
 
 const userConfPath = path.resolve('protractor.conf.js');
@@ -49,7 +49,7 @@ const merged = ld.mergeWith({
 
     require('../src/require-hooks');
 
-    return start({ host: 'localhost' }).then((server) => {
+    return start({host: 'localhost'}).then(server => {
       cdnServer = server;
       return beforeLaunch.call(merged);
     });
@@ -88,7 +88,7 @@ if (merged.framework === 'mocha') {
 
 function normaliseSpecs(config) {
   const specs = [].concat(config.specs || []);
-  return Object.assign({}, config, { specs: specs.map(spec => path.resolve(spec)) });
+  return Object.assign({}, config, {specs: specs.map(spec => path.resolve(spec))});
 }
 
 function setupProtractorLogs() {

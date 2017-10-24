@@ -1,1 +1,1 @@
-module.exports = require('./webpack.config.client')({ debug: false });
+module.exports = require('./webpack.config.client')({debug: false});

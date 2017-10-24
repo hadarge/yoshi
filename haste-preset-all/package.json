@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "main": "./src/index.js",
   "scripts": {
-    "release": "wnpm-release --no-shrinkwrap"
+    "release": "wnpm-release --no-shrinkwrap",
+    "build": "eslint ."
   },
   "dependencies": {
     "autoprefixer": "~7.1.2",

@@ -15,7 +15,7 @@ function mockCssModules(module) {
 
 function loadGraphQLModules(module) {
   const query = fs.readFileSync(module.filename, 'utf-8');
-  const scopedLoader = graphqlLoader.bind({ cacheable: noop });
+  const scopedLoader = graphqlLoader.bind({cacheable: noop});
   const output = scopedLoader(query);
   module.exports = eval(output); // eslint-disable-line no-eval
 }

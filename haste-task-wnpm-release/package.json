@@ -4,10 +4,16 @@
   "main": "./src/index.js",
   "license": "MIT",
   "scripts": {
-    "release": "wnpm-release --no-shrinkwrap"
+    "release": "wnpm-release --no-shrinkwrap",
+    "build": "eslint .",
+    "test": "mocha ."
   },
   "dependencies": {
     "wnpm-ci": "latest"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-wix": "^1.1.16"
   },
   "publishConfig": {
     "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
