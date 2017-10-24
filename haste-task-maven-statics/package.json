@@ -1,0 +1,28 @@
+{
+  "name": "haste-task-maven-statics",
+  "version": "0.0.1",
+  "main": "./src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --timeout 2000 --reporter mocha-env-reporter",
+    "build": "eslint .",
+    "release": "wnpm-release --no-shrinkwrap"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.9.0",
+    "eslint-config-wix": "^1.1.16",
+    "mocha": "~3.4.2",
+    "mocha-env-reporter": "~2.0.4",
+    "tempy": "^0.2.1",
+    "test-phases": "^1.0.18",
+    "wnpm-ci": "latest"
+  },
+  "publishConfig": {
+    "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
+  }
+}
