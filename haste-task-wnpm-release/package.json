@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "release": "wnpm-release --no-shrinkwrap",
-    "build": "eslint .",
-    "test": "mocha ."
+    "build": "eslint ."
   },
   "dependencies": {
     "wnpm-ci": "latest"
