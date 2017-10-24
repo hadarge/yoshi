@@ -1,6 +1,7 @@
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const paths = require('../../config/paths');
 const {petriSpecsConfig} = require('../../config/project');
+const {specs: testsGlob} = require('../globs');
 
 module.exports = async configure => {
   const {run, watch, tasks} = configure({
@@ -52,7 +53,7 @@ module.exports = async configure => {
   ]);
 
   await run(
-    read({pattern: `${paths.src}/**/*.spec.js`}),
+    read({pattern: testsGlob()}),
     mocha({
       requireFiles: [require.resolve('../../config/test-setup')],
       timeout: 30000,
@@ -84,7 +85,7 @@ module.exports = async configure => {
     write({target: paths.build})
   ));
 
-  watch(`${paths.src}/**/*.js`, () => run(
+  watch(`${paths.src}/**/*.js`, () => run( // TODO - should also run on changes in specs
     read({pattern: `${paths.src}/**/*.spec.js`}),
     mocha({timeout: 30000})
   ));
