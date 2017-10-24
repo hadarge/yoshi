@@ -10,8 +10,8 @@ module.exports = async configure => {
     ],
   });
 
-  const { clean, read, write, babel, sass, webpackDevServer, server, mocha, petriSpecs } = tasks;
-  
+  const {clean, read, write, babel, sass, webpackDevServer, server, mocha, petriSpecs} = tasks;
+
   await run(clean({pattern: `${paths.build}/*`}));
 
   await Promise.all([
@@ -47,8 +47,8 @@ module.exports = async configure => {
       }),
       write({target: paths.statics}, {title: 'copy-static-assets'})
     ),
-    run(webpackDevServer({ configPath: paths.config.webpack.development })),
-    run(petriSpecs({ config: petriSpecsConfig() }))
+    run(webpackDevServer({configPath: paths.config.webpack.development})),
+    run(petriSpecs({config: petriSpecsConfig()}))
   ]);
 
   await run(

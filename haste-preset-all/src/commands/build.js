@@ -10,7 +10,7 @@ module.exports = async configure => {
   });
 
 
-  const { clean, read, babel, write, sass, webpack, petriSpecs } = tasks;
+  const {clean, read, babel, write, sass, webpack, petriSpecs} = tasks;
 
   await run(clean({pattern: `${paths.build}/*`}));
 
@@ -47,8 +47,8 @@ module.exports = async configure => {
       write({base: paths.src, target: paths.statics}, {title: 'copy-static-assets'})
     ),
 
-    run(webpack({ configPath: paths.config.webpack.production }, { title: 'webpack-production' })),
-    run(webpack({ configPath: paths.config.webpack.development }, { title: 'webpack-development' })),
-    run(petriSpecs({ config: petriSpecsConfig() }))
+    run(webpack({configPath: paths.config.webpack.production}, {title: 'webpack-production'})),
+    run(webpack({configPath: paths.config.webpack.development}, {title: 'webpack-development'})),
+    run(petriSpecs({config: petriSpecsConfig()}))
   ]);
 };
