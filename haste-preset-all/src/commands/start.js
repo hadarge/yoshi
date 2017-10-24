@@ -1,5 +1,6 @@
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const paths = require('../../config/paths');
+const {petriSpecsConfig} = require('../../config/project');
 
 module.exports = async configure => {
   const {run, watch, tasks} = configure({
@@ -9,8 +10,8 @@ module.exports = async configure => {
     ],
   });
 
-  const {clean, read, write, babel, sass, webpackDevServer, server, mocha} = tasks;
-
+  const { clean, read, write, babel, sass, webpackDevServer, server, mocha, petriSpecs } = tasks;
+  
   await run(clean({pattern: `${paths.build}/*`}));
 
   await Promise.all([
@@ -46,7 +47,8 @@ module.exports = async configure => {
       }),
       write({target: paths.statics}, {title: 'copy-static-assets'})
     ),
-    run(webpackDevServer({configPath: paths.config.webpack.development}))
+    run(webpackDevServer({ configPath: paths.config.webpack.development })),
+    run(petriSpecs({ config: petriSpecsConfig() }))
   ]);
 
   await run(
