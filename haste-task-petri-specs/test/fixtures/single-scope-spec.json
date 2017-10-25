@@ -1,0 +1,8 @@
+{
+    "specs.infra.Dummy": {
+        "scope": "my-scope",
+        "owner": "shahart@wix.com",
+        "onlyForLoggedInUsers": true,
+        "testGroups": []
+    }
+}

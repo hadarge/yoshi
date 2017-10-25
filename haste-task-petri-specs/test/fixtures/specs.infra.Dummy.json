@@ -1,0 +1,11 @@
+{
+    "specs.infra.Dummy": {
+        "owner": "shahart@wix.com",
+        "onlyForLoggedInUsers": true,
+        "controlGroup": "",
+        "variants": [],
+        "scopes": [
+            "my-scope"
+        ]
+    }
+}

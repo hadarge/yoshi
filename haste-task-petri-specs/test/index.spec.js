@@ -5,8 +5,6 @@ const path = require('path');
 const {expect} = require('chai');
 const tempy = require('tempy');
 const petriSpecsTask = require('../src/index');
-const petriSpecsTestkit = require('petri-specs/test/testkit');
-const petriTestUtils = require('petri-specs/test/test-utils'); // eslint-disable-line
 const destFile = 'petri-experiments.json';
 const staticsDir = 'statics';
 
@@ -22,9 +20,11 @@ describe('haste-task-petri-specs', () => {
   it('should create petri-experiments.json file inside statics directory', async () => {
     const tempDir = tempy.directory();
 
-    const fsObj = petriSpecsTestkit.baseFsWith({
-      'petri-specs/specs.infra.Dummy.json': JSON.stringify(petriSpecsTestkit.spec('specs.infra.Dummy'))
-    });
+    const fsObj = {
+      'package.json': '',
+      'pom.xml': fs.readFileSync(require.resolve('./fixtures/pom.xml')),
+      'petri-specs/specs.infra.Dummy.json': fs.readFileSync(require.resolve('./fixtures/specs.infra.Dummy'))
+    };
 
     writeFsObject(tempDir, fsObj);
 
@@ -38,12 +38,14 @@ describe('haste-task-petri-specs', () => {
     expect(staticDirContent).to.contain(destFile);
   });
 
-  it.skip('should create petri-experiments.json from translation keys with config', async () => {
+  it('should create petri-experiments.json from translation keys with config', async () => {
     const tempDir = tempy.directory();
 
-    const fsObj = petriSpecsTestkit.baseFsWith({
-      'src/assets/messages_en.json': JSON.stringify(petriSpecsTestkit.translationWithSpecs('translation1')),
-    });
+    const fsObj = {
+      'package.json': '',
+      'pom.xml': fs.readFileSync(require.resolve('./fixtures/pom.xml')),
+      'src/assets/messages_en.json': fs.readFileSync(require.resolve('./fixtures/messages-en')),
+    };
 
     writeFsObject(tempDir, fsObj);
 
@@ -60,24 +62,17 @@ describe('haste-task-petri-specs', () => {
     expect(staticDirContent).to.contain(destFile);
 
     const petriExperimentsJson = fs.readJsonSync(path.join(tempDir, staticsDir, destFile));
-    expect(petriExperimentsJson).to.eql(
-      Object.assign({},
-        petriSpecsTestkit.translationSpec(
-          'specs.abTranslate.alt-scope.translation1',
-          petriTestUtils.and({
-            scopes: ['alt-scope', 'alt-scope2'],
-            onlyForLoggedInUsers: false
-          })
-        )
-      ));
+    expect(petriExperimentsJson).to.eql(fs.readJsonSync(require.resolve('./fixtures/petri-experiments'), 'utf8'));
   });
 
   it('should fail with an error when converting deprecated json files', async () => {
     const tempDir = tempy.directory();
 
-    const fsObj = petriSpecsTestkit.baseFsWith({
-      'petri-specs/specs.infra.Dummy.json': JSON.stringify(petriSpecsTestkit.singleScopeSpec('specs.infra.Dummy'))
-    });
+    const fsObj = {
+      'package.json': '',
+      'pom.xml': fs.readFileSync(require.resolve('./fixtures/pom.xml')),
+      'petri-specs/specs.infra.Dummy.json': fs.readFileSync(require.resolve('./fixtures/single-scope-spec')),
+    };
 
     writeFsObject(tempDir, fsObj);
 

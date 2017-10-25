@@ -1,0 +1,15 @@
+{
+    "specs.abTranslate.alt-scope.translation1": {
+      "owner": "ronena@wix.com",
+      "scopes": [
+        "alt-scope",
+        "alt-scope2"
+      ],
+      "onlyForLoggedInUsers": false,
+      "controlGroup": "0",
+      "variants": [
+        "1",
+        "2"
+      ]
+    }
+  }
