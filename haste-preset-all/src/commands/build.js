@@ -1,6 +1,6 @@
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const paths = require('../../config/paths');
-const {petriSpecsConfig} = require('../../config/project');
+const projectConfig = require('../../config/project');
 
 module.exports = async configure => {
   const {run, tasks} = configure({
@@ -9,10 +9,22 @@ module.exports = async configure => {
     ],
   });
 
-
-  const {clean, read, babel, write, sass, webpack, petriSpecs} = tasks;
+  const {
+    clean,
+    read,
+    babel,
+    write,
+    sass,
+    webpack,
+    petriSpecs,
+    updateNodeVersion,
+    fedopsBuildReport,
+    mavenStatics
+  } = tasks;
 
   await run(clean({pattern: `${paths.build}/*`}));
+
+  await run(updateNodeVersion());
 
   await Promise.all([
     run(
@@ -46,9 +58,16 @@ module.exports = async configure => {
       }),
       write({base: paths.src, target: paths.statics}, {title: 'copy-static-assets'})
     ),
-
     run(webpack({configPath: paths.config.webpack.production}, {title: 'webpack-production'})),
     run(webpack({configPath: paths.config.webpack.development}, {title: 'webpack-development'})),
-    run(petriSpecs({config: petriSpecsConfig()}))
+    run(petriSpecs({config: projectConfig.petriSpecsConfig()})),
+    run(
+      mavenStatics({
+        clientProjectName: projectConfig.clientProjectName(),
+        staticsDir: projectConfig.clientFilesPath()
+      })
+    )
   ]);
+
+  await run(fedopsBuildReport());
 };

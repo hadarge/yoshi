@@ -36,12 +36,15 @@
     "haste-task-babel": "^0.1.3",
     "haste-task-clean": "^0.1.0",
     "haste-task-eslint": "^0.1.0",
+    "haste-task-fedops-build-report": "^0.0.1",
+    "haste-task-maven-statics": "^0.0.1",
     "haste-task-mocha": "^0.1.3",
     "haste-task-petri-specs": "^0.0.1",
     "haste-task-protractor": "^0.1.3",
     "haste-task-read": "^0.1.0",
     "haste-task-sass": "^0.1.3",
     "haste-task-server": "^0.1.3",
+    "haste-task-update-node-version": "^0.0.1",
     "haste-task-webpack": "^0.1.0",
     "haste-task-webpack-dev-server": "^0.1.3",
     "haste-task-write": "^0.1.3",
@@ -85,9 +88,9 @@
     "webpack-dev-middleware": "~1.11.0",
     "webpack-hot-middleware": "~2.18.2",
     "wix-tpa-style-loader": "~1.0.8",
+    "wnpm-ci": "latest",
     "yoshi-runtime": "~1.0.0",
-    "yoshi-utils": "~1.0.0",
-    "wnpm-ci": "latest"
+    "yoshi-utils": "~1.0.0"
   },
   "publishConfig": {
     "registry": "http://repo.dev.wix/artifactory/api/npm/npm-local/"
