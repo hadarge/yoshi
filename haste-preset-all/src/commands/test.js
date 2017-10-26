@@ -1,5 +1,6 @@
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const globs = require('../globs');
+const {inTeamCity} = require('../utils');
 
 module.exports = async configure => {
   const {run, tasks} = configure({
@@ -15,7 +16,7 @@ module.exports = async configure => {
     mocha({
       requireFiles: [require.resolve('../../config/test-setup')],
       timeout: 30000,
-      reporter: 'progress',
+      reporter: inTeamCity() ? 'mocha-env-reporter' : 'progress',
     })
   );
 
