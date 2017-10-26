@@ -1,5 +1,5 @@
 const LoggerPlugin = require('haste-plugin-wix-logger');
-const paths = require('../../config/paths');
+const globs = require('../globs');
 
 module.exports = async configure => {
   const {run, tasks} = configure({
@@ -11,7 +11,7 @@ module.exports = async configure => {
   const {read, eslint} = tasks;
 
   await run(
-    read({pattern: `${paths.src}/**/*.js`}),
+    read({pattern: ['*.js', `${globs.base()}/**/*.js`]}),
     eslint()
   );
 };

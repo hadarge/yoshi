@@ -1,5 +1,5 @@
 const LoggerPlugin = require('haste-plugin-wix-logger');
-const {specs: testsGlob} = require('../globs');
+const globs = require('../globs');
 
 module.exports = async configure => {
   const {run, tasks} = configure({
@@ -11,7 +11,7 @@ module.exports = async configure => {
   const {read, mocha, protractor} = tasks;
 
   await run(
-    read({pattern: testsGlob()}),
+    read({pattern: globs.specs()}),
     mocha({
       requireFiles: [require.resolve('../../config/test-setup')],
       timeout: 30000,

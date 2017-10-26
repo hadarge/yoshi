@@ -1,6 +1,5 @@
 const path = require('path');
 const LoggerPlugin = require('haste-plugin-wix-logger');
-const paths = require('../../config/paths');
 const projectConfig = require('../../config/project');
 const globs = require('../globs');
 
@@ -123,12 +122,8 @@ module.exports = async configure => {
     write({target: 'dist'}),
   ));
 
-  watch([
-    globs.specs(),
-    path.join(globs.base(), '**', '*.js{,x}'),
-    'index.js',
-  ], () => run(
-    read({pattern: `${paths.src}/**/*.spec.js`}),
+  watch([globs.specs(), path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], () => run(
+    read({pattern: globs.specs()}),
     mocha({timeout: 30000}),
   ));
 };
