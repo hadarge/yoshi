@@ -15,6 +15,7 @@ module.exports = async configure => {
     mocha({
       requireFiles: [require.resolve('../../config/test-setup')],
       timeout: 30000,
+      reporter: 'progress',
     })
   );
 
