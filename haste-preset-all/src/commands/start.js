@@ -20,7 +20,6 @@ module.exports = async configure => {
     server,
     petriSpecs,
     updateNodeVersion,
-    fedopsBuildReport,
     mavenStatics,
     webpackDevServer,
     mocha,
@@ -87,8 +86,6 @@ module.exports = async configure => {
       timeout: 30000,
     }),
   );
-
-  await run(fedopsBuildReport());
 
   watch([
     `${globs.base()}/assets/**/*`,
