@@ -20,25 +20,26 @@ module.exports = async configure => {
     petriSpecs,
     updateNodeVersion,
     fedopsBuildReport,
-    mavenStatics
+    mavenStatics,
   } = tasks;
 
-  await run(clean({pattern: `{dist,target}/*`}));
-
-  await run(updateNodeVersion());
+  await Promise.all([
+    run(clean({pattern: `{dist,target}/*`})),
+    run(updateNodeVersion()),
+  ]);
 
   await Promise.all([
     run(
       read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
-      babel({sourceMaps: true}),
-      write({target: 'dist'})
+      babel(),
+      write({target: 'dist'}),
     ),
     run(
       read({pattern: `${globs.base()}/**/*.scss`}),
       sass({
         includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
       }),
-      write({target: 'dist'})
+      write({target: 'dist'}),
     ),
     run(
       read({
@@ -48,7 +49,7 @@ module.exports = async configure => {
           `${globs.base()}/**/*.{css,json,d.ts}`,
         ]
       }),
-      write({target: 'dist'}, {title: 'copy-server-assets'})
+      write({target: 'dist'}, {title: 'copy-server-assets'}),
     ),
     run(
       read({
@@ -57,7 +58,7 @@ module.exports = async configure => {
           `${globs.base()}/**/*.{ejs,html,vm}`,
         ]
       }),
-      write({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'})
+      write({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'}),
     ),
     run(webpack({configPath: require.resolve('../../config/webpack.config.prod')}, {title: 'webpack-production'})),
     run(webpack({configPath: require.resolve('../../config/webpack.config.dev')}, {title: 'webpack-development'})),
@@ -67,7 +68,7 @@ module.exports = async configure => {
         clientProjectName: projectConfig.clientProjectName(),
         staticsDir: projectConfig.clientFilesPath()
       })
-    )
+    ),
   ]);
 
   await run(fedopsBuildReport());

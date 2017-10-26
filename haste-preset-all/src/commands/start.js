@@ -1,7 +1,8 @@
+const path = require('path');
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const paths = require('../../config/paths');
-const {petriSpecsConfig} = require('../../config/project');
-const {specs: testsGlob} = require('../globs');
+const projectConfig = require('../../config/project');
+const globs = require('../globs');
 
 module.exports = async configure => {
   const {run, watch, tasks} = configure({
@@ -11,82 +12,123 @@ module.exports = async configure => {
     ],
   });
 
-  const {clean, read, write, babel, sass, webpackDevServer, server, mocha, petriSpecs} = tasks;
+  const {
+    clean,
+    read,
+    babel,
+    write,
+    sass,
+    server,
+    petriSpecs,
+    updateNodeVersion,
+    fedopsBuildReport,
+    mavenStatics,
+    webpackDevServer,
+    mocha,
+  } = tasks;
 
-  await run(clean({pattern: `${paths.build}/*`}));
+  await Promise.all([
+    run(clean({pattern: `{dist,target}/*`})),
+    run(updateNodeVersion()),
+  ]);
 
   await Promise.all([
     run(
-      read({pattern: `{${paths.src},${paths.test}}/**/*.js`}),
-      babel(),
-      write({target: paths.build}),
-      server({serverPath: 'index.js'})
+      read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
+      babel({sourceMaps: true}),
+      write({target: 'dist'}),
+      server({serverPath: 'index.js'}),
     ),
     run(
-      read({pattern: `${paths.src}/**/*.scss`}),
+      read({pattern: `${globs.base()}/**/*.scss`}),
       sass({
         includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
       }),
-      write({target: paths.build})
+      write({target: 'dist'})
     ),
     run(
       read({
         pattern: [
-          `${paths.assets}/**/*.*`,
-          `${paths.src}/**/*.{ejs,html,vm}`,
-          `${paths.src}/**/*.{css,json,d.ts}`,
+          `${globs.base()}/assets/**/*`,
+          `${globs.base()}/**/*.{ejs,html,vm}`,
+          `${globs.base()}/**/*.{css,json,d.ts}`,
         ]
       }),
-      write({target: paths.build}, {title: 'copy-server-assets'})
+      write({target: 'dist'}, {title: 'copy-server-assets'})
     ),
     run(
       read({
         pattern: [
-          `${paths.assets}/**/*.*`,
-          `${paths.src}/**/*.{ejs,html,vm}`,
+          `${globs.base()}/assets/**/*`,
+          `${globs.base()}/**/*.{ejs,html,vm}`,
         ]
       }),
-      write({target: paths.statics}, {title: 'copy-static-assets'})
+      write({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'})
     ),
-    run(webpackDevServer({configPath: paths.config.webpack.development})),
-    run(petriSpecs({config: petriSpecsConfig()}))
+    run(
+      webpackDevServer({
+        configPath: require.resolve('../../config/webpack.config.dev'),
+        port: projectConfig.servers.cdn.port(),
+        decoratorPath: require.resolve('../server-api'),
+      }),
+    ),
+    run(petriSpecs({config: projectConfig.petriSpecsConfig()})),
+    run(
+      mavenStatics({
+        clientProjectName: projectConfig.clientProjectName(),
+        staticsDir: projectConfig.clientFilesPath()
+      })
+    ),
   ]);
 
   await run(
-    read({pattern: testsGlob()}),
+    read({pattern: globs.specs()}),
     mocha({
       requireFiles: [require.resolve('../../config/test-setup')],
       timeout: 30000,
-    })
+    }),
   );
 
-  watch([`${paths.assets}/**/*.*`, `${paths.src}/**/*.{ejs,html,vm}`, `${paths.src}/**/*.{css,json,d.ts}`], changed => run(
+  await run(fedopsBuildReport());
+
+  watch([
+    `${globs.base()}/assets/**/*`,
+    `${globs.base()}/**/*.{ejs,html,vm}`,
+    `${globs.base()}/**/*.{css,json,d.ts}`,
+  ], changed => run(
     read(changed),
-    write({target: paths.build})
+    write({target: 'dist'}),
   ));
 
-  watch([`${paths.assets}/**/*.*`, `${paths.src}/**/*.{ejs,html,vm}`], changed => run(
+  watch([
+    `${globs.base()}/assets/**/*`,
+    `${globs.base()}/**/*.{ejs,html,vm}`,
+  ], changed => run(
     read(changed),
-    write({target: paths.statics})
+    write({base: 'src', target: 'dist/statics'}),
   ));
 
-  watch(`${paths.src}/**/*.js`, changed => run(
+  watch([path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], changed => run(
     read({pattern: changed}),
     babel(),
-    write({target: paths.build}),
-    server({serverPath: 'index.js'})
+    write({target: 'dist'}),
+    server({serverPath: 'index.js'}),
   ));
 
-  watch(`${paths.src}/**/*.scss`, changed => run(
+  watch(`${globs.base()}/**/*.scss`, changed => run(
     read({pattern: changed}),
     sass({
       includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
     }),
-    write({target: paths.build})
+    write({target: 'dist'}),
   ));
 
-  watch(`${paths.src}/**/*.js`, () => run( // TODO - should also run on changes in specs
+  watch([
+    globs.specs(),
+    path.join(globs.base(), '**', '*.js{,x}'),
+    'index.js',
+  ], () => run(
     read({pattern: `${paths.src}/**/*.spec.js`}),
-    mocha({timeout: 30000})
+    mocha({timeout: 30000}),
   ));
 };
