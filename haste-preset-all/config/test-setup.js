@@ -1,3 +1,8 @@
+Object.assign(process.env, {
+  NODE_ENV: 'test',
+  SRC_PATH: './src',
+});
+
 const path = require('path');
 const {tryRequire, isTypescriptProject} = require('../src/utils');
 
