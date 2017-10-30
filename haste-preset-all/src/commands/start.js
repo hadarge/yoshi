@@ -17,11 +17,11 @@ module.exports = async configure => {
     babel,
     write,
     sass,
-    server,
+    spawn,
     petriSpecs,
     updateNodeVersion,
     mavenStatics,
-    webpackDevServer,
+    express,
     mocha,
   } = tasks;
 
@@ -35,7 +35,7 @@ module.exports = async configure => {
       read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
       babel({sourceMaps: true}),
       write({target: 'dist'}),
-      server({serverPath: 'index.js'}),
+      spawn({serverPath: 'index.js'}),
     ),
     run(
       read({pattern: `${globs.base()}/**/*.scss`}),
@@ -64,10 +64,9 @@ module.exports = async configure => {
       write({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'})
     ),
     run(
-      webpackDevServer({
-        configPath: require.resolve('../../config/webpack.config.dev'),
+      express({
         port: projectConfig.servers.cdn.port(),
-        decoratorPath: require.resolve('../server-api'),
+        callbackPath: require.resolve('../start-callback'),
       }),
     ),
     run(petriSpecs({config: projectConfig.petriSpecsConfig()})),
@@ -108,7 +107,7 @@ module.exports = async configure => {
     read({pattern: changed}),
     babel(),
     write({target: 'dist'}),
-    server({serverPath: 'index.js'}),
+    spawn({serverPath: 'index.js'}),
   ));
 
   watch(`${globs.base()}/**/*.scss`, changed => run(
