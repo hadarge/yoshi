@@ -66,7 +66,7 @@ module.exports = async configure => {
     run(
       express({
         port: projectConfig.servers.cdn.port(),
-        callbackPath: require.resolve('../start-callback'),
+        callbackPath: require.resolve('../server-callback'),
       }),
     ),
     run(petriSpecs({config: projectConfig.petriSpecsConfig()})),

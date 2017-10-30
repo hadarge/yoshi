@@ -31,16 +31,13 @@ function resourceTimingMiddleware() {
   };
 }
 
-function start({middlewares = [], host}) {
-  const port = projectConfig.servers.cdn.port();
-  const ssl = projectConfig.servers.cdn.ssl();
-  const files = projectConfig.clientFilesPath();
-  const app = express();
+function httpsServer(app) {
+  const credentials = sslCredentials('../config/key.pem', '../config/cert.pem', '1234');
+  return https.createServer(credentials, app);
+}
 
-  [corsMiddleware(), resourceTimingMiddleware(), express.static(files), ...middlewares]
-    .forEach(mw => app.use(mw));
-
-  app.use((req, res, next) => {
+function redirectMiddleware(hostname, port) {
+  return (req, res, next) => {
     if (!/\.min\.(js|css)/.test(req.originalUrl)) {
       return next();
     }
@@ -49,7 +46,7 @@ function start({middlewares = [], host}) {
 
     const options = {
       port,
-      hostname: host,
+      hostname,
       path: req.originalUrl.replace('.min', ''),
       rejectUnauthorized: false,
     };
@@ -57,18 +54,37 @@ function start({middlewares = [], host}) {
     const request = httpModule.request(options, proxy => proxy.pipe(res));
 
     request.on('error', () => next()).end();
-  });
+  };
+}
+
+const decorate = ({app, middlewares = [], host}) => {
+  const port = projectConfig.servers.cdn.port();
+  const files = projectConfig.clientFilesPath();
+
+  [
+    corsMiddleware(),
+    resourceTimingMiddleware(),
+    express.static(files),
+    ...middlewares,
+    redirectMiddleware(host, port)
+  ]
+  .forEach(mw => app.use(mw));
+
+  return app;
+};
+
+const start = ({middlewares, host}) => {
+  const port = projectConfig.servers.cdn.port();
+  const ssl = projectConfig.servers.cdn.ssl();
+  const app = express();
+
+  decorate({app, middlewares, host});
 
   return new Promise((resolve, reject) => {
     const serverFactory = ssl ? httpsServer(app) : app;
     const server = serverFactory.listen(port, host, err =>
       err ? reject(err) : resolve(server));
   });
-}
+};
 
-function httpsServer(app) {
-  const credentials = sslCredentials('../config/key.pem', '../config/cert.pem', '1234');
-  return https.createServer(credentials, app);
-}
-
-module.exports = {start};
+module.exports = {start, decorate};
