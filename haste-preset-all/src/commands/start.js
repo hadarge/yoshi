@@ -1,4 +1,5 @@
 const path = require('path');
+const crossSpawn = require('cross-spawn');
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const projectConfig = require('../../config/project');
 const globs = require('../globs');
@@ -22,7 +23,6 @@ module.exports = async configure => {
     updateNodeVersion,
     mavenStatics,
     express,
-    mocha,
   } = tasks;
 
   await Promise.all([
@@ -78,13 +78,13 @@ module.exports = async configure => {
     ),
   ]);
 
-  await run(
-    read({pattern: globs.specs()}),
-    mocha({
-      requireFiles: [require.resolve('../../config/test-setup')],
-      timeout: 30000,
-    }),
-  );
+  crossSpawn('npm', ['test', '--silent'], {
+    stdio: 'inherit',
+    env: {
+      ...process.env,
+      WIX_NODE_BUILD_WATCH_MODE: 'true'
+    }
+  });
 
   watch([
     `${globs.base()}/assets/**/*`,
@@ -116,10 +116,5 @@ module.exports = async configure => {
       includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
     }),
     write({target: 'dist'}),
-  ));
-
-  watch([globs.specs(), path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], () => run(
-    read({pattern: globs.specs()}),
-    mocha({timeout: 30000}),
   ));
 };
