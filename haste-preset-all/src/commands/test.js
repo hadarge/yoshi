@@ -1,9 +1,8 @@
 const path = require('path');
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const globs = require('../globs');
-const {inTeamCity} = require('../utils');
-
-const shouldWatch = process.env.WIX_NODE_BUILD_WATCH_MODE;
+const {inTeamCity, watchMode} = require('../utils');
+const shouldWatch = watchMode();
 
 module.exports = async configure => {
   const {run, tasks, watch} = configure({

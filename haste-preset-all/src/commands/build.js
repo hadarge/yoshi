@@ -2,8 +2,14 @@ const path = require('path');
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
+const {watchMode} = require('../utils');
+const shouldWatch = watchMode();
 
 module.exports = async configure => {
+  if (shouldWatch) {
+    return;
+  }
+
   const {run, tasks} = configure({
     plugins: [
       new LoggerPlugin(),
