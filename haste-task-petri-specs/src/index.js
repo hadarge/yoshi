@@ -1,9 +1,9 @@
 const path = require('path');
 const petriSpecs = require('petri-specs/lib/petri-specs');
 
-module.exports = ({config = {}, base = process.cwd(), staticsDir = 'statics'}) => async () => {
+module.exports = ({config = {}, base = process.cwd(), destDir = path.join('dist', 'statics')}) => async () => {
   const directory = path.join(base, 'petri-specs');
-  const destFile = path.join(base, staticsDir, 'petri-experiments.json');
+  const destFile = path.join(base, destDir, 'petri-experiments.json');
 
   const options = Object.assign({directory, json: destFile, base}, config);
   const {convertedFilesCount} = petriSpecs.convert(options);

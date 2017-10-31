@@ -6,7 +6,7 @@ const {expect} = require('chai');
 const tempy = require('tempy');
 const petriSpecsTask = require('../src/index');
 const destFile = 'petri-experiments.json';
-const staticsDir = 'statics';
+const destDir = path.join('dist', 'statics');
 
 const writeFsObject = (tempDir, fsObj) => {
   for (let filePath in fsObj) {
@@ -17,7 +17,7 @@ const writeFsObject = (tempDir, fsObj) => {
 };
 
 describe('haste-task-petri-specs', () => {
-  it('should create petri-experiments.json file inside statics directory', async () => {
+  it('should create petri-experiments.json file inside destination directory', async () => {
     const tempDir = tempy.directory();
 
     const fsObj = {
@@ -30,11 +30,11 @@ describe('haste-task-petri-specs', () => {
 
     await petriSpecsTask({
       base: tempDir,
-      staticsDir,
+      destDir,
       config: {},
     })();
 
-    const staticDirContent = fs.readdirSync(path.join(tempDir, staticsDir));
+    const staticDirContent = fs.readdirSync(path.join(tempDir, destDir));
     expect(staticDirContent).to.contain(destFile);
   });
 
@@ -51,17 +51,17 @@ describe('haste-task-petri-specs', () => {
 
     await petriSpecsTask({
       base: tempDir,
-      staticsDir,
+      destDir,
       config: {
         scopes: ['alt-scope', 'alt-scope2'],
         onlyForLoggedInUsers: false
       },
     })();
 
-    const staticDirContent = fs.readdirSync(path.join(tempDir, staticsDir));
+    const staticDirContent = fs.readdirSync(path.join(tempDir, destDir));
     expect(staticDirContent).to.contain(destFile);
 
-    const petriExperimentsJson = fs.readJsonSync(path.join(tempDir, staticsDir, destFile));
+    const petriExperimentsJson = fs.readJsonSync(path.join(tempDir, destDir, destFile));
     expect(petriExperimentsJson).to.eql(fs.readJsonSync(require.resolve('./fixtures/petri-experiments'), 'utf8'));
   });
 
@@ -79,7 +79,7 @@ describe('haste-task-petri-specs', () => {
     try {
       await petriSpecsTask({
         base: tempDir,
-        staticsDir,
+        destDir,
         config: {},
       })();
 
