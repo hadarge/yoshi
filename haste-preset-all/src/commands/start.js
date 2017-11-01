@@ -18,7 +18,7 @@ module.exports = async configure => {
     babel,
     write,
     sass,
-    spawn,
+    runAppServer,
     petriSpecs,
     updateNodeVersion,
     mavenStatics,
@@ -35,7 +35,7 @@ module.exports = async configure => {
       read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
       babel({sourceMaps: true}),
       write({target: 'dist'}),
-      spawn({serverPath: 'index.js'}),
+      runAppServer(),
     ),
     run(
       read({pattern: `${globs.base()}/**/*.scss`}),
@@ -107,7 +107,7 @@ module.exports = async configure => {
     read({pattern: changed}),
     babel(),
     write({target: 'dist'}),
-    spawn({serverPath: 'index.js'}),
+    runAppServer(),
   ));
 
   watch(`${globs.base()}/**/*.scss`, changed => run(

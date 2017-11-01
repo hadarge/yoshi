@@ -43,7 +43,7 @@
     "haste-task-protractor": "~0.1.3",
     "haste-task-read": "~0.1.5",
     "haste-task-sass": "~0.1.3",
-    "haste-task-spawn": "~0.1.3",
+    "haste-task-run-app-server": "~0.0.1",
     "haste-task-update-node-version": "~0.0.1",
     "haste-task-webpack": "~0.1.0",
     "haste-task-express": "~0.1.3",
