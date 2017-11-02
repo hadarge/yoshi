@@ -4,7 +4,7 @@ const LoggerPlugin = require('haste-plugin-wix-logger');
 const projectConfig = require('../../config/project');
 const globs = require('../globs');
 
-module.exports = async configure => {
+module.exports = async (configure, {entryPoint}) => {
   const {run, watch, tasks} = configure({
     persistent: true,
     plugins: [
@@ -35,7 +35,7 @@ module.exports = async configure => {
       read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
       babel({sourceMaps: true}),
       write({target: 'dist'}),
-      runAppServer(),
+      runAppServer({entryPoint}),
     ),
     run(
       read({pattern: `${globs.base()}/**/*.scss`}),
@@ -107,7 +107,7 @@ module.exports = async configure => {
     read({pattern: changed}),
     babel(),
     write({target: 'dist'}),
-    runAppServer(),
+    runAppServer({entryPoint}),
   ));
 
   watch(`${globs.base()}/**/*.scss`, changed => run(
