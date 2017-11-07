@@ -3,8 +3,8 @@
     "name": "wix-haste",
     "scripts": {
       "bootstrap": "lerna bootstrap",
-      "build": "npm run bootstrap && lerna run build",
-      "test": "lerna run test"
+      "build": "npm run bootstrap && lerna run build --parallel",
+      "test": "lerna run test --parallel"
     },
     "devDependencies": {
       "lerna": "^2.4.0"
