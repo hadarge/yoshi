@@ -1,3 +1,6 @@
 {
-    "extends": "wix"
+    "extends": "wix",
+    "rules": {
+        "mocha/no-exclusive-tests":"WARN"
+    }
 }
