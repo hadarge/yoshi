@@ -2,7 +2,9 @@
     "private": true,
     "name": "wix-haste",
     "scripts": {
-      "bootstrap": "lerna bootstrap"
+      "bootstrap": "lerna bootstrap",
+      "build": "npm run bootstrap && lerna run build",
+      "test": "lerna run test"
     },
     "devDependencies": {
       "lerna": "^2.4.0"
