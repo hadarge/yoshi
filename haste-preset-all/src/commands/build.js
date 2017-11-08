@@ -2,7 +2,7 @@ const path = require('path');
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
-const {watchMode} = require('../utils');
+const {watchMode, isTypescriptProject, isBabelProject} = require('../utils');
 const shouldWatch = watchMode();
 
 module.exports = async configure => {
@@ -23,6 +23,7 @@ module.exports = async configure => {
     write,
     sass,
     webpack,
+    typescript,
     petriSpecs,
     updateNodeVersion,
     fedopsBuildReport,
@@ -35,11 +36,7 @@ module.exports = async configure => {
   ]);
 
   await Promise.all([
-    run(
-      read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
-      babel(),
-      write({target: 'dist'}),
-    ),
+    transpileJavascript(),
     run(
       read({pattern: `${globs.base()}/**/*.scss`}),
       sass({
@@ -78,4 +75,22 @@ module.exports = async configure => {
   ]);
 
   await run(fedopsBuildReport());
+
+  function transpileJavascript() {
+    if (isTypescriptProject()) {
+      return run(
+        typescript({project: 'tsconfig.json', rootDir: '.', outDir: './dist/'})
+      );
+    }
+
+    if (isBabelProject()) {
+      return run(
+        read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
+        babel(),
+        write({target: 'dist'}),
+      );
+    }
+
+    return Promise.resolve();
+  }
 };

@@ -3,6 +3,7 @@ const crossSpawn = require('cross-spawn');
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const projectConfig = require('../../config/project');
 const globs = require('../globs');
+const {isTypescriptProject, isBabelProject} = require('../utils');
 
 module.exports = async (configure, {entryPoint}) => {
   const {run, watch, tasks} = configure({
@@ -13,16 +14,17 @@ module.exports = async (configure, {entryPoint}) => {
   });
 
   const {
-    clean,
+    sass,
     read,
+    clean,
     babel,
     write,
-    sass,
-    runAppServer,
-    petriSpecs,
-    updateNodeVersion,
-    mavenStatics,
     express,
+    typescript,
+    petriSpecs,
+    mavenStatics,
+    runAppServer,
+    updateNodeVersion,
   } = tasks;
 
   await Promise.all([
@@ -31,12 +33,7 @@ module.exports = async (configure, {entryPoint}) => {
   ]);
 
   await Promise.all([
-    run(
-      read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
-      babel({sourceMaps: true}),
-      write({target: 'dist'}),
-      runAppServer({entryPoint}),
-    ),
+    transpileJavascriptAndRunServer(),
     run(
       read({pattern: `${globs.base()}/**/*.scss`}),
       sass({
@@ -103,13 +100,6 @@ module.exports = async (configure, {entryPoint}) => {
     write({base: 'src', target: 'dist/statics'}),
   ));
 
-  watch([path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], changed => run(
-    read({pattern: changed}),
-    babel(),
-    write({target: 'dist'}),
-    runAppServer({entryPoint}),
-  ));
-
   watch(`${globs.base()}/**/*.scss`, changed => run(
     read({pattern: changed}),
     sass({
@@ -117,4 +107,35 @@ module.exports = async (configure, {entryPoint}) => {
     }),
     write({target: 'dist'}),
   ));
+
+  function transpileJavascriptAndRunServer() {
+    if (isTypescriptProject()) {
+      watch([path.join('dist', '**', '*.js'), 'index.js'], () => {
+        return run(runAppServer({entryPoint}));
+      });
+
+      return run(
+        typescript({watch: true, project: 'tsconfig.json', rootDir: '.', outDir: './dist/'}),
+        runAppServer({entryPoint})
+      );
+    }
+
+    if (isBabelProject()) {
+      watch([path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], changed => run(
+        read({pattern: changed}),
+        babel(),
+        write({target: 'dist'}),
+        runAppServer({entryPoint}),
+      ));
+
+      return run(
+        read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
+        babel({sourceMaps: true}),
+        write({target: 'dist'}),
+        runAppServer({entryPoint}),
+      );
+    }
+
+    return Promise.resolve();
+  }
 };
