@@ -32,7 +32,6 @@ const globAsync = (patter, options) => new Promise((resolve, reject) => {
   });
 });
 
-
 module.exports = ({base = process.cwd()}) => async () => {
   const getBundleNames = () => {
     return globAsync(path.resolve(base, 'dist/statics/*.min.@(js|css)'));

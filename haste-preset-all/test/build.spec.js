@@ -52,7 +52,6 @@ describe.only('Aggregator: Build', () => {
     it('should serve webpack-bundle-analyzer server', () => {
       const analyzerServerPort = '8888';
       const analyzerContentPart = 'window.chartData = [{"label":"app.bundle.min.js"';
-
       test
         .setup({
           'src/client.js': '',
@@ -65,7 +64,7 @@ describe.only('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('Less', () => {
+  describe('Less', () => {
     it('should transpile to dist/, preserve folder structure, extensions and exit with code 0', () => {
       const compiledStyle = '.a .b {\n  color: red;\n}';
       const resp = test
@@ -112,7 +111,7 @@ describe.only('Aggregator: Build', () => {
 
       expect(resp.code).to.equal(1);
       expect(resp.stdout).to.contain(`Failed 'less'`);
-      expect(resp.stdout).to.contain(`[style.less] Unrecognised input`);
+      expect(resp.stdout).to.contain(`Unrecognised input`);
     });
 
     it('should handle @import statements', () => {
@@ -147,7 +146,7 @@ describe.only('Aggregator: Build', () => {
   });
 
   describe('yoshi-babel', () => {
-    it.skip('should use yoshi-babel', () => {
+    it('should use yoshi-babel', () => {
       const resp = test
         .setup({
           '.babelrc': '{}',
@@ -182,7 +181,7 @@ describe.only('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('yoshi-typescript', () => {
+  describe('yoshi-typescript', () => {
     it('should use yoshi-typescript', () => {
       const resp = test
         .setup({
@@ -211,7 +210,7 @@ describe.only('Aggregator: Build', () => {
         .execute('build');
 
       expect(resp.code).to.equal(1);
-      expect(resp.stdout).to.contain('error TS1003: Identifier expected');
+      expect(resp.stderr).to.contain('error TS1003: Identifier expected');
     });
 
     it('should not transpile with babel if there is tsconfig', () => {
@@ -238,7 +237,7 @@ describe.only('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('No individual transpilation', () => {
+  describe('No individual transpilation', () => {
     it('should not transpile if no tsconfig/babelrc', () => {
       const resp = test
         .setup({
@@ -385,7 +384,7 @@ describe.only('Aggregator: Build', () => {
       expect(test.content('dist/statics/app.bundle.js')).to.contain('module.exports = function (a)');
     });
 
-    it.skip('should fail with exit code 1', () => {
+    it('should fail with exit code 1', () => {
       const res = test
         .setup({
           'src/client.js': `const aFunction = require('./dep');const a = aFunction(1);`,
@@ -452,20 +451,6 @@ describe.only('Aggregator: Build', () => {
       expect(test.content('dist/statics/second.bundle.js')).to.contain('const hello');
     });
 
-    it.skip('should put all of the bundles in the specified directory when --output flag is set', () => {
-      const res = test.setup({
-        'src/app1.js': `const thisIsWorks = true;`,
-        'package.json': fx.packageJson({
-          entry: {
-            app: './app1.js',
-          }
-        })
-      }).execute('build', ['--output=statics1']);
-
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics1').indexOf('app.bundle.js')).to.be.at.least(0);
-    });
-
     it('should create sourceMaps for both bundle and specs', () => {
       const res = test
         .setup({
@@ -524,7 +509,7 @@ describe.only('Aggregator: Build', () => {
       expect(test.content('dist/statics/app.bundle.js.map')).to.contain('const thisIsWorks');
     });
 
-    it.skip('should generate bundle if entry is a typescript file', () => {
+    it('should generate bundle if entry is a typescript file', () => {
       const res = test
         .setup({
           'src/app.ts': 'console.log("hello");',
@@ -540,7 +525,7 @@ describe.only('Aggregator: Build', () => {
       expect(test.list('dist/statics')).to.contain('app.bundle.js');
     });
 
-    it.skip('should generate bundle if entry extension is omitted by looking for existing .ts or .js files', () => {
+    it('should generate bundle if entry extension is omitted by looking for existing .ts or .js files', () => {
       const res = test
         .setup({
           'src/app.ts': 'console.log("hello");',
@@ -556,7 +541,7 @@ describe.only('Aggregator: Build', () => {
       expect(test.list('dist/statics')).to.contain('app.bundle.js');
     });
 
-    it.skip('should allow generating a bundle by default with both .js and .ts extensions', () => {
+    it('should allow generating a bundle by default with both .js and .ts extensions', () => {
       const res = test
         .setup({
           'src/client.ts': 'console.log("hello");',
@@ -637,7 +622,7 @@ describe.only('Aggregator: Build', () => {
       expect(test.list('dist/statics')).not.to.contain('app.bundle.js');
     });
 
-    it.skip('should exit with code 0 and not create bundle.js when there is no custom entry configures and default entry does not exist', () => {
+    it('should exit with code 0 and not create bundle.js when there is no custom entry configures and default entry does not exist', () => {
       const res = test
         .setup({
           'tsconfig.json': fx.tsconfig({files: ['src/example.ts']}),
@@ -652,7 +637,7 @@ describe.only('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('Fedops bundle report', () => {
+  describe('Fedops bundle report', () => {
     it('should log to console', () => {
       const res = test
         .setup({
@@ -661,7 +646,7 @@ describe.only('Aggregator: Build', () => {
         .execute('build', [], insideTeamCity);
 
       expect(res.code).to.equal(0);
-      expect(res.stdout).to.contain(`Finished 'fedopsBundleSize'`);
+      expect(res.stdout).to.contain(`Finished 'fedops-build-report'`);
     });
   });
 
@@ -697,7 +682,6 @@ describe.only('Aggregator: Build', () => {
   });
 
   describe('Bundle - sass', () => {
-
     const generateCssModulesPattern = (name, path, pattern = `[hash:base64:5]`) => {
       const genericNames = require('generic-names');
       const generate = genericNames(pattern, {hashPrefix: 'a'});
@@ -720,7 +704,7 @@ describe.only('Aggregator: Build', () => {
       expect(test.content('dist/statics/app.bundle.js')).to.contain('.a .b');
     });
 
-    it.skip('should fail with exit code 1', () => {
+    it('should fail with exit code 1', () => {
       const res = test
         .setup({
           'src/client.js': 'require(\'./style1.scss\');',
@@ -730,7 +714,6 @@ describe.only('Aggregator: Build', () => {
         .execute('build');
 
       expect(res.code).to.equal(1);
-      expect(test.list('dist', '-R')).to.not.include('statics/app.bundle.js');
     });
 
     it('should separate Css from bundle', () => {
@@ -766,20 +749,6 @@ describe.only('Aggregator: Build', () => {
         .execute('build');
       expect(res.code).to.equal(0);
       expect(test.list('./dist/statics')).to.contain.members(['app.css', 'settings.css']);
-    });
-
-    it.skip('should generate css modules on bundle', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./styles/my-file.scss\');',
-          'src/styles/my-file.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.contain('.styles-__my-file__a__');
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.contain('.styles-__my-file__b__');
     });
 
     it('should generate (runtime) css modules on production with hash only', function () {
@@ -903,66 +872,8 @@ describe.only('Aggregator: Build', () => {
       expect(test.content(`dist/${defaultOutput}/app.css`)).to.contain('.a .b {');
     });
 
-    it.skip('should generate a bundle with svg/images', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./style.scss\');',
-          'src/style.scss': `.button {
-                                background: url("./icon.svg") no-repeat center center;
-                                background: url("./image.png") no-repeat center center;
-                                background: url("./image.jpg") no-repeat center center;
-                                background: url("./image.gif") no-repeat center center;
-                              }`,
-          'src/icon.svg': '',
-          'src/image.gif': '',
-          'src/image.jpg': '',
-          'src/image.png': '',
-          'package.json': fx.packageJson({
-            separateCss: false
-          })
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/icon.\w+.svg/g);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/image.\w+.png/g);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/image.\w+.jpg/g);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/image.\w+.gif/g);
-    });
-
-    it.skip('should generate a bundle with @font-face', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./style.scss\');',
-          'src/style.scss': `@font-face {
-                              font-family: 'icomoon';
-                              src:  url('assets/fonts/icomoon.eot?7yf4s0');
-                              src:  url('assets/fonts/icomoon.eot?7yf4s0#iefix') format('embedded-opentype'),
-                                url('assets/fonts/icomoon.ttf?7yf4s0') format('truetype'),
-                                url('assets/fonts/icomoon.woff?7yf4s0') format('woff'),
-                                url('assets/fonts/icomoon.svg?7yf4s0#icomoon') format('svg');
-                              font-weight: normal;
-                              font-style: normal;
-                            }`,
-          'src/assets/fonts/icomoon.eot': '',
-          'src/assets/fonts/icomoon.ttf': '',
-          'src/assets/fonts/icomoon.woff': '',
-          'src/assets/fonts/icomoon.svg': '',
-          'package.json': fx.packageJson({
-            separateCss: false
-          })
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/icomoon.\w+.eot/g);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/icomoon.\w+.ttf/g);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/icomoon.\w+.woff/g);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/icomoon.\w+.svg/g);
-    });
-
     describe('autoprefixer', () => {
-      it.skip('should generate css attributes prefixes', () => {
+      it('should generate css attributes prefixes', () => {
         const res = test
           .setup({
             'src/client.js': 'require(\'./style.scss\');',
@@ -1019,113 +930,7 @@ describe.only('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('Specs Bundle', () => {
-    describe('when an entry point does not exist', () => {
-      it('should not generate a bundle with that configuration', () => {
-        const res = test
-          .setup({
-            'src/client.js': `module.exports = 'hello'`,
-            'src/server.js': `module.exports = 'world'`,
-            'package.json': fx.packageJson()
-          })
-          .execute('build');
-
-        expect(res.code).to.equal(0);
-        expect(test.content('dist/statics/app.bundle.js')).not.to.equal('');
-        expect(test.content('dist/server.bundle.js')).to.equal('');
-        expect(test.content('dist/config.bundle.js')).to.equal('');
-      });
-    });
-
-    it('should generate a bundle', () => {
-      const res = test
-        .setup({
-          'src/client.js': `const add1 = a => {return a + 1;};module.exports = add1;`,
-          'src/app.spec.js': `const add1 = require('./client');const a = add1(1);`,
-          'src/appTwo.spec.js': `const add1 = require('./client');const b = add1(2);`,
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.list('dist')).to.contain('specs.bundle.js');
-      expect(test.content('dist/specs.bundle.js')).to.contain('const a = add1(1);');
-      expect(test.content('dist/specs.bundle.js')).to.contain('const b = add1(2);');
-      expect(test.content('dist/specs.bundle.js')).to.contain('return a + 1;');
-    });
-
-    it('should consider custom specs.browser globs if configured', () => {
-      const res = test
-        .setup({
-          'src/client.js': '',
-          'some/other/app.js': `const add1 = a => { return a + 1; }; module.exports = add1;`,
-          'some/other/app.glob.js': `const add1 = require("./app"); const a = add1(2);`,
-          'package.json': fx.packageJson({
-            specs: {
-              browser: 'some/other/*.glob.js'
-            }
-          })
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/specs.bundle.js')).to.contain('const a = add1(2);');
-      expect(test.content('dist/specs.bundle.js')).to.contain('return a + 1;');
-    });
-
-    it('should generate a bundle with css', () => {
-      const res = test
-        .setup({
-          'src/client.js': `require('./style.css');const add1 = a => {return a + 1;};module.exports = add1;`,
-          'src/app.spec.js': `const add1 = require('./client');const a = add1(2);`,
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            separateCss: false
-          })
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/specs.bundle.js')).to.contain('.a .b');
-    });
-
-    it('should separate css from bundle', () => {
-      const res = test
-        .setup({
-          'src/client.js': `require('./style.css');const add1 = a => {return a + 1;};module.exports = add1;`,
-          'src/app.spec.js': `const add1 = require('./client');const a = add1(2);`,
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            separateCss: true
-          })
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('.a .b');
-      expect(test.list('dist/statics')).to.contain('app.css');
-      expect(test.content('dist/statics/app.css')).to.contain('.a .b');
-    });
-
-    it('should separate css from bundle by default', () => {
-      const res = test
-        .setup({
-          'src/client.js': `require('./style.css');const add1 = a => {return a + 1;};module.exports = add1;`,
-          'src/app.spec.js': `const add1 = require('./client');const a = add1(2);`,
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('.a .b');
-      expect(test.list('dist/statics')).to.contain('app.css');
-      expect(test.content('dist/statics/app.css')).to.contain('.a .b');
-    });
-
-  });
-
-  describe.skip('yoshi-copy', () => {
+  describe('yoshi-copy', () => {
     it('should use yoshi-copy', () => {
       const res = test
         .setup({
@@ -1142,7 +947,7 @@ describe.only('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('yoshi-maven-statics', () => {
+  describe('yoshi-maven-statics', () => {
     it('should use yoshi-maven-statics', () => {
       const res = test
         .setup({
@@ -1178,7 +983,7 @@ describe.only('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('yoshi-clean', () => {
+  describe('yoshi-clean', () => {
     it('should use yoshi-clean', () => {
       const res = test
         .setup({
@@ -1196,7 +1001,7 @@ describe.only('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('yoshi-update-node-version', () => {
+  describe('yoshi-update-node-version', () => {
     it('should use yoshi-update-node-version', () => {
       const res = test
         .setup({'package.json': fx.packageJson()})
@@ -1217,10 +1022,6 @@ describe.only('Aggregator: Build', () => {
         .execute('build');
 
       expect(test.list('dist', '-R')).to.contain('statics/petri-experiments.json');
-    });
-
-    it.skip('should do nothing if there is no petri-specs installed', () => {
-      // TODO: figure out how to simulate module doesn't exist in registry
     });
   });
 

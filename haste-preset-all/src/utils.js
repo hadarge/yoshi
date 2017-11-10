@@ -5,6 +5,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const glob = require('glob');
 const project = require('../config/project');
+const globs = require('./globs');
 
 const readDir = module.exports.readDir = patterns =>
   [].concat(patterns).reduce((acc, pattern) =>
@@ -64,6 +65,14 @@ module.exports.isTypescriptProject = () =>
 
 module.exports.isBabelProject = () => {
   return !!glob.sync(path.resolve('.babelrc')).length || !!project.babel();
+};
+
+module.exports.shouldRunLess = () => {
+  return glob.sync(`${globs.base()}/**/*.less`).length > 0;
+};
+
+module.exports.shouldRunSass = () => {
+  return glob.sync(`${globs.base()}/**/*.sass`).filter(file => path.basename(file)[0] !== '_').length > 0;
 };
 
 module.exports.writeFile = (targetFileName, data) => {
