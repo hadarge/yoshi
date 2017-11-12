@@ -6,7 +6,7 @@ const fx = require('./helpers/fixtures');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
 const {getMockedCI} = require('yoshi-utils').utilsTestkit;
 
-describe.skip('Aggregator: Test', () => {
+describe('Aggregator: Test', () => {
   let test;
   beforeEach(() => {
     test = tp.create(outsideTeamCity);
@@ -524,7 +524,6 @@ describe.skip('Aggregator: Test', () => {
     });
 
     it('should not transpile tests if no tsconfig/.babelrc/babel configuration', () => {
-
       const res = test
         .setup({
           'test/some.js': 'export default x => x',
@@ -537,7 +536,7 @@ describe.skip('Aggregator: Test', () => {
         .execute('test', ['--mocha']);
 
       expect(res.code).to.equal(1);
-      expect(res.stderr).to.contain('Unexpected token import');
+      expect(res.stdout).to.contain('Unexpected token import');
     });
 
     it('should require "test/mocha-setup.js" configuration file', () => {

@@ -37,7 +37,7 @@ class Test {
         options = options.concat(['--preset', hastePresetAllPath]);
 
         const env = Object.assign({}, this.env, environment);
-        this.child = spawn('node', [`${this.script}`, `${command}`].concat(options), {cwd: this.tmp, env, stdio: 'inherit'});
+        this.child = spawn('node', [`${this.script}`, `${command}`].concat(options), {cwd: this.tmp, env});
         this.child.stdout.on('data', buffer => {
           this.stdout += buffer.toString();
         });

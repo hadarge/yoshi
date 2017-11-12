@@ -123,3 +123,7 @@ module.exports.shouldRunStylelint = () => {
       .load(process.cwd())
       .then(result => !!result);
 };
+
+module.exports.hasProtractorConfigFile = () => {
+  return exists(path.resolve('protractor.conf.js'));
+};
