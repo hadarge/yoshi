@@ -39,6 +39,9 @@ Edit your project's package.json and add commands for starting, building and tes
     "start": "haste start",
     "test": "haste test",
     "build": "haste build"
+  },
+  "haste": {
+    "preset": "haste-preset-all"
   }
 }
 ```
