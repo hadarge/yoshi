@@ -1,9 +1,9 @@
-const {mergeWith} = require('lodash/fp');
 const fs = require('fs');
-const process = require('process');
 const path = require('path');
-const mkdirp = require('mkdirp');
 const glob = require('glob');
+const mkdirp = require('mkdirp');
+const {mergeWith} = require('lodash/fp');
+const cosmiconfig = require('cosmiconfig');
 const project = require('../config/project');
 const globs = require('./globs');
 
@@ -116,4 +116,10 @@ module.exports.filterNoise = comp => {
 module.exports.shouldRunWebpack = webpackConfig => {
   const defaultEntryPath = path.join(webpackConfig.context, project.defaultEntry());
   return project.entry() || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
+};
+
+module.exports.shouldRunStylelint = () => {
+  return cosmiconfig('stylelint')
+      .load(process.cwd())
+      .then(result => !!result);
 };
