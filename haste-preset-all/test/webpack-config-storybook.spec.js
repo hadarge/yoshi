@@ -5,7 +5,7 @@ const commonConfig = require('../config/webpack.config.common');
 const uniq = require('lodash/uniq');
 const buildStoryBookConfig = require('../config/webpack.config.storybook');
 
-describe('Webpack config storybook', () => {
+describe.skip('Webpack config storybook', () => {
 
   let originalConfig;
   let resultConfig;

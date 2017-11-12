@@ -7,7 +7,7 @@ const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
 const retryPromise = require('retry-promise').default;
 const fetch = require('node-fetch');
 
-describe.only('Aggregator: Build', () => {
+describe('Aggregator: Build', () => {
   const defaultOutput = 'statics';
   let test;
 

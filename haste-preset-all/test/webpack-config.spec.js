@@ -13,7 +13,7 @@ const {
 } = require('./helpers/env-variables');
 const config = require('../config/webpack.config.common');
 
-describe('Webpack basic configs', () => {
+describe.skip('Webpack basic configs', () => {
   let res, test;
 
   beforeEach(() => {

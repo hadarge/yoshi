@@ -4,7 +4,7 @@ const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {insideTeamCity} = require('./helpers/env-variables');
 
-describe.only('Aggregator: Lint', () => {
+describe('Aggregator: Lint', () => {
   const test = tp.create();
   afterEach(() => test.teardown());
 

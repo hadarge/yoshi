@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 const _ = require('lodash');
 const {getMockedCI} = require('yoshi-utils').utilsTestkit;
 
-describe('Loaders', () => {
+describe.skip('Loaders', () => {
   let test;
 
   beforeEach(() => {

@@ -10,7 +10,7 @@ const retryPromise = require('retry-promise').default;
 const {outsideTeamCity} = require('./helpers/env-variables');
 const https = require('https');
 
-describe('Aggregator: Start', () => {
+describe.skip('Aggregator: Start', () => {
   let test, child;
 
   describe('Yoshi', () => {

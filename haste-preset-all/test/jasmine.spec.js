@@ -7,7 +7,7 @@ const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {outsideTeamCity, insideTeamCity, insideWatchMode} = require('./helpers/env-variables');
 
-describe('test --jasmine', () => {
+describe.skip('test --jasmine', () => {
   let test, child;
 
   beforeEach(() => {

@@ -8,7 +8,7 @@ const {exists} = require('../src/utils');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
 const {getMockedCI} = require('yoshi-utils').utilsTestkit;
 
-describe('Aggregator: e2e', () => {
+describe.skip('Aggregator: e2e', () => {
   let test;
   beforeEach(() => {
     test = tp.create();
