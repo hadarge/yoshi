@@ -39,10 +39,12 @@ class Test {
         const env = Object.assign({}, this.env, environment);
         this.child = spawn('node', [`${this.script}`, `${command}`].concat(options), {cwd: this.tmp, env});
         this.child.stdout.on('data', buffer => {
-          this.stdout += buffer.toString();
+          // console.log(buffer.toString());
+          this.stdout += stripAnsi(buffer.toString());
         });
         this.child.stderr.on('data', buffer => {
-          this.stderr += buffer.toString();
+          // console.log(buffer.toString());
+          this.stderr += stripAnsi(buffer.toString());
         });
         return this.child;
       } catch (e) {

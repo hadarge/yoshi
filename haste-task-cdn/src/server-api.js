@@ -1,5 +1,4 @@
 const express = require('express');
-const projectConfig = require('../config/project');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
@@ -57,9 +56,8 @@ function redirectMiddleware(hostname, port) {
   };
 }
 
-const decorate = ({app, middlewares = [], host}) => {
-  const port = projectConfig.servers.cdn.port();
-  const files = projectConfig.clientFilesPath();
+const decorate = ({app, middlewares = [], host, port, statics}) => {
+  const files = statics;
 
   [
     corsMiddleware(),
@@ -73,12 +71,10 @@ const decorate = ({app, middlewares = [], host}) => {
   return app;
 };
 
-const start = ({middlewares, host}) => {
-  const port = projectConfig.servers.cdn.port();
-  const ssl = projectConfig.servers.cdn.ssl();
+const start = ({middlewares, host, ssl, port, statics}) => {
   const app = express();
 
-  decorate({app, middlewares, host});
+  decorate({app, middlewares, host, port, statics});
 
   return new Promise((resolve, reject) => {
     const serverFactory = ssl ? httpsServer(app) : app;

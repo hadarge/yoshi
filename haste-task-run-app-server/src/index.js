@@ -22,7 +22,7 @@ module.exports = ({
 
   if (server && manualRestart) {
     server.kill('SIGHUP');
-    return Promise.resolve(server);
+    return Promise.resolve();
   }
 
   const serverScript = path.resolve(base, entryPoint);

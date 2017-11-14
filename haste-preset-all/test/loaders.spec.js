@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 const _ = require('lodash');
 const {getMockedCI} = require('yoshi-utils').utilsTestkit;
 
-describe.skip('Loaders', () => {
+describe('Loaders', () => {
   let test;
 
   beforeEach(() => {
@@ -137,7 +137,7 @@ describe.skip('Loaders', () => {
         .execute('build');
 
       expect(resp.code).to.equal(1);
-      expect(resp.stdout).to.contain('error TS1003: Identifier expected');
+      expect(resp.stderr).to.contain('error TS1003: Identifier expected');
     });
   });
 
@@ -266,7 +266,7 @@ describe.skip('Loaders', () => {
       });
     });
 
-    it('it should merge all style tags into one', () => {
+    it('should merge all style tags into one', () => {
       setupAndBuild({separateCss: false});
       expect(test.content('dist/statics/app.bundle.js')).to.contain('{"singleton":true}');
     });
@@ -352,31 +352,6 @@ describe.skip('Loaders', () => {
       expect(test.content('dist/statics/app.css')).to.contain('-webkit-appearance');
       expect(test.content('dist/statics/app.css')).to.not.contain('unquote("{{color-1}}")');
     });
-  });
-
-  describe('Stylable', () => {
-    afterEach(() => test.teardown());
-
-    describe('client', () => {
-      beforeEach(() => setupAndBuild());
-
-      it.skip('should run stylable loader over imported .st.css files', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.match(/.Test.*some-rule {\s*?color: red;\s*?}/);
-      });
-    });
-
-    function setupAndBuild(config) {
-      test
-        .setup({
-          'src/client.js': `require('./some-css.st.css');`,
-          'src/server.js': `require('./some-css.st.css');`,
-          'src/some-css.st.css': `/* comment */
-                                  @namespace "Test";
-                                  .some-rule { color: red; }`,
-          'package.json': fx.packageJson(config || {})
-        })
-        .execute('build', [], getMockedCI({ci: false}));
-    }
   });
 
   describe('Less', () => {

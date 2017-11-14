@@ -1,11 +1,22 @@
 const path = require('path');
+const parseArgs = require('minimist');
 const crossSpawn = require('cross-spawn');
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const projectConfig = require('../../config/project');
 const globs = require('../globs');
-const {isTypescriptProject, isBabelProject} = require('../utils');
+const {
+  isTypescriptProject,
+  isBabelProject,
+  shouldRunLess,
+  shouldRunSass,
+  suffix
+} = require('../utils');
 
-module.exports = async (configure, {entryPoint}) => {
+const addJsSuffix = suffix('.js');
+const cliArgs = parseArgs(process.argv.slice(2));
+const entryPoint = addJsSuffix(cliArgs['entry-point'] || 'index.js');
+
+module.exports = async configure => {
   const {run, watch, tasks} = configure({
     persistent: true,
     plugins: [
@@ -14,18 +25,29 @@ module.exports = async (configure, {entryPoint}) => {
   });
 
   const {
+    cdn,
     sass,
+    less,
     read,
     clean,
     babel,
     write,
-    express,
     typescript,
     petriSpecs,
     mavenStatics,
     runAppServer,
     updateNodeVersion,
   } = tasks;
+
+  const appServer = async () => {
+    if (cliArgs['no-server']) {
+      return;
+    }
+
+    return run(
+      runAppServer({entryPoint, manualRestart: cliArgs['manual-restart']})
+    );
+  };
 
   await Promise.all([
     run(clean({pattern: `{dist,target}/*`})),
@@ -34,13 +56,7 @@ module.exports = async (configure, {entryPoint}) => {
 
   await Promise.all([
     transpileJavascriptAndRunServer(),
-    run(
-      read({pattern: `${globs.base()}/**/*.scss`}),
-      sass({
-        includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
-      }),
-      write({target: 'dist'})
-    ),
+    ...transpileCss(),
     run(
       read({
         pattern: [
@@ -60,12 +76,15 @@ module.exports = async (configure, {entryPoint}) => {
       }),
       write({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'})
     ),
-    run(
-      express({
-        port: projectConfig.servers.cdn.port(),
-        callbackPath: require.resolve('../server-callback'),
-      }),
-    ),
+    run(cdn({
+      port: projectConfig.servers.cdn.port(),
+      ssl: projectConfig.servers.cdn.ssl(),
+      publicPath: projectConfig.servers.cdn.url(),
+      statics: projectConfig.clientFilesPath(),
+      webpackConfigPath: require.resolve('../../config/webpack.config.client'),
+      configuredEntry: projectConfig.entry(),
+      defaultEntry: projectConfig.defaultEntry()
+    })),
     run(petriSpecs({config: projectConfig.petriSpecsConfig()})),
     run(
       mavenStatics({
@@ -100,42 +119,78 @@ module.exports = async (configure, {entryPoint}) => {
     write({base: 'src', target: 'dist/statics'}),
   ));
 
-  watch(`${globs.base()}/**/*.scss`, changed => run(
-    read({pattern: changed}),
-    sass({
-      includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
-    }),
-    write({target: 'dist'}),
-  ));
+  function transpileCss() {
+    if (shouldRunSass) {
+      watch(`${globs.base()}/**/*.scss`, changed => run(
+        read({pattern: changed}),
+        sass({
+          includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
+        }),
+        write({target: 'dist'}),
+      ));
+    }
 
-  function transpileJavascriptAndRunServer() {
+    if (shouldRunLess) {
+      watch(`${globs.base()}/**/*.less`, changed => run(
+        read({pattern: changed}),
+        less({
+          paths: ['.', 'node_modules'],
+        }),
+        write({target: 'dist'}),
+      ));
+    }
+
+    return [
+      !shouldRunSass ? null : run(
+        read({pattern: `${globs.base()}/**/*.scss`}),
+        sass({
+          includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
+        }),
+        write({target: 'dist'}),
+      ),
+      !shouldRunLess ? null : run(
+        read({pattern: `${globs.base()}/**/*.less`}),
+        less({
+          paths: ['.', 'node_modules'],
+        }),
+        write({target: 'dist'}),
+      )
+    ].filter(a => a);
+  }
+
+  async function transpileJavascriptAndRunServer() {
     if (isTypescriptProject()) {
-      watch([path.join('dist', '**', '*.js'), 'index.js'], () => {
-        return run(runAppServer({entryPoint}));
-      });
+      watch([path.join('dist', '**', '*.js'), 'index.js'], appServer);
 
-      return run(
-        typescript({watch: true, project: 'tsconfig.json', rootDir: '.', outDir: './dist/'}),
-        runAppServer({entryPoint})
+      await run(
+        typescript({watch: true, project: 'tsconfig.json', rootDir: '.', outDir: './dist/'})
       );
+
+      return appServer();
     }
 
     if (isBabelProject()) {
-      watch([path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], changed => run(
-        read({pattern: changed}),
-        babel(),
-        write({target: 'dist'}),
-        runAppServer({entryPoint}),
-      ));
+      watch([path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], async changed => {
+        await run(
+          read({pattern: changed}),
+          babel(),
+          write({target: 'dist'}),
+        );
 
-      return run(
+        await appServer();
+      });
+
+      await run(
         read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
         babel({sourceMaps: true}),
         write({target: 'dist'}),
-        runAppServer({entryPoint}),
       );
+
+      return appServer();
     }
 
-    return Promise.resolve();
+    watch(globs.babel(), appServer);
+
+    return appServer();
   }
 };

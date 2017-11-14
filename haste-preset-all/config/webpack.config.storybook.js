@@ -12,12 +12,12 @@ module.exports = config => {
 
   config.module.rules = [
     ...webpackCommonConfig.module.rules,
-    ...require('../lib/loaders/sass')(false, cssModules, false, projectName).client
+    ...require('../src/loaders/sass')(false, cssModules, false, projectName).client
   ];
 
   config.plugins = [
     ...config.plugins || [],
-    require('../lib/plugins/babelHappyPack')(),
+    require('../src/plugins/babelHappyPack')(),
     stylable.plugin()
   ];
 

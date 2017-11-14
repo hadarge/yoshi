@@ -94,25 +94,6 @@ module.exports.inTeamCity = () =>
 
 module.exports.isProduction = () => (process.env.NODE_ENV || '').toLowerCase() === 'production';
 
-module.exports.filterNoise = comp => {
-  comp.plugin('done', stats => {
-    logIfAny(stats.toString({
-      colors: true,
-      hash: false,
-      chunks: false,
-      assets: false,
-      children: false,
-      version: false,
-      timings: false,
-      modules: false
-    }));
-    mkdirp.sync(path.resolve('target'));
-    fs.writeFileSync('target/webpack-stats.json', JSON.stringify(stats.toJson()));
-  });
-
-  return comp;
-};
-
 module.exports.shouldRunWebpack = webpackConfig => {
   const defaultEntryPath = path.join(webpackConfig.context, project.defaultEntry());
   return project.entry() || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);

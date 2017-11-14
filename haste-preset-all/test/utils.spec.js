@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const {isProduction} = require('../src/utils');
 
-describe.skip('Utils', () => {
+describe('Utils', () => {
   describe('isProduction ', () => {
     let nodeEnvCopy;
     beforeEach(() => nodeEnvCopy = process.env.NODE_ENV);

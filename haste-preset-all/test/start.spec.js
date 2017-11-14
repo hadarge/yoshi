@@ -10,7 +10,7 @@ const retryPromise = require('retry-promise').default;
 const {outsideTeamCity} = require('./helpers/env-variables');
 const https = require('https');
 
-describe.skip('Aggregator: Start', () => {
+describe('Aggregator: Start', () => {
   let test, child;
 
   describe('Yoshi', () => {
@@ -42,7 +42,7 @@ describe.skip('Aggregator: Start', () => {
     });
 
     describe('--entry-point', () => {
-      it('should run the entry point provided', () => {
+      it('should run the entry point provided and add .js to entry if needed', () => {
         child = test
           .setup({
             'src/client.js': '',
@@ -138,8 +138,9 @@ describe.skip('Aggregator: Start', () => {
           .spawn('start');
 
         return checkServerIsServing({port: 3200, file: 'app.bundle.min.js'})
-          .then(content =>
-            expect(content).to.contain(`__webpack_require__.p = "http://localhost:3200/";`));
+          .then(content => {
+            expect(content).to.contain(`__webpack_require__.p = "http://localhost:3200/";`);
+          });
       });
 
       it('should serve files without "min" suffix when requested with a "min" suffix in ssl', () => {
@@ -274,7 +275,7 @@ describe.skip('Aggregator: Start', () => {
       this.timeout(30000);
 
       describe('when using typescript', () => {
-        it(`should rebuild and restart server after a file has been changed with typescript files`, () => {
+        it.skip(`should rebuild and restart server after a file has been changed with typescript files`, () => {
           child = test
             .setup({
               'tsconfig.json': fx.tsconfig(),
@@ -291,7 +292,6 @@ describe.skip('Aggregator: Start', () => {
             .then(() => checkServerIsRespondingWith('hello'))
             .then(() => test.modify('src/server.ts', `declare var require: any; ${fx.httpServer('world')}`))
             .then(() => {
-              console.log('modified~~~~!!!');
               return checkServerIsRespondingWith('world');
             });
         });
@@ -319,7 +319,7 @@ describe.skip('Aggregator: Start', () => {
       });
 
       describe('when using no transpile', () => {
-        it(`should rebuild and restart server after a file has been changed`, () => {
+        it(`should restart server after a file has been changed`, () => {
           child = test
             .setup({
               'src/server.js': fx.httpServer('hello'),

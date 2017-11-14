@@ -16,7 +16,7 @@ module.exports = async configure => {
     persistent: shouldWatch,
   });
 
-  const {read, mocha, jasmine, karma, jest, protractor, webpack} = tasks;
+  const {read, mocha, jasmine, karma, jest, protractor, webpack, cdn} = tasks;
 
   const noOptions = !cliArgs.mocha &&
     !cliArgs.jasmine &&
@@ -106,6 +106,13 @@ module.exports = async configure => {
   }
 
   if ((noOptions || cliArgs.protractor) && hasProtractorConfigFile() && !shouldWatch) {
+    await run(cdn({
+      port: projectConfig.servers.cdn.port(),
+      ssl: projectConfig.servers.cdn.ssl(),
+      publicPath: projectConfig.servers.cdn.url(),
+      statics: projectConfig.clientFilesPath(),
+    }));
+
     await run(
       protractor({
         webdriverManagerArgs: ['--standalone', '--versions.chrome', '2.29', '--gecko', 'false'],
@@ -114,4 +121,3 @@ module.exports = async configure => {
     );
   }
 };
-

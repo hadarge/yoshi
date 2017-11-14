@@ -178,7 +178,7 @@ const fx = {
         </build>
     </project>
   `,
-  defaultServerPort: () => 6666,
+  defaultServerPort: () => 3002,
   httpServer: (message, port) => `
     'use strict';
 

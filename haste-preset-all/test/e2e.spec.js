@@ -8,7 +8,7 @@ const {exists} = require('../src/utils');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
 const {getMockedCI} = require('yoshi-utils').utilsTestkit;
 
-describe.skip('Aggregator: e2e', () => {
+describe('Aggregator: e2e', () => {
   let test;
   beforeEach(() => {
     test = tp.create();
@@ -18,7 +18,7 @@ describe.skip('Aggregator: e2e', () => {
   describe('should run protractor with a cdn server', function () {
     this.timeout(60000);
 
-    it('should download chromedriver 2.29 and use it', () => {
+    it.skip('should download chromedriver 2.29 and use it', () => {
       const res = test
         .setup({
           'protractor.conf.js': '',

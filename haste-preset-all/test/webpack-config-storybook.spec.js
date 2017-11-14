@@ -5,8 +5,7 @@ const commonConfig = require('../config/webpack.config.common');
 const uniq = require('lodash/uniq');
 const buildStoryBookConfig = require('../config/webpack.config.storybook');
 
-describe.skip('Webpack config storybook', () => {
-
+describe('Webpack config storybook', () => {
   let originalConfig;
   let resultConfig;
 
@@ -24,7 +23,6 @@ describe.skip('Webpack config storybook', () => {
   });
 
   describe('Extensions', () => {
-
     it('should add all the extensions from the common config', () => {
       const expectedExtensions = commonConfig.resolve.extensions;
       expect(resultConfig.resolve.extensions).to.include.members(expectedExtensions);

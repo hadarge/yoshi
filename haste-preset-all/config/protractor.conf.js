@@ -18,7 +18,6 @@ const path = require('path');
 const ld = require('lodash');
 const exists = require('../src/utils').exists;
 const inTeamCity = require('../src/utils').inTeamCity;
-const {start} = require('../src/server-api');
 const globs = require('../src/globs');
 
 const userConfPath = path.resolve('protractor.conf.js');
@@ -49,10 +48,7 @@ const merged = ld.mergeWith({
 
     require('../src/require-hooks');
 
-    return start({host: 'localhost'}).then(server => {
-      cdnServer = server;
-      return beforeLaunch.call(merged);
-    });
+    return beforeLaunch.call(merged);
   },
   onPrepare: () => {
     if (shouldUseProtractorBrowserLogs) {

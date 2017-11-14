@@ -701,20 +701,6 @@ describe('Aggregator: Test', () => {
         expect(res.stdout).to.contain(`Finished 'karma'`);
         expect(res.stdout).to.contain('Executed 1 of 1 SUCCESS');
       });
-
-      it.skip('should fail with exit code 1', () => {
-        const res = test
-          .setup({
-            'src/test.spec.js': 'it("fail", function () { throw new Error(); });',
-            'karma.conf.js': 'module.exports = {frameworks: ["mocha"]}',
-            'package.json': fx.packageJson()
-          })
-          .execute('test', ['--karma']);
-
-        expect(res.code).to.equal(1);
-        expect(res.stdout).to.contain(`Finished 'karma'`);
-        expect(res.stdout).to.contain('Executed 1 of 1 (1 FAILED)');
-      });
     });
 
     describe('Specs Bundle', () => {

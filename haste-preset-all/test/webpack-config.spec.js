@@ -13,7 +13,7 @@ const {
 } = require('./helpers/env-variables');
 const config = require('../config/webpack.config.common');
 
-describe.skip('Webpack basic configs', () => {
+describe('Webpack basic configs', () => {
   let res, test;
 
   beforeEach(() => {
@@ -176,9 +176,9 @@ describe.skip('Webpack basic configs', () => {
       });
     });
 
-    it('should warn on build command', () => {
+    it.skip('should warn on build command', () => {
       res = test.execute('build');
-      expect(res.stdout).to.contain(warningOutput);
+      expect(res.stderr).to.contain(warningOutput);
     });
 
     it('should warn on start command', () => {
@@ -208,7 +208,7 @@ describe.skip('Webpack basic configs', () => {
       });
     });
 
-    it('should be enabled by default for build', () => {
+    it.skip('should be enabled by default for build', () => {
       test.execute('build', [], {});
       expect(test.content('./dist/statics/app.bundle.js')).to.contain('// CONCATENATED MODULE: ./dep.js');
     });
