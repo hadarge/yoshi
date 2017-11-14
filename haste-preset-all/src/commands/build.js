@@ -30,6 +30,7 @@ module.exports = async configure => {
     plugins: [
       new LoggerPlugin(),
     ],
+    persistent: !!cliArgs.analyze,
   });
 
   const {
