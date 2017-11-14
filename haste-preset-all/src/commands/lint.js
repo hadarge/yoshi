@@ -14,7 +14,7 @@ module.exports = async configure => {
 
   const {read, eslint, tslint, stylelint} = tasks;
 
-  if (shouldRunStylelint()) {
+  if (await shouldRunStylelint()) {
     await run(
       read({pattern: [`${globs.base()}/**/*.scss`, `${globs.base()}/**/*.less`]}),
       stylelint({formatter: 'string'})
