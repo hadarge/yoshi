@@ -208,7 +208,7 @@ describe('Webpack basic configs', () => {
       });
     });
 
-    it.skip('should be enabled by default for build', () => {
+    it('should be enabled by default for build', () => {
       test.execute('build', [], {});
       expect(test.content('./dist/statics/app.bundle.js')).to.contain('// CONCATENATED MODULE: ./dep.js');
     });
