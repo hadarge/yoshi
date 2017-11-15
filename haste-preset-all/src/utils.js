@@ -71,6 +71,21 @@ module.exports.shouldRunLess = () => {
   return glob.sync(`${globs.base()}/**/*.less`).length > 0;
 };
 
+module.exports.filterNoise = stats => {
+  logIfAny(stats.toString({
+    colors: true,
+    hash: false,
+    chunks: false,
+    assets: false,
+    children: false,
+    version: false,
+    timings: false,
+    modules: false
+  }));
+  mkdirp.sync(path.resolve('target'));
+  fs.writeFileSync('target/webpack-stats.json', JSON.stringify(stats.toJson()));
+};
+
 module.exports.shouldRunSass = () => {
   return glob.sync(`${globs.base()}/**/*.sass`).filter(file => path.basename(file)[0] !== '_').length > 0;
 };

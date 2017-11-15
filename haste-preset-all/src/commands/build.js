@@ -91,12 +91,22 @@ module.exports = async configure => {
 
   function bundle() {
     const configPath = require.resolve('../../config/webpack.config.client');
+    const callbackPath = require.resolve('../webpack-callback');
     const webpackConfig = require(configPath)();
+
+    const defaultOptions = {
+      configPath,
+      callbackPath,
+    };
 
     if (shouldRunWebpack(webpackConfig)) {
       return Promise.all([
-        run(webpack({configPath, configParams: {debug: false, analyze: cliArgs.analyze}}, {title: 'webpack-production'})),
-        run(webpack({configPath, configParams: {debug: true}}, {title: 'webpack-development'})),
+        run(
+          webpack({...defaultOptions, configParams: {debug: false, analyze: cliArgs.analyze}}, {title: 'webpack-production'})
+        ),
+        run(
+          webpack({...defaultOptions, configParams: {debug: true}}, {title: 'webpack-development'})
+        ),
       ]);
     }
 

@@ -176,9 +176,9 @@ describe('Webpack basic configs', () => {
       });
     });
 
-    it.skip('should warn on build command', () => {
+    it('should warn on build command', () => {
       res = test.execute('build');
-      expect(res.stderr).to.contain(warningOutput);
+      expect(res.stdout).to.contain(warningOutput);
     });
 
     it('should warn on start command', () => {
