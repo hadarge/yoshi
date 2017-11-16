@@ -115,7 +115,7 @@ module.exports = async configure => {
 
     await run(
       protractor({
-        webdriverManagerArgs: ['--standalone', '--versions.chrome', '2.29', '--gecko', 'false'],
+        webdriverManagerOptions: {'versions.chrome': '2.29', gecko: 'false'},
         configPath: require.resolve('../../config/protractor.conf.js')
       })
     );
