@@ -29,6 +29,7 @@ module.exports = async configure => {
     sass,
     less,
     read,
+    copy,
     clean,
     babel,
     write,
@@ -65,7 +66,7 @@ module.exports = async configure => {
           `${globs.base()}/**/*.{css,json,d.ts}`,
         ]
       }),
-      write({target: 'dist'}, {title: 'copy-server-assets'})
+      copy({target: 'dist'}, {title: 'copy-server-assets'})
     ),
     run(
       read({
@@ -74,7 +75,7 @@ module.exports = async configure => {
           `${globs.base()}/**/*.{ejs,html,vm}`,
         ]
       }),
-      write({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'})
+      copy({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'})
     ),
     run(cdn({
       port: projectConfig.servers.cdn.port(),

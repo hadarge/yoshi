@@ -37,6 +37,7 @@ module.exports = async configure => {
     less,
     clean,
     read,
+    copy,
     babel,
     write,
     sass,
@@ -64,7 +65,7 @@ module.exports = async configure => {
           `${globs.base()}/**/*.{css,json,d.ts}`,
         ]
       }),
-      write({target: 'dist'}, {title: 'copy-server-assets'}),
+      copy({target: 'dist'}, {title: 'copy-server-assets'}),
     ),
     run(
       read({
@@ -73,7 +74,7 @@ module.exports = async configure => {
           `${globs.base()}/**/*.{ejs,html,vm}`,
         ]
       }),
-      write({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'}),
+      copy({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'}),
     ),
     bundle(),
     run(petriSpecs({config: petriSpecsConfig()})),
