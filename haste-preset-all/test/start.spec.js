@@ -275,7 +275,7 @@ describe('Aggregator: Start', () => {
       this.timeout(30000);
 
       describe('when using typescript', () => {
-        it.skip(`should rebuild and restart server after a file has been changed with typescript files`, () => {
+        it(`should rebuild and restart server after a file has been changed with typescript files`, () => {
           child = test
             .setup({
               'tsconfig.json': fx.tsconfig(),

@@ -11,6 +11,7 @@ const {
   shouldRunSass,
   suffix
 } = require('../utils');
+const {debounce} = require('lodash');
 
 const addJsSuffix = suffix('.js');
 const cliArgs = parseArgs(process.argv.slice(2));
@@ -179,13 +180,10 @@ module.exports = async configure => {
 
   async function transpileJavascriptAndRunServer() {
     if (isTypescriptProject()) {
-      watch([path.join('dist', '**', '*.js'), 'index.js'], appServer);
+      await run(typescript({watch: true, project: 'tsconfig.json', rootDir: '.', outDir: './dist/'}));
+      await appServer();
 
-      await run(
-        typescript({watch: true, project: 'tsconfig.json', rootDir: '.', outDir: './dist/'})
-      );
-
-      return appServer();
+      return watch([path.join('dist', '**', '*.js'), 'index.js'], debounce(appServer, 500, {maxWait: 1000}));
     }
 
     if (isBabelProject()) {
