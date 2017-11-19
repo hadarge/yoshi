@@ -66,16 +66,26 @@ module.exports = async configure => {
           `${globs.base()}/**/*.{css,json,d.ts}`,
         ]
       }),
-      copy({target: 'dist'}, {title: 'copy-server-assets'})
+      write({target: 'dist'}, {title: 'copy-server-assets'})
     ),
     run(
       read({
         pattern: [
-          `${globs.base()}/assets/**/*`,
-          `${globs.base()}/**/*.{ejs,html,vm}`,
-        ]
+          `${globs.assetsLegacyBase()}/assets/**/*`,
+          `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
+        ],
       }),
-      copy({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'})
+      copy({target: 'dist/statics'}, {title: 'copy-static-assets-legacy'})
+    ),
+    run(
+      read({
+        pattern: [
+          `assets/**/*`,
+          `**/*.{ejs,html,vm}`,
+        ],
+        options: {cwd: path.resolve(globs.assetsBase())}
+      }),
+      copy({target: 'dist/statics'}, {title: 'copy-static-assets'})
     ),
     run(cdn({
       port: projectConfig.servers.cdn.port(),
@@ -108,16 +118,24 @@ module.exports = async configure => {
     `${globs.base()}/**/*.{ejs,html,vm}`,
     `${globs.base()}/**/*.{css,json,d.ts}`,
   ], changed => run(
-    read(changed),
-    write({target: 'dist'}),
+    read({pattern: changed}),
+    copy({target: 'dist'}),
   ));
 
   watch([
-    `${globs.base()}/assets/**/*`,
-    `${globs.base()}/**/*.{ejs,html,vm}`,
+    `${globs.assetsLegacyBase()}/assets/**/*`,
+    `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
   ], changed => run(
-    read(changed),
-    write({base: 'src', target: 'dist/statics'}),
+    read({pattern: changed}),
+    copy({target: 'dist/statics'}),
+  ));
+
+  watch([
+    `assets/**/*`,
+    `**/*.{ejs,html,vm}`,
+  ], changed => run(
+    read({changed, options: {cwd: path.resolve(globs.assetsBase())}}),
+    copy({target: 'dist/statics'}),
   ));
 
   function transpileCss() {

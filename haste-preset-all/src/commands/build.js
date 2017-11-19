@@ -70,11 +70,21 @@ module.exports = async configure => {
     run(
       read({
         pattern: [
-          `${globs.base()}/assets/**/*`,
-          `${globs.base()}/**/*.{ejs,html,vm}`,
+          `${globs.assetsLegacyBase()}/assets/**/*`,
+          `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
         ]
       }),
-      copy({base: 'src', target: 'dist/statics'}, {title: 'copy-static-assets'}),
+      copy({target: 'dist/statics'}, {title: 'copy-static-assets-legacy'}),
+    ),
+    run(
+      read({
+        pattern: [
+          `assets/**/*`,
+          `**/*.{ejs,html,vm}`,
+        ],
+        options: {cwd: path.resolve(globs.assetsBase())}
+      }),
+      copy({target: 'dist/statics'}, {title: 'copy-static-assets'}),
     ),
     bundle(),
     run(petriSpecs({config: petriSpecsConfig()})),
