@@ -97,6 +97,7 @@ module.exports = async configure => {
     await run(
       webpack({
         configPath: require.resolve('../../config/webpack.config.specs'),
+        watch: shouldWatch,
       })
     );
 
