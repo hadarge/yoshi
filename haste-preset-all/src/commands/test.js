@@ -5,6 +5,8 @@ const globs = require('../globs');
 const projectConfig = require('../../config/project');
 const {inTeamCity, watchMode, hasProtractorConfigFile} = require('../utils');
 const shouldWatch = watchMode();
+const {runCLI} = require('jest-cli');
+const merge = require('lodash/merge');
 
 const cliArgs = minimist(process.argv.slice(2));
 
@@ -16,7 +18,7 @@ module.exports = async configure => {
     persistent: shouldWatch,
   });
 
-  const {read, mocha, jasmine, karma, jest, protractor, webpack, cdn} = tasks;
+  const {read, mocha, jasmine, karma, protractor, webpack, cdn} = tasks;
 
   const noOptions = !cliArgs.mocha &&
     !cliArgs.jasmine &&
@@ -74,19 +76,21 @@ module.exports = async configure => {
   if (cliArgs.jest) {
     const jestProjectConfig = projectConfig.jestConfig();
 
+    const config = merge(jestProjectConfig, {
+      transform: {
+        '\\.jsx?$': require.resolve('../../config/jest-transformer')
+      }
+    });
+
     if (inTeamCity()) {
-      jestProjectConfig.testResultsProcessor = require.resolve('jest-teamcity-reporter');
+      config.testResultsProcessor = require.resolve('jest-teamcity-reporter');
     }
 
-    await run(
-      jest({
-        config: Object.assign(jestProjectConfig, {
-          transform: {
-            '\\.jsx?$': require.resolve('../../config/jest-transformer')
-          }
-        })
-      })
-    );
+    return new Promise((resolve, reject) => {
+      runCLI({watch: shouldWatch, config}, [process.cwd()], result => {
+        result.success ? resolve() : reject('jest failed');
+      });
+    });
   }
 
   if (cliArgs.karma) {

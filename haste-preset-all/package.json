@@ -43,7 +43,6 @@
     "haste-task-cdn": "~0.0.1",
     "haste-task-fedops-build-report": "~0.0.1",
     "haste-task-jasmine": "~0.1.10",
-    "haste-task-jest": "~0.1.10",
     "haste-task-karma": "~0.1.10",
     "haste-task-maven-statics": "~0.0.1",
     "haste-task-mocha": "~0.1.3",
