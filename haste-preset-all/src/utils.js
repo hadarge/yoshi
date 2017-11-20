@@ -114,6 +114,9 @@ module.exports.shouldRunWebpack = webpackConfig => {
   return project.entry() || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
 };
 
+module.exports.migrateToScopedPackages = () =>
+  process.env.MIGRATE_TO_SCOPED_PACKAGES === 'true';
+
 module.exports.shouldRunStylelint = () => {
   return cosmiconfig('stylelint')
       .load(process.cwd())

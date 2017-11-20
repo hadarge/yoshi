@@ -9,7 +9,7 @@ const fx = require('./helpers/fixtures');
 const {killSpawnProcessAndHisChildren} = require('./helpers/process');
 const {migrateToScopedPackages, insideTeamCity, outsideTeamCity} = require('./helpers/env-variables');
 
-describe.skip('Migrate to scoped packages task', () => {
+describe('Migrate to scoped packages task', () => {
 
   let test, child, npm;
 

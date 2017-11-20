@@ -52,6 +52,7 @@ module.exports = async configure => {
   await Promise.all([
     run(clean({pattern: `{dist,target}/*`})),
     run(updateNodeVersion()),
+    run({task: require.resolve('../tasks/haste-task-migrate-to-scoped-packages/index')})
   ]);
 
   await Promise.all([
