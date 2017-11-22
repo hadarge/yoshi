@@ -37,7 +37,7 @@ module.exports = ({
 
   return port.then(newPort => {
     const env = Object.assign({}, process.env, {
-      NODEdebounceENV: 'developmen/NODEdebouncet',
+      NODE_ENV: 'development',
       DEBUG: 'wix:*,wnp:*',
       PORT: newPort
     });
