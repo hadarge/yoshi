@@ -70,7 +70,7 @@ module.exports = async configure => {
           `${globs.base()}/**/*.{css,json,d.ts}`,
         ]
       }),
-      write({target: 'dist'}, {title: 'copy-server-assets'})
+      copy({target: 'dist'}, {title: 'copy-server-assets'})
     ),
     run(
       read({
