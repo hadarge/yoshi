@@ -138,7 +138,7 @@ module.exports = async configure => {
     `assets/**/*`,
     `**/*.{ejs,html,vm}`,
   ], changed => run(
-    read({changed, options: {cwd: path.resolve(globs.assetsBase())}}),
+    read({pattern: changed, options: {cwd: path.resolve(globs.assetsBase())}}),
     copy({target: 'dist/statics'}),
   ));
 
