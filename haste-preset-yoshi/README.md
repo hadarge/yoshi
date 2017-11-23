@@ -1,29 +1,17 @@
-# Haste preset all
+# Haste preset yoshi
 
 A Haste preset that supports building all kinds of applications in wix.
 
 ## Features
+This preset mimics [Yoshi's](https://github.com/wix/yoshi#yoshi) behavior, every project that is driven by Yoshi can use this preset as a drop-in replacement.
 
-- Zero configuration required to start developing your app.
-- Webpack config that includes loaders for importing scss, icons, fonts and graphql.
-- Hot Module Replacement support in dev mode.
-- Production optimized bundles with minification and scope hoisted modules for faster execution.
-- Dashboard view while in dev mode to clearly see what is running.
+In order to configure the preset go to [Yoshi's configuration guide](https://github.com/wix/yoshi#configurations)
 
 ## Requirements
 
-- Node.js v6.10.0 or above
-- Yarn or NPM
+- Node.js v8.7.0 or above
 
 ## Installation
-
-With yarn:
-
-```sh
-$ yarn add --dev haste-cli haste-preset-yoshi
-```
-
-Or with npm:
 
 ```sh
 $ npm install --save-dev haste-cli haste-preset-yoshi
@@ -41,22 +29,30 @@ Edit your project's package.json and add commands for starting, building and tes
     "build": "haste build"
   },
   "haste": {
-    "preset": "haste-preset-yoshi"
+    "preset": "yoshi"
   }
 }
 ```
 
+Make sure your node version is above 8.7
+
+```
+// .nvmrc
+
+8.9.1
+```
+
 That's it, you can start working on your app by running one of the supported commands: `start`, `test` or `build`.
 
-## `npm start` or `yarn start`
+## `npm start`
 
-Runs the app in dev mode, watching for file changes and updating the app in response.
+Runs the app in dev mode, watching for file changes and updating the app in response. (also spawns `npm test` on watch mode)
 
-## `npm test` or `yarn test`
+## `npm test`
 
 Runs all of your app's tests with Jest. Supports a `--watch` flag to watch for file changes and run again.
 
-## `npm build` or `yarn build`
+## `npm build`
 
 Builds your app for production. It bundles your client side code, minifies it and optimizes the build for the best performance.
 
