@@ -123,6 +123,18 @@ module.exports.shouldRunStylelint = () => {
       .then(result => !!result);
 };
 
+module.exports.getMochaReporter = () => {
+  if (process.env.mocha_reporter) {
+    return process.env.mocha_reporter;
+  }
+
+  if (module.exports.inTeamCity()) {
+    return 'mocha-teamcity-reporter';
+  }
+
+  return 'progress';
+};
+
 module.exports.hasProtractorConfigFile = () => {
   return exists(path.resolve('protractor.conf.js'));
 };

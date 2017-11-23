@@ -3,7 +3,7 @@ const minimist = require('minimist');
 const LoggerPlugin = require('haste-plugin-wix-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
-const {inTeamCity, watchMode, hasProtractorConfigFile} = require('../utils');
+const {inTeamCity, watchMode, hasProtractorConfigFile, getMochaReporter} = require('../utils');
 const shouldWatch = watchMode();
 const {runCLI} = require('jest-cli');
 const merge = require('lodash/merge');
@@ -30,7 +30,7 @@ module.exports = async configure => {
     const options = {
       requireFiles: [require.resolve('../../config/test-setup')],
       timeout: 30000,
-      reporter: inTeamCity() ? 'mocha-env-reporter' : (process.env.mocha_reporter || 'progress'),
+      reporter: getMochaReporter(),
     };
 
     await run(
