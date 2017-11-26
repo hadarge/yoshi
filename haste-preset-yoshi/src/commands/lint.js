@@ -1,5 +1,5 @@
 const parseArgs = require('minimist');
-const LoggerPlugin = require('haste-plugin-wix-logger');
+const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
 const {isTypescriptProject, shouldRunStylelint} = require('../utils');
 

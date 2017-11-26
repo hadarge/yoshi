@@ -1,4 +1,4 @@
-const LoggerPlugin = require('haste-plugin-wix-logger');
+const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 
 module.exports = async configure => {
   const {run, tasks} = configure({

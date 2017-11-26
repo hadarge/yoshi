@@ -27,7 +27,7 @@ const config = {
 
   plugins: [
     new CaseSensitivePathsPlugin(),
-    require('../src/plugins/babelHappyPack')(projectConfig.isAngularProject()),
+    require('../src/webpack-plugins/babelHappyPack')(projectConfig.isAngularProject()),
     stylable.plugin()
   ],
 

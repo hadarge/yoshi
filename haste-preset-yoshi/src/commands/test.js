@@ -1,6 +1,6 @@
 const path = require('path');
 const minimist = require('minimist');
-const LoggerPlugin = require('haste-plugin-wix-logger');
+const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
 const {inTeamCity, watchMode, hasProtractorConfigFile, getMochaReporter} = require('../utils');

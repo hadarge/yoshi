@@ -1,7 +1,7 @@
 const path = require('path');
 const parseArgs = require('minimist');
 const crossSpawn = require('cross-spawn');
-const LoggerPlugin = require('haste-plugin-wix-logger');
+const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const projectConfig = require('../../config/project');
 const globs = require('../globs');
 const {
