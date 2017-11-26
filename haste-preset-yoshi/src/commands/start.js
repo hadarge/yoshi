@@ -55,7 +55,10 @@ module.exports = async configure => {
   await Promise.all([
     run(clean({pattern: `{dist,target}/*`})),
     run(wixUpdateNodeVersion()),
-    run({task: require.resolve('../tasks/migrate-to-scoped-packages/index')}),
+    run({
+      task: require.resolve('../tasks/migrate-to-scoped-packages/index'),
+      metadata: {title: 'scope-packages-migration'}}
+    ),
     run(wixDepCheck())
   ]);
 
