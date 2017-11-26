@@ -646,7 +646,7 @@ describe('Aggregator: Build', () => {
         .execute('build', [], insideTeamCity);
 
       expect(res.code).to.equal(0);
-      expect(res.stdout).to.contain(`Finished 'wix-fedops-build-report'`);
+      expect(res.stdout).to.contain(`Finished 'fedops-build-report'`);
     });
   });
 

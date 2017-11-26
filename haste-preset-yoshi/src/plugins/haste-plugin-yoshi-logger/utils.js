@@ -1,3 +1,5 @@
+const WIX_PREFIX_REGEX = /^wix-/;
+
 module.exports.format = time => time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
 
 module.exports.delta = start => {
@@ -23,5 +25,7 @@ module.exports.generateRunTitle = tasks => {
     // filter any "read"/"write" tasks that has no title
     .filter(task => task.metadata.title || ![READ, WRITE].includes(task.name))
     // try to use the title of a task if exist and default to the task name
-    .map(task => task.metadata.title || task.name).join(',');
+    .map(task => task.metadata.title || task.name)
+    .map(title => title.replace(WIX_PREFIX_REGEX, ''))
+    .join(',');
 };
