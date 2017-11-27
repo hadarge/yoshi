@@ -9,7 +9,7 @@ In order to configure the preset go to [Yoshi's configuration guide](https://git
 
 ## Requirements
 
-- Node.js v8.7.0 or above
+- Node.js v8.9.1 or above
 
 ## Installation
 
@@ -34,7 +34,7 @@ Edit your project's package.json and add commands for starting, building and tes
 }
 ```
 
-Make sure your node version is above 8.7
+Make sure your node version is above 8.9.1
 
 ```
 // .nvmrc
