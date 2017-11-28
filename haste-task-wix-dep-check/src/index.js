@@ -27,8 +27,8 @@ function warn(deps) {
 
 module.exports = ({cwd = process.cwd()}) => async () => {
   return depkeeper({cwd})
-    .rule('haste-preset-yoshi', {major: 1})
-    .rule('{haste-preset-yoshi,wix-style-react}', {major: 0, minor: 0, patch: 0})
+    .rule('yoshi', {major: 1, strategy: 'numeral'}) // TODO: strategy this option when it becomes default in depkeeper
+    .rule('{yoshi,wix-style-react}', {strategy: 'numeral'}) // TODO: strategy this option when it becomes default in depkeeper
     .checkRules()
     .then(([outdated1, outdated2]) => {
       if (outdated1.length) {
