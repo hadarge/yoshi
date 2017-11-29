@@ -201,7 +201,10 @@ describe('Aggregator: Start', () => {
           .setup({
             'node_modules/my-client-project/dist/statics/test.json': '{a: 1}',
             'src/index.js': 'var a = 1;',
-            'package.json': fx.packageJson({clientProjectName: 'my-client-project', servers: {cdn: {port: 3005, dir: 'dist/statics'}}})
+            'package.json': fx.packageJson({
+              clientProjectName: 'my-client-project',
+              servers: {cdn: {port: 3005, dir: 'dist/statics'}}
+            })
           })
           .spawn('start');
 
@@ -236,12 +239,12 @@ describe('Aggregator: Start', () => {
       describe('HTTPS', () => {
         it('should be able to create an https server', () => {
           child = test
-          .setup({
-            'src/assets/test.json': '{a: 1}',
-            'src/index.js': 'var a = 1;',
-            'package.json': fx.packageJson({servers: {cdn: {port: 3005, dir: 'dist/statics', ssl: true}}})
-          })
-          .spawn('start');
+            .setup({
+              'src/assets/test.json': '{a: 1}',
+              'src/index.js': 'var a = 1;',
+              'package.json': fx.packageJson({servers: {cdn: {port: 3005, dir: 'dist/statics', ssl: true}}})
+            })
+            .spawn('start');
 
           // This is because we're using self signed certificate - otherwise the request will fail
           const agent = new https.Agent({
@@ -439,6 +442,44 @@ describe('Aggregator: Start', () => {
         return checkServerLogCreated()
           .then(wait(1000))
           .then(() => expect(test.stdout).to.contains(`There are errors! Please check ./target/server.log`));
+      });
+    });
+
+    describe('Migrate Bower Artifactory', () => {
+      it('should migrate .bowerrc', () => {
+        const bowerrc = {
+          registry: {
+            search: ['https://bower.herokuapp.com', 'http://wix:wix@mirror.wixpress.com:3333'],
+            register: 'http://wix:wix@mirror.wixpress.com:3333',
+            publish: 'http://wix:wix@mirror.wixpress.com:3333'
+          }
+        };
+
+        child = test
+          .setup({
+            'package.json': fx.packageJson(),
+            '.bowerrc': JSON.stringify(bowerrc, null, 2),
+          })
+          .spawn('start', [], {MIGRATE_BOWER_ARTIFACTORY_TOOL: true});
+
+        return retryPromise({backoff: 100}, () => {
+          try {
+            const newBowerrc = JSON.parse(test.content('.bowerrc'));
+            expect(newBowerrc).to.eql({
+              registry: 'https://bower.dev.wixpress.com',
+              resolvers: [
+                'bower-art-resolver'
+              ]
+            });
+
+            const newPj = JSON.parse(test.content('package.json'));
+            expect(newPj.devDependencies['bower-art-resolver']).to.exist;
+            return Promise.resolve();
+          } catch (e) {
+            return Promise.reject(e);
+          }
+        });
+
       });
     });
   });

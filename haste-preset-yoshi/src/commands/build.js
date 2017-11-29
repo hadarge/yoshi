@@ -57,6 +57,10 @@ module.exports = async configure => {
       task: require.resolve('../tasks/migrate-to-scoped-packages/index'),
       metadata: {title: 'scope-packages-migration'}}
     ),
+    run({
+      task: require.resolve('../tasks/migrate-bower-artifactory/index'),
+      metadata: {title: 'migrate-bower-artifactory'}}
+    ),
     run(wixDepCheck())
   ]);
 

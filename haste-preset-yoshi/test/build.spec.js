@@ -1034,7 +1034,6 @@ describe('Aggregator: Build', () => {
     });
   });
 
-
   describe('symlinks', () => {
     it('should not resolve symlinks to their symlinked location', () => {
       const module1 = '.call(exports, "../node_modules/awesome-module1")';
@@ -1054,6 +1053,37 @@ describe('Aggregator: Build', () => {
       expect(res.code).to.equal(0);
       expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.contain(module1);
       expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.not.contain(module2);
+    });
+  });
+
+  describe('Migrate Bower Artifactory', () => {
+    it('should migrate .bowerrc', () => {
+      const bowerrc = {
+        registry: {
+          search: ['https://bower.herokuapp.com', 'http://wix:wix@mirror.wixpress.com:3333'],
+          register: 'http://wix:wix@mirror.wixpress.com:3333',
+          publish: 'http://wix:wix@mirror.wixpress.com:3333'
+        }
+      };
+
+      test
+        .setup({
+          'package.json': fx.packageJson(),
+          '.bowerrc': JSON.stringify(bowerrc, null, 2),
+        })
+        .execute('build', [], {MIGRATE_BOWER_ARTIFACTORY_TOOL: true});
+
+      const newBowerrc = JSON.parse(test.content('.bowerrc'));
+      const newPj = JSON.parse(test.content('package.json'));
+
+      expect(newBowerrc).to.eql({
+        registry: 'https://bower.dev.wixpress.com',
+        resolvers: [
+          'bower-art-resolver'
+        ]
+      });
+
+      expect(newPj.devDependencies['bower-art-resolver']).to.exist;
     });
   });
 
