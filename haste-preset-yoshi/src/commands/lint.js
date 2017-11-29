@@ -1,11 +1,16 @@
 const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
-const {isTypescriptProject, shouldRunStylelint} = require('../utils');
+const {isTypescriptProject, shouldRunStylelint, watchMode} = require('../utils');
 
+const shouldWatch = watchMode();
 const cliArgs = parseArgs(process.argv.slice(2));
 
 module.exports = async configure => {
+  if (shouldWatch) {
+    return;
+  }
+
   const {run, tasks} = configure({
     plugins: [
       new LoggerPlugin(),
