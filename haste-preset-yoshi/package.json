@@ -97,7 +97,7 @@
     "ts-node": "~3.3.0",
     "tslint-config-wix": "^1.0.30",
     "url-loader": "~0.5.9",
-    "webpack": "~3.2.0",
+    "webpack": "^3.8.1",
     "webpack-bundle-analyzer": "~2.8.3",
     "wix-tpa-style-loader": "~1.0.8",
     "wnpm-ci": "latest",
