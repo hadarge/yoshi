@@ -1,12 +1,11 @@
-'use strict';
-
 const {expect} = require('chai');
 const shmock = require('shmock');
 const stripAnsi = require('strip-ansi');
 const tp = require('test-phases');
-const deps = require('../src');
+const deps = require('../src/');
 
-describe('haste-check-deps', () => {
+
+describe('haste-task-wix-dep-check', () => {
   let test, task;
   const port = 3333;
   const npmServer = shmock(port);
@@ -24,15 +23,14 @@ describe('haste-check-deps', () => {
   after(() => npmServer.close());
 
   it('should show a warning when haste-preset-yoshi & wix-style-react is at least 1 patch version behind', () => {
-    // TODO: use more complex version, like installed - 1.5.2, latest - 1.6.0
     setupProject();
-    mockMeta('haste-preset-yoshi', ['1.0.0', '1.0.1']);
     mockMeta('wix-style-react', ['1.0.0', '1.0.2']);
+    mockMeta('haste-preset-yoshi', ['1.0.0', '1.0.1']);
 
     const message = [
       'WARNING: some dependencies are a bit behind:',
-      'haste-preset-yoshi@1.0.0 should be @1.0.1',
-      'wix-style-react@1.0.0 should be @1.0.2'
+      'wix-style-react@1.0.0 should be @1.0.2',
+      'haste-preset-yoshi@1.0.0 should be @1.0.1'
     ].join('\n');
 
     return task().then(warning =>
@@ -41,13 +39,13 @@ describe('haste-check-deps', () => {
 
   it('should show a warning when haste-preset-yoshi & wix-style-react is at least 1 version behind', () => {
     setupProject();
-    mockMeta('haste-preset-yoshi', ['1.0.0', '2.0.0']);
     mockMeta('wix-style-react', ['1.0.0', '1.1.0']);
+    mockMeta('haste-preset-yoshi', ['1.0.0', '2.0.0']);
 
     const message = [
       'WARNING: some dependencies are a bit behind:',
-      'haste-preset-yoshi@1.0.0 should be @2.0.0',
-      'wix-style-react@1.0.0 should be @1.1.0'
+      'wix-style-react@1.0.0 should be @1.1.0',
+      'haste-preset-yoshi@1.0.0 should be @2.0.0'
     ].join('\n');
 
     return task().then(warning =>
@@ -67,10 +65,23 @@ describe('haste-check-deps', () => {
       expect(stripAnsi(error)).to.equal(message));
   });
 
+  it('should throw an error when wix-style-react is 2 major versions behind', () => {
+    setupProject();
+    mockMeta('wix-style-react', ['1.0.0', '1.1.0', '2.0.0', '2.1.0', '3.0.0']);
+
+    const message = [
+      'ERROR: the following dependencies must be updated:',
+      'wix-style-react@1.0.0 must be at least @2.0.0'
+    ].join('\n');
+
+    return invertPromise(task())
+      .then(error => expect(stripAnsi(error)).to.equal(message));
+  });
+
   it('should show nothing if haste-preset-yoshi & wix-style-react is up to date', () => {
     setupProject();
-    mockMeta('haste-preset-yoshi', '1.0.0');
     mockMeta('wix-style-react', '1.0.0');
+    mockMeta('haste-preset-yoshi', '1.0.0');
 
     return task().then(message =>
       expect(message).to.be.undefined);
@@ -79,7 +90,7 @@ describe('haste-check-deps', () => {
   function setupProject() {
     return test.setup({
       '.npmrc': `registry=http://localhost:${port}/`,
-      'package.json': '{"devDependencies": {"haste-preset-yoshi": "1.0.0"}, "dependencies": {"wix-style-react": "1.0.0"}}',
+      'package.json': '{"dependencies": {"wix-style-react": "1.0.0"}, "devDependencies": {"haste-preset-yoshi": "1.0.0"}}',
       'node_modules/haste-preset-yoshi/package.json': '{"name": "haste-preset-yoshi", "version": "1.0.0"}',
       'node_modules/wix-style-react/package.json': '{"name": "wix-style-react", "version": "1.0.0"}'
     });

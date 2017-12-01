@@ -1,6 +1,22 @@
 const chalk = require('chalk');
 const depkeeper = require('depkeeper');
 
+module.exports = ({cwd = process.cwd()}) => async () => {
+  return depkeeper({cwd})
+    .rule('{haste-preset-yoshi,wix-style-react}', {major: 1})
+    .rule('{haste-preset-yoshi,wix-style-react}')
+    .checkRules()
+    .then(([outdated1, outdated2]) => {
+      if (outdated1.length) {
+        return fail(outdated1);
+      }
+
+      if (outdated2.length) {
+        return warn(outdated2);
+      }
+    });
+};
+
 function fail(deps) {
   const formatedDeps = deps
     .map(({name, version, minimal}) =>
@@ -24,19 +40,3 @@ function warn(deps) {
 
   return Promise.resolve(message);
 }
-
-module.exports = ({cwd = process.cwd()}) => async () => {
-  return depkeeper({cwd})
-    .rule('haste-preset-yoshi', {major: 1, strategy: 'numeral'}) // TODO: strategy this option when it becomes default in depkeeper
-    .rule('{haste-preset-yoshi,wix-style-react}', {strategy: 'numeral'}) // TODO: strategy this option when it becomes default in depkeeper
-    .checkRules()
-    .then(([outdated1, outdated2]) => {
-      if (outdated1.length) {
-        return fail(outdated1);
-      }
-
-      if (outdated2.length) {
-        return warn(outdated2);
-      }
-    });
-};

@@ -13,12 +13,12 @@
     "depkeeper": "~1.0.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "eslint": "^4.9.0",
-    "eslint-config-wix": "^1.1.16",
+    "chai": "~4.1.0",
+    "eslint": "~4.9.0",
+    "eslint-config-wix": "latest",
     "mocha": "~3.4.2",
-    "mocha-env-reporter": "~2.0.4",
-    "test-phases": "^1.0.18",
+    "mocha-env-reporter": "~2.0.0",
+    "test-phases": "latest",
     "shmock": "~0.8.0",
     "wnpm-ci": "latest"
   },
