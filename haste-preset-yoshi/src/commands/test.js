@@ -84,6 +84,7 @@ module.exports = async configure => {
 
     if (inTeamCity()) {
       config.testResultsProcessor = require.resolve('jest-teamcity-reporter');
+      process.argv.push('--teamcity');
     }
 
     return new Promise((resolve, reject) => {
