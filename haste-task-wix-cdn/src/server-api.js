@@ -31,7 +31,7 @@ function resourceTimingMiddleware() {
 }
 
 function httpsServer(app) {
-  const credentials = sslCredentials('../config/key.pem', '../config/cert.pem', '1234');
+  const credentials = sslCredentials('../assets/key.pem', '../assets/cert.pem', '1234');
   return https.createServer(credentials, app);
 }
 
