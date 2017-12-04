@@ -14,26 +14,36 @@ In order to configure the preset go to [Yoshi's configuration guide](https://git
 ## Installation
 
 ```sh
-$ npm install --save-dev haste-cli haste-preset-yoshi
+$ npm install --save-dev haste-preset-yoshi
 ```
 
 ## Quickstart
 
-Edit your project's package.json and add commands for starting, building and testing your application:
+Edit your project's package.json and add the yoshi preset to the haste config:
 
 ```json
 {
-  "scripts": {
-    "start": "haste start",
-    "test": "haste test",
-    "build": "haste build"
-  },
   "haste": {
     "preset": "yoshi"
   }
 }
 ```
 
+Configure `package.json` scripts,
+
+> The following is a only a sample usage:
+
+```js
+{
+"scripts": {
+    "start": "haste start",
+    "pretest": "haste lint && haste build",
+    "test": "haste test",
+    "build": ":",
+    "release": "haste release" // only needed if you publish to npm
+  }
+}
+```
 Make sure your node version is above 8.9.1
 
 ```
@@ -42,7 +52,7 @@ Make sure your node version is above 8.9.1
 8.9.1
 ```
 
-That's it, you can start working on your app by running one of the supported commands: `start`, `test` or `build`.
+That's it, you can start working on your app by running one of the supported commands:
 
 ## `npm start`
 
@@ -50,12 +60,8 @@ Runs the app in dev mode, watching for file changes and updating the app in resp
 
 ## `npm test`
 
-Runs all of your app's tests with Jest. Supports a `--watch` flag to watch for file changes and run again.
+Runs all of your app's tests.
 
 ## `npm build`
 
 Builds your app for production. It bundles your client side code, minifies it and optimizes the build for the best performance.
-
-## Configuration
-
-You can provide custom configuration for the preset adding a `haste` field in your `package.json` or by creating a `.hasterc` file.
