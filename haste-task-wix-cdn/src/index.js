@@ -18,33 +18,35 @@ module.exports = ({
   configuredEntry,
   defaultEntry,
 } = {host: 'localhost', port: '3000'}) => () => {
-  let middlewares = [];
-
-  if (webpackConfigPath) {
-    const getConfig = require(webpackConfigPath);
-    const webpackConfig = getConfig({debug: true, disableModuleConcatenation: true});
-    if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {
-      webpackConfig.entry = addHotEntries(webpackConfig.entry);
-      webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
-      webpackConfig.output.publicPath = publicPath;
-
-      const bundler = filterNoise(webpack(webpackConfig));
-
-      middlewares = [
-        webpackDevMiddleware(bundler, {quiet: true}),
-        webpackHotMiddleware(bundler, {log: null})
-      ];
-    }
-  }
-
-  const app = express();
-
-  decorate({app, middlewares, host, port, statics});
-
   return new Promise((resolve, reject) => {
+    let middlewares = [];
+
+    if (webpackConfigPath) {
+      const getConfig = require(webpackConfigPath);
+      const webpackConfig = getConfig({debug: true, disableModuleConcatenation: true});
+
+      if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {
+        webpackConfig.entry = addHotEntries(webpackConfig.entry);
+        webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+        webpackConfig.output.publicPath = publicPath;
+
+        const bundler = filterNoise(webpack(webpackConfig));
+
+        middlewares = [
+          webpackDevMiddleware(bundler, {quiet: true}),
+          webpackHotMiddleware(bundler, {log: null})
+        ];
+      }
+    }
+
+    const app = express();
+
+    decorate({app, middlewares, host, port, statics});
+
     const serverFactory = ssl ? httpsServer(app) : app;
+
     serverFactory.listen(port, host, err =>
-        err ? reject(err) : resolve());
+      err ? reject(err) : resolve());
   });
 };
 
