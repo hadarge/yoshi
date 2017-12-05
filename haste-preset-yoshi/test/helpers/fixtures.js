@@ -37,11 +37,7 @@ const fx = {
       'dist'
     ]
   }, options), null, 2),
-  tslint: () => JSON.stringify({
-    rules: {
-      radix: true
-    }
-  }, null, 2),
+  tslint: rules => JSON.stringify({rules}, null, 2),
   eslintrc: () => JSON.stringify({
     rules: {
       radix: 'error'

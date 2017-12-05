@@ -15,7 +15,7 @@ describe('Aggregator: Lint', () => {
           'app/a.ts': `parseInt("1", 10);`,
           'package.json': fx.packageJson(),
           'tsconfig.json': fx.tsconfig(),
-          'tslint.json': fx.tslint()
+          'tslint.json': fx.tslint({radix: true})
         })
         .execute('lint');
 
@@ -28,12 +28,27 @@ describe('Aggregator: Lint', () => {
           'app/a.ts': `parseInt("1");`,
           'package.json': fx.packageJson(),
           'tsconfig.json': fx.tsconfig(),
-          'tslint.json': fx.tslint()
+          'tslint.json': fx.tslint({radix: true})
         })
         .execute('lint');
 
       expect(res.code).to.equal(1);
       expect(res.stdout).to.contain('Missing radix parameter');
+    });
+
+    it('should fix linting errors and exit with exit code 0 if executed with --fix flag & there are only fixable errors', () => {
+      const res = test
+        .setup({
+          'app/a.ts': `const a = "1"`,
+          'package.json': fx.packageJson(),
+          'tsconfig.json': fx.tsconfig(),
+          'tslint.json': fx.tslint({semicolon: [true, 'always']})
+        })
+        .execute('lint', ['--fix']);
+
+
+      expect(res.code).to.equal(0);
+      expect(test.content('app/a.ts')).to.equal(`const a = "1";`);
     });
   });
 

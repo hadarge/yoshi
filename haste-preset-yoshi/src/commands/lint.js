@@ -29,7 +29,7 @@ module.exports = async configure => {
   if (isTypescriptProject()) {
     await run(
       read({pattern: [`${globs.base()}/**/*.ts{,x}`]}),
-      tslint({fix: false, formatter: 'prose'})
+      tslint({options: {fix: cliArgs.fix, formatter: 'prose'}})
     );
   } else {
     await run(
