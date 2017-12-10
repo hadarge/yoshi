@@ -89,11 +89,7 @@ module.exports = async configure => {
     const jestCliOptions = [`--config=${JSON.stringify(config)}`, shouldWatch ? '--watch' : ''];
 
     return new Promise((resolve, reject) => {
-      const jest = crossSpawn(require.resolve('jest-cli/bin/jest'), jestCliOptions, {
-        stdio: 'inherit',
-        env: process.env,
-        cwd: process.cwd()
-      });
+      const jest = crossSpawn(require.resolve('jest-cli/bin/jest'), jestCliOptions, {stdio: 'inherit'});
 
       jest.on('exit', code => {
         code === 0 ? resolve() : reject(`jest failed with status code "${code}"`);
