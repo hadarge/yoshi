@@ -5,8 +5,8 @@ const globs = require('../globs');
 const projectConfig = require('../../config/project');
 const {inTeamCity, watchMode, hasProtractorConfigFile, getMochaReporter} = require('../utils');
 const shouldWatch = watchMode();
-const {runCLI} = require('jest-cli');
 const merge = require('lodash/merge');
+const crossSpawn = require('cross-spawn');
 
 const cliArgs = minimist(process.argv.slice(2));
 
@@ -79,17 +79,24 @@ module.exports = async configure => {
     const config = merge(jestProjectConfig, {
       transform: {
         '\\.jsx?$': require.resolve('../../config/jest-transformer')
-      }
+      },
     });
 
     if (inTeamCity()) {
       config.testResultsProcessor = require.resolve('jest-teamcity-reporter');
-      process.argv.push('--teamcity');
     }
 
+    const jestCliOptions = [`--config=${JSON.stringify(config)}`, shouldWatch ? '--watch' : ''];
+
     return new Promise((resolve, reject) => {
-      runCLI({watch: shouldWatch, config}, [process.cwd()], result => {
-        result.success ? resolve() : reject('jest failed');
+      const jest = crossSpawn(require.resolve('jest-cli/bin/jest'), jestCliOptions, {
+        stdio: 'inherit',
+        env: process.env,
+        cwd: process.cwd()
+      });
+
+      jest.on('exit', code => {
+        code === 0 ? resolve() : reject(`jest failed with status code "${code}"`);
       });
     });
   }
