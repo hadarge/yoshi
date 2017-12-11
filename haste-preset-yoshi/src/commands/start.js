@@ -15,6 +15,7 @@ const {debounce} = require('lodash');
 
 const addJsSuffix = suffix('.js');
 const cliArgs = parseArgs(process.argv.slice(2));
+const shouldRunTests = cliArgs.test !== false;
 const entryPoint = addJsSuffix(cliArgs['entry-point'] || 'index.js');
 
 module.exports = async configure => {
@@ -116,13 +117,15 @@ module.exports = async configure => {
     ),
   ]);
 
-  crossSpawn('npm', ['test', '--silent'], {
-    stdio: 'inherit',
-    env: {
-      ...process.env,
-      WIX_NODE_BUILD_WATCH_MODE: 'true'
-    }
-  });
+  if (shouldRunTests) {
+    crossSpawn('npm', ['test', '--silent'], {
+      stdio: 'inherit',
+      env: {
+        ...process.env,
+        WIX_NODE_BUILD_WATCH_MODE: 'true'
+      }
+    });
+  }
 
   watch([
     `${globs.base()}/assets/**/*`,
