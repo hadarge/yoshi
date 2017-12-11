@@ -87,7 +87,7 @@ module.exports.filterNoise = stats => {
 };
 
 module.exports.shouldRunSass = () => {
-  return glob.sync(`${globs.base()}/**/*.sass`).filter(file => path.basename(file)[0] !== '_').length > 0;
+  return glob.sync(`${globs.base()}/**/*.scss`).filter(file => path.basename(file)[0] !== '_').length > 0;
 };
 
 module.exports.writeFile = (targetFileName, data) => {

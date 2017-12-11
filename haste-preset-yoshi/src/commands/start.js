@@ -150,7 +150,7 @@ module.exports = async configure => {
   ));
 
   function transpileCss() {
-    if (shouldRunSass) {
+    if (shouldRunSass()) {
       watch(`${globs.base()}/**/*.scss`, changed => run(
         read({pattern: changed}),
         sass({
@@ -160,7 +160,7 @@ module.exports = async configure => {
       ));
     }
 
-    if (shouldRunLess) {
+    if (shouldRunLess()) {
       watch(`${globs.base()}/**/*.less`, changed => run(
         read({pattern: changed}),
         less({
@@ -171,14 +171,14 @@ module.exports = async configure => {
     }
 
     return [
-      !shouldRunSass ? null : run(
+      !shouldRunSass() ? null : run(
         read({pattern: `${globs.base()}/**/*.scss`}),
         sass({
           includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
         }),
         write({target: 'dist'}),
       ),
-      !shouldRunLess ? null : run(
+      !shouldRunLess() ? null : run(
         read({pattern: `${globs.base()}/**/*.less`}),
         less({
           paths: ['.', 'node_modules'],
