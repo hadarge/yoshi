@@ -2,11 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const mkdirp = require('mkdirp');
+const chokidar = require('chokidar');
 const {mergeWith} = require('lodash/fp');
 const cosmiconfig = require('cosmiconfig');
 const project = require('../config/project');
 const globs = require('./globs');
-const chokidar = require('chokidar');
 
 const readDir = module.exports.readDir = patterns =>
   [].concat(patterns).reduce((acc, pattern) =>
