@@ -460,7 +460,7 @@ describe('Aggregator: Start', () => {
             'package.json': fx.packageJson(),
             '.bowerrc': JSON.stringify(bowerrc, null, 2),
           })
-          .spawn('start');
+          .spawn('start', [], {MIGRATE_BOWER_ARTIFACTORY_TOOL: true});
 
         return retryPromise({backoff: 100}, () => {
           try {

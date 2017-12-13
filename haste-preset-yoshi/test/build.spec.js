@@ -1071,7 +1071,7 @@ describe('Aggregator: Build', () => {
           'package.json': fx.packageJson(),
           '.bowerrc': JSON.stringify(bowerrc, null, 2),
         })
-        .execute('build');
+        .execute('build', [], {MIGRATE_BOWER_ARTIFACTORY_TOOL: true});
 
       const newBowerrc = JSON.parse(test.content('.bowerrc'));
       const newPj = JSON.parse(test.content('package.json'));
