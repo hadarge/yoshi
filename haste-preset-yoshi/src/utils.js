@@ -6,6 +6,7 @@ const {mergeWith} = require('lodash/fp');
 const cosmiconfig = require('cosmiconfig');
 const project = require('../config/project');
 const globs = require('./globs');
+const chokidar = require('chokidar');
 
 const readDir = module.exports.readDir = patterns =>
   [].concat(patterns).reduce((acc, pattern) =>
@@ -93,6 +94,13 @@ module.exports.shouldRunSass = () => {
 module.exports.writeFile = (targetFileName, data) => {
   mkdirp.sync(path.dirname(targetFileName));
   fs.writeFileSync(path.resolve(targetFileName), data);
+};
+
+module.exports.watch = ({pattern, cwd = process.cwd(), ignoreInitial = true, ...options}, callback) => {
+  const watcher = chokidar.watch(pattern, {cwd, ignoreInitial, ...options})
+    .on('all', (event, path) => callback(path));
+
+  return watcher;
 };
 
 module.exports.isSingleEntry = entry => typeof entry === 'string' || Array.isArray(entry);
