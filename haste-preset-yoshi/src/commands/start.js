@@ -9,7 +9,8 @@ const {
   isBabelProject,
   shouldRunLess,
   shouldRunSass,
-  suffix
+  suffix,
+  watch,
 } = require('../utils');
 const {debounce} = require('lodash');
 
@@ -17,9 +18,8 @@ const addJsSuffix = suffix('.js');
 const cliArgs = parseArgs(process.argv.slice(2));
 const shouldRunTests = cliArgs.test !== false;
 const entryPoint = addJsSuffix(cliArgs['entry-point'] || 'index.js');
-
 module.exports = async configure => {
-  const {run, watch, tasks} = configure({
+  const {run, tasks} = configure({
     persistent: true,
     plugins: [
       new LoggerPlugin(),
@@ -127,34 +127,41 @@ module.exports = async configure => {
     });
   }
 
-  watch([
-    `${globs.base()}/assets/**/*`,
-    `${globs.base()}/**/*.{ejs,html,vm}`,
-    `${globs.base()}/**/*.{css,json,d.ts}`,
-  ], changed => run(
+  watch({
+    pattern: [
+      `${globs.base()}/assets/**/*`,
+      `${globs.base()}/**/*.{ejs,html,vm}`,
+      `${globs.base()}/**/*.{css,json,d.ts}`,
+    ]
+  }, changed => run(
     read({pattern: changed}),
     copy({target: 'dist'}),
   ));
 
-  watch([
-    `${globs.assetsLegacyBase()}/assets/**/*`,
-    `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
-  ], changed => run(
+  watch({
+    pattern: [
+      `${globs.assetsLegacyBase()}/assets/**/*`,
+      `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
+    ]
+  }, changed => run(
     read({pattern: changed}),
     copy({target: 'dist/statics'}),
   ));
 
-  watch([
-    `assets/**/*`,
-    `**/*.{ejs,html,vm}`,
-  ], changed => run(
+  watch({
+    pattern: [
+      `assets/**/*`,
+      `**/*.{ejs,html,vm}`,
+    ],
+    cwd: path.resolve(globs.assetsBase()),
+  }, changed => run(
     read({pattern: changed, options: {cwd: path.resolve(globs.assetsBase())}}),
     copy({target: 'dist/statics'}),
   ));
 
   function transpileCss() {
     if (shouldRunSass()) {
-      watch(`${globs.base()}/**/*.scss`, changed => run(
+      watch({pattern: `${globs.base()}/**/*.scss`}, changed => run(
         read({pattern: changed}),
         sass({
           includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
@@ -164,7 +171,7 @@ module.exports = async configure => {
     }
 
     if (shouldRunLess()) {
-      watch(`${globs.base()}/**/*.less`, changed => run(
+      watch({pattern: `${globs.base()}/**/*.less`}, changed => run(
         read({pattern: changed}),
         less({
           paths: ['.', 'node_modules'],
@@ -196,11 +203,11 @@ module.exports = async configure => {
       await run(typescript({watch: true, project: 'tsconfig.json', rootDir: '.', outDir: './dist/'}));
       await appServer();
 
-      return watch([path.join('dist', '**', '*.js'), 'index.js'], debounce(appServer, 500, {maxWait: 1000}));
+      return watch({pattern: [path.join('dist', '**', '*.js'), 'index.js']}, debounce(appServer, 500, {maxWait: 1000}));
     }
 
     if (isBabelProject()) {
-      watch([path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], async changed => {
+      watch({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}, async changed => {
         await run(
           read({pattern: changed}),
           babel(),
@@ -219,7 +226,7 @@ module.exports = async configure => {
       return appServer();
     }
 
-    watch(globs.babel(), appServer);
+    watch({pattern: globs.babel()}, appServer);
 
     return appServer();
   }

@@ -3,7 +3,7 @@ const minimist = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
-const {inTeamCity, watchMode, hasProtractorConfigFile, getMochaReporter} = require('../utils');
+const {inTeamCity, watchMode, hasProtractorConfigFile, getMochaReporter, watch} = require('../utils');
 const merge = require('lodash/merge');
 const crossSpawn = require('cross-spawn');
 
@@ -12,7 +12,7 @@ const cliArgs = minimist(process.argv.slice(2));
 const shouldWatch = cliArgs.watch || watchMode();
 
 module.exports = async configure => {
-  const {run, tasks, watch} = configure({
+  const {run, tasks} = configure({
     plugins: [
       new LoggerPlugin(),
     ],
@@ -40,7 +40,7 @@ module.exports = async configure => {
     );
 
     if (shouldWatch) {
-      watch([globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js'], () => run(
+      watch({pattern: [globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js']}, () => run(
         read({pattern: globs.specs()}),
         mocha(options),
       ));
@@ -67,7 +67,7 @@ module.exports = async configure => {
     );
 
     if (shouldWatch) {
-      watch([globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js'], () => run(
+      watch({pattern: [globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js']}, () => run(
         read({pattern: globs.specs()}),
         jasmine(options),
       ));
