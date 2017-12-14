@@ -2,6 +2,7 @@
 
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
+const hooks = require('./helpers/hooks');
 const expect = require('chai').expect;
 const _ = require('lodash');
 const {getMockedCI} = require('yoshi-utils').utilsTestkit;
@@ -352,6 +353,31 @@ describe('Loaders', () => {
       expect(test.content('dist/statics/app.css')).to.contain('-webkit-appearance');
       expect(test.content('dist/statics/app.css')).to.not.contain('unquote("{{color-1}}")');
     });
+  });
+
+  describe('Stylable', () => {
+    afterEach(() => test.teardown());
+
+    describe('client', () => {
+      beforeEach(() => setupAndBuild());
+
+      it('should run stylable loader over imported .st.css files', () => {
+        expect(test.content('dist/statics/app.bundle.js')).to.match(/.Test.*some-rule {\s*?color: red;\s*?}/);
+      });
+    });
+
+    function setupAndBuild(config) {
+      test
+        .setup({
+          'src/client.js': `require('./some-css.st.css');`,
+          'src/server.js': `require('./some-css.st.css');`,
+          'src/some-css.st.css': `/* comment */
+                                  @namespace "Test";
+                                  .some-rule { color: red; }`,
+          'package.json': fx.packageJson(config || {})
+        }, [hooks.installDependency('stylable@4')])
+        .execute('build');
+    }
   });
 
   describe('Less', () => {
