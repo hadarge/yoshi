@@ -137,14 +137,14 @@ module.exports = async configure => {
   function transpileCss() {
     return [
       !shouldRunSass() ? null : run(
-        read({pattern: `${globs.base()}/**/*.scss`}),
+        read({pattern: globs.sass()}),
         sass({
           includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
         }),
         write({target: 'dist'}),
       ),
       !shouldRunLess() ? null : run(
-        read({pattern: `${globs.base()}/**/*.less`}),
+        read({pattern: globs.less()}),
         less({
           paths: ['.', 'node_modules'],
         }),
