@@ -123,9 +123,13 @@ module.exports = async configure => {
       statics: projectConfig.clientFilesPath(),
     }));
 
+    // Only install specific version of chromedriver in CI, install latest locally
+    const webdriverManagerOptions = !!process.env.IS_BUILD_AGENT ? // eslint-disable-line no-extra-boolean-cast
+      {'versions.chrome': '2.29'} : {};
+
     await run(
       protractor({
-        webdriverManagerOptions: {'versions.chrome': '2.29', gecko: 'false'},
+        webdriverManagerOptions,
         configPath: require.resolve('../../config/protractor.conf.js')
       })
     );
