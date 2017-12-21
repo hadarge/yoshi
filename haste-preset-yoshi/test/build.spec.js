@@ -637,19 +637,6 @@ describe('Aggregator: Build', () => {
     });
   });
 
-  describe('Fedops bundle report', () => {
-    it('should log to console', () => {
-      const res = test
-        .setup({
-          'package.json': fx.packageJson(),
-        })
-        .execute('build', [], insideTeamCity);
-
-      expect(res.code).to.equal(0);
-      expect(res.stdout).to.contain(`Finished 'fedops-build-report'`);
-    });
-  });
-
   describe('Bundle output with library support', () => {
     it('should generate a bundle with umd library support', () => {
       const res = test

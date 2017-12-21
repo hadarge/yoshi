@@ -13,7 +13,6 @@ const {
   isTypescriptProject,
   isBabelProject,
   shouldRunWebpack,
-  inTeamCity,
   shouldRunLess,
   shouldRunSass,
 } = require('../utils');
@@ -46,7 +45,6 @@ module.exports = async configure => {
     wixPetriSpecs,
     wixDepCheck,
     wixUpdateNodeVersion,
-    wixFedopsBuildReport,
     wixMavenStatics,
   } = tasks;
 
@@ -105,10 +103,6 @@ module.exports = async configure => {
       })
     ),
   ]);
-
-  if (inTeamCity()) {
-    await run(wixFedopsBuildReport());
-  }
 
   function bundle() {
     const configPath = require.resolve('../../config/webpack.config.client');

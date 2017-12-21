@@ -56,7 +56,6 @@
     "haste-task-wix-app-server": "~1.0.0",
     "haste-task-wix-cdn": "~1.0.0",
     "haste-task-wix-dep-check": "~1.0.0",
-    "haste-task-wix-fedops-build-report": "~1.0.0",
     "haste-task-wix-maven-statics": "~1.0.0",
     "haste-task-wix-petri-specs": "~1.0.0",
     "haste-task-wix-update-node-version": "~1.0.0",
