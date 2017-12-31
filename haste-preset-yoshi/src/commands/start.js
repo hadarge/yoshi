@@ -106,7 +106,8 @@ module.exports = async configure => {
       statics: projectConfig.clientFilesPath(),
       webpackConfigPath: require.resolve('../../config/webpack.config.client'),
       configuredEntry: projectConfig.entry(),
-      defaultEntry: projectConfig.defaultEntry()
+      defaultEntry: projectConfig.defaultEntry(),
+      hmr: projectConfig.hmr(),
     })),
     run(wixPetriSpecs({config: projectConfig.petriSpecsConfig()})),
     run(

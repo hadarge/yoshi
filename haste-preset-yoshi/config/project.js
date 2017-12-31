@@ -24,6 +24,7 @@ module.exports = {
     node: () => getConfig('specs.node'),
     browser: () => getConfig('specs.browser')
   },
+  hmr: () => getConfig('hmr', true),
   exports: () => getConfig('exports'),
   clientProjectName: () => getConfig('clientProjectName'),
   clientFilesPath: () => {

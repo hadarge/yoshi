@@ -11,13 +11,14 @@ const {shouldRunWebpack, filterNoise} = require('./utils');
 module.exports = ({
   port,
   ssl,
+  hmr,
   host,
   publicPath,
   statics,
   webpackConfigPath,
   configuredEntry,
   defaultEntry,
-} = {host: 'localhost', port: '3000'}) => () => {
+} = {host: 'localhost', port: '3000', hmr: true}) => () => {
   return new Promise((resolve, reject) => {
     let middlewares = [];
 
@@ -26,15 +27,18 @@ module.exports = ({
       const webpackConfig = getConfig({debug: true, disableModuleConcatenation: true});
 
       if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {
-        webpackConfig.entry = addHotEntries(webpackConfig.entry);
-        webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+        if (hmr) {
+          webpackConfig.entry = addHotEntries(webpackConfig.entry);
+          webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+        }
+
         webpackConfig.output.publicPath = publicPath;
 
         const bundler = filterNoise(webpack(webpackConfig));
 
         middlewares = [
           webpackDevMiddleware(bundler, {quiet: true}),
-          webpackHotMiddleware(bundler, {log: null})
+          ...hmr ? [webpackHotMiddleware(bundler, {log: null})] : []
         ];
       }
     }
