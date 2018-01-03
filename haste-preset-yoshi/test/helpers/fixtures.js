@@ -6,6 +6,7 @@ const fx = {
     name: 'a',
     version: '1.0.4',
     yoshi: yoshiConfig,
+    migrateToScopedPackages: false,
     scripts: {
       build: 'echo npm-run-build',
       test: 'echo Testing with Mocha'

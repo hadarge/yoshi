@@ -115,15 +115,15 @@ module.exports.watchMode = value => {
 module.exports.inTeamCity = () =>
   process.env.BUILD_NUMBER || process.env.TEAMCITY_VERSION;
 
+module.exports.inCi = () =>
+  module.exports.inTeamCity() || process.env.CI;
+
 module.exports.isProduction = () => (process.env.NODE_ENV || '').toLowerCase() === 'production';
 
 module.exports.shouldRunWebpack = webpackConfig => {
   const defaultEntryPath = path.join(webpackConfig.context, project.defaultEntry());
   return project.entry() || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
 };
-
-module.exports.migrateToScopedPackages = () =>
-  process.env.MIGRATE_TO_SCOPED_PACKAGES === 'true';
 
 module.exports.shouldRunStylelint = () => {
   return cosmiconfig('stylelint')
