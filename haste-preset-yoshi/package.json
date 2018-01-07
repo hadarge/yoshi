@@ -114,8 +114,9 @@
     "chai": "^3.5.0",
     "haste-cli": "~0.1.7",
     "identity-obj-proxy": "~3.0.0",
-    "node-fetch": "^1.7.3",
+    "minimatch": "~3.0.4",
     "mocha-env-reporter": "~2.0.4",
+    "node-fetch": "^1.7.3",
     "ps-tree": "^1.1.0",
     "retry-promise": "^1.0.0",
     "typescript": "^2.6.1"

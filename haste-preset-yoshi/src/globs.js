@@ -13,7 +13,7 @@ module.exports = {
   assetsLegacyBase: () => assetsLegacyBase,
   statics: () => statics,
   babel: list => [path.join(list || base, '**', '*.js{,x}'), 'index.js'],
-  specs: () => `${base}/**/*.spec.+(js|ts){,x}`,
+  specs: () => `${base}/**/*.+(spec|it).+(js|ts){,x}`,
   e2e: () => `${test}/**/*.e2e.{js,ts}`,
   singleModule: {
     clientDist: () => statics
