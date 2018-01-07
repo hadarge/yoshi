@@ -1074,6 +1074,44 @@ describe('Aggregator: Build', () => {
     });
   });
 
+  describe('externalize relative lodash (lodash/map -> lodash.map)', function () {
+    this.timeout(30000);
+
+    it('should be disabled when features.externalizeRelativeLodash = false', () => {
+      const res = test
+        .setup({
+          'src/client.js': `require('lodash/map')`,
+          'package.json': fx.packageJson({
+            features: {
+              externalizeRelativeLodash: false
+            },
+            externals: ['lodash/map']
+          })
+        }, [hooks.installDependency('lodash')])
+        .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain(').map');
+    });
+
+    it('should be enabled when features.externalizeRelativeLodash = true', () => {
+      const res = test
+        .setup({
+          'src/client.js': `require('lodash/map')`,
+          'package.json': fx.packageJson({
+            features: {
+              externalizeRelativeLodash: true
+            },
+            externals: ['lodash']
+          })
+        }, [hooks.installDependency('lodash')])
+        .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/statics/app.bundle.js')).to.contain(').map');
+    });
+  });
+
   function checkServerIsServing({backoff = 100, max = 100, port = fx.defaultServerPort(), file = ''} = {}) {
     return retryPromise({backoff, max}, () => fetch(`http://localhost:${port}/${file}`)
       .then(res => res.text()));

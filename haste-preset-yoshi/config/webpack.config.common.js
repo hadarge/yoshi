@@ -3,7 +3,6 @@ const path = require('path');
 const context = path.resolve('./src');
 const projectConfig = require('./project');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-
 const stylable = require('../src/loaders/stylable');
 
 const config = {
@@ -33,6 +32,7 @@ const config = {
 
   module: {
     rules: [
+      ...projectConfig.features().externalizeRelativeLodash ? [require('../src/loaders/externalize-relative-lodash')()] : [],
       require('../src/loaders/babel')(),
       require('../src/loaders/typescript')(projectConfig.isAngularProject()),
       require('../src/loaders/graphql')(),

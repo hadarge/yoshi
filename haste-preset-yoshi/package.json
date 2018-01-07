@@ -9,6 +9,7 @@
     "release": "wnpm-release --no-shrinkwrap"
   },
   "dependencies": {
+    "@wix/externalize-relative-module-loader": "~1.0.0",
     "autoprefixer": "~7.1.2",
     "babel-jest": "~20.0.3",
     "babel-loader": "~7.1.1",
