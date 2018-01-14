@@ -1,4 +1,5 @@
 const path = require('path');
+const {createRunner} = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const parseArgs = require('minimist');
 const globs = require('../globs');
@@ -17,28 +18,23 @@ const {
   shouldRunSass,
 } = require('../utils');
 
+const runner = createRunner({
+  logger: new LoggerPlugin()
+});
+
 const shouldWatch = watchMode();
 const cliArgs = parseArgs(process.argv.slice(2));
 
-module.exports = async configure => {
+module.exports = runner.command(async tasks => {
   if (shouldWatch) {
     return;
   }
 
-  const {run, tasks} = configure({
-    plugins: [
-      new LoggerPlugin(),
-    ],
-    persistent: !!cliArgs.analyze,
-  });
-
   const {
     less,
     clean,
-    read,
     copy,
     babel,
-    write,
     sass,
     webpack,
     typescript,
@@ -48,60 +44,43 @@ module.exports = async configure => {
     wixMavenStatics,
   } = tasks;
 
+  const migrateScopePackages = tasks[require.resolve('../tasks/migrate-to-scoped-packages/index')];
+  const migrateBowerArtifactory = tasks[require.resolve('../tasks/migrate-bower-artifactory/index')];
+
   await Promise.all([
-    run(clean({pattern: `{dist,target}/*`})),
-    run(wixUpdateNodeVersion()),
-    run({
-      task: require.resolve('../tasks/migrate-to-scoped-packages/index'),
-      metadata: {title: 'scope-packages-migration'}}
-    ),
-    run({
-      task: require.resolve('../tasks/migrate-bower-artifactory/index'),
-      metadata: {title: 'migrate-bower-artifactory'}}
-    ),
-    run(wixDepCheck())
+    clean({pattern: `{dist,target}/*`}),
+    wixUpdateNodeVersion(),
+    migrateScopePackages({}, {title: 'scope-packages-migration'}),
+    migrateBowerArtifactory({}, {title: 'migrate-bower-artifactory'}),
+    wixDepCheck()
   ]);
 
   await Promise.all([
     transpileJavascript(),
     ...transpileCss(),
-    run(
-      read({
-        pattern: [
-          `${globs.base()}/assets/**/*`,
-          `${globs.base()}/**/*.{ejs,html,vm}`,
-          `${globs.base()}/**/*.{css,json,d.ts}`,
-        ]
-      }),
-      copy({target: 'dist'}, {title: 'copy-server-assets'}),
-    ),
-    run(
-      read({
-        pattern: [
-          `${globs.assetsLegacyBase()}/assets/**/*`,
-          `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
-        ]
-      }),
-      copy({target: 'dist/statics'}, {title: 'copy-static-assets-legacy'}),
-    ),
-    run(
-      read({
-        pattern: [
-          `assets/**/*`,
-          `**/*.{ejs,html,vm}`,
-        ],
-        options: {cwd: path.resolve(globs.assetsBase())}
-      }),
-      copy({target: 'dist/statics'}, {title: 'copy-static-assets'}),
-    ),
+    copy({pattern: [
+      `${globs.base()}/assets/**/*`,
+      `${globs.base()}/**/*.{ejs,html,vm}`,
+      `${globs.base()}/**/*.{css,json,d.ts}`,
+    ], target: 'dist'}, {title: 'copy-server-assets'}),
+    copy({pattern: [
+      `${globs.assetsLegacyBase()}/assets/**/*`,
+      `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
+    ], target: 'dist/statics'}, {title: 'copy-static-assets-legacy'}),
+    copy({
+      pattern: [
+        `assets/**/*`,
+        `**/*.{ejs,html,vm}`,
+      ],
+      source: globs.assetsBase(),
+      target: 'dist/statics'
+    }, {title: 'copy-static-assets'}),
     bundle(),
-    run(wixPetriSpecs({config: petriSpecsConfig()})),
-    run(
-      wixMavenStatics({
-        clientProjectName: clientProjectName(),
-        staticsDir: clientFilesPath()
-      })
-    ),
+    wixPetriSpecs({config: petriSpecsConfig()}),
+    wixMavenStatics({
+      clientProjectName: clientProjectName(),
+      staticsDir: clientFilesPath()
+    })
   ]);
 
   function bundle() {
@@ -116,12 +95,8 @@ module.exports = async configure => {
 
     if (shouldRunWebpack(webpackConfig)) {
       return Promise.all([
-        run(
-          webpack({...defaultOptions, configParams: {debug: false, analyze: cliArgs.analyze}}, {title: 'webpack-production'})
-        ),
-        run(
-          webpack({...defaultOptions, configParams: {debug: true}}, {title: 'webpack-development'})
-        ),
+        webpack({...defaultOptions, configParams: {debug: false, analyze: cliArgs.analyze}}, {title: 'webpack-production'}),
+        webpack({...defaultOptions, configParams: {debug: true}}, {title: 'webpack-development'})
       ]);
     }
 
@@ -130,38 +105,30 @@ module.exports = async configure => {
 
   function transpileCss() {
     return [
-      !shouldRunSass() ? null : run(
-        read({pattern: globs.sass()}),
+      !shouldRunSass() ? null :
         sass({
-          includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
+          pattern: globs.sass(),
+          target: 'dist',
+          options: {includePaths: ['node_modules', 'node_modules/compass-mixins/lib']}
         }),
-        write({target: 'dist'}),
-      ),
-      !shouldRunLess() ? null : run(
-        read({pattern: globs.less()}),
+      !shouldRunLess() ? null :
         less({
-          paths: ['.', 'node_modules'],
+          pattern: globs.less(),
+          target: 'dist',
+          options: {paths: ['.', 'node_modules']},
         }),
-        write({target: 'dist'}),
-      )
     ].filter(a => a);
   }
 
   function transpileJavascript() {
     if (isTypescriptProject() && runIndividualTranspiler()) {
-      return run(
-        typescript({project: 'tsconfig.json', rootDir: '.', outDir: './dist/'})
-      );
+      return typescript({project: 'tsconfig.json', rootDir: '.', outDir: './dist/'});
     }
 
     if (isBabelProject() && runIndividualTranspiler()) {
-      return run(
-        read({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}),
-        babel(),
-        write({target: 'dist'}),
-      );
+      return babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist'});
     }
 
     return Promise.resolve();
   }
-};
+}, {persistent: !!cliArgs.analyze});

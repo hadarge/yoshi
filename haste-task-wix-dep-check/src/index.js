@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const depkeeper = require('depkeeper');
 
-module.exports = ({cwd = process.cwd()}) => async () => {
+module.exports = ({cwd = process.cwd()} = {}) => {
   return depkeeper({cwd})
     .rule('{haste-preset-yoshi,wix-style-react}', {major: 1})
     .rule('{haste-preset-yoshi,wix-style-react}')

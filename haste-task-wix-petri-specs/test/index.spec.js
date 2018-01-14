@@ -32,7 +32,7 @@ describe('haste-task-wix-petri-specs', () => {
       base: tempDir,
       destDir,
       config: {},
-    })();
+    });
 
     const staticDirContent = fs.readdirSync(path.join(tempDir, destDir));
     expect(staticDirContent).to.contain(destFile);
@@ -56,7 +56,7 @@ describe('haste-task-wix-petri-specs', () => {
         scopes: ['alt-scope', 'alt-scope2'],
         onlyForLoggedInUsers: false
       },
-    })();
+    });
 
     const staticDirContent = fs.readdirSync(path.join(tempDir, destDir));
     expect(staticDirContent).to.contain(destFile);
@@ -81,7 +81,7 @@ describe('haste-task-wix-petri-specs', () => {
         base: tempDir,
         destDir,
         config: {},
-      })();
+      });
 
       throw new Error('TestFailed');
     } catch (err) {

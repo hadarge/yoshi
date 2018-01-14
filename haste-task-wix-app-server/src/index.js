@@ -15,7 +15,7 @@ module.exports = ({
   base = process.cwd(),
   entryPoint = 'index.js',
   manualRestart = false
-} = {}) => async () => {
+} = {}) => {
   function writeToServerLog(data) {
     fs.appendFile(path.join(base, 'target', 'server.log'), data, () => {});
   }

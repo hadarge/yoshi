@@ -1,5 +1,3 @@
 const {migrate} = require('migrate-bower-artifactory');
 
-module.exports = () => {
-  return async () => migrate();
-};
+module.exports = async () => migrate();

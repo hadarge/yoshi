@@ -25,7 +25,7 @@ describe('haste-maven-statics', () => {
     it('should create tar.gz.xml based on client project name', async () => {
       const task = mavenStatics({base, clientProjectName});
 
-      return task()
+      return task
         .then(() => {
           const pom = fs.readFileSync(path.join(base, 'maven/assembly/tar.gz.xml'), 'utf-8');
           const expected = fs.readFileSync(require.resolve('./expected/pom.xml'), 'utf-8');
@@ -37,7 +37,7 @@ describe('haste-maven-statics', () => {
     it('should create tar.gz.xml for universal app, using default directory for statics', async () => {
       const task = mavenStatics({base, staticsDir});
 
-      return task()
+      return task
         .then(() => {
           const pom = fs.readFileSync(path.join(base, 'maven/assembly/tar.gz.xml'), 'utf-8');
           const expected = fs.readFileSync(require.resolve('./expected/universal.xml'), 'utf-8');
@@ -53,17 +53,13 @@ describe('haste-maven-statics', () => {
     });
 
     it('should not fail', async () => {
-      const task = mavenStatics({base, staticsDir});
-
-      return task();
+      return mavenStatics({base, staticsDir});
     });
   });
 
   describe('without pom.xml', () => {
     it('should not fail', async () => {
-      const task = mavenStatics({base, staticsDir});
-
-      return task();
+      return mavenStatics({base, staticsDir});
     });
   });
 });

@@ -11,7 +11,7 @@ WARNING: package.json has been updated
 Please read more here: https://github.com/wix-private/feds/blob/master/migrate-to-scoped-packages.md
 `;
 
-module.exports = () => () => {
+module.exports = () => {
   return validate()
     .then(names => ({
       pkg: readPackage(),

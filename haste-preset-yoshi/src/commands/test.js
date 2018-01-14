@@ -1,5 +1,6 @@
 const path = require('path');
 const minimist = require('minimist');
+const {createRunner} = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
@@ -7,19 +8,16 @@ const {inTeamCity, watchMode, hasProtractorConfigFile, getMochaReporter, watch} 
 const merge = require('lodash/merge');
 const crossSpawn = require('cross-spawn');
 
+const runner = createRunner({
+  logger: new LoggerPlugin()
+});
+
 const cliArgs = minimist(process.argv.slice(2));
 
 const shouldWatch = cliArgs.watch || watchMode();
 
-module.exports = async configure => {
-  const {run, tasks} = configure({
-    plugins: [
-      new LoggerPlugin(),
-    ],
-    persistent: shouldWatch,
-  });
-
-  const {read, mocha, jasmine, karma, protractor, webpack, wixCdn} = tasks;
+module.exports = runner.command(async tasks => {
+  const {mocha, jasmine, karma, protractor, webpack, wixCdn} = tasks;
 
   const noOptions = !cliArgs.mocha &&
     !cliArgs.jasmine &&
@@ -34,16 +32,12 @@ module.exports = async configure => {
       reporter: getMochaReporter(),
     };
 
-    await run(
-      read({pattern: projectConfig.specs.node() || globs.specs()}),
-      mocha(options)
-    );
+    await mocha({pattern: projectConfig.specs.node() || globs.specs(), ...options});
 
     if (shouldWatch) {
-      watch({pattern: [globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js']}, () => run(
-        read({pattern: globs.specs()}),
-        mocha(options),
-      ));
+      watch({pattern: [globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js']}, () =>
+        mocha({pattern: globs.specs(), ...options})
+      );
     }
   }
 
@@ -61,16 +55,12 @@ module.exports = async configure => {
       reportersPath: require.resolve('../../config/jasmine-reporters'),
     };
 
-    await run(
-      read({pattern: projectConfig.specs.node() || globs.specs()}),
-      jasmine(options)
-    );
+    await jasmine({pattern: projectConfig.specs.node() || globs.specs(), ...options});
 
     if (shouldWatch) {
-      watch({pattern: [globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js']}, () => run(
-        read({pattern: globs.specs()}),
-        jasmine(options),
-      ));
+      watch({pattern: [globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js']}, () => {
+        jasmine({pattern: projectConfig.specs.node() || globs.specs(), ...options});
+      });
     }
   }
 
@@ -99,39 +89,33 @@ module.exports = async configure => {
   }
 
   if (cliArgs.karma) {
-    await run(
-      webpack({
-        configPath: require.resolve('../../config/webpack.config.specs'),
-        watch: shouldWatch,
-      })
-    );
+    await webpack({
+      configPath: require.resolve('../../config/webpack.config.specs'),
+      watch: shouldWatch,
+    });
 
-    await run(
-      karma({
-        configFile: path.join(__dirname, '../../config/karma.conf'),
-        singleRun: !shouldWatch,
-        autoWatch: shouldWatch,
-      })
-    );
+    await karma({
+      configFile: path.join(__dirname, '../../config/karma.conf'),
+      singleRun: !shouldWatch,
+      autoWatch: shouldWatch,
+    });
   }
 
   if ((noOptions || cliArgs.protractor) && hasProtractorConfigFile() && !shouldWatch) {
-    await run(wixCdn({
+    await wixCdn({
       port: projectConfig.servers.cdn.port(),
       ssl: projectConfig.servers.cdn.ssl(),
       publicPath: projectConfig.servers.cdn.url(),
       statics: projectConfig.clientFilesPath(),
-    }));
+    });
 
     // Only install specific version of chromedriver in CI, install latest locally
     const webdriverManagerOptions = !!process.env.IS_BUILD_AGENT ? // eslint-disable-line no-extra-boolean-cast
       {'versions.chrome': '2.29'} : {};
 
-    await run(
-      protractor({
-        webdriverManagerOptions,
-        configPath: require.resolve('../../config/protractor.conf.js')
-      })
-    );
+    await protractor({
+      webdriverManagerOptions,
+      configPath: require.resolve('../../config/protractor.conf.js')
+    });
   }
-};
+}, {persistent: shouldWatch});

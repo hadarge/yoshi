@@ -1,7 +1,7 @@
 const path = require('path');
 const {parseXml, renderTemplate, writeFile, readFile} = require('./utils');
 
-module.exports = ({clientProjectName, staticsDir, base = process.cwd()}) => async () => {
+module.exports = async ({clientProjectName, staticsDir, base = process.cwd()}) => {
   let templateFilename;
   let templateData = {};
 

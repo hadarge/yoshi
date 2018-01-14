@@ -44,7 +44,7 @@ describe('Aggregator: Build', () => {
 
       expect(resp.code).to.equal(1);
       expect(resp.stdout).to.contain(`Failed 'sass'`);
-      expect(resp.stdout).to.contain('Invalid CSS after ".a {');
+      expect(resp.stderr).to.contain('Invalid CSS after ".a {');
     });
   });
 
@@ -111,7 +111,7 @@ describe('Aggregator: Build', () => {
 
       expect(resp.code).to.equal(1);
       expect(resp.stdout).to.contain(`Failed 'less'`);
-      expect(resp.stdout).to.contain(`Unrecognised input`);
+      expect(resp.stderr).to.contain(`Unrecognised input`);
     });
 
     it('should handle @import statements', () => {
@@ -176,8 +176,8 @@ describe('Aggregator: Build', () => {
         })
         .execute('build');
       expect(resp.code).to.equal(1);
-      expect(resp.stdout).to.contain('Unexpected token (1:9)');
-      expect(resp.stdout).to.contain('1 | function ()');
+      expect(resp.stderr).to.contain('Unexpected token (1:9)');
+      expect(resp.stderr).to.contain('1 | function ()');
     });
   });
 

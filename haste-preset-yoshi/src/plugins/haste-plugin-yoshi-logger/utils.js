@@ -9,23 +9,7 @@ module.exports.delta = start => {
   return [end, time];
 };
 
-module.exports.generateRunTitle = tasks => {
-  const READ = 'read';
-  const WRITE = 'write';
-  const COPY = 'copy';
-
-  // if there are two tasks which are "read" and "write" with no titles call it copy
-  if (tasks.length === 2 && !tasks[0].metadata.title && !tasks[1].metadata.title) {
-    if (tasks[0].name === READ && tasks[1].name === WRITE) {
-      return COPY;
-    }
-  }
-
-  return tasks
-    // filter any "read"/"write" tasks that has no title
-    .filter(task => task.metadata.title || ![READ, WRITE].includes(task.name))
-    // try to use the title of a task if exist and default to the task name
-    .map(task => task.metadata.title || task.name)
-    .map(title => title.replace(WIX_PREFIX_REGEX, ''))
-    .join(',');
+module.exports.generateRunTitle = ({run, task}) => {
+  const title = (run.runnerOptions && run.runnerOptions.title) || task.name;
+  return title.replace(WIX_PREFIX_REGEX, '');
 };

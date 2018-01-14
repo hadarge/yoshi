@@ -536,7 +536,7 @@ describe('Aggregator: Test', () => {
         .execute('test', ['--mocha']);
 
       expect(res.code).to.equal(1);
-      expect(res.stdout).to.contain('Unexpected token import');
+      expect(res.stderr).to.contain('Unexpected token import');
     });
 
     it('should require "test/mocha-setup.js" configuration file', () => {
@@ -599,7 +599,7 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--karma']);
 
         expect(res.code).to.equal(1);
-        expect(res.stdout).to.contain(`Module not found: Error: Can't resolve './ballsack'`);
+        expect(res.stderr).to.contain(`Module not found: Error: Can't resolve './ballsack'`);
         expect(res.stdout).not.to.contain(`Finished 'karma'`);
       });
 

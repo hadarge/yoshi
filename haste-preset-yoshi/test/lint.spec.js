@@ -33,7 +33,7 @@ describe('Aggregator: Lint', () => {
         .execute('lint');
 
       expect(res.code).to.equal(1);
-      expect(res.stdout).to.contain('Missing radix parameter');
+      expect(res.stderr).to.contain('Missing radix parameter');
     });
 
     it('should fix linting errors and exit with exit code 0 if executed with --fix flag & there are only fixable errors', () => {
@@ -68,7 +68,7 @@ describe('Aggregator: Lint', () => {
     it('should fail with exit code 1', () => {
       const res = setup({'app/a.js': `parseInt("1");`}).execute('lint', [], insideTeamCity);
       expect(res.code).to.equal(1);
-      expect(res.stdout).to.contain('1:1  error  Missing radix parameter  radix');
+      expect(res.stderr).to.contain('1:1  error  Missing radix parameter  radix');
     });
 
     it('should fix linting errors and exit with exit code 0 if there are only fixable errors', () => {
@@ -137,8 +137,8 @@ p {
         })
         .execute('lint', []);
 
-      expect(res.stdout).to.contain('✖  Expected no more than 1 empty line');
-      expect(res.stdout).to.contain('max-empty-lines');
+      expect(res.stderr).to.contain('✖  Expected no more than 1 empty line');
+      expect(res.stderr).to.contain('max-empty-lines');
       expect(res.code).to.equal(1);
     });
   });

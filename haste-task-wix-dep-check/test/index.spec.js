@@ -33,7 +33,7 @@ describe('haste-task-wix-dep-check', () => {
       'haste-preset-yoshi@1.0.0 should be @1.0.1'
     ].join('\n');
 
-    return task().then(warning =>
+    return task.then(warning =>
       expect(stripAnsi(warning)).to.equal(message));
   });
 
@@ -48,7 +48,7 @@ describe('haste-task-wix-dep-check', () => {
       'haste-preset-yoshi@1.0.0 should be @2.0.0'
     ].join('\n');
 
-    return task().then(warning =>
+    return task.then(warning =>
       expect(stripAnsi(warning)).to.equal(message));
   });
 
@@ -61,7 +61,7 @@ describe('haste-task-wix-dep-check', () => {
       'haste-preset-yoshi@1.0.0 must be at least @3.0.0'
     ].join('\n');
 
-    return invertPromise(task()).then(error =>
+    return invertPromise(task).then(error =>
       expect(stripAnsi(error)).to.equal(message));
   });
 
@@ -74,7 +74,7 @@ describe('haste-task-wix-dep-check', () => {
       'wix-style-react@1.0.0 must be at least @2.0.0'
     ].join('\n');
 
-    return invertPromise(task())
+    return invertPromise(task)
       .then(error => expect(stripAnsi(error)).to.equal(message));
   });
 
@@ -83,7 +83,7 @@ describe('haste-task-wix-dep-check', () => {
     mockMeta('wix-style-react', '1.0.0');
     mockMeta('haste-preset-yoshi', '1.0.0');
 
-    return task().then(message =>
+    return task.then(message =>
       expect(message).to.be.undefined);
   });
 

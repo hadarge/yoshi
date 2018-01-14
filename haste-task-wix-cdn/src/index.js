@@ -9,16 +9,16 @@ const {decorate} = require('./server-api');
 const {shouldRunWebpack, filterNoise} = require('./utils');
 
 module.exports = ({
-  port,
+  port = '3000',
   ssl,
-  hmr,
-  host,
+  hmr = true,
+  host = 'localhost',
   publicPath,
   statics,
   webpackConfigPath,
   configuredEntry,
   defaultEntry,
-} = {host: 'localhost', port: '3000', hmr: true}) => () => {
+} = {}) => {
   return new Promise((resolve, reject) => {
     let middlewares = [];
 
