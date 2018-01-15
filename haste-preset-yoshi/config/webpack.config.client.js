@@ -52,6 +52,8 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
         'window.__CI_APP_VERSION__': process.env.ARTIFACT_VERSION ? `"${process.env.ARTIFACT_VERSION}"` : '"0.0.0"'
       }),
 
+      new webpack.EnvironmentPlugin(projectConfig.environment()),
+
       ...!separateCss ? [] : [
         new ExtractTextPlugin(debug ? '[name].css' : '[name].min.css')
       ],

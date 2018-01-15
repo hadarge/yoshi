@@ -62,7 +62,8 @@ module.exports = {
       allSourcesButExternalModules(path);
   },
   jestConfig: () => _.get(packagejson, 'jest', {}),
-  petriSpecsConfig: () => getConfig('petriSpecs', {})
+  petriSpecsConfig: () => getConfig('petriSpecs', {}),
+  environment: () => getConfig('environment', {})
 };
 
 function serverProtocol() {

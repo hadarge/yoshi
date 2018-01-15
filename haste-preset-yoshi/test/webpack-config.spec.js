@@ -158,6 +158,28 @@ describe('Webpack basic configs', () => {
     });
   });
 
+  describe('EnvironmentPlugin configuration', () => {
+    it('Should inject requested environment variables to bundle', () => {
+      const res = test.setup({
+        'src/client.js': `const foo = process.env.MY_VAR;`,
+        'package.json': fx.packageJson({environment: {MY_VAR: 'MY_FALLBACK_VALUE'}})
+      }).execute('build', [], {MY_VAR: 'MY_VALUE'});
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/statics/app.bundle.js')).to.contain('MY_VALUE');
+    });
+
+    it('Should inject fallback value if environment variable did not exist', () => {
+      const res = test.setup({
+        'src/client.js': `const foo = process.env.MY_VAR;`,
+        'package.json': fx.packageJson({environment: {MY_VAR: 'MY_FALLBACK_VALUE'}})
+      }).execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/statics/app.bundle.js')).to.contain('MY_FALLBACK_VALUE');
+    });
+  });
+
   describe('when multiple versions of the same package exist in a build', () => {
     const warningOutput = 'WARNING in duplicate-package-checker';
     let child;
