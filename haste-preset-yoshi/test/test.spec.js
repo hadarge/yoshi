@@ -1,6 +1,7 @@
 'use strict';
 
 const expect = require('chai').expect;
+const hooks = require('./helpers/hooks');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
@@ -567,6 +568,25 @@ describe('Aggregator: Test', () => {
         .execute('test', ['--mocha']);
 
       expect(res.code).to.equal(0);
+      expect(res.stdout).to.contain('1 passing');
+    });
+
+    it('should run e2e tests using mocha', () => {
+      const res = test
+        .setup({
+          'dist/statics/index.html': `hello world`,
+          'test/bla/a.spec.js': `it("pass", () => 1);`,
+          'test/bla/b.spec.js': `it("pass", () => 1);`,
+          'test/bla/c.e2e.js': `
+            const assert = require('assert');
+            const fetch = require('node-fetch');
+            it("pass", async () => assert.equal((await (await fetch('http://localhost:3200/index.html')).text()).trim(), 'hello world'));`,
+          'package.json': fx.packageJson()
+        }, [hooks.installDependency('node-fetch')])
+        .execute('test', ['--mocha']);
+
+      expect(res.code).to.equal(0);
+      expect(res.stdout).to.contain('2 passing');
       expect(res.stdout).to.contain('1 passing');
     });
   });
