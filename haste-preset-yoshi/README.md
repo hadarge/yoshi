@@ -62,6 +62,6 @@ Runs the app in dev mode, watching for file changes and updating the app in resp
 
 Runs all of your app's tests.
 
-## `npm build`
+## `npm run build`
 
 Builds your app for production. It bundles your client side code, minifies it and optimizes the build for the best performance.
