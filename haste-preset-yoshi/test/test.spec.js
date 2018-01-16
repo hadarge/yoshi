@@ -586,8 +586,7 @@ describe('Aggregator: Test', () => {
         .execute('test', ['--mocha']);
 
       expect(res.code).to.equal(0);
-      expect(res.stdout).to.contain('2 passing');
-      expect(res.stdout).to.contain('1 passing');
+      expect(res.stdout).to.contain('3 passing');
     });
   });
 

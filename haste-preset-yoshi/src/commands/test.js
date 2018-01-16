@@ -4,7 +4,7 @@ const {createRunner} = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
-const {inTeamCity, watchMode, hasProtractorConfigFile, shouldRunE2E, getMochaReporter, watch} = require('../utils');
+const {inTeamCity, watchMode, hasProtractorConfigFile, getMochaReporter, watch} = require('../utils');
 const merge = require('lodash/merge');
 const crossSpawn = require('cross-spawn');
 
@@ -30,6 +30,18 @@ module.exports = runner.command(async tasks => {
     cliArgs.protractor = true;
   }
 
+  await wixCdn({
+    port: projectConfig.servers.cdn.port(),
+    ssl: projectConfig.servers.cdn.ssl(),
+    publicPath: projectConfig.servers.cdn.url(),
+    statics: projectConfig.clientFilesPath(),
+  });
+
+  const specsPattern = [projectConfig.specs.node() || globs.specs()];
+  if (!hasProtractorConfigFile()) {
+    specsPattern.push(globs.e2e());
+  }
+
   if (cliArgs.mocha) {
     const options = {
       requireFiles: [require.resolve('../../config/test-setup')],
@@ -37,7 +49,7 @@ module.exports = runner.command(async tasks => {
       reporter: getMochaReporter(),
     };
 
-    await mocha({pattern: projectConfig.specs.node() || globs.specs(), ...options});
+    await mocha({pattern: specsPattern, ...options});
 
     if (shouldWatch) {
       watch({pattern: [globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js']}, () =>
@@ -60,7 +72,7 @@ module.exports = runner.command(async tasks => {
       reportersPath: require.resolve('../../config/jasmine-reporters'),
     };
 
-    await jasmine({pattern: projectConfig.specs.node() || globs.specs(), ...options});
+    await jasmine({pattern: specsPattern, ...options});
 
     if (shouldWatch) {
       watch({pattern: [globs.specs(), path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'), 'index.js']}, () => {
@@ -106,33 +118,14 @@ module.exports = runner.command(async tasks => {
     });
   }
 
-  const shouldRunProtractor = cliArgs.protractor && hasProtractorConfigFile() && !shouldWatch;
-  const shouldRunMochaE2E = cliArgs.mocha && shouldRunE2E() && !shouldWatch;
-  if (shouldRunProtractor || shouldRunMochaE2E) {
-    await wixCdn({
-      port: projectConfig.servers.cdn.port(),
-      ssl: projectConfig.servers.cdn.ssl(),
-      publicPath: projectConfig.servers.cdn.url(),
-      statics: projectConfig.clientFilesPath(),
+  if (cliArgs.protractor && hasProtractorConfigFile() && !shouldWatch) {
+    // Only install specific version of chrome driver in CI, install latest locally
+    const webdriverManagerOptions = !!process.env.IS_BUILD_AGENT ? // eslint-disable-line no-extra-boolean-cast
+      {'versions.chrome': '2.29'} : {};
+
+    await protractor({
+      webdriverManagerOptions,
+      configPath: require.resolve('../../config/protractor.conf.js')
     });
-
-    if (shouldRunProtractor) {
-      // Only install specific version of chromedriver in CI, install latest locally
-      const webdriverManagerOptions = !!process.env.IS_BUILD_AGENT ? // eslint-disable-line no-extra-boolean-cast
-        {'versions.chrome': '2.29'} : {};
-
-      await protractor({
-        webdriverManagerOptions,
-        configPath: require.resolve('../../config/protractor.conf.js')
-      });
-    } else if (shouldRunMochaE2E) {
-      const options = {
-        requireFiles: [require.resolve('../../config/test-setup')],
-        timeout: 30000,
-        reporter: getMochaReporter(),
-      };
-
-      await mocha({pattern: globs.e2e(), ...options});
-    }
   }
 }, {persistent: shouldWatch});

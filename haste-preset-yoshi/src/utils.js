@@ -72,10 +72,6 @@ module.exports.shouldRunLess = () => {
   return glob.sync(`${globs.base()}/**/*.less`).length > 0;
 };
 
-module.exports.shouldRunE2E = () => {
-  return glob.sync(globs.e2e()).length > 0;
-};
-
 module.exports.filterNoise = stats => {
   logIfAny(stats.toString({
     colors: true,
