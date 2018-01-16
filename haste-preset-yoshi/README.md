@@ -288,6 +288,12 @@ Use this if you are writing a library and want to publish it as single file. Lib
 
 Set to false in order to disable hot module replacement. (defaults to true)
 
+#### yoshi.performance
+
+Allows to use the Webpack Performance Budget feature.
+The configuration object is the same as in webpack.
+For more info, you can read the [webpack docs](https://webpack.js.org/configuration/performance/). 
+
 ## FAQ
 - [How do I debug my application/tests?](https://github.com/wix-private/fed-handbook/blob/master/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)

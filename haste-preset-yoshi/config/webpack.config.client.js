@@ -68,6 +68,10 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
 
     devtool: inTeamCity() ? 'source-map' : 'cheap-module-source-map',
 
+    performance: {
+      ...debug ? {} : projectConfig.performanceBudget()
+    },
+
     output: {
       umdNamedDefine: true,
       path: path.resolve('./dist/statics'),

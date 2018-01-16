@@ -231,4 +231,24 @@ describe('Webpack basic configs', () => {
       return retryPromise({backoff, max}, () => fetch(`http://localhost:${port}/${file}`).then(res => res.text()));
     }
   });
+
+  describe('Performance budget', () => {
+    it('should fail the build when exceeding the given max bundle size', () => {
+      const maxSize = 10;
+      const expectedOutput = `The following entrypoint(s) combined asset size exceeds the recommended limit (${maxSize} bytes)`;
+      res = test
+        .setup({
+          'package.json': fx.packageJson({
+            performance: {
+              maxEntrypointSize: maxSize,
+              hints: 'error'
+            }
+          })
+        })
+        .execute('build');
+
+      expect(res.code, 'Build error code should be 1').to.equal(1);
+      expect(res.stdout, 'build output should show the webpack perf budget error').to.contain(expectedOutput);
+    });
+  });
 });
