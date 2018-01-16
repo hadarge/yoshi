@@ -30,16 +30,19 @@ module.exports = runner.command(async tasks => {
     cliArgs.protractor = true;
   }
 
-  await wixCdn({
-    port: projectConfig.servers.cdn.port(),
-    ssl: projectConfig.servers.cdn.ssl(),
-    publicPath: projectConfig.servers.cdn.url(),
-    statics: projectConfig.clientFilesPath(),
-  });
-
   const specsPattern = [projectConfig.specs.node() || globs.specs()];
-  if (!hasProtractorConfigFile()) {
-    specsPattern.push(globs.e2e());
+
+  if (!shouldWatch) {
+    await wixCdn({
+      port: projectConfig.servers.cdn.port(),
+      ssl: projectConfig.servers.cdn.ssl(),
+      publicPath: projectConfig.servers.cdn.url(),
+      statics: projectConfig.clientFilesPath(),
+    });
+
+    if (!hasProtractorConfigFile()) {
+      specsPattern.push(globs.e2e());
+    }
   }
 
   if (cliArgs.mocha) {
