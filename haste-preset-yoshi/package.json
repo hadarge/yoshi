@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./src/index.js",
   "bin": {
-    "haste": "./src/cli/index.js"
+    "haste": "./bin/haste.js"
   },
   "scripts": {
     "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js'",
