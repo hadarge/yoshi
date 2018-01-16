@@ -2,6 +2,9 @@
   "name": "haste-preset-yoshi",
   "version": "1.0.0",
   "main": "./src/index.js",
+  "bin": {
+    "haste": "./src/cli/index.js"
+  },
   "scripts": {
     "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js'",
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch",
@@ -17,6 +20,7 @@
     "babel-polyfill": "~6.23.0",
     "babel-preset-wix": "~1.0.0",
     "babel-register": "~6.24.1",
+    "caporal": "~0.9.0",
     "case-sensitive-paths-webpack-plugin": "~2.1.1",
     "chalk": "~2.3.0",
     "chokidar": "~1.7.0",
@@ -35,7 +39,6 @@
     "graphql": "~0.10.5",
     "graphql-tag": "~2.4.2",
     "happypack": "3.0.2",
-    "haste-cli": "~0.2.0",
     "haste-core": "~0.2.3",
     "haste-plugin-dashboard": "~0.2.0",
     "haste-plugin-loader": "~0.2.0",

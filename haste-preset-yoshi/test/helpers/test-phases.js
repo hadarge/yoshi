@@ -5,8 +5,7 @@ const path = require('path');
 const sh = require('shelljs');
 const spawn = require('cross-spawn');
 const stripAnsi = require('strip-ansi');
-const hasteCliBin = path.resolve(__dirname, '../../node_modules/haste-cli/bin/haste.js');
-const hastePresetYoshiPath = path.resolve(__dirname, '../../src/index.js');
+const hasteCliBin = path.resolve(__dirname, '../../bin/haste.js');
 
 class Test {
   constructor(...args) {
@@ -34,7 +33,6 @@ class Test {
       try {
         options = options || [];
         options = Array.isArray(options) ? options : options.split(' ');
-        options = options.concat(['--preset', hastePresetYoshiPath]);
 
         const env = Object.assign({}, this.env, environment);
         this.child = spawn('node', [`${this.script}`, `${command}`].concat(options), {cwd: this.tmp, env});
@@ -56,8 +54,6 @@ class Test {
   }
 
   execute(command, cliArgs = [], environment = {}, execOptions = {}) {
-    cliArgs = cliArgs.concat(['--preset', hastePresetYoshiPath]);
-
     const args = [command].concat(cliArgs).join(' ');
     const env = Object.assign({}, this.env, environment);
     const options = Object.assign({}, {cwd: this.tmp, env, silent: true}, execOptions);
