@@ -6,6 +6,9 @@ const hooks = require('./helpers/hooks');
 const expect = require('chai').expect;
 const _ = require('lodash');
 const {getMockedCI} = require('yoshi-utils').utilsTestkit;
+const fs = require('fs');
+const path = require('path');
+const {spawnSync} = require('child_process');
 
 describe('Loaders', () => {
   let test;
@@ -623,6 +626,23 @@ describe('Loaders', () => {
     );
   });
 
+  describe('HAML', () => {
+    beforeEach(() => test
+      .setup({
+        'src/client.js': `require('./some.haml')`,
+        'src/some.haml': '.foo This is a HAML file'
+      }, [installHaml])
+      .execute('build', [], {
+        PATH: spawnSync('bundle', ['show', 'haml'], {cwd: test.tmp}).stdout.toString().trim() + '/bin' + path.delimiter + process.env.PATH,
+        GEM_PATH: process.env.GEM_PATH + path.delimiter + test.tmp + '/.bundle'
+      })
+    );
+
+    it('should embed haml file into bundle', () =>
+      expect(test.content('dist/statics/app.bundle.js')).to.contain('<div class=\'foo\'>This is a HAML file</div>')
+    );
+  });
+
   describe('raw', () => {
     beforeEach(() =>
       test
@@ -657,3 +677,9 @@ describe('Loaders', () => {
     });
   });
 });
+
+function installHaml(cwd) {
+  fs.writeFileSync(cwd + '/Gemfile', 'source \'https://rubygems.org\'\ngem \'haml\'');
+  spawnSync('bundle', ['config', 'path', cwd + '/.bundle'], {cwd});
+  spawnSync('bundle', ['install'], {cwd});
+}

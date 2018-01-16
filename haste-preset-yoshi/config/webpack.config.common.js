@@ -39,6 +39,7 @@ const config = {
       require('../src/loaders/assets')(),
       require('../src/loaders/svg')(),
       require('../src/loaders/html')(),
+      require('../src/loaders/haml')(),
       require('../src/loaders/raw')(),
       stylable.rule()
     ]
