@@ -289,7 +289,7 @@ Use this if you are writing a library and want to publish it as single file. Lib
 Set to false in order to disable hot module replacement. (defaults to true)
 
 ## FAQ
-- [How do I debug my application/tests?](docs/faq/DEBUGGING.md)
+- [How do I debug my application/tests?](https://github.com/wix-private/fed-handbook/blob/master/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)
 - [How do I setup Enzyme test environment?](docs/faq/SETUP-TESTING-WITH-ENZYME.md)
 - [How to disable css modules in specific places](docs/faq/DISABLE-SPECIFIC-CSS-MODULES.md)
