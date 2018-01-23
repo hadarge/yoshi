@@ -7,6 +7,7 @@ const {
   runIndividualTranspiler,
   petriSpecsConfig,
   clientProjectName,
+  isAngularProject,
   clientFilesPath,
 } = require('../../config/project');
 const {
@@ -38,6 +39,7 @@ module.exports = runner.command(async tasks => {
     sass,
     webpack,
     typescript,
+    ngAnnotate,
     wixPetriSpecs,
     wixDepCheck,
     wixUpdateNodeVersion,
@@ -56,7 +58,7 @@ module.exports = runner.command(async tasks => {
   ]);
 
   await Promise.all([
-    transpileJavascript(),
+    transpileJavascript().then(() => transpileNgAnnotate()),
     ...transpileCss(),
     copy({pattern: [
       `${globs.base()}/assets/**/*`,
@@ -118,6 +120,14 @@ module.exports = runner.command(async tasks => {
           options: {paths: ['.', 'node_modules']},
         }),
     ].filter(a => a);
+  }
+
+  function transpileNgAnnotate() {
+    if (isAngularProject()) {
+      return ngAnnotate({
+        glob: 'dist/' + globs.base()
+      });
+    }
   }
 
   function transpileJavascript() {

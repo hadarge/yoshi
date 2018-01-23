@@ -1112,6 +1112,86 @@ describe('Aggregator: Build', () => {
     });
   });
 
+  describe('angular ngInject annotations', function () {
+    const $inject = 'something.$inject = ["$http"];';
+    it('are not executed when project is not Angular and TypeScript', () => {
+      const res = test
+        .setup({
+          'src/something.ts': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          'tsconfig.json': fx.tsconfig(),
+          'package.json': fx.packageJson({
+          }, {
+          })
+        }, [])
+        .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/src/something.js')).not.to.contain($inject);
+      expect(test.content('dist/something/something.js')).not.to.contain($inject);
+      expect(test.content('something.js')).not.to.contain($inject);
+    });
+    it('are executed when project is Angular and TypeScript', () => {
+      const res = test
+        .setup({
+          'src/something.ts': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          'tsconfig.json': fx.tsconfig(),
+          'package.json': fx.packageJson({
+          }, {
+            angular: '1.5.0'
+          })
+        }, [])
+        .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/src/something.js')).to.contain($inject);
+      expect(test.content('dist/something/something.js')).not.to.contain($inject);
+      expect(test.content('something.js')).not.to.contain($inject);
+    });
+    it('are executed when project is Angular and EcmaScript', () => {
+      const res = test
+        .setup({
+          'src/something.js': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          '.babelrc': '{}',
+          'package.json': fx.packageJson({
+          }, {
+            angular: '1.5.0'
+          })
+        }, [])
+        .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/src/something.js')).to.contain($inject);
+      expect(test.content('dist/something/something.js')).not.to.contain($inject);
+      expect(test.content('src/something.js')).not.to.contain($inject);
+      expect(test.content('something.js')).not.to.contain($inject);
+    });
+    it('are not executed when project is not Angular and EcmaScript', () => {
+      const res = test
+        .setup({
+          'src/something.js': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          '.babelrc': '{}',
+          'package.json': fx.packageJson({
+          }, {
+          })
+        }, [])
+        .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/src/something.js')).not.to.contain($inject);
+      expect(test.content('dist/something/something.js')).not.to.contain($inject);
+      expect(test.content('src/something.js')).not.to.contain($inject);
+      expect(test.content('something.js')).not.to.contain($inject);
+    });
+  });
+
   function checkServerIsServing({backoff = 100, max = 100, port = fx.defaultServerPort(), file = ''} = {}) {
     return retryPromise({backoff, max}, () => fetch(`http://localhost:${port}/${file}`)
       .then(res => res.text()));

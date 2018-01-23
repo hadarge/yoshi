@@ -206,6 +206,10 @@ const fx = {
       "variants": ["true"]
     }
   }
+  `,
+  angularJs: () => `
+/* @ngInject */
+function something($http) { }
   `
 };
 

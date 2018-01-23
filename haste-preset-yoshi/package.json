@@ -50,6 +50,7 @@
     "haste-task-karma": "~0.2.1",
     "haste-task-less": "~0.2.1",
     "haste-task-mocha": "~0.2.1",
+    "haste-task-ng-annotate": "^0.2.0",
     "haste-task-protractor": "~0.2.1",
     "haste-task-sass": "~0.2.1",
     "haste-task-stylelint": "~0.2.1",
