@@ -18,6 +18,7 @@ prog.command('test', 'Run unit tests and e2e tests if exists')
   .option('--karma', 'Run unit tests with Karma', BOOL)
   .option('--jest', 'Run tests with Jest', BOOL)
   .option('--protractor', 'Run e2e tests with Protractor', BOOL)
+  .option('-w, --watch', 'Run tests on watch mode (mocha, jasmine, jest, karma)', BOOL)
   .action(() => runCLI('test'));
 
 prog.command('build', 'Build the app for production')

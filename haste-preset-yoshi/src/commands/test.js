@@ -14,7 +14,7 @@ const runner = createRunner({
 
 const cliArgs = minimist(process.argv.slice(2));
 
-const shouldWatch = cliArgs.watch || watchMode();
+const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
 
 module.exports = runner.command(async tasks => {
   const {mocha, jasmine, karma, protractor, webpack, wixCdn} = tasks;

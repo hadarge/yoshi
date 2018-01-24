@@ -116,6 +116,7 @@ Flag | Description
 --karma | Run tests with Karma (browser)
 --jest | Run tests with Jest
 --protractor | Run e2e tests with Protractor (e2e)
+--watch | Run tests on watch mode (works for mocha, jasmine, jest & karma)
 
 By default, this task executes both unit test (using `mocha` as default) and e2e test using `protractor`.
 Default unit test glob is `{test,app,src}/**/*.spec.+(js|ts)`. You can change this by adding the following to your package.json:
@@ -292,7 +293,7 @@ Set to false in order to disable hot module replacement. (defaults to true)
 
 Allows to use the Webpack Performance Budget feature.
 The configuration object is the same as in webpack.
-For more info, you can read the [webpack docs](https://webpack.js.org/configuration/performance/). 
+For more info, you can read the [webpack docs](https://webpack.js.org/configuration/performance/).
 
 ## FAQ
 - [How do I debug my application/tests?](https://github.com/wix-private/fed-handbook/blob/master/DEBUGGING.md)
