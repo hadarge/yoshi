@@ -16,7 +16,7 @@ const config = {
       context
     ],
 
-    extensions: ['.ts', '.js', '.tsx', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     symlinks: false
   },
 
