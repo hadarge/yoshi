@@ -132,12 +132,12 @@ module.exports.shouldRunStylelint = () => {
 };
 
 module.exports.getMochaReporter = () => {
-  if (process.env.mocha_reporter) {
-    return process.env.mocha_reporter;
-  }
-
   if (module.exports.inTeamCity()) {
     return 'mocha-teamcity-reporter';
+  }
+
+  if (process.env.mocha_reporter) {
+    return process.env.mocha_reporter;
   }
 
   return 'progress';
