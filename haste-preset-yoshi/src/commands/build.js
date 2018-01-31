@@ -87,18 +87,18 @@ module.exports = runner.command(async tasks => {
 
   function bundle() {
     const configPath = require.resolve('../../config/webpack.config.client');
-    const callbackPath = require.resolve('../webpack-callback');
+    const productionCallbackPath = require.resolve('../webpack-production-callback');
+    const developmentCallbackPath = require.resolve('../webpack-development-callback');
     const webpackConfig = require(configPath)();
 
     const defaultOptions = {
-      configPath,
-      callbackPath,
+      configPath
     };
 
     if (shouldRunWebpack(webpackConfig)) {
       return Promise.all([
-        webpack({...defaultOptions, configParams: {debug: false, analyze: cliArgs.analyze}}, {title: 'webpack-production'}),
-        webpack({...defaultOptions, configParams: {debug: true}}, {title: 'webpack-development'})
+        webpack({...defaultOptions, callbackPath: productionCallbackPath, configParams: {debug: false, analyze: cliArgs.analyze}}, {title: 'webpack-production'}),
+        webpack({...defaultOptions, callbackPath: developmentCallbackPath, configParams: {debug: true}}, {title: 'webpack-development'})
       ]);
     }
 

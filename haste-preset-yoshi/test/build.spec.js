@@ -555,6 +555,20 @@ describe('Aggregator: Build', () => {
       expect(test.list('dist/statics')).to.contain('app.bundle.js');
     });
 
+    it('should generate stats files', () => {
+      const res = test
+        .setup({
+          'src/client.js': 'console.log("hello");',
+          'package.json': fx.packageJson(),
+          'pom.xml': fx.pom()
+        })
+        .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.list('target')).to.contain('webpack-stats.prod.json');
+      expect(test.list('target')).to.contain('webpack-stats.dev.json');
+    });
+
     describe('moment js', () => {
       it('should ignore locale modules from within moment', () => {
         const res = test
