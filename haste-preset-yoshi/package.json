@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "./src/index.js",
   "bin": {
-    "haste": "./bin/haste.js"
+    "haste": "./bin/yoshi.js",
+    "yoshi": "./bin/yoshi.js"
   },
   "scripts": {
     "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js'",

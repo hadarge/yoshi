@@ -5,13 +5,13 @@ const path = require('path');
 const sh = require('shelljs');
 const spawn = require('cross-spawn');
 const stripAnsi = require('strip-ansi');
-const hasteCliBin = path.resolve(__dirname, '../../bin/haste.js');
+const yoshiCliBin = path.resolve(__dirname, '../../bin/yoshi.js');
 
 class Test {
   constructor(...args) {
     const script = typeof args[0] === 'string' && args[0];
     const env = typeof args[0] === 'object' ? args[0] : args[1];
-    this.script = script || hasteCliBin;
+    this.script = script || yoshiCliBin;
     this.env = Object.assign({}, process.env, env);
     this.child = null;
     this.stdout = '';
