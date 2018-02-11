@@ -732,6 +732,23 @@ describe('Aggregator: Build', () => {
       expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
     });
 
+    it('should generate RTL Css from bundle', () => {
+      const res = test
+        .setup({
+          'src/client.js': 'require(\'./style.scss\');',
+          'src/style.scss': `.a {.b {float: left;}}`,
+          'package.json': fx.packageJson(),
+          'pom.xml': fx.pom()
+        })
+        .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  float: left; }');
+      expect(test.content('dist/statics/app.css')).to.contain('{\n  float: left; }');
+      expect(test.content('dist/statics/app.rtl.css')).to.contain('{\n  float: right; }');
+      expect(test.content('dist/statics/app.rtl.min.css')).to.contain('{float:right}');
+    });
+
     it('should create a separate css file for each entry', () => {
       const res = test
         .setup({

@@ -92,6 +92,7 @@
     "protractor-browser-logs": "~1.0.351",
     "raw-loader": "~0.5.1",
     "resolve-url-loader": "~2.1.0",
+    "rtlcss-webpack-plugin": "^1.0.7",
     "ruby-haml-loader": "~1.0.0",
     "sass-loader": "~6.0.6",
     "screenshot-reporter": "~1.1.3",

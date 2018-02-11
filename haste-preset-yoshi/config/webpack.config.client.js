@@ -5,6 +5,7 @@ const {mergeByConcat, isSingleEntry, inTeamCity} = require('../src/utils');
 const webpackConfigCommon = require('./webpack.config.common');
 const projectConfig = require('./project');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
+const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const {isObject} = require('lodash');
@@ -53,7 +54,8 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
       }),
 
       ...!separateCss ? [] : [
-        new ExtractTextPlugin(debug ? '[name].css' : '[name].min.css')
+        new ExtractTextPlugin(debug ? '[name].css' : '[name].min.css'),
+        new RtlCssPlugin(debug ? '[name].rtl.css' : '[name].rtl.min.css'),
       ],
 
       ...debug ? [] : [
