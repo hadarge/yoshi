@@ -31,6 +31,19 @@ describe('Aggregator: e2e', () => {
       expect(exists(chromedriverPath)).to.be.true;
     });
 
+    it('should download chromedriver according to the environment param CHROMEDRIVER_VERSION in CI, if exist', () => {
+      const res = test
+        .setup({
+          'protractor.conf.js': '',
+          'package.json': fx.packageJson()
+        })
+        .execute('test', ['--protractor'], Object.assign({}, outsideTeamCity, {IS_BUILD_AGENT: true, CHROMEDRIVER_VERSION: 2.35}));
+      const chromedriverPath = path.resolve('node_modules', 'protractor', 'node_modules', 'webdriver-manager', 'selenium', 'chromedriver_2.35.zip');
+
+      expect(res.code).to.equal(1);
+      expect(exists(chromedriverPath)).to.be.true;
+    });
+
     it('should support single module structure by default', () => {
       const res = test
         .setup(singleModuleWithJasmine())
