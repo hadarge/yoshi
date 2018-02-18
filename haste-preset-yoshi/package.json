@@ -1,6 +1,6 @@
 {
   "name": "haste-preset-yoshi",
-  "version": "1.0.0",
+  "version": "1.0.44",
   "main": "./src/index.js",
   "bin": {
     "haste": "./bin/yoshi.js",
@@ -10,7 +10,7 @@
     "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js'",
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch",
     "build": "eslint .",
-    "release": "wnpm-release --no-shrinkwrap"
+    "release": "node scripts/release.js"
   },
   "dependencies": {
     "@wix/externalize-relative-module-loader": "~1.0.0",
