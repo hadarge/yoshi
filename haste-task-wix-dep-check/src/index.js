@@ -5,14 +5,19 @@ module.exports = ({cwd = process.cwd()} = {}) => {
   return depkeeper({cwd})
     .rule('{haste-preset-yoshi,wix-style-react}', {major: 1})
     .rule('{haste-preset-yoshi,wix-style-react}')
+    .rule('wix-bootstrap-*', {patch: 5})
     .checkRules()
-    .then(([outdated1, outdated2]) => {
+    .then(([outdated1, outdated2, outdated3]) => {
       if (outdated1.length) {
         return fail(outdated1);
       }
 
       if (outdated2.length) {
         return warn(outdated2);
+      }
+
+      if (outdated3.length) {
+        return warn(outdated3);
       }
     });
 };
