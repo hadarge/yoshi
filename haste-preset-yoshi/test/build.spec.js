@@ -311,7 +311,11 @@ describe('Aggregator: Build', () => {
           'src/app1.js': `const thisIsWorks = true; require('./first.scss'); require('./styles.scss');`,
           'src/app2.js': `const hello = "world"; require('./second.scss'); require('./styles.scss');`,
           'package.json': fx.packageJson({
-            commonsChunk: true,
+            commonsChunk: {
+              chunks: 'initial',
+              minSize: 0,
+              name: 'commons'
+            },
             entry: {
               first: './app1.js',
               second: './app2.js'
@@ -339,8 +343,10 @@ describe('Aggregator: Build', () => {
           'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1);`,
           'package.json': fx.packageJson({
             commonsChunk: {
+              chunks: 'initial',
               name: 'myCustomCommonsName',
               minChunks: 2,
+              minSize: 0,
             },
             entry: {
               first: './app1.js',
@@ -352,8 +358,9 @@ describe('Aggregator: Build', () => {
         .execute('build');
 
       expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.not.contain('commons.bundle.js');
-      expect(test.list('dist/statics')).to.contain('myCustomCommonsName.bundle.js');
+      console.log(test.list('dist/statics'));
+      expect(test.list('dist/statics')).to.not.contain('commons.chunk.js');
+      expect(test.list('dist/statics')).to.contain('myCustomCommonsName.chunk.js');
     });
   });
 
@@ -524,7 +531,6 @@ describe('Aggregator: Build', () => {
           'pom.xml': fx.pom()
         })
         .execute('build');
-
       expect(res.code).to.equal(0);
       expect(test.list('dist/statics')).to.contain('app.bundle.js');
     });
