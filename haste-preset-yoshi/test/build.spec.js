@@ -358,7 +358,6 @@ describe('Aggregator: Build', () => {
         .execute('build');
 
       expect(res.code).to.equal(0);
-      console.log(test.list('dist/statics'));
       expect(test.list('dist/statics')).to.not.contain('commons.chunk.js');
       expect(test.list('dist/statics')).to.contain('myCustomCommonsName.chunk.js');
     });
