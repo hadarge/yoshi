@@ -278,7 +278,11 @@ describe('Aggregator: Build', () => {
           'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1);`,
           'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1);`,
           'package.json': fx.packageJson({
-            commonsChunk: true,
+            commonsChunk: {
+              chunks: 'initial',
+              minSize: 0,
+              name: 'commons'
+            },
             entry: {
               first: './app1.js',
               second: './app2.js'
@@ -290,10 +294,10 @@ describe('Aggregator: Build', () => {
       expect(res.code).to.equal(0);
       expect(test.list('dist/statics')).to.contain('first.bundle.js');
       expect(test.list('dist/statics')).to.contain('second.bundle.js');
-      expect(test.list('dist/statics')).to.contain('commons.bundle.js');
-      expect(test.list('dist/statics')).to.contain('commons.bundle.min.js');
-      expect(test.list('dist/statics')).to.contain('commons.bundle.js.map');
-      expect(test.content('dist/statics/commons.bundle.js')).to.contain('module.exports = function (a) {\n  return a + 1;\n};');
+      expect(test.list('dist/statics')).to.contain('commons.chunk.js');
+      expect(test.list('dist/statics')).to.contain('commons.chunk.min.js');
+      expect(test.list('dist/statics')).to.contain('commons.chunk.js.map');
+      expect(test.content('dist/statics/commons.chunk.js')).to.contain('module.exports = function (a) {\n  return a + 1;\n};');
       expect(test.content('dist/statics/first.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
       expect(test.content('dist/statics/second.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
     });

@@ -11,6 +11,7 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const {isObject} = require('lodash');
 
 const defaultCommonsChunkConfig = {
+  chunks: 'initial',
   name: 'commons',
   minChunks: 2
 };
@@ -22,9 +23,15 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
   const tpaStyle = projectConfig.tpaStyle();
   const useCommonsChunk = projectConfig.commonsChunk();
   const commonsChunkConfig = isObject(useCommonsChunk) ? useCommonsChunk : defaultCommonsChunkConfig;
-
   return mergeByConcat(webpackConfigCommon, {
     entry: getEntry(),
+
+    mode: debug ? 'development' : 'production',
+
+    optimization: {
+      minimize: !debug,
+      splitChunks: useCommonsChunk ? commonsChunkConfig : false,
+    },
 
     module: {
       rules: [
@@ -36,7 +43,6 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
     plugins: [
       ...disableModuleConcat ? [] : [new webpack.optimize.ModuleConcatenationPlugin()],
       ...analyze ? [new BundleAnalyzerPlugin()] : [],
-      ...useCommonsChunk ? [new webpack.optimize.CommonsChunkPlugin(commonsChunkConfig)] : [],
 
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
@@ -56,15 +62,6 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
       ...!separateCss ? [] : [
         new ExtractTextPlugin(debug ? '[name].css' : '[name].min.css'),
         new RtlCssPlugin(debug ? '[name].rtl.css' : '[name].rtl.min.css'),
-      ],
-
-      ...debug ? [] : [
-        new webpack.optimize.UglifyJsPlugin({
-          sourceMap: true,
-          compress: {
-            warnings: false,
-          },
-        })
       ],
     ],
 
