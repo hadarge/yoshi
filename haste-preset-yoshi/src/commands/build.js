@@ -40,21 +40,21 @@ module.exports = runner.command(async tasks => {
     webpack,
     typescript,
     ngAnnotate,
-    wixPetriSpecs,
-    wixDepCheck,
-    wixUpdateNodeVersion,
-    wixMavenStatics,
   } = tasks;
 
-  const migrateScopePackages = tasks[require.resolve('../tasks/migrate-to-scoped-packages/index')];
-  const migrateBowerArtifactory = tasks[require.resolve('../tasks/migrate-bower-artifactory/index')];
+  const migrateScopePackages = tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
+  const migrateBowerArtifactory = tasks[require.resolve('../tasks/migrate-bower-artifactory')];
+  const wixUpdateNodeVersion = tasks[require.resolve('../tasks/update-node-version')];
+  const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
+  const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
+  const wixDepCheck = tasks[require.resolve('../tasks/dep-check')];
 
   await Promise.all([
     clean({pattern: `{dist,target}/*`}),
-    wixUpdateNodeVersion(),
+    wixUpdateNodeVersion({}, {title: 'update-node-version'}),
     migrateScopePackages({}, {title: 'scope-packages-migration'}),
     migrateBowerArtifactory({}, {title: 'migrate-bower-artifactory'}),
-    wixDepCheck()
+    wixDepCheck({}, {title: 'dep-check'})
   ]);
 
   await Promise.all([
@@ -78,11 +78,11 @@ module.exports = runner.command(async tasks => {
       target: 'dist/statics'
     }, {title: 'copy-static-assets'}),
     bundle(),
-    wixPetriSpecs({config: petriSpecsConfig()}),
+    wixPetriSpecs({config: petriSpecsConfig()}, {title: 'petri-specs'}),
     wixMavenStatics({
       clientProjectName: clientProjectName(),
       staticsDir: clientFilesPath()
-    })
+    }, {title: 'maven-statics'})
   ]);
 
   function bundle() {

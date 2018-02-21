@@ -17,7 +17,7 @@ const cliArgs = minimist(process.argv.slice(2));
 const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
 
 module.exports = runner.command(async tasks => {
-  const {mocha, jasmine, karma, protractor, webpack, wixCdn} = tasks;
+  const {mocha, jasmine, karma, protractor, webpack} = tasks;
 
   const noOptions = !cliArgs.mocha &&
     !cliArgs.jasmine &&
@@ -30,6 +30,7 @@ module.exports = runner.command(async tasks => {
     cliArgs.protractor = true;
   }
 
+  const wixCdn = tasks[require.resolve('../tasks/cdn/index')];
   const specsPattern = [projectConfig.specs.node() || globs.specs()];
 
   if (!shouldWatch) {
@@ -38,7 +39,7 @@ module.exports = runner.command(async tasks => {
       ssl: projectConfig.servers.cdn.ssl(),
       publicPath: projectConfig.servers.cdn.url(),
       statics: projectConfig.clientFilesPath(),
-    });
+    }, {title: 'cdn'});
 
     if (!hasProtractorConfigFile()) {
       specsPattern.push(globs.e2e());

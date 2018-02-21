@@ -34,37 +34,37 @@ const entryPoint = addJsSuffix(cliArgs['entry-point'] || 'index.js');
 
 module.exports = runner.command(async tasks => {
   const {
-    wixCdn,
     sass,
     less,
     copy,
     clean,
     babel,
     typescript,
-    wixDepCheck,
-    wixPetriSpecs,
-    wixMavenStatics,
-    wixAppServer,
-    wixUpdateNodeVersion,
   } = tasks;
 
-  const migrateScopePackages = tasks[require.resolve('../tasks/migrate-to-scoped-packages/index')];
-  const migrateBowerArtifactory = tasks[require.resolve('../tasks/migrate-bower-artifactory/index')];
+  const wixAppServer = tasks[require.resolve('../tasks/app-server')];
+  const wixCdn = tasks[require.resolve('../tasks/cdn')];
+  const migrateScopePackages = tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
+  const migrateBowerArtifactory = tasks[require.resolve('../tasks/migrate-bower-artifactory')];
+  const wixUpdateNodeVersion = tasks[require.resolve('../tasks/update-node-version')];
+  const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
+  const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
+  const wixDepCheck = tasks[require.resolve('../tasks/dep-check')];
 
   const appServer = async () => {
     if (cliArgs['no-server']) {
       return;
     }
 
-    return wixAppServer({entryPoint, manualRestart: cliArgs['manual-restart']});
+    return wixAppServer({entryPoint, manualRestart: cliArgs['manual-restart']}, {title: 'app-server'});
   };
 
   await Promise.all([
     clean({pattern: `{dist,target}/*`}),
-    wixUpdateNodeVersion(),
+    wixUpdateNodeVersion({}, {title: 'update-node-version'}),
     migrateScopePackages({}, {title: 'scope-packages-migration'}),
     migrateBowerArtifactory({}, {title: 'migrate-bower-artifactory'}),
-    wixDepCheck()
+    wixDepCheck({}, {title: 'dep-check'})
   ]);
 
   await Promise.all([
@@ -96,12 +96,12 @@ module.exports = runner.command(async tasks => {
       configuredEntry: entry(),
       defaultEntry: defaultEntry(),
       hmr: hmr(),
-    }),
-    wixPetriSpecs({config: petriSpecsConfig()}),
+    }, {title: 'cdn'}),
+    wixPetriSpecs({config: petriSpecsConfig()}, {title: 'petri-specs'}),
     wixMavenStatics({
       clientProjectName: clientProjectName(),
       staticsDir: clientFilesPath()
-    })
+    }, {title: 'maven-statics'})
   ]);
 
   if (shouldRunTests) {
