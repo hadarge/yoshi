@@ -734,8 +734,8 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--karma']);
 
         expect(res.code).to.equal(0);
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1);');
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2);');
+        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1)');
+        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2)');
       });
 
       it('should consider custom specs.browser globs if configured', () => {
@@ -754,8 +754,8 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--karma']);
 
         expect(res.code).to.equal(0);
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1);');
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2);');
+        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1)');
+        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2)');
       });
 
       it('should not include css into a specs bundle', () => {
