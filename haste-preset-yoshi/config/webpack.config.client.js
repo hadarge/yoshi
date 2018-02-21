@@ -11,7 +11,7 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const {isObject} = require('lodash');
 
 const defaultCommonsChunkConfig = {
-  chunks: 'initial',
+  chunks: 'all',
   name: 'commons',
   minChunks: 2
 };
