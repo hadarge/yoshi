@@ -2,7 +2,6 @@
 
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
-const hooks = require('./helpers/hooks');
 const expect = require('chai').expect;
 const _ = require('lodash');
 const {getMockedCI} = require('yoshi-utils').utilsTestkit;
@@ -358,7 +357,7 @@ describe('Loaders', () => {
     });
   });
 
-  describe.skip('Stylable', () => { // Link to failing test on CI - http://pullrequest-tc.dev.wixpress.com/viewLog.html?buildId=300252&buildTypeId=FedInfra_WixHaste&tab=buildLog&_focus=1039#_state=1035,1037
+  describe('Stylable', () => {
     afterEach(() => test.teardown());
 
     describe('client', () => {
@@ -378,7 +377,7 @@ describe('Loaders', () => {
                                   @namespace "Test";
                                   .some-rule { color: red; }`,
           'package.json': fx.packageJson(config || {})
-        }, [hooks.installDependency('stylable@4')])
+        }, [])
         .execute('build');
     }
   });
