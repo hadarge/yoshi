@@ -1063,8 +1063,8 @@ describe('Aggregator: Build', () => {
 
   describe('symlinks', () => {
     it('should not resolve symlinks to their symlinked location', () => {
-      const module1 = '.call(exports, "../node_modules/awesome-module1")';
-      const module2 = '.call(exports, "../node_modules/awesome-module2")';
+      const module1 = '.call(this, "../node_modules/awesome-module1")';
+      const module2 = '.call(this, "../node_modules/awesome-module2")';
 
       const res = test
         .setup({
