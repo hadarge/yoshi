@@ -84,7 +84,7 @@
     "protractor": "~5.1.2",
     "protractor-browser-logs": "~1.0.351",
     "raw-loader": "~0.5.1",
-    "resolve-url-loader": "~2.1.0",
+    "resolve-url-loader": "github:acoll/resolve-url-loader#1f5389285f47198e84efed61fa29acf1310c8f0e",
     "rtlcss-webpack-plugin": "^1.0.7",
     "ruby-haml-loader": "~1.0.0",
     "sass-loader": "~6.0.6",
