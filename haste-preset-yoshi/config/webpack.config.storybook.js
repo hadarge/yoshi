@@ -17,7 +17,6 @@ module.exports = config => {
 
   config.plugins = [
     ...config.plugins || [],
-    require('../src/webpack-plugins/babelHappyPack')(),
     stylable.plugin()
   ];
 
