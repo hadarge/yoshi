@@ -121,12 +121,15 @@ module.exports = runner.command(async tasks => {
       autoWatch: shouldWatch,
     });
   }
-
+  console.log('beforeHasProtractorConfigFileCheck')
   if (cliArgs.protractor && hasProtractorConfigFile() && !shouldWatch) {
+    console.log('afterHasProtractorConfigFileCheck')
+    console.log(process.env.CHROMEDRIVER_VERSION);
+    console.log(process.env.IS_BUILD_AGENT);
     // Only install specific version of chrome driver in CI, install latest locally
     const webdriverManagerOptions = !!process.env.IS_BUILD_AGENT ? // eslint-disable-line no-extra-boolean-cast
       {'versions.chrome': process.env.CHROMEDRIVER_VERSION || '2.29'} : {};
-
+    console.log(webdriverManagerOptions);
     await protractor({
       webdriverManagerOptions,
       configPath: require.resolve('../../config/protractor.conf.js')

@@ -27,9 +27,6 @@ describe('Aggregator: e2e', () => {
         })
         .execute('test', ['--protractor'], Object.assign({}, outsideTeamCity, {IS_BUILD_AGENT: true, CHROMEDRIVER_VERSION: undefined}));
       const chromedriverPath = path.resolve('node_modules', 'protractor', 'node_modules', 'webdriver-manager', 'selenium', 'chromedriver_2.29.zip');
-      console.log(chromedriverPath);
-      console.log(exists(path.resolve('node_modules', 'protractor')));
-      console.log(exists(path.resolve('node_modules', 'protractor', 'node_modules', 'webdriver-manager')));
       const files = fs.readdirSync(path.resolve('node_modules', 'protractor', 'node_modules', 'webdriver-manager', 'selenium'));
       console.log(files);
       expect(res.code).to.equal(1);
