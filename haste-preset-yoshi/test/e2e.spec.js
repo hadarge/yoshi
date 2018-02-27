@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const fs = require('fs');
 const expect = require('chai').expect;
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
@@ -14,6 +13,7 @@ describe('Aggregator: e2e', () => {
   beforeEach(() => {
     test = tp.create();
   });
+
   afterEach(() => test.teardown());
 
   describe('should run protractor with a cdn server', function () {
