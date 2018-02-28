@@ -3,7 +3,7 @@ const path = require('path');
 const context = path.resolve('./src');
 const projectConfig = require('./project');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const stylable = require('../src/loaders/stylable');
+// const stylable = require('../src/loaders/stylable');
 
 const config = {
   context,
@@ -26,13 +26,13 @@ const config = {
 
   plugins: [
     new CaseSensitivePathsPlugin(),
-    require('../src/webpack-plugins/babelHappyPack')(projectConfig.isAngularProject()),
-    stylable.plugin()
+    // stylable.plugin()
   ],
 
   module: {
     rules: [
       ...projectConfig.features().externalizeRelativeLodash ? [require('../src/loaders/externalize-relative-lodash')()] : [],
+      ...projectConfig.isAngularProject() ? [require('../src/loaders/ng-annotate')()] : [],
       require('../src/loaders/babel')(),
       require('../src/loaders/typescript')(projectConfig.isAngularProject()),
       require('../src/loaders/graphql')(),
@@ -41,7 +41,7 @@ const config = {
       require('../src/loaders/html')(),
       require('../src/loaders/haml')(),
       require('../src/loaders/raw')(),
-      stylable.rule()
+      // stylable.rule()
     ]
   },
 

@@ -1,11 +1,7 @@
 const {unprocessedModules} = require('../../config/project');
-const threadLoader = require('./thread');
 
 module.exports = () => ({
   test: /\.js?$/,
-  use: [
-    threadLoader(),
-    'babel-loader',
-  ],
+  loader: 'ng-annotate-loader',
   include: unprocessedModules()
 });
