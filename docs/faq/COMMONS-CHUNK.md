@@ -1,8 +1,8 @@
 # How do I separetly bundle common logic for multiple entries?
 
-If you are using multiple entries you might consider using the [commonsChunkPlugin](https://webpack.js.org/plugins/commons-chunk-plugin/), it will create a seperate file (chunk) consisting of common modules shared between multiple entry points. This results in pagespeed optimizations as the browser can quickly serve the shared code from cache, rather than being forced to load a larger bundle whenever a new page is visited.
+If you are using multiple entries you might consider using the [`yoshi.commonsChunk`](https://webpack.js.org/plugins/commons-chunk-plugin/), it will create a seperate file (chunk) consisting of common modules shared between multiple entry points. This results in page speed optimizations as the browser can quickly serve the shared code from cache, rather than being forced to load a larger bundle whenever a new page is visited.
 
-If you want to add it, go to your `package.json` and add the `commonChunks` options, the value can be a boolean or an object.
+If you want to add it, go to your `package.json` and add the `commonChunks` option, the value can be a *boolean* or an *object*.
 
 
 ```json
@@ -15,29 +15,29 @@ If you want to add it, go to your `package.json` and add the `commonChunks` opti
 }
 ```
 
-Insert `true` for the default configuration and an object for custom configuraion, it is the same object you would normaly insert to the plugin -> `new webpack.optimize.CommonsChunkPlugin(<this object>)`
+Insert `true` for the default configuration and an object for custom configuraion, it is the same config you would normaly insert to the plugin -> `optimization.splitChunks: <config>`
 
 ```json
-// the default configuration
-
+// default configuration
 {
+  "chunks": "all",
   "name": "commons",
   "minChunks": 2
 };
 ```
 
 Once the plugin is active it will generate the following files if needed:
-1. commons.bundle.js
-2. commons.bundle.min.js
-3. commons.bundle.js.map
-4. commons.css
-5. commons.min.css
-6. commons.css.map
+1. `commons.chunk.js`
+2. `commons.chunk.min.js`
+3. `commons.chunk.js.map`
+4. `commons.css`
+5. `commons.min.css`
+6. `commons.css.map`
 
 Don't forget to add them into your html file before the entry point.
 
 ```html
-<script src="commons.bundle<% if (!debug) { %>.min<% } %>.js" charset="utf-8"></script>
+<script src="commons.chunk<% if (!debug) { %>.min<% } %>.js" charset="utf-8"></script>
 <script src="entry.bundle<% if (!debug) { %>.min<% } %>.js" charset="utf-8"></script>
 ```
 
@@ -45,3 +45,6 @@ Don't forget to add them into your html file before the entry point.
 <link rel="stylesheet" type="text/css" href="commons<% if (!debug) { %>.min<% } %>.css" />
 <link rel="stylesheet" type="text/css" href="app<% if (!debug) { %>.min<% } %>.css" />
 ```
+
+**Note:** since `1.1.0` version (webpack 4 support), if you're customizing `commonsChunk` with *configuration object*, you should pass `commonsChunk.chunks: "all" | "async" | "initial"` option.  
+Plase look into [RIP CommonsChunkPlugin](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693#configuration) to receive all advantage of webpack 4 `commonsChunk` optimizations.

@@ -94,7 +94,7 @@ You can specify multiple entry points in your `package.json` file. This gives th
 }
 ```
 
-**Note:** if you have multiple entries you should consider using the [Commons Chunk Plugin](docs/faq/COMMONS-CHUNK.md)
+**Note:** if you have multiple entries you should consider using the [`optimization.splitChunks`](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693)
 
 **Note2:** the decision whether to use `TypeScript` or `babel` is done by searching `tsconfig.json` inside the root directory.
 
@@ -172,6 +172,18 @@ By default, your `require`d css will bundled to a separate `app.css` bundle. You
   ```json
   "yoshi": {
     "separateCss": false
+  }
+  ```
+
+#### yoshi.commonsChunk
+
+Configure webpack's `optimization.splitChunks` option. It's an opt-in feature that creates a separate file (known as a chunk), consisting of common modules shared between multiple entry points.
+
+Supports both `false` value *(default)*, `true` and a [configuration object](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693#configuration):
+
+  ```json
+  "yoshi": {
+    "commonsChunk": true
   }
   ```
 
