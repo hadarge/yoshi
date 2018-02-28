@@ -175,7 +175,7 @@ By default, your `require`d css will bundled to a separate `app.css` bundle. You
   }
   ```
 
-#### yoshi.commonsChunk
+#### yoshi.splitChunks
 
 Configure webpack's `optimization.splitChunks` option. It's an opt-in feature that creates a separate file (known as a chunk), consisting of common modules shared between multiple entry points.
 
@@ -183,7 +183,7 @@ Supports both `false` value *(default)*, `true` and a [configuration object](htt
 
   ```json
   "yoshi": {
-    "commonsChunk": true
+    "splitChunks": true
   }
   ```
 

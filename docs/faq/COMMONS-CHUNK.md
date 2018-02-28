@@ -1,6 +1,6 @@
 # How do I separetly bundle common logic for multiple entries?
 
-If you are using multiple entries you might consider using the [`yoshi.commonsChunk`](https://webpack.js.org/plugins/commons-chunk-plugin/), it will create a seperate file (chunk) consisting of common modules shared between multiple entry points. This results in page speed optimizations as the browser can quickly serve the shared code from cache, rather than being forced to load a larger bundle whenever a new page is visited.
+If you are using multiple entries you might consider using the [`yoshi.splitChunks`](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693), it will create a seperate file (chunk) consisting of common modules shared between multiple entry points. This results in page speed optimizations as the browser can quickly serve the shared code from cache, rather than being forced to load a larger bundle whenever a new page is visited.
 
 If you want to add it, go to your `package.json` and add the `commonChunks` option, the value can be a *boolean* or an *object*.
 
@@ -11,7 +11,7 @@ If you want to add it, go to your `package.json` and add the `commonChunks` opti
     "a": "./a",
     "b": "./b",
   },
-  "commonsChunk": true
+  "splitChunks": true
 }
 ```
 
@@ -46,5 +46,12 @@ Don't forget to add them into your html file before the entry point.
 <link rel="stylesheet" type="text/css" href="app<% if (!debug) { %>.min<% } %>.css" />
 ```
 
-**Note:** since `1.1.0` version (webpack 4 support), if you're customizing `commonsChunk` with *configuration object*, you should pass `commonsChunk.chunks: "all" | "async" | "initial"` option.  
-Plase look into [RIP CommonsChunkPlugin](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693#configuration) to receive all advantage of webpack 4 `commonsChunk` optimizations.
+**Note:** since `1.1.0` version (webpack 4 support), if you're customizing `splitChunks` with *configuration object*, you should pass `splitChunks.chunks: "all" | "async" | "initial"` option.  
+Plase look into [RIP CommonsChunkPlugin](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693#configuration) to receive all advantage of webpack 4 `splitChunks` optimizations.
+
+**Note 2:** consider chunk filename update after `1.1.0`: `chunk` instead of `bundle`:
+
+```diff
+- commons.bundle.js
++ commons.chunk.js
+``` 
