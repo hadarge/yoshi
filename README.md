@@ -304,6 +304,6 @@ For more info, you can read the [webpack docs](https://webpack.js.org/configurat
 - [How do I setup Enzyme test environment?](docs/faq/SETUP-TESTING-WITH-ENZYME.md)
 - [How to disable css modules in specific places](docs/faq/DISABLE-SPECIFIC-CSS-MODULES.md)
 - [How to I analyze my webpack bundle contents](docs/faq/WEBPACK-ANALYZE.md)
-- [How do I separately bundle common logic for multiple entries?](docs/faq/COMMONS-CHUNK.md)
+- [How do I separately bundle common logic for multiple entries?](docs/faq/SPLIT-CHUNKS.md)
 - [How to use SVG](docs/faq/SVG.md)
 - [Moment.js locales are missing](docs/faq/MOMENT_OPTIMIZATION.md)

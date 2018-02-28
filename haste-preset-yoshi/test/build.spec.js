@@ -271,14 +271,14 @@ describe('Aggregator: Build', () => {
   });
 
   describe('Commons chunk plugin', () => {
-    it('should generate an additional commons.bundle.js when commonsChunks option in package.json is true, commons chunk should have the common parts and the other chunks should not', () => {
+    it('should generate an additional commons.bundle.js when `splitChunks` option in package.json is true, commons chunk should have the common parts and the other chunks should not', () => {
       const res = test
         .setup({
           'src/dep.js': `module.exports = function(a){return a + 1;};`,
           'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1);`,
           'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1);`,
           'package.json': fx.packageJson({
-            commonsChunk: {
+            splitChunks: {
               chunks: 'initial',
               minSize: 0,
               name: 'commons'
@@ -311,7 +311,7 @@ describe('Aggregator: Build', () => {
           'src/app1.js': `const thisIsWorks = true; require('./first.scss'); require('./styles.scss');`,
           'src/app2.js': `const hello = "world"; require('./second.scss'); require('./styles.scss');`,
           'package.json': fx.packageJson({
-            commonsChunk: {
+            splitChunks: {
               chunks: 'initial',
               minSize: 0,
               name: 'commons'
@@ -335,14 +335,14 @@ describe('Aggregator: Build', () => {
       expect(test.content('dist/statics/second.css')).to.not.contain('body {\n  background: red; }');
     });
 
-    it('should pass a custom configuration if an object is passed to the commonsChunk configuration', () => {
+    it('should pass a custom configuration if an object is passed to the `splitChunks` configuration', () => {
       const res = test
         .setup({
           'src/dep.js': `module.exports = function(a){return a + 1;};`,
           'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1);`,
           'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1);`,
           'package.json': fx.packageJson({
-            commonsChunk: {
+            splitChunks: {
               chunks: 'initial',
               name: 'myCustomCommonsName',
               minChunks: 2,

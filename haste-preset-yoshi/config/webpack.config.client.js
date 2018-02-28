@@ -10,7 +10,7 @@ const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const {isObject} = require('lodash');
 
-const defaultCommonsChunkConfig = {
+const defaultSplitChunksConfig = {
   chunks: 'all',
   name: 'commons',
   minChunks: 2
@@ -21,8 +21,8 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
   const projectName = projectConfig.name();
   const cssModules = projectConfig.cssModules();
   const tpaStyle = projectConfig.tpaStyle();
-  const useCommonsChunk = projectConfig.commonsChunk();
-  const commonsChunkConfig = isObject(useCommonsChunk) ? useCommonsChunk : defaultCommonsChunkConfig;
+  const useSplitChunks = projectConfig.splitChunks();
+  const splitChunksConfig = isObject(useSplitChunks) ? useSplitChunks : defaultSplitChunksConfig;
   return mergeByConcat(webpackConfigCommon, {
     entry: getEntry(),
 
@@ -30,7 +30,7 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
 
     optimization: {
       minimize: !debug,
-      splitChunks: useCommonsChunk ? commonsChunkConfig : false,
+      splitChunks: useSplitChunks ? splitChunksConfig : false,
     },
 
     module: {
