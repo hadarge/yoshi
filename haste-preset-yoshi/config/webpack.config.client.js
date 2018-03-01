@@ -10,8 +10,7 @@ const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const {isObject} = require('lodash');
 
-const defaultSplitChunksConfig = {
-  chunks: 'all',
+const defaultCommonsChunkConfig = {
   name: 'commons',
   minChunks: 2
 };
@@ -21,17 +20,11 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
   const projectName = projectConfig.name();
   const cssModules = projectConfig.cssModules();
   const tpaStyle = projectConfig.tpaStyle();
-  const useSplitChunks = projectConfig.splitChunks();
-  const splitChunksConfig = isObject(useSplitChunks) ? useSplitChunks : defaultSplitChunksConfig;
+  const useCommonsChunk = projectConfig.commonsChunk();
+  const commonsChunkConfig = isObject(useCommonsChunk) ? useCommonsChunk : defaultCommonsChunkConfig;
+
   return mergeByConcat(webpackConfigCommon, {
     entry: getEntry(),
-
-    mode: debug ? 'development' : 'production',
-
-    optimization: {
-      minimize: !debug,
-      splitChunks: useSplitChunks ? splitChunksConfig : false,
-    },
 
     module: {
       rules: [
@@ -43,6 +36,7 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
     plugins: [
       ...disableModuleConcat ? [] : [new webpack.optimize.ModuleConcatenationPlugin()],
       ...analyze ? [new BundleAnalyzerPlugin()] : [],
+      ...useCommonsChunk ? [new webpack.optimize.CommonsChunkPlugin(commonsChunkConfig)] : [],
 
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
@@ -62,6 +56,15 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
       ...!separateCss ? [] : [
         new ExtractTextPlugin(debug ? '[name].css' : '[name].min.css'),
         new RtlCssPlugin(debug ? '[name].rtl.css' : '[name].rtl.min.css'),
+      ],
+
+      ...debug ? [] : [
+        new webpack.optimize.UglifyJsPlugin({
+          sourceMap: true,
+          compress: {
+            warnings: false,
+          },
+        })
       ],
     ],
 

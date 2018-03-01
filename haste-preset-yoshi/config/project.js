@@ -45,7 +45,7 @@ module.exports = {
     }
   },
   entry: () => getConfig('entry'),
-  splitChunks: () => getConfig('splitChunks', false),
+  commonsChunk: () => getConfig('commonsChunk', false),
   defaultEntry: () => './client',
   separateCss: () => getConfig('separateCss', true),
   cssModules: () => getConfig('cssModules', true),
