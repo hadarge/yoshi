@@ -10,7 +10,9 @@
     "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js'",
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch",
     "build": "eslint .",
-    "release": "node scripts/release.js"
+    "customPublish": "node scripts/release.js haste-preset-yoshi yoshi",
+    "publish:yoshi": "node scripts/release.js yoshi",
+    "publish:haste-preset-yoshi": "node scripts/release.js haste-preset-yoshi"
   },
   "dependencies": {
     "@wix/externalize-relative-module-loader": "~1.0.0",
@@ -118,6 +120,7 @@
     "node-fetch": "^1.7.3",
     "ps-tree": "^1.1.0",
     "retry-promise": "^1.0.0",
+    "semver": "~5.5.0",
     "shmock": "~0.8.1",
     "tempy": "~0.2.1",
     "typescript": "^2.6.1"
