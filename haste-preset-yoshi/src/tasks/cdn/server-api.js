@@ -66,7 +66,7 @@ const decorate = ({app, middlewares = [], host, port, statics}) => {
     ...middlewares,
     redirectMiddleware(host, port)
   ]
-  .forEach(mw => app.use(mw));
+    .forEach(mw => app.use(mw));
 
   return app;
 };

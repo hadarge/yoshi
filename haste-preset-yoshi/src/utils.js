@@ -127,8 +127,8 @@ module.exports.migrateToScopedPackages = () =>
 
 module.exports.shouldRunStylelint = () => {
   return cosmiconfig('stylelint')
-      .load()
-      .then(Boolean);
+    .load()
+    .then(Boolean);
 };
 
 module.exports.getMochaReporter = () => {

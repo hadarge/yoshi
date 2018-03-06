@@ -160,8 +160,8 @@ describe('Aggregator: e2e', () => {
   it('should extend project\'s beforeLaunch', function () {
     this.timeout(60000);
     const res = test
-    .setup(singleModuleWithBeforeLaunch())
-    .execute('test', ['--protractor'], outsideTeamCity);
+      .setup(singleModuleWithBeforeLaunch())
+      .execute('test', ['--protractor'], outsideTeamCity);
 
     expect(res.code).to.equal(0);
     expect(res.stdout).to.contain('protractor');
