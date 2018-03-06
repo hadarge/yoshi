@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0-alpha.2 (March 6, 2018)
+* [#171](https://github.com/wix-private/wix-haste/pull/171) Update release script to support `old` npm dist-tag.
+* [#172](https://github.com/wix-private/wix-haste/pull/172) Add `yoshi.config.js` support.
+
 ## 1.2.0-alpha.1 (March 4, 2018)
   * [#169](https://github.com/wix-private/wix-haste/pull/169) Add a custom publish script, the ci will automaticlly release after changing the version on `package.json`.
   * [#157](https://github.com/wix-private/wix-haste/pull/157) Update webpack and related packages:
