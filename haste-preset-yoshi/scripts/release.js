@@ -48,12 +48,12 @@ function shouldPublishPackage(name) {
 }
 
 function getTag(name) {
-  const isLowerThanLatest = () => semver.lt(version, getLatestVersion(name));
+  const isLessThanLatest = () => semver.lt(version, getLatestVersion(name));
 
   const isPreRelease = () => semver.prerelease(version) !== null;
 
-  // if the version is lower than the version tagged as latest in the registry
-  if (isLowerThanLatest()) {
+  // if the version is less than the version tagged as latest in the registry
+  if (isLessThanLatest()) {
     return OLD_TAG;
   }
 
@@ -105,7 +105,7 @@ try {
   // 2. go over each package name:
   // 2.1. replace the name in `package.json`.
   // 2.2. choose a tag ->
-  // * `old` for a release that is lower than latest (semver).
+  // * `old` for a release that is less than latest (semver).
   // * `next` for a prerelease (beta/alpha/rc).
   // * `latest` as default.
   // 2.3. perform npm publish using the chosen tag.
