@@ -271,7 +271,7 @@ describe('Aggregator: Build', () => {
   });
 
   describe('Commons chunk plugin', () => {
-    it('should generate an additional commons.bundle.js when `splitChunks` option in package.json is true, commons chunk should have the common parts and the other chunks should not', () => {
+    it('should generate an additional commons.bundle.js when `splitChunks` option in package.json is a configuration object, commons chunk should have the common parts and the other chunks should not', () => {
       const res = test
         .setup({
           'src/dep.js': `module.exports = function(a){return a + 1;};`,
@@ -360,6 +360,44 @@ describe('Aggregator: Build', () => {
       expect(res.code).to.equal(0);
       expect(test.list('dist/statics')).to.not.contain('commons.chunk.js');
       expect(test.list('dist/statics')).to.contain('myCustomCommonsName.chunk.js');
+    });
+
+    it('should generate x.bundle.js with content from `src/dep` and without content from src2/dep when `cacheGroups.test` speficifed', () => {
+      const res = test
+        .setup({
+          'src/dep.js': `module.exports = function(){return 'iLiveInChunk';};`,
+          'src/dep2.js': `module.exports = function(){return 'iAmNotCodeFromChunk!';};`,
+          'src/app1.js': `const a = require('./dep'); const b = require('../src/dep2');a();b();`,
+          'src/app2.js': `const a = require('./dep'); const b = require('../src/dep2');a();b();`,
+          'yoshi.config.js': `module.exports = {
+            splitChunks: {
+              "cacheGroups": {
+                "x": {
+                  "name": "x",
+                  "minChunks": 2,
+                  "minSize": 0,
+                  "chunks": "initial",
+                  "test": require('path').resolve("./src/dep.js")
+                }
+              }
+            },
+            entry: {
+              first: './app1.js',
+              second: './app2.js'
+            }
+          };`,
+          'package.json': '{}',
+          'pom.xml': fx.pom()
+        })
+        .execute('build');
+      expect(res.code).to.equal(0);
+      expect(test.list('dist/statics')).to.contain('first.bundle.js');
+      expect(test.list('dist/statics')).to.contain('second.bundle.js');
+      expect(test.list('dist/statics')).to.contain('x.chunk.js');
+      expect(test.content('dist/statics/x.chunk.js')).to.contain('iLiveInChunk');
+      expect(test.content('dist/statics/x.chunk.js')).to.not.contain('iAmNotCodeFromChunk');
+      expect(test.content('dist/statics/first.bundle.js')).to.contain('iAmNotCodeFromChunk');
+      expect(test.content('dist/statics/second.bundle.js')).to.contain('iAmNotCodeFromChunk');
     });
   });
 
