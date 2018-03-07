@@ -37,7 +37,7 @@ module.exports = ({
         const bundler = filterNoise(webpack(webpackConfig));
 
         middlewares = [
-          webpackDevMiddleware(bundler, {quiet: true}),
+          webpackDevMiddleware(bundler, {logLevel: 'silent'}),
           ...hmr ? [webpackHotMiddleware(bundler, {log: null})] : []
         ];
       }

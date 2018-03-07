@@ -1,6 +1,6 @@
 {
   "name": "haste-preset-yoshi",
-  "version": "1.0.45",
+  "version": "1.0.46",
   "main": "./src/index.js",
   "bin": {
     "haste": "./bin/yoshi.js",
