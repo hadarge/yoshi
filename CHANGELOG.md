@@ -13,6 +13,9 @@
     * Use `splitChunks.chunks: 'all'` by default (see more: [RIP CommonsChunkPlugin](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693)).
     * Disable [stylable-loader](github.com/wix/stylable-integration) (since it's incompatible with webpack 4).
 
+## 1.0.47 (March 7, 2018)
+* [#176](https://github.com/wix-private/wix-haste/pull/176) Adding `ts` files to the glob pattern provided by `debug/mocha`.
+
 ## 1.0.46 (March 7, 2018)
   * [#177](https://github.com/wix-private/wix-haste/pull/177) Fix: Remove webpack output from `start` & `test` commands.
 
