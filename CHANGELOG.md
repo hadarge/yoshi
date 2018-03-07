@@ -13,6 +13,9 @@
     * Use `splitChunks.chunks: 'all'` by default (see more: [RIP CommonsChunkPlugin](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693)).
     * Disable [stylable-loader](github.com/wix/stylable-integration) (since it's incompatible with webpack 4).
 
+## 1.0.46 (March 7, 2018)
+  * [#177](https://github.com/wix-private/wix-haste/pull/177) Fix: Remove webpack output from `start` & `test` commands.
+
 ## 1.0.45 (February 21, 2018)
   * [#156](https://github.com/wix-private/wix-haste/pull/156) Inline wix tasks instead of using them as external packages
   * [#154](https://github.com/wix-private/wix-haste/pull/154) Add `wix-bootstrap-*` to depcheck task
