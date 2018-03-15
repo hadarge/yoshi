@@ -302,6 +302,7 @@ For more info, you can read the [webpack docs](https://webpack.js.org/configurat
 - [How do I debug my application/tests?](https://github.com/wix-private/fed-handbook/blob/master/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)
 - [How do I setup Enzyme test environment?](docs/faq/SETUP-TESTING-WITH-ENZYME.md)
+- [How to export ES modules along with commonjs?](docs/faq/EXPORT-MODULES.md)
 - [How to disable css modules in specific places](docs/faq/DISABLE-SPECIFIC-CSS-MODULES.md)
 - [How to I analyze my webpack bundle contents](docs/faq/WEBPACK-ANALYZE.md)
 - [How do I separately bundle common logic for multiple entries?](docs/faq/SPLIT-CHUNKS.md)

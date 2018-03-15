@@ -145,6 +145,46 @@ describe('Aggregator: Build', () => {
     });
   });
 
+  describe('ES modules', () => {
+    it('should not transpile modules for `/es` content if `module` field in `package.json` was specified', () => {
+      const resp = test
+        .setup({
+          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", { "modules": false }]]}`,
+          'src/a.js': 'export default "I\'m a module!";',
+          'package.json': `{
+            "module": "dist/es/src/a.js",
+            "yoshi": {
+              "entry": "./a.js"
+            }
+          }`,
+          'pom.xml': fx.pom()
+        })
+        .execute('build');
+      expect(resp.code).to.equal(0);
+      expect(test.list('dist')).to.include.members(['src', 'statics', 'es']);
+      expect(test.content('dist/es/src/a.js')).to.contain('export default');
+      expect(test.content('dist/src/a.js')).to.contain('exports.default =');
+    });
+
+    it('should not create `/es` directory if no `module` field in `package.json` was specified and no commonjs plugin added', () => {
+      const resp = test
+        .setup({
+          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", {"modules": false}]]}`,
+          'src/a.js': 'export default "I\'m a module!";',
+          'package.json': `{
+            "yoshi": {
+              "entry": "./a.js"
+            }
+          }`,
+          'pom.xml': fx.pom()
+        })
+        .execute('build');
+      expect(resp.code).to.equal(0);
+      expect(test.list('dist')).to.not.include('es');
+      expect(test.content('dist/src/a.js')).to.contain('export default');
+    });
+  });
+
   describe('yoshi-babel', () => {
     it('should use yoshi-babel', () => {
       const resp = test

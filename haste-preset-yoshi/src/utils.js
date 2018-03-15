@@ -68,6 +68,11 @@ module.exports.isBabelProject = () => {
   return !!glob.sync(path.resolve('.babelrc')).length || !!project.babel();
 };
 
+module.exports.shouldExportModule = () => {
+  const pkg = tryRequire(path.resolve('package.json'));
+  return !!(pkg && pkg.module);
+};
+
 module.exports.shouldRunLess = () => {
   return glob.sync(`${globs.base()}/**/*.less`).length > 0;
 };

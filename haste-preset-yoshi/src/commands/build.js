@@ -1,4 +1,3 @@
-const path = require('path');
 const {createRunner} = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const parseArgs = require('minimist');
@@ -14,6 +13,7 @@ const {
   watchMode,
   isTypescriptProject,
   isBabelProject,
+  shouldExportModule,
   shouldRunWebpack,
   shouldRunLess,
   shouldRunSass,
@@ -136,7 +136,17 @@ module.exports = runner.command(async tasks => {
     }
 
     if (isBabelProject() && runIndividualTranspiler()) {
-      return babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist'});
+      const transformOptions = {pattern: globs.babel(), target: globs.multipleModules.clientDist()};
+      const babelTransformsChain = [];
+      if (shouldExportModule()) {
+        transformOptions.plugins = [
+          require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
+        ];
+        babelTransformsChain.push(
+          babel({pattern: globs.babel(), target: globs.esModulesDist()})
+        );
+      }
+      return Promise.all([...babelTransformsChain, babel(transformOptions)]);
     }
 
     return Promise.resolve();
