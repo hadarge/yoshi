@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0-beta.0 (March 15, 2018)
+* [#178](https://github.com/wix-private/wix-haste/pull/178) Add ES6 modules support
+
 ## 2.0.0-alpha.2 (March 6, 2018)
 * [#171](https://github.com/wix-private/wix-haste/pull/171) Update release script to support `old` npm dist-tag.
 * [#172](https://github.com/wix-private/wix-haste/pull/172) Add `yoshi.config.js` support.
