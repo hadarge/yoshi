@@ -5,7 +5,7 @@ const hooks = require('./helpers/hooks');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
-const {getMockedCI} = require('yoshi-utils').utilsTestkit;
+const getMockedCI = require('./helpers/get-mocked-ci');
 
 describe('Aggregator: Test', () => {
   let test;
@@ -58,24 +58,24 @@ describe('Aggregator: Test', () => {
     it(`should run protractor with express that serves static files from client dep
         if protractor.conf is present, according to dist/test/**/*.e2e.js glob`, () => {
       const res = test
-        .setup({
-          'protractor.conf.js': fx.protractorConf({cdnPort: 3200}),
-          'dist/test/some.e2e.js': `
+          .setup({
+            'protractor.conf.js': fx.protractorConf({cdnPort: 3200}),
+            'dist/test/some.e2e.js': `
             it("should write to body", () => {
               browser.ignoreSynchronization = true;
               browser.get("http://localhost:1337");
               expect(element(by.css("body")).getText()).toEqual("roy");
             });
           `,
-          'node_modules/client/dist/app.bundle.js': `document.body.innerHTML = "roy";`,
-          'package.json': fx.packageJson({clientProjectName: 'client'})
-        })
-        .execute('test', ['--protractor']);
+            'node_modules/client/dist/app.bundle.js': `document.body.innerHTML = "roy";`,
+            'package.json': fx.packageJson({clientProjectName: 'client'})
+          })
+          .execute('test', ['--protractor']);
 
       expect(res.code).to.equal(0);
       expect(res.stdout).to.contains('protractor');
-      // note: we've setup a real integration, keep it in order
-      // to see the full integration between server and client.
+        // note: we've setup a real integration, keep it in order
+        // to see the full integration between server and client.
       expect(res.stdout).to.contain('1 spec, 0 failures');
     });
 
@@ -850,8 +850,8 @@ function setupMediaFilesExtensions(extensions) {
     'src/some.spec.js': `
       const assert = require('assert');
       ${extensions
-        .map(ext => `it("pass", () => assert.equal(require('./some.${ext}'), 'some.${ext}'))`)
-        .join(';')}
+    .map(ext => `it("pass", () => assert.equal(require('./some.${ext}'), 'some.${ext}'))`)
+    .join(';')}
     `,
     'package.json': fx.packageJson()
   });

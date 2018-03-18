@@ -23,8 +23,8 @@ module.exports.filterNoise = comp => {
 };
 
 const readDir = patterns =>
-[].concat(patterns).reduce((acc, pattern) =>
-acc.concat(glob.sync(pattern)), []);
+  [].concat(patterns).reduce((acc, pattern) =>
+    acc.concat(glob.sync(pattern)), []);
 
 const exists = patterns => !!readDir(patterns).length;
 

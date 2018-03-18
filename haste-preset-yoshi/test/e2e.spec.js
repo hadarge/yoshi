@@ -6,7 +6,7 @@ const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {exists} = require('../src/utils');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
-const {getMockedCI} = require('yoshi-utils').utilsTestkit;
+const getMockedCI = require('./helpers/get-mocked-ci');
 
 describe('Aggregator: e2e', () => {
   let test;
@@ -160,8 +160,8 @@ describe('Aggregator: e2e', () => {
   it('should extend project\'s beforeLaunch', function () {
     this.timeout(60000);
     const res = test
-    .setup(singleModuleWithBeforeLaunch())
-    .execute('test', ['--protractor'], outsideTeamCity);
+      .setup(singleModuleWithBeforeLaunch())
+      .execute('test', ['--protractor'], outsideTeamCity);
 
     expect(res.code).to.equal(0);
     expect(res.stdout).to.contain('protractor');
