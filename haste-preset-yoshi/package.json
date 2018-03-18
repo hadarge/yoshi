@@ -105,8 +105,7 @@
     "wix-tpa-style-loader": "~1.0.8",
     "wnpm-ci": "~6.2.54",
     "xml2js": "~0.4.19",
-    "yoshi-runtime": "~1.0.0",
-    "yoshi-utils": "~1.0.0"
+    "yoshi-runtime": "~1.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

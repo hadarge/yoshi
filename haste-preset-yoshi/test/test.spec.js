@@ -5,7 +5,7 @@ const hooks = require('./helpers/hooks');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
-const {getMockedCI} = require('yoshi-utils').utilsTestkit;
+const getMockedCI = require('./helpers/get-mocked-ci');
 
 describe('Aggregator: Test', () => {
   let test;

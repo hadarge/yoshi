@@ -6,7 +6,7 @@ const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {exists} = require('../src/utils');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
-const {getMockedCI} = require('yoshi-utils').utilsTestkit;
+const getMockedCI = require('./helpers/get-mocked-ci');
 
 describe('Aggregator: e2e', () => {
   let test;
