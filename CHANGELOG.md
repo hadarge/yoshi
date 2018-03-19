@@ -1,5 +1,7 @@
 # Changelog
 
+* [#181](https://github.com/wix-private/wix-haste/pull/#181) exclude some tasks logs
+
 ## 2.0.0-beta.0 (March 15, 2018)
 * [#178](https://github.com/wix-private/wix-haste/pull/178) Add ES6 modules support
 
