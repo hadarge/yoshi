@@ -1,6 +1,19 @@
 # Changelog
 
-* [#181](https://github.com/wix-private/wix-haste/pull/#181) exclude some tasks logs
+## 2.0.0-beta.1 (March 19, 2018)
+* [#181](https://github.com/wix-private/wix-haste/pull/#181) Exclude the following tasks logs:
+  1. `wixUpdateNodeVersion`
+  2. `migrateScopePackages`
+  3. `migrateBowerArtifactory`
+  4. `wixDepCheck`
+  5. `copy-server-assets`
+  6. `copy-static-assets-legacy`
+  7. `copy-static-assets`
+  8. `maven-statics`
+  9. `petri-specs`
+
+* [#182](https://github.com/wix-private/wix-haste/pull/#182) Remove `yoshi-utils` as a dev dependency and replace with a local function
+* [#183](https://github.com/wix-private/wix-haste/pull/#183) Copy `yoshi-runtime` package from original yoshi repository
 
 ## 2.0.0-beta.0 (March 15, 2018)
 * [#178](https://github.com/wix-private/wix-haste/pull/178) Add ES6 modules support
