@@ -1,6 +1,8 @@
 # Changelog
 
+## 2.0.0-beta.2 (March 19, 2018)
 * **(Breaking)** Remove `haste` as a bin alias, from now on only `yoshi` would be valid bin. (for example `haste start` would not be supported, use `yoshi start` instead)
+
 ## 2.0.0-beta.1 (March 19, 2018)
 * [#181](https://github.com/wix-private/wix-haste/pull/181) Exclude the following tasks logs:
   1. `wixUpdateNodeVersion`
