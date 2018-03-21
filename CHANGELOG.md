@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.48 (March 21, 2018)
+* [#143](https://github.com/wix-private/wix-haste/pull/143) Add `stylable-integration` require-hooks and transform functions for testing environments (jest + mocha)
+
 ## 1.0.47 (March 7, 2018)
 * [#176](https://github.com/wix-private/wix-haste/pull/176) Adding `ts` files to the glob pattern provided by `debug/mocha`.
 
