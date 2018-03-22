@@ -717,7 +717,7 @@ describe('Aggregator: Build', () => {
       expect(res.code).to.equal(1);
     });
 
-    it('should separate Css from bundle', () => {
+    it('should separate Css from bundle by default', () => {
       const res = test
         .setup({
           'src/client.js': 'require(\'./style.scss\');',
@@ -726,6 +726,40 @@ describe('Aggregator: Build', () => {
           'pom.xml': fx.pom()
         })
         .execute('build');
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
+      expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
+    });
+
+    it('should separate Css with prod setting on production', () => {
+      const res = test
+        .setup({
+          'src/client.js': 'require(\'./style.scss\');',
+          'src/style.scss': `.a {.b {color: red;}}`,
+          'package.json': fx.packageJson({
+            separateCss: 'prod'
+          }),
+          'pom.xml': fx.pom()
+        })
+        .execute('build', [], {NODE_ENV: 'PRODUCTION'});
+
+      expect(res.code).to.equal(0);
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
+      expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
+    });
+
+    it('should separate Css with prod setting on teamcity', () => {
+      const res = test
+        .setup({
+          'src/client.js': 'require(\'./style.scss\');',
+          'src/style.scss': `.a {.b {color: red;}}`,
+          'package.json': fx.packageJson({
+            separateCss: 'prod'
+          }),
+          'pom.xml': fx.pom()
+        })
+        .execute('build', [], insideTeamCity);
 
       expect(res.code).to.equal(0);
       expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');

@@ -175,6 +175,14 @@ By default, your `require`d css will bundled to a separate `app.css` bundle. You
   }
   ```
 
+You also use the `prod` keyword to only separate css on CI and production, this is useful for speeding up HMR on local dev environments.
+
+  ```json
+  "yoshi": {
+    "separateCss": "prod"
+  }
+  ```
+
 #### yoshi.cssModules
 
 We use [css modules](https://github.com/css-modules/css-modules) as default. You can disable this option any time by adding the following to wix section inside your `package.json`:

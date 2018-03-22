@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const {mergeByConcat, isSingleEntry, inTeamCity} = require('../src/utils');
+const {mergeByConcat, isSingleEntry, inTeamCity, isProduction} = require('../src/utils');
 const webpackConfigCommon = require('./webpack.config.common');
 const projectConfig = require('./project');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
@@ -22,6 +22,14 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
   const tpaStyle = projectConfig.tpaStyle();
   const useCommonsChunk = projectConfig.commonsChunk();
   const commonsChunkConfig = isObject(useCommonsChunk) ? useCommonsChunk : defaultCommonsChunkConfig;
+
+  if (separateCss === 'prod') {
+    if (inTeamCity() || isProduction()) {
+      separateCss = true;
+    } else {
+      separateCss = false;
+    }
+  }
 
   return mergeByConcat(webpackConfigCommon, {
     entry: getEntry(),
