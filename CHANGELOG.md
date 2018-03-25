@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.0 (March 25, 2018)
+* [#188](https://github.com/wix-private/wix-haste/pull/188) Add option to only separate CSS on production
+
 ## 1.0.48 (March 21, 2018)
 * [#143](https://github.com/wix-private/wix-haste/pull/143) Add `stylable-integration` require-hooks and transform functions for testing environments (jest + mocha)
 
