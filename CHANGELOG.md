@@ -34,6 +34,12 @@
     * Use `splitChunks.chunks: 'all'` by default (see more: [RIP CommonsChunkPlugin](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693)).
     * Disable [stylable-loader](github.com/wix/stylable-integration) (since it's incompatible with webpack 4).
 
+## 1.1.0 (March 25, 2018)
+* [#188](https://github.com/wix-private/wix-haste/pull/188) Add option to only separate CSS on production
+
+## 1.0.48 (March 21, 2018)
+* [#143](https://github.com/wix-private/wix-haste/pull/143) Add `stylable-integration` require-hooks and transform functions for testing environments (jest + mocha)
+
 ## 1.0.47 (March 7, 2018)
 * [#176](https://github.com/wix-private/wix-haste/pull/176) Adding `ts` files to the glob pattern provided by `debug/mocha`.
 
