@@ -149,9 +149,10 @@ yoshi: {
 
 ### lint
 
-Flag | Short Flag | Description
----- | ---------- | -----------
---fix | | Automatically fix lint problems (works only for eslint)
+Flag | Short Flag | Description | Default Value
+---- | ---------- | ----------- | ------------|
+--fix | | Automatically fix lint problems | false
+--format | | Use a specific formatter for eslint/tslint | stylish
 
 Executes `TSLint` or `ESLint` (depending on the type of the project) over all matched files. An '.eslintrc' / `tslint.json` file with proper configurations is required.
 

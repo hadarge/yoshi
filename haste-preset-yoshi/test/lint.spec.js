@@ -33,7 +33,7 @@ describe('Aggregator: Lint', () => {
         .execute('lint');
 
       expect(res.code).to.equal(1);
-      expect(res.stderr).to.contain('Missing radix parameter');
+      expect(res.stderr).to.contain('radix  Missing radix parameter');
     });
 
     it('should fix linting errors and exit with exit code 0 if executed with --fix flag & there are only fixable errors', () => {
@@ -49,6 +49,20 @@ describe('Aggregator: Lint', () => {
 
       expect(res.code).to.equal(0);
       expect(test.content('app/a.ts')).to.equal(`const a = "1";`);
+    });
+
+    it('should support formatter flag', () => {
+      const res = test
+        .setup({
+          'app/a.ts': `parseInt("1");`,
+          'package.json': fx.packageJson(),
+          'tsconfig.json': fx.tsconfig(),
+          'tslint.json': fx.tslint({radix: true})
+        })
+        .execute('lint', ['--format json']);
+
+      expect(res.code).to.equal(1);
+      expect(JSON.parse(res.stderr)[0].failure).to.eq('Missing radix parameter');
     });
   });
 
@@ -78,6 +92,12 @@ describe('Aggregator: Lint', () => {
 
       expect(res.code).to.equal(0);
       expect(test.content('app/a.js')).to.equal('/*eslint no-regex-spaces: "error"*/\nnew RegExp("foo {2}bar");');
+    });
+
+    it('should support formatter flag', () => {
+      const res = setup({'app/a.js': `parseInt("1");`}).execute('lint', ['--format json'], insideTeamCity);
+      expect(res.code).to.equal(1);
+      expect(JSON.parse(res.stderr)[0].messages[0].message).to.eq('Missing radix parameter.');
     });
   });
 
