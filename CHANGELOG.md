@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.1 (March 27, 2018)
+## 1.1.2 (March 27, 2018)
 * [#168](https://github.com/wix-private/wix-haste/pull/168) Set default formatter for tslint to `stylish` and add `--format` option for `lint` command.
 
 ## 1.1.0 (March 25, 2018)
