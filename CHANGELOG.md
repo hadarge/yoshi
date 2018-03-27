@@ -34,6 +34,9 @@
     * Use `splitChunks.chunks: 'all'` by default (see more: [RIP CommonsChunkPlugin](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693)).
     * Disable [stylable-loader](github.com/wix/stylable-integration) (since it's incompatible with webpack 4).
 
+## 1.1.2 (March 27, 2018)
+* [#168](https://github.com/wix-private/wix-haste/pull/168) Set default formatter for tslint to `stylish` and add `--format` option for `lint` command.
+
 ## 1.1.0 (March 25, 2018)
 * [#188](https://github.com/wix-private/wix-haste/pull/188) Add option to only separate CSS on production
 
