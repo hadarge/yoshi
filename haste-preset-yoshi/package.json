@@ -45,7 +45,7 @@
     "haste-task-babel": "0.2.5",
     "haste-task-clean": "0.2.5",
     "haste-task-copy": "0.2.5",
-    "haste-task-eslint": "0.2.5",
+    "haste-task-eslint": "0.2.6",
     "haste-task-jasmine": "0.2.5",
     "haste-task-karma": "0.2.5",
     "haste-task-less": "0.2.5",
