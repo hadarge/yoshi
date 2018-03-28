@@ -151,3 +151,19 @@ module.exports.getMochaReporter = () => {
 module.exports.hasProtractorConfigFile = () => {
   return exists(path.resolve('protractor.conf.js'));
 };
+
+module.exports.getListOfEntries = entry => {
+  if (typeof entry === 'string') {
+    return [path.resolve('src', entry)];
+  } else if (typeof entry === 'object') {
+    return Object.keys(entry).map(name => {
+      const file = entry[name];
+      return path.resolve('src', file);
+    });
+  }
+  return [];
+};
+
+module.exports.shouldTransformHMRRuntime = () => {
+  return project.hmr() === 'auto' && project.isReactProject();
+};

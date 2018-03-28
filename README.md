@@ -290,8 +290,9 @@ If set, export the bundle as library. `yoshi.exports` is the name.
 Use this if you are writing a library and want to publish it as single file. Library will be exported with `UMD` format.
 
 ##### yoshi.hmr
-
+`Boolean` | `"auto"`
 Set to false in order to disable hot module replacement. (defaults to true)
+`"auto"` is an experimental feature which provides zero configuration HMR for react. It will include `react-hot-loader` to the top of the entry file and will wrap React's root component in special Higher Order Component which enables hot module reload for react. Also it will call `module.hot.accept` on the project's entry file.
 
 #### yoshi.performance
 
@@ -302,6 +303,7 @@ For more info, you can read the [webpack docs](https://webpack.js.org/configurat
 ## FAQ
 - [How do I debug my application/tests?](https://github.com/wix-private/fed-handbook/blob/master/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)
+- [How to use HMR? And how to customize React project to use it?](docs/faq/USING-HMR.md)
 - [How do I setup Enzyme test environment?](docs/faq/SETUP-TESTING-WITH-ENZYME.md)
 - [How to export ES modules along with commonjs?](docs/faq/EXPORT-MODULES.md)
 - [How to disable css modules in specific places](docs/faq/DISABLE-SPECIFIC-CSS-MODULES.md)

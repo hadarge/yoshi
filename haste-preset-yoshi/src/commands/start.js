@@ -18,6 +18,8 @@ const {
   isBabelProject,
   shouldRunLess,
   shouldRunSass,
+  getListOfEntries,
+  shouldTransformHMRRuntime,
   suffix,
   watch,
 } = require('../utils');
@@ -96,6 +98,7 @@ module.exports = runner.command(async tasks => {
       configuredEntry: entry(),
       defaultEntry: defaultEntry(),
       hmr: hmr(),
+      transformHMRRuntime: shouldTransformHMRRuntime()
     }, {title: 'cdn'}),
     wixPetriSpecs({config: petriSpecsConfig()}, {title: 'petri-specs', log: false}),
     wixMavenStatics({
@@ -183,12 +186,18 @@ module.exports = runner.command(async tasks => {
     }
 
     if (isBabelProject()) {
+      const entryFiles = getListOfEntries(entry());
+      const transformOptions = shouldTransformHMRRuntime() ?
+        {plugins: [require.resolve('react-hot-loader/babel'), [path.resolve(__dirname, '../plugins/babel-plugin-transform-hmr-runtime'), {
+          entryFiles,
+        }]]} :
+        null;
       watch({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}, async changed => {
-        await babel({pattern: changed, target: 'dist', sourceMaps: true});
+        await babel({pattern: changed, target: 'dist', sourceMaps: true, ...transformOptions});
         await appServer();
       });
 
-      await babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist', sourceMaps: true});
+      await babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist', sourceMaps: true, ...transformOptions});
       return appServer();
     }
 

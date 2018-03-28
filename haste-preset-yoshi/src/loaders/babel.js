@@ -5,7 +5,7 @@ module.exports = () => ({
   test: /\.js?$/,
   use: [
     threadLoader(),
-    'babel-loader',
+    {loader: 'babel-loader'},
   ],
   include: unprocessedModules()
 });

@@ -111,6 +111,27 @@ describe('Aggregator: Start', () => {
           .then(content =>
             expect(content).to.not.contain(`path=__webpack_hmr`));
       });
+
+      it('should wrap react root element with react-hot-loader HOC', () => {
+        child = test
+          .setup({
+            'src/client.js': `import { render } from 'react-dom';
+              render(<App />, rootEl);`,
+            '.babelrc': `{"presets": ["${require.resolve('babel-preset-wix')}"]}`,
+            'package.json': fx.packageJson({
+              hmr: 'auto',
+              entry: './client.js',
+            }, {
+              react: '16.0.0'
+            })
+          })
+          .spawn('start');
+        return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
+          .then(content => {
+            expect(content).to.contain('module.hot.accept()');
+            expect(content).to.contain('react-hot-loader');
+          });
+      });
     });
 
     describe('Public path', () => {

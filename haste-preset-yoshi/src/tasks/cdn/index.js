@@ -7,11 +7,14 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const {decorate} = require('./server-api');
 const {shouldRunWebpack, filterNoise} = require('./utils');
+const {getListOfEntries} = require('../../utils');
+
 
 module.exports = ({
   port = '3000',
   ssl,
   hmr = true,
+  transformHMRRuntime,
   host = 'localhost',
   publicPath,
   statics,
@@ -33,7 +36,31 @@ module.exports = ({
         }
 
         webpackConfig.output.publicPath = publicPath;
-
+        if (transformHMRRuntime) {
+          const entryFiles = getListOfEntries(configuredEntry);
+          webpackConfig.module.rules.forEach(rule => {
+            if (Array.isArray(rule.use)) {
+              rule.use = rule.use.map(useItem => {
+                if (useItem === 'babel-loader') {
+                  useItem = {loader: 'babel-loader'};
+                }
+                if (useItem.loader === 'babel-loader') {
+                  if (!useItem.options) {
+                    useItem.options = {};
+                  }
+                  if (!useItem.options.plugins) {
+                    useItem.options.plugins = [];
+                  }
+                  useItem.options.plugins.push(
+                    require.resolve('react-hot-loader/babel'),
+                    [path.resolve(__dirname, '../../plugins/babel-plugin-transform-hmr-runtime'), {entryFiles}]
+                  );
+                }
+                return useItem;
+              });
+            }
+          });
+        }
         const bundler = filterNoise(webpack(webpackConfig));
 
         middlewares = [
