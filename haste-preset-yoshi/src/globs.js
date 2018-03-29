@@ -10,6 +10,7 @@ const assetsBase = 'src';
 
 module.exports = {
   base: () => base,
+  dist: ({esTarget} = {}) => esTarget ? esModulesDist : dist,
   assetsBase: () => assetsBase,
   assetsLegacyBase: () => assetsLegacyBase,
   statics: () => statics,
@@ -22,7 +23,6 @@ module.exports = {
   multipleModules: {
     clientDist: () => dist,
   },
-  esModulesDist: () => esModulesDist,
   tslint: () => [`${base}/**/*.ts{,x}`],
   less: () => [`${base}/**/*.less`, `!${base}/assets/**/*`],
   sass: () => [`${base}/**/*.scss`, `!${base}/assets/**/*`],

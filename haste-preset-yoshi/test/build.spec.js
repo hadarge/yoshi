@@ -151,6 +151,8 @@ describe('Aggregator: Build', () => {
         .setup({
           '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", { "modules": false }]]}`,
           'src/a.js': 'export default "I\'m a module!";',
+          'src/a.scss': 'body { background: red; }',
+          'src/assets/file': '1',
           'package.json': `{
             "module": "dist/es/src/a.js",
             "yoshi": {
@@ -163,7 +165,9 @@ describe('Aggregator: Build', () => {
       expect(resp.code).to.equal(0);
       expect(test.list('dist')).to.include.members(['src', 'statics', 'es']);
       expect(test.content('dist/es/src/a.js')).to.contain('export default');
+      expect(test.list('dist/es/src/assets')).to.contain('file');
       expect(test.content('dist/src/a.js')).to.contain('exports.default =');
+      expect(test.list('dist/src')).to.contain('a.scss');
     });
 
     it('should not create `/es` directory if no `module` field in `package.json` was specified and no commonjs plugin added', () => {
