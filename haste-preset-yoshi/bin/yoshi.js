@@ -6,7 +6,7 @@ const {BOOL} = prog;
 
 prog
   .version(version)
-  .description('haste-preset-yoshi');
+  .description('yoshi');
 
 prog.command('lint', 'Run the linter')
   .option('--fix', 'Automatically fix lint problems')

@@ -12,7 +12,7 @@ This preset mimics [Yoshi's](https://github.com/wix/yoshi#yoshi) behavior, every
 ## Installation
 
 ```sh
-$ npm install --save-dev haste-preset-yoshi
+$ npm install --save-dev yoshi
 ```
 
 ## Quickstart

@@ -16,7 +16,6 @@ Haste is a monorepo, meaning it is divided into independent sub-packages.
 We're using [Lerna](https://github.com/lerna/lerna) for the repo management.
 
 ```
-  ├── haste-task-* - private haste tasks
   └── haste-preset-yoshi - toolkit for yoshi's behavior
     ├── bin
     ├── config
