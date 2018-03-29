@@ -12,20 +12,28 @@ Moreover, for React application you should also use [react-hot-loader](https://g
 "plugins": ["react-hot-loader/babel"]
 ```
 
-2. Wrap your root component into `hot` HOC:
+2. Wrap your root component into `hot` HOC:  
+
+*App.js*
+```js
+import { hot } from 'react-hot-loader'
+const App = () => <div>Hello World!</div>
+
+export default hot(module)(App);
+```
+
+*index.js*
 ```js
 import { render } from 'react-dom';
-import { hot } from 'react-hot-loader'
+import App from './App';
 
-const App = () => <div>Hello World!</div>
-const Hot = hot(module)(App);
-
-render(Hot, rootEl);
+render(App, rootEl);
 ```
 
 3. Run `yoshi start`
 
 For more info read [react-hot-loader documentation](https://github.com/gaearon/react-hot-loader#install).
+
 
 ## `hmr: "auto"`
 
@@ -35,7 +43,7 @@ You can configure hmr manually, according to the steps above, or you can use the
 
 Just add this option to your config and yoshi will provide the transformations needed for your entry files to make HMR work in a correct way.
 
-During `yoshi start` command it will [add `babel-plugin-transform-hmr-runtime`](https://github.com/wix-private/wix-haste/pull/189). This plugin will add `react-hot-reload` to your imports, check `import`ed `from 'react-dom'` `render` method and try to wrap your root Component into `hot(module)(Component)` HOC provided by `react-hot-reload`.  
+During `yoshi start` command it will [add `babel-plugin-transform-hmr-runtime`](https://github.com/wix-private/wix-haste/pull/189). This plugin will add `react-hot-reload` to your imports, check `import`ed `from 'react-dom'` `render` method and try to wrap your root Component into special Higher Order Component provided by `react-hot-reload`.  
 It also adds:
 ```js
 if (module.hot) {

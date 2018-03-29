@@ -3,8 +3,9 @@
 const nodePath = require('path');
 
 const RENDER_NAME = 'render';
-const HOT_LOADER_METHOD = 'hot';
+// const HOT_LOADER_METHOD = 'hot';
 const HOT_LOADER_PATH = 'react-hot-loader';
+const HOT_LOADER_PROVIDER = 'AppContainer';
 
 module.exports = function ({types: t}) {
   const isRender = (type, renderName = RENDER_NAME) => {
@@ -45,6 +46,7 @@ module.exports = function ({types: t}) {
     return renderWasImported && isRender(path.node.callee.name, renderWasImported);
   };
 
+  // Should be useful for future, when we will implement `export default hot(module)(Component)`
   // const isHocImport = (path, declaration) => {
   //   return path.node.imported.name === HOT_LOADER_METHOD && declaration.node.source.value === HOT_LOADER_PATH;
   // };
@@ -62,30 +64,12 @@ module.exports = function ({types: t}) {
       path.node.callee.object.object.name === 'module';
   };
 
-  const wrapInArrowWithProps = (children, scope) => {
-    const props = scope.generateDeclaredUidIdentifier('props');
-    const restEl = t.restElement(props);
-    children.openingElement.attributes.push(
-      t.JSXSpreadAttribute(props)
+  const wrapInHMRProvider = (children, scope, containerName) => {
+    return t.JSXElement(
+      t.JSXOpeningElement(t.JSXIdentifier(containerName), [], false),
+      t.JSXClosingElement(t.JSXIdentifier(containerName)),
+      [children]
     );
-    return t.arrowFunctionExpression([restEl], children);
-  };
-
-  const wrapInHMRHoc = (children, scope) => {
-    return t.callExpression(
-      t.callExpression(
-        t.identifier(HOT_LOADER_METHOD),
-        [t.identifier('module')]
-      ),
-      [wrapInArrowWithProps(children, scope)]
-    );
-  };
-
-  const wrapInCreateClassCall = child => {
-    return t.callExpression(t.memberExpression(
-      t.identifier('React'),
-      t.identifier('createElement')
-    ), [child]);
   };
 
   const findRenderVariableFromProps = (props, variable) => {
@@ -95,16 +79,9 @@ module.exports = function ({types: t}) {
     return prop ? prop.value.name : null;
   };
 
-  // const findRenderVariableFromSpecifiers = specifiers => {
-  // 	const prop = props.find(property => {
-  //     return property.key.name === 'render';
-  //   });
-  //   return prop ? prop.value.name : null;
-  // };
-
-  const createNamedImport = (name, prop, path) => {
+  const createNamedImport = (nameIdentifier, uniqIdentifier, path) => {
     return t.importDeclaration(
-      [t.importSpecifier(t.identifier(name), t.identifier(name))],
+      [t.importSpecifier(uniqIdentifier, nameIdentifier)],
       t.stringLiteral(path)
     );
   };
@@ -115,7 +92,7 @@ module.exports = function ({types: t}) {
       this.renderWasImported = null;
       this.reactDOMVariableName = null;
       this.hotWasImported = false;
-      this.hotWasUsed = false;
+      this.hotProviderIdentifier = null;
     },
     visitor: {
       ImportDeclaration(path) {
@@ -138,9 +115,9 @@ module.exports = function ({types: t}) {
       },
       Program: {
         exit(path) {
-          if (!this.hotWasImported && this.hotWasUsed) {
+          if (!this.hotWasImported && this.hotProviderIdentifier) {
             path.node.body.unshift(
-              createNamedImport(HOT_LOADER_METHOD, HOT_LOADER_METHOD, HOT_LOADER_PATH)
+              createNamedImport(t.identifier(HOT_LOADER_PROVIDER), this.hotProviderIdentifier, HOT_LOADER_PATH, path.scope)
             );
             this.hotWasImported = true;
           }
@@ -182,9 +159,9 @@ module.exports = function ({types: t}) {
           if (!isValidTargetToWrap(reactRootElement)) {
             return;
           }
-          const wrappedReactRootElement = wrapInCreateClassCall(wrapInHMRHoc(reactRootElement.node, path.scope));
+          this.hotProviderIdentifier = path.scope.generateUidIdentifier(HOT_LOADER_PROVIDER);
+          const wrappedReactRootElement = wrapInHMRProvider(reactRootElement.node, path.scope, this.hotProviderIdentifier.name);
           reactRootElement.replaceWith(wrappedReactRootElement);
-          this.hotWasUsed = true;
           return;
         }
       }
