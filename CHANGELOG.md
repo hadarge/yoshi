@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0-beta.3 (March 28, 2018)
+* [#189](https://github.com/wix-private/wix-haste/pull/189) Add `hmr: "auto"` option, which customizes [webpack HMR](https://webpack.js.org/concepts/hot-module-replacement/) and [react-hot-loader](https://github.com/gaearon/react-hot-loader) automatically
+* [#191](https://github.com/wix-private/wix-haste/pull/191) Fix `test-setup` paths for wallaby configs
+* [#187](https://github.com/wix-private/wix-haste/pull/187) When compiling ES modules, move styles and assets to `es` directory.
+
 ## 2.0.0-beta.2 (March 19, 2018)
 * **(Breaking)** Remove `haste` as a bin alias, from now on only `yoshi` would be valid bin. (for example `haste start` would not be supported, use `yoshi start` instead)
 
