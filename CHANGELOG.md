@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0 (April 3, 2018)
+* [#194](https://github.com/wix-private/wix-haste/pull/194) Stop saving webpack stats on start command
+
 ## 1.1.2 (March 27, 2018)
 * [#168](https://github.com/wix-private/wix-haste/pull/168) Set default formatter for tslint to `stylish` and add `--format` option for `lint` command.
 
