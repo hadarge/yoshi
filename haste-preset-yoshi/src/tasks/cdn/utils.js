@@ -1,11 +1,9 @@
-const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const mkdirp = require('mkdirp');
 const {isPlainObject, isString} = require('lodash');
 
-module.exports.filterNoise = comp => {
-  comp.plugin('done', stats => {
+module.exports.logStats = compiler => {
+  compiler.plugin('done', stats => {
     logIfAny(stats.toString({
       colors: true,
       hash: false,
@@ -16,11 +14,9 @@ module.exports.filterNoise = comp => {
       timings: false,
       modules: false
     }));
-    mkdirp.sync(path.resolve('target'));
-    fs.writeFileSync('target/webpack-stats.json', JSON.stringify(stats.toJson()));
   });
 
-  return comp;
+  return compiler;
 };
 
 const readDir = patterns =>

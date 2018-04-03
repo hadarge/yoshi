@@ -6,9 +6,8 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const hotClient = require('webpack-hot-client');
 const {decorate} = require('./server-api');
-const {shouldRunWebpack, filterNoise, normalizeEntries} = require('./utils');
+const {shouldRunWebpack, logStats, normalizeEntries} = require('./utils');
 const {getListOfEntries} = require('../../utils');
-
 
 module.exports = ({
   port = '3000',
@@ -59,11 +58,15 @@ module.exports = ({
         }
 
         webpackConfig.entry = normalizeEntries(webpackConfig.entry);
-        const bundler = filterNoise(webpack(webpackConfig));
-        hotClient(bundler, {hot: Boolean(hmr), logLevel: 'warn'});
+
+        const compiler = webpack(webpackConfig);
+
+        hotClient(compiler, {hot: Boolean(hmr), logLevel: 'warn'});
+
+        logStats(compiler);
 
         middlewares = [
-          webpackDevMiddleware(bundler, {logLevel: 'silent'}),
+          webpackDevMiddleware(compiler, {logLevel: 'silent'}),
         ];
       }
     }
