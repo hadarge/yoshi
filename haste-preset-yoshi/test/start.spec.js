@@ -3,6 +3,7 @@
 const express = require('express');
 const {expect} = require('chai');
 const {killSpawnProcessAndHisChildren} = require('./helpers/process');
+const hooks = require('./helpers/hooks');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const fetch = require('node-fetch');
@@ -91,12 +92,13 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/client.js': `module.exports.wat = 'hmr';\n`,
             'package.json': fx.packageJson()
-          })
+          }, [hooks.installDependency('webpack-hot-client')])
           .spawn('start');
 
         return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
           .then(content =>
-            expect(content).to.contain('path=__webpack_hmr'));
+            expect(content).to.contain('"hot":true')
+          );
       });
 
       it('should create bundle with disabled hot module replacement if there is {hmr: false} in config', () => {
@@ -104,12 +106,12 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/client.js': `module.exports.wat = 'hmr';\n`,
             'package.json': fx.packageJson({hmr: false})
-          })
+          }, [hooks.installDependency('webpack-hot-client')])
           .spawn('start');
 
         return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
           .then(content =>
-            expect(content).to.not.contain(`path=__webpack_hmr`));
+            expect(content).to.contain(`"hot":false`));
       });
 
       it('should wrap react root element with react-hot-loader HOC', () => {

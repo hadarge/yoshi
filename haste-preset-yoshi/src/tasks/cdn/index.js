@@ -4,9 +4,9 @@ const https = require('https');
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const hotClient = require('webpack-hot-client');
 const {decorate} = require('./server-api');
-const {shouldRunWebpack, filterNoise} = require('./utils');
+const {shouldRunWebpack, filterNoise, normalizeEntries} = require('./utils');
 const {getListOfEntries} = require('../../utils');
 
 
@@ -30,12 +30,8 @@ module.exports = ({
       const webpackConfig = getConfig({debug: true, disableModuleConcatenation: true});
 
       if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {
-        if (hmr) {
-          webpackConfig.entry = addHotEntries(webpackConfig.entry);
-          webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
-        }
-
         webpackConfig.output.publicPath = publicPath;
+
         if (transformHMRRuntime) {
           const entryFiles = getListOfEntries(configuredEntry);
           webpackConfig.module.rules.forEach(rule => {
@@ -61,11 +57,13 @@ module.exports = ({
             }
           });
         }
+
+        webpackConfig.entry = normalizeEntries(webpackConfig.entry);
         const bundler = filterNoise(webpack(webpackConfig));
+        hotClient(bundler, {hot: Boolean(hmr), logLevel: 'warn'});
 
         middlewares = [
           webpackDevMiddleware(bundler, {logLevel: 'silent'}),
-          ...hmr ? [webpackHotMiddleware(bundler, {log: null})] : []
         ];
       }
     }
@@ -80,15 +78,6 @@ module.exports = ({
       err ? reject(err) : resolve());
   });
 };
-
-function addHotEntries(entries) {
-  return Object.keys(entries).reduce((acc, value) => {
-    acc[value] = [
-      `${require.resolve('webpack-hot-middleware/client')}?dynamicPublicPath=true&path=__webpack_hmr`
-    ].concat(entries[value]);
-    return acc;
-  }, {});
-}
 
 function sslCredentials(keyPath, certificatePath, passphrase) {
   const privateKey = fs.readFileSync(path.join(__dirname, keyPath), 'utf8');
