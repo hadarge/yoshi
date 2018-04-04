@@ -67,7 +67,7 @@ function getTag(name) {
 
 function modifyPackageJson(packageChanges) {
   const modifiedPkg = JSON.stringify(Object.assign({}, pkg, packageChanges), null, 2);
-  fs.writeFileSync(packageJsonPath, modifiedPkg);
+  fs.writeFileSync(packageJsonPath, modifiedPkg + '\n');
 }
 
 function publish(name) {
