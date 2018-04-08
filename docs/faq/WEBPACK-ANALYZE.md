@@ -4,7 +4,7 @@ __You can do one of the following:__
 
 1. use the built in webpack-bundle-analyzer by adding the `analyze` option to the build command:
 ```bash
-haste build --analyze
+yoshi build --analyze
 ```
 2. upload the `webpack-stats.prod.json` file to a website:
   - Go to https://chrisbateman.github.io/webpack-visualizer/

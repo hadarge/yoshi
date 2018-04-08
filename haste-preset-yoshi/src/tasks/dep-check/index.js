@@ -3,8 +3,8 @@ const depkeeper = require('depkeeper');
 
 module.exports = ({cwd = process.cwd()} = {}) => {
   return depkeeper({cwd})
-    .rule('{haste-preset-yoshi,wix-style-react}', {major: 1})
-    .rule('{haste-preset-yoshi,wix-style-react}')
+    .rule('{yoshi,wix-style-react}', {major: 1})
+    .rule('{yoshi,wix-style-react}')
     .rule('wix-bootstrap-*', {patch: 5})
     .checkRules()
     .then(([outdated1, outdated2, outdated3]) => {
