@@ -20,49 +20,49 @@ describe('haste-task-wix-dep-check', () => {
 
   after(() => npmServer.close());
 
-  context('haste-preset-yoshi & wix-style-react', () => {
+  context('yoshi & wix-style-react', () => {
 
     beforeEach(() => {
       setupProject(
         {'wix-style-react': '1.0.0'},
-        {'haste-preset-yoshi': '1.0.0'}
+        {yoshi: '1.0.0'}
       );
     });
 
-    it('should show a warning when haste-preset-yoshi & wix-style-react is at least 1 patch version behind', async () => {
+    it('should show a warning when yoshi & wix-style-react is at least 1 patch version behind', async () => {
       mockMeta('wix-style-react', ['1.0.0', '1.0.2']);
-      mockMeta('haste-preset-yoshi', ['1.0.0', '1.0.1']);
+      mockMeta('yoshi', ['1.0.0', '1.0.1']);
 
       const message = [
         'WARNING: some dependencies are a bit behind:',
         'wix-style-react@1.0.0 should be @1.0.2',
-        'haste-preset-yoshi@1.0.0 should be @1.0.1'
+        'yoshi@1.0.0 should be @1.0.1'
       ].join('\n');
 
       const warning = await task();
       expect(stripAnsi(warning)).to.equal(message);
     });
 
-    it('should show a warning when haste-preset-yoshi & wix-style-react is at least 1 version behind', async () => {
+    it('should show a warning when yoshi & wix-style-react is at least 1 version behind', async () => {
       mockMeta('wix-style-react', ['1.0.0', '1.1.0']);
-      mockMeta('haste-preset-yoshi', ['1.0.0', '2.0.0']);
+      mockMeta('yoshi', ['1.0.0', '2.0.0']);
 
       const message = [
         'WARNING: some dependencies are a bit behind:',
         'wix-style-react@1.0.0 should be @1.1.0',
-        'haste-preset-yoshi@1.0.0 should be @2.0.0'
+        'yoshi@1.0.0 should be @2.0.0'
       ].join('\n');
 
       const warning = await task();
       expect(stripAnsi(warning)).to.equal(message);
     });
 
-    it('should throw an error when haste-preset-yoshi is 2 major versions behind', async () => {
-      mockMeta('haste-preset-yoshi', ['1.0.0', '2.0.0', '3.0.0', '4.0.0']);
+    it('should throw an error when yoshi is 2 major versions behind', async () => {
+      mockMeta('yoshi', ['1.0.0', '2.0.0', '3.0.0', '4.0.0']);
 
       const message = [
         'ERROR: the following dependencies must be updated:',
-        'haste-preset-yoshi@1.0.0 must be at least @3.0.0'
+        'yoshi@1.0.0 must be at least @3.0.0'
       ].join('\n');
 
       const error = await invertPromise(task);
@@ -81,9 +81,9 @@ describe('haste-task-wix-dep-check', () => {
       expect(stripAnsi(error)).to.equal(message);
     });
 
-    it('should show nothing if haste-preset-yoshi & wix-style-react is up to date', async () => {
+    it('should show nothing if yoshi & wix-style-react is up to date', async () => {
       mockMeta('wix-style-react', '1.0.0');
-      mockMeta('haste-preset-yoshi', '1.0.0');
+      mockMeta('yoshi', '1.0.0');
 
       const message = await task();
       expect(message).to.be.undefined;
