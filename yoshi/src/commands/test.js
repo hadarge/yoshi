@@ -90,9 +90,13 @@ module.exports = runner.command(async tasks => {
 
     const config = merge(jestProjectConfig, {
       transform: {
-        '\\.jsx?$': require.resolve('../../config/jest-transformer')
-      },
+        '\\.jsx?$': require.resolve('../../config/jest-transformer'),
+        '\\.st.css?$': require.resolve('../../config/jest-stylable-transformer')
+      }
     });
+
+    config.transformIgnorePatterns = (config.transformIgnorePatterns || [])
+      .concat(['/node_modules/(?!(.*?\\.st\\.css$))']);
 
     if (inTeamCity()) {
       config.testResultsProcessor = require.resolve('jest-teamcity-reporter');

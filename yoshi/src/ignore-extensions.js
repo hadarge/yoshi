@@ -1,32 +1,12 @@
 const fs = require('fs');
 const graphqlLoader = require('graphql-tag/loader');
 const path = require('path');
+const {noop} = require('lodash');
 
-function conditionedProxy(predicate = () => {}) {
-  return new Proxy({}, {
-    get: (target, name) =>
-      predicate(name) ? conditionedProxy() : name
-  });
-}
+const {stylableToModuleFactory} = require('stylable-integration/dist/src/stylable-to-module-factory');
+const stylableToModule = stylableToModuleFactory(fs, require, null);
 
-function mockCssModules(module) {
-  module.exports = conditionedProxy(name => name === 'default');
-}
-
-function loadGraphQLModules(module) {
-  const query = fs.readFileSync(module.filename, 'utf-8');
-  const scopedLoader = graphqlLoader.bind({cacheable: noop});
-  const output = scopedLoader(query);
-  module.exports = eval(output); // eslint-disable-line no-eval
-}
-
-function mockMediaModules(module) {
-  module.exports = path.basename(module.filename);
-}
-
-function noop() {}
-
-require.extensions['.css'] = mockCssModules;
+require.extensions['.css'] = mockCss;
 require.extensions['.scss'] = mockCssModules;
 require.extensions['.less'] = mockCssModules;
 
@@ -41,3 +21,38 @@ require.extensions['.gif'] = mockMediaModules;
 
 require.extensions['.wav'] = mockMediaModules;
 require.extensions['.mp3'] = mockMediaModules;
+
+
+function mockCss(module, filename) {
+  return module.filename.endsWith('.st.css') ?
+    mockStylable(module, filename) :
+    mockCssModules(module);
+}
+
+function mockStylable(module, filename) {
+  const source = fs.readFileSync(filename).toString();
+  const code = stylableToModule(source, filename);
+  return module._compile(code, filename);
+}
+
+function mockCssModules(module) {
+  module.exports = conditionedProxy(name => name === 'default');
+}
+
+function conditionedProxy(predicate = () => {}) {
+  return new Proxy({}, {
+    get: (target, name) =>
+      predicate(name) ? conditionedProxy() : name
+  });
+}
+
+function loadGraphQLModules(module) {
+  const query = fs.readFileSync(module.filename, 'utf-8');
+  const scopedLoader = graphqlLoader.bind({cacheable: noop});
+  const output = scopedLoader(query);
+  module.exports = eval(output); // eslint-disable-line no-eval
+}
+
+function mockMediaModules(module) {
+  module.exports = path.basename(module.filename);
+}

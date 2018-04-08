@@ -185,7 +185,7 @@ Supports both `false` value *(default)*, `true` and a [configuration object](htt
   ```json
   "yoshi": {
     "splitChunks": true
-  }
+    }
   ```
 
 #### yoshi.cssModules
@@ -195,6 +195,14 @@ We use [css modules](https://github.com/css-modules/css-modules) as default. You
   ```json
   "yoshi": {
     "cssModules": false
+  }
+  ```
+
+You also use the `prod` keyword to only separate css on CI and production, this is useful for speeding up HMR on local dev environments.
+
+  ```json
+  "yoshi": {
+    "separateCss": "prod"
   }
   ```
 

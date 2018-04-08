@@ -266,6 +266,52 @@ describe('Aggregator: Test', () => {
       expect(res.code).to.equal(0);
       expect(res.stderr).to.contain('1 passed');
     });
+
+    describe('stylable integration', () => {
+      it('should support stylable', () => {
+        const res = test
+          .setup({
+            '__tests__/main.st.css': `
+              .someclass {
+                color: yellow;
+              }`,
+            '__tests__/foo.js': `
+              import style from './main.st.css';
+
+              it('pass', () => {
+                expect(style.someclass.indexOf('someclass') > -1).toBe(true);
+                expect(style('root').className.indexOf('root') > -1).toBe(true);
+              });
+          `,
+            'package.json': fx.packageJson()
+          })
+          .execute('test', ['--jest']);
+        expect(res.code).to.equal(0);
+        expect(res.stderr).to.contain('1 passed');
+      });
+
+      it('should load stylable files also from node_modules', () => {
+        const res = test
+          .setup({
+            'node_modules/pkg/main.st.css': `
+              .someclass {
+                color: yellow;
+              }`,
+            '__tests__/foo.js': `
+              import style from 'pkg/main.st.css';
+
+              it('pass', () => {
+                expect(style.someclass.indexOf('someclass') > -1).toBe(true);
+                expect(style('root').className.indexOf('root') > -1).toBe(true);
+              });
+          `,
+            'package.json': fx.packageJson()
+          })
+          .execute('test', ['--jest']);
+        expect(res.code).to.equal(0);
+        expect(res.stderr).to.contain('1 passed');
+      });
+    });
   });
 
   describe('--mocha', () => {
@@ -587,6 +633,30 @@ describe('Aggregator: Test', () => {
 
       expect(res.code).to.equal(0);
       expect(res.stdout).to.contain('3 passing');
+    });
+
+    describe('stylable integration', () => {
+      it('should transform stylable stylesheets', () => {
+        const res = test
+          .setup({
+            'src/main.st.css': `
+              .someclass {
+                color: yellow;
+              }`,
+            'src/style.spec.js': `
+              const assert = require('assert');
+              const style = require('./main.st.css').default;
+
+              it('pass', () => {
+                assert.equal(style.someclass.indexOf('someclass') > -1, true);
+                assert.equal(style('root').className.indexOf('root') > -1, true);
+              })`,
+            'package.json': fx.packageJson()
+          }, [hooks.installDependency('stylable')])
+          .execute('test', ['--mocha']);
+        expect(res.code).to.equal(0);
+        expect(res.stdout).to.contain('1 passing');
+      });
     });
   });
 
