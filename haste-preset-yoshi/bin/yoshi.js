@@ -1,67 +1,8 @@
 #!/usr/bin/env node
-const childProcess = require('child_process');
-const hasteToYoshi = require('haste-to-yoshi');
 const prog = require('caporal');
-const boxen = require('boxen');
-const chalk = require('chalk');
 const runCLI = require('../src/cli');
 const {version} = require('../package');
 const {BOOL} = prog;
-const isCI = process.env.CONTINUOUS_INTEGRATION ||
-  process.env.BUILD_NUMBER ||
-  process.env.TEAMCITY_VERSION;
-
-if (!isCI) {
-  if (process.argv.slice(2).includes('migrate')) {
-    const gitStatus = childProcess.execSync('git status --porcelain').toString();
-
-    if (gitStatus.trim() !== '') {
-      console.log(chalk.red('Please commit your changes before running the migration script'));
-      console.log();
-      console.log(gitStatus);
-      console.log();
-      process.exit(1);
-    }
-
-    const results = hasteToYoshi();
-
-    if (results.length === 0) {
-      console.log(chalk.cyan('You are already migrated 🦌  No changes has been made 🐢'));
-    } else {
-      console.log(chalk.green('migration success 🎉'));
-      console.log();
-      console.log(chalk.underline('migrated files: '));
-
-      results.forEach(file => {
-        console.log(chalk.cyan(file));
-      });
-    }
-
-    process.exit(0);
-  }
-
-  const message = `${chalk.red('ACTION REQUIRED 🔱')}
-
-We are going back to ${chalk.bold('yoshi')} 🦎
-${chalk.white('Same code, different name')}
-
-Want to know why❓ Read this: ${chalk.cyan('https://github.com/wix-private/fed-handbook/wiki/Yoshi-is-not-dead')}
-
-To migrate, run the following commands in your terminal:
-
-${chalk.bold(' npx yoshi migrate')}
-${chalk.bold(' rm -rf node_modules package-lock.json yarn.lock')}
-${chalk.bold(' npm install')}
-
-Commit and push your changes
-
-For more information - ${chalk.cyan('https://github.com/wix-private/haste-to-yoshi')}
-Let us know if anything goes wrong on ${chalk.bold('#fed-infra')}
-`;
-
-  console.log(boxen(message, {padding: 1, borderStyle: 'round'}));
-  process.exit(1);
-}
 
 prog
   .version(version)
