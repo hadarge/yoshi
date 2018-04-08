@@ -2,7 +2,7 @@
 HMR is a way to speed up development built with webpack. You could retain local state of your application after each time the code was changed, save some time and allow your bundler to update only needed modules, tweak styling, etc.
 
 ## `hmr: true` (default)
-In most cases enabling it in the config is not enough.  
+In most cases enabling it in the config is not enough.
 [You should configure it in a propper way](https://webpack.js.org/api/hot-module-replacement/)
 
 Moreover, for React application you should also use [react-hot-loader](https://github.com/gaearon/react-hot-loader) with `react-hot-loader/babel` plugin:
@@ -12,7 +12,7 @@ Moreover, for React application you should also use [react-hot-loader](https://g
 "plugins": ["react-hot-loader/babel"]
 ```
 
-2. Wrap your root component into `hot` HOC:  
+2. Wrap your root component into `hot` HOC:
 
 *App.js*
 ```js
@@ -43,7 +43,7 @@ You can configure hmr manually, according to the steps above, or you can use the
 
 Just add this option to your config and yoshi will provide the transformations needed for your entry files to make HMR work in a correct way.
 
-During `yoshi start` command it will [add `babel-plugin-transform-hmr-runtime`](https://github.com/wix-private/wix-haste/pull/189). This plugin will add `react-hot-reload` to your imports, check `import`ed `from 'react-dom'` `render` method and try to wrap your root Component into special Higher Order Component provided by `react-hot-reload`.  
+During `yoshi start` command it will [add `babel-plugin-transform-hmr-runtime`](https://github.com/wix-private/yoshi/pull/189). This plugin will add `react-hot-reload` to your imports, check `import`ed `from 'react-dom'` `render` method and try to wrap your root Component into special Higher Order Component provided by `react-hot-reload`.
 It also adds:
 ```js
 if (module.hot) {
@@ -54,4 +54,4 @@ to your entry files and initializes HMR.
 
 ### Caveats:
 - It doesn't work yet with `render(React.createElement('div'), el)`. Just with JSX elements. But we are working on this.
-- Despite that it isn't somehow affect production, it's not stable yet. So you could try it and [open an issue](https://github.com/wix-private/wix-haste/issues) in case of bugs. 🙏
+- Despite that it isn't somehow affect production, it's not stable yet. So you could try it and [open an issue](https://github.com/wix-private/yoshi/issues) in case of bugs. 🙏

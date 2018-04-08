@@ -1,15 +1,15 @@
 # Changelog
 
 ## 2.0.0-beta.3 (March 28, 2018)
-* [#189](https://github.com/wix-private/wix-haste/pull/189) Add `hmr: "auto"` option, which customizes [webpack HMR](https://webpack.js.org/concepts/hot-module-replacement/) and [react-hot-loader](https://github.com/gaearon/react-hot-loader) automatically
-* [#191](https://github.com/wix-private/wix-haste/pull/191) Fix `test-setup` paths for wallaby configs
-* [#187](https://github.com/wix-private/wix-haste/pull/187) When compiling ES modules, move styles and assets to `es` directory.
+* [#189](https://github.com/wix-private/yoshi/pull/189) Add `hmr: "auto"` option, which customizes [webpack HMR](https://webpack.js.org/concepts/hot-module-replacement/) and [react-hot-loader](https://github.com/gaearon/react-hot-loader) automatically
+* [#191](https://github.com/wix-private/yoshi/pull/191) Fix `test-setup` paths for wallaby configs
+* [#187](https://github.com/wix-private/yoshi/pull/187) When compiling ES modules, move styles and assets to `es` directory.
 
 ## 2.0.0-beta.2 (March 19, 2018)
 * **(Breaking)** Remove `haste` as a bin alias, from now on only `yoshi` would be valid bin. (for example `haste start` would not be supported, use `yoshi start` instead)
 
 ## 2.0.0-beta.1 (March 19, 2018)
-* [#181](https://github.com/wix-private/wix-haste/pull/181) Exclude the following tasks logs:
+* [#181](https://github.com/wix-private/yoshi/pull/181) Exclude the following tasks logs:
   1. `wixUpdateNodeVersion`
   2. `migrateScopePackages`
   3. `migrateBowerArtifactory`
@@ -20,19 +20,19 @@
   8. `maven-statics`
   9. `petri-specs`
 
-* [#182](https://github.com/wix-private/wix-haste/pull/182) Remove `yoshi-utils` as a dev dependency and replace with a local function
-* [#183](https://github.com/wix-private/wix-haste/pull/183) Copy `yoshi-runtime` package from original yoshi repository
+* [#182](https://github.com/wix-private/yoshi/pull/182) Remove `yoshi-utils` as a dev dependency and replace with a local function
+* [#183](https://github.com/wix-private/yoshi/pull/183) Copy `yoshi-runtime` package from original yoshi repository
 
 ## 2.0.0-beta.0 (March 15, 2018)
-* [#178](https://github.com/wix-private/wix-haste/pull/178) Add ES6 modules support
+* [#178](https://github.com/wix-private/yoshi/pull/178) Add ES6 modules support
 
 ## 2.0.0-alpha.2 (March 6, 2018)
-* [#171](https://github.com/wix-private/wix-haste/pull/171) Update release script to support `old` npm dist-tag.
-* [#172](https://github.com/wix-private/wix-haste/pull/172) Add `yoshi.config.js` support.
+* [#171](https://github.com/wix-private/yoshi/pull/171) Update release script to support `old` npm dist-tag.
+* [#172](https://github.com/wix-private/yoshi/pull/172) Add `yoshi.config.js` support.
 
 ## 1.2.0-alpha.1 (March 4, 2018)
-  * [#169](https://github.com/wix-private/wix-haste/pull/169) Add a custom publish script, the ci will automaticlly release after changing the version on `package.json`.
-  * [#157](https://github.com/wix-private/wix-haste/pull/157) Update webpack and related packages:
+  * [#169](https://github.com/wix-private/yoshi/pull/169) Add a custom publish script, the ci will automaticlly release after changing the version on `package.json`.
+  * [#157](https://github.com/wix-private/yoshi/pull/157) Update webpack and related packages:
     * Bump loaders: [css-loader](https://github.com/webpack-contrib/css-loader), [resolve-url-loader](https://github.com/bholloway/resolve-url-loader), [extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin), [file-loader](https://github.com/webpack-contrib/file-loader) and [ts-loader](https://github.com/TypeStrong/ts-loader).
     * Replace [happypack](https://github.com/amireh/happypack) with [thread-loader](https://github.com/webpack-contrib/thread-loader) (since it's faster and compatible with webpack 4).
     * Rename `commonsChunk` to `splitChunks` to match webpack's naming.
