@@ -39,6 +39,12 @@
     * Use `splitChunks.chunks: 'all'` by default (see more: [RIP CommonsChunkPlugin](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693)).
     * Disable [stylable-loader](github.com/wix/stylable-integration) (since it's incompatible with webpack 4).
 
+## 1.2.1 (April 8, 2018)
+start releasing on `yoshi` exclusively, update release script to publish one package, and updated relatived paths from `haste-preset-yoshi` to `yoshi`.
+
+## 1.2.0 (April 3, 2018)
+* [#194](https://github.com/wix-private/wix-haste/pull/194) Stop saving webpack stats on start command
+
 ## 1.1.2 (March 27, 2018)
 * [#168](https://github.com/wix-private/wix-haste/pull/168) Set default formatter for tslint to `stylish` and add `--format` option for `lint` command.
 
