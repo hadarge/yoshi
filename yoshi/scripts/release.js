@@ -1,14 +1,8 @@
-const fs = require('fs');
 const execSync = require('child_process').execSync;
 const chalk = require('chalk');
 const semver = require('semver');
-const intersection = require('lodash/intersection');
 const memoize = require('lodash/memoize');
 const get = require('lodash/get');
-
-const chosenPackages = process.argv.slice(2);
-const packagesToReleaseFrom = ['haste-preset-yoshi', 'yoshi'];
-const packagesToRelease = intersection(chosenPackages, packagesToReleaseFrom);
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org/';
 const LATEST_TAG = 'latest';
@@ -19,10 +13,11 @@ const packageJsonPath = require.resolve('../package.json');
 const pkg = require(packageJsonPath);
 const registry = get(pkg, 'publishConfig.registry', DEFAULT_REGISTRY);
 const version = get(pkg, 'version');
+const pkgName = get(pkg, 'name');
 
-const getPackageDetails = memoize(pkgName => {
+const getPackageDetails = memoize(name => {
   try {
-    return JSON.parse(execSync(`npm show ${pkgName} --registry=${registry} --json`));
+    return JSON.parse(execSync(`npm show ${name} --registry=${registry} --json`));
   } catch (error) {
     if (error.stderr.toString().includes('npm ERR! code E404')) {
       console.error(chalk.yellow('\nWarning: package not found. Possibly not published yet'));
@@ -33,12 +28,12 @@ const getPackageDetails = memoize(pkgName => {
   }
 });
 
-function getPublishedVersions(pkgName) {
-  return getPackageDetails(pkgName).versions || [];
+function getPublishedVersions(name) {
+  return getPackageDetails(name).versions || [];
 }
 
-function getLatestVersion(pkgName) {
-  return get(getPackageDetails(pkgName), 'dist-tags.latest');
+function getLatestVersion(name) {
+  return get(getPackageDetails(name), 'dist-tags.latest');
 }
 
 function shouldPublishPackage(name) {
@@ -65,14 +60,7 @@ function getTag(name) {
   return LATEST_TAG;
 }
 
-function modifyPackageJson(packageChanges) {
-  const modifiedPkg = JSON.stringify(Object.assign({}, pkg, packageChanges), null, 2);
-  fs.writeFileSync(packageJsonPath, modifiedPkg + '\n');
-}
-
 function publish(name) {
-  modifyPackageJson({name});
-
   const publishCommand = `npm publish --tag=${getTag(name)} --registry=${registry}`;
 
   console.log(chalk.magenta(`Running: "${publishCommand}" for ${name}@${version}`));
@@ -80,37 +68,25 @@ function publish(name) {
   execSync(publishCommand);
 }
 
-function release(packagesToRelease) {
-  console.log(`Starting the release process for ${packagesToRelease.join(' & ')}\n`);
+function release() {
+  console.log(`Starting the release process for ${chalk.bold(pkgName)}\n`);
 
-  const unpublishablePackages = packagesToRelease.filter(name => !shouldPublishPackage(name));
-
-  if (unpublishablePackages.length > 0) {
-    unpublishablePackages.forEach(name => {
-      console.log(chalk.blue(`${name}@${version} is already exist on registry ${registry}`));
-    });
-
+  if (!shouldPublishPackage(pkgName)) {
+    console.log(chalk.blue(`${pkgName}@${version} is already exist on registry ${registry}`));
     console.log('\nNo publish performed');
 
     process.exit(0);
   }
 
-  packagesToRelease.forEach(publish);
-
-  console.log(chalk.green(`\nPublish ${packagesToRelease.map(name => `"${name}@${version}"`).join(' & ')} succesfully to ${registry}`));
+  publish(pkgName);
+  console.log(chalk.green(`\nPublish "${pkgName}@${version}" succesfully to ${registry}`));
 }
 
-try {
-  // 1. verify that all packages can be published by checking the registry.
-  // 2. go over each package name:
-  // 2.1. replace the name in `package.json`.
-  // 2.2. choose a tag ->
-  // * `old` for a release that is less than latest (semver).
-  // * `next` for a prerelease (beta/alpha/rc).
-  // * `latest` as default.
-  // 2.3. perform npm publish using the chosen tag.
-  release(packagesToRelease);
-} finally {
-  // 3. write back the original `package.json`.
-  modifyPackageJson();
-}
+// 1. verify that the package can be published by checking the registry.
+//   (Can only publish versions that doesn't already exist)
+// 2. choose a tag ->
+// * `old` for a release that is less than latest (semver).
+// * `next` for a prerelease (beta/alpha/rc).
+// * `latest` as default.
+// 3. perform npm publish using the chosen tag.
+release(pkgName);
