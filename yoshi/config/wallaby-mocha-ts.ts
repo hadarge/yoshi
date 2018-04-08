@@ -24,6 +24,7 @@ module.exports = function (wallaby) {
       mocha.timeout(30000);
       process.env.IN_WALLABY = true;
       require('./test-setup');
+
     },
     env: {
       type: 'node',

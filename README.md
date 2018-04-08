@@ -1,6 +1,6 @@
-# Haste preset yoshi
+# Yoshi
 
-A Haste preset that supports building all kinds of applications in wix.
+A Toolkit that supports building all kinds of applications in wix.
 
 ## Features
 This preset mimics [Yoshi's](https://github.com/wix/yoshi#yoshi) behavior, every project that is driven by Yoshi can use this preset as a drop-in replacement.

@@ -6,7 +6,7 @@ const {BOOL} = prog;
 
 prog
   .version(version)
-  .description('yoshi');
+  .description('A toolkit for building applications in Wix');
 
 prog.command('lint', 'Run the linter')
   .option('--fix', 'Automatically fix lint problems')
