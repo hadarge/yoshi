@@ -12,22 +12,20 @@ Good pull requests, such as patches, improvements, and new features, are a fanta
 Please **ask first** if somebody else is already working on this or the core developers think your feature is in-scope. Generally always have a related issue with discussions for whatever you are including.
 
 ## Local Setup
-1. Clone the repo `git clone git@github.com:wix-private/wix-haste.git`.
-2. Run `npm run bootstrap` in the root wix-haste directory.
+1. Clone the repo `git clone git@github.com:wix-private/yoshi.git`.
+2. Run `npm install` in the yoshi directory.
 
 That's it, you're good to go.
 
-To make changes inside of the toolkit (yoshi preset) just `cd haste-preset-yoshi`:
-
 * `npm test` - Run yoshi's tests.
-* `npm run build` - Run [eslint](https://eslint.org/) on all packages with the following [rules](https://github.com/wix-private/wix-haste/blob/master/haste-preset-yoshi/.eslintrc).
+* `npm run build` - Run [eslint](https://eslint.org/) on all packages with the following [rules](https://github.com/wix-private/yoshi/blob/master/.eslintrc).
 * `npm run test:watch` Run the tests using watch mode.
 
 ## Adding a new feature to the yoshi toolkit
 1. Make sure the feature is tested.
-2. Document it in [README.md](https://github.com/wix-private/wix-haste/blob/master/README.md)
+2. Document it in [README.md](https://github.com/wix-private/yoshi/blob/master/README.md)
 
 ## Publish a new version
 The CI will automatically update the version if the build & test suite are passing, and the version on `package.json` is greater then the one on the registry.
 
-Don't forget to go over the [CHANGELOG.md](https://github.com/wix-private/wix-haste/blob/master/CHANGELOG.md) and insert the version's changes.
+Don't forget to go over the [CHANGELOG.md](https://github.com/wix-private/yoshi/blob/master/CHANGELOG.md) and insert the version's changes.
