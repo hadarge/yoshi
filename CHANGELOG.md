@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1 (April 8, 2018)
+start releasing on `yoshi` exclusively, update release script to publish one package, and updated relatived paths from `haste-preset-yoshi` to `yoshi`.
+
 ## 1.2.0 (April 3, 2018)
 * [#194](https://github.com/wix-private/wix-haste/pull/194) Stop saving webpack stats on start command
 
