@@ -1,18 +1,15 @@
 {
-  "name": "haste-preset-yoshi",
-  "version": "1.2.0",
+  "name": "yoshi",
+  "version": "1.2.1",
   "main": "./src/index.js",
   "bin": {
-    "haste": "./bin/yoshi.js",
     "yoshi": "./bin/yoshi.js"
   },
   "scripts": {
     "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js'",
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch",
     "build": "eslint .",
-    "customPublish": "node scripts/release.js haste-preset-yoshi yoshi",
-    "publish:yoshi": "node scripts/release.js yoshi",
-    "publish:haste-preset-yoshi": "node scripts/release.js haste-preset-yoshi"
+    "customPublish": "node scripts/release.js"
   },
   "dependencies": {
     "@wix/externalize-relative-module-loader": "~1.0.0",
