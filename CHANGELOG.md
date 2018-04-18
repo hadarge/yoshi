@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0-rc.0 (April 18, 2018)
+* :house_with_garden: Changes in the code structure, build configuration in CI and release script.
+
 ## 2.0.0-beta.3 (March 28, 2018)
 * [#189](https://github.com/wix-private/yoshi/pull/189) Add `hmr: "auto"` option, which customizes [webpack HMR](https://webpack.js.org/concepts/hot-module-replacement/) and [react-hot-loader](https://github.com/gaearon/react-hot-loader) automatically
 * [#191](https://github.com/wix-private/yoshi/pull/191) Fix `test-setup` paths for wallaby configs
