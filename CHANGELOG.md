@@ -1,5 +1,7 @@
 # Changelog
 
+# 2.0.0 (April 22, 2018)
+
 ## 2.0.0-rc.0 (April 18, 2018)
 * :house_with_garden: Changes in the code structure, build configuration in CI and release script.
 
