@@ -3,11 +3,11 @@ module.exports = function (wallaby) {
   return {
     files: [
       {pattern: 'src/templates/**', instrument: false},
-      {pattern: 'test/**/*.spec.[j|t]s', ignore: true},
-      {pattern: 'test/**/*.spec.[j|t]sx', ignore: true},
+      {pattern: 'test/**/*.+(spec|it).[j|t]s', ignore: true},
+      {pattern: 'test/**/*.+(spec|it).[j|t]sx', ignore: true},
       {pattern: 'test/**/*.e2e.[j|t]s', ignore: true},
-      {pattern: 'src/**/*.spec.[j|t]s', ignore: true},
-      {pattern: 'src/**/*.spec.[j|t]sx', ignore: true},
+      {pattern: 'src/**/*.+(spec|it).[j|t]s', ignore: true},
+      {pattern: 'src/**/*.+(spec|it).[j|t]sx', ignore: true},
       {pattern: 'src/assets/**', instrument: false},
       {pattern: 'src/**', instrument: true},
       {pattern: 'target/**/*.json', instrument: false},
@@ -22,10 +22,10 @@ module.exports = function (wallaby) {
       'src/**/*.scss'
     ],
     tests: [
-      {pattern: 'test/**/*.spec.[j|t]s'},
-      {pattern: 'test/**/*.spec.[j|t]sx'},
-      {pattern: 'src/**/*.spec.[j|t]s'},
-      {pattern: 'src/**/*.spec.[j|t]sx'},
+      {pattern: 'test/**/*.+(spec|it).[j|t]s'},
+      {pattern: 'test/**/*.+(spec|it).[j|t]sx'},
+      {pattern: 'src/**/*.+(spec|it).[j|t]s'},
+      {pattern: 'src/**/*.+(spec|it).[j|t]sx'},
     ],
     compilers: {
       '**/*.js{,x}': wallaby.compilers.babel({

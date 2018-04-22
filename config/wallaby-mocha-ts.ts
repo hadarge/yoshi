@@ -3,20 +3,20 @@ module.exports = function (wallaby) {
 
   return {
     files: [
-      {pattern: 'test/**/*.spec.ts*', ignore: true},
+      {pattern: 'test/**/*.+(spec|it).ts*', ignore: true},
       {pattern: 'test/**/*.e2e.ts*', ignore: true},
       {pattern: 'test/**/*.ts'},
       {pattern: 'src/assets/**', instrument: false},
       {pattern: 'src/**', instrument: true},
-      {pattern: 'src/**/*.spec.ts*', ignore: true},
+      {pattern: 'src/**/*.+(spec|it).ts*', ignore: true},
       {pattern: 'target/**/*.json', instrument: false},
       {pattern: 'templates/**', instrument: false},
       {pattern: 'index.ts', instrument: true},
       {pattern: 'package.json', instrument: false}
     ],
     tests: [
-      {pattern: 'test/**/*.spec.ts*'},
-      {pattern: 'src/**/*.spec.ts*'}
+      {pattern: 'test/**/*.+(spec|it).ts*'},
+      {pattern: 'src/**/*.+(spec|it).ts*'}
     ],
     testFramework: 'mocha',
     setup(wallaby) {

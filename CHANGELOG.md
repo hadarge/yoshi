@@ -1,5 +1,7 @@
 # Changelog
 
+* [#209](https://github.com/wix-private/yoshi/pull/209) Add support for 'it' test suffix for wallaby
+
 # 2.0.0 (April 22, 2018)
 
 ## 2.0.0-rc.0 (April 18, 2018)
