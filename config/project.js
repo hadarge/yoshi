@@ -1,10 +1,13 @@
 const path = require('path');
 const _ = require('lodash');
 const packagejson = require('./get-project-pkg');
+const lookupConfig = require('./lookup-config');
 const globs = require('../src/globs');
 
-const config = packagejson.yoshi || {};
+// Search for yoshi configuration from the file system.
+const config = lookupConfig();
 
+// Get configuration from the cache.
 const getConfig = (key, defaultVal = false) => {
   return _.get(config, key, defaultVal);
 };
@@ -36,6 +39,7 @@ module.exports = {
   },
   isUniversalProject: () => getConfig('universalProject'),
   isAngularProject: () => !!_.get(packagejson, 'dependencies.angular', false) || !!_.get(packagejson, 'peerDependencies.angular', false),
+  isReactProject: () => !!_.get(packagejson, 'dependencies.react', false) || !!_.get(packagejson, 'peerDependencies.react', false),
   isEsModule: () => !!_.get(packagejson, 'module', false),
   servers: {
     cdn: {
@@ -45,7 +49,7 @@ module.exports = {
     }
   },
   entry: () => getConfig('entry'),
-  commonsChunk: () => getConfig('commonsChunk', false),
+  splitChunks: () => getConfig('splitChunks', false),
   defaultEntry: () => './client',
   separateCss: () => getConfig('separateCss', true),
   cssModules: () => getConfig('cssModules', true),

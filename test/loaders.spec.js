@@ -357,7 +357,7 @@ describe('Loaders', () => {
     });
   });
 
-  describe('Stylable', () => {
+  describe.skip('Stylable', () => {
     afterEach(() => test.teardown());
 
     describe('client', () => {

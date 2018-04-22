@@ -68,6 +68,11 @@ module.exports.isBabelProject = () => {
   return !!glob.sync(path.resolve('.babelrc')).length || !!project.babel();
 };
 
+module.exports.shouldExportModule = () => {
+  const pkg = tryRequire(path.resolve('package.json'));
+  return !!(pkg && pkg.module);
+};
+
 module.exports.shouldRunLess = () => {
   return glob.sync(`${globs.base()}/**/*.less`).length > 0;
 };
@@ -127,8 +132,8 @@ module.exports.migrateToScopedPackages = () =>
 
 module.exports.shouldRunStylelint = () => {
   return cosmiconfig('stylelint')
-    .load(process.cwd())
-    .then(result => !!result);
+    .load()
+    .then(Boolean);
 };
 
 module.exports.getMochaReporter = () => {
@@ -145,4 +150,20 @@ module.exports.getMochaReporter = () => {
 
 module.exports.hasProtractorConfigFile = () => {
   return exists(path.resolve('protractor.conf.js'));
+};
+
+module.exports.getListOfEntries = entry => {
+  if (typeof entry === 'string') {
+    return [path.resolve('src', entry)];
+  } else if (typeof entry === 'object') {
+    return Object.keys(entry).map(name => {
+      const file = entry[name];
+      return path.resolve('src', file);
+    });
+  }
+  return [];
+};
+
+module.exports.shouldTransformHMRRuntime = () => {
+  return project.hmr() === 'auto' && project.isReactProject();
 };

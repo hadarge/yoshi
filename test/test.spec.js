@@ -57,7 +57,7 @@ describe('Aggregator: Test', () => {
   describe('--protractor', () => {
     it(`should run protractor with express that serves static files from client dep
         if protractor.conf is present, according to dist/test/**/*.e2e.js glob`, () => {
-      const res = test
+        const res = test
           .setup({
             'protractor.conf.js': fx.protractorConf({cdnPort: 3200}),
             'dist/test/some.e2e.js': `
@@ -72,12 +72,12 @@ describe('Aggregator: Test', () => {
           })
           .execute('test', ['--protractor']);
 
-      expect(res.code).to.equal(0);
-      expect(res.stdout).to.contains('protractor');
+        expect(res.code).to.equal(0);
+        expect(res.stdout).to.contains('protractor');
         // note: we've setup a real integration, keep it in order
         // to see the full integration between server and client.
-      expect(res.stdout).to.contain('1 spec, 0 failures');
-    });
+        expect(res.stdout).to.contain('1 spec, 0 failures');
+      });
 
     it(`should use protractor-browser-logs and fail if there are any console errors on the browser`, () => {
       const res = test
@@ -277,7 +277,7 @@ describe('Aggregator: Test', () => {
               }`,
             '__tests__/foo.js': `
               import style from './main.st.css';
-  
+
               it('pass', () => {
                 expect(style.someclass.indexOf('someclass') > -1).toBe(true);
                 expect(style('root').className.indexOf('root') > -1).toBe(true);
@@ -804,8 +804,8 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--karma']);
 
         expect(res.code).to.equal(0);
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1);');
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2);');
+        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1)');
+        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2)');
       });
 
       it('should consider custom specs.browser globs if configured', () => {
@@ -824,8 +824,8 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--karma']);
 
         expect(res.code).to.equal(0);
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1);');
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2);');
+        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1)');
+        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2)');
       });
 
       it('should not include css into a specs bundle', () => {

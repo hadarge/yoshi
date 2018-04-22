@@ -18,6 +18,8 @@ const {
   isBabelProject,
   shouldRunLess,
   shouldRunSass,
+  getListOfEntries,
+  shouldTransformHMRRuntime,
   suffix,
   watch,
 } = require('../utils');
@@ -61,10 +63,10 @@ module.exports = runner.command(async tasks => {
 
   await Promise.all([
     clean({pattern: `{dist,target}/*`}),
-    wixUpdateNodeVersion({}, {title: 'update-node-version'}),
-    migrateScopePackages({}, {title: 'scope-packages-migration'}),
-    migrateBowerArtifactory({}, {title: 'migrate-bower-artifactory'}),
-    wixDepCheck({}, {title: 'dep-check'})
+    wixUpdateNodeVersion({}, {title: 'update-node-version', log: false}),
+    migrateScopePackages({}, {title: 'scope-packages-migration', log: false}),
+    migrateBowerArtifactory({}, {title: 'migrate-bower-artifactory', log: false}),
+    wixDepCheck({}, {title: 'dep-check', log: false})
   ]);
 
   await Promise.all([
@@ -74,11 +76,11 @@ module.exports = runner.command(async tasks => {
       `${globs.base()}/assets/**/*`,
       `${globs.base()}/**/*.{ejs,html,vm}`,
       `${globs.base()}/**/*.{css,json,d.ts}`,
-    ], target: 'dist'}, {title: 'copy-server-assets'}),
+    ], target: 'dist'}, {title: 'copy-server-assets', log: false}),
     copy({pattern: [
       `${globs.assetsLegacyBase()}/assets/**/*`,
       `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
-    ], target: 'dist/statics'}, {title: 'copy-static-assets-legacy'}),
+    ], target: 'dist/statics'}, {title: 'copy-static-assets-legacy', log: false}),
     copy({
       pattern: [
         `assets/**/*`,
@@ -86,7 +88,7 @@ module.exports = runner.command(async tasks => {
       ],
       source: globs.assetsBase(),
       target: 'dist/statics'
-    }, {title: 'copy-static-assets'}),
+    }, {title: 'copy-static-assets', log: false}),
     wixCdn({
       port: servers.cdn.port(),
       ssl: servers.cdn.ssl(),
@@ -96,12 +98,13 @@ module.exports = runner.command(async tasks => {
       configuredEntry: entry(),
       defaultEntry: defaultEntry(),
       hmr: hmr(),
+      transformHMRRuntime: shouldTransformHMRRuntime()
     }, {title: 'cdn'}),
-    wixPetriSpecs({config: petriSpecsConfig()}, {title: 'petri-specs'}),
+    wixPetriSpecs({config: petriSpecsConfig()}, {title: 'petri-specs', log: false}),
     wixMavenStatics({
       clientProjectName: clientProjectName(),
       staticsDir: clientFilesPath()
-    }, {title: 'maven-statics'})
+    }, {title: 'maven-statics', log: false})
   ]);
 
   if (shouldRunTests) {
@@ -183,12 +186,18 @@ module.exports = runner.command(async tasks => {
     }
 
     if (isBabelProject()) {
+      const entryFiles = getListOfEntries(entry());
+      const transformOptions = shouldTransformHMRRuntime() ?
+        {plugins: [require.resolve('react-hot-loader/babel'), [path.resolve(__dirname, '../plugins/babel-plugin-transform-hmr-runtime'), {
+          entryFiles,
+        }]]} :
+        null;
       watch({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}, async changed => {
-        await babel({pattern: changed, target: 'dist', sourceMaps: true});
+        await babel({pattern: changed, target: 'dist', sourceMaps: true, ...transformOptions});
         await appServer();
       });
 
-      await babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist', sourceMaps: true});
+      await babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist', sourceMaps: true, ...transformOptions});
       return appServer();
     }
 

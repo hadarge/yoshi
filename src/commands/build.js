@@ -1,4 +1,3 @@
-const path = require('path');
 const {createRunner} = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const parseArgs = require('minimist');
@@ -14,6 +13,7 @@ const {
   watchMode,
   isTypescriptProject,
   isBabelProject,
+  shouldExportModule,
   shouldRunWebpack,
   shouldRunLess,
   shouldRunSass,
@@ -51,38 +51,24 @@ module.exports = runner.command(async tasks => {
 
   await Promise.all([
     clean({pattern: `{dist,target}/*`}),
-    wixUpdateNodeVersion({}, {title: 'update-node-version'}),
-    migrateScopePackages({}, {title: 'scope-packages-migration'}),
-    migrateBowerArtifactory({}, {title: 'migrate-bower-artifactory'}),
-    wixDepCheck({}, {title: 'dep-check'})
+    wixUpdateNodeVersion({}, {title: 'update-node-version', log: false}),
+    migrateScopePackages({}, {title: 'scope-packages-migration', log: false}),
+    migrateBowerArtifactory({}, {title: 'migrate-bower-artifactory', log: false}),
+    wixDepCheck({}, {title: 'dep-check', log: false})
   ]);
 
+  const esTarget = shouldExportModule();
+
   await Promise.all([
-    transpileJavascript().then(() => transpileNgAnnotate()),
-    ...transpileCss(),
-    copy({pattern: [
-      `${globs.base()}/assets/**/*`,
-      `${globs.base()}/**/*.{ejs,html,vm}`,
-      `${globs.base()}/**/*.{css,json,d.ts}`,
-    ], target: 'dist'}, {title: 'copy-server-assets'}),
-    copy({pattern: [
-      `${globs.assetsLegacyBase()}/assets/**/*`,
-      `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
-    ], target: 'dist/statics'}, {title: 'copy-static-assets-legacy'}),
-    copy({
-      pattern: [
-        `assets/**/*`,
-        `**/*.{ejs,html,vm}`,
-      ],
-      source: globs.assetsBase(),
-      target: 'dist/statics'
-    }, {title: 'copy-static-assets'}),
+    transpileJavascript({esTarget}).then(() => transpileNgAnnotate()),
+    ...transpileCss({esTarget}),
+    ...copyAssets({esTarget}),
     bundle(),
-    wixPetriSpecs({config: petriSpecsConfig()}, {title: 'petri-specs'}),
+    wixPetriSpecs({config: petriSpecsConfig()}, {title: 'petri-specs', log: false}),
     wixMavenStatics({
       clientProjectName: clientProjectName(),
       staticsDir: clientFilesPath()
-    }, {title: 'maven-statics'})
+    }, {title: 'maven-statics', log: false})
   ]);
 
   function bundle() {
@@ -105,21 +91,71 @@ module.exports = runner.command(async tasks => {
     return Promise.resolve();
   }
 
-  function transpileCss() {
+  function copyServerAssets({esTarget} = {}) {
+    return copy({pattern: [
+      `${globs.base()}/assets/**/*`,
+      `${globs.base()}/**/*.{ejs,html,vm}`,
+      `${globs.base()}/**/*.{css,json,d.ts}`,
+    ], target: globs.dist({esTarget})}, {title: 'copy-server-assets', log: false});
+  }
+
+  function copyLegacyAssets() {
+    return copy({pattern: [
+      `${globs.assetsLegacyBase()}/assets/**/*`,
+      `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
+    ], target: 'dist/statics'}, {title: 'copy-static-assets-legacy', log: false});
+  }
+
+  function copyStaticAssets() {
+    return copy({
+      pattern: [
+        `assets/**/*`,
+        `**/*.{ejs,html,vm}`,
+      ],
+      source: globs.assetsBase(),
+      target: 'dist/statics'
+    }, {title: 'copy-static-assets', log: false});
+  }
+
+  function copyAssets({esTarget} = {}) {
     return [
-      !shouldRunSass() ? null :
-        sass({
-          pattern: globs.sass(),
-          target: 'dist',
-          options: {includePaths: ['node_modules', 'node_modules/compass-mixins/lib']}
-        }),
-      !shouldRunLess() ? null :
-        less({
-          pattern: globs.less(),
-          target: 'dist',
-          options: {paths: ['.', 'node_modules']},
-        }),
-    ].filter(a => a);
+      copyServerAssets(),
+      esTarget && copyServerAssets({esTarget}),
+      copyLegacyAssets(),
+      copyStaticAssets(),
+    ].filter(Boolean);
+  }
+
+  function transpileSass({esTarget} = {}) {
+    return sass({
+      pattern: globs.sass(),
+      target: globs.dist({esTarget}),
+      options: {includePaths: ['node_modules', 'node_modules/compass-mixins/lib']}
+    });
+  }
+
+  function transpileLess({esTarget} = {}) {
+    return less({
+      pattern: globs.less(),
+      target: globs.dist({esTarget}),
+      options: {paths: ['.', 'node_modules']},
+    });
+  }
+
+  function transpileCss({esTarget} = {}) {
+    const result = [];
+    if (shouldRunSass()) {
+      result.push(...[
+        transpileSass(),
+        esTarget && transpileSass({esTarget}),
+      ]);
+    } if (shouldRunLess()) {
+      result.push(...[
+        transpileLess(),
+        esTarget && transpileLess({esTarget}),
+      ]);
+    }
+    return result.filter(Boolean);
   }
 
   function transpileNgAnnotate() {
@@ -130,13 +166,23 @@ module.exports = runner.command(async tasks => {
     }
   }
 
-  function transpileJavascript() {
+  function transpileJavascript({esTarget} = {}) {
     if (isTypescriptProject() && runIndividualTranspiler()) {
       return typescript({project: 'tsconfig.json', rootDir: '.', outDir: './dist/'});
     }
 
     if (isBabelProject() && runIndividualTranspiler()) {
-      return babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist'});
+      const transformOptions = {pattern: globs.babel(), target: globs.dist()};
+      const babelTransformsChain = [];
+      if (esTarget) {
+        transformOptions.plugins = [
+          require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
+        ];
+        babelTransformsChain.push(
+          babel({pattern: globs.babel(), target: globs.dist({esTarget})})
+        );
+      }
+      return Promise.all([...babelTransformsChain, babel(transformOptions)]);
     }
 
     return Promise.resolve();

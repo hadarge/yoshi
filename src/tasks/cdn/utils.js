@@ -1,5 +1,6 @@
 const path = require('path');
 const glob = require('glob');
+const {isPlainObject, isString} = require('lodash');
 
 module.exports.logStats = compiler => {
   compiler.plugin('done', stats => {
@@ -28,6 +29,19 @@ module.exports.shouldRunWebpack = (webpackConfig, defaultEntry, configuredEntry)
   const defaultEntryPath = path.join(webpackConfig.context, defaultEntry);
   return configuredEntry || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
 };
+
+const normalizeEntries = entries => {
+  if (isString(entries)) {
+    return [entries];
+  } else if (isPlainObject(entries)) {
+    return Object.keys(entries).reduce((total, key) => {
+      total[key] = normalizeEntries(entries[key]);
+      return total;
+    }, {});
+  }
+  return entries;
+};
+module.exports.normalizeEntries = normalizeEntries;
 
 function logIfAny(log) {
   if (log) {

@@ -3,6 +3,7 @@
 const express = require('express');
 const {expect} = require('chai');
 const {killSpawnProcessAndHisChildren} = require('./helpers/process');
+const hooks = require('./helpers/hooks');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const fetch = require('node-fetch');
@@ -91,12 +92,13 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/client.js': `module.exports.wat = 'hmr';\n`,
             'package.json': fx.packageJson()
-          })
+          }, [hooks.installDependency('webpack-hot-client')])
           .spawn('start');
 
         return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
           .then(content =>
-            expect(content).to.contain(`if (false) {\n  throw new Error("[HMR] Hot Module Replacement is disabled.");`));
+            expect(content).to.contain('"hot":true')
+          );
       });
 
       it('should create bundle with disabled hot module replacement if there is {hmr: false} in config', () => {
@@ -104,12 +106,33 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/client.js': `module.exports.wat = 'hmr';\n`,
             'package.json': fx.packageJson({hmr: false})
-          })
+          }, [hooks.installDependency('webpack-hot-client')])
           .spawn('start');
 
         return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
           .then(content =>
-            expect(content).to.not.contain(`if (false) {\n  throw new Error("[HMR] Hot Module Replacement is disabled.");`));
+            expect(content).to.contain(`"hot":false`));
+      });
+
+      it('should wrap react root element with react-hot-loader HOC', () => {
+        child = test
+          .setup({
+            'src/client.js': `import { render } from 'react-dom';
+              render(<App />, rootEl);`,
+            '.babelrc': `{"presets": ["${require.resolve('babel-preset-wix')}"]}`,
+            'package.json': fx.packageJson({
+              hmr: 'auto',
+              entry: './client.js',
+            }, {
+              react: '16.0.0'
+            })
+          })
+          .spawn('start');
+        return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
+          .then(content => {
+            expect(content).to.contain('module.hot.accept()');
+            expect(content).to.contain('react-hot-loader');
+          });
       });
     });
 

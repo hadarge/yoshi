@@ -2,6 +2,7 @@ const path = require('path');
 
 const dist = 'dist';
 const statics = path.join(dist, 'statics');
+const esModulesDist = path.join(dist, 'es');
 const test = 'test';
 const base = `{app,src,bin,${test},testkit,stories}`;
 const assetsLegacyBase = `{app,bin,${test},testkit,stories}`;
@@ -9,6 +10,7 @@ const assetsBase = 'src';
 
 module.exports = {
   base: () => base,
+  dist: ({esTarget} = {}) => esTarget ? esModulesDist : dist,
   assetsBase: () => assetsBase,
   assetsLegacyBase: () => assetsLegacyBase,
   statics: () => statics,
@@ -19,7 +21,7 @@ module.exports = {
     clientDist: () => statics
   },
   multipleModules: {
-    clientDist: () => dist
+    clientDist: () => dist,
   },
   tslint: () => [`${base}/**/*.ts{,x}`],
   less: () => [`${base}/**/*.less`, `!${base}/assets/**/*`],

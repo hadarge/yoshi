@@ -13,6 +13,7 @@ describe('Aggregator: e2e', () => {
   beforeEach(() => {
     test = tp.create();
   });
+
   afterEach(() => test.teardown());
 
   describe('should run protractor with a cdn server', function () {
@@ -26,7 +27,6 @@ describe('Aggregator: e2e', () => {
         })
         .execute('test', ['--protractor'], Object.assign({}, outsideTeamCity, {IS_BUILD_AGENT: true, CHROMEDRIVER_VERSION: undefined}));
       const chromedriverPath = path.resolve('node_modules', 'protractor', 'node_modules', 'webdriver-manager', 'selenium', 'chromedriver_2.29.zip');
-
       expect(res.code).to.equal(1);
       expect(exists(chromedriverPath)).to.be.true;
     });

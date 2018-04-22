@@ -145,6 +145,50 @@ describe('Aggregator: Build', () => {
     });
   });
 
+  describe('ES modules', () => {
+    it('should not transpile modules for `/es` content if `module` field in `package.json` was specified', () => {
+      const resp = test
+        .setup({
+          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", { "modules": false }]]}`,
+          'src/a.js': 'export default "I\'m a module!";',
+          'src/a.scss': 'body { background: red; }',
+          'src/assets/file': '1',
+          'package.json': `{
+            "module": "dist/es/src/a.js",
+            "yoshi": {
+              "entry": "./a.js"
+            }
+          }`,
+          'pom.xml': fx.pom()
+        })
+        .execute('build');
+      expect(resp.code).to.equal(0);
+      expect(test.list('dist')).to.include.members(['src', 'statics', 'es']);
+      expect(test.content('dist/es/src/a.js')).to.contain('export default');
+      expect(test.list('dist/es/src/assets')).to.contain('file');
+      expect(test.content('dist/src/a.js')).to.contain('exports.default =');
+      expect(test.list('dist/src')).to.contain('a.scss');
+    });
+
+    it('should not create `/es` directory if no `module` field in `package.json` was specified and no commonjs plugin added', () => {
+      const resp = test
+        .setup({
+          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", {"modules": false}]]}`,
+          'src/a.js': 'export default "I\'m a module!";',
+          'package.json': `{
+            "yoshi": {
+              "entry": "./a.js"
+            }
+          }`,
+          'pom.xml': fx.pom()
+        })
+        .execute('build');
+      expect(resp.code).to.equal(0);
+      expect(test.list('dist')).to.not.include('es');
+      expect(test.content('dist/src/a.js')).to.contain('export default');
+    });
+  });
+
   describe('yoshi-babel', () => {
     it('should use yoshi-babel', () => {
       const resp = test
@@ -271,14 +315,18 @@ describe('Aggregator: Build', () => {
   });
 
   describe('Commons chunk plugin', () => {
-    it('should generate an additional commons.bundle.js when commonsChunks option in package.json is true, commons chunk should have the common parts and the other chunks should not', () => {
+    it('should generate an additional commons.bundle.js when `splitChunks` option in package.json is a configuration object, commons chunk should have the common parts and the other chunks should not', () => {
       const res = test
         .setup({
           'src/dep.js': `module.exports = function(a){return a + 1;};`,
           'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1);`,
           'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1);`,
           'package.json': fx.packageJson({
-            commonsChunk: true,
+            splitChunks: {
+              chunks: 'initial',
+              minSize: 0,
+              name: 'commons'
+            },
             entry: {
               first: './app1.js',
               second: './app2.js'
@@ -290,10 +338,10 @@ describe('Aggregator: Build', () => {
       expect(res.code).to.equal(0);
       expect(test.list('dist/statics')).to.contain('first.bundle.js');
       expect(test.list('dist/statics')).to.contain('second.bundle.js');
-      expect(test.list('dist/statics')).to.contain('commons.bundle.js');
-      expect(test.list('dist/statics')).to.contain('commons.bundle.min.js');
-      expect(test.list('dist/statics')).to.contain('commons.bundle.js.map');
-      expect(test.content('dist/statics/commons.bundle.js')).to.contain('module.exports = function (a) {\n  return a + 1;\n};');
+      expect(test.list('dist/statics')).to.contain('commons.chunk.js');
+      expect(test.list('dist/statics')).to.contain('commons.chunk.min.js');
+      expect(test.list('dist/statics')).to.contain('commons.chunk.js.map');
+      expect(test.content('dist/statics/commons.chunk.js')).to.contain('module.exports = function (a) {\n  return a + 1;\n};');
       expect(test.content('dist/statics/first.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
       expect(test.content('dist/statics/second.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
     });
@@ -307,7 +355,11 @@ describe('Aggregator: Build', () => {
           'src/app1.js': `const thisIsWorks = true; require('./first.scss'); require('./styles.scss');`,
           'src/app2.js': `const hello = "world"; require('./second.scss'); require('./styles.scss');`,
           'package.json': fx.packageJson({
-            commonsChunk: true,
+            splitChunks: {
+              chunks: 'initial',
+              minSize: 0,
+              name: 'commons'
+            },
             entry: {
               first: './app1.js',
               second: './app2.js'
@@ -327,16 +379,18 @@ describe('Aggregator: Build', () => {
       expect(test.content('dist/statics/second.css')).to.not.contain('body {\n  background: red; }');
     });
 
-    it('should pass a custom configuration if an object is passed to the commonsChunk configuration', () => {
+    it('should pass a custom configuration if an object is passed to the `splitChunks` configuration', () => {
       const res = test
         .setup({
           'src/dep.js': `module.exports = function(a){return a + 1;};`,
           'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1);`,
           'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1);`,
           'package.json': fx.packageJson({
-            commonsChunk: {
+            splitChunks: {
+              chunks: 'initial',
               name: 'myCustomCommonsName',
               minChunks: 2,
+              minSize: 0,
             },
             entry: {
               first: './app1.js',
@@ -348,8 +402,46 @@ describe('Aggregator: Build', () => {
         .execute('build');
 
       expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.not.contain('commons.bundle.js');
-      expect(test.list('dist/statics')).to.contain('myCustomCommonsName.bundle.js');
+      expect(test.list('dist/statics')).to.not.contain('commons.chunk.js');
+      expect(test.list('dist/statics')).to.contain('myCustomCommonsName.chunk.js');
+    });
+
+    it('should generate x.bundle.js with content from `src/dep` and without content from src2/dep when `cacheGroups.test` speficifed', () => {
+      const res = test
+        .setup({
+          'src/dep.js': `module.exports = function(){return 'iLiveInChunk';};`,
+          'src/dep2.js': `module.exports = function(){return 'iAmNotCodeFromChunk!';};`,
+          'src/app1.js': `const a = require('./dep'); const b = require('../src/dep2');a();b();`,
+          'src/app2.js': `const a = require('./dep'); const b = require('../src/dep2');a();b();`,
+          'yoshi.config.js': `module.exports = {
+            splitChunks: {
+              "cacheGroups": {
+                "x": {
+                  "name": "x",
+                  "minChunks": 2,
+                  "minSize": 0,
+                  "chunks": "initial",
+                  "test": require('path').resolve("./src/dep.js")
+                }
+              }
+            },
+            entry: {
+              first: './app1.js',
+              second: './app2.js'
+            }
+          };`,
+          'package.json': '{}',
+          'pom.xml': fx.pom()
+        })
+        .execute('build');
+      expect(res.code).to.equal(0);
+      expect(test.list('dist/statics')).to.contain('first.bundle.js');
+      expect(test.list('dist/statics')).to.contain('second.bundle.js');
+      expect(test.list('dist/statics')).to.contain('x.chunk.js');
+      expect(test.content('dist/statics/x.chunk.js')).to.contain('iLiveInChunk');
+      expect(test.content('dist/statics/x.chunk.js')).to.not.contain('iAmNotCodeFromChunk');
+      expect(test.content('dist/statics/first.bundle.js')).to.contain('iAmNotCodeFromChunk');
+      expect(test.content('dist/statics/second.bundle.js')).to.contain('iAmNotCodeFromChunk');
     });
   });
 
@@ -520,7 +612,6 @@ describe('Aggregator: Build', () => {
           'pom.xml': fx.pom()
         })
         .execute('build');
-
       expect(res.code).to.equal(0);
       expect(test.list('dist/statics')).to.contain('app.bundle.js');
     });
@@ -1088,8 +1179,8 @@ describe('Aggregator: Build', () => {
 
   describe('symlinks', () => {
     it('should not resolve symlinks to their symlinked location', () => {
-      const module1 = '.call(exports, "../node_modules/awesome-module1")';
-      const module2 = '.call(exports, "../node_modules/awesome-module2")';
+      const module1 = '.call(this, "../node_modules/awesome-module1")';
+      const module2 = '.call(this, "../node_modules/awesome-module2")';
 
       const res = test
         .setup({

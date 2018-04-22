@@ -4,14 +4,16 @@ const https = require('https');
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const hotClient = require('webpack-hot-client');
 const {decorate} = require('./server-api');
-const {shouldRunWebpack, logStats} = require('./utils');
+const {shouldRunWebpack, logStats, normalizeEntries} = require('./utils');
+const {getListOfEntries} = require('../../utils');
 
 module.exports = ({
   port = '3000',
   ssl,
   hmr = true,
+  transformHMRRuntime,
   host = 'localhost',
   publicPath,
   statics,
@@ -27,20 +29,44 @@ module.exports = ({
       const webpackConfig = getConfig({debug: true, disableModuleConcatenation: true});
 
       if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {
-        if (hmr) {
-          webpackConfig.entry = addHotEntries(webpackConfig.entry);
-          webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
-        }
-
         webpackConfig.output.publicPath = publicPath;
 
+        if (transformHMRRuntime) {
+          const entryFiles = getListOfEntries(configuredEntry);
+          webpackConfig.module.rules.forEach(rule => {
+            if (Array.isArray(rule.use)) {
+              rule.use = rule.use.map(useItem => {
+                if (useItem === 'babel-loader') {
+                  useItem = {loader: 'babel-loader'};
+                }
+                if (useItem.loader === 'babel-loader') {
+                  if (!useItem.options) {
+                    useItem.options = {};
+                  }
+                  if (!useItem.options.plugins) {
+                    useItem.options.plugins = [];
+                  }
+                  useItem.options.plugins.push(
+                    require.resolve('react-hot-loader/babel'),
+                    [path.resolve(__dirname, '../../plugins/babel-plugin-transform-hmr-runtime'), {entryFiles}]
+                  );
+                }
+                return useItem;
+              });
+            }
+          });
+        }
+
+        webpackConfig.entry = normalizeEntries(webpackConfig.entry);
+
         const compiler = webpack(webpackConfig);
+
+        hotClient(compiler, {hot: Boolean(hmr), logLevel: 'warn'});
 
         logStats(compiler);
 
         middlewares = [
           webpackDevMiddleware(compiler, {logLevel: 'silent'}),
-          ...hmr ? [webpackHotMiddleware(compiler, {log: null})] : []
         ];
       }
     }
@@ -55,15 +81,6 @@ module.exports = ({
       err ? reject(err) : resolve());
   });
 };
-
-function addHotEntries(entries) {
-  return Object.keys(entries).reduce((acc, value) => {
-    acc[value] = [
-      `${require.resolve('webpack-hot-middleware/client')}?dynamicPublicPath=true&path=__webpack_hmr`
-    ].concat(entries[value]);
-    return acc;
-  }, {});
-}
 
 function sslCredentials(keyPath, certificatePath, passphrase) {
   const privateKey = fs.readFileSync(path.join(__dirname, keyPath), 'utf8');
