@@ -1,8 +1,7 @@
 const union = require('lodash/union');
 const webpackCommonConfig = require('./webpack.config.common');
 const projectConfig = require('./project');
-
-// const stylable = require('../src/loaders/stylable');
+const StylableWebpackPlugin = require('stylable-webpack-plugin');
 
 module.exports = config => {
   const projectName = projectConfig.name();
@@ -17,7 +16,7 @@ module.exports = config => {
 
   config.plugins = [
     ...config.plugins || [],
-    // stylable.plugin()
+    new StylableWebpackPlugin()
   ];
 
   return config;
