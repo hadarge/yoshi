@@ -1,8 +1,10 @@
 # Changelog
 
+## 2.1.0 (April 23, 2018)
+* [#210](https://github.com/wix-private/yoshi/pull/210) Add stylabe support for webpack using [stylable-webpack-plugin](https://github.com/wix-playground/stylable-webpack-plugin)
 * [#209](https://github.com/wix-private/yoshi/pull/209) Add support for 'it' test suffix for wallaby
 
-# 2.0.0 (April 22, 2018)
+## 2.0.0 (April 22, 2018)
 
 ## 2.0.0-rc.0 (April 18, 2018)
 * :house_with_garden: Changes in the code structure, build configuration in CI and release script.
