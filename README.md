@@ -2,9 +2,6 @@
 
 A Toolkit that supports building all kinds of applications in wix.
 
-## Features
-This preset mimics [Yoshi's](https://github.com/wix/yoshi#yoshi) behavior, every project that is driven by Yoshi can use this preset as a drop-in replacement.
-
 ## Requirements
 
 - Node.js v8.9.1 or above
