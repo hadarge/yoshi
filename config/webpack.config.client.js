@@ -9,6 +9,7 @@ const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const {isObject} = require('lodash');
+const StylableWebpackPlugin = require('stylable-webpack-plugin');
 
 const defaultSplitChunksConfig = {
   chunks: 'all',
@@ -66,6 +67,12 @@ const config = ({debug, separateCss = projectConfig.separateCss(), analyze, disa
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': debug ? '"development"' : '"production"',
         'window.__CI_APP_VERSION__': process.env.ARTIFACT_VERSION ? `"${process.env.ARTIFACT_VERSION}"` : '"0.0.0"'
+      }),
+
+      new StylableWebpackPlugin({
+        outputCSS: separateCss,
+        filename: '[name].stylable.bundle.css',
+        includeCSSInJS: !separateCss
       }),
 
       ...!separateCss ? [] : [

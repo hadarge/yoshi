@@ -46,11 +46,12 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
 
   return {
     client: [
-      getLessRule({include: globalRegex}, {modules: false}),
-      getLessRule({exclude: globalRegex})
+      getLessRule({include: globalRegex, exclude: /\.st\.css$/}, {modules: false}),
+      getLessRule({exclude: [globalRegex, /\.st\.css$/]})
     ],
     specs: {
       test: /\.less$/,
+      exclude: /\.st\.css$/,
       use: [
         {
           loader: 'css-loader/locals',

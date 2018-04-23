@@ -357,29 +357,40 @@ describe('Loaders', () => {
     });
   });
 
-  describe.skip('Stylable', () => {
+  describe('Stylable', () => {
     afterEach(() => test.teardown());
 
     describe('client', () => {
-      beforeEach(() => setupAndBuild());
-
-      it('should run stylable loader over imported .st.css files', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.match(/.Test.*some-rule {\s*?color: red;\s*?}/);
-      });
-    });
-
-    function setupAndBuild(config) {
-      test
-        .setup({
-          'src/client.js': `require('./some-css.st.css');`,
-          'src/server.js': `require('./some-css.st.css');`,
-          'src/some-css.st.css': `/* comment */
+      it('should run stylable loader over imported .st.css files with { separateCSS: true }', () => {
+        test
+          .setup({
+            'src/client.js': `require('./some-css.st.css');`,
+            'src/server.js': `require('./some-css.st.css');`,
+            'src/some-css.st.css': `/* comment */
                                   @namespace "Test";
                                   .some-rule { color: red; }`,
-          'package.json': fx.packageJson(config || {})
-        }, [])
-        .execute('build');
-    }
+            'package.json': fx.packageJson({separateCss: false})
+          }, [])
+          .execute('build');
+
+        expect(test.content('dist/statics/app.bundle.js')).to.match(/.Test.*some-rule {\s*?color: red;\s*?}/);
+      });
+
+      it('should run stylable loader over imported .st.css files with separateCSS true', () => {
+        test
+          .setup({
+            'src/client.js': `require('./some-css.st.css');`,
+            'src/server.js': `require('./some-css.st.css');`,
+            'src/some-css.st.css': `/* comment */
+                                  @namespace "Test";
+                                  .some-rule { color: red; }`,
+            'package.json': fx.packageJson({})
+          }, [])
+          .execute('build');
+
+        expect(test.content('dist/statics/app.stylable.bundle.css')).to.match(/.Test.*some-rule {\s*?color: red;\s*?}/);
+      });
+    });
   });
 
   describe('Less', () => {
