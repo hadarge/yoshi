@@ -17,6 +17,7 @@ class Test {
     this.stdout = '';
     this.stderr = '';
     this.tmp = path.join(sh.tempdir().toString(), new Date().getTime().toString());
+    this.silent = !this.env.VERBOSE_TESTS;
   }
 
   setup(tree, hooks = []) {
@@ -53,10 +54,15 @@ class Test {
     return null;
   }
 
+  verbose() {
+    this.silent = false;
+    return this;
+  }
+
   execute(command, cliArgs = [], environment = {}, execOptions = {}) {
     const args = [command].concat(cliArgs).join(' ');
     const env = Object.assign({}, this.env, environment);
-    const options = Object.assign({}, {cwd: this.tmp, env, silent: true}, execOptions);
+    const options = Object.assign({}, {cwd: this.tmp, env, silent: this.silent}, execOptions);
 
     if (this.hasTmp()) {
       const result = sh.exec(`node '${this.script}' ${args}`, options);
