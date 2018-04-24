@@ -25,5 +25,5 @@ module.exports = {
   },
   tslint: () => [`${base}/**/*.ts{,x}`],
   less: () => [`${base}/**/*.less`, `!${base}/assets/**/*`],
-  sass: () => [`${base}/**/*.scss`, `!${base}/assets/**/*`],
+  scss: () => [`${base}/**/*.scss`, `!${base}/assets/**/*`],
 };

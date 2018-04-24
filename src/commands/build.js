@@ -128,7 +128,7 @@ module.exports = runner.command(async tasks => {
 
   function transpileSass({esTarget} = {}) {
     return sass({
-      pattern: globs.sass(),
+      pattern: globs.scss(),
       target: globs.dist({esTarget}),
       options: {includePaths: ['node_modules', 'node_modules/compass-mixins/lib']}
     });

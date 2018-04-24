@@ -111,8 +111,8 @@ p {
 }`;
       const res = test
         .setup({
-          'src/a.sass': goodStyle,
           'src/a.scss': goodStyle,
+          'src/b.scss': goodStyle,
           'a.less': goodStyle,
           'package.json': `{
             "name": "a",\n
@@ -143,8 +143,8 @@ p {
 
       const res = test
         .setup({
-          'src/a.sass': badStyle,
           'src/a.scss': badStyle,
+          'src/b.scss': badStyle,
           'package.json': `{
             "name": "a",\n
             "version": "1.0.0",\n

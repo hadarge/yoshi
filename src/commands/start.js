@@ -142,7 +142,7 @@ module.exports = runner.command(async tasks => {
 
   function transpileCss() {
     if (shouldRunSass()) {
-      watch({pattern: globs.sass()}, changed =>
+      watch({pattern: globs.scss()}, changed =>
         sass({
           pattern: changed,
           target: 'dist',
@@ -164,7 +164,7 @@ module.exports = runner.command(async tasks => {
     return [
       !shouldRunSass() ? null :
         sass({
-          pattern: globs.sass(),
+          pattern: globs.scss(),
           target: 'dist',
           options: {includePaths: ['node_modules', 'node_modules/compass-mixins/lib']}
         }),
