@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.2 (April 24, 2018)
+* [#220](https://github.com/wix-private/yoshi/pull/220) Fix a bug in webpack configuration for karma based projects.
+
 ## 2.1.1 (April 23, 2018)
 * [#216](https://github.com/wix-private/yoshi/pull/216) Add stylable support for storybook webpack configuration.
 
