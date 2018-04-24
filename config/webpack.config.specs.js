@@ -10,7 +10,7 @@ const specsGlob = projectConfig.specs.browser() || globs.specs();
 
 module.exports = mergeByConcat(webpackConfigCommon, {
   entry: glob.sync(specsGlob).map(p => path.resolve(p)),
-
+  mode: 'development',
   output: {
     path: path.resolve('dist'),
     filename: 'specs.bundle.js'
