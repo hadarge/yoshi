@@ -1,5 +1,7 @@
+const path = require('path');
+
 module.exports = function (wallaby) {
-  process.env.NODE_PATH += `:${require('path').join(wallaby.localProjectDir, 'node_modules')}`;
+  process.env.NODE_PATH += `:${path.join(wallaby.localProjectDir, 'node_modules')}`;
 
   return {
     files: [
@@ -23,8 +25,8 @@ module.exports = function (wallaby) {
       const mocha = wallaby.testFramework;
       mocha.timeout(30000);
       process.env.IN_WALLABY = true;
-      require('./test-setup');
-
+      const testSetupPath = path.resolve('./test-setup');
+      require(testSetupPath);
     },
     env: {
       type: 'node',
