@@ -3,6 +3,7 @@ const prog = require('caporal');
 const runCLI = require('../src/cli');
 const {version} = require('../package');
 const {BOOL} = prog;
+const infoCommand = require('../src/commands/info');
 
 prog
   .version(version)
@@ -37,6 +38,9 @@ prog.command('start', 'Run the app in development mode (also spawns npm test)')
 
 prog.command('release', 'publish the package, should be used by CI')
   .action(() => runCLI('release'));
+
+prog.command('info', 'Get your local environment information')
+  .action(infoCommand);
 
 prog.parse(process.argv);
 
