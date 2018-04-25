@@ -25,7 +25,7 @@ Search open/closed issues before submitting since someone might have asked the s
 
 <!--- If describing a bug, tell us what happens instead of the expected behavior
       If you are seeing an error, please include the full error message and stack trace
-      If suggesting a change/improvement, explain the difference from current behavior -->
+      If suggesting a change/improvement, explain the difference from the current behavior -->
 ...
 
 ### 💁 Possible Solution
