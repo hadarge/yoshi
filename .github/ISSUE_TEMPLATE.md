@@ -10,11 +10,6 @@ Search open/closed issues before submitting since someone might have asked the s
 
 🙋 Feature Request
 
-<!--- Provide a general summary of the issue in the title -->
-
-## Issue Title
-
-
 ### 🤔 Expected Behavior
 
 <!--- If you're describing a bug, tell us what should happen
@@ -42,7 +37,8 @@ Search open/closed issues before submitting since someone might have asked the s
 
 ### 💻 Code Sample
 
-<!-- If you are seeing an error, please provide your github repository (preferable), gist or sample files to reproduce the issue -->
+<!--- If you are seeing an error, please provide your github repository (preferable), gist or inline sample code to reproduce the issue.
+      In addition, paste below your `yoshi` config block from your `package.json`. -->
 ...
 
 ### 🌍 Your Environment
