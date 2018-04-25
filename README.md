@@ -150,6 +150,7 @@ Flag | Short Flag | Description | Default Value
 ---- | ---------- | ----------- | ------------|
 --fix | | Automatically fix lint problems | false
 --format | | Use a specific formatter for eslint/tslint | stylish
+[files...] | | Optional list of files (space delimited) to run lint on | empty
 
 Executes `TSLint` or `ESLint` (depending on the type of the project) over all matched files. An '.eslintrc' / `tslint.json` file with proper configurations is required.
 

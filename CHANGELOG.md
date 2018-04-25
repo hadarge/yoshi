@@ -1,5 +1,7 @@
 # Changelog
 
+* [#211](https://github.com/wix-private/yoshi/pull/211) Yoshi Lint - Add support for file list
+
 ## 2.1.2 (April 24, 2018)
 * [#220](https://github.com/wix-private/yoshi/pull/220) Fix a bug in webpack configuration for karma based projects.
 

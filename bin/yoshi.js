@@ -11,6 +11,7 @@ prog
 prog.command('lint', 'Run the linter')
   .option('--fix', 'Automatically fix lint problems')
   .option('--format', 'Use a specific formatter for eslint/tslint')
+  .argument('[files...]', 'Run lint on a list of files')
   .action(() => runCLI('lint'));
 
 prog.command('test', 'Run unit tests and e2e tests if exists')

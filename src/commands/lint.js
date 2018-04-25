@@ -17,14 +17,80 @@ module.exports = runner.command(async tasks => {
   }
 
   const {eslint, tslint, stylelint} = tasks;
+  // Variadic arguments are placed inside the "_" property array
+  // https://github.com/substack/minimist#var-argv--parseargsargs-opts
+  // The first argument is the command itself (lint), we retrieve all the rest
+  const {styleFiles, jsFiles, tsFiles} =
+    cliArgs._.length > 1 ? groupFilesByType(cliArgs._.slice(1)) : {jsFiles: [], tsFiles: [], styleFiles: []};
+  const shouldRunOnSpecificFiles = !!(jsFiles.length || tsFiles.length || styleFiles.length);
+
+  if (shouldRunOnSpecificFiles) {
+    if (styleFiles.length) {
+      await runStyleLint(styleFiles);
+    }
+
+    if (isTypescriptProject() && tsFiles.length) {
+      await runTsLint(tsFiles);
+    } else if (jsFiles.length) {
+      await runEsLint(jsFiles);
+    }
+
+    return null;
+  }
 
   if (await shouldRunStylelint()) {
-    await stylelint({pattern: [`${globs.base()}/**/*.scss`, `${globs.base()}/**/*.less`], options: {formatter: 'string'}});
+    await runStyleLint([`${globs.base()}/**/*.scss`, `${globs.base()}/**/*.less`]);
   }
 
   if (isTypescriptProject()) {
-    await tslint({pattern: [`${globs.base()}/**/*.ts{,x}`], options: {fix: cliArgs.fix, formatter: cliArgs.format || 'stylish'}});
+    await runTsLint([`${globs.base()}/**/*.ts{,x}`]);
   } else {
-    await eslint({pattern: ['*.js', `${globs.base()}/**/*.js`], options: {cache: true, cacheLocation: 'target/.eslintcache', fix: cliArgs.fix, formatter: cliArgs.format}});
+    await runEsLint(['*.js', `${globs.base()}/**/*.js`]);
+  }
+
+  function runStyleLint(pattern) {
+    console.log('running style lint on', pattern);
+    return stylelint({pattern, options: {formatter: 'string'}});
+  }
+
+  function runTsLint(pattern) {
+    console.log('running ts lint on', pattern);
+    return tslint({pattern, options: {fix: cliArgs.fix, formatter: cliArgs.format || 'stylish'}});
+  }
+
+  function runEsLint(pattern) {
+    console.log('running es lint on', pattern);
+    return eslint({
+      pattern,
+      options: {cache: true, cacheLocation: 'target/.eslintcache', fix: cliArgs.fix, formatter: cliArgs.format}
+    });
   }
 });
+
+function groupFilesByType(fileList) {
+  return fileList.reduce(
+    (files, filename) => {
+      if (isStyleFile(filename)) {
+        files.styleFiles.push(filename);
+      } else if (isTypescriptFile(filename)) {
+        files.tsFiles.push(filename);
+      } else if (isJavascriptFile(filename)) {
+        files.jsFiles.push(filename);
+      }
+      return files;
+    },
+    {jsFiles: [], tsFiles: [], styleFiles: []}
+  );
+}
+
+function isJavascriptFile(filename) {
+  return filename.endsWith('.js');
+}
+
+function isTypescriptFile(filename) {
+  return filename.endsWith('.ts') || filename.endsWith('.tsx');
+}
+
+function isStyleFile(filename) {
+  return filename.endsWith('.css') || filename.endsWith('.scss') || filename.endsWith('.less');
+}
