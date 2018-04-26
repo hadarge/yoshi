@@ -2,7 +2,7 @@ const {createRunner} = require('haste-core');
 const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
-const {isTypescriptProject, shouldRunStylelint, watchMode} = require('../utils');
+const {isTypescriptProject, getTsconfigPath, getTslintPath, shouldRunStylelint, watchMode} = require('../utils');
 
 const runner = createRunner({
   logger: new LoggerPlugin()
@@ -30,7 +30,7 @@ module.exports = runner.command(async tasks => {
     }
 
     if (isTypescriptProject() && tsFiles.length) {
-      await runTsLint(tsFiles);
+      await runTsLint({pattern: tsFiles});
     } else if (jsFiles.length) {
       await runEsLint(jsFiles);
     }
@@ -43,7 +43,7 @@ module.exports = runner.command(async tasks => {
   }
 
   if (isTypescriptProject()) {
-    await runTsLint([`${globs.base()}/**/*.ts{,x}`]);
+    await runTsLint({tsconfigFilePath: getTsconfigPath()});
   } else {
     await runEsLint(['*.js', `${globs.base()}/**/*.js`]);
   }
@@ -53,9 +53,18 @@ module.exports = runner.command(async tasks => {
     return stylelint({pattern, options: {formatter: 'string'}});
   }
 
-  function runTsLint(pattern) {
-    console.log('running ts lint on', pattern);
-    return tslint({pattern, options: {fix: cliArgs.fix, formatter: cliArgs.format || 'stylish'}});
+  function runTsLint({tsconfigFilePath, pattern}) {
+    const message = pattern ?
+      `running ts lint on ${pattern}` :
+      `running ts lint on files which are specified in: ${tsconfigFilePath}`;
+
+    console.log(message);
+    return tslint({
+      pattern,
+      tsconfigFilePath,
+      tslintFilePath: getTslintPath(),
+      options: {fix: cliArgs.fix, formatter: cliArgs.format || 'stylish'}
+    });
   }
 
   function runEsLint(pattern) {

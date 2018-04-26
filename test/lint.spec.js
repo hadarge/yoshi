@@ -19,6 +19,7 @@ describe('Aggregator: Lint', () => {
         })
         .execute('lint');
 
+      expect(res.stdout).to.match(/^running ts lint on files which are specified in.*tsconfig.json/);
       expect(res.code).to.equal(0);
     });
 
@@ -64,20 +65,21 @@ describe('Aggregator: Lint', () => {
       expect(JSON.parse(res.stderr)[0].failure).to.eq('Missing radix parameter');
     });
 
-    it('should support a list of files to run lint on', () => {
+    it('should ignore the tsconfig.json file in order to support a list of files to run lint on', () => {
       const res = test
         .setup({
           'app/a.ts': `parseInt("1");`,
           'app/b.tsx': `parseInt("1");`,
           'app/dontrunonme.js': `parseInt("1");`,
           'package.json': fx.packageJson(),
-          'tsconfig.json': fx.tsconfig(),
+          'tsconfig.json': fx.tsconfig({include: []}),
           'tslint.json': fx.tslint({radix: true})
         })
         .execute('lint', ['--format json', 'app/a.ts', 'app/b.tsx'], insideTeamCity);
 
       const stderr = JSON.parse(res.stderr);
       expect(res.code).to.equal(1);
+      expect(res.stdout).to.match(/^running ts lint on app\/a\.ts,app\/b.tsx/);
       expect(stderr[0].name).to.contain('app/a.ts');
       expect(stderr[0].failure).to.eq('Missing radix parameter');
       expect(stderr[1].name).to.contain('app/b.tsx');

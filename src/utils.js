@@ -64,6 +64,16 @@ module.exports.suffix = suffix => str => {
 module.exports.isTypescriptProject = () =>
   !!tryRequire(path.resolve('tsconfig.json'));
 
+module.exports.getTsconfigPath = () => {
+  const tsconfigPath = path.resolve('tsconfig.json');
+  return fs.existsSync(tsconfigPath) ? tsconfigPath : '';
+};
+
+module.exports.getTslintPath = () => {
+  const tslintPath = path.resolve('tslint.json');
+  return fs.existsSync(tslintPath) ? tslintPath : '';
+};
+
 module.exports.isBabelProject = () => {
   return !!glob.sync(path.resolve('.babelrc')).length || !!project.babel();
 };
