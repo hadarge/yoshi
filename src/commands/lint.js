@@ -2,7 +2,7 @@ const {createRunner} = require('haste-core');
 const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
-const {isTypescriptProject, shouldRunStylelint, watchMode} = require('../utils');
+const {isTypescriptProject, getTsconfigPath, getTslintPath, shouldRunStylelint, watchMode} = require('../utils');
 
 const runner = createRunner({
   logger: new LoggerPlugin()
@@ -23,8 +23,15 @@ module.exports = runner.command(async tasks => {
   }
 
   if (isTypescriptProject()) {
-    await tslint({pattern: [`${globs.base()}/**/*.ts{,x}`], options: {fix: cliArgs.fix, formatter: cliArgs.format || 'stylish'}});
+    await tslint({
+      options: {fix: cliArgs.fix, formatter: cliArgs.format || 'stylish'},
+      tsconfigFilePath: getTsconfigPath(),
+      tslintFilePath: getTslintPath()
+    });
   } else {
-    await eslint({pattern: ['*.js', `${globs.base()}/**/*.js`], options: {cache: true, cacheLocation: 'target/.eslintcache', fix: cliArgs.fix, formatter: cliArgs.format}});
+    await eslint({
+      pattern: ['*.js', `${globs.base()}/**/*.js`],
+      options: {cache: true, cacheLocation: 'target/.eslintcache', fix: cliArgs.fix, formatter: cliArgs.format}
+    });
   }
 });

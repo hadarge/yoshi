@@ -22,7 +22,7 @@ const fx = {
   css: () => '.a {\ncolor: red;\n}\n',
   scss: () => '.a {\n.b {\ncolor: red;\n}\n}\n',
   scssInvalid: () => '.a {\n.b\ncolor: red;\n}\n}\n',
-  tsconfig: (options = {}) => JSON.stringify(_.merge({
+  tsconfig: (options = {}, include = ['*.ts', '*.tsx']) => JSON.stringify(_.merge({
     compilerOptions: {
       module: 'commonjs',
       target: 'es5',
@@ -32,6 +32,7 @@ const fx = {
       declaration: true,
       noImplicitAny: false
     },
+    include,
     exclude: [
       'node_modules',
       'dist'
