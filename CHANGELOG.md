@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.4 (April 27, 2018)
+* [#240](https://github.com/wix-private/yoshi/pull/240) Yoshi Lint - Run tslint on files which are specifed in the tsconfig.json file
+
 ## 2.1.4 (April 26, 2018)
 * Hotfix: fix `stylable-webpack-plugin` to `1.0.4` to prevent runtime error
 
