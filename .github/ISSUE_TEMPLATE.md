@@ -43,8 +43,8 @@ Search open/closed issues before submitting since someone might have asked the s
 
 ### 🌍 Your Environment
 
-<!--- yoshi v2.3.1 and up - Run `npx yoshi info` in your terminal and paste the output below -->
-<!--- yoshi v2.3.0 and below - Manually include as many relevant details about the environment you experienced the bug in -->
+<!--- yoshi v2.1.3 and up - Run `npx yoshi info` in your terminal and paste the output below -->
+<!--- yoshi v2.1.2 and below - Manually include as many relevant details about the environment you experienced the bug in -->
 
 | Software         | Version(s) |
 | ---------------- | ---------- |
