@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.4 (April 26, 2018)
+* Hotfix: fix `stylable-webpack-plugin` to `1.0.4` to prevent runtime error
+
 ## 2.1.3 (April 25, 2018)
 * [#211](https://github.com/wix-private/yoshi/pull/211) Yoshi Lint - Add support for file list
 * [#228](https://github.com/wix-private/yoshi/pull/228) Add `yoshi info` command to gather local environment information
