@@ -16,6 +16,7 @@
 * [#209](https://github.com/wix-private/yoshi/pull/209) Add support for 'it' test suffix for wallaby
 
 ## 2.0.0 (April 22, 2018)
+* See [migration guide](https://github.com/wix-private/fed-handbook/wiki/Yoshi-2.0#migration-guide)
 
 ## 2.0.0-rc.0 (April 18, 2018)
 * :house_with_garden: Changes in the code structure, build configuration in CI and release script
