@@ -152,7 +152,7 @@ Flag | Short Flag | Description | Default Value
 --format | | Use a specific formatter for eslint/tslint | stylish
 [files...] | | Optional list of files (space delimited) to run lint on | empty
 
-Executes `TSLint` or `ESLint` (depending on the type of the project) over all matched files. An '.eslintrc' / `tslint.json` file with proper configurations is required.
+Executes `TSLint` or `ESLint` (depending on the type of the project) over all matched files. For js projects An '.eslintrc' file is required, and for ts orijects a `tslint.json` and `tsconfig.json` files with proper configurations are required. Inside your `tsconfig.json` file you can specify the files you want the linter to run on.
 
 ### release
 
