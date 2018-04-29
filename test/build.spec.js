@@ -7,162 +7,353 @@ const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
 const retryPromise = require('retry-promise').default;
 const fetch = require('node-fetch');
 
+const generateCssModulesPattern = (name, path, pattern = `[hash:base64:5]`) => {
+  const genericNames = require('generic-names');
+  const generate = genericNames(pattern, {hashPrefix: 'a'});
+  return generate(name, path);
+};
+const $inject = 'something.$inject = ["$http"];';
+
 describe('Aggregator: Build', () => {
   const defaultOutput = 'statics';
   let test;
 
-  beforeEach(() => test = tp.create());
-  afterEach(() => test.teardown());
+  describe('simple development project with separate styles (sass and less), babel, JSON, commons chunks with custom name and some UMD modules', () => {
+    let resp;
+    const compiledSaasStyle = '.a .b {\n  color: red; }';
+    const compiledLessStyle = '.a .b {\n  color: red;\n}';
+    const bowerrc = {
+      registry: {
+        search: ['https://bower.herokuapp.com', 'http://wix:wix@mirror.wixpress.com:3333'],
+        register: 'http://wix:wix@mirror.wixpress.com:3333',
+        publish: 'http://wix:wix@mirror.wixpress.com:3333'
+      }
+    };
 
-  describe('yoshi-sass', () => {
-    it('should use yoshi-sass', () => {
-      const compiledStyle = '.a .b {\n  color: red; }';
-      const resp = test
+    before(() => {
+      test = tp.create();
+      resp = test
         .setup({
-          'src/client.js': '',
-          'app/a/style.scss': fx.scss(),
-          'src/b/style.scss': fx.scss(),
-          'test/c/style.scss': fx.scss(),
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-      expect(resp.code).to.equal(0);
-      expect(resp.stdout).to.contain(`Finished 'sass'`);
-      expect(test.content('dist/app/a/style.scss')).to.contain(compiledStyle);
-      expect(test.content('dist/src/b/style.scss')).to.contain(compiledStyle);
-      expect(test.content('dist/test/c/style.scss')).to.contain(compiledStyle);
-    });
-
-    it('should fail with exit code 1', () => {
-      const resp = test
-        .setup({
-          'src/client.js': '',
-          'app/a/style.scss': fx.scssInvalid(),
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(resp.code).to.equal(1);
-      expect(resp.stdout).to.contain(`Failed 'sass'`);
-      expect(resp.stderr).to.contain('Invalid CSS after ".a {');
-    });
-  });
-
-  describe('with --analyze flag', () => {
-    it('should serve webpack-bundle-analyzer server', () => {
-      const analyzerServerPort = '8888';
-      const analyzerContentPart = 'window.chartData = [{"label":"app.bundle.min.js"';
-      test
-        .setup({
-          'src/client.js': '',
-          'package.json': fx.packageJson()
-        })
-        .spawn('build', ['--analyze']);
-
-      return checkServerIsServing({port: analyzerServerPort})
-        .then(content => expect(content).to.contain(analyzerContentPart));
-    });
-  });
-
-  describe('Less', () => {
-    it('should transpile to dist/, preserve folder structure, extensions and exit with code 0', () => {
-      const compiledStyle = '.a .b {\n  color: red;\n}';
-      const resp = test
-        .setup({
-          'src/client.js': '',
-          'app/a/style.less': '.a {\n.b {\ncolor: red;\n}\n}\n',
-          'src/b/style.less': '.a {\n.b {\ncolor: red;\n}\n}\n',
-          'test/c/style.less': '.a {\n.b {\ncolor: red;\n}\n}\n',
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(resp.code).to.equal(0);
-      expect(resp.stdout).to.contain(`Finished 'less'`);
-      expect(test.content('dist/app/a/style.less')).to.contain(compiledStyle);
-      expect(test.content('dist/src/b/style.less')).to.contain(compiledStyle);
-      expect(test.content('dist/test/c/style.less')).to.contain(compiledStyle);
-    });
-
-    it('should disable css modules for .global.less files', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./styles/my-file.global.less\');',
-          'src/styles/my-file.global.less': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            separateCss: true
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.css`)).to.contain('.a .b {');
-    });
-
-    it('should fail with exit code 1', () => {
-      const resp = test
-        .setup({
-          'src/client.js': '',
-          'app/a/style.less': '.a {\n.b\ncolor: red;\n}\n}\n',
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(resp.code).to.equal(1);
-      expect(resp.stdout).to.contain(`Failed 'less'`);
-      expect(resp.stderr).to.contain(`Unrecognised input`);
-    });
-
-    it('should handle @import statements', () => {
-      const resp = test
-        .setup({
-          'src/client.js': '',
-          'src/style.less': `@import (once) './foobar.less';`,
-          'src/foobar.less': `.a { color: black; }`,
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(resp.code).to.equal(0);
-      expect(resp.stdout).to.contain(`Finished 'less'`);
-      expect(test.content('dist/src/style.less')).to.contain('.a {\n  color: black;\n}');
-    });
-
-    it('should consider node_modules for path', () => {
-      const resp = test
-        .setup({
-          'src/client.js': '',
-          'node_modules/some-module/style.less': `.a { color: black; }`,
-          'src/a/style.less': `@import (once) 'some-module/style.less';`,
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(resp.code).to.equal(0);
-      expect(resp.stdout).to.contain(`Finished 'less'`);
-      expect(test.content('dist/src/a/style.less')).to.contain('.a {\n  color: black;\n}');
-    });
-  });
-
-  describe('ES modules', () => {
-    it('should not transpile modules for `/es` content if `module` field in `package.json` was specified', () => {
-      const resp = test
-        .setup({
-          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", { "modules": false }]]}`,
+          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", {"modules": false}]]}`,
+          '.bowerrc': JSON.stringify(bowerrc, null, 2),
+          'petri-specs/specs.infra.Dummy.json': fx.petriSpec(),
           'src/a.js': 'export default "I\'m a module!";',
-          'src/a.scss': 'body { background: red; }',
-          'src/assets/file': '1',
-          'package.json': `{
-            "module": "dist/es/src/a.js",
-            "yoshi": {
-              "entry": "./a.js"
-            }
-          }`,
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
+          'app/b.jsx': 'const b = 2;',
+          'src/nativeModules.js': ['fs', 'net', 'tls'].map(moduleName => `require(${moduleName})`).join(';'),
+          'src/entry.js': 'export default "I\'m a module!";',
+          'src/dep.js': `module.exports = function(a){return a + 1;};`,
+          'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app.json');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss')`,
+          'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1); require('../app/e/style.less'); require('../app/b/style.less'); require('./moment-locale'); require('awesome-module1/entry.js'); require('lodash/map')`,
+          'src/app.json': `{"json-content": 1}`,
+          'src/moment-no-locale.js': `import 'moment-no-locale';`,
+          'node_modules/moment-no-locale/index.js': `function load() {return require('./locale/' + lang);}`,
+          'node_modules/awesome-module1/entry.js': 'module.exports = function() { return __dirname }',
+          'node_modules/awesome-module2/entry.js': 'module.exports = function() { return __dirname }',
+          'node_modules/moment-no-locale/locale/en.js': `module.exports = 'spanish';`,
+          'src/moment-locale.js': `require('moment-locale/locale/en')`,
+          'node_modules/moment-locale/locale/en.js': `module.exports = 'english';`,
+          'src/styles/my-file.global.scss': `.x {.y {color: blue;}}`,
+          'src/styles/my-file-less.global.less': `.q {.w {color: blue;}}`,
+          'src/styles/my-file.scss': `.a {.b {color: blue;}}`,
+          'app/a/style.scss': fx.scss(),
+          'app/b/style.less': fx.less(),
+          'app/c/style.less': `@import (once) '../b/style.less';`,
+          'app/d/style.less': `@import (once) 'some-module/style.less';`,
+          'app/e/style.scss': '.a {\n.b {\ncolor: black;\n}\n}\n .c {\ndisplay: flex;\n}',
+          'app/e/style.less': '.a .b {\n  color: black;\n}',
+          'node_modules/some-module/style.less': fx.less(),
+          'app/assets/some-file': 'a',
+          'src/assets/some-file': 'a',
+          'dist/old.js': `const hello = "world!";`,
+          'src/angular-module.js': fx.angularJs(),
+          'angular-module.js': fx.angularJs(),
+          'pom.xml': fx.pom(),
+          'package.json': fx.packageJson({
+            clientProjectName: 'some-client-proj',
+            exports: 'MyLibraryEndpoint',
+            splitChunks: {
+              chunks: 'initial',
+              minSize: 0,
+              name: 'myChunk'
+            },
+            entry: {
+              first: './app1.js',
+              second: './app2.js'
+            },
+            features: {
+              externalizeRelativeLodash: false
+            },
+            externals: ['lodash/map']
+          })
+        }, [
+          hooks.createSymlink('node_modules/awesome-module1/entry.js', 'node_modules/awesome-module2/entry.js'),
+          hooks.installDependency('lodash')
+        ])
+        .execute('build', [], getMockedCI({ci: false}));
+    });
+    after(() => {
+      test.teardown();
+    });
+
+    it('should build w/o errors', () => {
       expect(resp.code).to.equal(0);
+    });
+
+    describe('Output for sass, less and babel project', () => {
+      it('should log successfull build for sass, less, babel and commons chunks projects', () => {
+        expect(resp.stdout).to.contain(`Finished 'sass'`);
+        expect(resp.stdout).to.contain(`Finished 'less'`);
+        expect(resp.stdout).to.contain(`Finished 'babel'`);
+      });
+    });
+
+    describe('Sass/Less styles handling with @import statements, globals and RTL', () => {
+      it('should use yoshi-sass', () => {
+        expect(test.content('dist/app/a/style.scss')).to.contain(compiledSaasStyle);
+      });
+
+      it('should use yoshi-less', () => {
+        expect(test.content('dist/app/b/style.less')).to.contain(compiledLessStyle);
+      });
+
+      it('should use yoshi-less with @import statements', () => {
+        expect(test.content('dist/app/c/style.less')).to.contain(compiledLessStyle);
+      });
+
+      it('should use yoshi-less with @import statements and consider node_modules', () => {
+        expect(test.content('dist/app/d/style.less')).to.contain(compiledLessStyle);
+      });
+
+      it('should generate RTL Css from bundle', () => {
+        expect(test.content('dist/statics/first.rtl.css')).to.contain('{\n  color: black; }');
+        expect(test.content('dist/statics/first.rtl.min.css')).to.contain('{color:#000}');
+      });
+
+      it('should generate css attributes prefixes for on separate css file', () => {
+        expect(test.content(`dist/statics/first.css`)).to.match(/display: -webkit-box;/g);
+        expect(test.content(`dist/statics/first.css`)).to.match(/display: -ms-flexbox;/g);
+        expect(test.content(`dist/statics/first.css`)).to.match(/display: flex;/g);
+      });
+
+      it('should disable css modules for .global.scss files', () => {
+        expect(test.content(`dist/statics/first.css`)).to.contain('.x .y {');
+      });
+
+      it('should disable css modules for .global.less files', () => {
+        expect(test.content(`dist/statics/first.css`)).to.contain('.q .w {');
+      });
+
+      it('should create a separate css file for each entry', () => {
+        expect(test.list('./dist/statics')).to.contain.members(['first.css', 'second.css']);
+      });
+
+      it('should generate css modules on separate css file', () => {
+        const regex = /\.styles-my-file__a__.{5}\s.styles-my-file__b__.{5}\s{/;
+        expect(test.content(`dist/statics/first.bundle.js`)).not.to.match(regex);
+        expect(test.content(`dist/statics/first.css`)).to.match(regex);
+      });
+    });
+
+    describe('ES transpiling with babel', () => {
+      it('should use yoshi-babel', () => {
+        expect(test.list('dist')).to.include.members(['src', 'app']);
+      });
+
+      it('should not create `/es` directory if no `module` field in `package.json` was specified and no commonjs plugin added', () => {
+        expect(test.list('dist')).to.not.include('es');
+        expect(test.content('dist/src/a.js')).to.contain('export default');
+      });
+    });
+
+    describe('Bundling with bundle custom name, sourceMaps, some UMD/AMD modules, commons chunks and stats', () => {
+      it('should generate a bundle with custom name', () => {
+        expect(test.list('dist/statics')).to.contain('first.bundle.js');
+        expect(test.content('dist/statics/first.bundle.js')).to.contain('var thisIsWorks = true;');
+      });
+
+      it('should generate a bundle with sourceMaps', () => {
+        expect(test.list('dist/statics')).to.contain('first.bundle.js.map');
+      });
+
+      it('should consider babel\'s sourceMaps for bundle', () => {
+        expect(test.content('dist/statics/first.bundle.js')).to.contain('var thisIsWorks');
+        expect(test.content('dist/statics/first.bundle.js.map')).to.contain('const thisIsWorks');
+      });
+
+      it('should generate an additional myChunk.bundle.js when `splitChunks` option in package.json is a configuration object, myChunk chunk should have the common parts and the other chunks should not', () => {
+        expect(test.list('dist/statics')).to.contain('first.bundle.js');
+        expect(test.list('dist/statics')).to.contain('second.bundle.js');
+        expect(test.list('dist/statics')).to.contain('myChunk.chunk.js');
+        expect(test.list('dist/statics')).to.contain('myChunk.chunk.min.js');
+        expect(test.list('dist/statics')).to.contain('myChunk.chunk.js.map');
+        expect(test.content('dist/statics/myChunk.chunk.js')).to.contain('module.exports = function (a) {\n  return a + 1;\n};');
+        expect(test.content('dist/statics/first.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
+        expect(test.content('dist/statics/second.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
+      });
+
+      it('should add myChunk.css if there is any common css/scss/less required, the common css should be in the myChunk.css chunk while not in the other chunks', () => {
+        expect(test.list('dist/statics')).to.contain('first.css');
+        expect(test.list('dist/statics')).to.contain('second.css');
+        expect(test.list('dist/statics')).to.contain('myChunk.css');
+        expect(test.list('dist/statics')).to.contain('myChunk.min.css');
+        expect(test.list('dist/statics')).to.contain('myChunk.css.map');
+        expect(test.content('dist/statics/myChunk.css')).to.contain('{\n  color: red;\n}');
+        expect(test.content('dist/statics/first.css')).to.not.contain('{\n  color: red;\n}');
+        expect(test.content('dist/statics/second.css')).to.not.contain('{\n  color: red;\n}');
+      });
+
+      it('should generate stats files', () => {
+        expect(test.list('target')).to.contain('webpack-stats.prod.json');
+        expect(test.list('target')).to.contain('webpack-stats.dev.json');
+      });
+
+      it('should ignore locale modules from within moment', () => {
+        expect(test.content('dist/statics/myChunk.chunk.js')).not.to.contain('spanish');
+      });
+
+      it('should bundle locale modules from outside of moment', () => {
+        expect(test.content('dist/statics/myChunk.chunk.js')).to.contain('english');
+      });
+
+      it('hould generate a bundle with umd library support', () => {
+        expect(test.content('dist/statics/first.bundle.js')).to.contain('exports["MyLibraryEndpoint"]');
+        expect(test.content('dist/statics/first.bundle.js')).to.contain('root["MyLibraryEndpoint"]');
+      });
+
+      it('should generate a bundle with named amd library support', () => {
+        expect(test.content('dist/statics/first.bundle.js')).to.contain('define("MyLibraryEndpoint", [], factory)');
+      });
+    });
+
+    it('should load JSON file correctly', () => {
+      expect(test.content('dist/statics/first.bundle.js')).to.contain(`"json-content":1`);
+    });
+
+    describe('Copying assets and other files', () => {
+      it('should use yoshi-copy', () => {
+        expect(test.list(`dist/src/assets`)).to.include('some-file');
+      });
+    });
+
+    describe('yoshi-maven-statics', () => {
+      it('should use yoshi-maven-statics', () => {
+        expect(test.content('maven/assembly/tar.gz.xml').replace(/\s/g, '')).to.contain(`
+          <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+              <id>wix-angular</id>
+              <baseDirectory>/</baseDirectory>
+              <formats>
+                  <format>tar.gz</format>
+              </formats>
+              <fileSets>
+                  <fileSet>
+                      <directory>\${project.basedir}/node_modules/some-client-proj/dist</directory>
+                      <outputDirectory>/</outputDirectory>
+                      <includes>
+                          <include>*</include>
+                          <include>*/**</include>
+                      </includes>
+                  </fileSet>
+              </fileSets>
+          </assembly>
+        `.replace(/\s/g, ''));
+      });
+    });
+
+    describe('Cleaning dist after each build', () => {
+      it('should use yoshi-clean', () => {
+        expect(resp.stdout).to.include(`Finished 'clean'`);
+        expect(test.list('dist')).to.not.include('old.js');
+        expect(test.list('dist/src')).to.include('app1.js');
+      });
+    });
+
+    describe('Using yoshi-petri', () => {
+      it('should use yoshi-petri', () => {
+        expect(test.list('dist', '-R')).to.contain('statics/petri-experiments.json');
+      });
+    });
+
+    describe('Considering symlinks', () => {
+      it('should not resolve symlinks to their symlinked location', () => {
+        const module1 = '.call(this, "../node_modules/awesome-module1")';
+        const module2 = '.call(this, "../node_modules/awesome-module2")';
+
+        expect(test.content(`dist/statics/myChunk.chunk.js`)).to.contain(module1);
+        expect(test.content(`dist/statics/myChunk.chunk.js`)).to.not.contain(module2);
+      });
+    });
+
+    describe('Migrate Bower Artifactory', () => {
+      it('should migrate .bowerrc', () => {
+        const newBowerrc = JSON.parse(test.content('.bowerrc'));
+        const newPj = JSON.parse(test.content('package.json'));
+
+        expect(newBowerrc).to.eql({
+          registry: 'https://bower.dev.wixpress.com',
+          resolvers: [
+            'bower-art-resolver'
+          ]
+        });
+
+        expect(newPj.devDependencies['bower-art-resolver']).to.exist;
+      });
+    });
+
+    describe('Externalize relative lodash (lodash/map -> lodash.map)', function () {
+      it('should be disabled when features.externalizeRelativeLodash = false', () => {
+        expect(test.content('dist/statics/second.bundle.js')).not.to.contain(').map');
+      });
+    });
+
+    describe('Using angular ngInject annotations for babel project', function () {
+      it('are not executed when project is not Angular and EcmaScript', () => {
+        expect(test.content('dist/src/angular-module.js')).not.to.contain($inject);
+        expect(test.content('src/angular-module.js')).not.to.contain($inject);
+        expect(test.content('angular-module.js')).not.to.contain($inject);
+      });
+    });
+  });
+
+  describe('simple development project with 1 entry point, ES modules, non-separate styles, babel, commons chunks and w/o cssModules', () => {
+    let resp;
+    before(() => {
+      test = tp.create();
+
+      resp = test
+        .setup({
+          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", {"modules": false}]]}`,
+          'src/a.js': `export default "I'm a module!"; import './a.scss'; require('lodash/map')`,
+          'src/a.scss': `.x {.y {display: flex;}}`,
+          'src/assets/file': '1',
+          'src/something.js': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          'package.json': fx.packageJson({
+            entry: './a.js',
+            separateCss: false,
+            cssModules: false,
+            features: {
+              externalizeRelativeLodash: true
+            },
+            externals: ['lodash']
+          }, {
+          }, {
+            module: 'dist/es/src/a.js',
+          })
+        }, [hooks.installDependency('lodash')], outsideTeamCity)
+        .execute('build');
+    });
+    after(() => {
+      test.teardown();
+    });
+
+    it('should build w/o errors project using modules, non-separate sass, less, babel and commons chunks', () => {
+      expect(resp.code).to.equal(0);
+    });
+
+    it('should not transpile modules for `/es` content if `module` field in `package.json` was specified', () => {
       expect(test.list('dist')).to.include.members(['src', 'statics', 'es']);
       expect(test.content('dist/es/src/a.js')).to.contain('export default');
       expect(test.list('dist/es/src/assets')).to.contain('file');
@@ -170,1001 +361,318 @@ describe('Aggregator: Build', () => {
       expect(test.list('dist/src')).to.contain('a.scss');
     });
 
-    it('should not create `/es` directory if no `module` field in `package.json` was specified and no commonjs plugin added', () => {
-      const resp = test
-        .setup({
-          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", {"modules": false}]]}`,
-          'src/a.js': 'export default "I\'m a module!";',
-          'package.json': `{
-            "yoshi": {
-              "entry": "./a.js"
-            }
-          }`,
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-      expect(resp.code).to.equal(0);
-      expect(test.list('dist')).to.not.include('es');
-      expect(test.content('dist/src/a.js')).to.contain('export default');
+    it('should support single entry point in package.json', () => {
+      expect(test.content('dist/statics/app.bundle.js')).to.contain('"I\'m a module!"');
+    });
+
+    it('should generate a bundle with css', () => {
+      expect(test.content('dist/statics/app.bundle.js')).to.contain('.x .y');
+    });
+
+    it('should be enabled when features.externalizeRelativeLodash = true', () => {
+      expect(test.content('dist/statics/app.bundle.js')).to.contain(').map');
+    });
+
+    describe('yoshi-update-node-version', () => {
+      it('should use yoshi-update-node-version', () => {
+        expect(test.contains('.nvmrc')).to.be.true;
+      });
+    });
+
+    it('should generate css attributes prefixes', () => {
+      expect(test.content(`dist/statics/app.bundle.js`)).to.match(/display: -webkit-box;/g);
+      expect(test.content(`dist/statics/app.bundle.js`)).to.match(/display: -ms-flexbox;/g);
+      expect(test.content(`dist/statics/app.bundle.js`)).to.match(/display: flex;/g);
     });
   });
 
-  describe('yoshi-babel', () => {
-    it('should use yoshi-babel', () => {
-      const resp = test
-        .setup({
-          '.babelrc': '{}',
-          'app/b.jsx': 'const b = 2;',
-          'src/a/a.js': 'const a = 1;',
-          'test/a/a.spec.js': 'const test = \'test\';',
-          'testkit/a.js': 'const a = 1;',
-          'bin/a.js': 'const a = 1;',
-          'index.js': 'const name = \'name\';',
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
+  describe('simple project with typescript and angular that runs on CI (Teamcity) and w/ 1 entry point w/o extenstion', () => {
+    let resp;
 
-      expect(resp.stdout).to.contain(`Finished 'babel'`);
-      expect(resp.code).to.equal(0);
-      expect(test.list('dist')).to.include.members(['src', 'app', 'test', 'testkit', 'bin', 'index.js']);
-    });
+    before(() => {
+      test = tp.create();
 
-    it('should fail with exit code 1', () => {
-      const resp = test
+      resp = test
         .setup({
-          '.babelrc': '{}',
-          'src/a.js': 'function ()',
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-      expect(resp.code).to.equal(1);
-      expect(resp.stderr).to.contain('Unexpected token (1:9)');
-      expect(resp.stderr).to.contain('1 | function ()');
-    });
-  });
-
-  describe('yoshi-typescript', () => {
-    it('should use yoshi-typescript', () => {
-      const resp = test
-        .setup({
-          'app/a.ts': 'const a = 1;',
-          'app/b.tsx': 'const b = 2',
+          'src/client.ts': `console.log("hello");
+            import './styles/style.scss';
+            import './other';`,
+          'src/app.js': `const a = 1;`,
+          'src/other.tsx': 'const b = 2',
+          'src/something.ts': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          'src/styles/style.scss': `.a {.b {color: red;}}`,
           'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
+          '.babelrc': `{"plugins": ["${require.resolve('babel-plugin-transform-es2015-block-scoping')}"]}`,
+          'package.json': fx.packageJson({
+            entry: './client',
+            separateCss: 'prod',
+            cssModules: true,
+          }, {
+            angular: '1.5.0'
+          })
         })
-        .execute('build');
-
-      expect(resp.stdout).to.contain(`Finished 'typescript'`);
-      expect(resp.code).to.equal(0);
-      expect(test.content('dist/app/a.js')).to.contain('var a = 1');
-      expect(test.content('dist/app/b.js')).to.contain('var b = 2');
+        .execute('build', [], insideTeamCity);
+    });
+    after(() => {
+      test.teardown();
     });
 
-    it('should fail with exit code 1', () => {
-      const resp = test
-        .setup({
-          'src/a.ts': 'function ()',
-          'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(resp.code).to.equal(1);
-      expect(resp.stderr).to.contain('error TS1003: Identifier expected');
+    it('should build w/o errors', () => {
+      expect(resp.code).to.equal(0);
     });
 
     it('should not transpile with babel if there is tsconfig', () => {
-      const resp = test
-        .setup({
-          'src/a.js': 'const a = 1;',
-          'src/b.ts': 'const b = 2;',
-          'tsconfig.json': fx.tsconfig(),
-          '.babelrc': `{"plugins": ["${require.resolve('babel-plugin-transform-es2015-block-scoping')}"]}`,
-          'pom.xml': fx.pom(),
-          'package.json': `{
-              "name": "a",\n
-              "version": "1.0.4",\n
-              "yoshi": {
-                "entry": "./a.js"
-              }}`
-
-        })
-        .execute('build');
-
-      expect(resp.code).to.equal(0);
-      expect(test.list('dist/src')).not.to.contain('a.js');
-      expect(test.content('dist/src/b.js')).to.contain('var b = 2');
-    });
-  });
-
-  describe('No individual transpilation', () => {
-    it('should not transpile if no tsconfig/babelrc', () => {
-      const resp = test
-        .setup({
-          'src/b.ts': 'const b = 2;',
-          'src/a/a.js': 'const a = 1;',
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(resp.stdout).to.not.contain(`Finished 'babel'`);
-      expect(resp.code).to.equal(0);
-      expect(test.list('/')).not.to.include('dist');
+      expect(test.list('dist/src')).to.not.contain('app.js');
+      expect(test.content('dist/src/other.js')).to.contain('var b = 2');
     });
 
-    it('should not transpile if runIndividualTranspiler = false', () => {
-      const resp = test
-        .setup({
-          '.babelrc': '{}',
-          'src/b.ts': 'const b = 2;',
-          'src/a/a.js': 'const a = 1;',
-          'package.json': fx.packageJson({
-            runIndividualTranspiler: false
-          })
-        })
-        .execute('build');
-
-      expect(resp.stdout).to.not.contain(`Finished 'babel'`);
-      expect(resp.code).to.equal(0);
-      expect(test.list('/')).not.to.include('dist');
-    });
-  });
-
-  describe('Commons chunk plugin', () => {
-    it('should generate an additional commons.bundle.js when `splitChunks` option in package.json is a configuration object, commons chunk should have the common parts and the other chunks should not', () => {
-      const res = test
-        .setup({
-          'src/dep.js': `module.exports = function(a){return a + 1;};`,
-          'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1);`,
-          'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1);`,
-          'package.json': fx.packageJson({
-            splitChunks: {
-              chunks: 'initial',
-              minSize: 0,
-              name: 'commons'
-            },
-            entry: {
-              first: './app1.js',
-              second: './app2.js'
-            }
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.contain('first.bundle.js');
-      expect(test.list('dist/statics')).to.contain('second.bundle.js');
-      expect(test.list('dist/statics')).to.contain('commons.chunk.js');
-      expect(test.list('dist/statics')).to.contain('commons.chunk.min.js');
-      expect(test.list('dist/statics')).to.contain('commons.chunk.js.map');
-      expect(test.content('dist/statics/commons.chunk.js')).to.contain('module.exports = function (a) {\n  return a + 1;\n};');
-      expect(test.content('dist/statics/first.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
-      expect(test.content('dist/statics/second.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
-    });
-
-    it('should add commons.css if there is any common css/scss required, the common css should be in the commons.css chunk while not in the other chunks', () => {
-      const res = test
-        .setup({
-          'src/styles.scss': `body { background: red; }`,
-          'src/first.scss': `div { background: blue; }`,
-          'src/second.scss': `div { background: yellow; }`,
-          'src/app1.js': `const thisIsWorks = true; require('./first.scss'); require('./styles.scss');`,
-          'src/app2.js': `const hello = "world"; require('./second.scss'); require('./styles.scss');`,
-          'package.json': fx.packageJson({
-            splitChunks: {
-              chunks: 'initial',
-              minSize: 0,
-              name: 'commons'
-            },
-            entry: {
-              first: './app1.js',
-              second: './app2.js'
-            }
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.contain('first.css');
-      expect(test.list('dist/statics')).to.contain('second.css');
-      expect(test.list('dist/statics')).to.contain('commons.css');
-      expect(test.list('dist/statics')).to.contain('commons.min.css');
-      expect(test.list('dist/statics')).to.contain('commons.css.map');
-      expect(test.content('dist/statics/commons.css')).to.contain('body {\n  background: red; }');
-      expect(test.content('dist/statics/first.css')).to.not.contain('body {\n  background: red; }');
-      expect(test.content('dist/statics/second.css')).to.not.contain('body {\n  background: red; }');
-    });
-
-    it('should pass a custom configuration if an object is passed to the `splitChunks` configuration', () => {
-      const res = test
-        .setup({
-          'src/dep.js': `module.exports = function(a){return a + 1;};`,
-          'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1);`,
-          'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1);`,
-          'package.json': fx.packageJson({
-            splitChunks: {
-              chunks: 'initial',
-              name: 'myCustomCommonsName',
-              minChunks: 2,
-              minSize: 0,
-            },
-            entry: {
-              first: './app1.js',
-              second: './app2.js'
-            }
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.not.contain('commons.chunk.js');
-      expect(test.list('dist/statics')).to.contain('myCustomCommonsName.chunk.js');
-    });
-
-    it('should generate x.bundle.js with content from `src/dep` and without content from src2/dep when `cacheGroups.test` speficifed', () => {
-      const res = test
-        .setup({
-          'src/dep.js': `module.exports = function(){return 'iLiveInChunk';};`,
-          'src/dep2.js': `module.exports = function(){return 'iAmNotCodeFromChunk!';};`,
-          'src/app1.js': `const a = require('./dep'); const b = require('../src/dep2');a();b();`,
-          'src/app2.js': `const a = require('./dep'); const b = require('../src/dep2');a();b();`,
-          'yoshi.config.js': `module.exports = {
-            splitChunks: {
-              "cacheGroups": {
-                "x": {
-                  "name": "x",
-                  "minChunks": 2,
-                  "minSize": 0,
-                  "chunks": "initial",
-                  "test": require('path').resolve("./src/dep.js")
-                }
-              }
-            },
-            entry: {
-              first: './app1.js',
-              second: './app2.js'
-            }
-          };`,
-          'package.json': '{}',
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.contain('first.bundle.js');
-      expect(test.list('dist/statics')).to.contain('second.bundle.js');
-      expect(test.list('dist/statics')).to.contain('x.chunk.js');
-      expect(test.content('dist/statics/x.chunk.js')).to.contain('iLiveInChunk');
-      expect(test.content('dist/statics/x.chunk.js')).to.not.contain('iAmNotCodeFromChunk');
-      expect(test.content('dist/statics/first.bundle.js')).to.contain('iAmNotCodeFromChunk');
-      expect(test.content('dist/statics/second.bundle.js')).to.contain('iAmNotCodeFromChunk');
-    });
-  });
-
-  describe('Bundle', () => {
-    ['fs', 'net', 'tls'].forEach(moduleName => {
-      it(`should not fail to require node built-ins such as ${moduleName}`, () => {
-        const res = test
-          .setup({
-            'src/client.js': `require('${moduleName}');`,
-            'package.json': fx.packageJson(),
-            'pom.xml': fx.pom()
-          })
-          .execute('build');
-
-        expect(res.code).to.equal(0);
-      });
-    });
-
-    it('should generate a bundle', () => {
-      const res = test
-        .setup({
-          'src/client.js': `const aFunction = require('./dep');const a = aFunction(1);`,
-          'src/dep.js': `module.exports = function(a){return a + 1;};`,
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
+    it('should generate bundle if entry is a typescript file and entry extension is omitted', () => {
       expect(test.list('dist/statics')).to.contain('app.bundle.js');
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('const a = aFunction(1);');
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('module.exports = function (a)');
-    });
-
-    it('should fail with exit code 1', () => {
-      const res = test
-        .setup({
-          'src/client.js': `const aFunction = require('./dep');const a = aFunction(1);`,
-          'src/dep.js': `module.exports = a => {`,
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-      expect(res.code).to.equal(1);
-      expect(res.stdout).to.contain('Module build failed:');
-      expect(res.stderr).to.contain('Unexpected token (2:0)');
-    });
-
-    it('should generate a bundle using different entry', () => {
-      const res = test
-        .setup({
-          'src/app-final.js': `const aFunction = require('./dep');const a = aFunction(1);`,
-          'src/dep.js': `module.exports = function(a){return a + 1;};`,
-          'package.json': fx.packageJson({
-            entry: './app-final.js'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics').indexOf('app.bundle.js')).to.be.at.least(0);
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('const a = aFunction(1);');
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('module.exports = function (a)');
-    });
-
-    it('should support single entry point in package.json', () => {
-      const res = test
-        .setup({
-          'src/app1.js': `const thisIsWorks = true;`,
-          'package.json': fx.packageJson({
-            entry: './app1.js'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('thisIsWorks');
-    });
-
-    it('should support multiple entry points in package.json', () => {
-      const res = test
-        .setup({
-          'src/app1.js': `const thisIsWorks = true;`,
-          'src/app2.js': `const hello = "world";`,
-          'package.json': fx.packageJson({
-            entry: {
-              first: './app1.js',
-              second: './app2.js'
-            }
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/first.bundle.js')).to.contain('thisIsWorks');
-      expect(test.content('dist/statics/second.bundle.js')).to.contain('const hello');
-    });
-
-    it('should create sourceMaps for both bundle and specs', () => {
-      const res = test
-        .setup({
-          'src/app.js': `const thisIsWorks = true;`,
-          'src/app.spec.js': `const thisIsWorksAgain = true;`,
-          'package.json': fx.packageJson({
-            entry: './app.js'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('thisIsWorks');
-      expect(test.list('dist/statics')).to.contain('app.bundle.js.map');
-    });
-
-    it('should bundle the app given importing json file', () => {
-      test
-        .setup({
-          'src/app.js': `require('./some.json')`,
-          'src/some.json': `{"json-content": 42}`,
-          'package.json': fx.packageJson({
-            entry: './app.js'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(test.content('dist/statics/app.bundle.js')).to.contain(`"json-content":42`);
-    });
-
-    it('should consider babel\'s sourceMaps for bundle', function () {
-      this.timeout(120000); // 2min, may be even shorter
-
-      const res = test
-        .setup({
-          'src/app.js': `const thisIsWorks = true;`,
-          'src/app.spec.js': `const thisIsWorksAgain = true;`,
-          '.babelrc': `{"plugins": ["${require.resolve('babel-plugin-transform-es2015-block-scoping')}"]}`,
-          'pom.xml': fx.pom(),
-          'package.json': `{\n
-              "name": "a",\n
-              "version": "1.0.4",\n
-              "yoshi": {
-                "entry": "./app.js"
-              }
-            }`
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('var thisIsWorks');
-      expect(test.content('dist/statics/app.bundle.js.map')).to.contain('const thisIsWorks');
-    });
-
-    it('should generate bundle if entry is a typescript file', () => {
-      const res = test
-        .setup({
-          'src/app.ts': 'console.log("hello");',
-          'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson({
-            entry: './app.ts'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.contain('app.bundle.js');
-    });
-
-    it('should generate bundle if entry extension is omitted by looking for existing .ts or .js files', () => {
-      const res = test
-        .setup({
-          'src/app.ts': 'console.log("hello");',
-          'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson({
-            entry: './app'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.contain('app.bundle.js');
-    });
-
-    it('should allow generating a bundle by default with both .js and .ts extensions', () => {
-      const res = test
-        .setup({
-          'src/client.ts': 'console.log("hello");',
-          'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).to.contain('app.bundle.js');
-    });
-
-    it('should generate stats files', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'console.log("hello");',
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.list('target')).to.contain('webpack-stats.prod.json');
-      expect(test.list('target')).to.contain('webpack-stats.dev.json');
-    });
-
-    describe('moment js', () => {
-      it('should ignore locale modules from within moment', () => {
-        const res = test
-          .setup({
-            'src/client.js': `import 'moment';`,
-            'node_modules/moment/index.js': `function load() {return require('./locale/' + lang);}`,
-            'node_modules/moment/locale/en.js': `module.exports = 'english'`,
-            'package.json': fx.packageJson(),
-            'pom.xml': fx.pom()
-          })
-          .execute('build');
-
-        expect(res.code).to.equal(0);
-        expect(test.list('dist/statics')).to.contain('app.bundle.js');
-        expect(test.content('dist/statics/app.bundle.js')).not.to.contain('english');
-      });
-
-      it('should bundle locale modules from outside of moment', () => {
-        const res = test
-          .setup({
-            'src/client.js': `require('moment/locale/en')`,
-            'node_modules/moment/locale/en.js': `module.exports = 'english';`,
-            'package.json': fx.packageJson(),
-            'pom.xml': fx.pom()
-          })
-          .execute('build');
-
-        expect(res.code).to.equal(0);
-        expect(test.list('dist/statics')).to.contain('app.bundle.js');
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('english');
-      });
     });
 
     it('should generate a minified bundle on ci', () => {
-      const res = test
-        .setup({
-          'src/client.js': `const aFunction = require('./dep');const a = aFunction(1);`,
-          'src/dep.js': `module.exports = function(a){return a + 1;};`,
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build', [], insideTeamCity);
-
-      expect(res.code).to.equal(0);
-
-      expect(test.list('dist/statics')).to.contain('app.bundle.js');
       expect(test.list('dist/statics')).to.contain('app.bundle.min.js');
-
       expect(test.list('dist/statics')).to.contain('app.bundle.min.js.map');
-      expect(test.list('dist/statics')).to.contain('app.bundle.min.js.map');
-    });
-
-    it('should exit with code 1 with a custom entry that does not exist', () => {
-      const res = test
-        .setup({
-          'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson({
-            entry: './hello'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(1);
-      expect(test.list('dist/statics')).not.to.contain('app.bundle.js');
-    });
-
-    it('should exit with code 0 and not create bundle.js when there is no custom entry configures and default entry does not exist', () => {
-      const res = test
-        .setup({
-          'tsconfig.json': fx.tsconfig({files: ['src/example.ts']}),
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom(),
-          'src/example.ts': `console.log('horrey')`,
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.list('dist/statics')).not.to.contain('app.bundle.js');
-    });
-  });
-
-  describe('Bundle output with library support', () => {
-    it('should generate a bundle with umd library support', () => {
-      const res = test
-        .setup({
-          'src/client.js': '',
-          'package.json': fx.packageJson({
-            exports: 'MyLibraryEndpoint'
-          })
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('exports["MyLibraryEndpoint"]');
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('root["MyLibraryEndpoint"]');
-    });
-
-    it('should generate a bundle with named amd library support', () => {
-      const res = test
-        .setup({
-          'src/client.js': '',
-          'package.json': fx.packageJson({
-            exports: 'MyLibraryEndpoint'
-          })
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('define("MyLibraryEndpoint", [], factory)');
-    });
-  });
-
-  describe('Bundle - sass', () => {
-    const generateCssModulesPattern = (name, path, pattern = `[hash:base64:5]`) => {
-      const genericNames = require('generic-names');
-      const generate = genericNames(pattern, {hashPrefix: 'a'});
-      return generate(name, path);
-    };
-
-    it('should generate a bundle with css', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./style.scss\');',
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            separateCss: false,
-            cssModules: false
-          })
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('.a .b');
-    });
-
-    it('should fail with exit code 1', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./style1.scss\');',
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(1);
-    });
-
-    it('should separate Css from bundle by default', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./style.scss\');',
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
-      expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
-    });
-
-    it('should separate Css with prod setting on production', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./style.scss\');',
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            separateCss: 'prod'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build', [], {NODE_ENV: 'PRODUCTION'});
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
-      expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
     });
 
     it('should separate Css with prod setting on teamcity', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./style.scss\');',
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            separateCss: 'prod'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build', [], insideTeamCity);
-
-      expect(res.code).to.equal(0);
       expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
       expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
     });
 
-    it('should generate RTL Css from bundle', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./style.scss\');',
-          'src/style.scss': `.a {.b {float: left;}}`,
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  float: left; }');
-      expect(test.content('dist/statics/app.css')).to.contain('{\n  float: left; }');
-      expect(test.content('dist/statics/app.rtl.css')).to.contain('{\n  float: right; }');
-      expect(test.content('dist/statics/app.rtl.min.css')).to.contain('{float:right}');
-    });
-
-    it('should create a separate css file for each entry', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./client-styles.scss\');',
-          'src/settings.js': 'require(\'./settings-styles.scss\');',
-          'src/client-styles.scss': `.a {.b {color: red;}}`,
-          'src/settings-styles.scss': `.c {.d {color: purple;}}`,
-          'package.json': fx.packageJson({
-            entry: {
-              app: './client.js',
-              settings: './settings.js'
-            }
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-      expect(res.code).to.equal(0);
-      expect(test.list('./dist/statics')).to.contain.members(['app.css', 'settings.css']);
-    });
-
-    it('should generate (runtime) css modules on production with hash only', function () {
-      this.timeout(60000);
-
-      const hash = generateCssModulesPattern('a', 'styles/my-file.css');
-      const expectedCssMap = `{ a: '${hash}' }\n`;
-      const myTest = tp.create('src/index');
-      const res = myTest
-        .setup({
-          'src/index.js': `
-            const {wixCssModulesRequireHook} = require('${require.resolve('yoshi-runtime')}');
-            wixCssModulesRequireHook('./src');
-            const s = require('./styles/my-file.css')
-            console.log(s);
-          `,
-          'src/styles/my-file.css': `.a {color: red;}`,
-          'package.json': `{
-            "name": "a",\n
-            "version": "1.0.4",\n
-            "yoshi": {
-              "cssModules": true,
-              "separateCss": true
-            }
-          }`,
-          'pom.xml': fx.pom()
-        })
-        .execute('', [], {NODE_ENV: 'production'});
-
-      expect(res.code).to.equal(0);
-      expect(res.stdout).to.equal(expectedCssMap);
-      myTest.teardown();
-    });
-
     it('should generate css modules on CI with hash only', () => {
-      const hashA = generateCssModulesPattern('a', 'styles/my-file.scss');
-      const hashB = generateCssModulesPattern('b', 'styles/my-file.scss');
+      const hashA = generateCssModulesPattern('a', 'styles/style.scss');
+      const hashB = generateCssModulesPattern('b', 'styles/style.scss');
 
       const expectedCssPattern = `.${hashA} .${hashB} {`;
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./styles/my-file.scss\');',
-          'src/styles/my-file.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            cssModules: true,
-            separateCss: true
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build', [], insideTeamCity);
-
-      expect(res.code).to.equal(0);
       expect(test.content(`dist/${defaultOutput}/app.css`)).to.contain(expectedCssPattern);
     });
 
-    it('should generate css modules on separate css file', () => {
-      const regex = /\.styles-my-file__a__.{5}\s.styles-my-file__b__.{5}\s{/;
-      const res = test
+    it('should generate separated minified Css from bundle on ci', () => {
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
+      expect(test.content('dist/statics/app.min.css')).to.contain('{color:red}');
+    });
+
+    it('are executed when project is Angular and TypeScript', () => {
+      expect(test.content('dist/src/something.js')).to.contain($inject);
+      expect(test.content('something.js')).not.to.contain($inject);
+    });
+  });
+
+  describe('simple project with typescript and angular that runs on CI (Teamcity) and with 1 entry point w/o extenstion', () => {
+    let resp;
+
+    before(() => {
+      test = tp.create();
+
+      resp = test
         .setup({
-          'src/client.js': 'require(\'./styles/my-file.scss\');',
-          'src/styles/my-file.scss': `.a {.b {color: red;}}`,
+          'src/client.ts': `console.log("hello"); import './styles/style.scss'`,
+          'src/styles/style.scss': `.a {.b {color: red;}}`,
+          'src/something.ts': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          'tsconfig.json': fx.tsconfig(),
           'package.json': fx.packageJson({
-            cssModules: true,
-            separateCss: true
-          }),
-          'pom.xml': fx.pom()
+            separateCss: 'prod',
+            cssModules: true
+          })
         })
-        .execute('build', [], getMockedCI({ci: false}));
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).not.to.match(regex);
-      expect(test.content(`dist/${defaultOutput}/app.css`)).to.match(regex);
+        .execute('build', [], {NODE_ENV: 'PRODUCTION'});
+    });
+    after(() => {
+      test.teardown();
     });
 
-    it('should generate css modules as default', () => {
-      const regex = /\.styles-my-file__a__.{5}\s.styles-my-file__b__.{5}\s{/;
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./styles/my-file.scss\');',
-          'src/styles/my-file.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build', [], getMockedCI({ci: false}));
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).not.to.match(regex);
-      expect(test.content(`dist/${defaultOutput}/app.css`)).to.match(regex);
+    it('should build w/o errors', () => {
+      expect(resp.code).to.equal(0);
     });
 
-    it('should disable css modules', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./styles/my-file.scss\');',
-          'src/styles/my-file.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            cssModules: false,
-            separateCss: true
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.css`)).to.contain('.a .b {');
+    it('should allow generating a bundle by default with both .js and .ts extensions', () => {
+      expect(test.list('dist/statics')).to.contain('app.bundle.js');
     });
 
-    it('should disable css modules for .global.scss files', () => {
-      const res = test
-        .setup({
-          'src/client.js': 'require(\'./styles/my-file.global.scss\');',
-          'src/styles/my-file.global.scss': `.a {.b {color: red;}}`,
-          'package.json': fx.packageJson({
-            separateCss: true
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.css`)).to.contain('.a .b {');
+    it('should separate Css with prod setting on production', () => {
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
+      expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
     });
 
-    describe('autoprefixer', () => {
-      it('should generate css attributes prefixes', () => {
-        const res = test
+    it('should generate (runtime) css modules on production with hash only', function () {
+      const hashA = generateCssModulesPattern('a', 'styles/style.scss');
+      const hashB = generateCssModulesPattern('b', 'styles/style.scss');
+
+      const expectedCssPattern = `.${hashA} .${hashB} {`;
+      expect(test.content(`dist/statics/app.css`)).to.contain(expectedCssPattern);
+    });
+
+    it('are not executed when project is not Angular and TypeScript', () => {
+      expect(test.content('dist/src/something.js')).not.to.contain($inject);
+      expect(test.content('something.js')).not.to.contain($inject);
+    });
+  });
+
+  describe('build projects with individual cases', () => {
+    beforeEach(() => {
+      test = tp.create();
+    });
+    afterEach(() => {
+      test.teardown();
+    });
+
+    describe('build project with --analyze flag', () => {
+      it('should serve webpack-bundle-analyzer server', () => {
+        const analyzerServerPort = '8888';
+        const analyzerContentPart = 'window.chartData = [{"label":"app.bundle.min.js"';
+        test
           .setup({
-            'src/client.js': 'require(\'./style.scss\');',
-            'src/style.scss': `.a {
-                                display: flex;
-                              }`,
+            'src/client.js': '',
+            'package.json': fx.packageJson()
+          })
+          .spawn('build', ['--analyze']);
+
+        return checkServerIsServing({port: analyzerServerPort})
+          .then(content => expect(content).to.contain(analyzerContentPart));
+      });
+    });
+
+    describe('build project w/o individual transpilation', () => {
+      it('should not transpile if no tsconfig/babelrc', () => {
+        const resp = test
+          .setup({
+            'src/b.ts': 'const b = 2;',
+            'src/a/a.js': 'const a = 1;',
+            'package.json': fx.packageJson()
+          })
+          .execute('build');
+
+        expect(resp.stdout).to.not.contain(`Finished 'babel'`);
+        expect(resp.code).to.equal(0);
+        expect(test.list('/')).not.to.include('dist');
+      });
+
+      it('should not transpile if runIndividualTranspiler = false', () => {
+        const resp = test
+          .setup({
+            '.babelrc': '{}',
+            'src/b.ts': 'const b = 2;',
+            'src/a/a.js': 'const a = 1;',
             'package.json': fx.packageJson({
-              separateCss: false
+              runIndividualTranspiler: false
             })
           })
           .execute('build');
 
-        expect(res.code).to.equal(0);
-        expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/display: -webkit-box;/g);
-        expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/display: -ms-flexbox;/g);
-        expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.match(/display: flex;/g);
+        expect(resp.stdout).to.not.contain(`Finished 'babel'`);
+        expect(resp.code).to.equal(0);
+        expect(test.list('/')).not.to.include('dist');
       });
+    });
 
-      it('should generate css attributes prefixes for on separate css file', () => {
+    describe('build project with angular dependency and w/o entry files and default entries', () => {
+      it('should exit with code 0 and not create bundle.js when there is no custom entry configures and default entry does not exist', () => {
         const res = test
           .setup({
-            'src/client.js': 'require(\'./style.scss\');',
-            'src/style.scss': `.a {
-                                display: flex;
-                              }`,
+            'tsconfig.json': fx.tsconfig({files: ['src/example.ts']}),
+            'package.json': fx.packageJson(),
+            'pom.xml': fx.pom(),
+            'src/example.ts': `console.log('horrey')`,
+          })
+          .execute('build');
+
+        expect(res.code).to.equal(0);
+        expect(test.list('dist/statics')).not.to.contain('app.bundle.js');
+      });
+    });
+
+    describe('build project error cases', () => {
+      describe('Babel', () => {
+        it('should fail with exit code 1', () => {
+          const resp = test
+            .setup({
+              '.babelrc': '{}',
+              'src/a.js': 'function ()',
+              'package.json': fx.packageJson(),
+              'pom.xml': fx.pom()
+            })
+            .execute('build');
+          expect(resp.code).to.equal(1);
+          expect(resp.stderr).to.contain('Unexpected token (1:9)');
+          expect(resp.stderr).to.contain('1 | function ()');
+        });
+      });
+
+      describe('Typescript', () => {
+        it('should fail with exit code 1', () => {
+          const resp = test
+            .setup({
+              'src/a.ts': 'function ()',
+              'tsconfig.json': fx.tsconfig(),
+              'package.json': fx.packageJson(),
+              'pom.xml': fx.pom()
+            })
+            .execute('build');
+
+          expect(resp.code).to.equal(1);
+          expect(resp.stderr).to.contain('error TS1003: Identifier expected');
+        });
+      });
+
+      it('should exit with code 1 with a custom entry that does not exist', () => {
+        const res = test
+          .setup({
+            'tsconfig.json': fx.tsconfig(),
             'package.json': fx.packageJson({
-              cssModules: true,
-              separateCss: true
+              entry: './hello'
             }),
             'pom.xml': fx.pom()
           })
           .execute('build');
 
-        expect(res.code).to.equal(0);
-        expect(test.content(`dist/${defaultOutput}/app.css`)).to.match(/display: -webkit-box;/g);
-        expect(test.content(`dist/${defaultOutput}/app.css`)).to.match(/display: -ms-flexbox;/g);
-        expect(test.content(`dist/${defaultOutput}/app.css`)).to.match(/display: flex;/g);
+        expect(res.code).to.equal(1);
+        expect(test.list('dist/statics')).not.to.contain('app.bundle.js');
       });
 
-      it('should generate separated minified Css from bundle on ci', () => {
+      it('should fail with exit code 1 when yoshi can\'t transpile sass file', () => {
         const res = test
           .setup({
-            'src/client.js': 'require(\'./style.scss\');',
+            'src/client.js': 'require(\'./style1.scss\');',
             'src/style.scss': `.a {.b {color: red;}}`,
+            'package.json': fx.packageJson()
+          })
+          .execute('build');
+
+        expect(res.code).to.equal(1);
+      });
+
+      it('should fail with exit code 1 when yoshi can\'t transpile less file', () => {
+        const resp = test
+          .setup({
+            'src/client.js': '',
+            'app/a/style.less': '.a {\n.b\ncolor: red;\n}\n}\n',
+            'package.json': fx.packageJson()
+          })
+          .execute('build');
+
+        expect(resp.code).to.equal(1);
+        expect(resp.stdout).to.contain(`Failed 'less'`);
+        expect(resp.stderr).to.contain(`Unrecognised input`);
+      });
+
+      it('should fail with exit code 1 when yoshi can\'t transpile js file ', () => {
+        const res = test
+          .setup({
+            'src/client.js': `const aFunction = require('./dep');const a = aFunction(1);`,
+            'src/dep.js': `module.exports = a => {`,
             'package.json': fx.packageJson(),
             'pom.xml': fx.pom()
           })
-          .execute('build', [], insideTeamCity);
-
-        expect(res.code).to.equal(0);
-        expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
-        expect(test.content('dist/statics/app.min.css')).to.contain('{color:red}');
+          .execute('build');
+        expect(res.code).to.equal(1);
+        expect(res.stdout).to.contain('Module build failed:');
+        expect(res.stderr).to.contain('Unexpected token (2:0)');
       });
-    });
-  });
-
-  describe('yoshi-copy', () => {
-    it('should use yoshi-copy', () => {
-      const res = test
-        .setup({
-          'app/assets/some-file': 'a',
-          'src/assets/some-file': 'a',
-          'test/assets/some-file': 'a',
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.list(`dist/src/assets`)).to.include('some-file');
-    });
-  });
-
-  describe('yoshi-maven-statics', () => {
-    it('should use yoshi-maven-statics', () => {
-      const res = test
-        .setup({
-          'package.json': fx.packageJson({
-            clientProjectName: 'some-client-proj'
-          }),
-          'pom.xml': fx.pom()
-        })
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('maven/assembly/tar.gz.xml').replace(/\s/g, '')).to.contain(`
-        <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
-            <id>wix-angular</id>
-            <baseDirectory>/</baseDirectory>
-            <formats>
-                <format>tar.gz</format>
-            </formats>
-            <fileSets>
-                <fileSet>
-                    <directory>\${project.basedir}/node_modules/some-client-proj/dist</directory>
-                    <outputDirectory>/</outputDirectory>
-                    <includes>
-                        <include>*</include>
-                        <include>*/**</include>
-                    </includes>
-                </fileSet>
-            </fileSets>
-        </assembly>
-      `.replace(/\s/g, ''));
-    });
-  });
-
-  describe('yoshi-clean', () => {
-    it('should use yoshi-clean', () => {
-      const res = test
-        .setup({
-          '.babelrc': '{}',
-          'dist/old.js': `const hello = "world!";`,
-          'src/new.js': 'const world = "hello!";',
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(res.code).to.be.equal(0);
-      expect(res.stdout).to.include(`Finished 'clean'`);
-      expect(test.list('dist')).to.not.include('old.js');
-      expect(test.list('dist/src')).to.include('new.js');
-    });
-  });
-
-  describe('yoshi-update-node-version', () => {
-    it('should use yoshi-update-node-version', () => {
-      const res = test
-        .setup({'package.json': fx.packageJson()})
-        .execute('build', [], outsideTeamCity);
-
-      expect(res.code).to.be.equal(0);
-      expect(test.contains('.nvmrc')).to.be.true;
-    });
-  });
-
-  describe('yoshi-petri', () => {
-    it('should use yoshi-petri', () => {
-      test
-        .setup({
-          'petri-specs/specs.infra.Dummy.json': fx.petriSpec(),
-          'package.json': fx.packageJson()
-        })
-        .execute('build');
-
-      expect(test.list('dist', '-R')).to.contain('statics/petri-experiments.json');
     });
   });
 
@@ -1174,177 +682,6 @@ describe('Aggregator: Build', () => {
         .setup({'package.json': fx.packageJson()})
         .execute('build');
       expect(resp.stdout).to.contain('checkDeps');
-    });
-  });
-
-  describe('symlinks', () => {
-    it('should not resolve symlinks to their symlinked location', () => {
-      const module1 = '.call(this, "../node_modules/awesome-module1")';
-      const module2 = '.call(this, "../node_modules/awesome-module2")';
-
-      const res = test
-        .setup({
-          'node_modules/awesome-module1/entry.js': 'module.exports = function() { return __dirname }',
-          'node_modules/awesome-module2/entry.js': 'module.exports = function() { return __dirname }',
-          'src/client.js': `require('awesome-module1/entry.js')`,
-          'package.json': fx.packageJson()
-        }, [
-          hooks.createSymlink('node_modules/awesome-module2/entry.js', 'node_modules/awesome-module1/entry.js')
-        ])
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.contain(module1);
-      expect(test.content(`dist/${defaultOutput}/app.bundle.js`)).to.not.contain(module2);
-    });
-  });
-
-  describe('Migrate Bower Artifactory', () => {
-    it('should migrate .bowerrc', () => {
-      const bowerrc = {
-        registry: {
-          search: ['https://bower.herokuapp.com', 'http://wix:wix@mirror.wixpress.com:3333'],
-          register: 'http://wix:wix@mirror.wixpress.com:3333',
-          publish: 'http://wix:wix@mirror.wixpress.com:3333'
-        }
-      };
-
-      test
-        .setup({
-          'package.json': fx.packageJson(),
-          '.bowerrc': JSON.stringify(bowerrc, null, 2),
-        })
-        .execute('build');
-
-      const newBowerrc = JSON.parse(test.content('.bowerrc'));
-      const newPj = JSON.parse(test.content('package.json'));
-
-      expect(newBowerrc).to.eql({
-        registry: 'https://bower.dev.wixpress.com',
-        resolvers: [
-          'bower-art-resolver'
-        ]
-      });
-
-      expect(newPj.devDependencies['bower-art-resolver']).to.exist;
-    });
-  });
-
-  describe('externalize relative lodash (lodash/map -> lodash.map)', function () {
-    this.timeout(30000);
-
-    it('should be disabled when features.externalizeRelativeLodash = false', () => {
-      const res = test
-        .setup({
-          'src/client.js': `require('lodash/map')`,
-          'package.json': fx.packageJson({
-            features: {
-              externalizeRelativeLodash: false
-            },
-            externals: ['lodash/map']
-          })
-        }, [hooks.installDependency('lodash')])
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain(').map');
-    });
-
-    it('should be enabled when features.externalizeRelativeLodash = true', () => {
-      const res = test
-        .setup({
-          'src/client.js': `require('lodash/map')`,
-          'package.json': fx.packageJson({
-            features: {
-              externalizeRelativeLodash: true
-            },
-            externals: ['lodash']
-          })
-        }, [hooks.installDependency('lodash')])
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/statics/app.bundle.js')).to.contain(').map');
-    });
-  });
-
-  describe('angular ngInject annotations', function () {
-    const $inject = 'something.$inject = ["$http"];';
-    it('are not executed when project is not Angular and TypeScript', () => {
-      const res = test
-        .setup({
-          'src/something.ts': fx.angularJs(),
-          'something/something.js': fx.angularJs(),
-          'something.js': fx.angularJs(),
-          'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson({
-          }, {
-          })
-        }, [])
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/src/something.js')).not.to.contain($inject);
-      expect(test.content('dist/something/something.js')).not.to.contain($inject);
-      expect(test.content('something.js')).not.to.contain($inject);
-    });
-    it('are executed when project is Angular and TypeScript', () => {
-      const res = test
-        .setup({
-          'src/something.ts': fx.angularJs(),
-          'something/something.js': fx.angularJs(),
-          'something.js': fx.angularJs(),
-          'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson({
-          }, {
-            angular: '1.5.0'
-          })
-        }, [])
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/src/something.js')).to.contain($inject);
-      expect(test.content('dist/something/something.js')).not.to.contain($inject);
-      expect(test.content('something.js')).not.to.contain($inject);
-    });
-    it('are executed when project is Angular and EcmaScript', () => {
-      const res = test
-        .setup({
-          'src/something.js': fx.angularJs(),
-          'something/something.js': fx.angularJs(),
-          'something.js': fx.angularJs(),
-          '.babelrc': '{}',
-          'package.json': fx.packageJson({
-          }, {
-            angular: '1.5.0'
-          })
-        }, [])
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/src/something.js')).to.contain($inject);
-      expect(test.content('dist/something/something.js')).not.to.contain($inject);
-      expect(test.content('src/something.js')).not.to.contain($inject);
-      expect(test.content('something.js')).not.to.contain($inject);
-    });
-    it('are not executed when project is not Angular and EcmaScript', () => {
-      const res = test
-        .setup({
-          'src/something.js': fx.angularJs(),
-          'something/something.js': fx.angularJs(),
-          'something.js': fx.angularJs(),
-          '.babelrc': '{}',
-          'package.json': fx.packageJson({
-          }, {
-          })
-        }, [])
-        .execute('build');
-
-      expect(res.code).to.equal(0);
-      expect(test.content('dist/src/something.js')).not.to.contain($inject);
-      expect(test.content('dist/something/something.js')).not.to.contain($inject);
-      expect(test.content('src/something.js')).not.to.contain($inject);
-      expect(test.content('something.js')).not.to.contain($inject);
     });
   });
 
