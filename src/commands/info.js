@@ -1,4 +1,8 @@
 const envinfo = require('envinfo');
+const path = require('path');
+const chalk = require('chalk');
+
+const pkg = require(path.resolve(process.cwd(), 'package.json'));
 
 module.exports = async () => {
   console.log(
@@ -11,4 +15,11 @@ module.exports = async () => {
       }
     )
   );
+
+  if (pkg.yoshi) {
+    console.log(' ' + chalk.underline('Yoshi config'));
+    console.log(JSON.stringify(pkg.yoshi, null, 2));
+  } else {
+    console.log(' Zero config 🛴');
+  }
 };
