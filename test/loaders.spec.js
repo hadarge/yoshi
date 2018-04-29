@@ -361,7 +361,7 @@ describe('Loaders', () => {
     afterEach(() => test.teardown());
 
     describe('client', () => {
-      it('should run stylable loader over imported .st.css files with { separateCSS: true }', () => {
+      it('should run stylable loader over imported .st.css files with { separateCSS: false }', () => {
         test
           .setup({
             'src/client.js': `require('./some-css.st.css');`,
@@ -373,10 +373,11 @@ describe('Loaders', () => {
           }, [])
           .execute('build');
 
-        expect(test.content('dist/statics/app.bundle.js')).to.match(/.Test.*some-rule {\s*?color: red;\s*?}/);
+        expect(test.content('dist/statics/app.bundle.js')).to.match(/color: red/);
+        expect(test.content('dist/statics/app.bundle.js')).to.match(/"some-rule"/);
       });
 
-      it('should run stylable loader over imported .st.css files with separateCSS true', () => {
+      it('should run stylable loader over imported .st.css files with { separateCSS: true }', () => {
         test
           .setup({
             'src/client.js': `require('./some-css.st.css');`,
@@ -388,7 +389,7 @@ describe('Loaders', () => {
           }, [])
           .execute('build');
 
-        expect(test.content('dist/statics/app.stylable.bundle.css')).to.match(/.Test.*some-rule {\s*?color: red;\s*?}/);
+        expect(test.content('dist/statics/app.stylable.bundle.css')).to.match(/color: red/);
       });
     });
   });
