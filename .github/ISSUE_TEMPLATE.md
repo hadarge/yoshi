@@ -37,14 +37,13 @@ Search open/closed issues before submitting since someone might have asked the s
 
 ### 💻 Code Sample
 
-<!--- If you are seeing an error, please provide your github repository (preferable), gist or inline sample code to reproduce the issue.
-      In addition, paste below your `yoshi` config block from your `package.json`. -->
+<!--- If you are seeing an error, please provide your github repository (preferable), gist or inline sample code to reproduce the issue. -->
 ...
 
 ### 🌍 Your Environment
 
 <!--- yoshi v2.1.3 and up - Run `npx yoshi info` in your terminal and paste the output below -->
-<!--- yoshi v2.1.2 and below - Manually include as many relevant details about the environment you experienced the bug in -->
+<!--- yoshi v2.1.2 and below - Manually include as many relevant details about the environment you experienced the bug in. In addition, paste below your `yoshi` config block from your `package.json`. -->
 
 | Software         | Version(s) |
 | ---------------- | ---------- |
@@ -52,3 +51,9 @@ Search open/closed issues before submitting since someone might have asked the s
 | Node             |
 | Npm              |
 | Operating System |
+
+```javascript
+yoshi: {
+      // ...
+}
+```
