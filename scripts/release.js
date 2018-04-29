@@ -1,3 +1,7 @@
+if (process.env.IS_BUILD_AGENT) {
+  console.log('Yoshi release script should not run in CI. Exiting...');
+  process.exit(0);
+}
 process.on('unhandledRejection', error => {
   throw error;
 });
