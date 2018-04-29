@@ -143,7 +143,14 @@ yoshi: {
   Specifying a custom glob for test files is possible by configuring `package.json` as described in [`yoshi.specs`](#wixspecs). The default glob matches `.spec.` files in all folders.
   <br />
   If you wish to load helpers, import them all in a file placed at `'test/setup.js'`.
+* Jest test setup:
 
+  You may specify a jest config object in your `package.json`, for example:
+  ```json
+    "jest": {
+      "testRegex": "/src/.*\\.spec\\.(ts|tsx)$"
+    }
+  ```
 ### lint
 
 Flag | Short Flag | Description | Default Value
