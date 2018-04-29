@@ -25,7 +25,13 @@ That's it, you're good to go.
 1. Make sure the feature is tested.
 2. Document it in [README.md](https://github.com/wix-private/yoshi/blob/master/README.md)
 
-## Publish a new version
-The CI will automatically update the version if the build & test suite are passing, and the version on `package.json` is greater then the one on the registry.
+## Release a new version
+To create a new version just use the following command:
+
+```bash
+npm run release
+```
+
+This command will open an interactive UI for choosing the version, it will bump it in `package.json`, add a git tag and push the commits and tag to GitHub.
 
 Don't forget to go over the [CHANGELOG.md](https://github.com/wix-private/yoshi/blob/master/CHANGELOG.md) and insert the version's changes.
