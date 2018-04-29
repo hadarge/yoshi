@@ -129,7 +129,6 @@
     "prompts": "^0.1.8",
     "ps-tree": "^1.1.0",
     "retry-promise": "^1.0.0",
-    "semver": "~5.5.0",
     "shmock": "~0.8.1",
     "tempy": "~0.2.1",
     "typescript": "^2.6.1"
