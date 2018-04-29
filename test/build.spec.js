@@ -215,7 +215,7 @@ describe('Aggregator: Build', () => {
         expect(test.content('dist/statics/myChunk.chunk.js')).to.contain('english');
       });
 
-      it('hould generate a bundle with umd library support', () => {
+      it('should generate a bundle with umd library support', () => {
         expect(test.content('dist/statics/first.bundle.js')).to.contain('exports["MyLibraryEndpoint"]');
         expect(test.content('dist/statics/first.bundle.js')).to.contain('root["MyLibraryEndpoint"]');
       });
