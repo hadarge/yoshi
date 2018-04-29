@@ -9,8 +9,7 @@
     "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js'",
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch",
     "build": "eslint .",
-    "release": "node scripts/release.js",
-    "customPublish": "node scripts/publish.js"
+    "release": "node scripts/release.js"
   },
   "dependencies": {
     "@wix/externalize-relative-module-loader": "~1.0.0",
