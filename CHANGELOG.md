@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.5 (April 29, 2018)
+* Internal: [#232](https://github.com/wix-private/yoshi/pull/232) Better release script for creating new versions
+* Internal: [#207](https://github.com/wix-private/yoshi/pull/207), [#242](https://github.com/wix-private/yoshi/pull/242) Rewrite build command tests and decrease test time
+* [#223](https://github.com/wix-private/yoshi/pull/223) Documented how to configure Jest
+* Update version of `stylable-webpack-plugin` to `1.0.5`
+* [#233](https://github.com/wix-private/yoshi/pull/233) `yoshi info` now displays the project's yoshi config
+
 ## 2.1.4 (April 26, 2018)
 * Hotfix: fix `stylable-webpack-plugin` to `1.0.4` to prevent runtime error
 
