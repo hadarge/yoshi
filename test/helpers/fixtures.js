@@ -2,7 +2,7 @@
 const _ = require('lodash');
 
 const fx = {
-  packageJson: (yoshiConfig = {}, dependencies = {}) => JSON.stringify({
+  packageJson: (yoshiConfig = {}, dependencies = {}, otherFields = {}) => JSON.stringify({
     name: 'a',
     version: '1.0.4',
     yoshi: yoshiConfig,
@@ -10,7 +10,8 @@ const fx = {
       build: 'echo npm-run-build',
       test: 'echo Testing with Mocha'
     },
-    dependencies
+    dependencies,
+    ...otherFields
   }, null, 2),
   pkgJsonWithBuild: () => JSON.stringify({
     name: 'b',
@@ -21,6 +22,7 @@ const fx = {
   }, null, 2),
   css: () => '.a {\ncolor: red;\n}\n',
   scss: () => '.a {\n.b {\ncolor: red;\n}\n}\n',
+  less: () => '.a .b {\n  color: red;\n}',
   scssInvalid: () => '.a {\n.b\ncolor: red;\n}\n}\n',
   tsconfig: (options = {}) => JSON.stringify(_.merge({
     compilerOptions: {
