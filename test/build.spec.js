@@ -87,7 +87,6 @@ describe('Aggregator: Build', () => {
           })
         }, [
           hooks.createSymlink('node_modules/awesome-module1/entry.js', 'node_modules/awesome-module2/entry.js'),
-          hooks.installDependency('lodash')
         ])
         .execute('build', [], getMockedCI({ci: false}));
     });
@@ -342,7 +341,7 @@ describe('Aggregator: Build', () => {
           }, {
             module: 'dist/es/src/a.js',
           })
-        }, [hooks.installDependency('lodash')], outsideTeamCity)
+        }, [], outsideTeamCity)
         .execute('build');
     });
     after(() => {

@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const process = require('process');
 const path = require('path');
 const sh = require('shelljs');
@@ -22,10 +23,21 @@ class Test {
 
   setup(tree, hooks = []) {
     const flat = flattenTree(tree);
+
     Object.keys(flat).forEach(file => {
       this.write(file, flat[file]);
     });
-    (hooks || []).forEach(hook => hook(this.tmp));
+
+    hooks.forEach(hook => hook(this.tmp));
+
+    // create a symlink from node_modules in testing directory to yoshi's node_modules
+    const tmpNodeModules = path.join(this.tmp, 'node_modules');
+    const yoshiNodeModulesPath = path.resolve(__dirname, '../../node_modules');
+
+    if (!fs.existsSync(tmpNodeModules)) {
+      fs.symlinkSync(yoshiNodeModulesPath, tmpNodeModules);
+    }
+
     return this;
   }
 
@@ -38,11 +50,15 @@ class Test {
         const env = Object.assign({}, this.env, environment);
         this.child = spawn('node', [`${this.script}`, `${command}`].concat(options), {cwd: this.tmp, env});
         this.child.stdout.on('data', buffer => {
-          // console.log(buffer.toString());
+          if (!this.silent) {
+            console.log(buffer.toString());
+          }
           this.stdout += stripAnsi(buffer.toString());
         });
         this.child.stderr.on('data', buffer => {
-          // console.log(buffer.toString());
+          if (!this.silent) {
+            console.log(buffer.toString());
+          }
           this.stderr += stripAnsi(buffer.toString());
         });
         return this.child;
@@ -83,7 +99,9 @@ class Test {
         this.stderr = '';
       }
 
-      sh.rm('-rf', this.tmp);
+      if (this.silent) {
+        sh.rm('-rf', this.tmp);
+      }
     }
     return this;
   }
@@ -143,43 +161,3 @@ function flattenTree(tree, prefix) {
 module.exports = {
   create: (...args) => new Test(...args)
 };
-
-/*
-const test = module.exports.setup({
-  'app/a/a.js': 'const a = 1;',
-  test: {
-    'a/a.spec.js': '\'use strict\'',
-    'b/b.spec.ts': '\'use strict\'',
-    'c/c.spec.jsx': '\'use strict\''
-  },
-  src: {
-    b: {
-      'b.js': 'const b = 2;'
-    },
-    'c/c': {
-      'c.ts': 'const c = 3;'
-    }
-  }
-});
-*/
-
-/*
-function parseTree(tree) {
-  let result = {};
-  Object.keys(tree).forEach(key => {
-    let parts = key.split(path.sep);
-    const dir = parts.shift();
-    const rest = parts.join(path.sep);
-    const value = tree[key];
-    let branch;
-    if (rest) {
-      branch = {};
-      branch[rest] = value;
-    } else {
-      branch = value;
-    }
-    result[dir] = typeof branch === 'string' ? branch : parseTree(branch);
-  });
-  return result;
-}
-*/

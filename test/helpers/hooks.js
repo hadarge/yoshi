@@ -4,7 +4,6 @@ const sh = require('shelljs');
 const path = require('path');
 
 module.exports = {
-  installDependency: dep => cwd => exec(`npm i ${dep}`, cwd),
   createSymlink: (target, destination) => cwd => {
     const from = path.join(cwd, target);
     const to = path.join(cwd, destination);

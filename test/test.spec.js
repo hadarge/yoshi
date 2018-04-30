@@ -1,7 +1,6 @@
 'use strict';
 
 const expect = require('chai').expect;
-const hooks = require('./helpers/hooks');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
@@ -628,7 +627,7 @@ describe('Aggregator: Test', () => {
             const fetch = require('node-fetch');
             it("pass", async () => assert.equal((await (await fetch('http://localhost:3200/index.html')).text()).trim(), 'hello world'));`,
           'package.json': fx.packageJson()
-        }, [hooks.installDependency('node-fetch')])
+        })
         .execute('test', ['--mocha']);
 
       expect(res.code).to.equal(0);
@@ -652,7 +651,7 @@ describe('Aggregator: Test', () => {
                 assert.equal(style('root').className.indexOf('root') > -1, true);
               })`,
             'package.json': fx.packageJson()
-          }, [hooks.installDependency('stylable')])
+          })
           .execute('test', ['--mocha']);
         expect(res.code).to.equal(0);
         expect(res.stdout).to.contain('1 passing');

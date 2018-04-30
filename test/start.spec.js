@@ -3,7 +3,6 @@
 const express = require('express');
 const {expect} = require('chai');
 const {killSpawnProcessAndHisChildren} = require('./helpers/process');
-const hooks = require('./helpers/hooks');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const fetch = require('node-fetch');
@@ -92,7 +91,7 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/client.js': `module.exports.wat = 'hmr';\n`,
             'package.json': fx.packageJson()
-          }, [hooks.installDependency('webpack-hot-client')])
+          })
           .spawn('start');
 
         return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
@@ -106,7 +105,7 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/client.js': `module.exports.wat = 'hmr';\n`,
             'package.json': fx.packageJson({hmr: false})
-          }, [hooks.installDependency('webpack-hot-client')])
+          }, [])
           .spawn('start');
 
         return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
