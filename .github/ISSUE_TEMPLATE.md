@@ -33,6 +33,10 @@ Search open/closed issues before submitting since someone might have asked the s
       Providing context helps us come up with a solution that is most useful in the real world -->
 ...
 
+### 👣 Steps to Reproduce <!-- optional -->
+
+<!--- If you're describing a bug, please add an easy way to reproduce it  -->
+
 ### 💻 Code Sample
 
 <!--- If you are seeing an error, please provide your github repository (preferable), gist or inline sample code to reproduce the issue. -->
@@ -42,4 +46,6 @@ Search open/closed issues before submitting since someone might have asked the s
 
 <!--- yoshi v2.1.3 and above - Run `npx yoshi info` in your terminal and paste the output below -->
 <!--- yoshi v2.1.2 and below - Manually include as many relevant details about the environment you experienced the bug in. In addition, paste below your `yoshi` config block from your `package.json`. -->
-...
+```
+// PASTE HERE
+```
