@@ -1,6 +1,9 @@
+const path = require('path');
+const ld = require('lodash');
 const sass = require('node-sass');
-const {tryRequire, getMochaReporter} = require('../src/utils');
 const {wixCssModulesRequireHook} = require('yoshi-runtime');
+const {tryRequire, getMochaReporter, exists, inTeamCity} = require('../src/utils');
+const globs = require('../src/globs');
 
 // Private wix applitools key
 // skip wix' key for applitools
@@ -12,13 +15,7 @@ tryRequire('../private/node_modules/wix-eyes-env');
 // Read how to set your own params (if needed) here: https://github.com/wix/screenshot-reporter#usage
 tryRequire('../private/node_modules/screenshot-reporter-env');
 
-
 require('../src/require-hooks');
-const path = require('path');
-const ld = require('lodash');
-const exists = require('../src/utils').exists;
-const inTeamCity = require('../src/utils').inTeamCity;
-const globs = require('../src/globs');
 
 const userConfPath = path.resolve('protractor.conf.js');
 const userConf = exists(userConfPath) ? require(userConfPath).config : null;
@@ -27,9 +24,6 @@ const shouldUseProtractorBrowserLogs = process.env.PROTRACTOR_BROWSER_LOGS === '
 
 const beforeLaunch = (userConf && userConf.beforeLaunch) || ld.noop;
 const onPrepare = (userConf && userConf.onPrepare) || ld.noop;
-const afterLaunch = (userConf && userConf.afterLaunch) || ld.noop;
-
-let cdnServer;
 
 const merged = ld.mergeWith({
   framework: 'jasmine',
@@ -67,20 +61,11 @@ const merged = ld.mergeWith({
 
     return onPrepare.call(merged);
   },
-  afterLaunch: () => {
-    if (cdnServer) {
-      cdnServer.close();
-    }
-    return afterLaunch.call(merged);
-  },
   mochaOpts: {
-    timeout: 30000
+    timeout: 30000,
+    reporter: getMochaReporter()
   }
 }, userConf, a => typeof a === 'function' ? a : undefined);
-
-if (merged.framework === 'mocha') {
-  merged.mochaOpts.reporter = getMochaReporter();
-}
 
 function normaliseSpecs(config) {
   const specs = [].concat(config.specs || []);
