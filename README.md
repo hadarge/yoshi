@@ -324,3 +324,4 @@ For more info, you can read the [webpack docs](https://webpack.js.org/configurat
 - [How do I separately bundle common logic for multiple entries?](docs/faq/SPLIT-CHUNKS.md)
 - [How to use SVG](docs/faq/SVG.md)
 - [Moment.js locales are missing](docs/faq/MOMENT_OPTIMIZATION.md)
+- [How do I add automatic AB tests to textual content?](docs/faq/AB_TRANSLATE.md)
