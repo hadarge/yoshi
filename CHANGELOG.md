@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.1.6 (May 2, 2018)
+
+#### :bug: Bug
+* [#237](https://github.com/wix/haste/pull/237) Consider the different runtime context for wallaby setup function
+
+#### :house: Internal
+* [#243](https://github.com/wix/haste/pull/243) Remove custom publish script and use CI's built-in one instead
+* Remove a dependency on `semver`
+* [#245](https://github.com/wix/haste/pull/245) Release script will now exit with status code 0 if running in CI
+* [#231](https://github.com/wix/haste/pull/231) Add contribution templates for issues and pull requests
+* [#246](https://github.com/wix/haste/pull/246) Improve test and reduce flakiness by creating symlinks instead of installing specific dependencies
+* [#249](https://github.com/wix/haste/pull/249) Internal refactor to `protractor.conf.js`
+
 ## 2.1.5 (April 29, 2018)
 * Internal: [#232](https://github.com/wix-private/yoshi/pull/232) Better release script for creating new versions
 * Internal: [#207](https://github.com/wix-private/yoshi/pull/207), [#242](https://github.com/wix-private/yoshi/pull/242) Rewrite build command tests and decrease test time
