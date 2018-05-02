@@ -4,8 +4,7 @@ const {createRunner} = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
-const {inTeamCity, watchMode, hasProtractorConfigFile, getMochaReporter, watch} = require('../utils');
-const merge = require('lodash/merge');
+const {watchMode, hasProtractorConfigFile, getMochaReporter, watch} = require('../utils');
 const crossSpawn = require('cross-spawn');
 
 const runner = createRunner({
@@ -86,22 +85,7 @@ module.exports = runner.command(async tasks => {
   }
 
   if (cliArgs.jest) {
-    const jestProjectConfig = projectConfig.jestConfig();
-
-    const config = merge(jestProjectConfig, {
-      transform: {
-        '\\.jsx?$': require.resolve('../../config/jest-transformer'),
-        '\\.st.css?$': require.resolve('../../config/jest-stylable-transformer')
-      }
-    });
-
-    config.transformIgnorePatterns = (config.transformIgnorePatterns || [])
-      .concat(['/node_modules/(?!(.*?\\.st\\.css$))']);
-
-    if (inTeamCity()) {
-      config.testResultsProcessor = require.resolve('jest-teamcity-reporter');
-    }
-
+    const config = require('../../config/jest.config.js');
     const jestCliOptions = [`--config=${JSON.stringify(config)}`, shouldWatch ? '--watch' : ''];
 
     return new Promise((resolve, reject) => {
