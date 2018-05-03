@@ -18,7 +18,6 @@ const {
   isBabelProject,
   shouldRunLess,
   shouldRunSass,
-  getListOfEntries,
   shouldTransformHMRRuntime,
   suffix,
   watch,
@@ -72,15 +71,19 @@ module.exports = runner.command(async tasks => {
   await Promise.all([
     transpileJavascriptAndRunServer(),
     ...transpileCss(),
-    copy({pattern: [
-      `${globs.base()}/assets/**/*`,
-      `${globs.base()}/**/*.{ejs,html,vm}`,
-      `${globs.base()}/**/*.{css,json,d.ts}`,
-    ], target: 'dist'}, {title: 'copy-server-assets', log: false}),
-    copy({pattern: [
-      `${globs.assetsLegacyBase()}/assets/**/*`,
-      `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
-    ], target: 'dist/statics'}, {title: 'copy-static-assets-legacy', log: false}),
+    copy({
+      pattern: [
+        `${globs.base()}/assets/**/*`,
+        `${globs.base()}/**/*.{ejs,html,vm}`,
+        `${globs.base()}/**/*.{css,json,d.ts}`,
+      ], target: 'dist'
+    }, {title: 'copy-server-assets', log: false}),
+    copy({
+      pattern: [
+        `${globs.assetsLegacyBase()}/assets/**/*`,
+        `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
+      ], target: 'dist/statics'
+    }, {title: 'copy-static-assets-legacy', log: false}),
     copy({
       pattern: [
         `assets/**/*`,
@@ -186,18 +189,12 @@ module.exports = runner.command(async tasks => {
     }
 
     if (isBabelProject()) {
-      const entryFiles = getListOfEntries(entry());
-      const transformOptions = shouldTransformHMRRuntime() ?
-        {plugins: [require.resolve('react-hot-loader/babel'), [path.resolve(__dirname, '../plugins/babel-plugin-transform-hmr-runtime'), {
-          entryFiles,
-        }]]} :
-        null;
       watch({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js']}, async changed => {
-        await babel({pattern: changed, target: 'dist', sourceMaps: true, ...transformOptions});
+        await babel({pattern: changed, target: 'dist', sourceMaps: true});
         await appServer();
       });
 
-      await babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist', sourceMaps: true, ...transformOptions});
+      await babel({pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'], target: 'dist', sourceMaps: true});
       return appServer();
     }
 

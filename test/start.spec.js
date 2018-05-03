@@ -133,6 +133,26 @@ describe('Aggregator: Start', () => {
             expect(content).to.contain('react-hot-loader');
           });
       });
+
+      it('should wrap react root element with react-hot-loader HOC for default entry', () => {
+        child = test
+          .setup({
+            'src/client.js': `import { render } from 'react-dom';
+              render(<App />, rootEl);`,
+            '.babelrc': `{"presets": ["${require.resolve('babel-preset-wix')}"]}`,
+            'package.json': fx.packageJson({
+              hmr: 'auto'
+            }, {
+              react: '16.0.0'
+            })
+          })
+          .spawn('start');
+        return checkServerIsServing({port: 3200, file: 'app.bundle.js'})
+          .then(content => {
+            expect(content).to.contain('module.hot.accept()');
+            expect(content).to.contain('react-hot-loader');
+          });
+      });
     });
 
     describe('Public path', () => {

@@ -32,7 +32,7 @@ module.exports = ({
         webpackConfig.output.publicPath = publicPath;
 
         if (transformHMRRuntime) {
-          const entryFiles = getListOfEntries(configuredEntry);
+          const entryFiles = getListOfEntries(configuredEntry || defaultEntry);
           webpackConfig.module.rules.forEach(rule => {
             if (Array.isArray(rule.use)) {
               rule.use = rule.use.map(useItem => {
