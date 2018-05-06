@@ -34,6 +34,7 @@ prog.command('start', 'Run the app in development mode (also spawns npm test)')
   .option('--manual-restart', 'Get SIGHUP on change and manage application reboot manually', BOOL, 'false')
   .option('--no-test', 'Do not spawn npm test after start', BOOL, 'false')
   .option('--no-server', 'Do not spawn the app server', BOOL, 'false')
+  .option('--ssl', 'Serve the app bundle on https', BOOL, 'false')
   .action(() => runCLI('start'));
 
 prog.command('release', 'publish the package, should be used by CI')

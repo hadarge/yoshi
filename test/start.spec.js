@@ -292,6 +292,11 @@ describe('Aggregator: Start', () => {
       });
 
       describe('HTTPS', () => {
+        // This is because we're using self signed certificate - otherwise the request will fail
+        const agent = new https.Agent({
+          rejectUnauthorized: false
+        });
+
         it('should be able to create an https server', () => {
           child = test
             .setup({
@@ -301,12 +306,19 @@ describe('Aggregator: Start', () => {
             })
             .spawn('start');
 
-          // This is because we're using self signed certificate - otherwise the request will fail
-          const agent = new https.Agent({
-            rejectUnauthorized: false
-          });
+          return cdnIsServing('assets/test.json', 3005, 'https', {agent});
+        });
 
-          return cdnIsServing('assets/test.json', 'https', {agent});
+        it('should enable ssl when ran --ssl', () => {
+          child = test
+            .setup({
+              'src/assets/test.json': '{a: 1}',
+              'src/index.js': 'var a = 1;',
+              'package.json': fx.packageJson({servers: {cdn: {port: 3005, dir: 'dist/statics'}}})
+            })
+            .spawn('start', '--ssl');
+
+          return cdnIsServing('assets/test.json', 3005, 'https', {agent});
         });
       });
     });
@@ -584,9 +596,9 @@ describe('Aggregator: Start', () => {
     return retryPromise({backoff: 100}, () => fetch(`http://localhost:${port}/`));
   }
 
-  function cdnIsServing(name, protocol = 'http', options = {}) {
+  function cdnIsServing(name, port = 3005, protocol = 'http', options = {}) {
     return retryPromise({backoff: 100}, () =>
-      fetch(`${protocol}://localhost:3005/${name}`, options)
+      fetch(`${protocol}://localhost:${port}/${name}`, options)
         .then(res => {
           expect(res.status).to.equal(200);
           return res.text();

@@ -44,7 +44,7 @@ module.exports = {
   servers: {
     cdn: {
       port: () => getConfig('servers.cdn.port', 3200),
-      url: () => getConfig('servers.cdn.url', `${serverProtocol()}//localhost:${module.exports.servers.cdn.port()}/`),
+      url: ssl => getConfig('servers.cdn.url', `${serverProtocol(ssl)}//localhost:${module.exports.servers.cdn.port()}/`),
       ssl: () => getConfig('servers.cdn.ssl', false),
     }
   },
@@ -70,6 +70,6 @@ module.exports = {
   performanceBudget: () => getConfig('performance', {})
 };
 
-function serverProtocol() {
-  return getConfig('servers.cdn.ssl', false) === true ? 'https:' : 'http:';
+function serverProtocol(ssl) {
+  return ssl ? 'https:' : 'http:';
 }

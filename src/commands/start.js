@@ -68,6 +68,8 @@ module.exports = runner.command(async tasks => {
     wixDepCheck({}, {title: 'dep-check', log: false})
   ]);
 
+  const ssl = cliArgs.ssl || servers.cdn.ssl();
+
   await Promise.all([
     transpileJavascriptAndRunServer(),
     ...transpileCss(),
@@ -94,8 +96,8 @@ module.exports = runner.command(async tasks => {
     }, {title: 'copy-static-assets', log: false}),
     wixCdn({
       port: servers.cdn.port(),
-      ssl: servers.cdn.ssl(),
-      publicPath: servers.cdn.url(),
+      ssl,
+      publicPath: servers.cdn.url(ssl),
       statics: clientFilesPath(),
       webpackConfigPath: require.resolve('../../config/webpack.config.client'),
       configuredEntry: entry(),

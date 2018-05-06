@@ -49,6 +49,7 @@ Flag | Short Flag | Description | Default Value
 --manual-restart | | Get SIGHUP on change and manage application reboot manually | false
 --no-test | | Do not spawn `npm test` after start | false
 --no-server | | Do not spawn the app server | false
+--ssl | | Serve the app bundle on https | false
 
 This will run the specified (server) `entryPoint` file and mount a CDN server.
 
