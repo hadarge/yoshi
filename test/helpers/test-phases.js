@@ -31,7 +31,7 @@ class Test {
     hooks.forEach(hook => hook(this.tmp));
 
     // create a symlink from node_modules in testing directory to yoshi's node_modules
-    const tmpNodeModules = path.join(this.tmp, 'node_modules');
+    const tmpNodeModules = path.join(this.tmp, '../node_modules');
     const yoshiNodeModulesPath = path.resolve(__dirname, '../../node_modules');
 
     if (!fs.existsSync(tmpNodeModules)) {
