@@ -2,6 +2,7 @@
   "name": "yoshi-monorepo",
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "postinstall": "npm run bootstrap",
     "test": "lerna exec --concurrency 1 -- npm test",
     "build": "eslint .",
     "customPublish": "lerna exec --concurrency 1 -- npm run customPublish",
