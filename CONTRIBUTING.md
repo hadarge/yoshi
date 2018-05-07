@@ -21,11 +21,44 @@ That's it, you're good to go.
 * `npm run build` - Run [eslint](https://eslint.org/) on all packages with the following [rules](https://github.com/wix-private/yoshi/blob/master/.eslintrc).
 * `npm run test:watch` Run the tests using watch mode.
 
-## Adding a new feature to the yoshi toolkit
+## Adding a New Feature to the Yoshi Toolkit
 1. Make sure the feature is tested.
 2. Document it in [README.md](https://github.com/wix-private/yoshi/blob/master/README.md)
 
-## Release a new version
+## Running Tests Locally
+Yoshi's test suite, in its current state, takes a long time to complete and (unfortunately) contains flaky tests. Therefore, we advise limiting the scope of the test execution in your local environment to the tests that are most affected by your changes. Limit the scope using [mocha's `only` function](https://mochajs.org/#exclusive-tests).
+
+After the limited scope of tests passes locally you can push your changes and have the `Pull Request CI Server` build and run all of the tests as the test suite is much less flaky on the [CI server](http://pullrequest-tc.dev.wixpress.com/viewType.html?buildTypeId=FedInfra_Yoshi).
+
+### Test Phases
+In order to simplify Yoshi's tests we created a helper utility called [`test-phases`](https://github.com/wix-private/yoshi/blob/master/test/helpers/test-phases.js). This utility is in charge of setting up the environment for the test (`package.json`, `pom.xml`, source files, etc) in a temp directory, running Yoshi's commands (`start`, `build`, `lint`, etc) and asserting against the result (stdout, file content, exit code, etc).
+You can see an example usage of `test-phases` [here](https://github.com/wix-private/yoshi/blob/master/test/lint.spec.js).
+
+### Debugging Tests
+You might run into an issue where you have a test that seems to run and then hang (neither fail nor pass).
+This usually means that there was an error but you can't see it.
+The reason behind this is that Yoshi mutes the output of all the tests by default in order not to spam the build log in the CI. In order to see the output of the tests, and see the error they threw, you can do one of the two:
+
+```js
+it('should do something', () => {
+  const res = test
+    .verbose() // <------ add this
+    .setup({
+      //...
+    })
+    .execute(/* some task*/);
+
+  expect(/* something */).to.equal(/* something */);
+});
+```
+
+Alternatively, you can run all your tests (or just the focused ones) with the verbose flag in the following way:
+```bash
+VERBOSE_TESTS=true npm test
+```
+This is the same as adding the `.verbose()` method to each and every test.
+
+## Release a New Version
 To create a new version just use the following command:
 
 ```bash
