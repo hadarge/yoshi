@@ -14,13 +14,15 @@ const writeFsObject = (tempDir, fsObj) => {
   }
 };
 
+const pomPath = require.resolve('./fixtures/pom.xml');
+
 describe('haste-task-wix-petri-specs', () => {
   it('should create petri-experiments.json file inside destination directory', async () => {
     const tempDir = tempy.directory();
 
     const fsObj = {
       'package.json': '',
-      'pom.xml': fs.readFileSync(require.resolve('./fixtures/pom.xml')),
+      'pom.xml': fs.readFileSync(pomPath),
       'petri-specs/specs.infra.Dummy.json': fs.readFileSync(
         require.resolve('./fixtures/specs.infra.Dummy'),
       ),
@@ -31,7 +33,9 @@ describe('haste-task-wix-petri-specs', () => {
     await petriSpecsTask({
       base: tempDir,
       destDir,
-      config: {},
+      config: {
+        pom: pomPath,
+      },
     });
 
     const staticDirContent = fs.readdirSync(path.join(tempDir, destDir));
@@ -43,7 +47,7 @@ describe('haste-task-wix-petri-specs', () => {
 
     const fsObj = {
       'package.json': '',
-      'pom.xml': fs.readFileSync(require.resolve('./fixtures/pom.xml')),
+      'pom.xml': fs.readFileSync(pomPath),
       'src/assets/messages_en.json': fs.readFileSync(require.resolve('./fixtures/messages-en')),
     };
 
@@ -55,6 +59,7 @@ describe('haste-task-wix-petri-specs', () => {
       config: {
         scopes: ['alt-scope', 'alt-scope2'],
         onlyForLoggedInUsers: false,
+        pom: pomPath,
       },
     });
 
@@ -72,7 +77,7 @@ describe('haste-task-wix-petri-specs', () => {
 
     const fsObj = {
       'package.json': '',
-      'pom.xml': fs.readFileSync(require.resolve('./fixtures/pom.xml')),
+      'pom.xml': fs.readFileSync(pomPath),
       'petri-specs/specs.infra.Dummy.json': fs.readFileSync(
         require.resolve('./fixtures/single-scope-spec'),
       ),
@@ -84,7 +89,9 @@ describe('haste-task-wix-petri-specs', () => {
       await petriSpecsTask({
         base: tempDir,
         destDir,
-        config: {},
+        config: {
+          pom: pomPath,
+        },
       });
 
       throw new Error('TestFailed');
