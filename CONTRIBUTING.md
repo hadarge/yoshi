@@ -29,9 +29,9 @@ That's it, you're good to go.
 To create a new version just use the following command:
 
 ```bash
-npm run release
+npm run createRelease
 ```
 
-This command will open an interactive UI for choosing the version, it will bump it in `package.json`, add a git tag and push the commits and tag to GitHub.
+This command will open an interactive UI for choosing the version, it will bump it in the relevant packages, add a git tag and push the commits and tag to GitHub.
 
 Don't forget to go over the [CHANGELOG.md](https://github.com/wix-private/yoshi/blob/master/CHANGELOG.md) and insert the version's changes.
