@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 const process = require('process');
 const path = require('path');
@@ -48,7 +46,10 @@ class Test {
         options = Array.isArray(options) ? options : options.split(' ');
 
         const env = Object.assign({}, this.env, environment);
-        this.child = spawn('node', [`${this.script}`, `${command}`].concat(options), {cwd: this.tmp, env});
+        this.child = spawn('node', [`${this.script}`, `${command}`].concat(options), {
+          cwd: this.tmp,
+          env,
+        });
         this.child.stdout.on('data', buffer => {
           if (!this.silent) {
             console.log(buffer.toString());
@@ -78,14 +79,14 @@ class Test {
   execute(command, cliArgs = [], environment = {}, execOptions = {}) {
     const args = [command].concat(cliArgs).join(' ');
     const env = Object.assign({}, this.env, environment);
-    const options = Object.assign({}, {cwd: this.tmp, env, silent: this.silent}, execOptions);
+    const options = Object.assign({}, { cwd: this.tmp, env, silent: this.silent }, execOptions);
 
     if (this.hasTmp()) {
       const result = sh.exec(`node '${this.script}' ${args}`, options);
 
       return Object.assign(result, {
         stdout: stripAnsi(result.stdout),
-        stderr: stripAnsi(result.stderr)
+        stderr: stripAnsi(result.stderr),
       });
     }
   }
@@ -128,13 +129,16 @@ class Test {
     const fullPath = path.join(this.tmp, file);
     content = content.replace(/'/g, `'\\''`);
     sh.mkdir('-p', path.dirname(fullPath));
-    sh.exec(`echo '${content}'`, {silent: true}).to(fullPath);
+    sh.exec(`echo '${content}'`, { silent: true }).to(fullPath);
     return this;
   }
 
   contains(fileOrDir) {
     const args = arguments.length > 1 ? Array.from(arguments) : [fileOrDir];
-    return args.reduce((acc, item) => acc && !!item && sh.test('-e', path.join(this.tmp, item)), true);
+    return args.reduce(
+      (acc, item) => acc && !!item && sh.test('-e', path.join(this.tmp, item)),
+      true,
+    );
   }
 
   list(dir, options) {
@@ -159,5 +163,5 @@ function flattenTree(tree, prefix) {
 }
 
 module.exports = {
-  create: (...args) => new Test(...args)
+  create: (...args) => new Test(...args),
 };

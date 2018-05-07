@@ -1,8 +1,10 @@
+/* eslint-env jasmine, protractor */
+
 const path = require('path');
 const ld = require('lodash');
 const sass = require('node-sass');
-const {wixCssModulesRequireHook} = require('yoshi-runtime');
-const {tryRequire, getMochaReporter, exists, inTeamCity} = require('../src/utils');
+const { wixCssModulesRequireHook } = require('yoshi-runtime');
+const { tryRequire, getMochaReporter, exists, inTeamCity } = require('../src/utils');
 const globs = require('../src/globs');
 
 // Private wix applitools key
@@ -25,56 +27,61 @@ const shouldUseProtractorBrowserLogs = process.env.PROTRACTOR_BROWSER_LOGS === '
 const beforeLaunch = (userConf && userConf.beforeLaunch) || ld.noop;
 const onPrepare = (userConf && userConf.onPrepare) || ld.noop;
 
-const merged = ld.mergeWith({
-  framework: 'jasmine',
-  specs: [globs.e2e()],
-  directConnect: true,
+const merged = ld.mergeWith(
+  {
+    framework: 'jasmine',
+    specs: [globs.e2e()],
+    directConnect: true,
 
-  beforeLaunch: () => {
-    const rootDir = './src';
-    wixCssModulesRequireHook(rootDir, {
-      preprocessCss: (data, file) => sass.renderSync({
-        data,
-        file,
-        includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
-      }).css
-    });
+    beforeLaunch: () => {
+      const rootDir = './src';
+      wixCssModulesRequireHook(rootDir, {
+        preprocessCss: (data, file) =>
+          sass.renderSync({
+            data,
+            file,
+            includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
+          }).css,
+      });
 
-    require('../src/require-hooks');
+      require('../src/require-hooks');
 
-    return beforeLaunch.call(merged);
+      return beforeLaunch.call(merged);
+    },
+    onPrepare: () => {
+      if (shouldUseProtractorBrowserLogs) {
+        setupProtractorLogs();
+      }
+
+      if (merged.framework === 'jasmine' && inTeamCity()) {
+        const TeamCityReporter = require('jasmine-reporters').TeamCityReporter;
+        jasmine.getEnv().addReporter(new TeamCityReporter());
+      }
+
+      try {
+        const ScreenshotReporter = require('screenshot-reporter');
+        jasmine.getEnv().addReporter(new ScreenshotReporter());
+      } catch (e) {}
+
+      return onPrepare.call(merged);
+    },
+    mochaOpts: {
+      timeout: 30000,
+      reporter: getMochaReporter(),
+    },
   },
-  onPrepare: () => {
-    if (shouldUseProtractorBrowserLogs) {
-      setupProtractorLogs();
-    }
-
-    if (merged.framework === 'jasmine' && inTeamCity()) {
-      const TeamCityReporter = require('jasmine-reporters').TeamCityReporter;
-      jasmine.getEnv().addReporter(new TeamCityReporter());
-    }
-
-    try {
-      const ScreenshotReporter = require('screenshot-reporter');
-      jasmine.getEnv().addReporter(new ScreenshotReporter());
-    } catch (e) {}
-
-    return onPrepare.call(merged);
-  },
-  mochaOpts: {
-    timeout: 30000,
-    reporter: getMochaReporter()
-  }
-}, userConf, a => typeof a === 'function' ? a : undefined);
+  userConf,
+  a => (typeof a === 'function' ? a : undefined),
+);
 
 function normaliseSpecs(config) {
   const specs = [].concat(config.specs || []);
-  return Object.assign({}, config, {specs: specs.map(spec => path.resolve(spec))});
+  return Object.assign({}, config, { specs: specs.map(spec => path.resolve(spec)) });
 }
 
 function setupProtractorLogs() {
   const browserLogs = require('protractor-browser-logs');
-  const logs = global.logs = browserLogs(browser);
+  const logs = (global.logs = browserLogs(browser));
 
   beforeEach(() => {
     logs.reset();

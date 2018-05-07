@@ -12,8 +12,7 @@ function killSpawnProcessAndHisChildren(child) {
       [pid].concat(children.map(p => p.PID)).forEach(tpid => {
         try {
           process.kill(tpid, 'SIGKILL');
-        } catch (e) {
-        }
+        } catch (e) {}
       });
 
       child = null;
@@ -22,4 +21,4 @@ function killSpawnProcessAndHisChildren(child) {
   });
 }
 
-module.exports = {killSpawnProcessAndHisChildren};
+module.exports = { killSpawnProcessAndHisChildren };

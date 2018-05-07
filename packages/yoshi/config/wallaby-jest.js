@@ -1,4 +1,4 @@
-module.exports = function (wallaby) {
+module.exports = function(wallaby) {
   const wallabyCommon = require('./wallaby-common')(wallaby);
   wallabyCommon.testFramework = 'jest';
   wallabyCommon.setup = () => {

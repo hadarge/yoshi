@@ -1,10 +1,8 @@
-'use strict';
-
 const chalk = require('chalk');
 const fs = require('fs');
 const childProcess = require('child_process');
-const {isEmpty} = require('lodash');
-const {writeFile, inTeamCity, migrateToScopedPackages} = require('../../utils');
+const { isEmpty } = require('lodash');
+const { writeFile, inTeamCity, migrateToScopedPackages } = require('../../utils');
 
 const NOTICE = `
 WARNING: package.json has been updated
@@ -16,14 +14,14 @@ module.exports = () => {
     .then(names => ({
       pkg: readPackage(),
       names,
-      changes: {}
+      changes: {},
     }))
     .then(payload => updatePackageName(payload))
     .then(payload => updateDependencies(payload, 'dependencies'))
     .then(payload => updateDependencies(payload, 'devDependencies'))
     .then(payload => updateDependencies(payload, 'peerDependencies'))
     .then(payload => updateDependencies(payload, 'optionalDependencies'))
-    .then(payload => isEmpty(payload.changes) ? Promise.reject('No changes detected') : payload)
+    .then(payload => (isEmpty(payload.changes) ? Promise.reject('No changes detected') : payload))
     .then(payload => {
       writeFile('package.json', JSON.stringify(payload.pkg, null, 2));
       console.warn(chalk.red(NOTICE));
@@ -37,10 +35,14 @@ module.exports = () => {
 
 function validate() {
   return [
-    () => inTeamCity() ? Promise.reject('Running inside CI') : true,
+    () => (inTeamCity() ? Promise.reject('Running inside CI') : true),
     () => isFeatureTurnedOn(),
-    () => npm('view --silent --progress=false --fetch-retries=0 --cache-min=0 --json @wix/scopes@latest wix')
-      .then(stdout => JSON.parse(stdout)).catch(() => Promise.reject('@wix/scopes not found'))
+    () =>
+      npm(
+        'view --silent --progress=false --fetch-retries=0 --cache-min=0 --json @wix/scopes@latest wix',
+      )
+        .then(stdout => JSON.parse(stdout))
+        .catch(() => Promise.reject('@wix/scopes not found')),
   ].reduce((acc, curr) => acc.then(curr), Promise.resolve());
 }
 
@@ -56,11 +58,11 @@ function isFeatureTurnedOn() {
 }
 
 function updatePackageName(payload) {
-  const {pkg, changes} = payload;
+  const { pkg, changes } = payload;
   const update = [
     !pkg.private,
     !pkg.name.startsWith('@'),
-    ((pkg.publishConfig || {}).registry || '').indexOf('repo.dev.wix') >= 0
+    ((pkg.publishConfig || {}).registry || '').indexOf('repo.dev.wix') >= 0,
   ].every(truthy => truthy);
   if (update) {
     changes[pkg.name] = `@wix/${pkg.name}`;
@@ -70,14 +72,9 @@ function updatePackageName(payload) {
 }
 
 function updateDependencies(payload, type) {
-  const {
-    pkg,
-    changes,
-    names
-  } = payload;
+  const { pkg, changes, names } = payload;
 
-  const deps = Object
-    .keys(pkg[type] || {})
+  const deps = Object.keys(pkg[type] || {})
     .filter(name => !name.startsWith('@'))
     .filter(name => names.includes(`@wix/${name}`));
 
@@ -96,7 +93,7 @@ function readPackage() {
 
 function npm(params) {
   return new Promise((resolve, reject) => {
-    childProcess.exec(['npm', params].join(' '), {maxBuffer: 1024 * 1024}, (error, stdout) => {
+    childProcess.exec(['npm', params].join(' '), { maxBuffer: 1024 * 1024 }, (error, stdout) => {
       error ? reject(error) : resolve(stdout);
     });
   });

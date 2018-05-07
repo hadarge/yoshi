@@ -6,14 +6,12 @@ const pkg = require(path.resolve(process.cwd(), 'package.json'));
 
 module.exports = async () => {
   console.log(
-    await envinfo.run(
-      {
-        System: ['OS', 'CPU'],
-        Binaries: ['Node', 'Yarn', 'npm', 'Watchman'],
-        Browsers: ['Chrome', 'Firefox', 'Safari'],
-        npmPackages: ['yoshi', 'webpack', 'storybook'],
-      }
-    )
+    await envinfo.run({
+      System: ['OS', 'CPU'],
+      Binaries: ['Node', 'Yarn', 'npm', 'Watchman'],
+      Browsers: ['Chrome', 'Firefox', 'Safari'],
+      npmPackages: ['yoshi', 'webpack', 'storybook'],
+    }),
   );
 
   if (pkg.yoshi) {

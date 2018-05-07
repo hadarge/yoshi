@@ -9,7 +9,7 @@ module.exports.delta = start => {
   return [end, time];
 };
 
-module.exports.generateRunTitle = ({run, task}) => {
+module.exports.generateRunTitle = ({ run, task }) => {
   const title = (run.runnerOptions && run.runnerOptions.title) || task.name;
   return title.replace(WIX_PREFIX_REGEX, '');
 };

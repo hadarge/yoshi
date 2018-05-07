@@ -5,9 +5,9 @@ const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const hotClient = require('webpack-hot-client');
-const {decorate} = require('./server-api');
-const {shouldRunWebpack, logStats, normalizeEntries} = require('./utils');
-const {getListOfEntries} = require('../../utils');
+const { decorate } = require('./server-api');
+const { shouldRunWebpack, logStats, normalizeEntries } = require('./utils');
+const { getListOfEntries } = require('../../utils');
 
 module.exports = ({
   port = '3000',
@@ -26,7 +26,7 @@ module.exports = ({
 
     if (webpackConfigPath) {
       const getConfig = require(webpackConfigPath);
-      const webpackConfig = getConfig({debug: true, disableModuleConcatenation: true});
+      const webpackConfig = getConfig({ debug: true, disableModuleConcatenation: true });
 
       if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {
         webpackConfig.output.publicPath = publicPath;
@@ -37,7 +37,7 @@ module.exports = ({
             if (Array.isArray(rule.use)) {
               rule.use = rule.use.map(useItem => {
                 if (useItem === 'babel-loader') {
-                  useItem = {loader: 'babel-loader'};
+                  useItem = { loader: 'babel-loader' };
                 }
                 if (useItem.loader === 'babel-loader') {
                   if (!useItem.options) {
@@ -46,10 +46,10 @@ module.exports = ({
                   if (!useItem.options.plugins) {
                     useItem.options.plugins = [];
                   }
-                  useItem.options.plugins.push(
-                    require.resolve('react-hot-loader/babel'),
-                    [path.resolve(__dirname, '../../plugins/babel-plugin-transform-hmr-runtime'), {entryFiles}]
-                  );
+                  useItem.options.plugins.push(require.resolve('react-hot-loader/babel'), [
+                    path.resolve(__dirname, '../../plugins/babel-plugin-transform-hmr-runtime'),
+                    { entryFiles },
+                  ]);
                 }
                 return useItem;
               });
@@ -61,24 +61,21 @@ module.exports = ({
 
         const compiler = webpack(webpackConfig);
 
-        hotClient(compiler, {hot: Boolean(hmr), logLevel: 'warn'});
+        hotClient(compiler, { hot: Boolean(hmr), logLevel: 'warn' });
 
         logStats(compiler);
 
-        middlewares = [
-          webpackDevMiddleware(compiler, {logLevel: 'silent'}),
-        ];
+        middlewares = [webpackDevMiddleware(compiler, { logLevel: 'silent' })];
       }
     }
 
     const app = express();
 
-    decorate({app, middlewares, host, port, statics});
+    decorate({ app, middlewares, host, port, statics });
 
     const serverFactory = ssl ? httpsServer(app) : app;
 
-    serverFactory.listen(port, host, err =>
-      err ? reject(err) : resolve());
+    serverFactory.listen(port, host, err => (err ? reject(err) : resolve()));
   });
 };
 
@@ -89,7 +86,7 @@ function sslCredentials(keyPath, certificatePath, passphrase) {
   return {
     key: privateKey,
     cert: certificate,
-    passphrase
+    passphrase,
   };
 }
 

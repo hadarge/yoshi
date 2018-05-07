@@ -1,4 +1,4 @@
-const {reportWebpackStats} = require('./utils');
+const { reportWebpackStats } = require('./utils');
 
 module.exports = (err, stats) => {
   if (err === null) {

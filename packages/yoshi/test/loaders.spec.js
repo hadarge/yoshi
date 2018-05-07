@@ -1,5 +1,3 @@
-'use strict';
-
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const expect = require('chai').expect;
@@ -7,7 +5,7 @@ const _ = require('lodash');
 const getMockedCI = require('./helpers/get-mocked-ci');
 const fs = require('fs');
 const path = require('path');
-const {spawnSync} = require('child_process');
+const { spawnSync } = require('child_process');
 
 function createAboveTheLimitFile() {
   return _.repeat('a', 10001);
@@ -18,9 +16,9 @@ function fileAboveTheLimit(name) {
 }
 
 function installHaml(cwd) {
-  fs.writeFileSync(cwd + '/Gemfile', 'source \'https://rubygems.org\'\ngem \'haml\'');
-  spawnSync('bundle', ['config', 'path', cwd + '/.bundle'], {cwd});
-  spawnSync('bundle', ['install'], {cwd});
+  fs.writeFileSync(cwd + '/Gemfile', "source 'https://rubygems.org'\ngem 'haml'");
+  spawnSync('bundle', ['config', 'path', cwd + '/.bundle'], { cwd });
+  spawnSync('bundle', ['install'], { cwd });
 }
 
 describe('Loaders', () => {
@@ -82,7 +80,8 @@ describe('Loaders', () => {
             .some-rule { composes: foo from './composes.scss';}`,
           'src/foo/imported.scss': `
             .foo {appearance: smth; color: unquote("{{color-1}}")}`,
-          'src/tpa.css': '.foo{color: unquote("{{color-3}}");font: unquote("; {{body-m}}");font-size: 16px;}',
+          'src/tpa.css':
+            '.foo{color: unquote("{{color-3}}");font: unquote("; {{body-m}}");font-size: 16px;}',
           'src/foo.css': '.foo-rule { color: blue }',
           'src/composes.scss': `.foo{background: white;} // comments are only possible in sass`,
           'src/config.js': '',
@@ -118,9 +117,9 @@ describe('Loaders', () => {
               "tpaStyle": true
             }
           }`,
-          'pom.xml': fx.pom()
+          'pom.xml': fx.pom(),
         })
-        .execute('build', [], {RESOLVE_URL_LOADER: true, ...getMockedCI({ci: false})});
+        .execute('build', [], { RESOLVE_URL_LOADER: true, ...getMockedCI({ ci: false }) });
     });
     after(() => test.teardown());
 
@@ -134,8 +133,9 @@ describe('Loaders', () => {
       });
 
       it('should apply ng-annotate loader on angular project', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to
-          .contain(`.config(["$javascript", function ($javascript)`);
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          `.config(["$javascript", function ($javascript)`,
+        );
       });
 
       it('should run over specified 3rd party modules', () => {
@@ -152,11 +152,15 @@ describe('Loaders', () => {
     describe('Sass', () => {
       describe('client', () => {
         it('should run sass and css loaders over imported .scss files', () => {
-          expect(test.content('dist/statics/app.bundle.js')).to.match(/"other-rule":"some-css__other-rule__\w{5}",([\s\S]*?)"child":"some-css__child__\w{5}"/);
+          expect(test.content('dist/statics/app.bundle.js')).to.match(
+            /"other-rule":"some-css__other-rule__\w{5}",([\s\S]*?)"child":"some-css__child__\w{5}"/,
+          );
         });
 
         it('should also expose css classes as camelcase', () => {
-          expect(test.content('dist/statics/app.bundle.js')).to.match(/"otherRule":"some-css__other-rule__\w{5}"/);
+          expect(test.content('dist/statics/app.bundle.js')).to.match(
+            /"otherRule":"some-css__other-rule__\w{5}"/,
+          );
         });
 
         describe('postcss', () => {
@@ -187,12 +191,12 @@ describe('Loaders', () => {
           expect(test.content('dist/statics/app.css')).not.to.contain('body-l');
         });
 
-
         describe('composes keyword', () => {
           it('should support nested sass imports when using "compose"', () => {
             expect(test.content('dist/statics/app.css')).to.contain('background: white');
-            expect(test.content('dist/statics/app.bundle.js'))
-              .to.match(/"some-rule":"some-css__some-rule\w+ composes__foo\w+"/);
+            expect(test.content('dist/statics/app.bundle.js')).to.match(
+              /"some-rule":"some-css__some-rule\w+ composes__foo\w+"/,
+            );
           });
         });
       });
@@ -209,7 +213,9 @@ describe('Loaders', () => {
     describe('Less', () => {
       describe('client', () => {
         it('should run less and css loaders over imported .less files', () => {
-          expect(test.content('dist/statics/app.bundle.js')).to.match(/"less-rule":"some-less__less-rule__\w{5}",([\s\S]*?)"child":"some-less__child__\w{5}"/);
+          expect(test.content('dist/statics/app.bundle.js')).to.match(
+            /"less-rule":"some-less__less-rule__\w{5}",([\s\S]*?)"child":"some-less__child__\w{5}"/,
+          );
         });
 
         it('should allow import less from node_modules', () => {
@@ -222,7 +228,9 @@ describe('Loaders', () => {
           });
 
           it('should support source maps', () => {
-            expect(test.content('dist/statics/app.css.map')).not.to.contain('-webkit-appearance: "none"');
+            expect(test.content('dist/statics/app.css.map')).not.to.contain(
+              '-webkit-appearance: "none"',
+            );
           });
         });
       });
@@ -242,13 +250,15 @@ describe('Loaders', () => {
 
     describe('Assets', () => {
       it('should embed image below 10kb as base64', () => {
-        expect(test.content('dist/statics/app.bundle.js'))
-          .to.contain('data:image/png;base64,c29tZS1jb250ZW50Cg==');
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          'data:image/png;base64,c29tZS1jb250ZW50Cg==',
+        );
       });
 
       it('should write a separate image above 10kb', () => {
-        expect(test.content('dist/statics/app.bundle.js'))
-          .to.contain(fileAboveTheLimit('largeImage.png'));
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          fileAboveTheLimit('largeImage.png'),
+        );
       });
 
       it('should load images', () => {
@@ -302,8 +312,9 @@ describe('Loaders', () => {
     before(() => {
       test = tp.create();
       resp = test
-        .setup({
-          'src/app.ts': `
+        .setup(
+          {
+            'src/app.ts': `
             import './some.css';
             import './some.json';
             import './some.html';
@@ -313,15 +324,15 @@ describe('Loaders', () => {
             import './getData2.gql';
             let aServerFunction = 1;
             declare var angular: any; angular.module('fakeModule', []).config(function($typescript){});`,
-          'src/some.json': '{"json-content": 42}',
-          'src/some.html': '<div>This is a HTML file</div>',
-          'src/some.haml': '.foo This is a HAML file',
-          'src/some.md': '### title',
-          'src/some.css': '.a {color: green;}',
-          'src/getData1.graphql': 'query GetData1 { id, name }',
-          'src/getData2.gql': 'query GetData2 { id, name }',
-          'src/foo.css': '.foo-rule { color: blue }',
-          'package.json': `{
+            'src/some.json': '{"json-content": 42}',
+            'src/some.html': '<div>This is a HTML file</div>',
+            'src/some.haml': '.foo This is a HAML file',
+            'src/some.md': '### title',
+            'src/some.css': '.a {color: green;}',
+            'src/getData1.graphql': 'query GetData1 { id, name }',
+            'src/getData2.gql': 'query GetData2 { id, name }',
+            'src/foo.css': '.foo-rule { color: blue }',
+            'package.json': `{
             "name": "b",
             "yoshi": {
               "entry": "./app.ts",
@@ -331,12 +342,21 @@ describe('Loaders', () => {
               "angular": "^1.5.0"
             }
           }`,
-          'pom.xml': fx.pom(),
-          'tsconfig.json': fx.tsconfig(),
-        }, [installHaml]).execute('build', [], {
-          ...getMockedCI({ci: false}),
-          PATH: spawnSync('bundle', ['show', 'haml'], {cwd: test.tmp}).stdout.toString().trim() + '/bin' + path.delimiter + process.env.PATH,
-          GEM_PATH: process.env.GEM_PATH + path.delimiter + test.tmp + '/.bundle'
+            'pom.xml': fx.pom(),
+            'tsconfig.json': fx.tsconfig(),
+          },
+          [installHaml],
+        )
+        .execute('build', [], {
+          ...getMockedCI({ ci: false }),
+          PATH:
+            spawnSync('bundle', ['show', 'haml'], { cwd: test.tmp })
+              .stdout.toString()
+              .trim() +
+            '/bin' +
+            path.delimiter +
+            process.env.PATH,
+          GEM_PATH: process.env.GEM_PATH + path.delimiter + test.tmp + '/.bundle',
         });
     });
     after(() => test.teardown());
@@ -351,8 +371,9 @@ describe('Loaders', () => {
       });
 
       it('should apply ng-annotate loader on angular project with peerDependency', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to
-          .contain(`.config(["$typescript", function ($typescript)`);
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          `.config(["$typescript", function ($typescript)`,
+        );
       });
     });
     describe('`separateCss: false`', () => {
@@ -371,26 +392,26 @@ describe('Loaders', () => {
 
     describe('Json', () => {
       it('should embed json file into bundle', () =>
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('"json-content":42')
-      );
+        expect(test.content('dist/statics/app.bundle.js')).to.contain('"json-content":42'));
     });
 
     describe('HTML', () => {
       it('should embed html file into bundle', () =>
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('<div>This is a HTML file</div>')
-      );
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          '<div>This is a HTML file</div>',
+        ));
     });
 
     describe('HAML', () => {
       it('should embed haml file into bundle', () =>
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('<div class=\'foo\'>This is a HAML file</div>')
-      );
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          "<div class='foo'>This is a HAML file</div>",
+        ));
     });
 
     describe('raw', () => {
       it('should embed raw file into bundle', () =>
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('### title')
-      );
+        expect(test.content('dist/statics/app.bundle.js')).to.contain('### title'));
     });
 
     describe('GraphQL', () => {
@@ -405,7 +426,7 @@ describe('Loaders', () => {
 
   describe('loaders exceptions', () => {
     let test;
-    beforeEach(() => test = tp.create());
+    beforeEach(() => (test = tp.create()));
     afterEach(() => test.teardown());
 
     it('should fail with error code 1 if typescript code contains errors', () => {
@@ -414,8 +435,8 @@ describe('Loaders', () => {
           'src/app.ts': 'function ()',
           'tsconfig.json': fx.tsconfig(),
           'package.json': fx.packageJson({
-            entry: './app.ts'
-          })
+            entry: './app.ts',
+          }),
         })
         .execute('build');
 
@@ -431,7 +452,8 @@ describe('Loaders', () => {
           'src/foo/imported.scss': `.foo{background: url('./bar.svg');}`,
           'src/foo/bar.svg': '',
           'package.json': fx.packageJson(),
-        }).execute('build');
+        })
+        .execute('build');
       expect(res.code).to.equal(1);
     });
 
@@ -442,7 +464,7 @@ describe('Loaders', () => {
             'src/client.js': `require('./some.css');`,
             'src/some.css': '@import "./other.css"',
             'src/other.css': '.foo {appearance: smth; color: unquote("{{color-1}}")}',
-            'package.json': fx.packageJson({tpaStyle: true}),
+            'package.json': fx.packageJson({ tpaStyle: true }),
           })
           .execute('build', []);
 
@@ -458,20 +480,25 @@ describe('Loaders', () => {
         beforeEach(() => setupAndBuild());
 
         it('should run stylable loader over imported .st.css files', () => {
-          expect(test.content('dist/statics/app.bundle.js')).to.match(/.Test.*some-rule {\s*?color: red;\s*?}/);
+          expect(test.content('dist/statics/app.bundle.js')).to.match(
+            /.Test.*some-rule {\s*?color: red;\s*?}/,
+          );
         });
       });
 
       function setupAndBuild(config) {
         test
-          .setup({
-            'src/client.js': `require('./some-css.st.css');`,
-            'src/server.js': `require('./some-css.st.css');`,
-            'src/some-css.st.css': `/* comment */
+          .setup(
+            {
+              'src/client.js': `require('./some-css.st.css');`,
+              'src/server.js': `require('./some-css.st.css');`,
+              'src/some-css.st.css': `/* comment */
                                     @namespace "Test";
                                     .some-rule { color: red; }`,
-            'package.json': fx.packageJson(config || {})
-          }, [])
+              'package.json': fx.packageJson(config || {}),
+            },
+            [],
+          )
           .execute('build');
       }
     });

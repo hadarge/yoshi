@@ -1,4 +1,4 @@
 module.exports = () => ({
   test: /\.md$/,
-  loader: 'raw-loader'
+  loader: 'raw-loader',
 });

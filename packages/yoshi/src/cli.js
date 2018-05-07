@@ -7,9 +7,9 @@ module.exports = async command => {
   const action = preset[command];
 
   try {
-    const {persistent = false} = await action({
+    const { persistent = false } = await action({
       context: presetPath,
-      workerOptions: {cwd: appDirectory},
+      workerOptions: { cwd: appDirectory },
     });
 
     if (!persistent) {

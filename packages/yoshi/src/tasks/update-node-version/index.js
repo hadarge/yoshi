@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = async ({base = process.cwd()} = {}) => {
+module.exports = async ({ base = process.cwd() } = {}) => {
   const templateNvmrc = require.resolve('./templates/.nvmrc');
   const templateVersion = fs.readFileSync(templateNvmrc);
 

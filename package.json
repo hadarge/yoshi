@@ -3,7 +3,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "test": "lerna exec --concurrency 1 -- npm test",
-    "build": ":",
+    "build": "eslint .",
     "customPublish": "lerna exec --concurrency 1 -- npm run customPublish",
     "createVersion": "node scripts/createVersion"
   },

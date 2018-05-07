@@ -14,7 +14,7 @@ const defaultPort = Number(process.env.PORT) || 3000;
 module.exports = ({
   base = process.cwd(),
   entryPoint = 'index.js',
-  manualRestart = false
+  manualRestart = false,
 } = {}) => {
   function writeToServerLog(data) {
     fs.appendFile(path.join(base, 'target', 'server.log'), data, () => {});
@@ -39,33 +39,36 @@ module.exports = ({
     const env = Object.assign({}, process.env, {
       NODE_ENV: 'development',
       DEBUG: 'wix:*,wnp:*',
-      PORT: newPort
+      PORT: newPort,
     });
 
     if (server) {
       server.kill('SIGTERM');
     } else {
       if (newPort !== defaultPort) {
-        console.log(chalk.green(
-          `There's something running on port ${defaultPort}, using ${newPort} instead.`
-        ));
+        console.log(
+          chalk.green(
+            `There's something running on port ${defaultPort}, using ${newPort} instead.`,
+          ),
+        );
       }
 
       console.log('');
-      console.log('Application is now available at ', chalk.magenta(`http://localhost:${env.PORT}${env.MOUNT_POINT || '/'}`));
+      console.log(
+        'Application is now available at ',
+        chalk.magenta(`http://localhost:${env.PORT}${env.MOUNT_POINT || '/'}`),
+      );
       console.log('Server log is written to ', chalk.magenta('./target/server.log'));
     }
 
     mkdirp.sync(path.resolve('target'));
-    server = spawn('node', [serverScript], {env});
-    [server.stdout, server.stderr].forEach(stream =>
-      stream.on('data', writeToServerLog)
-    );
+    server = spawn('node', [serverScript], { env });
+    [server.stdout, server.stderr].forEach(stream => stream.on('data', writeToServerLog));
 
     const displayErrors = debounce(() => {
       console.log(
         chalk.red('There are errors! Please check'),
-        chalk.magenta('./target/server.log')
+        chalk.magenta('./target/server.log'),
       );
     }, 500);
 

@@ -1,6 +1,4 @@
-'use strict';
-
-const {expect} = require('chai');
+const { expect } = require('chai');
 const commonConfig = require('../config/webpack.config.common');
 const uniq = require('lodash/uniq');
 const buildStoryBookConfig = require('../config/webpack.config.storybook');
@@ -12,9 +10,9 @@ describe('Webpack config storybook', () => {
   beforeEach(() => {
     originalConfig = {
       resolve: {
-        extensions: ['.js', '.jsx', '.abc']
+        extensions: ['.js', '.jsx', '.abc'],
       },
-      module: { }
+      module: {},
     };
   });
 

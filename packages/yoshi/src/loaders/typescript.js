@@ -5,7 +5,7 @@ module.exports = isAngularProject => ({
   exclude: /(node_modules)/,
   use: [
     threadLoader(),
-    ...isAngularProject ? ['ng-annotate-loader'] : [],
+    ...(isAngularProject ? ['ng-annotate-loader'] : []),
     {
       loader: 'ts-loader?{"logLevel":"warn"}',
       options: {
@@ -13,6 +13,6 @@ module.exports = isAngularProject => ({
         // Needed for HappyPack or thread-loader.
         happyPackMode: true,
       },
-    }
-  ]
+    },
+  ],
 });

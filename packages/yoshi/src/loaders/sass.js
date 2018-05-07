@@ -1,7 +1,7 @@
 const path = require('path');
-const {merge} = require('lodash/fp');
+const { merge } = require('lodash/fp');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const {cssModulesPattren} = require('yoshi-runtime');
+const { cssModulesPattren } = require('yoshi-runtime');
 
 const useResolveUrlLoader = process.env.RESOLVE_URL_LOADER === 'true';
 
@@ -12,47 +12,49 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
     localIdentName: cssModulesPattren(),
     hashPrefix: projectName,
     modules: cssModules,
-    importLoaders: 2 /* postcss plugins and sass-loader (so composition will work with import) */ +
+    importLoaders:
+      2 /* postcss plugins and sass-loader (so composition will work with import) */ +
       Number(tpaStyle) +
-      Number(useResolveUrlLoader)
+      Number(useResolveUrlLoader),
   };
 
   const sassLoaderOptions = {
     sourceMap: true,
-    includePaths: ['node_modules', 'node_modules/compass-mixins/lib']
+    includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
   };
 
   const globalRegex = /\.global\.s?css$/;
 
-  const getScssRule = (ruleConfig, loaderConfig) => merge(ruleConfig, {
-    test: /\.s?css$/,
-    use: clientLoader(separateCss, {loader: 'style-loader', options: {singleton: true}}, [
-      {
-        loader: 'css-loader',
-        options: merge(cssLoaderOptions, loaderConfig)
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          config: {
-            path: path.join(__dirname, '..', '..', 'config', 'postcss.config.js'),
+  const getScssRule = (ruleConfig, loaderConfig) =>
+    merge(ruleConfig, {
+      test: /\.s?css$/,
+      use: clientLoader(separateCss, { loader: 'style-loader', options: { singleton: true } }, [
+        {
+          loader: 'css-loader',
+          options: merge(cssLoaderOptions, loaderConfig),
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            config: {
+              path: path.join(__dirname, '..', '..', 'config', 'postcss.config.js'),
+            },
+            sourceMap: true,
           },
-          sourceMap: true
-        }
-      },
-      ...useResolveUrlLoader ? ['resolve-url-loader'] : [],
-      ...tpaStyle ? ['wix-tpa-style-loader'] : [],
-      {
-        loader: 'sass-loader',
-        options: sassLoaderOptions
-      }
-    ])
-  });
+        },
+        ...(useResolveUrlLoader ? ['resolve-url-loader'] : []),
+        ...(tpaStyle ? ['wix-tpa-style-loader'] : []),
+        {
+          loader: 'sass-loader',
+          options: sassLoaderOptions,
+        },
+      ]),
+    });
 
   return {
     client: [
-      getScssRule({include: globalRegex, exclude: /\.st\.css$/}, {modules: false}),
-      getScssRule({exclude: [globalRegex, /\.st\.css$/]})
+      getScssRule({ include: globalRegex, exclude: /\.st\.css$/ }, { modules: false }),
+      getScssRule({ exclude: [globalRegex, /\.st\.css$/] }),
     ],
     specs: {
       test: /\.s?css$/,
@@ -60,18 +62,18 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
       use: [
         {
           loader: 'css-loader/locals',
-          options: cssLoaderOptions
+          options: cssLoaderOptions,
         },
-        ...tpaStyle ? ['wix-tpa-style-loader'] : [],
+        ...(tpaStyle ? ['wix-tpa-style-loader'] : []),
         {
           loader: 'sass-loader',
-          options: sassLoaderOptions
-        }
-      ]
-    }
+          options: sassLoaderOptions,
+        },
+      ],
+    },
   };
 };
 
 function clientLoader(separateCss, l1, l2) {
-  return separateCss ? ExtractTextPlugin.extract({fallback: l1, use: l2}) : [l1].concat(l2);
+  return separateCss ? ExtractTextPlugin.extract({ fallback: l1, use: l2 }) : [l1].concat(l2);
 }

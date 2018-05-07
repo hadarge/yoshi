@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const shmock = require('shmock');
 const stripAnsi = require('strip-ansi');
 const tp = require('../helpers/test-phases');
@@ -21,12 +21,8 @@ describe('haste-task-wix-dep-check', () => {
   after(() => npmServer.close());
 
   context('yoshi & wix-style-react', () => {
-
     beforeEach(() => {
-      setupProject(
-        {'wix-style-react': '1.0.0'},
-        {yoshi: '1.0.0'}
-      );
+      setupProject({ 'wix-style-react': '1.0.0' }, { yoshi: '1.0.0' });
     });
 
     it('should show a warning when yoshi & wix-style-react is at least 1 patch version behind', async () => {
@@ -36,7 +32,7 @@ describe('haste-task-wix-dep-check', () => {
       const message = [
         'WARNING: some dependencies are a bit behind:',
         'wix-style-react@1.0.0 should be @1.0.2',
-        'yoshi@1.0.0 should be @1.0.1'
+        'yoshi@1.0.0 should be @1.0.1',
       ].join('\n');
 
       const warning = await task();
@@ -50,7 +46,7 @@ describe('haste-task-wix-dep-check', () => {
       const message = [
         'WARNING: some dependencies are a bit behind:',
         'wix-style-react@1.0.0 should be @1.1.0',
-        'yoshi@1.0.0 should be @2.0.0'
+        'yoshi@1.0.0 should be @2.0.0',
       ].join('\n');
 
       const warning = await task();
@@ -62,7 +58,7 @@ describe('haste-task-wix-dep-check', () => {
 
       const message = [
         'ERROR: the following dependencies must be updated:',
-        'yoshi@1.0.0 must be at least @3.0.0'
+        'yoshi@1.0.0 must be at least @3.0.0',
       ].join('\n');
 
       const error = await invertPromise(task);
@@ -74,7 +70,7 @@ describe('haste-task-wix-dep-check', () => {
 
       const message = [
         'ERROR: the following dependencies must be updated:',
-        'wix-style-react@1.0.0 must be at least @2.0.0'
+        'wix-style-react@1.0.0 must be at least @2.0.0',
       ].join('\n');
 
       const error = await invertPromise(task);
@@ -88,16 +84,11 @@ describe('haste-task-wix-dep-check', () => {
       const message = await task();
       expect(message).to.be.undefined;
     });
-
   });
 
   context('wix-bootstrap-*', () => {
-
     beforeEach(() => {
-      setupProject(
-        {'wix-bootstrap-ng': '1.0.0'},
-        {'wix-bootstrap-testkit': '2.0.0'}
-      );
+      setupProject({ 'wix-bootstrap-ng': '1.0.0' }, { 'wix-bootstrap-testkit': '2.0.0' });
     });
 
     it('should show a warning for a wix-bootstrap-* dependency that is at least 10 patch version behind', async () => {
@@ -106,7 +97,7 @@ describe('haste-task-wix-dep-check', () => {
 
       const message = [
         'WARNING: some dependencies are a bit behind:',
-        'wix-bootstrap-testkit@2.0.0 should be @2.0.1'
+        'wix-bootstrap-testkit@2.0.0 should be @2.0.1',
       ].join('\n');
 
       const warning = await task();
@@ -125,14 +116,16 @@ describe('haste-task-wix-dep-check', () => {
   function setupProject(deps, devDeps) {
     const joinedDeps = Object.assign({}, deps, devDeps);
     const modules = Object.keys(joinedDeps).reduce((acc, current) => {
-      acc[`node_modules/${current}/package.json`] = `{"name": "${current}", "version": "${joinedDeps[current]}"}`;
+      acc[`node_modules/${current}/package.json`] = `{"name": "${current}", "version": "${
+        joinedDeps[current]
+      }"}`;
       return acc;
     }, {});
 
     return test.setup({
       '.npmrc': `registry=http://localhost:${port}/`,
-      'package.json': JSON.stringify({dependencies: deps, devDependencies: devDeps}),
-      ...modules
+      'package.json': JSON.stringify({ dependencies: deps, devDependencies: devDeps }),
+      ...modules,
     });
   }
 
@@ -141,21 +134,19 @@ describe('haste-task-wix-dep-check', () => {
     npmServer.get(`/${name}`).reply(200, {
       _id: name,
       name,
-      'dist-tags': {latest: versions.slice().pop()},
+      'dist-tags': { latest: versions.slice().pop() },
       versions: versions.reduce((acc, ver) => {
         acc[ver] = {};
         return acc;
-      }, {})
+      }, {}),
     });
   }
 
   function invertPromise(promise) {
-    return new Promise((resolve, reject) =>
-      promise().then(reject, resolve));
+    return new Promise((resolve, reject) => promise().then(reject, resolve));
   }
 
   function task() {
-    return deps({cwd: test.tmp});
+    return deps({ cwd: test.tmp });
   }
-
 });

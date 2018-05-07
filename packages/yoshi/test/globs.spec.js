@@ -1,4 +1,4 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 const match = require('minimatch');
 const globs = require('../src/globs');
 

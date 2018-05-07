@@ -10,27 +10,24 @@ const config = {
   output: getOutput(),
 
   resolve: {
-    modules: [
-      'node_modules',
-      context
-    ],
+    modules: ['node_modules', context],
 
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    symlinks: false
+    symlinks: false,
   },
 
   resolveLoader: {
-    modules: [path.join(__dirname, '..', 'node_modules'), 'node_modules']
+    modules: [path.join(__dirname, '..', 'node_modules'), 'node_modules'],
   },
 
-  plugins: [
-    new CaseSensitivePathsPlugin(),
-  ],
+  plugins: [new CaseSensitivePathsPlugin()],
 
   module: {
     rules: [
-      ...projectConfig.features().externalizeRelativeLodash ? [require('../src/loaders/externalize-relative-lodash')()] : [],
-      ...projectConfig.isAngularProject() ? [require('../src/loaders/ng-annotate')()] : [],
+      ...(projectConfig.features().externalizeRelativeLodash
+        ? [require('../src/loaders/externalize-relative-lodash')()]
+        : []),
+      ...(projectConfig.isAngularProject() ? [require('../src/loaders/ng-annotate')()] : []),
       require('../src/loaders/babel')(),
       require('../src/loaders/typescript')(projectConfig.isAngularProject()),
       require('../src/loaders/graphql')(),
@@ -39,32 +36,32 @@ const config = {
       require('../src/loaders/html')(),
       require('../src/loaders/haml')(),
       require('../src/loaders/raw')(),
-    ]
+    ],
   },
 
   node: {
     fs: 'empty',
     net: 'empty',
     tls: 'empty',
-    __dirname: true
+    __dirname: true,
   },
 
   devtool: 'source-map',
 
-  externals: projectConfig.externals()
+  externals: projectConfig.externals(),
 };
 
 function getOutput() {
   const libraryExports = projectConfig.exports();
   const output = {
     path: path.resolve('./dist'),
-    pathinfo: true
+    pathinfo: true,
   };
 
   if (libraryExports) {
     return Object.assign({}, output, {
       library: libraryExports,
-      libraryTarget: 'umd'
+      libraryTarget: 'umd',
     });
   }
 

@@ -3,13 +3,13 @@ const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const hooks = require('./helpers/hooks');
 const getMockedCI = require('./helpers/get-mocked-ci');
-const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
+const { outsideTeamCity, insideTeamCity } = require('./helpers/env-variables');
 const retryPromise = require('retry-promise').default;
 const fetch = require('node-fetch');
 
 const generateCssModulesPattern = (name, path, pattern = `[hash:base64:5]`) => {
   const genericNames = require('generic-names');
-  const generate = genericNames(pattern, {hashPrefix: 'a'});
+  const generate = genericNames(pattern, { hashPrefix: 'a' });
   return generate(name, path);
 };
 const $inject = 'something.$inject = ["$http"];';
@@ -26,69 +26,81 @@ describe('Aggregator: Build', () => {
       registry: {
         search: ['https://bower.herokuapp.com', 'http://wix:wix@mirror.wixpress.com:3333'],
         register: 'http://wix:wix@mirror.wixpress.com:3333',
-        publish: 'http://wix:wix@mirror.wixpress.com:3333'
-      }
+        publish: 'http://wix:wix@mirror.wixpress.com:3333',
+      },
     };
 
     before(() => {
       test = tp.create();
       resp = test
-        .setup({
-          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", {"modules": false}]]}`,
-          '.bowerrc': JSON.stringify(bowerrc, null, 2),
-          'petri-specs/specs.infra.Dummy.json': fx.petriSpec(),
-          'src/a.js': 'export default "I\'m a module!";',
-          'app/b.jsx': 'const b = 2;',
-          'src/nativeModules.js': ['fs', 'net', 'tls'].map(moduleName => `require(${moduleName})`).join(';'),
-          'src/entry.js': 'export default "I\'m a module!";',
-          'src/dep.js': `module.exports = function(a){return a + 1;};`,
-          'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app.json');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss')`,
-          'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1); require('../app/e/style.less'); require('../app/b/style.less'); require('./moment-locale'); require('awesome-module1/entry.js'); require('lodash/map')`,
-          'src/app.json': `{"json-content": 1}`,
-          'src/moment-no-locale.js': `import 'moment-no-locale';`,
-          'node_modules/moment-no-locale/index.js': `function load() {return require('./locale/' + lang);}`,
-          'node_modules/awesome-module1/entry.js': 'module.exports = function() { return __dirname }',
-          'node_modules/awesome-module2/entry.js': 'module.exports = function() { return __dirname }',
-          'node_modules/moment-no-locale/locale/en.js': `module.exports = 'spanish';`,
-          'src/moment-locale.js': `require('moment-locale/locale/en')`,
-          'node_modules/moment-locale/locale/en.js': `module.exports = 'english';`,
-          'src/styles/my-file.global.scss': `.x {.y {color: blue;}}`,
-          'src/styles/my-file-less.global.less': `.q {.w {color: blue;}}`,
-          'src/styles/my-file.scss': `.a {.b {color: blue;}}`,
-          'app/a/style.scss': fx.scss(),
-          'app/b/style.less': fx.less(),
-          'app/c/style.less': `@import (once) '../b/style.less';`,
-          'app/d/style.less': `@import (once) 'some-module/style.less';`,
-          'app/e/style.scss': '.a {\n.b {\ncolor: black;\n}\n}\n .c {\ndisplay: flex;\n}',
-          'app/e/style.less': '.a .b {\n  color: black;\n}',
-          'node_modules/some-module/style.less': fx.less(),
-          'app/assets/some-file': 'a',
-          'src/assets/some-file': 'a',
-          'dist/old.js': `const hello = "world!";`,
-          'src/angular-module.js': fx.angularJs(),
-          'angular-module.js': fx.angularJs(),
-          'pom.xml': fx.pom(),
-          'package.json': fx.packageJson({
-            clientProjectName: 'some-client-proj',
-            exports: 'MyLibraryEndpoint',
-            splitChunks: {
-              chunks: 'initial',
-              minSize: 0,
-              name: 'myChunk'
-            },
-            entry: {
-              first: './app1.js',
-              second: './app2.js'
-            },
-            features: {
-              externalizeRelativeLodash: false
-            },
-            externals: ['lodash/map']
-          })
-        }, [
-          hooks.createSymlink('node_modules/awesome-module1/entry.js', 'node_modules/awesome-module2/entry.js'),
-        ])
-        .execute('build', [], getMockedCI({ci: false}));
+        .setup(
+          {
+            '.babelrc': `{"presets": [["${require.resolve(
+              'babel-preset-env',
+            )}", {"modules": false}]]}`,
+            '.bowerrc': JSON.stringify(bowerrc, null, 2),
+            'petri-specs/specs.infra.Dummy.json': fx.petriSpec(),
+            'src/a.js': 'export default "I\'m a module!";',
+            'app/b.jsx': 'const b = 2;',
+            'src/nativeModules.js': ['fs', 'net', 'tls']
+              .map(moduleName => `require(${moduleName})`)
+              .join(';'),
+            'src/entry.js': 'export default "I\'m a module!";',
+            'src/dep.js': `module.exports = function(a){return a + 1;};`,
+            'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app.json');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss')`,
+            'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1); require('../app/e/style.less'); require('../app/b/style.less'); require('./moment-locale'); require('awesome-module1/entry.js'); require('lodash/map')`,
+            'src/app.json': `{"json-content": 1}`,
+            'src/moment-no-locale.js': `import 'moment-no-locale';`,
+            'node_modules/moment-no-locale/index.js': `function load() {return require('./locale/' + lang);}`,
+            'node_modules/awesome-module1/entry.js':
+              'module.exports = function() { return __dirname }',
+            'node_modules/awesome-module2/entry.js':
+              'module.exports = function() { return __dirname }',
+            'node_modules/moment-no-locale/locale/en.js': `module.exports = 'spanish';`,
+            'src/moment-locale.js': `require('moment-locale/locale/en')`,
+            'node_modules/moment-locale/locale/en.js': `module.exports = 'english';`,
+            'src/styles/my-file.global.scss': `.x {.y {color: blue;}}`,
+            'src/styles/my-file-less.global.less': `.q {.w {color: blue;}}`,
+            'src/styles/my-file.scss': `.a {.b {color: blue;}}`,
+            'app/a/style.scss': fx.scss(),
+            'app/b/style.less': fx.less(),
+            'app/c/style.less': `@import (once) '../b/style.less';`,
+            'app/d/style.less': `@import (once) 'some-module/style.less';`,
+            'app/e/style.scss': '.a {\n.b {\ncolor: black;\n}\n}\n .c {\ndisplay: flex;\n}',
+            'app/e/style.less': '.a .b {\n  color: black;\n}',
+            'node_modules/some-module/style.less': fx.less(),
+            'app/assets/some-file': 'a',
+            'src/assets/some-file': 'a',
+            'dist/old.js': `const hello = "world!";`,
+            'src/angular-module.js': fx.angularJs(),
+            'angular-module.js': fx.angularJs(),
+            'pom.xml': fx.pom(),
+            'package.json': fx.packageJson({
+              clientProjectName: 'some-client-proj',
+              exports: 'MyLibraryEndpoint',
+              splitChunks: {
+                chunks: 'initial',
+                minSize: 0,
+                name: 'myChunk',
+              },
+              entry: {
+                first: './app1.js',
+                second: './app2.js',
+              },
+              features: {
+                externalizeRelativeLodash: false,
+              },
+              externals: ['lodash/map'],
+            }),
+          },
+          [
+            hooks.createSymlink(
+              'node_modules/awesome-module1/entry.js',
+              'node_modules/awesome-module2/entry.js',
+            ),
+          ],
+        )
+        .execute('build', [], getMockedCI({ ci: false }));
     });
     after(() => {
       test.teardown();
@@ -174,7 +186,7 @@ describe('Aggregator: Build', () => {
         expect(test.list('dist/statics')).to.contain('first.bundle.js.map');
       });
 
-      it('should consider babel\'s sourceMaps for bundle', () => {
+      it("should consider babel's sourceMaps for bundle", () => {
         expect(test.content('dist/statics/first.bundle.js')).to.contain('var thisIsWorks');
         expect(test.content('dist/statics/first.bundle.js.map')).to.contain('const thisIsWorks');
       });
@@ -185,9 +197,15 @@ describe('Aggregator: Build', () => {
         expect(test.list('dist/statics')).to.contain('myChunk.chunk.js');
         expect(test.list('dist/statics')).to.contain('myChunk.chunk.min.js');
         expect(test.list('dist/statics')).to.contain('myChunk.chunk.js.map');
-        expect(test.content('dist/statics/myChunk.chunk.js')).to.contain('module.exports = function (a) {\n  return a + 1;\n};');
-        expect(test.content('dist/statics/first.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
-        expect(test.content('dist/statics/second.bundle.js')).to.not.contain('module.exports = function (a) {\n  return a + 1;\n};');
+        expect(test.content('dist/statics/myChunk.chunk.js')).to.contain(
+          'module.exports = function (a) {\n  return a + 1;\n};',
+        );
+        expect(test.content('dist/statics/first.bundle.js')).to.not.contain(
+          'module.exports = function (a) {\n  return a + 1;\n};',
+        );
+        expect(test.content('dist/statics/second.bundle.js')).to.not.contain(
+          'module.exports = function (a) {\n  return a + 1;\n};',
+        );
       });
 
       it('should add myChunk.css if there is any common css/scss/less required, the common css should be in the myChunk.css chunk while not in the other chunks', () => {
@@ -215,12 +233,18 @@ describe('Aggregator: Build', () => {
       });
 
       it('should generate a bundle with umd library support', () => {
-        expect(test.content('dist/statics/first.bundle.js')).to.contain('exports["MyLibraryEndpoint"]');
-        expect(test.content('dist/statics/first.bundle.js')).to.contain('root["MyLibraryEndpoint"]');
+        expect(test.content('dist/statics/first.bundle.js')).to.contain(
+          'exports["MyLibraryEndpoint"]',
+        );
+        expect(test.content('dist/statics/first.bundle.js')).to.contain(
+          'root["MyLibraryEndpoint"]',
+        );
       });
 
       it('should generate a bundle with named amd library support', () => {
-        expect(test.content('dist/statics/first.bundle.js')).to.contain('define("MyLibraryEndpoint", [], factory)');
+        expect(test.content('dist/statics/first.bundle.js')).to.contain(
+          'define("MyLibraryEndpoint", [], factory)',
+        );
       });
     });
 
@@ -236,7 +260,8 @@ describe('Aggregator: Build', () => {
 
     describe('yoshi-maven-statics', () => {
       it('should use yoshi-maven-statics', () => {
-        expect(test.content('maven/assembly/tar.gz.xml').replace(/\s/g, '')).to.contain(`
+        expect(test.content('maven/assembly/tar.gz.xml').replace(/\s/g, '')).to.contain(
+          `
           <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
@@ -256,7 +281,8 @@ describe('Aggregator: Build', () => {
                   </fileSet>
               </fileSets>
           </assembly>
-        `.replace(/\s/g, ''));
+        `.replace(/\s/g, ''),
+        );
       });
     });
 
@@ -291,22 +317,20 @@ describe('Aggregator: Build', () => {
 
         expect(newBowerrc).to.eql({
           registry: 'https://bower.dev.wixpress.com',
-          resolvers: [
-            'bower-art-resolver'
-          ]
+          resolvers: ['bower-art-resolver'],
         });
 
         expect(newPj.devDependencies['bower-art-resolver']).to.exist;
       });
     });
 
-    describe('Externalize relative lodash (lodash/map -> lodash.map)', function () {
+    describe('Externalize relative lodash (lodash/map -> lodash.map)', function() {
       it('should be disabled when features.externalizeRelativeLodash = false', () => {
         expect(test.content('dist/statics/second.bundle.js')).not.to.contain(').map');
       });
     });
 
-    describe('Using angular ngInject annotations for babel project', function () {
+    describe('Using angular ngInject annotations for babel project', function() {
       it('are not executed when project is not Angular and EcmaScript', () => {
         expect(test.content('dist/src/angular-module.js')).not.to.contain($inject);
         expect(test.content('src/angular-module.js')).not.to.contain($inject);
@@ -321,27 +345,36 @@ describe('Aggregator: Build', () => {
       test = tp.create();
 
       resp = test
-        .setup({
-          '.babelrc': `{"presets": [["${require.resolve('babel-preset-env')}", {"modules": false}]]}`,
-          'src/a.js': `export default "I'm a module!"; import './a.scss'; require('lodash/map')`,
-          'src/a.scss': `.x {.y {display: flex;}}`,
-          'src/assets/file': '1',
-          'src/something.js': fx.angularJs(),
-          'something/something.js': fx.angularJs(),
-          'something.js': fx.angularJs(),
-          'package.json': fx.packageJson({
-            entry: './a.js',
-            separateCss: false,
-            cssModules: false,
-            features: {
-              externalizeRelativeLodash: true
-            },
-            externals: ['lodash']
-          }, {
-          }, {
-            module: 'dist/es/src/a.js',
-          })
-        }, [], outsideTeamCity)
+        .setup(
+          {
+            '.babelrc': `{"presets": [["${require.resolve(
+              'babel-preset-env',
+            )}", {"modules": false}]]}`,
+            'src/a.js': `export default "I'm a module!"; import './a.scss'; require('lodash/map')`,
+            'src/a.scss': `.x {.y {display: flex;}}`,
+            'src/assets/file': '1',
+            'src/something.js': fx.angularJs(),
+            'something/something.js': fx.angularJs(),
+            'something.js': fx.angularJs(),
+            'package.json': fx.packageJson(
+              {
+                entry: './a.js',
+                separateCss: false,
+                cssModules: false,
+                features: {
+                  externalizeRelativeLodash: true,
+                },
+                externals: ['lodash'],
+              },
+              {},
+              {
+                module: 'dist/es/src/a.js',
+              },
+            ),
+          },
+          [],
+          outsideTeamCity,
+        )
         .execute('build');
     });
     after(() => {
@@ -403,14 +436,19 @@ describe('Aggregator: Build', () => {
           'something.js': fx.angularJs(),
           'src/styles/style.scss': `.a {.b {color: red;}}`,
           'tsconfig.json': fx.tsconfig(),
-          '.babelrc': `{"plugins": ["${require.resolve('babel-plugin-transform-es2015-block-scoping')}"]}`,
-          'package.json': fx.packageJson({
-            entry: './client',
-            separateCss: 'prod',
-            cssModules: true,
-          }, {
-            angular: '1.5.0'
-          })
+          '.babelrc': `{"plugins": ["${require.resolve(
+            'babel-plugin-transform-es2015-block-scoping',
+          )}"]}`,
+          'package.json': fx.packageJson(
+            {
+              entry: './client',
+              separateCss: 'prod',
+              cssModules: true,
+            },
+            {
+              angular: '1.5.0',
+            },
+          ),
         })
         .execute('build', [], insideTeamCity);
     });
@@ -476,10 +514,10 @@ describe('Aggregator: Build', () => {
           'tsconfig.json': fx.tsconfig(),
           'package.json': fx.packageJson({
             separateCss: 'prod',
-            cssModules: true
-          })
+            cssModules: true,
+          }),
         })
-        .execute('build', [], {NODE_ENV: 'PRODUCTION'});
+        .execute('build', [], { NODE_ENV: 'PRODUCTION' });
     });
     after(() => {
       test.teardown();
@@ -498,7 +536,7 @@ describe('Aggregator: Build', () => {
       expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
     });
 
-    it('should generate (runtime) css modules on production with hash only', function () {
+    it('should generate (runtime) css modules on production with hash only', function() {
       const hashA = generateCssModulesPattern('a', 'styles/style.scss');
       const hashB = generateCssModulesPattern('b', 'styles/style.scss');
 
@@ -527,12 +565,13 @@ describe('Aggregator: Build', () => {
         test
           .setup({
             'src/client.js': '',
-            'package.json': fx.packageJson()
+            'package.json': fx.packageJson(),
           })
           .spawn('build', ['--analyze']);
 
-        return checkServerIsServing({port: analyzerServerPort})
-          .then(content => expect(content).to.contain(analyzerContentPart));
+        return checkServerIsServing({ port: analyzerServerPort }).then(content =>
+          expect(content).to.contain(analyzerContentPart),
+        );
       });
     });
 
@@ -542,7 +581,7 @@ describe('Aggregator: Build', () => {
           .setup({
             'src/b.ts': 'const b = 2;',
             'src/a/a.js': 'const a = 1;',
-            'package.json': fx.packageJson()
+            'package.json': fx.packageJson(),
           })
           .execute('build');
 
@@ -558,8 +597,8 @@ describe('Aggregator: Build', () => {
             'src/b.ts': 'const b = 2;',
             'src/a/a.js': 'const a = 1;',
             'package.json': fx.packageJson({
-              runIndividualTranspiler: false
-            })
+              runIndividualTranspiler: false,
+            }),
           })
           .execute('build');
 
@@ -573,7 +612,7 @@ describe('Aggregator: Build', () => {
       it('should exit with code 0 and not create bundle.js when there is no custom entry configures and default entry does not exist', () => {
         const res = test
           .setup({
-            'tsconfig.json': fx.tsconfig({files: ['src/example.ts']}),
+            'tsconfig.json': fx.tsconfig({ files: ['src/example.ts'] }),
             'package.json': fx.packageJson(),
             'pom.xml': fx.pom(),
             'src/example.ts': `console.log('horrey')`,
@@ -593,7 +632,7 @@ describe('Aggregator: Build', () => {
               '.babelrc': '{}',
               'src/a.js': 'function ()',
               'package.json': fx.packageJson(),
-              'pom.xml': fx.pom()
+              'pom.xml': fx.pom(),
             })
             .execute('build');
           expect(resp.code).to.equal(1);
@@ -609,7 +648,7 @@ describe('Aggregator: Build', () => {
               'src/a.ts': 'function ()',
               'tsconfig.json': fx.tsconfig(),
               'package.json': fx.packageJson(),
-              'pom.xml': fx.pom()
+              'pom.xml': fx.pom(),
             })
             .execute('build');
 
@@ -623,9 +662,9 @@ describe('Aggregator: Build', () => {
           .setup({
             'tsconfig.json': fx.tsconfig(),
             'package.json': fx.packageJson({
-              entry: './hello'
+              entry: './hello',
             }),
-            'pom.xml': fx.pom()
+            'pom.xml': fx.pom(),
           })
           .execute('build');
 
@@ -633,24 +672,24 @@ describe('Aggregator: Build', () => {
         expect(test.list('dist/statics')).not.to.contain('app.bundle.js');
       });
 
-      it('should fail with exit code 1 when yoshi can\'t transpile sass file', () => {
+      it("should fail with exit code 1 when yoshi can't transpile sass file", () => {
         const res = test
           .setup({
-            'src/client.js': 'require(\'./style1.scss\');',
+            'src/client.js': "require('./style1.scss');",
             'src/style.scss': `.a {.b {color: red;}}`,
-            'package.json': fx.packageJson()
+            'package.json': fx.packageJson(),
           })
           .execute('build');
 
         expect(res.code).to.equal(1);
       });
 
-      it('should fail with exit code 1 when yoshi can\'t transpile less file', () => {
+      it("should fail with exit code 1 when yoshi can't transpile less file", () => {
         const resp = test
           .setup({
             'src/client.js': '',
             'app/a/style.less': '.a {\n.b\ncolor: red;\n}\n}\n',
-            'package.json': fx.packageJson()
+            'package.json': fx.packageJson(),
           })
           .execute('build');
 
@@ -659,13 +698,13 @@ describe('Aggregator: Build', () => {
         expect(resp.stderr).to.contain(`Unrecognised input`);
       });
 
-      it('should fail with exit code 1 when yoshi can\'t transpile js file ', () => {
+      it("should fail with exit code 1 when yoshi can't transpile js file ", () => {
         const res = test
           .setup({
             'src/client.js': `const aFunction = require('./dep');const a = aFunction(1);`,
             'src/dep.js': `module.exports = a => {`,
             'package.json': fx.packageJson(),
-            'pom.xml': fx.pom()
+            'pom.xml': fx.pom(),
           })
           .execute('build');
         expect(res.code).to.equal(1);
@@ -676,16 +715,20 @@ describe('Aggregator: Build', () => {
   });
 
   describe.skip('yoshi-check-deps', () => {
-    it('should run yoshi-check-deps and do nothing because yoshi isn\'t installed', () => {
-      const resp = test
-        .setup({'package.json': fx.packageJson()})
-        .execute('build');
+    it("should run yoshi-check-deps and do nothing because yoshi isn't installed", () => {
+      const resp = test.setup({ 'package.json': fx.packageJson() }).execute('build');
       expect(resp.stdout).to.contain('checkDeps');
     });
   });
 
-  function checkServerIsServing({backoff = 100, max = 100, port = fx.defaultServerPort(), file = ''} = {}) {
-    return retryPromise({backoff, max}, () => fetch(`http://localhost:${port}/${file}`)
-      .then(res => res.text()));
+  function checkServerIsServing({
+    backoff = 100,
+    max = 100,
+    port = fx.defaultServerPort(),
+    file = '',
+  } = {}) {
+    return retryPromise({ backoff, max }, () =>
+      fetch(`http://localhost:${port}/${file}`).then(res => res.text()),
+    );
   }
 });

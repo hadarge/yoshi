@@ -1,4 +1,4 @@
 module.exports = () => ({
   test: /\.inline\.svg$/,
-  loader: 'svg-inline-loader'
+  loader: 'svg-inline-loader',
 });

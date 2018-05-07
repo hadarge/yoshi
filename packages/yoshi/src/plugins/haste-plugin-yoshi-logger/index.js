@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const {format, delta, generateRunTitle} = require('./utils');
+const { format, delta, generateRunTitle } = require('./utils');
 const get = require('lodash/get');
 
 module.exports = class LoggerPlugin {
@@ -17,7 +17,7 @@ module.exports = class LoggerPlugin {
         task.hooks.before.tap('log start', run => {
           const start = new Date();
 
-          const title = generateRunTitle({run, task});
+          const title = generateRunTitle({ run, task });
           const showLogs = get(run, 'runnerOptions.log', true);
 
           if (showLogs) {
@@ -25,13 +25,17 @@ module.exports = class LoggerPlugin {
 
             run.hooks.success.tap('log success', () => {
               const [end, time] = delta(start);
-              console.log(`[${format(end)}] ${chalk.black.bgCyan('Finished')} '${title}' after ${time} ms`);
+              console.log(
+                `[${format(end)}] ${chalk.black.bgCyan('Finished')} '${title}' after ${time} ms`,
+              );
             });
           }
 
           run.hooks.failure.tap('log failure', () => {
             const [end, time] = delta(start);
-            console.log(`[${format(end)}] ${chalk.white.bgRed('Failed')} '${title}' after ${time} ms`);
+            console.log(
+              `[${format(end)}] ${chalk.white.bgRed('Failed')} '${title}' after ${time} ms`,
+            );
           });
         });
       });

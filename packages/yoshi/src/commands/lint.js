@@ -1,11 +1,11 @@
-const {createRunner} = require('haste-core');
+const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
-const {isTypescriptProject, shouldRunStylelint, watchMode} = require('../utils');
+const { isTypescriptProject, shouldRunStylelint, watchMode } = require('../utils');
 
 const runner = createRunner({
-  logger: new LoggerPlugin()
+  logger: new LoggerPlugin(),
 });
 
 const shouldWatch = watchMode();
@@ -16,12 +16,14 @@ module.exports = runner.command(async tasks => {
     return;
   }
 
-  const {eslint, tslint, stylelint} = tasks;
+  const { eslint, tslint, stylelint } = tasks;
   // Variadic arguments are placed inside the "_" property array
   // https://github.com/substack/minimist#var-argv--parseargsargs-opts
   // The first argument is the command itself (lint), we retrieve all the rest
-  const {styleFiles, jsFiles, tsFiles} =
-    cliArgs._.length > 1 ? groupFilesByType(cliArgs._.slice(1)) : {jsFiles: [], tsFiles: [], styleFiles: []};
+  const { styleFiles, jsFiles, tsFiles } =
+    cliArgs._.length > 1
+      ? groupFilesByType(cliArgs._.slice(1))
+      : { jsFiles: [], tsFiles: [], styleFiles: [] };
   const shouldRunOnSpecificFiles = !!(jsFiles.length || tsFiles.length || styleFiles.length);
 
   if (shouldRunOnSpecificFiles) {
@@ -50,19 +52,27 @@ module.exports = runner.command(async tasks => {
 
   function runStyleLint(pattern) {
     console.log('running style lint on', pattern);
-    return stylelint({pattern, options: {formatter: 'string'}});
+    return stylelint({ pattern, options: { formatter: 'string' } });
   }
 
   function runTsLint(pattern) {
     console.log('running ts lint on', pattern);
-    return tslint({pattern, options: {fix: cliArgs.fix, formatter: cliArgs.format || 'stylish'}});
+    return tslint({
+      pattern,
+      options: { fix: cliArgs.fix, formatter: cliArgs.format || 'stylish' },
+    });
   }
 
   function runEsLint(pattern) {
     console.log('running es lint on', pattern);
     return eslint({
       pattern,
-      options: {cache: true, cacheLocation: 'target/.eslintcache', fix: cliArgs.fix, formatter: cliArgs.format}
+      options: {
+        cache: true,
+        cacheLocation: 'target/.eslintcache',
+        fix: cliArgs.fix,
+        formatter: cliArgs.format,
+      },
     });
   }
 });
@@ -79,7 +89,7 @@ function groupFilesByType(fileList) {
       }
       return files;
     },
-    {jsFiles: [], tsFiles: [], styleFiles: []}
+    { jsFiles: [], tsFiles: [], styleFiles: [] },
   );
 }
 

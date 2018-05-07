@@ -1,51 +1,70 @@
-'use strict';
 const _ = require('lodash');
 
 const fx = {
-  packageJson: (yoshiConfig = {}, dependencies = {}, otherFields = {}) => JSON.stringify({
-    name: 'a',
-    version: '1.0.4',
-    yoshi: yoshiConfig,
-    scripts: {
-      build: 'echo npm-run-build',
-      test: 'echo Testing with Mocha'
-    },
-    dependencies,
-    ...otherFields
-  }, null, 2),
-  pkgJsonWithBuild: () => JSON.stringify({
-    name: 'b',
-    version: '1.1.0',
-    scripts: {
-      build: 'yoshi build'
-    }
-  }, null, 2),
+  packageJson: (yoshiConfig = {}, dependencies = {}, otherFields = {}) =>
+    JSON.stringify(
+      {
+        name: 'a',
+        version: '1.0.4',
+        yoshi: yoshiConfig,
+        scripts: {
+          build: 'echo npm-run-build',
+          test: 'echo Testing with Mocha',
+        },
+        dependencies,
+        ...otherFields,
+      },
+      null,
+      2,
+    ),
+  pkgJsonWithBuild: () =>
+    JSON.stringify(
+      {
+        name: 'b',
+        version: '1.1.0',
+        scripts: {
+          build: 'yoshi build',
+        },
+      },
+      null,
+      2,
+    ),
   css: () => '.a {\ncolor: red;\n}\n',
   scss: () => '.a {\n.b {\ncolor: red;\n}\n}\n',
   less: () => '.a .b {\n  color: red;\n}',
   scssInvalid: () => '.a {\n.b\ncolor: red;\n}\n}\n',
-  tsconfig: (options = {}) => JSON.stringify(_.merge({
-    compilerOptions: {
-      module: 'commonjs',
-      target: 'es5',
-      moduleResolution: 'node',
-      sourceMap: true,
-      outDir: 'dist',
-      declaration: true,
-      noImplicitAny: false
-    },
-    exclude: [
-      'node_modules',
-      'dist'
-    ]
-  }, options), null, 2),
-  tslint: rules => JSON.stringify({rules}, null, 2),
-  eslintrc: () => JSON.stringify({
-    rules: {
-      radix: 'error'
-    }
-  }, null, 2),
-  protractorConfWithStatics: ({framework, cdnPort} = {}) => `
+  tsconfig: (options = {}) =>
+    JSON.stringify(
+      _.merge(
+        {
+          compilerOptions: {
+            module: 'commonjs',
+            target: 'es5',
+            moduleResolution: 'node',
+            sourceMap: true,
+            outDir: 'dist',
+            declaration: true,
+            noImplicitAny: false,
+          },
+          exclude: ['node_modules', 'dist'],
+        },
+        options,
+      ),
+      null,
+      2,
+    ),
+  tslint: rules => JSON.stringify({ rules }, null, 2),
+  eslintrc: () =>
+    JSON.stringify(
+      {
+        rules: {
+          radix: 'error',
+        },
+      },
+      null,
+      2,
+    ),
+  protractorConfWithStatics: ({ framework, cdnPort } = {}) => `
     const path = require('path');
     const http = require("http");
     const express = require('${require.resolve('express')}');
@@ -56,7 +75,8 @@ const fx = {
       framework: "${framework || 'jasmine'}",
       onPrepare: () => {
         const server = http.createServer((req, res) => {
-          const response = "<html><body><script src=http://localhost:${cdnPort || 6452}/app.bundle.js></script></body></html>";
+          const response = "<html><body><script src=http://localhost:${cdnPort ||
+            6452}/app.bundle.js></script></body></html>";
           res.end(response);
         });
         app.use(express.static(path.join(__dirname, '/dist/statics')));
@@ -65,21 +85,22 @@ const fx = {
       }
     };
   `,
-  protractorConfWithBeforeLaunch: ({framework, cdnPort} = {}) => `
+  protractorConfWithBeforeLaunch: ({ framework, cdnPort } = {}) => `
     const http = require("http");
     exports.config = {
       specs: ["dist/test/**/*.e2e.js"],
       framework: "${framework || 'jasmine'}",
       beforeLaunch: () => {
         const server = http.createServer((req, res) => {
-          const response = "<html><body><script src=http://localhost:${cdnPort || 6452}/app.bundle.js></script></body></html>";
+          const response = "<html><body><script src=http://localhost:${cdnPort ||
+            6452}/app.bundle.js></script></body></html>";
           res.end(response);
         });
         return server.listen(1337);
       }
     };
   `,
-  protractorConfWithAfterLaunch: ({framework} = {}) => `
+  protractorConfWithAfterLaunch: ({ framework } = {}) => `
     exports.config = {
       specs: ["dist/test/**/*.e2e.js"],
       framework: "${framework || 'jasmine'}",
@@ -91,14 +112,15 @@ const fx = {
       },
     };
   `,
-  protractorConf: ({framework, cdnPort} = {}) => `
+  protractorConf: ({ framework, cdnPort } = {}) => `
     const http = require("http");
     exports.config = {
       specs: ["dist/test/**/*.e2e.js"],
       framework: "${framework || 'jasmine'}",
       onPrepare: () => {
         const server = http.createServer((req, res) => {
-          const response = "<html><body><script src=http://localhost:${cdnPort || 6452}/app.bundle.js></script></body></html>";
+          const response = "<html><body><script src=http://localhost:${cdnPort ||
+            6452}/app.bundle.js></script></body></html>";
           res.end(response);
         });
         return server.listen(1337);
@@ -212,7 +234,7 @@ const fx = {
   angularJs: () => `
 /* @ngInject */
 function something($http) { }
-  `
+  `,
 };
 
 module.exports = fx;

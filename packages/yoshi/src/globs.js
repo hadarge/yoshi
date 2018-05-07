@@ -10,7 +10,7 @@ const assetsBase = 'src';
 
 module.exports = {
   base: () => base,
-  dist: ({esTarget} = {}) => esTarget ? esModulesDist : dist,
+  dist: ({ esTarget } = {}) => (esTarget ? esModulesDist : dist),
   assetsBase: () => assetsBase,
   assetsLegacyBase: () => assetsLegacyBase,
   statics: () => statics,
@@ -18,7 +18,7 @@ module.exports = {
   specs: () => `${base}/**/*.+(spec|it).+(js|ts){,x}`,
   e2e: () => `${test}/**/*.e2e.{js,ts}`,
   singleModule: {
-    clientDist: () => statics
+    clientDist: () => statics,
   },
   multipleModules: {
     clientDist: () => dist,

@@ -1,27 +1,28 @@
 const path = require('path');
 const glob = require('glob');
-const {isPlainObject, isString} = require('lodash');
+const { isPlainObject, isString } = require('lodash');
 
 module.exports.logStats = compiler => {
   compiler.plugin('done', stats => {
-    logIfAny(stats.toString({
-      colors: true,
-      hash: false,
-      chunks: false,
-      assets: false,
-      children: false,
-      version: false,
-      timings: false,
-      modules: false
-    }));
+    logIfAny(
+      stats.toString({
+        colors: true,
+        hash: false,
+        chunks: false,
+        assets: false,
+        children: false,
+        version: false,
+        timings: false,
+        modules: false,
+      }),
+    );
   });
 
   return compiler;
 };
 
 const readDir = patterns =>
-  [].concat(patterns).reduce((acc, pattern) =>
-    acc.concat(glob.sync(pattern)), []);
+  [].concat(patterns).reduce((acc, pattern) => acc.concat(glob.sync(pattern)), []);
 
 const exists = patterns => !!readDir(patterns).length;
 
@@ -48,5 +49,3 @@ function logIfAny(log) {
     console.log(log);
   }
 }
-
-

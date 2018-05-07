@@ -3,6 +3,6 @@ module.exports = () => ({
   loader: 'url-loader',
   options: {
     name: '[path][name].[ext]?[hash]',
-    limit: 10000
-  }
+    limit: 10000,
+  },
 });

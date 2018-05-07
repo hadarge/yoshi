@@ -11,7 +11,7 @@ function sslCredentials(keyPath, certificatePath, passphrase) {
   return {
     key: privateKey,
     cert: certificate,
-    passphrase
+    passphrase,
   };
 }
 
@@ -56,7 +56,7 @@ function redirectMiddleware(hostname, port) {
   };
 }
 
-const decorate = ({app, middlewares = [], host, port, statics}) => {
+const decorate = ({ app, middlewares = [], host, port, statics }) => {
   const files = statics;
 
   [
@@ -64,23 +64,21 @@ const decorate = ({app, middlewares = [], host, port, statics}) => {
     resourceTimingMiddleware(),
     express.static(files),
     ...middlewares,
-    redirectMiddleware(host, port)
-  ]
-    .forEach(mw => app.use(mw));
+    redirectMiddleware(host, port),
+  ].forEach(mw => app.use(mw));
 
   return app;
 };
 
-const start = ({middlewares, host, ssl, port, statics}) => {
+const start = ({ middlewares, host, ssl, port, statics }) => {
   const app = express();
 
-  decorate({app, middlewares, host, port, statics});
+  decorate({ app, middlewares, host, port, statics });
 
   return new Promise((resolve, reject) => {
     const serverFactory = ssl ? httpsServer(app) : app;
-    const server = serverFactory.listen(port, host, err =>
-      err ? reject(err) : resolve(server));
+    const server = serverFactory.listen(port, host, err => (err ? reject(err) : resolve(server)));
   });
 };
 
-module.exports = {start, decorate};
+module.exports = { start, decorate };

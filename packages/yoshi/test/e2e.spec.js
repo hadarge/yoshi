@@ -1,11 +1,9 @@
-'use strict';
-
 const path = require('path');
 const expect = require('chai').expect;
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
-const {exists} = require('../src/utils');
-const {outsideTeamCity, insideTeamCity} = require('./helpers/env-variables');
+const { exists } = require('../src/utils');
+const { outsideTeamCity, insideTeamCity } = require('./helpers/env-variables');
 const getMockedCI = require('./helpers/get-mocked-ci');
 
 describe('Aggregator: e2e', () => {
@@ -16,17 +14,31 @@ describe('Aggregator: e2e', () => {
 
   afterEach(() => test.teardown());
 
-  describe('should run protractor with a cdn server', function () {
+  describe('should run protractor with a cdn server', function() {
     this.timeout(60000);
 
     it('should download chromedriver 2.29 and use it (when there is environement param IS_BUILD_AGENT and no CHROMEDRIVER_VERSION supplied)', () => {
       const res = test
         .setup({
           'protractor.conf.js': '',
-          'package.json': fx.packageJson()
+          'package.json': fx.packageJson(),
         })
-        .execute('test', ['--protractor'], Object.assign({}, outsideTeamCity, {IS_BUILD_AGENT: true, CHROMEDRIVER_VERSION: undefined}));
-      const chromedriverPath = path.resolve('node_modules', 'protractor', 'node_modules', 'webdriver-manager', 'selenium', 'chromedriver_2.29.zip');
+        .execute(
+          'test',
+          ['--protractor'],
+          Object.assign({}, outsideTeamCity, {
+            IS_BUILD_AGENT: true,
+            CHROMEDRIVER_VERSION: undefined,
+          }),
+        );
+      const chromedriverPath = path.resolve(
+        'node_modules',
+        'protractor',
+        'node_modules',
+        'webdriver-manager',
+        'selenium',
+        'chromedriver_2.29.zip',
+      );
       expect(res.code).to.equal(1);
       expect(exists(chromedriverPath)).to.be.true;
     });
@@ -35,10 +47,21 @@ describe('Aggregator: e2e', () => {
       const res = test
         .setup({
           'protractor.conf.js': '',
-          'package.json': fx.packageJson()
+          'package.json': fx.packageJson(),
         })
-        .execute('test', ['--protractor'], Object.assign({}, outsideTeamCity, {IS_BUILD_AGENT: true, CHROMEDRIVER_VERSION: 2.35}));
-      const chromedriverPath = path.resolve('node_modules', 'protractor', 'node_modules', 'webdriver-manager', 'selenium', 'chromedriver_2.35.zip');
+        .execute(
+          'test',
+          ['--protractor'],
+          Object.assign({}, outsideTeamCity, { IS_BUILD_AGENT: true, CHROMEDRIVER_VERSION: 2.35 }),
+        );
+      const chromedriverPath = path.resolve(
+        'node_modules',
+        'protractor',
+        'node_modules',
+        'webdriver-manager',
+        'selenium',
+        'chromedriver_2.35.zip',
+      );
 
       expect(res.code).to.equal(1);
       expect(exists(chromedriverPath)).to.be.true;
@@ -59,7 +82,7 @@ describe('Aggregator: e2e', () => {
     it('should take a screenshot at the end of a failing test', () => {
       const res = test
         .setup(singleModuleWithFailingJasmine())
-        .execute('test', ['--protractor'], outsideTeamCity, {silent: true}); // run in silent so that TC won't fail with the screenshot log
+        .execute('test', ['--protractor'], outsideTeamCity, { silent: true }); // run in silent so that TC won't fail with the screenshot log
 
       expect(res.code).to.equal(1);
       expect(res.stdout).to.contain('protractor');
@@ -93,10 +116,12 @@ describe('Aggregator: e2e', () => {
 
       expect(res.code).to.equal(0);
       expect(res.stdout).to.contain('protractor');
-      expect(res.stdout).to.contain('##teamcity[testStarted name=\'should write some text to body\' captureStandardOutput=\'true\']');
+      expect(res.stdout).to.contain(
+        "##teamcity[testStarted name='should write some text to body' captureStandardOutput='true']",
+      );
     });
 
-    it('should use babel-register', function () {
+    it('should use babel-register', function() {
       this.timeout(60000);
 
       const res = test
@@ -110,7 +135,7 @@ describe('Aggregator: e2e', () => {
       expect(fx.e2eTestJasmineES6Imports()).to.contain(`import path from 'path'`);
     });
 
-    it('should not use babel-register', function () {
+    it('should not use babel-register', function() {
       this.timeout(60000);
 
       const res = test
@@ -125,7 +150,7 @@ describe('Aggregator: e2e', () => {
   it('should not run protractor if protractor.conf is not present', () => {
     const res = test
       .setup({
-        'package.json': fx.packageJson()
+        'package.json': fx.packageJson(),
       })
       .execute('test', ['--protractor']);
 
@@ -133,31 +158,29 @@ describe('Aggregator: e2e', () => {
     expect(res.stdout).to.not.contain('protractor');
   });
 
-  it('should support css class selectors with cssModules on', function () {
+  it('should support css class selectors with cssModules on', function() {
     this.timeout(60000);
 
-    test
-      .setup(singleModuleWithCssModules())
-      .execute('build', [], getMockedCI({ci: false}));
+    test.setup(singleModuleWithCssModules()).execute('build', [], getMockedCI({ ci: false }));
 
-    const res = test.execute('test', ['--protractor'], getMockedCI({ci: false}));
+    const res = test.execute('test', ['--protractor'], getMockedCI({ ci: false }));
 
     expect(res.code).to.equal(0);
   });
 
-  it('should pre-process sass with cssModules on', function () {
+  it('should pre-process sass with cssModules on', function() {
     this.timeout(60000);
 
     test
       .setup(singleModuleWithCssModulesAndSass())
-      .execute('build', [], getMockedCI({ci: false}));
+      .execute('build', [], getMockedCI({ ci: false }));
 
-    const res = test.execute('test', ['--protractor'], getMockedCI({ci: false}));
+    const res = test.execute('test', ['--protractor'], getMockedCI({ ci: false }));
 
     expect(res.code).to.equal(0);
   });
 
-  it('should extend project\'s beforeLaunch', function () {
+  it("should extend project's beforeLaunch", function() {
     this.timeout(60000);
     const res = test
       .setup(singleModuleWithBeforeLaunch())
@@ -168,13 +191,13 @@ describe('Aggregator: e2e', () => {
     expect(res.stdout).to.contain('1 spec, 0 failures');
   });
 
-  it('should extend project\'s afterLaunch', function () {
+  it("should extend project's afterLaunch", function() {
     this.timeout(60000);
     const res = test
       .setup({
         'dist/test/some.e2e.js': `it('some test', () => {})`,
         'package.json': fx.packageJson(),
-        'protractor.conf.js': fx.protractorConfWithAfterLaunch()
+        'protractor.conf.js': fx.protractorConfWithAfterLaunch(),
       })
       .execute('test', ['--protractor'], outsideTeamCity);
 
@@ -186,9 +209,9 @@ describe('Aggregator: e2e', () => {
     return {
       servers: {
         cdn: {
-          port: 6452
-        }
-      }
+          port: 6452,
+        },
+      },
     };
   }
 
@@ -198,9 +221,13 @@ describe('Aggregator: e2e', () => {
       'package.json': `{
           "name": "a",\n
           "version": "1.0.4",\n
-          "yoshi": ${JSON.stringify(Object.assign(cdnConfigurations(), {runIndividualTranspiler}))},
-          "babel": { "plugins": ["${require.resolve('babel-plugin-transform-es2015-modules-commonjs')}"] }
-        }`
+          "yoshi": ${JSON.stringify(
+            Object.assign(cdnConfigurations(), { runIndividualTranspiler }),
+          )},
+          "babel": { "plugins": ["${require.resolve(
+            'babel-plugin-transform-es2015-modules-commonjs',
+          )}"] }
+        }`,
     });
   }
 
@@ -209,7 +236,7 @@ describe('Aggregator: e2e', () => {
       'protractor.conf.js': fx.protractorConf(),
       'dist/test/subFolder/some.e2e.js': fx.e2eTestJasmine(),
       'dist/statics/app.bundle.js': fx.e2eClient(),
-      'package.json': fx.packageJson(cdnConfigurations())
+      'package.json': fx.packageJson(cdnConfigurations()),
     };
   }
 
@@ -218,7 +245,7 @@ describe('Aggregator: e2e', () => {
       'protractor.conf.js': fx.protractorConf(),
       'dist/test/subFolder/some.e2e.js': fx.e2eTestJasmineFailing(),
       'dist/statics/app.bundle.js': fx.e2eClient(),
-      'package.json': fx.packageJson(cdnConfigurations())
+      'package.json': fx.packageJson(cdnConfigurations()),
     };
   }
 
@@ -228,20 +255,18 @@ describe('Aggregator: e2e', () => {
       'dist/test/some.e2e.js': fx.e2eTestJasmine(),
       'node_modules/client/dist/app.bundle.js': fx.e2eClient(),
       'package.json': fx.packageJson(
-        Object.assign(cdnConfigurations(), {clientProjectName: 'client'}),
-        {client: 'file:node_modules/client'}
-      )
+        Object.assign(cdnConfigurations(), { clientProjectName: 'client' }),
+        { client: 'file:node_modules/client' },
+      ),
     };
   }
 
   function singleModuleWithMocha() {
     return {
-      'protractor.conf.js': fx.protractorConf({framework: 'mocha'}),
+      'protractor.conf.js': fx.protractorConf({ framework: 'mocha' }),
       'dist/test/some.e2e.js': fx.e2eTestMocha(),
       'dist/statics/app.bundle.js': fx.e2eClient(),
-      'package.json': fx.packageJson(
-        Object.assign(cdnConfigurations())
-      )
+      'package.json': fx.packageJson(Object.assign(cdnConfigurations())),
     };
   }
 
@@ -253,7 +278,7 @@ describe('Aggregator: e2e', () => {
         document.body.innerHTML = style.className;
       `,
       'src/some.css': `.class-name {color: green;}`,
-      'package.json': fx.packageJson(cdnConfigurations())
+      'package.json': fx.packageJson(cdnConfigurations()),
     };
   }
 
@@ -266,13 +291,13 @@ describe('Aggregator: e2e', () => {
       `,
       'src/some-2.scss': `$txt-color:green; .class-name { color: $txt-color }`,
       'src/some.scss': `@import "./some-2.scss"`,
-      'package.json': fx.packageJson(cdnConfigurations())
+      'package.json': fx.packageJson(cdnConfigurations()),
     };
   }
 
   function singleModuleWithBeforeLaunch() {
     return Object.assign(singleModuleWithJasmine(), {
-      'protractor.conf.js': fx.protractorConfWithBeforeLaunch()
+      'protractor.conf.js': fx.protractorConfWithBeforeLaunch(),
     });
   }
 });

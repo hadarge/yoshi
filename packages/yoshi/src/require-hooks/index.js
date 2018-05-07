@@ -1,7 +1,5 @@
-'use strict';
-
-const {runIndividualTranspiler} = require('../../config/project');
-const {isTypescriptProject, isBabelProject} = require('../utils');
+const { runIndividualTranspiler } = require('../../config/project');
+const { isTypescriptProject, isBabelProject } = require('../utils');
 
 if (runIndividualTranspiler()) {
   runtimeTranspiler();

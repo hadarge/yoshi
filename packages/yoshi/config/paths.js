@@ -14,7 +14,7 @@ module.exports = {
   config: {
     webpack: {
       development: require.resolve('./webpack.config.dev'),
-      production: require.resolve('./webpack.config.prod')
-    }
-  }
+      production: require.resolve('./webpack.config.prod'),
+    },
+  },
 };

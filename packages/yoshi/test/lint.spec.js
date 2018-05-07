@@ -1,8 +1,8 @@
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
-const {insideTeamCity} = require('./helpers/env-variables');
+const { insideTeamCity } = require('./helpers/env-variables');
 
 describe('Aggregator: Lint', () => {
   const test = tp.create();
@@ -15,7 +15,7 @@ describe('Aggregator: Lint', () => {
           'app/a.ts': `parseInt("1", 10);`,
           'package.json': fx.packageJson(),
           'tsconfig.json': fx.tsconfig(),
-          'tslint.json': fx.tslint({radix: true})
+          'tslint.json': fx.tslint({ radix: true }),
         })
         .execute('lint');
 
@@ -28,7 +28,7 @@ describe('Aggregator: Lint', () => {
           'app/a.ts': `parseInt("1");`,
           'package.json': fx.packageJson(),
           'tsconfig.json': fx.tsconfig(),
-          'tslint.json': fx.tslint({radix: true})
+          'tslint.json': fx.tslint({ radix: true }),
         })
         .execute('lint');
 
@@ -42,7 +42,7 @@ describe('Aggregator: Lint', () => {
           'app/a.ts': `const a = "1"`,
           'package.json': fx.packageJson(),
           'tsconfig.json': fx.tsconfig(),
-          'tslint.json': fx.tslint({semicolon: [true, 'always']})
+          'tslint.json': fx.tslint({ semicolon: [true, 'always'] }),
         })
         .execute('lint', ['--fix']);
 
@@ -56,7 +56,7 @@ describe('Aggregator: Lint', () => {
           'app/a.ts': `parseInt("1");`,
           'package.json': fx.packageJson(),
           'tsconfig.json': fx.tsconfig(),
-          'tslint.json': fx.tslint({radix: true})
+          'tslint.json': fx.tslint({ radix: true }),
         })
         .execute('lint', ['--format json']);
 
@@ -72,7 +72,7 @@ describe('Aggregator: Lint', () => {
           'app/dontrunonme.js': `parseInt("1");`,
           'package.json': fx.packageJson(),
           'tsconfig.json': fx.tsconfig(),
-          'tslint.json': fx.tslint({radix: true})
+          'tslint.json': fx.tslint({ radix: true }),
         })
         .execute('lint', ['--format json', 'app/a.ts', 'app/b.tsx'], insideTeamCity);
 
@@ -92,35 +92,41 @@ describe('Aggregator: Lint', () => {
         Object.assign(
           {
             'package.json': fx.packageJson(),
-            '.eslintrc': fx.eslintrc()
+            '.eslintrc': fx.eslintrc(),
           },
-          data
-        )
+          data,
+        ),
       );
     }
 
     it('should use yoshi-eslint', () => {
-      const res = setup({'app/a.js': `parseInt("1", 10);`}).execute('lint', [], insideTeamCity);
+      const res = setup({ 'app/a.js': `parseInt("1", 10);` }).execute('lint', [], insideTeamCity);
       expect(res.code).to.equal(0);
     });
 
     it('should fail with exit code 1', () => {
-      const res = setup({'app/a.js': `parseInt("1");`}).execute('lint', [], insideTeamCity);
+      const res = setup({ 'app/a.js': `parseInt("1");` }).execute('lint', [], insideTeamCity);
       expect(res.code).to.equal(1);
       expect(res.stderr).to.contain('1:1  error  Missing radix parameter  radix');
     });
 
     it('should fix linting errors and exit with exit code 0 if there are only fixable errors', () => {
       const res = setup({
-        'app/a.js': '/*eslint no-regex-spaces: "error"*/\nnew RegExp("foo  bar");'
+        'app/a.js': '/*eslint no-regex-spaces: "error"*/\nnew RegExp("foo  bar");',
       }).execute('lint', ['--fix']);
 
       expect(res.code).to.equal(0);
-      expect(test.content('app/a.js')).to.equal('/*eslint no-regex-spaces: "error"*/\nnew RegExp("foo {2}bar");');
+      expect(test.content('app/a.js')).to.equal(
+        '/*eslint no-regex-spaces: "error"*/\nnew RegExp("foo {2}bar");',
+      );
     });
 
     it('should support formatter flag', () => {
-      const res = setup({'app/a.js': `parseInt("1");`}).execute('lint', ['--format json'], insideTeamCity);
+      const res = setup({ 'app/a.js': `parseInt("1");` }).execute(
+        'lint',
+        ['--format json'],
+        insideTeamCity,
+      );
       expect(res.code).to.equal(1);
       expect(JSON.parse(res.stderr)[0].messages[0].message).to.eq('Missing radix parameter.');
     });
@@ -129,7 +135,7 @@ describe('Aggregator: Lint', () => {
       const res = setup({
         'app/a.js': `parseInt("1");`,
         'app/b.js': `parseInt("1");`,
-        'app/dontrunonme.js': `parseInt("1");`
+        'app/dontrunonme.js': `parseInt("1");`,
       }).execute('lint', ['--format json', 'app/a.js', 'app/b.js'], insideTeamCity);
 
       const stderr = JSON.parse(res.stderr);
@@ -162,7 +168,7 @@ p {
                 "max-empty-lines": 1
               }
             }
-          }`
+          }`,
         })
         .execute('lint', []);
 
@@ -193,7 +199,7 @@ p {
                 "max-empty-lines": 1
               }
             }
-          }`
+          }`,
         })
         .execute('lint', []);
 
@@ -224,7 +230,7 @@ p {
                 "max-empty-lines": 1
               }
             }
-          }`
+          }`,
         })
         .execute('lint', ['src/a.less', 'src/b.scss']);
 
@@ -240,7 +246,7 @@ p {
     it('should pass out of the box if no relevant files exist', () => {
       const res = test
         .setup({
-          'package.json': fx.packageJson()
+          'package.json': fx.packageJson(),
         })
         .execute('lint');
 

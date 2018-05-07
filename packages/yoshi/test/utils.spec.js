@@ -1,11 +1,11 @@
 const expect = require('chai').expect;
-const {isProduction} = require('../src/utils');
+const { isProduction } = require('../src/utils');
 
 describe('Utils', () => {
   describe('isProduction ', () => {
     let nodeEnvCopy;
-    beforeEach(() => nodeEnvCopy = process.env.NODE_ENV);
-    afterEach(() => process.env.NODE_ENV = nodeEnvCopy);
+    beforeEach(() => (nodeEnvCopy = process.env.NODE_ENV));
+    afterEach(() => (process.env.NODE_ENV = nodeEnvCopy));
 
     it('should handle upper case process.env.NODE_ENV', () => {
       process.env.NODE_ENV = 'PRODUCTION';

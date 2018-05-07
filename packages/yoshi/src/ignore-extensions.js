@@ -1,9 +1,11 @@
 const fs = require('fs');
 const graphqlLoader = require('graphql-tag/loader');
 const path = require('path');
-const {noop} = require('lodash');
+const { noop } = require('lodash');
 
-const {stylableToModuleFactory} = require('stylable-integration/dist/src/stylable-to-module-factory');
+const {
+  stylableToModuleFactory,
+} = require('stylable-integration/dist/src/stylable-to-module-factory');
 const stylableToModule = stylableToModuleFactory(fs, require, null);
 
 require.extensions['.css'] = mockCss;
@@ -22,11 +24,10 @@ require.extensions['.gif'] = mockMediaModules;
 require.extensions['.wav'] = mockMediaModules;
 require.extensions['.mp3'] = mockMediaModules;
 
-
 function mockCss(module, filename) {
-  return module.filename.endsWith('.st.css') ?
-    mockStylable(module, filename) :
-    mockCssModules(module);
+  return module.filename.endsWith('.st.css')
+    ? mockStylable(module, filename)
+    : mockCssModules(module);
 }
 
 function mockStylable(module, filename) {
@@ -40,15 +41,17 @@ function mockCssModules(module) {
 }
 
 function conditionedProxy(predicate = () => {}) {
-  return new Proxy({}, {
-    get: (target, name) =>
-      predicate(name) ? conditionedProxy() : name
-  });
+  return new Proxy(
+    {},
+    {
+      get: (target, name) => (predicate(name) ? conditionedProxy() : name),
+    },
+  );
 }
 
 function loadGraphQLModules(module) {
   const query = fs.readFileSync(module.filename, 'utf-8');
-  const scopedLoader = graphqlLoader.bind({cacheable: noop});
+  const scopedLoader = graphqlLoader.bind({ cacheable: noop });
   const output = scopedLoader(query);
   module.exports = eval(output); // eslint-disable-line no-eval
 }

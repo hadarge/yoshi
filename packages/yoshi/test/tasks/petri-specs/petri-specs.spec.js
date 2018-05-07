@@ -1,8 +1,6 @@
-'use strict';
-
 const fs = require('fs-extra');
 const path = require('path');
-const {expect} = require('chai');
+const { expect } = require('chai');
 const tempy = require('tempy');
 const petriSpecsTask = require('../../../src/tasks/petri-specs');
 const destFile = 'petri-experiments.json';
@@ -23,7 +21,9 @@ describe('haste-task-wix-petri-specs', () => {
     const fsObj = {
       'package.json': '',
       'pom.xml': fs.readFileSync(require.resolve('./fixtures/pom.xml')),
-      'petri-specs/specs.infra.Dummy.json': fs.readFileSync(require.resolve('./fixtures/specs.infra.Dummy'))
+      'petri-specs/specs.infra.Dummy.json': fs.readFileSync(
+        require.resolve('./fixtures/specs.infra.Dummy'),
+      ),
     };
 
     writeFsObject(tempDir, fsObj);
@@ -54,7 +54,7 @@ describe('haste-task-wix-petri-specs', () => {
       destDir,
       config: {
         scopes: ['alt-scope', 'alt-scope2'],
-        onlyForLoggedInUsers: false
+        onlyForLoggedInUsers: false,
       },
     });
 
@@ -62,7 +62,9 @@ describe('haste-task-wix-petri-specs', () => {
     expect(staticDirContent).to.contain(destFile);
 
     const petriExperimentsJson = fs.readJsonSync(path.join(tempDir, destDir, destFile));
-    expect(petriExperimentsJson).to.eql(fs.readJsonSync(require.resolve('./fixtures/petri-experiments'), 'utf8'));
+    expect(petriExperimentsJson).to.eql(
+      fs.readJsonSync(require.resolve('./fixtures/petri-experiments'), 'utf8'),
+    );
   });
 
   it('should fail with an error when converting deprecated json files', async () => {
@@ -71,7 +73,9 @@ describe('haste-task-wix-petri-specs', () => {
     const fsObj = {
       'package.json': '',
       'pom.xml': fs.readFileSync(require.resolve('./fixtures/pom.xml')),
-      'petri-specs/specs.infra.Dummy.json': fs.readFileSync(require.resolve('./fixtures/single-scope-spec')),
+      'petri-specs/specs.infra.Dummy.json': fs.readFileSync(
+        require.resolve('./fixtures/single-scope-spec'),
+      ),
     };
 
     writeFsObject(tempDir, fsObj);
@@ -85,7 +89,9 @@ describe('haste-task-wix-petri-specs', () => {
 
       throw new Error('TestFailed');
     } catch (err) {
-      expect(err.message).to.equal('Error: yoshi-petri detected 1 deprecated specs that got converted. More info: https://github.com/wix-private/petri-specs/docs/CONVERT_SPECS.md');
+      expect(err.message).to.equal(
+        'Error: yoshi-petri detected 1 deprecated specs that got converted. More info: https://github.com/wix-private/petri-specs/docs/CONVERT_SPECS.md',
+      );
     }
   });
 });

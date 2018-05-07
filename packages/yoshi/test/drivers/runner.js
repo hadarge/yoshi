@@ -1,5 +1,3 @@
-'use strict';
-
 const shelljs = require('shelljs');
 const path = require('path');
 

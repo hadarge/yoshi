@@ -1,4 +1,4 @@
 module.exports = () => ({
   test: /\.haml$/,
-  loader: 'ruby-haml-loader'
+  loader: 'ruby-haml-loader',
 });
