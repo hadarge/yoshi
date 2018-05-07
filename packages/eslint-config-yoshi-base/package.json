@@ -1,0 +1,22 @@
+{
+  "name": "eslint-config-yoshi-base",
+  "version": "2.1.6",
+  "description": "eslint configuration for yoshi",
+  "main": "index.js",
+  "keywords": ["eslint", "yoshi"],
+  "author": "Ronen Amiel & Ran Yitzhaki",
+  "license": "ISC",
+  "scripts": {
+    "customPublish": "node ../../scripts/customPublish.js"
+  },
+  "peerDependencies": {
+    "eslint": "^4.13.1",
+    "prettier": "^1.11.1",
+    "babel-eslint": "^8.2.2",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

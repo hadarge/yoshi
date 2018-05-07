@@ -1,7 +1,3 @@
-if (process.env.IS_BUILD_AGENT) {
-  console.log('Yoshi release script should not run in CI. Exiting...');
-  process.exit(0);
-}
 process.on('unhandledRejection', error => {
   throw error;
 });
@@ -12,8 +8,7 @@ const prompts = require('prompts');
 const rimraf = require('rimraf');
 const cp = require('child_process');
 const pkg = require('../package.json');
-const npPath = path.resolve(__dirname, '../node_modules/.bin/np');
-const packageLockPath = path.resolve(__dirname, '../package-lock.json');
+const lernaPath = path.resolve(__dirname, '../node_modules/.bin/lerna');
 
 // resets the console
 process.stdout.write('\x1Bc');
@@ -36,10 +31,7 @@ prompts({
     console.log(chalk.red('Release aborted'));
   } else {
     try {
-      // np will not publish if there is a package-lock.json
-      rimraf.sync(packageLockPath);
-
-      cp.execSync(`${npPath} --yolo --no-publish --no-yarn`, {stdio: 'inherit'});
+      cp.execSync(`${lernaPath} publish --skip-npm`, {stdio: 'inherit'});
 
       console.log();
       console.log(chalk.green('release process succeeded'));

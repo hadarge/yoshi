@@ -5,3 +5,4 @@ yarn.lock
 dist
 .vscode
 .DS_Store
+lerna-debug.log

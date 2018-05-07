@@ -1,5 +1,7 @@
 # Yoshi
 
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+
 A Toolkit that supports building all kinds of applications in wix.
 
 ## Requirements

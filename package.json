@@ -1,0 +1,22 @@
+{
+  "name": "yoshi-monorepo",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna exec --concurrency 1 -- npm test",
+    "build": ":",
+    "customPublish": "lerna exec --concurrency 1 -- npm run customPublish",
+    "createVersion": "node scripts/createVersion"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "lerna": "^2.11.0",
+    "lodash": "^4.17.10",
+    "prettier": "^1.12.1",
+    "prompts": "^0.1.8",
+    "rimraf": "^2.6.2",
+    "semver": "^5.5.0"
+  }
+}
