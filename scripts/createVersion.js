@@ -42,7 +42,9 @@ prompts({
       console.log('Head over to the CI and wait for yoshi build to pass 👇');
       console.log();
       console.log(
-        chalk.cyan('http://ci.dev.wix/viewType.html?buildTypeId=Wix_Angular_WixHaste_HastePresetYoshi'),
+        chalk.cyan(
+          'http://ci.dev.wix/viewType.html?buildTypeId=Wix_Angular_WixHaste_HastePresetYoshi',
+        ),
       );
     } catch (error) {
       throw error;
