@@ -98,6 +98,7 @@
     "stylable-webpack-plugin": "^1.0.5",
     "style-loader": "~0.18.2",
     "svg-inline-loader": "~0.8.0",
+    "terminal-link": "^1.1.0",
     "thread-loader": "^1.1.4",
     "ts-loader": "^4.1.0",
     "ts-node": "~3.3.0",

@@ -6,18 +6,20 @@ const globs = require('../globs');
 const projectConfig = require('../../config/project');
 const { watchMode, hasProtractorConfigFile, getMochaReporter, watch } = require('../utils');
 const crossSpawn = require('cross-spawn');
+const protractor = require('../../src/tasks/protractor');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
 });
 
 const cliArgs = minimist(process.argv.slice(2));
+const isDebugOn = !!cliArgs.debug;
 
 const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
 
 module.exports = runner.command(
   async tasks => {
-    const { mocha, jasmine, karma, protractor, webpack } = tasks;
+    const { jasmine, karma, webpack } = tasks;
 
     const noOptions =
       !cliArgs.mocha && !cliArgs.jasmine && !cliArgs.karma && !cliArgs.jest && !cliArgs.protractor;
@@ -47,26 +49,33 @@ module.exports = runner.command(
     }
 
     if (cliArgs.mocha) {
-      const options = {
-        requireFiles: [require.resolve('../../config/test-setup')],
-        timeout: 30000,
-        reporter: getMochaReporter(),
-      };
+      const mochaArgs = [
+        require.resolve('mocha/bin/_mocha'),
+        specsPattern,
+        `--require=${require.resolve('../../config/test-setup')}`,
+        '--timeout=30000',
+        `--reporter=${getMochaReporter()}`,
+      ];
 
-      await mocha({ pattern: specsPattern, ...options });
+      if (isDebugOn) {
+        const debugPort = cliArgs.debug;
+        mochaArgs.unshift(`--inspect=${debugPort}`);
+        mochaArgs.push('--no-timeouts');
+      }
 
       if (shouldWatch) {
-        watch(
-          {
-            pattern: [
-              globs.specs(),
-              path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'),
-              'index.js',
-            ],
-          },
-          () => mocha({ pattern: globs.specs(), ...options }),
-        );
+        mochaArgs.push('--watch');
+        mochaArgs.push('--watch-extensions=js,jsx,ts,tsx');
       }
+      return new Promise((resolve, reject) => {
+        const mochaSpawn = crossSpawn('node', mochaArgs, { stdio: 'inherit' });
+        mochaSpawn.on('exit', code => {
+          code === 0 ? resolve() : reject(`mocha failed with status code "${code}"`);
+        });
+        mochaSpawn.on('error', err => {
+          reject(err);
+        });
+      });
     }
 
     if (cliArgs.jasmine) {
@@ -104,11 +113,13 @@ module.exports = runner.command(
       const config = require('../../config/jest.config.js');
       const jestCliOptions = [`--config=${JSON.stringify(config)}`, shouldWatch ? '--watch' : ''];
 
+      if (isDebugOn) {
+        const debugPort = cliArgs.debug;
+        jestCliOptions.unshift(`--inspect=${debugPort}`);
+        jestCliOptions.push(`--runInBand`);
+      }
       return new Promise((resolve, reject) => {
-        const jest = crossSpawn(require.resolve('jest-cli/bin/jest'), jestCliOptions, {
-          stdio: 'inherit',
-        });
-
+        const jest = crossSpawn('node', jestCliOptions, { stdio: 'inherit' });
         jest.on('exit', code => {
           code === 0 ? resolve() : reject(`jest failed with status code "${code}"`);
         });
@@ -129,15 +140,7 @@ module.exports = runner.command(
     }
 
     if (cliArgs.protractor && hasProtractorConfigFile() && !shouldWatch) {
-      // Only install specific version of chrome driver in CI, install latest locally
-      const webdriverManagerOptions = !!process.env.IS_BUILD_AGENT // eslint-disable-line no-extra-boolean-cast
-        ? { 'versions.chrome': process.env.CHROMEDRIVER_VERSION || '2.29' }
-        : {};
-
-      await protractor({
-        webdriverManagerOptions,
-        configPath: require.resolve('../../config/protractor.conf.js'),
-      });
+      return protractor(isDebugOn, cliArgs.debug);
     }
   },
   { persistent: shouldWatch },
