@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.9 (May 8, 2018)
+
+#### :bug: Bug
+Add `eslint-config-wix` to be a dependency of yoshi for backwards compatibility.
+
 ## 2.1.7 (May 6, 2018)
 
 #### :nail_care: Enhancement
