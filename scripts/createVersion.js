@@ -33,13 +33,16 @@ prompts({
       cp.execSync(`${lernaPath} publish --skip-npm`, { stdio: 'inherit' });
 
       console.log();
-      console.log(chalk.green('release process succeeded'));
+      console.log(chalk.green('Release was created locally'));
       console.log();
-      console.log('publish will occure if all tests are passed,');
-      console.log('head over to the CI and search for yoshi build 👇');
+      console.log('Please push your changes to origin');
+      console.log();
+      console.log(chalk.cyan('git push --follow-tags'));
+      console.log();
+      console.log('Head over to the CI and wait for yoshi build to pass 👇');
       console.log();
       console.log(
-        'http://ci.dev.wix/viewType.html?buildTypeId=Wix_Angular_WixHaste_HastePresetYoshi',
+        chalk.cyan('http://ci.dev.wix/viewType.html?buildTypeId=Wix_Angular_WixHaste_HastePresetYoshi'),
       );
     } catch (error) {
       throw error;

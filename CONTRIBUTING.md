@@ -59,12 +59,28 @@ VERBOSE_TESTS=true npm test
 This is the same as adding the `.verbose()` method to each and every test.
 
 ## Release a New Version
-To create a new version just use the following command:
+Start by heading to the [CHANGELOG.md](https://github.com/wix-private/yoshi/blob/master/CHANGELOG.md) and insert the version's changes. See [commits section](https://github.com/wix-private/yoshi/commits/master) to verify you haven't missed anything
+
+* New releases can be issued from branch `master`.
+
+* `alpha`/`beta`/`rc` versions should be issued from a branch named `version_${version_name}`.
+
+* Hotfixes for an older version should be issued form a branch named `hotfix_${version_name}`.
+
+To create a new version use the following command:
 
 ```bash
 npm run createRelease
 ```
 
-This command will open an interactive UI for choosing the version, it will bump it in the relevant packages, add a git tag and push the commits and tag to GitHub.
+This command will open an interactive UI for choosing the version, it will bump it in the relevant packages and add a git tag.
 
-Don't forget to go over the [CHANGELOG.md](https://github.com/wix-private/yoshi/blob/master/CHANGELOG.md) and insert the version's changes.
+> It runs [lerna publish --skip-npm](https://github.com/lerna/lerna#--skip-npm) behaind the hood
+
+Now Push the commits and tag to GitHub
+
+```bash
+git push origin master/version_*/hotfix_* --follow-tags
+```
+
+In the end of the [build](http://ci.dev.wix/viewType.html?buildTypeId=Wix_Angular_WixHaste_HastePresetYoshi) (unless there is a failure) the release should be published to npm
