@@ -66,7 +66,7 @@ function publish(name) {
 
   console.log(chalk.magenta(`Running: "${publishCommand}" for ${name}@${version}`));
 
-  execSync(publishCommand);
+  execSync(publishCommand, { stdio: 'inherit' });
 }
 
 function release() {
