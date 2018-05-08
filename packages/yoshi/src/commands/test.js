@@ -51,7 +51,7 @@ module.exports = runner.command(
     if (cliArgs.mocha) {
       const mochaArgs = [
         require.resolve('mocha/bin/_mocha'),
-        specsPattern,
+        ...specsPattern,
         `--require=${require.resolve('../../config/test-setup')}`,
         '--timeout=30000',
         `--reporter=${getMochaReporter()}`,
@@ -71,9 +71,6 @@ module.exports = runner.command(
         const mochaSpawn = crossSpawn('node', mochaArgs, { stdio: 'inherit' });
         mochaSpawn.on('exit', code => {
           code === 0 ? resolve() : reject(`mocha failed with status code "${code}"`);
-        });
-        mochaSpawn.on('error', err => {
-          reject(err);
         });
       });
     }
@@ -111,7 +108,11 @@ module.exports = runner.command(
 
     if (cliArgs.jest) {
       const config = require('../../config/jest.config.js');
-      const jestCliOptions = [`--config=${JSON.stringify(config)}`, shouldWatch ? '--watch' : ''];
+      const jestCliOptions = [
+        require.resolve('jest-cli/bin/jest'),
+        `--config=${JSON.stringify(config)}`,
+        shouldWatch ? '--watch' : '',
+      ];
 
       if (isDebugOn) {
         const debugPort = cliArgs.debug;

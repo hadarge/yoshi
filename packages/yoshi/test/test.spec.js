@@ -40,7 +40,7 @@ describe('Aggregator: Test', () => {
         })
         .execute('test', undefined, outsideTeamCity);
       expect(res.code).to.equal(0);
-      expect(res.stdout).to.contain(`Finished 'mocha'`);
+      expect(res.stdout).to.contain(`Finished`);
       expect(res.stdout).to.contain('1 passing');
     });
   });

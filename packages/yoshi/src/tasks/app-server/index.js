@@ -30,7 +30,7 @@ function ensureServerIsNotRunning(newPort) {
   return startServerPromise;
 }
 
-function initializeServerStartDelegate({ serverScript, serverDebugPort, log }) {
+function initializeServerStartDelegate({ serverScript, debugPort, log }) {
   return port => {
     const env = Object.assign({}, process.env, {
       NODE_ENV: 'development',
@@ -49,18 +49,15 @@ function initializeServerStartDelegate({ serverScript, serverDebugPort, log }) {
       'Application is now available at ',
       chalk.magenta(`http://localhost:${env.PORT}${env.MOUNT_POINT || '/'}`),
     );
-    if (serverDebugPort) {
-      console.log(
-        'Debugger is avaiable at ',
-        chalk.magenta(`${serverDebugHost}:${serverDebugPort}`),
-      );
+    if (debugPort) {
+      console.log('Debugger is avaiable at ', chalk.magenta(`${serverDebugHost}:${debugPort}`));
     }
     console.log('Server log is written to ', chalk.magenta('./target/server.log'));
 
     mkdirp.sync(path.resolve('target'));
     const runScripts = [serverScript];
-    if (serverDebugPort) {
-      runScripts.unshift(`--inspect=${serverDebugHost}:${serverDebugPort}`);
+    if (debugPort) {
+      runScripts.unshift(`--inspect=${serverDebugHost}:${debugPort}`);
     }
 
     server = spawn('node', runScripts, { env });
@@ -85,7 +82,7 @@ module.exports = ({
   base = process.cwd(),
   entryPoint = 'index.js',
   manualRestart = false,
-  serverDebugPort = undefined,
+  debugPort = undefined,
 } = {}) => {
   function writeToServerLog(data) {
     fs.appendFile(path.join(base, 'target', 'server.log'), data, () => {});
@@ -108,7 +105,7 @@ module.exports = ({
 
   const startServer = initializeServerStartDelegate({
     serverScript,
-    serverDebugPort,
+    debugPort,
     log: writeToServerLog,
   });
 
