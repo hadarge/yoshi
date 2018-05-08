@@ -19,5 +19,8 @@
     "prompts": "^0.1.8",
     "rimraf": "^2.6.2",
     "semver": "^5.5.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
