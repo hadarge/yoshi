@@ -2,8 +2,8 @@
 This guide will help you get started debugging your tests.
   
 ## Enable Inspector  
-When started with the `--debug` switch, Yoshi will allow to attach NodeJS debugger to the relevant child process, by default at host and port 127.0.0.1:9229.  
-The port number can change by using `--debug=XXXX`  
+When started with the `--debug` switch, Yoshi will allow to attach NodeJS debugger to the relevant child process with the default host and port.
+You can configure the default port by: `--debug=XXXX`    
   
 ## [Inspector Clients](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients)  
   
