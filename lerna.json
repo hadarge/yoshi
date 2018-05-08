@@ -5,8 +5,12 @@
   ],
   "command": {
     "publish": {
-      "allowBranch": ["master", "version_*", "hotfix_*"]
+      "allowBranch": [
+        "master",
+        "version_*",
+        "hotfix_*"
+      ]
     }
   },
-  "version": "2.1.6"
+  "version": "2.1.7"
 }
