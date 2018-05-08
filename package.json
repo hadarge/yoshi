@@ -54,7 +54,7 @@
     "haste-task-sass": "0.2.5",
     "haste-task-stylelint": "0.2.5",
     "haste-task-tslint": "0.2.5",
-    "haste-task-typescript": "0.2.5",
+    "haste-task-typescript": "0.2.7",
     "haste-task-webpack": "0.2.5",
     "html-loader": "~0.4.5",
     "jasmine": "~2.6.0",
