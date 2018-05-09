@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.10 (May 8, 2018)
+* [#267](https://github.com/wix-private/yoshi/pull/267) Update `haste-task-typescript` to support windows
+* Remove all `eslint-config-yoshi-base` related dependencies to prevent clash with `eslint-config-wix`
+
 ## 2.1.9 (May 8, 2018)
 
 #### :bug: Bug
