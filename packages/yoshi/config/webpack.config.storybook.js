@@ -14,7 +14,8 @@ module.exports = config => {
 
   config.module.rules = [
     ...webpackCommonConfig.module.rules,
-    ...require('../src/loaders/sass')(false, cssModules, false, projectName).client,
+    ...require('../src/loaders/sass')(false, cssModules, false, projectName)
+      .client,
   ];
 
   config.plugins = [...(config.plugins || []), new StylableWebpackPlugin()];

@@ -32,11 +32,23 @@ module.exports = runner.command(
       return;
     }
 
-    const { less, clean, copy, babel, sass, webpack, typescript, ngAnnotate } = tasks;
+    const {
+      less,
+      clean,
+      copy,
+      babel,
+      sass,
+      webpack,
+      typescript,
+      ngAnnotate,
+    } = tasks;
 
-    const migrateScopePackages = tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
-    const migrateBowerArtifactory = tasks[require.resolve('../tasks/migrate-bower-artifactory')];
-    const wixUpdateNodeVersion = tasks[require.resolve('../tasks/update-node-version')];
+    const migrateScopePackages =
+      tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
+    const migrateBowerArtifactory =
+      tasks[require.resolve('../tasks/migrate-bower-artifactory')];
+    const wixUpdateNodeVersion =
+      tasks[require.resolve('../tasks/update-node-version')];
     const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
     const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
     const wixDepCheck = tasks[require.resolve('../tasks/dep-check')];
@@ -44,8 +56,14 @@ module.exports = runner.command(
     await Promise.all([
       clean({ pattern: `{dist,target}/*` }),
       wixUpdateNodeVersion({}, { title: 'update-node-version', log: false }),
-      migrateScopePackages({}, { title: 'scope-packages-migration', log: false }),
-      migrateBowerArtifactory({}, { title: 'migrate-bower-artifactory', log: false }),
+      migrateScopePackages(
+        {},
+        { title: 'scope-packages-migration', log: false },
+      ),
+      migrateBowerArtifactory(
+        {},
+        { title: 'migrate-bower-artifactory', log: false },
+      ),
       wixDepCheck({}, { title: 'dep-check', log: false }),
     ]);
 
@@ -56,7 +74,10 @@ module.exports = runner.command(
       ...transpileCss({ esTarget }),
       ...copyAssets({ esTarget }),
       bundle(),
-      wixPetriSpecs({ config: petriSpecsConfig() }, { title: 'petri-specs', log: false }),
+      wixPetriSpecs(
+        { config: petriSpecsConfig() },
+        { title: 'petri-specs', log: false },
+      ),
       wixMavenStatics(
         {
           clientProjectName: clientProjectName(),
@@ -68,8 +89,12 @@ module.exports = runner.command(
 
     function bundle() {
       const configPath = require.resolve('../../config/webpack.config.client');
-      const productionCallbackPath = require.resolve('../webpack-production-callback');
-      const developmentCallbackPath = require.resolve('../webpack-development-callback');
+      const productionCallbackPath = require.resolve(
+        '../webpack-production-callback',
+      );
+      const developmentCallbackPath = require.resolve(
+        '../webpack-development-callback',
+      );
       const webpackConfig = require(configPath)();
 
       const defaultOptions = {
@@ -151,7 +176,9 @@ module.exports = runner.command(
       return sass({
         pattern: globs.scss(),
         target: globs.dist({ esTarget }),
-        options: { includePaths: ['node_modules', 'node_modules/compass-mixins/lib'] },
+        options: {
+          includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
+        },
       });
     }
 
@@ -166,10 +193,14 @@ module.exports = runner.command(
     function transpileCss({ esTarget } = {}) {
       const result = [];
       if (shouldRunSass()) {
-        result.push(...[transpileSass(), esTarget && transpileSass({ esTarget })]);
+        result.push(
+          ...[transpileSass(), esTarget && transpileSass({ esTarget })],
+        );
       }
       if (shouldRunLess()) {
-        result.push(...[transpileLess(), esTarget && transpileLess({ esTarget })]);
+        result.push(
+          ...[transpileLess(), esTarget && transpileLess({ esTarget })],
+        );
       }
       return result.filter(Boolean);
     }
@@ -184,11 +215,18 @@ module.exports = runner.command(
 
     function transpileJavascript({ esTarget } = {}) {
       if (isTypescriptProject() && runIndividualTranspiler()) {
-        return typescript({ project: 'tsconfig.json', rootDir: '.', outDir: './dist/' });
+        return typescript({
+          project: 'tsconfig.json',
+          rootDir: '.',
+          outDir: './dist/',
+        });
       }
 
       if (isBabelProject() && runIndividualTranspiler()) {
-        const transformOptions = { pattern: globs.babel(), target: globs.dist() };
+        const transformOptions = {
+          pattern: globs.babel(),
+          target: globs.dist(),
+        };
         const babelTransformsChain = [];
         if (esTarget) {
           transformOptions.plugins = [

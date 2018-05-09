@@ -39,7 +39,9 @@ function initializeServerStartDelegate({ serverScript, debugPort, log }) {
 
     if (port !== defaultPort) {
       console.log(
-        chalk.green(`There's something running on port ${defaultPort}, using ${port} instead.`),
+        chalk.green(
+          `There's something running on port ${defaultPort}, using ${port} instead.`,
+        ),
       );
     }
 
@@ -49,9 +51,15 @@ function initializeServerStartDelegate({ serverScript, debugPort, log }) {
       chalk.magenta(`http://localhost:${env.PORT}${env.MOUNT_POINT || '/'}`),
     );
     if (debugPort) {
-      console.log('Debugger is available at ', chalk.magenta(`${serverDebugHost}:${debugPort}`));
+      console.log(
+        'Debugger is available at ',
+        chalk.magenta(`${serverDebugHost}:${debugPort}`),
+      );
     }
-    console.log('Server log is written to ', chalk.magenta('./target/server.log'));
+    console.log(
+      'Server log is written to ',
+      chalk.magenta('./target/server.log'),
+    );
 
     mkdirp.sync(path.resolve('target'));
     const runScripts = [serverScript];

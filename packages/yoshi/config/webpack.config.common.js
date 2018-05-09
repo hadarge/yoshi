@@ -27,7 +27,9 @@ const config = {
       ...(projectConfig.features().externalizeRelativeLodash
         ? [require('../src/loaders/externalize-relative-lodash')()]
         : []),
-      ...(projectConfig.isAngularProject() ? [require('../src/loaders/ng-annotate')()] : []),
+      ...(projectConfig.isAngularProject()
+        ? [require('../src/loaders/ng-annotate')()]
+        : []),
       require('../src/loaders/babel')(),
       require('../src/loaders/typescript')(projectConfig.isAngularProject()),
       require('../src/loaders/graphql')(),

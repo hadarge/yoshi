@@ -16,7 +16,10 @@ function fileAboveTheLimit(name) {
 }
 
 function installHaml(cwd) {
-  fs.writeFileSync(cwd + '/Gemfile', "source 'https://rubygems.org'\ngem 'haml'");
+  fs.writeFileSync(
+    cwd + '/Gemfile',
+    "source 'https://rubygems.org'\ngem 'haml'",
+  );
   spawnSync('bundle', ['config', 'path', cwd + '/.bundle'], { cwd });
   spawnSync('bundle', ['install'], { cwd });
 }
@@ -26,7 +29,8 @@ describe('Loaders', () => {
     let test;
     let resp;
     const svgContent = '<svg><g><path fill="#EEEEEE"></path></g></svg>';
-    const svgModule = 'module.exports = "<svg><g><path fill=\\"#EEEEEE\\"></path></g></svg>"';
+    const svgModule =
+      'module.exports = "<svg><g><path fill=\\"#EEEEEE\\"></path></g></svg>"';
 
     before(() => {
       test = tp.create();
@@ -119,7 +123,10 @@ describe('Loaders', () => {
           }`,
           'pom.xml': fx.pom(),
         })
-        .execute('build', [], { RESOLVE_URL_LOADER: true, ...getMockedCI({ ci: false }) });
+        .execute('build', [], {
+          RESOLVE_URL_LOADER: true,
+          ...getMockedCI({ ci: false }),
+        });
     });
     after(() => test.teardown());
 
@@ -129,7 +136,9 @@ describe('Loaders', () => {
 
     describe('babel-loader', () => {
       it('should transpile according .babelrc file', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('var aServerFunction = 1;');
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          'var aServerFunction = 1;',
+        );
       });
 
       it('should apply ng-annotate loader on angular project', () => {
@@ -139,13 +148,17 @@ describe('Loaders', () => {
       });
 
       it('should run over specified 3rd party modules', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('var tpl = 1');
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          'var tpl = 1',
+        );
       });
     });
 
     describe('SVG-loader', () => {
       it('should run svg loader', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain(svgModule);
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          svgModule,
+        );
       });
     });
 
@@ -165,7 +178,9 @@ describe('Loaders', () => {
 
         describe('postcss', () => {
           it('should apply auto-prefixer', () => {
-            expect(test.content('dist/statics/app.css')).to.contain('-webkit-appearance');
+            expect(test.content('dist/statics/app.css')).to.contain(
+              '-webkit-appearance',
+            );
           });
 
           it('should support source maps', () => {
@@ -174,16 +189,24 @@ describe('Loaders', () => {
         });
 
         it('should allow import sass from node_modules', () => {
-          expect(test.content('dist/statics/app.css')).to.contain('color: yellow');
+          expect(test.content('dist/statics/app.css')).to.contain(
+            'color: yellow',
+          );
         });
 
         it('should support compass', () => {
-          expect(test.content('dist/statics/app.css')).to.contain('color: brown');
+          expect(test.content('dist/statics/app.css')).to.contain(
+            'color: brown',
+          );
         });
 
         it('should support TPA style params', () => {
-          expect(test.content('dist/statics/app.css')).to.contain('font-size: 16px');
-          expect(test.content('dist/statics/app.css')).not.to.contain('color-3');
+          expect(test.content('dist/statics/app.css')).to.contain(
+            'font-size: 16px',
+          );
+          expect(test.content('dist/statics/app.css')).not.to.contain(
+            'color-3',
+          );
           expect(test.content('dist/statics/app.css')).not.to.contain('body-m');
         });
 
@@ -193,7 +216,9 @@ describe('Loaders', () => {
 
         describe('composes keyword', () => {
           it('should support nested sass imports when using "compose"', () => {
-            expect(test.content('dist/statics/app.css')).to.contain('background: white');
+            expect(test.content('dist/statics/app.css')).to.contain(
+              'background: white',
+            );
             expect(test.content('dist/statics/app.bundle.js')).to.match(
               /"some-rule":"some-css__some-rule\w+ composes__foo\w+"/,
             );
@@ -205,7 +230,9 @@ describe('Loaders', () => {
         it('should create an external app.css file with a source map', () => {
           expect(test.content('dist/statics/app.css')).to.match(/.\w+/);
           expect(test.content('dist/statics/app.css')).to.contain('color: red');
-          expect(test.content('dist/statics/app.css')).to.contain('color: blue');
+          expect(test.content('dist/statics/app.css')).to.contain(
+            'color: blue',
+          );
         });
       });
     });
@@ -219,12 +246,16 @@ describe('Loaders', () => {
         });
 
         it('should allow import less from node_modules', () => {
-          expect(test.content('dist/statics/app.css')).to.contain('color: pink');
+          expect(test.content('dist/statics/app.css')).to.contain(
+            'color: pink',
+          );
         });
 
         describe('postcss', () => {
           it('should apply auto-prefixer', () => {
-            expect(test.content('dist/statics/app.css')).to.contain('-webkit-appearance: none');
+            expect(test.content('dist/statics/app.css')).to.contain(
+              '-webkit-appearance: none',
+            );
           });
 
           it('should support source maps', () => {
@@ -243,7 +274,9 @@ describe('Loaders', () => {
         });
 
         it('should run after wix-tpa-style loader', () => {
-          expect(test.content('dist/statics/app.css')).to.not.contain('unquote("{{color-1}}")');
+          expect(test.content('dist/statics/app.css')).to.not.contain(
+            'unquote("{{color-1}}")',
+          );
         });
       });
     });
@@ -356,7 +389,8 @@ describe('Loaders', () => {
             '/bin' +
             path.delimiter +
             process.env.PATH,
-          GEM_PATH: process.env.GEM_PATH + path.delimiter + test.tmp + '/.bundle',
+          GEM_PATH:
+            process.env.GEM_PATH + path.delimiter + test.tmp + '/.bundle',
         });
     });
     after(() => test.teardown());
@@ -367,7 +401,9 @@ describe('Loaders', () => {
 
     describe('Typescript', () => {
       it('should transpile', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('var aServerFunction = 1;');
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          'var aServerFunction = 1;',
+        );
       });
 
       it('should apply ng-annotate loader on angular project with peerDependency', () => {
@@ -378,7 +414,9 @@ describe('Loaders', () => {
     });
     describe('`separateCss: false`', () => {
       it('should merge all style tags into one', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('{"singleton":true}');
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          '{"singleton":true}',
+        );
       });
 
       it('should not create separate style files', () => {
@@ -392,7 +430,9 @@ describe('Loaders', () => {
 
     describe('Json', () => {
       it('should embed json file into bundle', () =>
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('"json-content":42'));
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          '"json-content":42',
+        ));
     });
 
     describe('HTML', () => {
@@ -411,7 +451,9 @@ describe('Loaders', () => {
 
     describe('raw', () => {
       it('should embed raw file into bundle', () =>
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('### title'));
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          '### title',
+        ));
     });
 
     describe('GraphQL', () => {
@@ -463,13 +505,18 @@ describe('Loaders', () => {
           .setup({
             'src/client.js': `require('./some.css');`,
             'src/some.css': '@import "./other.css"',
-            'src/other.css': '.foo {appearance: smth; color: unquote("{{color-1}}")}',
+            'src/other.css':
+              '.foo {appearance: smth; color: unquote("{{color-1}}")}',
             'package.json': fx.packageJson({ tpaStyle: true }),
           })
           .execute('build', []);
 
-        expect(test.content('dist/statics/app.css')).to.contain('-webkit-appearance');
-        expect(test.content('dist/statics/app.css')).to.not.contain('unquote("{{color-1}}")');
+        expect(test.content('dist/statics/app.css')).to.contain(
+          '-webkit-appearance',
+        );
+        expect(test.content('dist/statics/app.css')).to.not.contain(
+          'unquote("{{color-1}}")',
+        );
       });
     });
 

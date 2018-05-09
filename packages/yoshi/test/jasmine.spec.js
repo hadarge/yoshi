@@ -3,7 +3,11 @@ const retryPromise = require('retry-promise').default;
 const psTree = require('ps-tree');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
-const { outsideTeamCity, insideTeamCity, insideWatchMode } = require('./helpers/env-variables');
+const {
+  outsideTeamCity,
+  insideTeamCity,
+  insideWatchMode,
+} = require('./helpers/env-variables');
 
 describe('test --jasmine', () => {
   let test, child;
@@ -50,14 +54,20 @@ describe('test --jasmine', () => {
   });
 
   it('should use the right reporter when running inside TeamCity', () => {
-    const res = test.setup(passingProject()).execute('test', ['--jasmine'], insideTeamCity);
+    const res = test
+      .setup(passingProject())
+      .execute('test', ['--jasmine'], insideTeamCity);
 
     expect(res.code).to.equal(0);
-    expect(res.stdout).to.contain("##teamcity[progressStart 'Running Jasmine Tests']");
+    expect(res.stdout).to.contain(
+      "##teamcity[progressStart 'Running Jasmine Tests']",
+    );
   });
 
   it('should rerun tests after file changes when in watch mode', () => {
-    child = test.setup(failingProject()).spawn('test', ['--jasmine'], insideWatchMode);
+    child = test
+      .setup(failingProject())
+      .spawn('test', ['--jasmine'], insideWatchMode);
 
     return checkStdoutContains(test, '1 spec, 1 failure')
       .then(() => test.modify('test/a.spec.js', passingTest()))
@@ -77,7 +87,9 @@ describe('test --jasmine', () => {
   });
 
   it('should load helpers', () => {
-    const res = test.setup(passingProjectWithHelper()).execute('test', ['--jasmine']);
+    const res = test
+      .setup(passingProjectWithHelper())
+      .execute('test', ['--jasmine']);
 
     expect(res.code).to.equal(0);
     expect(res.stdout).to.contain('1 spec, 0 failures');
@@ -125,7 +137,8 @@ function jasmineSetup() {
 function checkStdoutContains(test, str) {
   return retryPromise(
     { backoff: 100 },
-    () => (test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject()),
+    () =>
+      test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
   );
 }
 

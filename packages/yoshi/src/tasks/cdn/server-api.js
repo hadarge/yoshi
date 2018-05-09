@@ -6,7 +6,10 @@ const path = require('path');
 
 function sslCredentials(keyPath, certificatePath, passphrase) {
   const privateKey = fs.readFileSync(path.join(__dirname, keyPath), 'utf8');
-  const certificate = fs.readFileSync(path.resolve(__dirname, certificatePath), 'utf8');
+  const certificate = fs.readFileSync(
+    path.resolve(__dirname, certificatePath),
+    'utf8',
+  );
 
   return {
     key: privateKey,
@@ -31,7 +34,11 @@ function resourceTimingMiddleware() {
 }
 
 function httpsServer(app) {
-  const credentials = sslCredentials('./assets/key.pem', './assets/cert.pem', '1234');
+  const credentials = sslCredentials(
+    './assets/key.pem',
+    './assets/cert.pem',
+    '1234',
+  );
   return https.createServer(credentials, app);
 }
 
@@ -77,7 +84,11 @@ const start = ({ middlewares, host, ssl, port, statics }) => {
 
   return new Promise((resolve, reject) => {
     const serverFactory = ssl ? httpsServer(app) : app;
-    const server = serverFactory.listen(port, host, err => (err ? reject(err) : resolve(server)));
+    const server = serverFactory.listen(
+      port,
+      host,
+      err => (err ? reject(err) : resolve(server)),
+    );
   });
 };
 

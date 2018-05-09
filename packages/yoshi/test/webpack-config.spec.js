@@ -32,11 +32,14 @@ describe('Webpack basic configs', () => {
         res = test.execute('build', [], insideTeamCity);
       });
 
-      it('should exit with exit code 0 on success', () => expect(res.code).to.equal(0));
+      it('should exit with exit code 0 on success', () =>
+        expect(res.code).to.equal(0));
 
       it('should have a context ./src and output to ./dist', () =>
         // client.js
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('const aClientFunction'));
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          'const aClientFunction',
+        ));
 
       it('should resolve modules relatively to current context', () =>
         // in webpack config: resolve.modules to be the same as context
@@ -59,8 +62,12 @@ describe('Webpack basic configs', () => {
       });
 
       it('should generate filenames comments for each module', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('!*** ./dep.js ***!');
-        expect(test.content('dist/statics/app.bundle.min.js')).not.to.contain('!*** ./dep.js ***!');
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          '!*** ./dep.js ***!',
+        );
+        expect(test.content('dist/statics/app.bundle.min.js')).not.to.contain(
+          '!*** ./dep.js ***!',
+        );
       });
     });
 
@@ -80,7 +87,9 @@ describe('Webpack basic configs', () => {
           })
           .execute('build');
 
-        expect(test.content('dist/statics/app.bundle.js')).to.contain('module.exports = React;');
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          'module.exports = React;',
+        );
       });
     });
   });
@@ -93,7 +102,9 @@ describe('Webpack basic configs', () => {
         })
         .execute('build');
 
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('const some');
+      expect(test.content('dist/statics/app.bundle.js')).to.contain(
+        'const some',
+      );
     });
 
     it('should set chunk filename', () => {
@@ -125,7 +136,9 @@ describe('Webpack basic configs', () => {
           .pop()
           .indexOf(value),
       ).to.equal(0);
-      expect(content).to.contain('module.exports = __webpack_require__.p + "image.jpg?');
+      expect(content).to.contain(
+        'module.exports = __webpack_require__.p + "image.jpg?',
+      );
     });
   });
 
@@ -197,7 +210,8 @@ describe('Webpack basic configs', () => {
     function checkStdout(str) {
       return retryPromise(
         { backoff: 100 },
-        () => (test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject()),
+        () =>
+          test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
       );
     }
   });
@@ -234,8 +248,9 @@ describe('Webpack basic configs', () => {
     it('should be disabled for start', () => {
       child = test.spawn('start');
 
-      return fetchClientBundle({ port: 3200, file: 'app.bundle.js' }).then(bundle =>
-        expect(bundle).to.not.contain('// CONCATENATED MODULE: ./dep.js'),
+      return fetchClientBundle({ port: 3200, file: 'app.bundle.js' }).then(
+        bundle =>
+          expect(bundle).to.not.contain('// CONCATENATED MODULE: ./dep.js'),
       );
     });
 
@@ -267,9 +282,10 @@ describe('Webpack basic configs', () => {
         .execute('build');
 
       expect(res.code, 'Build error code should be 1').to.equal(1);
-      expect(res.stdout, 'build output should show the webpack perf budget error').to.contain(
-        expectedOutput,
-      );
+      expect(
+        res.stdout,
+        'build output should show the webpack perf budget error',
+      ).to.contain(expectedOutput);
     });
   });
 });

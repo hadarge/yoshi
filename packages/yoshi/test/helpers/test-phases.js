@@ -16,7 +16,10 @@ class Test {
     this.child = null;
     this.stdout = '';
     this.stderr = '';
-    this.tmp = path.join(sh.tempdir().toString(), new Date().getTime().toString());
+    this.tmp = path.join(
+      sh.tempdir().toString(),
+      new Date().getTime().toString(),
+    );
     this.silent = !this.env.VERBOSE_TESTS;
 
     // create a symlink from node_modules one level above testing directory to yoshi's node_modules
@@ -46,10 +49,14 @@ class Test {
         options = Array.isArray(options) ? options : options.split(' ');
 
         const env = Object.assign({}, this.env, environment);
-        this.child = spawn('node', [`${this.script}`, `${command}`].concat(options), {
-          cwd: this.tmp,
-          env,
-        });
+        this.child = spawn(
+          'node',
+          [`${this.script}`, `${command}`].concat(options),
+          {
+            cwd: this.tmp,
+            env,
+          },
+        );
         this.child.stdout.on('data', buffer => {
           if (!this.silent) {
             console.log(buffer.toString());
@@ -79,7 +86,11 @@ class Test {
   execute(command, cliArgs = [], environment = {}, execOptions = {}) {
     const args = [command].concat(cliArgs).join(' ');
     const env = Object.assign({}, this.env, environment);
-    const options = Object.assign({}, { cwd: this.tmp, env, silent: this.silent }, execOptions);
+    const options = Object.assign(
+      {},
+      { cwd: this.tmp, env, silent: this.silent },
+      execOptions,
+    );
 
     if (this.hasTmp()) {
       const result = sh.exec(`node '${this.script}' ${args}`, options);

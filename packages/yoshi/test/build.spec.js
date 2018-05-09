@@ -24,7 +24,10 @@ describe('Aggregator: Build', () => {
     const compiledLessStyle = '.a .b {\n  color: red;\n}';
     const bowerrc = {
       registry: {
-        search: ['https://bower.herokuapp.com', 'http://wix:wix@mirror.wixpress.com:3333'],
+        search: [
+          'https://bower.herokuapp.com',
+          'http://wix:wix@mirror.wixpress.com:3333',
+        ],
         register: 'http://wix:wix@mirror.wixpress.com:3333',
         publish: 'http://wix:wix@mirror.wixpress.com:3333',
       },
@@ -66,7 +69,8 @@ describe('Aggregator: Build', () => {
             'app/b/style.less': fx.less(),
             'app/c/style.less': `@import (once) '../b/style.less';`,
             'app/d/style.less': `@import (once) 'some-module/style.less';`,
-            'app/e/style.scss': '.a {\n.b {\ncolor: black;\n}\n}\n .c {\ndisplay: flex;\n}',
+            'app/e/style.scss':
+              '.a {\n.b {\ncolor: black;\n}\n}\n .c {\ndisplay: flex;\n}',
             'app/e/style.less': '.a .b {\n  color: black;\n}',
             'node_modules/some-module/style.less': fx.less(),
             'app/assets/some-file': 'a',
@@ -120,30 +124,48 @@ describe('Aggregator: Build', () => {
 
     describe('Sass/Less styles handling with @import statements, globals and RTL', () => {
       it('should use yoshi-sass', () => {
-        expect(test.content('dist/app/a/style.scss')).to.contain(compiledSaasStyle);
+        expect(test.content('dist/app/a/style.scss')).to.contain(
+          compiledSaasStyle,
+        );
       });
 
       it('should use yoshi-less', () => {
-        expect(test.content('dist/app/b/style.less')).to.contain(compiledLessStyle);
+        expect(test.content('dist/app/b/style.less')).to.contain(
+          compiledLessStyle,
+        );
       });
 
       it('should use yoshi-less with @import statements', () => {
-        expect(test.content('dist/app/c/style.less')).to.contain(compiledLessStyle);
+        expect(test.content('dist/app/c/style.less')).to.contain(
+          compiledLessStyle,
+        );
       });
 
       it('should use yoshi-less with @import statements and consider node_modules', () => {
-        expect(test.content('dist/app/d/style.less')).to.contain(compiledLessStyle);
+        expect(test.content('dist/app/d/style.less')).to.contain(
+          compiledLessStyle,
+        );
       });
 
       it('should generate RTL Css from bundle', () => {
-        expect(test.content('dist/statics/first.rtl.css')).to.contain('{\n  color: black; }');
-        expect(test.content('dist/statics/first.rtl.min.css')).to.contain('{color:#000}');
+        expect(test.content('dist/statics/first.rtl.css')).to.contain(
+          '{\n  color: black; }',
+        );
+        expect(test.content('dist/statics/first.rtl.min.css')).to.contain(
+          '{color:#000}',
+        );
       });
 
       it('should generate css attributes prefixes for on separate css file', () => {
-        expect(test.content(`dist/statics/first.css`)).to.match(/display: -webkit-box;/g);
-        expect(test.content(`dist/statics/first.css`)).to.match(/display: -ms-flexbox;/g);
-        expect(test.content(`dist/statics/first.css`)).to.match(/display: flex;/g);
+        expect(test.content(`dist/statics/first.css`)).to.match(
+          /display: -webkit-box;/g,
+        );
+        expect(test.content(`dist/statics/first.css`)).to.match(
+          /display: -ms-flexbox;/g,
+        );
+        expect(test.content(`dist/statics/first.css`)).to.match(
+          /display: flex;/g,
+        );
       });
 
       it('should disable css modules for .global.scss files', () => {
@@ -155,12 +177,17 @@ describe('Aggregator: Build', () => {
       });
 
       it('should create a separate css file for each entry', () => {
-        expect(test.list('./dist/statics')).to.contain.members(['first.css', 'second.css']);
+        expect(test.list('./dist/statics')).to.contain.members([
+          'first.css',
+          'second.css',
+        ]);
       });
 
       it('should generate css modules on separate css file', () => {
         const regex = /\.styles-my-file__a__.{5}\s.styles-my-file__b__.{5}\s{/;
-        expect(test.content(`dist/statics/first.bundle.js`)).not.to.match(regex);
+        expect(test.content(`dist/statics/first.bundle.js`)).not.to.match(
+          regex,
+        );
         expect(test.content(`dist/statics/first.css`)).to.match(regex);
       });
     });
@@ -179,7 +206,9 @@ describe('Aggregator: Build', () => {
     describe('Bundling with bundle custom name, sourceMaps, some UMD/AMD modules, commons chunks and stats', () => {
       it('should generate a bundle with custom name', () => {
         expect(test.list('dist/statics')).to.contain('first.bundle.js');
-        expect(test.content('dist/statics/first.bundle.js')).to.contain('var thisIsWorks = true;');
+        expect(test.content('dist/statics/first.bundle.js')).to.contain(
+          'var thisIsWorks = true;',
+        );
       });
 
       it('should generate a bundle with sourceMaps', () => {
@@ -187,8 +216,12 @@ describe('Aggregator: Build', () => {
       });
 
       it("should consider babel's sourceMaps for bundle", () => {
-        expect(test.content('dist/statics/first.bundle.js')).to.contain('var thisIsWorks');
-        expect(test.content('dist/statics/first.bundle.js.map')).to.contain('const thisIsWorks');
+        expect(test.content('dist/statics/first.bundle.js')).to.contain(
+          'var thisIsWorks',
+        );
+        expect(test.content('dist/statics/first.bundle.js.map')).to.contain(
+          'const thisIsWorks',
+        );
       });
 
       it('should generate an additional myChunk.bundle.js when `splitChunks` option in package.json is a configuration object, myChunk chunk should have the common parts and the other chunks should not', () => {
@@ -214,9 +247,15 @@ describe('Aggregator: Build', () => {
         expect(test.list('dist/statics')).to.contain('myChunk.css');
         expect(test.list('dist/statics')).to.contain('myChunk.min.css');
         expect(test.list('dist/statics')).to.contain('myChunk.css.map');
-        expect(test.content('dist/statics/myChunk.css')).to.contain('{\n  color: red;\n}');
-        expect(test.content('dist/statics/first.css')).to.not.contain('{\n  color: red;\n}');
-        expect(test.content('dist/statics/second.css')).to.not.contain('{\n  color: red;\n}');
+        expect(test.content('dist/statics/myChunk.css')).to.contain(
+          '{\n  color: red;\n}',
+        );
+        expect(test.content('dist/statics/first.css')).to.not.contain(
+          '{\n  color: red;\n}',
+        );
+        expect(test.content('dist/statics/second.css')).to.not.contain(
+          '{\n  color: red;\n}',
+        );
       });
 
       it('should generate stats files', () => {
@@ -225,11 +264,15 @@ describe('Aggregator: Build', () => {
       });
 
       it('should ignore locale modules from within moment', () => {
-        expect(test.content('dist/statics/myChunk.chunk.js')).not.to.contain('spanish');
+        expect(test.content('dist/statics/myChunk.chunk.js')).not.to.contain(
+          'spanish',
+        );
       });
 
       it('should bundle locale modules from outside of moment', () => {
-        expect(test.content('dist/statics/myChunk.chunk.js')).to.contain('english');
+        expect(test.content('dist/statics/myChunk.chunk.js')).to.contain(
+          'english',
+        );
       });
 
       it('should generate a bundle with umd library support', () => {
@@ -249,7 +292,9 @@ describe('Aggregator: Build', () => {
     });
 
     it('should load JSON file correctly', () => {
-      expect(test.content('dist/statics/first.bundle.js')).to.contain(`"json-content":1`);
+      expect(test.content('dist/statics/first.bundle.js')).to.contain(
+        `"json-content":1`,
+      );
     });
 
     describe('Copying assets and other files', () => {
@@ -260,7 +305,9 @@ describe('Aggregator: Build', () => {
 
     describe('yoshi-maven-statics', () => {
       it('should use yoshi-maven-statics', () => {
-        expect(test.content('maven/assembly/tar.gz.xml').replace(/\s/g, '')).to.contain(
+        expect(
+          test.content('maven/assembly/tar.gz.xml').replace(/\s/g, ''),
+        ).to.contain(
           `
           <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -296,7 +343,9 @@ describe('Aggregator: Build', () => {
 
     describe('Using yoshi-petri', () => {
       it('should use yoshi-petri', () => {
-        expect(test.list('dist', '-R')).to.contain('statics/petri-experiments.json');
+        expect(test.list('dist', '-R')).to.contain(
+          'statics/petri-experiments.json',
+        );
       });
     });
 
@@ -305,8 +354,12 @@ describe('Aggregator: Build', () => {
         const module1 = '.call(this, "../node_modules/awesome-module1")';
         const module2 = '.call(this, "../node_modules/awesome-module2")';
 
-        expect(test.content(`dist/statics/myChunk.chunk.js`)).to.contain(module1);
-        expect(test.content(`dist/statics/myChunk.chunk.js`)).to.not.contain(module2);
+        expect(test.content(`dist/statics/myChunk.chunk.js`)).to.contain(
+          module1,
+        );
+        expect(test.content(`dist/statics/myChunk.chunk.js`)).to.not.contain(
+          module2,
+        );
       });
     });
 
@@ -326,13 +379,17 @@ describe('Aggregator: Build', () => {
 
     describe('Externalize relative lodash (lodash/map -> lodash.map)', function() {
       it('should be disabled when features.externalizeRelativeLodash = false', () => {
-        expect(test.content('dist/statics/second.bundle.js')).not.to.contain(').map');
+        expect(test.content('dist/statics/second.bundle.js')).not.to.contain(
+          ').map',
+        );
       });
     });
 
     describe('Using angular ngInject annotations for babel project', function() {
       it('are not executed when project is not Angular and EcmaScript', () => {
-        expect(test.content('dist/src/angular-module.js')).not.to.contain($inject);
+        expect(test.content('dist/src/angular-module.js')).not.to.contain(
+          $inject,
+        );
         expect(test.content('src/angular-module.js')).not.to.contain($inject);
         expect(test.content('angular-module.js')).not.to.contain($inject);
       });
@@ -394,7 +451,9 @@ describe('Aggregator: Build', () => {
     });
 
     it('should support single entry point in package.json', () => {
-      expect(test.content('dist/statics/app.bundle.js')).to.contain('"I\'m a module!"');
+      expect(test.content('dist/statics/app.bundle.js')).to.contain(
+        '"I\'m a module!"',
+      );
     });
 
     it('should generate a bundle with css', () => {
@@ -412,9 +471,15 @@ describe('Aggregator: Build', () => {
     });
 
     it('should generate css attributes prefixes', () => {
-      expect(test.content(`dist/statics/app.bundle.js`)).to.match(/display: -webkit-box;/g);
-      expect(test.content(`dist/statics/app.bundle.js`)).to.match(/display: -ms-flexbox;/g);
-      expect(test.content(`dist/statics/app.bundle.js`)).to.match(/display: flex;/g);
+      expect(test.content(`dist/statics/app.bundle.js`)).to.match(
+        /display: -webkit-box;/g,
+      );
+      expect(test.content(`dist/statics/app.bundle.js`)).to.match(
+        /display: -ms-flexbox;/g,
+      );
+      expect(test.content(`dist/statics/app.bundle.js`)).to.match(
+        /display: flex;/g,
+      );
     });
   });
 
@@ -475,8 +540,12 @@ describe('Aggregator: Build', () => {
     });
 
     it('should separate Css with prod setting on teamcity', () => {
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
-      expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
+        '{\n  color: red; }',
+      );
+      expect(test.content('dist/statics/app.css')).to.contain(
+        '{\n  color: red; }',
+      );
     });
 
     it('should generate css modules on CI with hash only', () => {
@@ -484,12 +553,18 @@ describe('Aggregator: Build', () => {
       const hashB = generateCssModulesPattern('b', 'styles/style.scss');
 
       const expectedCssPattern = `.${hashA} .${hashB} {`;
-      expect(test.content(`dist/${defaultOutput}/app.css`)).to.contain(expectedCssPattern);
+      expect(test.content(`dist/${defaultOutput}/app.css`)).to.contain(
+        expectedCssPattern,
+      );
     });
 
     it('should generate separated minified Css from bundle on ci', () => {
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
-      expect(test.content('dist/statics/app.min.css')).to.contain('{color:red}');
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
+        '{\n  color: red; }',
+      );
+      expect(test.content('dist/statics/app.min.css')).to.contain(
+        '{color:red}',
+      );
     });
 
     it('are executed when project is Angular and TypeScript', () => {
@@ -532,8 +607,12 @@ describe('Aggregator: Build', () => {
     });
 
     it('should separate Css with prod setting on production', () => {
-      expect(test.content('dist/statics/app.bundle.js')).not.to.contain('{\n  color: red; }');
-      expect(test.content('dist/statics/app.css')).to.contain('{\n  color: red; }');
+      expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
+        '{\n  color: red; }',
+      );
+      expect(test.content('dist/statics/app.css')).to.contain(
+        '{\n  color: red; }',
+      );
     });
 
     it('should generate (runtime) css modules on production with hash only', function() {
@@ -541,7 +620,9 @@ describe('Aggregator: Build', () => {
       const hashB = generateCssModulesPattern('b', 'styles/style.scss');
 
       const expectedCssPattern = `.${hashA} .${hashB} {`;
-      expect(test.content(`dist/statics/app.css`)).to.contain(expectedCssPattern);
+      expect(test.content(`dist/statics/app.css`)).to.contain(
+        expectedCssPattern,
+      );
     });
 
     it('are not executed when project is not Angular and TypeScript', () => {
@@ -561,7 +642,8 @@ describe('Aggregator: Build', () => {
     describe('build project with --analyze flag', () => {
       it('should serve webpack-bundle-analyzer server', () => {
         const analyzerServerPort = '8888';
-        const analyzerContentPart = 'window.chartData = [{"label":"app.bundle.min.js"';
+        const analyzerContentPart =
+          'window.chartData = [{"label":"app.bundle.min.js"';
         test
           .setup({
             'src/client.js': '',
@@ -569,8 +651,8 @@ describe('Aggregator: Build', () => {
           })
           .spawn('build', ['--analyze']);
 
-        return checkServerIsServing({ port: analyzerServerPort }).then(content =>
-          expect(content).to.contain(analyzerContentPart),
+        return checkServerIsServing({ port: analyzerServerPort }).then(
+          content => expect(content).to.contain(analyzerContentPart),
         );
       });
     });
@@ -716,7 +798,9 @@ describe('Aggregator: Build', () => {
 
   describe.skip('yoshi-check-deps', () => {
     it("should run yoshi-check-deps and do nothing because yoshi isn't installed", () => {
-      const resp = test.setup({ 'package.json': fx.packageJson() }).execute('build');
+      const resp = test
+        .setup({ 'package.json': fx.packageJson() })
+        .execute('build');
       expect(resp.stdout).to.contain('checkDeps');
     });
   });

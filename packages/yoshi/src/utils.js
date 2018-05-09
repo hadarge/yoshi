@@ -9,7 +9,9 @@ const project = require('../config/project');
 const globs = require('./globs');
 
 const readDir = (module.exports.readDir = patterns =>
-  [].concat(patterns).reduce((acc, pattern) => acc.concat(glob.sync(pattern)), []));
+  []
+    .concat(patterns)
+    .reduce((acc, pattern) => acc.concat(glob.sync(pattern)), []));
 
 module.exports.copyFile = (source, target) =>
   new Promise((resolve, reject) => {
@@ -61,7 +63,8 @@ module.exports.suffix = suffix => str => {
   return hasSuffix ? str : str + suffix;
 };
 
-module.exports.isTypescriptProject = () => !!tryRequire(path.resolve('tsconfig.json'));
+module.exports.isTypescriptProject = () =>
+  !!tryRequire(path.resolve('tsconfig.json'));
 
 module.exports.isBabelProject = () => {
   return !!glob.sync(path.resolve('.babelrc')).length || !!project.babel();
@@ -95,7 +98,9 @@ module.exports.reportWebpackStats = (stats, outputPath) => {
 
 module.exports.shouldRunSass = () => {
   return (
-    glob.sync(`${globs.base()}/**/*.scss`).filter(file => path.basename(file)[0] !== '_').length > 0
+    glob
+      .sync(`${globs.base()}/**/*.scss`)
+      .filter(file => path.basename(file)[0] !== '_').length > 0
   );
 };
 
@@ -115,7 +120,8 @@ module.exports.watch = (
   return watcher;
 };
 
-module.exports.isSingleEntry = entry => typeof entry === 'string' || Array.isArray(entry);
+module.exports.isSingleEntry = entry =>
+  typeof entry === 'string' || Array.isArray(entry);
 
 module.exports.watchMode = value => {
   if (value !== undefined) {
@@ -124,16 +130,22 @@ module.exports.watchMode = value => {
   return !!process.env.WIX_NODE_BUILD_WATCH_MODE;
 };
 
-module.exports.inTeamCity = () => process.env.BUILD_NUMBER || process.env.TEAMCITY_VERSION;
+module.exports.inTeamCity = () =>
+  process.env.BUILD_NUMBER || process.env.TEAMCITY_VERSION;
 
-module.exports.isProduction = () => (process.env.NODE_ENV || '').toLowerCase() === 'production';
+module.exports.isProduction = () =>
+  (process.env.NODE_ENV || '').toLowerCase() === 'production';
 
 module.exports.shouldRunWebpack = webpackConfig => {
-  const defaultEntryPath = path.join(webpackConfig.context, project.defaultEntry());
+  const defaultEntryPath = path.join(
+    webpackConfig.context,
+    project.defaultEntry(),
+  );
   return project.entry() || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
 };
 
-module.exports.migrateToScopedPackages = () => process.env.MIGRATE_TO_SCOPED_PACKAGES === 'true';
+module.exports.migrateToScopedPackages = () =>
+  process.env.MIGRATE_TO_SCOPED_PACKAGES === 'true';
 
 module.exports.shouldRunStylelint = () => {
   return cosmiconfig('stylelint')

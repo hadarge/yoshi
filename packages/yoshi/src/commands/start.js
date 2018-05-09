@@ -40,9 +40,12 @@ module.exports = runner.command(
 
     const wixAppServer = tasks[require.resolve('../tasks/app-server')];
     const wixCdn = tasks[require.resolve('../tasks/cdn')];
-    const migrateScopePackages = tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
-    const migrateBowerArtifactory = tasks[require.resolve('../tasks/migrate-bower-artifactory')];
-    const wixUpdateNodeVersion = tasks[require.resolve('../tasks/update-node-version')];
+    const migrateScopePackages =
+      tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
+    const migrateBowerArtifactory =
+      tasks[require.resolve('../tasks/migrate-bower-artifactory')];
+    const wixUpdateNodeVersion =
+      tasks[require.resolve('../tasks/update-node-version')];
     const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
     const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
     const wixDepCheck = tasks[require.resolve('../tasks/dep-check')];
@@ -61,8 +64,14 @@ module.exports = runner.command(
     await Promise.all([
       clean({ pattern: `{dist,target}/*` }),
       wixUpdateNodeVersion({}, { title: 'update-node-version', log: false }),
-      migrateScopePackages({}, { title: 'scope-packages-migration', log: false }),
-      migrateBowerArtifactory({}, { title: 'migrate-bower-artifactory', log: false }),
+      migrateScopePackages(
+        {},
+        { title: 'scope-packages-migration', log: false },
+      ),
+      migrateBowerArtifactory(
+        {},
+        { title: 'migrate-bower-artifactory', log: false },
+      ),
       wixDepCheck({}, { title: 'dep-check', log: false }),
     ]);
 
@@ -106,7 +115,9 @@ module.exports = runner.command(
           ssl,
           publicPath: servers.cdn.url(ssl),
           statics: clientFilesPath(),
-          webpackConfigPath: require.resolve('../../config/webpack.config.client'),
+          webpackConfigPath: require.resolve(
+            '../../config/webpack.config.client',
+          ),
           configuredEntry: entry(),
           defaultEntry: defaultEntry(),
           hmr: hmr(),
@@ -114,7 +125,10 @@ module.exports = runner.command(
         },
         { title: 'cdn' },
       ),
-      wixPetriSpecs({ config: petriSpecsConfig() }, { title: 'petri-specs', log: false }),
+      wixPetriSpecs(
+        { config: petriSpecsConfig() },
+        { title: 'petri-specs', log: false },
+      ),
       wixMavenStatics(
         {
           clientProjectName: clientProjectName(),
@@ -160,7 +174,12 @@ module.exports = runner.command(
         pattern: [`assets/**/*`, `**/*.{ejs,html,vm}`],
         cwd: path.resolve(globs.assetsBase()),
       },
-      changed => copy({ pattern: changed, target: 'dist/statics', source: globs.assetsBase() }),
+      changed =>
+        copy({
+          pattern: changed,
+          target: 'dist/statics',
+          source: globs.assetsBase(),
+        }),
     );
 
     function transpileCss() {
@@ -169,7 +188,9 @@ module.exports = runner.command(
           sass({
             pattern: changed,
             target: 'dist',
-            options: { includePaths: ['node_modules', 'node_modules/compass-mixins/lib'] },
+            options: {
+              includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
+            },
           }),
         );
       }
@@ -190,7 +211,12 @@ module.exports = runner.command(
           : sass({
               pattern: globs.scss(),
               target: 'dist',
-              options: { includePaths: ['node_modules', 'node_modules/compass-mixins/lib'] },
+              options: {
+                includePaths: [
+                  'node_modules',
+                  'node_modules/compass-mixins/lib',
+                ],
+              },
             }),
         !shouldRunLess()
           ? null

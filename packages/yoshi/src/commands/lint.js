@@ -2,7 +2,11 @@ const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
-const { isTypescriptProject, shouldRunStylelint, watchMode } = require('../utils');
+const {
+  isTypescriptProject,
+  shouldRunStylelint,
+  watchMode,
+} = require('../utils');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -24,7 +28,11 @@ module.exports = runner.command(async tasks => {
     cliArgs._.length > 1
       ? groupFilesByType(cliArgs._.slice(1))
       : { jsFiles: [], tsFiles: [], styleFiles: [] };
-  const shouldRunOnSpecificFiles = !!(jsFiles.length || tsFiles.length || styleFiles.length);
+  const shouldRunOnSpecificFiles = !!(
+    jsFiles.length ||
+    tsFiles.length ||
+    styleFiles.length
+  );
 
   if (shouldRunOnSpecificFiles) {
     if (styleFiles.length) {
@@ -41,7 +49,10 @@ module.exports = runner.command(async tasks => {
   }
 
   if (await shouldRunStylelint()) {
-    await runStyleLint([`${globs.base()}/**/*.scss`, `${globs.base()}/**/*.less`]);
+    await runStyleLint([
+      `${globs.base()}/**/*.scss`,
+      `${globs.base()}/**/*.less`,
+    ]);
   }
 
   if (isTypescriptProject()) {
@@ -102,5 +113,9 @@ function isTypescriptFile(filename) {
 }
 
 function isStyleFile(filename) {
-  return filename.endsWith('.css') || filename.endsWith('.scss') || filename.endsWith('.less');
+  return (
+    filename.endsWith('.css') ||
+    filename.endsWith('.scss') ||
+    filename.endsWith('.less')
+  );
 }

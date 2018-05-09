@@ -35,7 +35,11 @@ describe('Migrate to scoped packages task', () => {
   it('should not change package name by default', () => {
     const pkg = JSON.parse(fx.packageJson());
 
-    child = setup(test, JSON.stringify(pkg)).spawn('start', [], merge({}, outsideTeamCity));
+    child = setup(test, JSON.stringify(pkg)).spawn(
+      'start',
+      [],
+      merge({}, outsideTeamCity),
+    );
 
     return waitUntilStarted(test).then(() => {
       expect(readPackage(test).name).to.equal(pkg.name);
@@ -69,7 +73,11 @@ describe('Migrate to scoped packages task', () => {
     npm.app.set('exists', true);
     npm.app.set('packages', []);
 
-    child = setup(test, JSON.stringify(pkg)).spawn('start', [], merge({}, outsideTeamCity));
+    child = setup(test, JSON.stringify(pkg)).spawn(
+      'start',
+      [],
+      merge({}, outsideTeamCity),
+    );
 
     return waitUntilStarted(test).then(() => {
       expect(readPackage(test).name).to.equal('@wix/' + pkg.name);
@@ -93,7 +101,9 @@ describe('Migrate to scoped packages task', () => {
 
     return waitUntilStarted(test).then(() => {
       expect(readPackage(test).name).to.equal(pkg.name);
-      expect(test.stderr).to.not.contain('WARNING: package.json has been updated');
+      expect(test.stderr).to.not.contain(
+        'WARNING: package.json has been updated',
+      );
     });
   });
 

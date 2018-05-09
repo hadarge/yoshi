@@ -2,7 +2,11 @@ const chalk = require('chalk');
 const fs = require('fs');
 const childProcess = require('child_process');
 const { isEmpty } = require('lodash');
-const { writeFile, inTeamCity, migrateToScopedPackages } = require('../../utils');
+const {
+  writeFile,
+  inTeamCity,
+  migrateToScopedPackages,
+} = require('../../utils');
 
 const NOTICE = `
 WARNING: package.json has been updated
@@ -21,7 +25,12 @@ module.exports = () => {
     .then(payload => updateDependencies(payload, 'devDependencies'))
     .then(payload => updateDependencies(payload, 'peerDependencies'))
     .then(payload => updateDependencies(payload, 'optionalDependencies'))
-    .then(payload => (isEmpty(payload.changes) ? Promise.reject('No changes detected') : payload))
+    .then(
+      payload =>
+        isEmpty(payload.changes)
+          ? Promise.reject('No changes detected')
+          : payload,
+    )
     .then(payload => {
       writeFile('package.json', JSON.stringify(payload.pkg, null, 2));
       console.warn(chalk.red(NOTICE));
@@ -93,8 +102,12 @@ function readPackage() {
 
 function npm(params) {
   return new Promise((resolve, reject) => {
-    childProcess.exec(['npm', params].join(' '), { maxBuffer: 1024 * 1024 }, (error, stdout) => {
-      error ? reject(error) : resolve(stdout);
-    });
+    childProcess.exec(
+      ['npm', params].join(' '),
+      { maxBuffer: 1024 * 1024 },
+      (error, stdout) => {
+        error ? reject(error) : resolve(stdout);
+      },
+    );
   });
 }

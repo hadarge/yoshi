@@ -22,11 +22,17 @@ module.exports.logStats = compiler => {
 };
 
 const readDir = patterns =>
-  [].concat(patterns).reduce((acc, pattern) => acc.concat(glob.sync(pattern)), []);
+  []
+    .concat(patterns)
+    .reduce((acc, pattern) => acc.concat(glob.sync(pattern)), []);
 
 const exists = patterns => !!readDir(patterns).length;
 
-module.exports.shouldRunWebpack = (webpackConfig, defaultEntry, configuredEntry) => {
+module.exports.shouldRunWebpack = (
+  webpackConfig,
+  defaultEntry,
+  configuredEntry,
+) => {
   const defaultEntryPath = path.join(webpackConfig.context, defaultEntry);
   return configuredEntry || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
 };

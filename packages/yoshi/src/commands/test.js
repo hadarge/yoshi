@@ -4,7 +4,12 @@ const { createRunner } = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
 const projectConfig = require('../../config/project');
-const { watchMode, hasProtractorConfigFile, getMochaReporter, watch } = require('../utils');
+const {
+  watchMode,
+  hasProtractorConfigFile,
+  getMochaReporter,
+  watch,
+} = require('../utils');
 const crossSpawn = require('cross-spawn');
 const protractor = require('../../src/tasks/protractor');
 
@@ -23,7 +28,11 @@ module.exports = runner.command(
     const { jasmine, karma, webpack } = tasks;
 
     const noOptions =
-      !cliArgs.mocha && !cliArgs.jasmine && !cliArgs.karma && !cliArgs.jest && !cliArgs.protractor;
+      !cliArgs.mocha &&
+      !cliArgs.jasmine &&
+      !cliArgs.karma &&
+      !cliArgs.jest &&
+      !cliArgs.protractor;
 
     if (noOptions) {
       cliArgs.mocha = true;
@@ -70,7 +79,9 @@ module.exports = runner.command(
       return new Promise((resolve, reject) => {
         const mochaSpawn = crossSpawn('node', mochaArgs, { stdio: 'inherit' });
         mochaSpawn.on('exit', code => {
-          code === 0 ? resolve() : reject(`mocha failed with status code "${code}"`);
+          code === 0
+            ? resolve()
+            : reject(`mocha failed with status code "${code}"`);
         });
       });
     }
@@ -100,7 +111,10 @@ module.exports = runner.command(
             ],
           },
           () => {
-            jasmine({ pattern: projectConfig.specs.node() || globs.specs(), ...options });
+            jasmine({
+              pattern: projectConfig.specs.node() || globs.specs(),
+              ...options,
+            });
           },
         );
       }
@@ -121,7 +135,9 @@ module.exports = runner.command(
       return new Promise((resolve, reject) => {
         const jest = crossSpawn('node', jestCliOptions, { stdio: 'inherit' });
         jest.on('exit', code => {
-          code === 0 ? resolve() : reject(`jest failed with status code "${code}"`);
+          code === 0
+            ? resolve()
+            : reject(`jest failed with status code "${code}"`);
         });
       });
     }

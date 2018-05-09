@@ -105,7 +105,9 @@ describe('Aggregator: Test', () => {
           'node_modules/client/dist/app.bundle.js': `console.error('some-error')`,
           'package.json': fx.packageJson({ clientProjectName: 'client' }),
         })
-        .execute('test', ['--protractor'], { PROTRACTOR_BROWSER_LOGS: 'false' });
+        .execute('test', ['--protractor'], {
+          PROTRACTOR_BROWSER_LOGS: 'false',
+        });
 
       // Test should not fail although the `console.error`
 
@@ -592,10 +594,14 @@ describe('Aggregator: Test', () => {
             it("pass polyfill", function () { expect(global.a).toBe(1); console.log('passed polyfill') });
             it("pass correct sequence", function () { expect(a).toBe(1);expect(b).toBe(3); console.log('passed correct sequence')});
           `,
-          'src/test2.spec.js': 'it("pass", function () { expect(1).toBe(1); });',
-          'src/test1.spec.js': 'it("pass", function () { expect(2).toBe(2); });',
-          'some/other/app.glob.js': 'it("pass", function () { expect(4).toBe(4); });',
-          'some/other/app2.glob.js': 'it("pass", function () { expect(5).toBe(5); });',
+          'src/test2.spec.js':
+            'it("pass", function () { expect(1).toBe(1); });',
+          'src/test1.spec.js':
+            'it("pass", function () { expect(2).toBe(2); });',
+          'some/other/app.glob.js':
+            'it("pass", function () { expect(4).toBe(4); });',
+          'some/other/app2.glob.js':
+            'it("pass", function () { expect(5).toBe(5); });',
           'src/style.scss': `.a {.b {color: red;}}`,
           'src/client.js': `require('./style.scss'); module.exports = function (a) {return a + 1;};`,
           'src/client.spec.js': `
@@ -637,8 +643,12 @@ describe('Aggregator: Test', () => {
 
       describe('Specs Bundle', () => {
         it('should generate a bundle', () => {
-          expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1)');
-          expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2)');
+          expect(test.content('dist/specs.bundle.js')).to.contain(
+            'expect(1).toBe(1)',
+          );
+          expect(test.content('dist/specs.bundle.js')).to.contain(
+            'expect(2).toBe(2)',
+          );
         });
 
         it('should not include css into a specs bundle', () => {
@@ -659,8 +669,10 @@ describe('Aggregator: Test', () => {
       it('should consider custom specs.browser globs if configured', () => {
         const res = test
           .setup({
-            'some/other/app.glob.js': 'it("pass", function () { expect(1).toBe(1); });',
-            'some/other/app2.glob.js': 'it("pass", function () { expect(2).toBe(2); });',
+            'some/other/app.glob.js':
+              'it("pass", function () { expect(1).toBe(1); });',
+            'some/other/app2.glob.js':
+              'it("pass", function () { expect(2).toBe(2); });',
             'karma.conf.js': fx.karmaWithJasmine(),
             'pom.xml': fx.pom(),
             'package.json': fx.packageJson({
@@ -672,8 +684,12 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--karma']);
 
         expect(res.code).to.equal(0);
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(1).toBe(1)');
-        expect(test.content('dist/specs.bundle.js')).to.contain('expect(2).toBe(2)');
+        expect(test.content('dist/specs.bundle.js')).to.contain(
+          'expect(1).toBe(1)',
+        );
+        expect(test.content('dist/specs.bundle.js')).to.contain(
+          'expect(2).toBe(2)',
+        );
       });
 
       it('should allow import sass from node_modules', () => {
@@ -715,14 +731,17 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--karma']);
 
         expect(res.code).to.equal(1);
-        expect(res.stderr).to.contain(`Module not found: Error: Can't resolve './ballsack'`);
+        expect(res.stderr).to.contain(
+          `Module not found: Error: Can't resolve './ballsack'`,
+        );
         expect(res.stdout).not.to.contain(`Finished 'karma'`);
       });
 
       it('should fail with exit code 1', () => {
         const res = customTest
           .setup({
-            'src/test.spec.js': 'it("fail", function () { expect(1).toBe(2); });',
+            'src/test.spec.js':
+              'it("fail", function () { expect(1).toBe(2); });',
             'karma.conf.js': fx.karmaWithJasmine(),
             'package.json': fx.packageJson(),
             'pom.xml': fx.pom(),

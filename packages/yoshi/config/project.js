@@ -18,7 +18,9 @@ const externalUnprocessedModules = ['wix-style-react/src'].concat(
 
 const allSourcesButExternalModules = function(filePath) {
   filePath = path.normalize(filePath);
-  return filePath.startsWith(process.cwd()) && !filePath.includes('node_modules');
+  return (
+    filePath.startsWith(process.cwd()) && !filePath.includes('node_modules')
+  );
 };
 
 module.exports = {
@@ -34,7 +36,8 @@ module.exports = {
     const clientProjectName = getConfig('clientProjectName');
     const dir = getConfig('servers.cdn.dir');
     return clientProjectName
-      ? `node_modules/${clientProjectName}/${dir || globs.multipleModules.clientDist()}`
+      ? `node_modules/${clientProjectName}/${dir ||
+          globs.multipleModules.clientDist()}`
       : dir || globs.singleModule.clientDist();
   },
   isUniversalProject: () => getConfig('universalProject'),
@@ -51,7 +54,9 @@ module.exports = {
       url: ssl =>
         getConfig(
           'servers.cdn.url',
-          `${serverProtocol(ssl)}//localhost:${module.exports.servers.cdn.port()}/`,
+          `${serverProtocol(
+            ssl,
+          )}//localhost:${module.exports.servers.cdn.port()}/`,
         ),
       ssl: () => getConfig('servers.cdn.ssl', false),
     },
@@ -67,9 +72,14 @@ module.exports = {
   babel: () => _.get(packagejson, 'babel'),
   runIndividualTranspiler: () => getConfig('runIndividualTranspiler', true),
   unprocessedModules: () => path => {
-    const externalRegexList = externalUnprocessedModules.map(m => new RegExp(`node_modules/${m}`));
+    const externalRegexList = externalUnprocessedModules.map(
+      m => new RegExp(`node_modules/${m}`),
+    );
 
-    return externalRegexList.some(regex => regex.test(path)) || allSourcesButExternalModules(path);
+    return (
+      externalRegexList.some(regex => regex.test(path)) ||
+      allSourcesButExternalModules(path)
+    );
   },
   jestConfig: () => _.get(packagejson, 'jest', {}),
   petriSpecsConfig: () => getConfig('petriSpecs', {}),

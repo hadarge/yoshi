@@ -26,7 +26,9 @@ describe('Lookup and read configuration', () => {
       })
       .execute('build');
     expect(res.code).to.equal(0);
-    expect(test.content('dist/statics/app.bundle.js')).to.contain('I am entry from package');
+    expect(test.content('dist/statics/app.bundle.js')).to.contain(
+      'I am entry from package',
+    );
     expect(test.content('dist/statics/app.bundle.js')).to.not.contain(
       'I am entry from yoshi.config',
     );
@@ -46,7 +48,11 @@ describe('Lookup and read configuration', () => {
       })
       .execute('build');
     expect(res.code).to.equal(0);
-    expect(test.content('dist/statics/app.bundle.js')).to.contain('I am entry from yoshi.config');
-    expect(test.content('dist/statics/app.bundle.js')).to.not.contain('I am entry from package');
+    expect(test.content('dist/statics/app.bundle.js')).to.contain(
+      'I am entry from yoshi.config',
+    );
+    expect(test.content('dist/statics/app.bundle.js')).to.not.contain(
+      'I am entry from package',
+    );
   });
 });

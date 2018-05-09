@@ -23,12 +23,16 @@ describe('Webpack config storybook', () => {
   describe('Extensions', () => {
     it('should add all the extensions from the common config', () => {
       const expectedExtensions = commonConfig.resolve.extensions;
-      expect(resultConfig.resolve.extensions).to.include.members(expectedExtensions);
+      expect(resultConfig.resolve.extensions).to.include.members(
+        expectedExtensions,
+      );
     });
 
     it('should NOT add duplicate extensions', () => {
       const uniqueOccurrences = uniq(resultConfig.resolve.extensions).length;
-      expect(resultConfig.resolve.extensions.length).to.equal(uniqueOccurrences);
+      expect(resultConfig.resolve.extensions.length).to.equal(
+        uniqueOccurrences,
+      );
     });
 
     it('should keep the original extensions', () => {

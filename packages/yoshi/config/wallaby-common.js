@@ -1,5 +1,8 @@
 module.exports = function(wallaby) {
-  process.env.NODE_PATH += `:${require('path').join(wallaby.localProjectDir, 'node_modules')}`;
+  process.env.NODE_PATH += `:${require('path').join(
+    wallaby.localProjectDir,
+    'node_modules',
+  )}`;
   return {
     files: [
       { pattern: 'src/templates/**', instrument: false },
@@ -30,7 +33,9 @@ module.exports = function(wallaby) {
     compilers: {
       '**/*.js{,x}': wallaby.compilers.babel({
         babelrc: true,
-        plugins: [require.resolve('babel-plugin-transform-es2015-modules-commonjs')],
+        plugins: [
+          require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
+        ],
       }),
     },
     env: {

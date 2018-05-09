@@ -21,12 +21,18 @@ module.exports = class LoggerPlugin {
           const showLogs = get(run, 'runnerOptions.log', true);
 
           if (showLogs) {
-            console.log(`[${format(start)}] ${chalk.black.bgGreen('Starting')} '${title}'...`);
+            console.log(
+              `[${format(start)}] ${chalk.black.bgGreen(
+                'Starting',
+              )} '${title}'...`,
+            );
 
             run.hooks.success.tap('log success', () => {
               const [end, time] = delta(start);
               console.log(
-                `[${format(end)}] ${chalk.black.bgCyan('Finished')} '${title}' after ${time} ms`,
+                `[${format(end)}] ${chalk.black.bgCyan(
+                  'Finished',
+                )} '${title}' after ${time} ms`,
               );
             });
           }
@@ -34,7 +40,9 @@ module.exports = class LoggerPlugin {
           run.hooks.failure.tap('log failure', () => {
             const [end, time] = delta(start);
             console.log(
-              `[${format(end)}] ${chalk.white.bgRed('Failed')} '${title}' after ${time} ms`,
+              `[${format(end)}] ${chalk.white.bgRed(
+                'Failed',
+              )} '${title}' after ${time} ms`,
             );
           });
         });

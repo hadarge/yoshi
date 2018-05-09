@@ -9,7 +9,11 @@ const protractor = debugPort => {
 
   const configPath = require.resolve('../../../config/protractor.conf.js');
   const defaultWebdriverOptions = { standalone: true, gecko: 'false' };
-  const dargsSettings = { allowCamelCase: true, useEquals: false, ignoreFalse: false };
+  const dargsSettings = {
+    allowCamelCase: true,
+    useEquals: false,
+    ignoreFalse: false,
+  };
 
   const webdriverArgs = dargs(
     { ...defaultWebdriverOptions, ...webdriverManagerOptions },
@@ -25,13 +29,21 @@ const protractor = debugPort => {
   }
   const WEBDRIVER_BIN = require.resolve('protractor/bin/webdriver-manager');
   return new Promise((resolve, reject) => {
-    const webDriverUpdate = crossSpawn(WEBDRIVER_BIN, ['update', ...webdriverArgs], {
-      stdio: 'inherit',
-    });
+    const webDriverUpdate = crossSpawn(
+      WEBDRIVER_BIN,
+      ['update', ...webdriverArgs],
+      {
+        stdio: 'inherit',
+      },
+    );
     webDriverUpdate.on('exit', () => {
-      const protractor = crossSpawn('node', protractorArgs, { stdio: 'inherit' });
+      const protractor = crossSpawn('node', protractorArgs, {
+        stdio: 'inherit',
+      });
       protractor.on('exit', code => {
-        code === 0 ? resolve() : reject(`protractor failed with status code "${code}"`);
+        code === 0
+          ? resolve()
+          : reject(`protractor failed with status code "${code}"`);
       });
     });
   });

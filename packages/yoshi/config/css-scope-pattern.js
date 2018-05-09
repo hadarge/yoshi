@@ -5,4 +5,7 @@ const devPattern = `[path][name]__[local]__${productionPattern}`;
 
 const isTestEnv = process.env.NODE_ENV === 'test';
 
-module.exports = !isTestEnv && (inTeamCity() || isProduction()) ? productionPattern : devPattern;
+module.exports =
+  !isTestEnv && (inTeamCity() || isProduction())
+    ? productionPattern
+    : devPattern;

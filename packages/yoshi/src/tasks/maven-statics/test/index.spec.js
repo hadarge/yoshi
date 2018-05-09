@@ -7,7 +7,10 @@ const mavenStatics = require('../src/index');
 const clientProjectName = 'some-client-project';
 const staticsDir = 'dist/statics';
 
-const correctPom = fs.readFileSync(require.resolve('./fixtures/pom.xml'), 'utf-8');
+const correctPom = fs.readFileSync(
+  require.resolve('./fixtures/pom.xml'),
+  'utf-8',
+);
 const noTarGzLocationPom = fs.readFileSync(
   require.resolve('./fixtures/no-tar-gz-location.xml'),
   'utf-8',
@@ -29,8 +32,14 @@ describe('haste-maven-statics', () => {
       const task = mavenStatics({ base, clientProjectName });
 
       return task.then(() => {
-        const pom = fs.readFileSync(path.join(base, 'maven/assembly/tar.gz.xml'), 'utf-8');
-        const expected = fs.readFileSync(require.resolve('./expected/pom.xml'), 'utf-8');
+        const pom = fs.readFileSync(
+          path.join(base, 'maven/assembly/tar.gz.xml'),
+          'utf-8',
+        );
+        const expected = fs.readFileSync(
+          require.resolve('./expected/pom.xml'),
+          'utf-8',
+        );
 
         expect(pom).to.equal(expected);
       });
@@ -40,8 +49,14 @@ describe('haste-maven-statics', () => {
       const task = mavenStatics({ base, staticsDir });
 
       return task.then(() => {
-        const pom = fs.readFileSync(path.join(base, 'maven/assembly/tar.gz.xml'), 'utf-8');
-        const expected = fs.readFileSync(require.resolve('./expected/universal.xml'), 'utf-8');
+        const pom = fs.readFileSync(
+          path.join(base, 'maven/assembly/tar.gz.xml'),
+          'utf-8',
+        );
+        const expected = fs.readFileSync(
+          require.resolve('./expected/universal.xml'),
+          'utf-8',
+        );
 
         expect(pom).to.equal(expected);
       });

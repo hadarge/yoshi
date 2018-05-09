@@ -26,7 +26,10 @@ module.exports = ({
 
     if (webpackConfigPath) {
       const getConfig = require(webpackConfigPath);
-      const webpackConfig = getConfig({ debug: true, disableModuleConcatenation: true });
+      const webpackConfig = getConfig({
+        debug: true,
+        disableModuleConcatenation: true,
+      });
 
       if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {
         webpackConfig.output.publicPath = publicPath;
@@ -46,10 +49,16 @@ module.exports = ({
                   if (!useItem.options.plugins) {
                     useItem.options.plugins = [];
                   }
-                  useItem.options.plugins.push(require.resolve('react-hot-loader/babel'), [
-                    path.resolve(__dirname, '../../plugins/babel-plugin-transform-hmr-runtime'),
-                    { entryFiles },
-                  ]);
+                  useItem.options.plugins.push(
+                    require.resolve('react-hot-loader/babel'),
+                    [
+                      path.resolve(
+                        __dirname,
+                        '../../plugins/babel-plugin-transform-hmr-runtime',
+                      ),
+                      { entryFiles },
+                    ],
+                  );
                 }
                 return useItem;
               });
@@ -81,7 +90,10 @@ module.exports = ({
 
 function sslCredentials(keyPath, certificatePath, passphrase) {
   const privateKey = fs.readFileSync(path.join(__dirname, keyPath), 'utf8');
-  const certificate = fs.readFileSync(path.resolve(__dirname, certificatePath), 'utf8');
+  const certificate = fs.readFileSync(
+    path.resolve(__dirname, certificatePath),
+    'utf8',
+  );
 
   return {
     key: privateKey,
@@ -91,6 +103,10 @@ function sslCredentials(keyPath, certificatePath, passphrase) {
 }
 
 function httpsServer(app) {
-  const credentials = sslCredentials('./assets/key.pem', './assets/cert.pem', '1234');
+  const credentials = sslCredentials(
+    './assets/key.pem',
+    './assets/cert.pem',
+    '1234',
+  );
   return https.createServer(credentials, app);
 }

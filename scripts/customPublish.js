@@ -18,10 +18,16 @@ const pkgName = get(pkg, 'name');
 
 const getPackageDetails = memoize(name => {
   try {
-    return JSON.parse(execSync(`npm show ${name} --registry=${registry} --json`));
+    return JSON.parse(
+      execSync(`npm show ${name} --registry=${registry} --json`),
+    );
   } catch (error) {
     if (error.stderr.toString().includes('npm ERR! code E404')) {
-      console.error(chalk.yellow('\nWarning: package not found. Possibly not published yet'));
+      console.error(
+        chalk.yellow(
+          '\nWarning: package not found. Possibly not published yet',
+        ),
+      );
       return {};
     }
 
@@ -62,9 +68,13 @@ function getTag(name) {
 }
 
 function publish(name) {
-  const publishCommand = `npm publish --tag=${getTag(name)} --registry=${registry}`;
+  const publishCommand = `npm publish --tag=${getTag(
+    name,
+  )} --registry=${registry}`;
 
-  console.log(chalk.magenta(`Running: "${publishCommand}" for ${name}@${version}`));
+  console.log(
+    chalk.magenta(`Running: "${publishCommand}" for ${name}@${version}`),
+  );
 
   execSync(publishCommand, { stdio: 'inherit' });
 }
@@ -73,14 +83,20 @@ function release() {
   console.log(`Starting the release process for ${chalk.bold(pkgName)}\n`);
 
   if (!shouldPublishPackage(pkgName)) {
-    console.log(chalk.blue(`${pkgName}@${version} is already exist on registry ${registry}`));
+    console.log(
+      chalk.blue(
+        `${pkgName}@${version} is already exist on registry ${registry}`,
+      ),
+    );
     console.log('\nNo publish performed');
 
     process.exit(0);
   }
 
   publish(pkgName);
-  console.log(chalk.green(`\nPublish "${pkgName}@${version}" succesfully to ${registry}`));
+  console.log(
+    chalk.green(`\nPublish "${pkgName}@${version}" succesfully to ${registry}`),
+  );
 }
 
 // 1. verify that the package can be published by checking the registry.

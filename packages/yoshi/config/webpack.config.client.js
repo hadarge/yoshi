@@ -1,7 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const { mergeByConcat, isSingleEntry, inTeamCity, isProduction } = require('../src/utils');
+const {
+  mergeByConcat,
+  isSingleEntry,
+  inTeamCity,
+  isProduction,
+} = require('../src/utils');
 const webpackConfigCommon = require('./webpack.config.common');
 const projectConfig = require('./project');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
@@ -24,12 +29,15 @@ const config = ({
   disableModuleConcatenation,
 } = {}) => {
   const disableModuleConcat =
-    process.env.DISABLE_MODULE_CONCATENATION === 'true' || disableModuleConcatenation;
+    process.env.DISABLE_MODULE_CONCATENATION === 'true' ||
+    disableModuleConcatenation;
   const projectName = projectConfig.name();
   const cssModules = projectConfig.cssModules();
   const tpaStyle = projectConfig.tpaStyle();
   const useSplitChunks = projectConfig.splitChunks();
-  const splitChunksConfig = isObject(useSplitChunks) ? useSplitChunks : defaultSplitChunksConfig;
+  const splitChunksConfig = isObject(useSplitChunks)
+    ? useSplitChunks
+    : defaultSplitChunksConfig;
 
   if (separateCss === 'prod') {
     if (inTeamCity() || isProduction()) {
@@ -51,13 +59,25 @@ const config = ({
 
     module: {
       rules: [
-        ...require('../src/loaders/sass')(separateCss, cssModules, tpaStyle, projectName).client,
-        ...require('../src/loaders/less')(separateCss, cssModules, tpaStyle, projectName).client,
+        ...require('../src/loaders/sass')(
+          separateCss,
+          cssModules,
+          tpaStyle,
+          projectName,
+        ).client,
+        ...require('../src/loaders/less')(
+          separateCss,
+          cssModules,
+          tpaStyle,
+          projectName,
+        ).client,
       ],
     },
 
     plugins: [
-      ...(disableModuleConcat ? [] : [new webpack.optimize.ModuleConcatenationPlugin()]),
+      ...(disableModuleConcat
+        ? []
+        : [new webpack.optimize.ModuleConcatenationPlugin()]),
       ...(analyze ? [new BundleAnalyzerPlugin()] : []),
 
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),

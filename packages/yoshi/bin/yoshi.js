@@ -25,18 +25,32 @@ prog
   .option('--jest', 'Run tests with Jest', BOOL)
   .option('--protractor', 'Run e2e tests with Protractor', BOOL)
   .option('--debug', 'Allow test debugging', INT)
-  .option('-w, --watch', 'Run tests on watch mode (mocha, jasmine, jest, karma)', BOOL)
+  .option(
+    '-w, --watch',
+    'Run tests on watch mode (mocha, jasmine, jest, karma)',
+    BOOL,
+  )
   .action(() => runCLI('test'));
 
 prog
   .command('build', 'Build the app for production')
-  .option('--output', 'The output directory for static assets', /\w+/, 'statics')
+  .option(
+    '--output',
+    'The output directory for static assets',
+    /\w+/,
+    'statics',
+  )
   .option('--analyze', 'Run webpack-bundle-analyzer plugin', BOOL)
   .action(() => runCLI('build'));
 
 prog
   .command('start', 'Run the app in development mode (also spawns npm test)')
-  .option('-e, --entry-point', 'Entry point for the app', /\w+/, './dist/index.js')
+  .option(
+    '-e, --entry-point',
+    'Entry point for the app',
+    /\w+/,
+    './dist/index.js',
+  )
   .option(
     '--manual-restart',
     'Get SIGHUP on change and manage application reboot manually',
@@ -53,7 +67,9 @@ prog
   .command('release', 'publish the package, should be used by CI')
   .action(() => runCLI('release'));
 
-prog.command('info', 'Get your local environment information').action(infoCommand);
+prog
+  .command('info', 'Get your local environment information')
+  .action(infoCommand);
 
 prog.parse(process.argv);
 

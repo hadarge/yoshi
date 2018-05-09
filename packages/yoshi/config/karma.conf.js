@@ -1,13 +1,18 @@
 const path = require('path');
 const { tryRequire, inTeamCity } = require('../src/utils');
 const _ = require('lodash');
-const projectConfig = tryRequire(path.resolve('karma.conf.js')) || { files: [] };
+const projectConfig = tryRequire(path.resolve('karma.conf.js')) || {
+  files: [],
+};
 
 const baseConfig = {
   basePath: process.cwd(),
   browsers: projectConfig.browsers ? [] : ['PhantomJS'],
   frameworks: ['mocha'],
-  files: ['node_modules/phantomjs-polyfill/bind-polyfill.js', 'dist/specs.bundle.js'],
+  files: [
+    'node_modules/phantomjs-polyfill/bind-polyfill.js',
+    'dist/specs.bundle.js',
+  ],
   exclude: [],
   plugins: [
     require('karma-jasmine'),

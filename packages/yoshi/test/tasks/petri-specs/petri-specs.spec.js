@@ -48,7 +48,9 @@ describe('haste-task-wix-petri-specs', () => {
     const fsObj = {
       'package.json': '',
       'pom.xml': fs.readFileSync(pomPath),
-      'src/assets/messages_en.json': fs.readFileSync(require.resolve('./fixtures/messages-en')),
+      'src/assets/messages_en.json': fs.readFileSync(
+        require.resolve('./fixtures/messages-en'),
+      ),
     };
 
     writeFsObject(tempDir, fsObj);
@@ -66,7 +68,9 @@ describe('haste-task-wix-petri-specs', () => {
     const staticDirContent = fs.readdirSync(path.join(tempDir, destDir));
     expect(staticDirContent).to.contain(destFile);
 
-    const petriExperimentsJson = fs.readJsonSync(path.join(tempDir, destDir, destFile));
+    const petriExperimentsJson = fs.readJsonSync(
+      path.join(tempDir, destDir, destFile),
+    );
     expect(petriExperimentsJson).to.eql(
       fs.readJsonSync(require.resolve('./fixtures/petri-experiments'), 'utf8'),
     );

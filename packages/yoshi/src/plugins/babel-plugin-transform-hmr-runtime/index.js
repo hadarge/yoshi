@@ -30,20 +30,34 @@ module.exports = function({ types: t }) {
 
   const requiresFor = (node, target) => {
     const firstArgument = node.arguments[0];
-    return node.callee.name === 'require' && firstArgument && firstArgument.value === target;
+    return (
+      node.callee.name === 'require' &&
+      firstArgument &&
+      firstArgument.value === target
+    );
   };
 
   const createAcceptModuleCall = () => {
-    const moduleHot = t.memberExpression(t.identifier('module'), t.identifier('hot'));
-    const moduleHotAccept = t.memberExpression(moduleHot, t.identifier('accept'));
+    const moduleHot = t.memberExpression(
+      t.identifier('module'),
+      t.identifier('hot'),
+    );
+    const moduleHotAccept = t.memberExpression(
+      moduleHot,
+      t.identifier('accept'),
+    );
     return t.ifStatement(
       moduleHot,
-      t.blockStatement([t.expressionStatement(t.callExpression(moduleHotAccept, []))]),
+      t.blockStatement([
+        t.expressionStatement(t.callExpression(moduleHotAccept, [])),
+      ]),
     );
   };
 
   const isRenderCall = (path, renderWasImported) => {
-    return renderWasImported && isRender(path.node.callee.name, renderWasImported);
+    return (
+      renderWasImported && isRender(path.node.callee.name, renderWasImported)
+    );
   };
 
   // Should be useful for future, when we will implement `export default hot(module)(Component)`
@@ -103,7 +117,10 @@ module.exports = function({ types: t }) {
         const importFromReactHotLoader = sourceValue === 'react-hot-loader';
 
         path.get('specifiers').forEach(specifier => {
-          if (importFromReactDOM && t.isImportNamespaceSpecifier(specifier.node)) {
+          if (
+            importFromReactDOM &&
+            t.isImportNamespaceSpecifier(specifier.node)
+          ) {
             this.reactDOMVariableName = specifier.node.local.name;
           } else if (t.isImportSpecifier(specifier.node)) {
             if (importFromReactDOM && isRender(specifier.node.imported.name)) {
@@ -147,12 +164,21 @@ module.exports = function({ types: t }) {
           return;
         }
         const requireFromReactDOM = requiresFor(path.node, 'react-dom');
-        const requireFromReactHotLoader = requiresFor(path.node, 'react-hot-loader');
+        const requireFromReactHotLoader = requiresFor(
+          path.node,
+          'react-hot-loader',
+        );
         if (requireFromReactDOM && t.isIdentifier(path.parent.id)) {
           this.reactDOMVariableName = path.parent.id.name;
         } else if (t.isObjectPattern(path.parent.id)) {
-          this.renderWasImported = findRenderVariableFromProps(path.parent.id.properties, 'render');
-          if (requireFromReactDOM && isRender(path.parent.id.name, this.renderWasImported)) {
+          this.renderWasImported = findRenderVariableFromProps(
+            path.parent.id.properties,
+            'render',
+          );
+          if (
+            requireFromReactDOM &&
+            isRender(path.parent.id.name, this.renderWasImported)
+          ) {
             this.renderWasImported = true;
           } else if (requireFromReactHotLoader) {
             // check for hot var
@@ -169,7 +195,9 @@ module.exports = function({ types: t }) {
           if (!isValidTargetToWrap(reactRootElement)) {
             return;
           }
-          this.hotProviderIdentifier = path.scope.generateUidIdentifier(HOT_LOADER_PROVIDER);
+          this.hotProviderIdentifier = path.scope.generateUidIdentifier(
+            HOT_LOADER_PROVIDER,
+          );
           const wrappedReactRootElement = wrapInHMRProvider(
             reactRootElement.node,
             path.scope,

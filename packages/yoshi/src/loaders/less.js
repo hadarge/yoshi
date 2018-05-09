@@ -23,31 +23,44 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
   const getLessRule = (ruleConfig, loaderConfig) =>
     merge(ruleConfig, {
       test: /\.less$/,
-      use: clientLoader(separateCss, { loader: 'style-loader', options: { singleton: true } }, [
-        {
-          loader: 'css-loader',
-          options: merge(cssLoaderOptions, loaderConfig),
-        },
-        {
-          loader: 'postcss-loader',
-          options: {
-            config: {
-              path: path.join(__dirname, '..', '..', 'config', 'postcss.config.js'),
-            },
-            sourceMap: true,
+      use: clientLoader(
+        separateCss,
+        { loader: 'style-loader', options: { singleton: true } },
+        [
+          {
+            loader: 'css-loader',
+            options: merge(cssLoaderOptions, loaderConfig),
           },
-        },
-        ...(tpaStyle ? ['wix-tpa-style-loader'] : []),
-        {
-          loader: 'less-loader',
-          options: lessLoaderOptions,
-        },
-      ]),
+          {
+            loader: 'postcss-loader',
+            options: {
+              config: {
+                path: path.join(
+                  __dirname,
+                  '..',
+                  '..',
+                  'config',
+                  'postcss.config.js',
+                ),
+              },
+              sourceMap: true,
+            },
+          },
+          ...(tpaStyle ? ['wix-tpa-style-loader'] : []),
+          {
+            loader: 'less-loader',
+            options: lessLoaderOptions,
+          },
+        ],
+      ),
     });
 
   return {
     client: [
-      getLessRule({ include: globalRegex, exclude: /\.st\.css$/ }, { modules: false }),
+      getLessRule(
+        { include: globalRegex, exclude: /\.st\.css$/ },
+        { modules: false },
+      ),
       getLessRule({ exclude: [globalRegex, /\.st\.css$/] }),
     ],
     specs: {
@@ -69,5 +82,7 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
 };
 
 function clientLoader(separateCss, l1, l2) {
-  return separateCss ? ExtractTextPlugin.extract({ fallback: l1, use: l2 }) : [l1].concat(l2);
+  return separateCss
+    ? ExtractTextPlugin.extract({ fallback: l1, use: l2 })
+    : [l1].concat(l2);
 }

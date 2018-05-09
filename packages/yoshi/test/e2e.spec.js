@@ -52,7 +52,10 @@ describe('Aggregator: e2e', () => {
         .execute(
           'test',
           ['--protractor'],
-          Object.assign({}, outsideTeamCity, { IS_BUILD_AGENT: true, CHROMEDRIVER_VERSION: 2.35 }),
+          Object.assign({}, outsideTeamCity, {
+            IS_BUILD_AGENT: true,
+            CHROMEDRIVER_VERSION: 2.35,
+          }),
         );
       const chromedriverPath = path.resolve(
         'node_modules',
@@ -132,7 +135,9 @@ describe('Aggregator: e2e', () => {
       expect(res.stdout).to.contain('protractor');
       expect(res.stdout).to.contain('1 spec, 0 failures');
       // a dummy import in order to use es6 feature that is not supported by node env ootb
-      expect(fx.e2eTestJasmineES6Imports()).to.contain(`import path from 'path'`);
+      expect(fx.e2eTestJasmineES6Imports()).to.contain(
+        `import path from 'path'`,
+      );
     });
 
     it('should not use babel-register', function() {
@@ -161,9 +166,15 @@ describe('Aggregator: e2e', () => {
   it('should support css class selectors with cssModules on', function() {
     this.timeout(60000);
 
-    test.setup(singleModuleWithCssModules()).execute('build', [], getMockedCI({ ci: false }));
+    test
+      .setup(singleModuleWithCssModules())
+      .execute('build', [], getMockedCI({ ci: false }));
 
-    const res = test.execute('test', ['--protractor'], getMockedCI({ ci: false }));
+    const res = test.execute(
+      'test',
+      ['--protractor'],
+      getMockedCI({ ci: false }),
+    );
 
     expect(res.code).to.equal(0);
   });
@@ -175,7 +186,11 @@ describe('Aggregator: e2e', () => {
       .setup(singleModuleWithCssModulesAndSass())
       .execute('build', [], getMockedCI({ ci: false }));
 
-    const res = test.execute('test', ['--protractor'], getMockedCI({ ci: false }));
+    const res = test.execute(
+      'test',
+      ['--protractor'],
+      getMockedCI({ ci: false }),
+    );
 
     expect(res.code).to.equal(0);
   });

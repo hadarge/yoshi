@@ -4,7 +4,12 @@ const path = require('path');
 const ld = require('lodash');
 const sass = require('node-sass');
 const { wixCssModulesRequireHook } = require('yoshi-runtime');
-const { tryRequire, getMochaReporter, exists, inTeamCity } = require('../src/utils');
+const {
+  tryRequire,
+  getMochaReporter,
+  exists,
+  inTeamCity,
+} = require('../src/utils');
 const globs = require('../src/globs');
 
 // Private wix applitools key
@@ -22,7 +27,8 @@ require('../src/require-hooks');
 const userConfPath = path.resolve('protractor.conf.js');
 const userConf = exists(userConfPath) ? require(userConfPath).config : null;
 
-const shouldUseProtractorBrowserLogs = process.env.PROTRACTOR_BROWSER_LOGS === 'true';
+const shouldUseProtractorBrowserLogs =
+  process.env.PROTRACTOR_BROWSER_LOGS === 'true';
 
 const beforeLaunch = (userConf && userConf.beforeLaunch) || ld.noop;
 const onPrepare = (userConf && userConf.onPrepare) || ld.noop;
@@ -76,7 +82,9 @@ const merged = ld.mergeWith(
 
 function normaliseSpecs(config) {
   const specs = [].concat(config.specs || []);
-  return Object.assign({}, config, { specs: specs.map(spec => path.resolve(spec)) });
+  return Object.assign({}, config, {
+    specs: specs.map(spec => path.resolve(spec)),
+  });
 }
 
 function setupProtractorLogs() {

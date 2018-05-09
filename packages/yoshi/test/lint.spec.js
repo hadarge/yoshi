@@ -61,7 +61,9 @@ describe('Aggregator: Lint', () => {
         .execute('lint', ['--format json']);
 
       expect(res.code).to.equal(1);
-      expect(JSON.parse(res.stderr)[0].failure).to.eq('Missing radix parameter');
+      expect(JSON.parse(res.stderr)[0].failure).to.eq(
+        'Missing radix parameter',
+      );
     });
 
     it('should support a list of files to run lint on', () => {
@@ -74,7 +76,11 @@ describe('Aggregator: Lint', () => {
           'tsconfig.json': fx.tsconfig(),
           'tslint.json': fx.tslint({ radix: true }),
         })
-        .execute('lint', ['--format json', 'app/a.ts', 'app/b.tsx'], insideTeamCity);
+        .execute(
+          'lint',
+          ['--format json', 'app/a.ts', 'app/b.tsx'],
+          insideTeamCity,
+        );
 
       const stderr = JSON.parse(res.stderr);
       expect(res.code).to.equal(1);
@@ -100,19 +106,30 @@ describe('Aggregator: Lint', () => {
     }
 
     it('should use yoshi-eslint', () => {
-      const res = setup({ 'app/a.js': `parseInt("1", 10);` }).execute('lint', [], insideTeamCity);
+      const res = setup({ 'app/a.js': `parseInt("1", 10);` }).execute(
+        'lint',
+        [],
+        insideTeamCity,
+      );
       expect(res.code).to.equal(0);
     });
 
     it('should fail with exit code 1', () => {
-      const res = setup({ 'app/a.js': `parseInt("1");` }).execute('lint', [], insideTeamCity);
+      const res = setup({ 'app/a.js': `parseInt("1");` }).execute(
+        'lint',
+        [],
+        insideTeamCity,
+      );
       expect(res.code).to.equal(1);
-      expect(res.stderr).to.contain('1:1  error  Missing radix parameter  radix');
+      expect(res.stderr).to.contain(
+        '1:1  error  Missing radix parameter  radix',
+      );
     });
 
     it('should fix linting errors and exit with exit code 0 if there are only fixable errors', () => {
       const res = setup({
-        'app/a.js': '/*eslint no-regex-spaces: "error"*/\nnew RegExp("foo  bar");',
+        'app/a.js':
+          '/*eslint no-regex-spaces: "error"*/\nnew RegExp("foo  bar");',
       }).execute('lint', ['--fix']);
 
       expect(res.code).to.equal(0);
@@ -128,7 +145,9 @@ describe('Aggregator: Lint', () => {
         insideTeamCity,
       );
       expect(res.code).to.equal(1);
-      expect(JSON.parse(res.stderr)[0].messages[0].message).to.eq('Missing radix parameter.');
+      expect(JSON.parse(res.stderr)[0].messages[0].message).to.eq(
+        'Missing radix parameter.',
+      );
     });
 
     it('should support a list of files to run lint on', () => {
@@ -136,7 +155,11 @@ describe('Aggregator: Lint', () => {
         'app/a.js': `parseInt("1");`,
         'app/b.js': `parseInt("1");`,
         'app/dontrunonme.js': `parseInt("1");`,
-      }).execute('lint', ['--format json', 'app/a.js', 'app/b.js'], insideTeamCity);
+      }).execute(
+        'lint',
+        ['--format json', 'app/a.js', 'app/b.js'],
+        insideTeamCity,
+      );
 
       const stderr = JSON.parse(res.stderr);
       expect(res.code).to.equal(1);

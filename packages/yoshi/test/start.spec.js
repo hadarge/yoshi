@@ -58,7 +58,9 @@ describe('Aggregator: Start', () => {
       it('should pass --inspect flag when parameter is passed with the correct port', () => {
         const port = 9230;
         const checkIfInspectIsPassedInArgs = function(port) {
-          return !!process.execArgv.find(arg => arg.indexOf(`--inspect=127.0.0.1:${port}`) === 0);
+          return !!process.execArgv.find(
+            arg => arg.indexOf(`--inspect=127.0.0.1:${port}`) === 0,
+          );
         };
 
         child = test
@@ -108,7 +110,9 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/assets/image.png': '',
             'index.js': `console.log('should not run');`,
-            'package.json': fx.packageJson({ servers: { cdn: { port: 3005 } } }),
+            'package.json': fx.packageJson({
+              servers: { cdn: { port: 3005 } },
+            }),
             '.babelrc': '{}',
           })
           .spawn('start', ['--no-server']);
@@ -128,8 +132,8 @@ describe('Aggregator: Start', () => {
           })
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(content =>
-          expect(content).to.contain('"hot":true'),
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content => expect(content).to.contain('"hot":true'),
         );
       });
 
@@ -144,8 +148,8 @@ describe('Aggregator: Start', () => {
           )
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(content =>
-          expect(content).to.contain(`"hot":false`),
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content => expect(content).to.contain(`"hot":false`),
         );
       });
 
@@ -154,7 +158,9 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/client.js': `import { render } from 'react-dom';
               render(<App />, rootEl);`,
-            '.babelrc': `{"presets": ["${require.resolve('babel-preset-wix')}"]}`,
+            '.babelrc': `{"presets": ["${require.resolve(
+              'babel-preset-wix',
+            )}"]}`,
             'package.json': fx.packageJson(
               {
                 hmr: 'auto',
@@ -166,10 +172,12 @@ describe('Aggregator: Start', () => {
             ),
           })
           .spawn('start');
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(content => {
-          expect(content).to.contain('module.hot.accept()');
-          expect(content).to.contain('react-hot-loader');
-        });
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content => {
+            expect(content).to.contain('module.hot.accept()');
+            expect(content).to.contain('react-hot-loader');
+          },
+        );
       });
 
       it('should wrap react root element with react-hot-loader HOC for default entry', () => {
@@ -177,7 +185,9 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/client.js': `import { render } from 'react-dom';
               render(<App />, rootEl);`,
-            '.babelrc': `{"presets": ["${require.resolve('babel-preset-wix')}"]}`,
+            '.babelrc': `{"presets": ["${require.resolve(
+              'babel-preset-wix',
+            )}"]}`,
             'package.json': fx.packageJson(
               {
                 hmr: 'auto',
@@ -188,10 +198,12 @@ describe('Aggregator: Start', () => {
             ),
           })
           .spawn('start');
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(content => {
-          expect(content).to.contain('module.hot.accept()');
-          expect(content).to.contain('react-hot-loader');
-        });
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content => {
+            expect(content).to.contain('module.hot.accept()');
+            expect(content).to.contain('react-hot-loader');
+          },
+        );
       });
     });
 
@@ -204,8 +216,11 @@ describe('Aggregator: Start', () => {
           })
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(content =>
-          expect(content).to.contain(`__webpack_require__.p = "http://localhost:3200/";`),
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content =>
+            expect(content).to.contain(
+              `__webpack_require__.p = "http://localhost:3200/";`,
+            ),
         );
       });
 
@@ -213,12 +228,15 @@ describe('Aggregator: Start', () => {
         child = test
           .setup({
             'src/client.js': `module.exports.wat = 'hmr';\n`,
-            'package.json': fx.packageJson({ servers: { cdn: { url: 'some.url' } } }),
+            'package.json': fx.packageJson({
+              servers: { cdn: { url: 'some.url' } },
+            }),
           })
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(content =>
-          expect(content).to.contain(`__webpack_require__.p = "some.url";`),
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content =>
+            expect(content).to.contain(`__webpack_require__.p = "some.url";`),
         );
       });
     });
@@ -232,8 +250,13 @@ describe('Aggregator: Start', () => {
           })
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.min.js' }).then(content => {
-          expect(content).to.contain(`__webpack_require__.p = "http://localhost:3200/";`);
+        return checkServerIsServing({
+          port: 3200,
+          file: 'app.bundle.min.js',
+        }).then(content => {
+          expect(content).to.contain(
+            `__webpack_require__.p = "http://localhost:3200/";`,
+          );
         });
       });
 
@@ -255,7 +278,9 @@ describe('Aggregator: Start', () => {
           protocol: 'https',
           options: { agent },
         }).then(content =>
-          expect(content).to.contain(`__webpack_require__.p = "https://localhost:3200/";`),
+          expect(content).to.contain(
+            `__webpack_require__.p = "https://localhost:3200/";`,
+          ),
         );
       });
 
@@ -264,7 +289,9 @@ describe('Aggregator: Start', () => {
           .setup({
             'src/assets/test.json': '{a: 1}',
             'src/index.js': 'var a = 1;',
-            'package.json': fx.packageJson({ servers: { cdn: { port: 3005 } } }),
+            'package.json': fx.packageJson({
+              servers: { cdn: { port: 3005 } },
+            }),
           })
           .spawn('start');
 
@@ -323,7 +350,9 @@ describe('Aggregator: Start', () => {
           .spawn('start');
 
         return fetchCDN().then(res => {
-          expect(res.headers.get('Access-Control-Allow-Methods')).to.equal('GET, OPTIONS');
+          expect(res.headers.get('Access-Control-Allow-Methods')).to.equal(
+            'GET, OPTIONS',
+          );
           expect(res.headers.get('Access-Control-Allow-Origin')).to.equal('*');
         });
       });
@@ -352,7 +381,9 @@ describe('Aggregator: Start', () => {
               'src/assets/test.json': '{a: 1}',
               'src/index.js': 'var a = 1;',
               'package.json': fx.packageJson({
-                servers: { cdn: { port: 3005, dir: 'dist/statics', ssl: true } },
+                servers: {
+                  cdn: { port: 3005, dir: 'dist/statics', ssl: true },
+                },
               }),
             })
             .spawn('start');
@@ -402,7 +433,9 @@ describe('Aggregator: Start', () => {
           child = test
             .setup({
               'tsconfig.json': fx.tsconfig(),
-              'src/server.ts': `declare var require: any; ${fx.httpServer('hello')}`,
+              'src/server.ts': `declare var require: any; ${fx.httpServer(
+                'hello',
+              )}`,
               'src/config.ts': '',
               'src/client.ts': '',
               'index.js': `require('./dist/src/server')`,
@@ -414,7 +447,10 @@ describe('Aggregator: Start', () => {
           return checkServerIsServing({ max: 100 })
             .then(() => checkServerIsRespondingWith('hello'))
             .then(() =>
-              test.modify('src/server.ts', `declare var require: any; ${fx.httpServer('world')}`),
+              test.modify(
+                'src/server.ts',
+                `declare var require: any; ${fx.httpServer('world')}`,
+              ),
             )
             .then(() => {
               return checkServerIsRespondingWith('world');
@@ -499,7 +535,9 @@ describe('Aggregator: Start', () => {
         });
 
         it('should send SIGHUP to entryPoint process on change', () =>
-          checkServerLogContains('onInit').then(() => triggerChangeAndCheckForRestartMessage()));
+          checkServerLogContains('onInit').then(() =>
+            triggerChangeAndCheckForRestartMessage(),
+          ));
 
         it('should not restart server', () =>
           checkServerLogContains('onInit', { backoff: 200 })
@@ -525,7 +563,9 @@ describe('Aggregator: Start', () => {
         })
         .spawn('start', [], outsideTeamCity);
 
-      return checkServerLogCreated().then(() => expect(test.contains('.nvmrc')).to.be.true);
+      return checkServerLogCreated().then(
+        () => expect(test.contains('.nvmrc')).to.be.true,
+      );
     });
 
     it(`should use yoshi-clean before building`, () => {
@@ -558,7 +598,9 @@ describe('Aggregator: Start', () => {
         return checkServerLogCreated()
           .then(wait(1000))
           .then(() =>
-            expect(test.stdout).to.contains(`There are errors! Please check ./target/server.log`),
+            expect(test.stdout).to.contains(
+              `There are errors! Please check ./target/server.log`,
+            ),
           );
       });
     });
@@ -567,7 +609,10 @@ describe('Aggregator: Start', () => {
       it('should migrate .bowerrc', () => {
         const bowerrc = {
           registry: {
-            search: ['https://bower.herokuapp.com', 'http://wix:wix@mirror.wixpress.com:3333'],
+            search: [
+              'https://bower.herokuapp.com',
+              'http://wix:wix@mirror.wixpress.com:3333',
+            ],
             register: 'http://wix:wix@mirror.wixpress.com:3333',
             publish: 'http://wix:wix@mirror.wixpress.com:3333',
           },
@@ -625,7 +670,9 @@ describe('Aggregator: Start', () => {
         return content.includes(str)
           ? Promise.resolve()
           : Promise.reject(
-              new Error(`Expect server.log to contain "${str}", got "${content}" instead`),
+              new Error(
+                `Expect server.log to contain "${str}", got "${content}" instead`,
+              ),
             );
       }),
     );
@@ -634,7 +681,8 @@ describe('Aggregator: Start', () => {
   function checkStdout(str) {
     return retryPromise(
       { backoff: 100 },
-      () => (test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject()),
+      () =>
+        test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
     );
   }
 
@@ -644,7 +692,9 @@ describe('Aggregator: Start', () => {
 
   function fetchCDN(port) {
     port = port || 3200;
-    return retryPromise({ backoff: 100 }, () => fetch(`http://localhost:${port}/`));
+    return retryPromise({ backoff: 100 }, () =>
+      fetch(`http://localhost:${port}/`),
+    );
   }
 
   function cdnIsServing(name, port = 3005, protocol = 'http', options = {}) {
@@ -660,7 +710,9 @@ describe('Aggregator: Start', () => {
     return retryPromise({ backoff: 1000 }, () =>
       fetch(`http://localhost:${fx.defaultServerPort()}/`)
         .then(res => res.text())
-        .then(body => (body === expected ? Promise.resolve() : Promise.reject())),
+        .then(
+          body => (body === expected ? Promise.resolve() : Promise.reject()),
+        ),
     );
   }
 
@@ -677,7 +729,9 @@ describe('Aggregator: Start', () => {
     options = {},
   } = {}) {
     return retryPromise({ backoff, max }, () =>
-      fetch(`${protocol}://localhost:${port}/${file}`, options).then(res => res.text()),
+      fetch(`${protocol}://localhost:${port}/${file}`, options).then(res =>
+        res.text(),
+      ),
     );
   }
 

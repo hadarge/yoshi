@@ -9,7 +9,10 @@ module.exports = class Runner {
   }
 
   _cloneDir() {
-    this._clonedDir = path.resolve(shelljs.tempdir(), Math.ceil(Math.random() * 100000).toString());
+    this._clonedDir = path.resolve(
+      shelljs.tempdir(),
+      Math.ceil(Math.random() * 100000).toString(),
+    );
     shelljs.cp('-r', `${this._inDir}${path.sep}`, this._clonedDir);
   }
 
