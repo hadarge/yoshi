@@ -1,13 +1,20 @@
 # Changelog
 
+## 2.2.0 (May 9, 2018)
+
+#### :bug: Bug
+* Fixate `eslint` version to `4.13.1` in order to be compatiable with `eslint-config-wix` (with `babel-eslint` version)
+
 ## 2.1.10 (May 8, 2018)
+
+#### :bug: Bug
 * [#267](https://github.com/wix-private/yoshi/pull/267) Update `haste-task-typescript` to support windows
 * Remove all `eslint-config-yoshi-base` related dependencies to prevent clash with `eslint-config-wix`
 
 ## 2.1.9 (May 8, 2018)
 
 #### :bug: Bug
-Add `eslint-config-wix` to be a dependency of yoshi for backwards compatibility.
+* Add `eslint-config-wix` to be a dependency of yoshi for backwards compatibility.
 
 ## 2.1.7 (May 6, 2018)
 
