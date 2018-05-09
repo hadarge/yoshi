@@ -1,5 +1,4 @@
 const { expect } = require('chai');
-
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const { insideTeamCity } = require('./helpers/env-variables');

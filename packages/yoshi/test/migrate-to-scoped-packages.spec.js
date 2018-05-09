@@ -1,7 +1,6 @@
 const { merge } = require('lodash');
 const { expect } = require('chai');
 const retryPromise = require('retry-promise').default;
-
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const { killSpawnProcessAndHisChildren } = require('./helpers/process');

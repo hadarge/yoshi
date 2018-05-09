@@ -3,7 +3,7 @@ module.exports = {
 
   parser: 'babel-eslint',
 
-  plugins: ['prettier'],
+  plugins: ['prettier', 'import'],
 
   env: {
     commonjs: true,
@@ -136,6 +136,24 @@ module.exports = {
     'use-isnan': 'warn',
     'valid-typeof': 'warn',
     'getter-return': 'warn',
+
+    // https://github.com/benmosher/eslint-plugin-import
+    'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
+    'import/no-extraneous-dependencies': 'error',
+    'import/no-amd': 'error',
+    'import/first': ['error', 'absolute-first'],
+    'import/no-duplicates': 'error',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+      },
+    ],
+    'import/newline-after-import': 'error',
+    'import/no-absolute-path': 'error',
+    'import/no-cycle': ['error', { maxDepth: Infinity }],
+    'import/no-useless-path-segments': 'error',
 
     // https://github.com/prettier/eslint-plugin-prettier
     'prettier/prettier': [

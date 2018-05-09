@@ -3,10 +3,11 @@ process.on('unhandledRejection', error => {
 });
 
 const path = require('path');
+const cp = require('child_process');
 const chalk = require('chalk');
 const prompts = require('prompts');
-const cp = require('child_process');
 const pkg = require('../package.json');
+
 const lernaPath = path.resolve(__dirname, '../node_modules/.bin/lerna');
 
 // resets the console

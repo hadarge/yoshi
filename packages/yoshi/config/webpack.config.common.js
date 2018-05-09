@@ -1,8 +1,8 @@
 const path = require('path');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 const context = path.resolve('./src');
 const projectConfig = require('./project');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 const config = {
   context,

@@ -2,6 +2,7 @@
 
 const chalk = require('chalk');
 const terminalLink = require('terminal-link');
+
 const readMoreLink = terminalLink(
   '🔗  Read more',
   'https://github.com/wix-private/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md',
@@ -29,4 +30,4 @@ console.warn(`
 
 Object.assign(process.env, { NODE_ENV: 'test', SRC_PATH: './src' });
 process.argv = ['', '', './node_modules/yoshi/config/protractor.conf.js'];
-require('../../protractor/bin/protractor');
+require('../../protractor/bin/protractor'); // eslint-disable-line import/no-unresolved

@@ -1,5 +1,5 @@
-const glob = require('glob');
 const path = require('path');
+const glob = require('glob');
 const webpackConfigCommon = require('./webpack.config.common');
 const mergeByConcat = require('../src/utils').mergeByConcat;
 const { cssModules, tpaStyle } = require('./project');

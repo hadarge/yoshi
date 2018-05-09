@@ -1,6 +1,6 @@
 const { createRunner } = require('haste-core');
-const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const parseArgs = require('minimist');
+const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
 const {
   runIndividualTranspiler,

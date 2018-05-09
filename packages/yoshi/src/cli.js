@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 const presetPath = require.resolve('../src/index.js');
 
 module.exports = async command => {

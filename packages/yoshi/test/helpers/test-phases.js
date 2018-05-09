@@ -5,6 +5,7 @@ const path = require('path');
 const sh = require('shelljs');
 const spawn = require('cross-spawn');
 const stripAnsi = require('strip-ansi');
+
 const yoshiCliBin = path.resolve(__dirname, '../../bin/yoshi.js');
 
 class Test {

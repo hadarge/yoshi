@@ -1,5 +1,5 @@
-const sh = require('shelljs');
 const path = require('path');
+const sh = require('shelljs');
 
 module.exports = {
   createSymlink: (target, destination) => cwd => {

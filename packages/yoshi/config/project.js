@@ -1,8 +1,8 @@
 const path = require('path');
 const _ = require('lodash');
+const globs = require('../src/globs');
 const packagejson = require('./get-project-pkg');
 const lookupConfig = require('./lookup-config');
-const globs = require('../src/globs');
 
 // Search for yoshi configuration from the file system.
 const config = lookupConfig();

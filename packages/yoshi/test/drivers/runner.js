@@ -1,5 +1,5 @@
-const shelljs = require('shelljs');
 const path = require('path');
+const shelljs = require('shelljs');
 
 module.exports = class Runner {
   constructor(inDir, command, args) {

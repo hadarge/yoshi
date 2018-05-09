@@ -1,6 +1,7 @@
 const path = require('path');
-const { tryRequire, inTeamCity } = require('../src/utils');
 const _ = require('lodash');
+const { tryRequire, inTeamCity } = require('../src/utils');
+
 const projectConfig = tryRequire(path.resolve('karma.conf.js')) || {
   files: [],
 };

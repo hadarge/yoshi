@@ -1,5 +1,4 @@
 const merge = require('lodash/merge');
-
 const projectConfig = require('./project');
 const { inTeamCity } = require('../src/utils');
 

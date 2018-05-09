@@ -1,8 +1,9 @@
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
 const { expect } = require('chai');
 const tempy = require('tempy');
 const petriSpecsTask = require('../../../src/tasks/petri-specs');
+
 const destFile = 'petri-experiments.json';
 const destDir = path.join('dist', 'statics');
 

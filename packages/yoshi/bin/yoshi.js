@@ -2,6 +2,7 @@
 const prog = require('caporal');
 const runCLI = require('../src/cli');
 const { version } = require('../package');
+
 const { BOOL, INT } = prog;
 const infoCommand = require('../src/commands/info');
 

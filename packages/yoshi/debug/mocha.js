@@ -2,6 +2,7 @@
 
 const chalk = require('chalk');
 const terminalLink = require('terminal-link');
+
 const readMoreLink = terminalLink(
   '🔗  Read more',
   'https://github.com/wix-private/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md',
@@ -36,4 +37,4 @@ process.argv = [
   '--require',
   './node_modules/yoshi/config/mocha-setup.js',
 ];
-require('../../mocha/bin/_mocha');
+require('../../mocha/bin/_mocha'); // eslint-disable-line import/no-unresolved

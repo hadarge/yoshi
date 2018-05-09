@@ -1,5 +1,5 @@
-const envinfo = require('envinfo');
 const path = require('path');
+const envinfo = require('envinfo');
 const chalk = require('chalk');
 
 const pkg = require(path.resolve(process.cwd(), 'package.json'));

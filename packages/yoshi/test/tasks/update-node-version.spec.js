@@ -1,8 +1,9 @@
 const fs = require('fs');
-const tempy = require('tempy');
 const path = require('path');
+const tempy = require('tempy');
 const { expect } = require('chai');
 const updateNodeVersion = require('../../src/tasks/update-node-version');
+
 const nodeVersion = fs.readFileSync(
   require.resolve('../../src/tasks/update-node-version/templates/.nvmrc'),
   'utf-8',

@@ -1,20 +1,20 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const RtlCssPlugin = require('rtlcss-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
+const { isObject } = require('lodash');
+const StylableWebpackPlugin = require('stylable-webpack-plugin');
+const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const {
   mergeByConcat,
   isSingleEntry,
   inTeamCity,
   isProduction,
 } = require('../src/utils');
-const webpackConfigCommon = require('./webpack.config.common');
 const projectConfig = require('./project');
-const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
-const RtlCssPlugin = require('rtlcss-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
-const { isObject } = require('lodash');
-const StylableWebpackPlugin = require('stylable-webpack-plugin');
+const webpackConfigCommon = require('./webpack.config.common');
 
 const defaultSplitChunksConfig = {
   chunks: 'all',
