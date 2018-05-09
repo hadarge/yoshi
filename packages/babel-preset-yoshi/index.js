@@ -1,6 +1,7 @@
 const DEFAULT_ENV = 'development';
 const env = process.env.BABEL_ENV || process.env.NODE_ENV || DEFAULT_ENV;
-const envChecker = env => (...envsToMatch) => envsToMatch.some(envToMatch => envToMatch === env);
+const envChecker = env => (...envsToMatch) =>
+  envsToMatch.some(envToMatch => envToMatch === env);
 const isMatchEnvs = envChecker(env);
 
 const normaliseOptions = opts => {
