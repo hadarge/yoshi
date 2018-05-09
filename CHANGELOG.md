@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.0 (May 9, 2018)
+
+#### :nail_care: Enhancement
+* [#264](https://github.com/wix-private/yoshi/pull/264) Add debug ability for tests and app-server
+  * `yoshi test --debug`
+  * `yoshi start --debug`
+
 ## 2.2.0 (May 9, 2018)
 
 #### :bug: Bug
