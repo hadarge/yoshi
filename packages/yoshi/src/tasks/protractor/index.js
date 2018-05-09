@@ -1,7 +1,7 @@
 const dargs = require('dargs');
 const crossSpawn = require('cross-spawn');
 
-const protractor = (isDebugOn, debugPort) => {
+const protractor = debugPort => {
   // Only install specific version of chrome driver in CI, install latest locally
   const webdriverManagerOptions = !!process.env.IS_BUILD_AGENT // eslint-disable-line no-extra-boolean-cast
     ? { 'versions.chrome': process.env.CHROMEDRIVER_VERSION || '2.29' }
@@ -20,7 +20,7 @@ const protractor = (isDebugOn, debugPort) => {
   const PROTRACTOR_BIN = require.resolve('protractor/bin/protractor');
   protractorArgs.unshift(PROTRACTOR_BIN);
 
-  if (isDebugOn) {
+  if (!!debugPort) {
     protractorArgs.unshift(`--inspect=${debugPort}`);
   }
   const WEBDRIVER_BIN = require.resolve('protractor/bin/webdriver-manager');

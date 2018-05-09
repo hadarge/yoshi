@@ -14,6 +14,7 @@ const runner = createRunner({
 
 const cliArgs = minimist(process.argv.slice(2));
 const isDebugOn = !!cliArgs.debug;
+const debugPort = cliArgs.debug;
 
 const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
 
@@ -58,7 +59,6 @@ module.exports = runner.command(
       ];
 
       if (isDebugOn) {
-        const debugPort = cliArgs.debug;
         mochaArgs.unshift(`--inspect=${debugPort}`);
         mochaArgs.push('--no-timeouts');
       }
@@ -115,7 +115,6 @@ module.exports = runner.command(
       ];
 
       if (isDebugOn) {
-        const debugPort = cliArgs.debug;
         jestCliOptions.unshift(`--inspect=${debugPort}`);
         jestCliOptions.push(`--runInBand`);
       }
@@ -141,7 +140,7 @@ module.exports = runner.command(
     }
 
     if (cliArgs.protractor && hasProtractorConfigFile() && !shouldWatch) {
-      return protractor(isDebugOn, cliArgs.debug);
+      return protractor(debugPort);
     }
   },
   { persistent: shouldWatch },

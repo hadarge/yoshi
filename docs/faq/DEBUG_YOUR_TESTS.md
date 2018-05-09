@@ -39,8 +39,3 @@ Several commercial and open source tools can connect to Node's Inspector and the
  - Example configuration -   
        
 ![image description](https://image.ibb.co/cYNPOn/Screen_Shot_2018_05_02_at_21_56_05.png)  
-  
-  
-#### [chrome-remote-interface](https://github.com/cyrus-and/chrome-remote-interface)[](https://nodejs.org/en/docs/guides/debugging-getting-started/#chrome-remote-interface)  
-  
-- Library to ease connections to Inspector Protocol endpoints.

@@ -10,7 +10,7 @@ const normalizeDebuggingArgs = () => {
     process.argv.push(debugArgName);
   }
 
-  // attache default port to --debug option
+  // assign default port to --debug option
   const debugArgIndex = process.argv.indexOf(debugArgName);
   if (debugArgIndex !== -1) {
     process.argv[debugArgIndex] = `${debugArgName}=${defaultDebugPort}`;

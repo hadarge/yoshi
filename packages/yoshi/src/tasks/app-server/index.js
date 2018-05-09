@@ -9,7 +9,6 @@ const debounce = require('lodash/debounce');
 let server;
 let port;
 const defaultPort = Number(process.env.PORT) || 3000;
-// TODO: add serverDebugHost to args (if needed)
 const serverDebugHost = '127.0.0.1';
 
 function ensureServerIsNotRunning(newPort) {
@@ -50,7 +49,7 @@ function initializeServerStartDelegate({ serverScript, debugPort, log }) {
       chalk.magenta(`http://localhost:${env.PORT}${env.MOUNT_POINT || '/'}`),
     );
     if (debugPort) {
-      console.log('Debugger is avaiable at ', chalk.magenta(`${serverDebugHost}:${debugPort}`));
+      console.log('Debugger is available at ', chalk.magenta(`${serverDebugHost}:${debugPort}`));
     }
     console.log('Server log is written to ', chalk.magenta('./target/server.log'));
 

@@ -5,6 +5,7 @@ const { version } = require('../package');
 const { BOOL, INT } = prog;
 const infoCommand = require('../src/commands/info');
 
+// IDEs start debugging with '--inspect' or '--inspect-brk' option. We are setting --debug instead
 require('./normalize-debugging-args')();
 
 prog.version(version).description('A toolkit for building applications in Wix');
@@ -44,7 +45,7 @@ prog
   )
   .option('--no-test', 'Do not spawn npm test after start', BOOL, 'false')
   .option('--no-server', 'Do not spawn the app server', BOOL, 'false')
-  .option('--debug', 'Port for debugging app-server', INT, 0)
+  .option('--debug', 'Allow app-server debugging', INT, 0)
   .option('--ssl', 'Serve the app bundle on https', BOOL, 'false')
   .action(() => runCLI('start'));
 
