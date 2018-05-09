@@ -1,4 +1,5 @@
 const fs = require('fs');
+const rimraf = require('rimraf');
 const process = require('process');
 const path = require('path');
 const sh = require('shelljs');
@@ -17,6 +18,14 @@ class Test {
     this.stderr = '';
     this.tmp = path.join(sh.tempdir().toString(), new Date().getTime().toString());
     this.silent = !this.env.VERBOSE_TESTS;
+
+    // create a symlink from node_modules one level above testing directory to yoshi's node_modules
+    const tmpNodeModules = path.join(this.tmp, '../node_modules');
+    const yoshiNodeModulesPath = path.resolve(__dirname, '../../node_modules');
+    // remove current tmp/node_modules directory
+    rimraf.sync(tmpNodeModules);
+    // creates a symlink from tmp/node_modules to yoshi/node_modules
+    fs.symlinkSync(yoshiNodeModulesPath, tmpNodeModules);
   }
 
   setup(tree, hooks = []) {
@@ -27,15 +36,6 @@ class Test {
     });
 
     hooks.forEach(hook => hook(this.tmp));
-
-    // create a symlink from node_modules one level above testing directory to yoshi's node_modules
-    const tmpNodeModules = path.join(this.tmp, '../node_modules');
-    const yoshiNodeModulesPath = path.resolve(__dirname, '../../node_modules');
-
-    if (!fs.existsSync(tmpNodeModules)) {
-      fs.symlinkSync(yoshiNodeModulesPath, tmpNodeModules);
-    }
-
     return this;
   }
 

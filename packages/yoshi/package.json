@@ -113,6 +113,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
+    "@types/node": "^8.9.4",
     "babel-core": "^6.26.0",
     "babel-helper-plugin-test-runner": "^6.24.1",
     "babel-plugin-syntax-jsx": "^6.18.0",
@@ -126,6 +127,7 @@
     "node-fetch": "^1.7.3",
     "ps-tree": "^1.1.0",
     "retry-promise": "^1.0.0",
+    "rimraf": "^2.6.2",
     "shmock": "~0.8.1",
     "tempy": "~0.2.1",
     "typescript": "^2.6.1"
