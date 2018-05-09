@@ -38,6 +38,42 @@ describe('Aggregator: Start', () => {
       });
     });
 
+    describe('--debug', () => {
+      it('should not pass --inspect flag when parameter is not passed', () => {
+        const checkIfInspectIsPassedInArgs = function() {
+          return !!process.execArgv.find(arg => arg.indexOf('--inspect') === 0);
+        };
+        child = test
+          .setup({
+            'src/client.js': '',
+            'index.js': `console.log((${checkIfInspectIsPassedInArgs.toString()})())`,
+            'package.json': fx.packageJson(),
+            'pom.xml': fx.pom(),
+          })
+          .spawn('start');
+
+        return checkServerLogContains('false', { backoff: 100 });
+      });
+
+      it('should pass --inspect flag when parameter is passed with the correct port', () => {
+        const port = 9230;
+        const checkIfInspectIsPassedInArgs = function(port) {
+          return !!process.execArgv.find(arg => arg.indexOf(`--inspect=127.0.0.1:${port}`) === 0);
+        };
+
+        child = test
+          .setup({
+            'src/client.js': '',
+            'index.js': `console.log((${checkIfInspectIsPassedInArgs.toString()})(${port}))`,
+            'package.json': fx.packageJson(),
+            'pom.xml': fx.pom(),
+          })
+          .spawn('start', `--debug=${port}`);
+
+        return checkServerLogContains('true', { backoff: 100 });
+      });
+    });
+
     describe('--entry-point', () => {
       it('should run the entry point provided and add .js to entry if needed', () => {
         child = test
