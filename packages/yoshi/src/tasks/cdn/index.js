@@ -30,7 +30,7 @@ module.exports = ({
       const webpackConfig = getConfig({
         separateCss: false,
         debug: true,
-        disableModuleConcatenation: true
+        disableModuleConcatenation: true,
       });
 
       if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {
