@@ -24,11 +24,13 @@ const getPackageDetails = memoize(name => {
   } catch (error) {
     if (error.stderr.toString().includes('npm ERR! code E404')) {
       console.error(
-        chalk.yellow(
-          '\nWarning: package not found. Possibly not published yet',
+        chalk.red(
+          '\nError: package not found. Possibly not published yet, please verify that this package is published to npm.\n\nExit with status 1',
         ),
       );
-      return {};
+
+      // This script will not publish new packages to npm
+      process.exit(1);
     }
 
     throw error;
