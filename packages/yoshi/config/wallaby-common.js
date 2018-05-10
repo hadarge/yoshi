@@ -1,3 +1,26 @@
+const { spawnSync } = require('child_process');
+const { isAbsolute } = require('path');
+const homeDir = require('os').homedir();
+
+// cache result in env var since wallaby runs this file multiple times in the same process
+if (!process.env.WALLABY_NODE_PATH && process.platform !== 'win32') {
+  process.env.WALLABY_NODE_PATH = 'N/A';
+  let nvmOutput = spawnSync('/bin/sh', ['-c', `. ${homeDir}/.nvm/nvm.sh && nvm which`], {
+    encoding: 'utf-8',
+  });
+  if (nvmOutput.status === 1 && nvmOutput.stderr.includes('is not yet installed')) {
+    // if .nvmrc's version isnt installed, get default version
+    nvmOutput = spawnSync('/bin/sh', ['-c', `. ${homeDir}/.nvm/nvm.sh && nvm which default`], {
+      encoding: 'utf-8',
+    });
+  }
+  if (nvmOutput.status === 0) {
+    const stdout = nvmOutput.stdout.split('\n');
+    process.env.WALLABY_NODE_PATH =
+      (isAbsolute(stdout[0]) && stdout[0]) || (isAbsolute(stdout[1]) && stdout[1]);
+  }
+}
+
 module.exports = function(wallaby) {
   process.env.NODE_PATH += `:${require('path').join(
     wallaby.localProjectDir,
@@ -40,6 +63,7 @@ module.exports = function(wallaby) {
     },
     env: {
       type: 'node',
+      runner: process.env.WALLABY_NODE_PATH === 'N/A' ? null : process.env.WALLABY_NODE_PATH, // if falsy, defaults to Wallaby's node or System's node
       params: {
         env: `SRC_PATH=./src;NODE_ENV=test;WIX_NODE_BUILD_WATCH_MODE=true;`,
       },
