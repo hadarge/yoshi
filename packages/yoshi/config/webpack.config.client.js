@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
@@ -25,6 +25,7 @@ const defaultSplitChunksConfig = {
 const config = ({
   debug,
   separateCss = projectConfig.separateCss(),
+  hmr,
   analyze,
   disableModuleConcatenation,
 } = {}) => {
@@ -59,18 +60,20 @@ const config = ({
 
     module: {
       rules: [
-        ...require('../src/loaders/sass')(
+        ...require('../src/loaders/sass')({
           separateCss,
           cssModules,
           tpaStyle,
           projectName,
-        ).client,
-        ...require('../src/loaders/less')(
+          hmr,
+        }).client,
+        ...require('../src/loaders/less')({
           separateCss,
           cssModules,
           tpaStyle,
           projectName,
-        ).client,
+          hmr,
+        }).client,
       ],
     },
 
@@ -106,7 +109,7 @@ const config = ({
       ...(!separateCss
         ? []
         : [
-            new ExtractTextPlugin(debug ? '[name].css' : '[name].min.css'),
+            new MiniCssExtractPlugin(debug ? '[name].css' : '[name].min.css'),
             new RtlCssPlugin(debug ? '[name].rtl.css' : '[name].rtl.min.css'),
           ]),
     ],
