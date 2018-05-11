@@ -1,11 +1,11 @@
 const path = require('path');
 const { merge } = require('lodash/fp');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { cssModulesPattren } = require('yoshi-runtime');
 
 const useResolveUrlLoader = process.env.RESOLVE_URL_LOADER === 'true';
 
-module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
+module.exports = ({ separateCss, cssModules, tpaStyle, projectName, hmr }) => {
   const cssLoaderOptions = {
     camelCase: true,
     sourceMap: !!separateCss,
@@ -30,6 +30,7 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
       test: /\.s?css$/,
       use: clientLoader(
         separateCss,
+        hmr,
         { loader: 'style-loader', options: { singleton: true } },
         [
           {
@@ -87,8 +88,8 @@ module.exports = (separateCss, cssModules, tpaStyle, projectName) => {
   };
 };
 
-function clientLoader(separateCss, l1, l2) {
-  return separateCss
-    ? ExtractTextPlugin.extract({ fallback: l1, use: l2 })
-    : [l1].concat(l2);
+function clientLoader(separateCss, hmr, l1, l2) {
+  const fallbackLoader = separateCss ? MiniCssExtractPlugin.loader : l1;
+  const hmrLoader = hmr ? ['css-hot-loader'] : [];
+  return hmrLoader.concat(fallbackLoader).concat(l2);
 }
