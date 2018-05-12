@@ -19,7 +19,6 @@ describe('Aggregator: Build', () => {
   let test;
 
   describe('simple development project with separate styles (sass and less), babel, JSON, commons chunks with custom name and some UMD modules', () => {
-    let resp;
     const compiledSaasStyle = '.a .b {\n  color: red; }';
     const compiledLessStyle = '.a .b {\n  color: red;\n}';
     const bowerrc = {
@@ -33,82 +32,77 @@ describe('Aggregator: Build', () => {
       },
     };
 
-    before(() => {
-      test = tp.create();
-      resp = test
-        .setup(
-          {
-            '.babelrc': `{"presets": [["${require.resolve(
-              'babel-preset-env',
-            )}", {"modules": false}]]}`,
-            '.bowerrc': JSON.stringify(bowerrc, null, 2),
-            'petri-specs/specs.infra.Dummy.json': fx.petriSpec(),
-            'src/a.js': 'export default "I\'m a module!";',
-            'app/b.jsx': 'const b = 2;',
-            'src/nativeModules.js': ['fs', 'net', 'tls']
-              .map(moduleName => `require(${moduleName})`)
-              .join(';'),
-            'src/entry.js': 'export default "I\'m a module!";',
-            'src/dep.js': `module.exports = function(a){return a + 1;};`,
-            'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app.json');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss')`,
-            'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1); require('../app/e/style.less'); require('../app/b/style.less'); require('./moment-locale'); require('awesome-module1/entry.js'); require('lodash/map')`,
-            'src/app.json': `{"json-content": 1}`,
-            'src/moment-no-locale.js': `import 'moment-no-locale';`,
-            'node_modules/moment-no-locale/index.js': `function load() {return require('./locale/' + lang);}`,
-            'node_modules/awesome-module1/entry.js':
-              'module.exports = function() { return __dirname }',
-            'node_modules/awesome-module2/entry.js':
-              'module.exports = function() { return __dirname }',
-            'node_modules/moment-no-locale/locale/en.js': `module.exports = 'spanish';`,
-            'src/moment-locale.js': `require('moment-locale/locale/en')`,
-            'node_modules/moment-locale/locale/en.js': `module.exports = 'english';`,
-            'src/styles/my-file.global.scss': `.x {.y {color: blue;}}`,
-            'src/styles/my-file-less.global.less': `.q {.w {color: blue;}}`,
-            'src/styles/my-file.scss': `.a {.b {color: blue;}}`,
-            'app/a/style.scss': fx.scss(),
-            'app/b/style.less': fx.less(),
-            'app/c/style.less': `@import (once) '../b/style.less';`,
-            'app/d/style.less': `@import (once) 'some-module/style.less';`,
-            'app/e/style.scss':
-              '.a {\n.b {\ncolor: black;\n}\n}\n .c {\ndisplay: flex;\n}',
-            'app/e/style.less': '.a .b {\n  color: black;\n}',
-            'node_modules/some-module/style.less': fx.less(),
-            'app/assets/some-file': 'a',
-            'src/assets/some-file': 'a',
-            'dist/old.js': `const hello = "world!";`,
-            'src/angular-module.js': fx.angularJs(),
-            'angular-module.js': fx.angularJs(),
-            'pom.xml': fx.pom(),
-            'package.json': fx.packageJson({
-              clientProjectName: 'some-client-proj',
-              exports: 'MyLibraryEndpoint',
-              splitChunks: {
-                chunks: 'initial',
-                minSize: 0,
-                name: 'myChunk',
-              },
-              entry: {
-                first: './app1.js',
-                second: './app2.js',
-              },
-              features: {
-                externalizeRelativeLodash: false,
-              },
-              externals: ['lodash/map'],
-            }),
-          },
-          [
-            hooks.createSymlink(
-              'node_modules/awesome-module1/entry.js',
-              'node_modules/awesome-module2/entry.js',
-            ),
-          ],
-        )
-        .execute('build', [], getMockedCI({ ci: false }));
-    });
-    after(() => {
-      test.teardown();
-    });
+    const test = tp.create();
+    const resp = test
+      .setup(
+        {
+          '.babelrc': `{"presets": [["${require.resolve(
+            'babel-preset-env',
+          )}", {"modules": false}]]}`,
+          '.bowerrc': JSON.stringify(bowerrc, null, 2),
+          'petri-specs/specs.infra.Dummy.json': fx.petriSpec(),
+          'src/a.js': 'export default "I\'m a module!";',
+          'app/b.jsx': 'const b = 2;',
+          'src/nativeModules.js': ['fs', 'net', 'tls']
+            .map(moduleName => `require(${moduleName})`)
+            .join(';'),
+          'src/entry.js': 'export default "I\'m a module!";',
+          'src/dep.js': `module.exports = function(a){return a + 1;};`,
+          'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app.json');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss')`,
+          'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1); require('../app/e/style.less'); require('../app/b/style.less'); require('./moment-locale'); require('awesome-module1/entry.js'); require('lodash/map')`,
+          'src/app.json': `{"json-content": 1}`,
+          'src/moment-no-locale.js': `import 'moment-no-locale';`,
+          'node_modules/moment-no-locale/index.js': `function load() {return require('./locale/' + lang);}`,
+          'node_modules/awesome-module1/entry.js':
+            'module.exports = function() { return __dirname }',
+          'node_modules/awesome-module2/entry.js':
+            'module.exports = function() { return __dirname }',
+          'node_modules/moment-no-locale/locale/en.js': `module.exports = 'spanish';`,
+          'src/moment-locale.js': `require('moment-locale/locale/en')`,
+          'node_modules/moment-locale/locale/en.js': `module.exports = 'english';`,
+          'src/styles/my-file.global.scss': `.x {.y {color: blue;}}`,
+          'src/styles/my-file-less.global.less': `.q {.w {color: blue;}}`,
+          'src/styles/my-file.scss': `.a {.b {color: blue;}}`,
+          'app/a/style.scss': fx.scss(),
+          'app/b/style.less': fx.less(),
+          'app/c/style.less': `@import (once) '../b/style.less';`,
+          'app/d/style.less': `@import (once) 'some-module/style.less';`,
+          'app/e/style.scss':
+            '.a {\n.b {\ncolor: black;\n}\n}\n .c {\ndisplay: flex;\n}',
+          'app/e/style.less': '.a .b {\n  color: black;\n}',
+          'node_modules/some-module/style.less': fx.less(),
+          'app/assets/some-file': 'a',
+          'src/assets/some-file': 'a',
+          'dist/old.js': `const hello = "world!";`,
+          'src/angular-module.js': fx.angularJs(),
+          'angular-module.js': fx.angularJs(),
+          'pom.xml': fx.pom(),
+          'package.json': fx.packageJson({
+            clientProjectName: 'some-client-proj',
+            exports: 'MyLibraryEndpoint',
+            splitChunks: {
+              chunks: 'initial',
+              minSize: 0,
+              name: 'myChunk',
+            },
+            entry: {
+              first: './app1.js',
+              second: './app2.js',
+            },
+            features: {
+              externalizeRelativeLodash: false,
+            },
+            externals: ['lodash/map'],
+          }),
+        },
+        [
+          hooks.createSymlink(
+            'node_modules/awesome-module1/entry.js',
+            'node_modules/awesome-module2/entry.js',
+          ),
+        ],
+      )
+      .execute('build', [], getMockedCI({ ci: false }));
 
     it('should build w/o errors', () => {
       expect(resp.code).to.equal(0);
@@ -394,49 +388,44 @@ describe('Aggregator: Build', () => {
         expect(test.content('angular-module.js')).not.to.contain($inject);
       });
     });
+
+    test.teardown();
   });
 
   describe('simple development project with 1 entry point, ES modules, non-separate styles, babel, commons chunks and w/o cssModules', () => {
-    let resp;
-    before(() => {
-      test = tp.create();
-
-      resp = test
-        .setup(
-          {
-            '.babelrc': `{"presets": [["${require.resolve(
-              'babel-preset-env',
-            )}", {"modules": false}]]}`,
-            'src/a.js': `export default "I'm a module!"; import './a.scss'; require('lodash/map')`,
-            'src/a.scss': `.x {.y {display: flex;}}`,
-            'src/assets/file': '1',
-            'src/something.js': fx.angularJs(),
-            'something/something.js': fx.angularJs(),
-            'something.js': fx.angularJs(),
-            'package.json': fx.packageJson(
-              {
-                entry: './a.js',
-                separateCss: false,
-                cssModules: false,
-                features: {
-                  externalizeRelativeLodash: true,
-                },
-                externals: ['lodash'],
+    const test = tp.create();
+    const resp = test
+      .setup(
+        {
+          '.babelrc': `{"presets": [["${require.resolve(
+            'babel-preset-env',
+          )}", {"modules": false}]]}`,
+          'src/a.js': `export default "I'm a module!"; import './a.scss'; require('lodash/map')`,
+          'src/a.scss': `.x {.y {display: flex;}}`,
+          'src/assets/file': '1',
+          'src/something.js': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          'package.json': fx.packageJson(
+            {
+              entry: './a.js',
+              separateCss: false,
+              cssModules: false,
+              features: {
+                externalizeRelativeLodash: true,
               },
-              {},
-              {
-                module: 'dist/es/src/a.js',
-              },
-            ),
-          },
-          [],
-          outsideTeamCity,
-        )
-        .execute('build');
-    });
-    after(() => {
-      test.teardown();
-    });
+              externals: ['lodash'],
+            },
+            {},
+            {
+              module: 'dist/es/src/a.js',
+            },
+          ),
+        },
+        [],
+        outsideTeamCity,
+      )
+      .execute('build');
 
     it('should build w/o errors project using modules, non-separate sass, less, babel and commons chunks', () => {
       expect(resp.code).to.equal(0);
@@ -481,45 +470,39 @@ describe('Aggregator: Build', () => {
         /display: flex;/g,
       );
     });
+
+    test.teardown();
   });
 
   describe('simple project with typescript and angular that runs on CI (Teamcity) and w/ 1 entry point w/o extenstion', () => {
-    let resp;
-
-    before(() => {
-      test = tp.create();
-
-      resp = test
-        .setup({
-          'src/client.ts': `console.log("hello");
-            import './styles/style.scss';
-            import './other';`,
-          'src/app.js': `const a = 1;`,
-          'src/other.tsx': 'const b = 2',
-          'src/something.ts': fx.angularJs(),
-          'something/something.js': fx.angularJs(),
-          'something.js': fx.angularJs(),
-          'src/styles/style.scss': `.a {.b {color: red;}}`,
-          'tsconfig.json': fx.tsconfig(),
-          '.babelrc': `{"plugins": ["${require.resolve(
-            'babel-plugin-transform-es2015-block-scoping',
-          )}"]}`,
-          'package.json': fx.packageJson(
-            {
-              entry: './client',
-              separateCss: 'prod',
-              cssModules: true,
-            },
-            {
-              angular: '1.5.0',
-            },
-          ),
-        })
-        .execute('build', [], insideTeamCity);
-    });
-    after(() => {
-      test.teardown();
-    });
+    const test = tp.create();
+    const resp = test
+      .setup({
+        'src/client.ts': `console.log("hello");
+          import './styles/style.scss';
+          import './other';`,
+        'src/app.js': `const a = 1;`,
+        'src/other.tsx': 'const b = 2',
+        'src/something.ts': fx.angularJs(),
+        'something/something.js': fx.angularJs(),
+        'something.js': fx.angularJs(),
+        'src/styles/style.scss': `.a {.b {color: red;}}`,
+        'tsconfig.json': fx.tsconfig(),
+        '.babelrc': `{"plugins": ["${require.resolve(
+          'babel-plugin-transform-es2015-block-scoping',
+        )}"]}`,
+        'package.json': fx.packageJson(
+          {
+            entry: './client',
+            separateCss: 'prod',
+            cssModules: true,
+          },
+          {
+            angular: '1.5.0',
+          },
+        ),
+      })
+      .execute('build', [], insideTeamCity);
 
     it('should build w/o errors', () => {
       expect(resp.code).to.equal(0);
@@ -571,32 +554,26 @@ describe('Aggregator: Build', () => {
       expect(test.content('dist/src/something.js')).to.contain($inject);
       expect(test.content('something.js')).not.to.contain($inject);
     });
+
+    test.teardown();
   });
 
   describe('simple project with typescript and angular that runs on CI (Teamcity) and with 1 entry point w/o extenstion', () => {
-    let resp;
-
-    before(() => {
-      test = tp.create();
-
-      resp = test
-        .setup({
-          'src/client.ts': `console.log("hello"); import './styles/style.scss'`,
-          'src/styles/style.scss': `.a {.b {color: red;}}`,
-          'src/something.ts': fx.angularJs(),
-          'something/something.js': fx.angularJs(),
-          'something.js': fx.angularJs(),
-          'tsconfig.json': fx.tsconfig(),
-          'package.json': fx.packageJson({
-            separateCss: 'prod',
-            cssModules: true,
-          }),
-        })
-        .execute('build', [], { NODE_ENV: 'PRODUCTION' });
-    });
-    after(() => {
-      test.teardown();
-    });
+    const test = tp.create();
+    const resp = test
+      .setup({
+        'src/client.ts': `console.log("hello"); import './styles/style.scss'`,
+        'src/styles/style.scss': `.a {.b {color: red;}}`,
+        'src/something.ts': fx.angularJs(),
+        'something/something.js': fx.angularJs(),
+        'something.js': fx.angularJs(),
+        'tsconfig.json': fx.tsconfig(),
+        'package.json': fx.packageJson({
+          separateCss: 'prod',
+          cssModules: true,
+        }),
+      })
+      .execute('build', [], { NODE_ENV: 'PRODUCTION' });
 
     it('should build w/o errors', () => {
       expect(resp.code).to.equal(0);
@@ -794,6 +771,8 @@ describe('Aggregator: Build', () => {
         expect(res.stderr).to.contain('Unexpected token (2:0)');
       });
     });
+
+    test.teardown();
   });
 
   describe.skip('yoshi-check-deps', () => {
