@@ -139,6 +139,7 @@
     "typescript": "^2.6.1"
   },
   "jest": {
-    "testRegex": "((\\.|/)spec)\\.jsx?$"
+    "testRegex": "((\\.|/)spec)\\.jsx?$",
+    "testPathIgnorePatterns": ["/node_modules/", "/fixtures/build/"]
   }
 }
