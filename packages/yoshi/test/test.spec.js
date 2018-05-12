@@ -129,82 +129,77 @@ describe('Aggregator: Test', () => {
   });
 
   describe('--jest', () => {
-    let test;
-    let res;
-    before(() => {
-      test = tp.create();
-      res = test
-        .setup({
-          '__tests__/foo.js': `
-            describe('Foo', () => {
-              it('should return value', () => {
-                jest.mock('../foo');
-                const foo = require('../foo');
-                // foo is a mock function
-                foo.mockImplementation(() => 42);
-                expect(foo()).toBe(42);
-              });
-
-              it('should work with css', () => {
-                jest.mock('../bar');
-                const foo = require('../bar');
-                // foo is a mock function
-                foo.mockImplementation(() => 42);
-                expect(foo()).toBe(42);
-              });
-
-              it('should work with es modules', () => {
-                const baz = require('../baz').default;
-                expect(baz).toBe(1);
-              });
+    const test = tp.create();
+    const res = test
+      .setup({
+        '__tests__/foo.js': `
+          describe('Foo', () => {
+            it('should return value', () => {
+              jest.mock('../foo');
+              const foo = require('../foo');
+              // foo is a mock function
+              foo.mockImplementation(() => 42);
+              expect(foo()).toBe(42);
             });
-          `,
-          '__tests__/styles.js': `
-            it('pass stylable', () => {
-              const style = require('./main.st.css').default;
 
+            it('should work with css', () => {
+              jest.mock('../bar');
+              const foo = require('../bar');
+              // foo is a mock function
+              foo.mockImplementation(() => 42);
+              expect(foo()).toBe(42);
+            });
+
+            it('should work with es modules', () => {
+              const baz = require('../baz').default;
+              expect(baz).toBe(1);
+            });
+          });
+        `,
+        '__tests__/styles.js': `
+          it('pass stylable', () => {
+            const style = require('./main.st.css').default;
+
+            expect(style.someclass.indexOf('someclass') > -1).toBe(true);
+            expect(style('root').className.indexOf('root') > -1).toBe(true);
+          });
+        `,
+        '__tests__/separate-styles.js': `
+            it('pass styles from node_modules', () => {
+              const style = require('pkg/main.st.css').default;
               expect(style.someclass.indexOf('someclass') > -1).toBe(true);
               expect(style('root').className.indexOf('root') > -1).toBe(true);
-            });
-          `,
-          '__tests__/separate-styles.js': `
-              it('pass styles from node_modules', () => {
-                const style = require('pkg/main.st.css').default;
-                expect(style.someclass.indexOf('someclass') > -1).toBe(true);
-                expect(style('root').className.indexOf('root') > -1).toBe(true);
-              });`,
-          '__tests__/main.st.css': `
-            .someclass {
-              color: yellow;
+            });`,
+        '__tests__/main.st.css': `
+          .someclass {
+            color: yellow;
+        }`,
+        'foo.js': `
+          const s = require('./foo.scss');
+          module.exports = function() {
+            const a = s.a;
+          };`,
+        'bar.js': `
+          const s = require('./foo.scss');
+          module.exports = function() {
+            const a = s.a;
+          };`,
+        'baz.js': `export default 1;`,
+        'foo.scss': `.a {.b {color: red;}}`,
+        'node_modules/pkg/main.st.css': `
+          .someclass {
+            color: yellow;
           }`,
-          'foo.js': `
-            const s = require('./foo.scss');
-            module.exports = function() {
-              const a = s.a;
-            };`,
-          'bar.js': `
-            const s = require('./foo.scss');
-            module.exports = function() {
-              const a = s.a;
-            };`,
-          'baz.js': `export default 1;`,
-          'foo.scss': `.a {.b {color: red;}}`,
-          'node_modules/pkg/main.st.css': `
-            .someclass {
-              color: yellow;
-            }`,
-          'package.json': `{
-            "name": "a",\n
-            "jest": {
-              "moduleNameMapper": {
-                ".scss$": "${require.resolve('identity-obj-proxy')}"
-              }
+        'package.json': `{
+          "name": "a",\n
+          "jest": {
+            "moduleNameMapper": {
+              ".scss$": "${require.resolve('identity-obj-proxy')}"
             }
-          }`,
-        })
-        .execute('test', ['--jest'], insideTeamCity);
-    });
-    after(() => test.teardown());
+          }
+        }`,
+      })
+      .execute('test', ['--jest'], insideTeamCity);
 
     it('should pass with exit code 0', () => {
       expect(res.code).to.equal(0);
@@ -262,89 +257,85 @@ describe('Aggregator: Test', () => {
       expect(res.stderr).to.contain('1 failed');
       test.teardown();
     });
+    test.teardown();
   });
 
   describe('--mocha', () => {
-    let test;
-    let res;
     const imageExtensions = ['png', 'svg', 'jpg', 'jpeg', 'gif'];
     const audioExtensions = ['wav', 'mp3'];
-    before(() => {
-      test = tp.create();
-      res = test
-        .setup({
-          ...setupMediaFilesExtensions(imageExtensions, 'image'),
-          ...setupMediaFilesExtensions(audioExtensions, 'audio'),
-          '.babelrc': `{"plugins": ["${require.resolve(
-            'babel-plugin-transform-es2015-modules-commonjs',
-          )}"]}`,
-          'test/mocha-setup.js': 'global.foo = 123',
-          'src/getData1.graphql': 'query GetData1 { id, name }',
-          'src/getData2.gql': 'query GetData2 { id, name }',
-          'some/other.glob.js': `it("pass glob", () => { console.log('glob'); require('assert').equal(1, 1)});`,
-          'test/some.spec.js': `
-            const assert = require('assert');
-            const css = require('../src/some.scss');
-            const cssWithDefault = require('../src/some.scss').default;
+    const test = tp.create();
+    const res = test
+      .setup({
+        ...setupMediaFilesExtensions(imageExtensions, 'image'),
+        ...setupMediaFilesExtensions(audioExtensions, 'audio'),
+        '.babelrc': `{"plugins": ["${require.resolve(
+          'babel-plugin-transform-es2015-modules-commonjs',
+        )}"]}`,
+        'test/mocha-setup.js': 'global.foo = 123',
+        'src/getData1.graphql': 'query GetData1 { id, name }',
+        'src/getData2.gql': 'query GetData2 { id, name }',
+        'some/other.glob.js': `it("pass glob", () => { console.log('glob'); require('assert').equal(1, 1)});`,
+        'test/some.spec.js': `
+          const assert = require('assert');
+          const css = require('../src/some.scss');
+          const cssWithDefault = require('../src/some.scss').default;
 
-            describe('Foo', () => {
-              it("simply pass", () => 1);
-            });
+          describe('Foo', () => {
+            it("simply pass", () => 1);
+          });
 
-            describe('Bar', () => {
-              it("pass with css", () => {
-                assert.equal(css.hello, 'hello');
-                console.log('passed with css');
-              });
-              it("pass with default css", () => {
-                assert.equal(cssWithDefault.hello, 'hello');
-                console.log('passed with default css');
-              });
+          describe('Bar', () => {
+            it("pass with css", () => {
+              assert.equal(css.hello, 'hello');
+              console.log('passed with css');
             });
+            it("pass with default css", () => {
+              assert.equal(cssWithDefault.hello, 'hello');
+              console.log('passed with default css');
+            });
+          });
 
-            describe('graphql', () => {
-              it("pass with graphql", () => {
-                assert.equal(require('../src/getData1.graphql').kind, 'Document');
-                console.log('passed with graphql');
-              });
-              it("pass with gql", () => {
-                assert.equal(require('../src/getData2.gql').kind, 'Document');
-                console.log('passed with gql');
-              });
+          describe('graphql', () => {
+            it("pass with graphql", () => {
+              assert.equal(require('../src/getData1.graphql').kind, 'Document');
+              console.log('passed with graphql');
             });
+            it("pass with gql", () => {
+              assert.equal(require('../src/getData2.gql').kind, 'Document');
+              console.log('passed with gql');
+            });
+          });
 
-            it("accept configuration file", () => {
-              assert.equal(global.foo, 123);
-              console.log('accepted configuration file');
-            });
-          `,
-          'dist/statics/index.html': `hello world`,
-          'dist/components/some.css': `.my-class {color: red}`,
-          'dist/components/some.js': `require('./some.css');`,
-          'dist/components/some.spec.js': `it("pass css", () => {require('./some'); console.log('passed css')});`,
-          'node_modules/wix-style-react/src/index.js': 'export default 1',
-          'test/some.js': `import x from 'wix-style-react/src'; export default x => x`,
-          'test/some-babel.spec.js': `import identity from './some'; it("pass babel", () => console.log('passed babel'));`,
-          'test/bla.e2e.js': `
-            const assert = require('assert');
-            const fetch = require('node-fetch');
-            it("pass e2e", async () => {
-              assert.equal((await (await fetch('http://localhost:3200/index.html')).text()).trim(), 'hello world')
-              console.log('passed e2e');
-            });`,
-          'src/some.scss': '',
-          'package.json': `{
-            "name": "a",
-            "yoshi": {
-              "specs": {
-                "node": "**/*.{glob,spec,e2e}.js"
-              }
+          it("accept configuration file", () => {
+            assert.equal(global.foo, 123);
+            console.log('accepted configuration file');
+          });
+        `,
+        'dist/statics/index.html': `hello world`,
+        'dist/components/some.css': `.my-class {color: red}`,
+        'dist/components/some.js': `require('./some.css');`,
+        'dist/components/some.spec.js': `it("pass css", () => {require('./some'); console.log('passed css')});`,
+        'node_modules/wix-style-react/src/index.js': 'export default 1',
+        'test/some.js': `import x from 'wix-style-react/src'; export default x => x`,
+        'test/some-babel.spec.js': `import identity from './some'; it("pass babel", () => console.log('passed babel'));`,
+        'test/bla.e2e.js': `
+          const assert = require('assert');
+          const fetch = require('node-fetch');
+          it("pass e2e", async () => {
+            assert.equal((await (await fetch('http://localhost:3200/index.html')).text()).trim(), 'hello world')
+            console.log('passed e2e');
+          });`,
+        'src/some.scss': '',
+        'package.json': `{
+          "name": "a",
+          "yoshi": {
+            "specs": {
+              "node": "**/*.{glob,spec,e2e}.js"
             }
-          }`,
-        })
-        .execute('test', ['--mocha']);
-    });
-    after(() => test.teardown());
+          }
+        }`,
+      })
+      .execute('test', ['--mocha']);
 
     it('should pass with exit code 0', () => {
       // the way we detect that Mocha runs is by using it.only,
@@ -568,59 +559,49 @@ describe('Aggregator: Test', () => {
     it('should run e2e tests using mocha', () => {
       expect(res.stdout).to.contain('passed e2e');
     });
+
+    test.teardown();
   });
 
   describe('--karma', function() {
     this.timeout(60000);
-    let test;
-    let res;
-
-    before(() => {
-      test = tp.create();
-
-      // 'src/client.spec.js': `require('./foo.css'); it('pass', function () {expect(1).toBe(1);});`,
-      //   'src/foo.css': '@import "bar/bar";',
-      //   'node_modules/bar/bar.scss': '.bar{color:red}',
-      //   'karma.conf.js': fx.karmaWithJasmine(),
-      //   'package.json': fx.packageJson()
-      res = test
-        .setup({
-          'karma.conf.js':
-            'module.exports = {frameworks: ["jasmine"], files: ["a.js", "test.spec.js"], exclude: ["excluded.spec.js"]}',
-          'node_modules/phantomjs-polyfill/bind-polyfill.js': 'a = 1;',
-          'a.js': '"use strict";var a = 2; var b = 3;',
-          'src/test.spec.js': `
-            it("pass result", function () { expect(1).toBe(1); });
-            it("pass polyfill", function () { expect(global.a).toBe(1); console.log('passed polyfill') });
-            it("pass correct sequence", function () { expect(a).toBe(1);expect(b).toBe(3); console.log('passed correct sequence')});
-          `,
-          'src/test2.spec.js':
-            'it("pass", function () { expect(1).toBe(1); });',
-          'src/test1.spec.js':
-            'it("pass", function () { expect(2).toBe(2); });',
-          'some/other/app.glob.js':
-            'it("pass", function () { expect(4).toBe(4); });',
-          'some/other/app2.glob.js':
-            'it("pass", function () { expect(5).toBe(5); });',
-          'src/style.scss': `.a {.b {color: red;}}`,
-          'src/client.js': `require('./style.scss'); module.exports = function (a) {return a + 1;};`,
-          'src/client.spec.js': `
-            const add1 = require('./client'); it('pass client', function () {expect(add1(1)).toBe(2);});
-              it('pass style from node_modules', function () {require('./foo.css');});
-          `,
-          'src/foo.css': '@import "bar/bar";',
-          'node_modules/bar/bar.scss': '.bar{color:red}',
-          'excluded.spec.js': `
-            it("pass excluded", function () { expect(1).toBe(1); console.log('passed excluded') });
-          `,
-          'package.json': fx.packageJson({
-            separateCss: false,
-          }),
-          'pom.xml': fx.pom(),
-        })
-        .execute('test', ['--karma'], outsideTeamCity);
-    });
-    after(() => test.teardown());
+    const test = tp.create();
+    const res = test
+      .setup({
+        'karma.conf.js':
+          'module.exports = {frameworks: ["jasmine"], files: ["a.js", "test.spec.js"], exclude: ["excluded.spec.js"]}',
+        'node_modules/phantomjs-polyfill/bind-polyfill.js': 'a = 1;',
+        'a.js': '"use strict";var a = 2; var b = 3;',
+        'src/test.spec.js': `
+          it("pass result", function () { expect(1).toBe(1); });
+          it("pass polyfill", function () { expect(global.a).toBe(1); console.log('passed polyfill') });
+          it("pass correct sequence", function () { expect(a).toBe(1);expect(b).toBe(3); console.log('passed correct sequence')});
+        `,
+        'src/test2.spec.js':
+          'it("pass", function () { expect(1).toBe(1); });',
+        'src/test1.spec.js':
+          'it("pass", function () { expect(2).toBe(2); });',
+        'some/other/app.glob.js':
+          'it("pass", function () { expect(4).toBe(4); });',
+        'some/other/app2.glob.js':
+          'it("pass", function () { expect(5).toBe(5); });',
+        'src/style.scss': `.a {.b {color: red;}}`,
+        'src/client.js': `require('./style.scss'); module.exports = function (a) {return a + 1;};`,
+        'src/client.spec.js': `
+          const add1 = require('./client'); it('pass client', function () {expect(add1(1)).toBe(2);});
+            it('pass style from node_modules', function () {require('./foo.css');});
+        `,
+        'src/foo.css': '@import "bar/bar";',
+        'node_modules/bar/bar.scss': '.bar{color:red}',
+        'excluded.spec.js': `
+          it("pass excluded", function () { expect(1).toBe(1); console.log('passed excluded') });
+        `,
+        'package.json': fx.packageJson({
+          separateCss: false,
+        }),
+        'pom.xml': fx.pom(),
+      })
+      .execute('test', ['--karma'], outsideTeamCity);
 
     describe('with jasmine configuration', () => {
       it('should exit with code 0', () => {
@@ -810,6 +791,7 @@ describe('Aggregator: Test', () => {
         });
       });
     });
+    test.teardown();
   });
 });
 

@@ -26,109 +26,104 @@ function installHaml(cwd) {
 
 describe('Loaders', () => {
   describe('[babel,svg,sass,less]-loaders with dependencies.angular and assets', () => {
-    let test;
-    let resp;
     const svgContent = '<svg><g><path fill="#EEEEEE"></path></g></svg>';
     const svgModule =
       'module.exports = "<svg><g><path fill=\\"#EEEEEE\\"></path></g></svg>"';
 
-    before(() => {
-      test = tp.create();
-      resp = test
-        .setup({
-          'src/client.js': `
-            let aServerFunction = 1;
-            angular.module('fakeModule', []).config(function($javascript){});
-            require('wix-style-react/src');
-            require('./svgIcon.inline.svg');
-            require('./some-css.scss');
-            require('./some-less.less');
-            require('./foo.css');
-            require('./foo.css');
-            require('./tiny-image.png');
-            require('./largeImage.png');
-            require('./img.png');
-            require('./img.jpg');
-            require('./img.jpeg');
-            require('./img.gif');
-            require('./font.ttf');
-            require('./font.woff');
-            require('./font.woff2');
-            require('./font.eot');
-            require('./beep.wav');
-            require('./beep.mp3');
-            require('./image.svg?version=1.0.2&some-other-param=value');
-            require('./icon.svg');
-            require('./icon.inline.svg');
-            require('./icon.inlineW.svg');`,
-          'src/server.js': `
-            require('./some-css.scss');
-            require('./foo.css');`,
-          'src/some-less.less': `// comment
-            @import "./imported-less";
-            @import "bar/baz.less";
-            .less-rule { .child { color: gray; } }
-            .tpa-rule {
-              font: unquote("; {{body-l}}");
-            }
-            `,
-          'src/imported-less.less': '.foo{appearance: none;}',
-          'src/some-css.scss': `
-            // comment
-            @import "./foo/imported";
-            @import "./tpa";
-            @import "bar/bar";
-            .other-rule { .child { color: red; } }
-            @import "compass";
-            .bar{color:brown}
-            .some-rule { composes: foo from './composes.scss';}`,
-          'src/foo/imported.scss': `
-            .foo {appearance: smth; color: unquote("{{color-1}}")}`,
-          'src/tpa.css':
-            '.foo{color: unquote("{{color-3}}");font: unquote("; {{body-m}}");font-size: 16px;}',
-          'src/foo.css': '.foo-rule { color: blue }',
-          'src/composes.scss': `.foo{background: white;} // comments are only possible in sass`,
-          'src/config.js': '',
-          'src/svgIcon.inline.svg': svgContent,
-          'node_modules/wix-style-react/src/index.js': 'let tpl = 1',
-          'node_modules/bar/baz.less': '.bar{color:pink}',
-          'node_modules/bar/bar.scss': '.bar{color:yellow}',
-          'node_modules/compass-mixins/lib/_compass.scss': '',
-          'src/tiny-image.png': 'some-content',
-          'src/largeImage.png': createAboveTheLimitFile(),
-          'src/img.png': createAboveTheLimitFile(),
-          'src/img.jpg': createAboveTheLimitFile(),
-          'src/img.jpeg': createAboveTheLimitFile(),
-          'src/img.gif': createAboveTheLimitFile(),
-          'src/font.ttf': createAboveTheLimitFile(),
-          'src/font.woff': createAboveTheLimitFile(),
-          'src/font.woff2': createAboveTheLimitFile(),
-          'src/font.eot': createAboveTheLimitFile(),
-          'src/beep.wav': createAboveTheLimitFile(),
-          'src/beep.mp3': createAboveTheLimitFile(),
-          'src/image.svg': createAboveTheLimitFile(),
-          'src/icon.svg': createAboveTheLimitFile(),
-          'src/icon.inline.svg': createAboveTheLimitFile(),
-          'src/icon.inlineW.svg': createAboveTheLimitFile(),
-          '.babelrc': `{"plugins": ["babel-plugin-transform-es2015-block-scoping"]}`,
-          'package.json': `{\n
-            "name": "a",
-            "dependencies": {\n
-              "angular": "^1.5.0",\n
-              "wix-style-react": "file:node_modules/wix-style-react"
-            },
-            "yoshi": {
-              "tpaStyle": true
-            }
-          }`,
-          'pom.xml': fx.pom(),
-        })
-        .execute('build', [], {
-          RESOLVE_URL_LOADER: true,
-          ...getMockedCI({ ci: false }),
-        });
-    });
-    after(() => test.teardown());
+    const test = tp.create();
+    const resp = test
+      .setup({
+        'src/client.js': `
+          let aServerFunction = 1;
+          angular.module('fakeModule', []).config(function($javascript){});
+          require('wix-style-react/src');
+          require('./svgIcon.inline.svg');
+          require('./some-css.scss');
+          require('./some-less.less');
+          require('./foo.css');
+          require('./foo.css');
+          require('./tiny-image.png');
+          require('./largeImage.png');
+          require('./img.png');
+          require('./img.jpg');
+          require('./img.jpeg');
+          require('./img.gif');
+          require('./font.ttf');
+          require('./font.woff');
+          require('./font.woff2');
+          require('./font.eot');
+          require('./beep.wav');
+          require('./beep.mp3');
+          require('./image.svg?version=1.0.2&some-other-param=value');
+          require('./icon.svg');
+          require('./icon.inline.svg');
+          require('./icon.inlineW.svg');`,
+        'src/server.js': `
+          require('./some-css.scss');
+          require('./foo.css');`,
+        'src/some-less.less': `// comment
+          @import "./imported-less";
+          @import "bar/baz.less";
+          .less-rule { .child { color: gray; } }
+          .tpa-rule {
+            font: unquote("; {{body-l}}");
+          }
+          `,
+        'src/imported-less.less': '.foo{appearance: none;}',
+        'src/some-css.scss': `
+          // comment
+          @import "./foo/imported";
+          @import "./tpa";
+          @import "bar/bar";
+          .other-rule { .child { color: red; } }
+          @import "compass";
+          .bar{color:brown}
+          .some-rule { composes: foo from './composes.scss';}`,
+        'src/foo/imported.scss': `
+          .foo {appearance: smth; color: unquote("{{color-1}}")}`,
+        'src/tpa.css':
+          '.foo{color: unquote("{{color-3}}");font: unquote("; {{body-m}}");font-size: 16px;}',
+        'src/foo.css': '.foo-rule { color: blue }',
+        'src/composes.scss': `.foo{background: white;} // comments are only possible in sass`,
+        'src/config.js': '',
+        'src/svgIcon.inline.svg': svgContent,
+        'node_modules/wix-style-react/src/index.js': 'let tpl = 1',
+        'node_modules/bar/baz.less': '.bar{color:pink}',
+        'node_modules/bar/bar.scss': '.bar{color:yellow}',
+        'node_modules/compass-mixins/lib/_compass.scss': '',
+        'src/tiny-image.png': 'some-content',
+        'src/largeImage.png': createAboveTheLimitFile(),
+        'src/img.png': createAboveTheLimitFile(),
+        'src/img.jpg': createAboveTheLimitFile(),
+        'src/img.jpeg': createAboveTheLimitFile(),
+        'src/img.gif': createAboveTheLimitFile(),
+        'src/font.ttf': createAboveTheLimitFile(),
+        'src/font.woff': createAboveTheLimitFile(),
+        'src/font.woff2': createAboveTheLimitFile(),
+        'src/font.eot': createAboveTheLimitFile(),
+        'src/beep.wav': createAboveTheLimitFile(),
+        'src/beep.mp3': createAboveTheLimitFile(),
+        'src/image.svg': createAboveTheLimitFile(),
+        'src/icon.svg': createAboveTheLimitFile(),
+        'src/icon.inline.svg': createAboveTheLimitFile(),
+        'src/icon.inlineW.svg': createAboveTheLimitFile(),
+        '.babelrc': `{"plugins": ["babel-plugin-transform-es2015-block-scoping"]}`,
+        'package.json': `{\n
+          "name": "a",
+          "dependencies": {\n
+            "angular": "^1.5.0",\n
+            "wix-style-react": "file:node_modules/wix-style-react"
+          },
+          "yoshi": {
+            "tpaStyle": true
+          }
+        }`,
+        'pom.xml': fx.pom(),
+      })
+      .execute('build', [], {
+        RESOLVE_URL_LOADER: true,
+        ...getMockedCI({ ci: false }),
+      });
 
     it('should build w/o errors', () => {
       expect(resp.code).to.equal(0);
@@ -336,64 +331,59 @@ describe('Loaders', () => {
         expect(content).to.contain(fileAboveTheLimit('icon.inlineW.svg'));
       });
     });
+    test.teardown();
   });
 
   describe('[ts,json,html,haml]-loaders with `yoshi.separateCss: false`', () => {
-    let test;
-    let resp;
-
-    before(() => {
-      test = tp.create();
-      resp = test
-        .setup(
-          {
-            'src/app.ts': `
-            import './some.css';
-            import './some.json';
-            import './some.html';
-            import './some.haml';
-            import './some.md';
-            import './getData1.graphql';
-            import './getData2.gql';
-            let aServerFunction = 1;
-            declare var angular: any; angular.module('fakeModule', []).config(function($typescript){});`,
-            'src/some.json': '{"json-content": 42}',
-            'src/some.html': '<div>This is a HTML file</div>',
-            'src/some.haml': '.foo This is a HAML file',
-            'src/some.md': '### title',
-            'src/some.css': '.a {color: green;}',
-            'src/getData1.graphql': 'query GetData1 { id, name }',
-            'src/getData2.gql': 'query GetData2 { id, name }',
-            'src/foo.css': '.foo-rule { color: blue }',
-            'package.json': `{
-            "name": "b",
-            "yoshi": {
-              "entry": "./app.ts",
-              "separateCss": false
-            },
-            "peerDependencies": {
-              "angular": "^1.5.0"
-            }
-          }`,
-            'pom.xml': fx.pom(),
-            'tsconfig.json': fx.tsconfig(),
+    const test = tp.create();
+    const resp = test
+      .setup(
+        {
+          'src/app.ts': `
+          import './some.css';
+          import './some.json';
+          import './some.html';
+          import './some.haml';
+          import './some.md';
+          import './getData1.graphql';
+          import './getData2.gql';
+          let aServerFunction = 1;
+          declare var angular: any; angular.module('fakeModule', []).config(function($typescript){});`,
+          'src/some.json': '{"json-content": 42}',
+          'src/some.html': '<div>This is a HTML file</div>',
+          'src/some.haml': '.foo This is a HAML file',
+          'src/some.md': '### title',
+          'src/some.css': '.a {color: green;}',
+          'src/getData1.graphql': 'query GetData1 { id, name }',
+          'src/getData2.gql': 'query GetData2 { id, name }',
+          'src/foo.css': '.foo-rule { color: blue }',
+          'package.json': `{
+          "name": "b",
+          "yoshi": {
+            "entry": "./app.ts",
+            "separateCss": false
           },
-          [installHaml],
-        )
-        .execute('build', [], {
-          ...getMockedCI({ ci: false }),
-          PATH:
-            spawnSync('bundle', ['show', 'haml'], { cwd: test.tmp })
-              .stdout.toString()
-              .trim() +
-            '/bin' +
-            path.delimiter +
-            process.env.PATH,
-          GEM_PATH:
-            process.env.GEM_PATH + path.delimiter + test.tmp + '/.bundle',
-        });
-    });
-    after(() => test.teardown());
+          "peerDependencies": {
+            "angular": "^1.5.0"
+          }
+        }`,
+          'pom.xml': fx.pom(),
+          'tsconfig.json': fx.tsconfig(),
+        },
+        [installHaml],
+      )
+      .execute('build', [], {
+        ...getMockedCI({ ci: false }),
+        PATH:
+          spawnSync('bundle', ['show', 'haml'], { cwd: test.tmp })
+            .stdout.toString()
+            .trim() +
+          '/bin' +
+          path.delimiter +
+          process.env.PATH,
+        GEM_PATH:
+          process.env.GEM_PATH + path.delimiter + test.tmp + '/.bundle',
+      });
 
     it('should build w/o errors', () => {
       expect(resp.code).to.equal(0);
@@ -464,6 +454,7 @@ describe('Loaders', () => {
         expect(content).to.contain('{"kind":"Name","value":"GetData2"}');
       });
     });
+    test.teardown();
   });
 
   describe('loaders exceptions', () => {

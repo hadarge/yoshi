@@ -13,21 +13,23 @@ const {
 describe('Migrate to scoped packages task', () => {
   let test, child, npm;
 
-  before(() => startNpmServer(3400).then(ref => (npm = ref)));
-  after(() => npm.instance.close());
+  // const npm = startNpmServer(3400);
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    npm = await startNpmServer(3400);
+
     test = tp.create();
     child = null;
     npm.app.set('exists', false);
     npm.app.set('packages', []);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     if (test.stderr) {
       console.log(test.stderr);
     }
     test.teardown();
+    await npm.instance.close();
     return killSpawnProcessAndHisChildren(child);
   });
 
