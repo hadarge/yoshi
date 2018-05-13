@@ -158,22 +158,22 @@ describe('Aggregator: Build', () => {
 
       it('should generate css attributes prefixes for on separate css file', () => {
         expect(test.content(`dist/statics/first.css`)).to.match(
-          /display:-webkit-box/g,
+          /display: -webkit-box/g,
         );
         expect(test.content(`dist/statics/first.css`)).to.match(
-          /display:-ms-flexbox/g,
+          /display: -ms-flexbox/g,
         );
         expect(test.content(`dist/statics/first.css`)).to.match(
-          /display:flex/g,
+          /display: flex/g,
         );
       });
 
       it('should disable css modules for .global.scss files', () => {
-        expect(test.content(`dist/statics/first.css`)).to.contain('.x .y{');
+        expect(test.content(`dist/statics/first.css`)).to.contain('.x .y {');
       });
 
       it('should disable css modules for .global.less files', () => {
-        expect(test.content(`dist/statics/first.css`)).to.contain('.q .w{');
+        expect(test.content(`dist/statics/first.css`)).to.contain('.q .w {');
       });
 
       it('should create a separate css file for each entry', () => {
@@ -184,7 +184,7 @@ describe('Aggregator: Build', () => {
       });
 
       it('should generate css modules on separate css file', () => {
-        const regex = /\.styles-my-file__a__.{5}\s.styles-my-file__b__.{5}{/;
+        const regex = /\.styles-my-file__a__.{5}\s.styles-my-file__b__.{5}\s{/;
         expect(test.content(`dist/statics/first.bundle.js`)).not.to.match(
           regex,
         );
