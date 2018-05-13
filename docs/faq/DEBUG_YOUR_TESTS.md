@@ -34,8 +34,9 @@ Several commercial and open source tools can connect to Node's Inspector and the
 #### [JetBrains WebStorm](https://www.jetbrains.com/webstorm/)  [2017.1+ and other JetBrains IDEs](https://nodejs.org/en/docs/guides/debugging-getting-started/#jetbrains-webstorm-2017-1-and-other-jetbrains-ides)  
   
 - Create a new Node.js debug configuration with the wantted Yoshi task name   
- - 📌 no `--debug` flag needed when using WebStorm  
- - WebStorm will inject `--inspect-brk=XXX` and automatically attach debugger to Yoshi's main process and any other child process.   
+ - In some cases WebStorm debugger can't auto attach to child process
+    - In order to manually tell WebStorm the debugging port create another configuration from type 'Attach to Node.js/Chrome'
+    - ![image description](https://preview.ibb.co/mhSnty/Screen_Shot_2018_05_13_at_11_49_48.png)  
  - Example configuration -   
        
-![image description](https://image.ibb.co/cYNPOn/Screen_Shot_2018_05_02_at_21_56_05.png)  
+![image description](https://preview.ibb.co/cyXbmJ/Screen_Shot_2018_05_13_at_11_49_40.png)  
