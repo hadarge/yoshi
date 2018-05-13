@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.4.0 (May 13, 2018)
+
+#### :bug: Bug
+* `yoshi`
+  * [#274](https://github.com/wix-private/yoshi/pull/274) Lint fixes for wallaby config
+  * [#277](https://github.com/wix-private/yoshi/pull/277) Jest Stylable Transform Fix for Windows
+
+#### :nail_care: Enhancement
+* `eslint-config-yoshi-base`
+  * [#258](https://github.com/wix-private/yoshi/pull/258) Has been created and can be used
+* `eslint-config-yoshi`
+  * [#276](https://github.com/wix-private/yoshi/pull/276) Has been created and can be used
+* `babel-preset-yoshi`
+  * [#205](https://github.com/wix-private/yoshi/pull/205) Has been created and can be used
+* `yoshi`
+  * [#253](https://github.com/wix-private/yoshi/pull/253) support nvm version in wallaby
+
 ## 2.3.0 (May 9, 2018)
 
 #### :nail_care: Enhancement
