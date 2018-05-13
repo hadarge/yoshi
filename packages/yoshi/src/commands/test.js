@@ -123,7 +123,7 @@ module.exports = runner.command(
     if (cliArgs.jest) {
       const config = require('../../config/jest.config.js');
       const jestCliOptions = [
-        require.resolve('jest-cli/bin/jest'),
+        require.resolve('jest/bin/jest'),
         `--config=${JSON.stringify(config)}`,
         shouldWatch ? '--watch' : '',
       ];
