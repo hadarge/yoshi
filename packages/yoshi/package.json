@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -16,9 +16,9 @@
     "babel-jest": "~20.0.3",
     "babel-loader": "~7.1.1",
     "babel-plugin-transform-es2015-modules-commonjs": "~6.24.1",
-    "babel-preset-yoshi": "^2.1.8",
     "babel-polyfill": "~6.23.0",
     "babel-preset-wix": "~1.0.0",
+    "babel-preset-yoshi": "^2.4.0",
     "babel-register": "~6.24.1",
     "caporal": "~0.9.0",
     "case-sensitive-paths-webpack-plugin": "~2.1.1",
