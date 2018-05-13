@@ -109,7 +109,9 @@ const config = ({
       ...(!separateCss
         ? []
         : [
-            new MiniCssExtractPlugin(debug ? '[name].css' : '[name].min.css'),
+            new MiniCssExtractPlugin({
+              filename: debug ? '[name].css' : '[name].min.css',
+            }),
             new RtlCssPlugin(debug ? '[name].rtl.css' : '[name].rtl.min.css'),
           ]),
     ],
