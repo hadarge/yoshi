@@ -1,4 +1,4 @@
-# eslint configuration for react projects using yoshi
+# eslint configuration for yoshi based projects using react
 
 Install all peer dependencies:
 
