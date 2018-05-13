@@ -26,7 +26,7 @@ module.exports = function(api, opts = {}) {
           // Always use destructuring b/c of import/export support.
           include: ['transform-es2015-destructuring', ...options.include],
           exclude: options.exclude,
-          // We don't need be fully spec compatiable, bundle size is matter.
+          // We don't need be fully spec compatible, bundle size is matter.
           loose: true,
           // Allow users to provide own targets
           targets: options.targets,
