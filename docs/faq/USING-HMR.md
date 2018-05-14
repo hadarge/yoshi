@@ -43,7 +43,7 @@ You can configure hmr manually, according to the steps above, or you can use the
 
 Just add this option to your config and yoshi will provide the transformations needed for your entry files to make HMR work in a correct way.
 
-During `yoshi start` command it will [add `babel-plugin-transform-hmr-runtime`](https://github.com/wix-private/yoshi/pull/189). This plugin will add `react-hot-reload` to your imports, check `import`ed `from 'react-dom'` `render` method and try to wrap your root Component into special Higher Order Component provided by `react-hot-reload`.
+During `yoshi start` command it will [add `babel-plugin-transform-hmr-runtime`](https://github.com/wix/yoshi/pull/189). This plugin will add `react-hot-reload` to your imports, check `import`ed `from 'react-dom'` `render` method and try to wrap your root Component into special Higher Order Component provided by `react-hot-reload`.
 It also adds:
 ```js
 if (module.hot) {
@@ -54,4 +54,4 @@ to your entry files and initializes HMR.
 
 ### Caveats:
 - It doesn't work yet with `render(React.createElement('div'), el)`. Just with JSX elements. But we are working on this.
-- Despite that it isn't somehow affect production, it's not stable yet. So you could try it and [open an issue](https://github.com/wix-private/yoshi/issues) in case of bugs. 🙏
+- Despite that it isn't somehow affect production, it's not stable yet. So you could try it and [open an issue](https://github.com/wix/yoshi/issues) in case of bugs. 🙏

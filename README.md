@@ -156,7 +156,7 @@ yoshi: {
     }
   ```
 
-* [How to debug tests](https://github.com/wix-private/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md)
+* [How to debug tests](https://github.com/wix/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md)
 ### lint
 
 Flag | Short Flag | Description | Default Value
