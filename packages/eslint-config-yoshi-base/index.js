@@ -139,9 +139,9 @@ module.exports = {
 
     // https://github.com/benmosher/eslint-plugin-import
     'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
-    'import/no-extraneous-dependencies': 'error',
+    'import/no-extraneous-dependencies': 'warn',
     'import/no-amd': 'error',
-    'import/first': ['error', 'absolute-first'],
+    'import/first': ['warn', 'absolute-first'],
     'import/no-duplicates': 'error',
     'import/extensions': [
       'error',
@@ -152,7 +152,6 @@ module.exports = {
     ],
     'import/newline-after-import': 'error',
     'import/no-absolute-path': 'error',
-    'import/no-cycle': ['error', { maxDepth: Infinity }],
     'import/no-useless-path-segments': 'error',
 
     // https://github.com/prettier/eslint-plugin-prettier
