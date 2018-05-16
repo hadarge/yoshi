@@ -5,15 +5,15 @@ const terminalLink = require('terminal-link');
 
 const readMoreLink = terminalLink(
   '🔗  Read more',
-  'https://github.com/wix-private/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md',
+  'https://github.com/wix/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md',
 );
 console.warn(`
               ╔════════════════════════════════╗
               ║ 🛑                            🛑 ║
               ║      ${chalk.underline('Deprecation Warning')}       ║
-              ║                                ║ 
-              ║      'yoshi' now supports      ║    
-              ║                                ║ 
+              ║                                ║
+              ║      'yoshi' now supports      ║
+              ║                                ║
               ║      ${chalk.green.bold('🖥  yoshi test --debug')}     ║
               ║                                ║
               ║      As a built in command     ║
