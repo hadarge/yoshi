@@ -29,7 +29,12 @@ function ensureServerIsNotRunning(newPort) {
   return startServerPromise;
 }
 
-function initializeServerStartDelegate({ serverScript, debugPort, debugBrkPort, log }) {
+function initializeServerStartDelegate({
+  serverScript,
+  debugPort,
+  debugBrkPort,
+  log,
+}) {
   return port => {
     const env = Object.assign({}, process.env, {
       NODE_ENV: 'development',

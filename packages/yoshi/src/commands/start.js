@@ -57,7 +57,12 @@ module.exports = runner.command(
       }
 
       return wixAppServer(
-        { entryPoint, debugPort, debugBrkPort, manualRestart: cliArgs['manual-restart'] },
+        {
+          entryPoint,
+          debugPort,
+          debugBrkPort,
+          manualRestart: cliArgs['manual-restart'],
+        },
         { title: 'app-server' },
       );
     };
