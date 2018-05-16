@@ -5,6 +5,12 @@ This guide will help you get started debugging your tests.
 When started with the `--debug` switch, Yoshi will allow to attach NodeJS debugger to the relevant child process with the default host and port.
 You can configure the default port by: `--debug=XXXX`
 
+## Enable BRK flag
+When started with the `--debug-brk` switch, Yoshi will allow to attach NodeJS debugger and the relevant child process won't start until debugger will attached.
+You can configure the default port by: `--debug-brk=XXXX`.
+
+- 📌 yoshi consider `--debug-brk` before `--debug`. so in case you're using both flags `--debug-brk` will take place.
+
 ## [Inspector Clients](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients)
 
 Several commercial and open source tools can connect to Node's Inspector and there for can debug Yoshi tasks. Basic info on these follows:
