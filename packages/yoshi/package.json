@@ -5,6 +5,10 @@
   "bin": {
     "yoshi": "./bin/yoshi.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wix-private/yoshi"
+  },
   "scripts": {
     "test": "mocha './test/{,!(fixtures)/**/}/*.spec.js'",
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch",
