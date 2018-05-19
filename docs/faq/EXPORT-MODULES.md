@@ -14,7 +14,9 @@ Yoshi will also use this field to infer whether to create `/es` directory with n
 
 ### How
 
-1. Don't include `babel-plugin-transform-es2015-modules-commonjs` to your `.babelrc`. (If you are using `babel-preset-env`, `babel-preset-es2015` or other preset which includes this plugin under the hood, use `{ modules: false }` to configure it.
+1. Don't include `babel-plugin-transform-es2015-modules-commonjs` to your `.babelrc`.
+    * If you are using `babel-preset-env`, `babel-preset-es2015` or other preset which includes this plugin under the hood, use `{ modules: false }` to configure it.
+    * If you are using `babel-preset-wix` there is nothing special you need to do in babel config.
 2. Specify path to your entry file with `module: 'dist/es/src/entry.js'`. Please note that Yoshi will create `es` directory with untranspiled modules near your usual transformation output (`dist/src` and `dist/es/src`).
 
 *package.json*
@@ -22,7 +24,7 @@ Yoshi will also use this field to infer whether to create `/es` directory with n
 "module": "dist/es/src/entry.js",
 "babel": {
   "presets": [
-    ["env", {"modules": false}]
+    "wix"
   ]
 },
 "yoshi": {
@@ -39,8 +41,8 @@ dist
      └── src/entry.js
 ```
 
-__NOTE:__ In `pacakge.json`, you can [configure `"side-effects": false`](https://github.com/webpack/webpack/tree/master/examples/side-effects) and allow webpack to perform tree-shaking on your library when imported to other projects, eg:
+__NOTE:__ In `pacakge.json`, you can [configure `"sideEffects": false`](https://github.com/webpack/webpack/tree/master/examples/side-effects) and allow webpack to perform tree-shaking on your library when imported to other projects, eg:
 
 ```js
-import { Button } from 'wix-style-react/Button';
+import { Button } from 'wix-style-react';
 ```
