@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.1 (May 19, 2018)
+* `yoshi`
+  * [#296](https://github.com/wix/yoshi/pull/296) Fix es modules readme, upgrade `babel-preset-wix` version to 2.0.0
+
 ## 2.4.0 (May 13, 2018)
 
 #### :bug: Bug
