@@ -1,7 +1,7 @@
 # How to export ES modules along with commonjs?
 
 ### TL;DR
-Add `module: 'path/to/entry.js'` in your `package.json` and make sure you are **not** using[`babel-plugin-transform-es2015-modules-commonjs`](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-modules-commonjs) in `.babelrc`.
+Add `module: 'path/to/entry.js'` in your `package.json` and make sure you are **not** using[`babel-plugin-transform-es2015-modules-commonjs`](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-modules-commonjs) in `.babelrc`. Similarly, for typescript project, make sure you have `{"module": "es6"}` in `tsconfig.json`.
 
 ### Why
 
@@ -17,7 +17,8 @@ Yoshi will also use this field to infer whether to create `/es` directory with n
 1. Don't include `babel-plugin-transform-es2015-modules-commonjs` to your `.babelrc`.
     * If you are using `babel-preset-env`, `babel-preset-es2015` or other preset which includes this plugin under the hood, use `{ modules: false }` to configure it.
     * If you are using `babel-preset-wix` there is nothing special you need to do in babel config.
-2. Specify path to your entry file with `module: 'dist/es/src/entry.js'`. Please note that Yoshi will create `es` directory with untranspiled modules near your usual transformation output (`dist/src` and `dist/es/src`).
+2. For typescript project, use `{"module": "es6"}` in `tsconfig.json` (under `compilerOptions`).
+3. Specify path to your entry file with `module: 'dist/es/src/entry.js'`. Please note that Yoshi will create `es` directory with untranspiled modules near your usual transformation output (`dist/src` and `dist/es/src`).
 
 *package.json*
 ```json

@@ -581,12 +581,13 @@ describe('Aggregator: Build', () => {
 
       resp = test
         .setup({
-          'src/client.ts': `console.log("hello"); import './styles/style.scss'`,
+          'src/client.ts': `console.log("hello"); import './styles/style.scss';`,
+          'src/a.ts': 'export default "I\'m a module!";',
           'src/styles/style.scss': `.a {.b {color: red;}}`,
           'src/something.ts': fx.angularJs(),
           'something/something.js': fx.angularJs(),
           'something.js': fx.angularJs(),
-          'tsconfig.json': fx.tsconfig(),
+          'tsconfig.json': fx.tsconfig({ compilerOptions: { module: 'es6' } }),
           'package.json': fx.packageJson({
             separateCss: 'prod',
             cssModules: true,
@@ -628,6 +629,55 @@ describe('Aggregator: Build', () => {
     it('are not executed when project is not Angular and TypeScript', () => {
       expect(test.content('dist/src/something.js')).not.to.contain($inject);
       expect(test.content('something.js')).not.to.contain($inject);
+    });
+
+    it('should not create `/es` directory if no `module` field in `package.json` was specified and no commonjs plugin added', () => {
+      expect(test.list('dist')).to.not.include('es');
+      expect(test.content('dist/src/a.js')).to.contain('export default');
+    });
+  });
+
+  describe('simple development project with 1 entry point, ES modules, cssModules, typescript', () => {
+    let resp;
+    before(() => {
+      test = tp.create();
+
+      resp = test
+        .setup({
+          'src/client.ts': `console.log("hello"); import './styles/style.scss';`,
+          'src/a.ts': 'export default "I\'m a module!";',
+          'src/styles/style.scss': `.a {.b {color: red;}}`,
+          'src/something.ts': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          'tsconfig.json': fx.tsconfig({ compilerOptions: { module: 'es6' } }),
+          'package.json': fx.packageJson(
+            {
+              separateCss: 'prod',
+              cssModules: true,
+            },
+            {},
+            {
+              module: 'dist/es/src/a.js',
+            },
+          ),
+        })
+        .execute('build', [], { NODE_ENV: 'PRODUCTION' });
+    });
+    after(() => {
+      test.teardown();
+    });
+
+    it('should build w/o errors', () => {
+      expect(resp.code).to.equal(0);
+    });
+
+    it('should not transpile modules for `/es` content if `module` field in `package.json` was specified', () => {
+      expect(test.list('dist')).to.include.members(['src', 'statics', 'es']);
+      expect(test.content('dist/es/src/a.js')).to.contain('export default');
+      expect(test.content('dist/src/a.js')).to.contain('exports.default =');
+      expect(test.list('dist/es/src/styles')).to.contain('style.scss');
+      expect(test.list('dist/src/styles')).to.contain('style.scss');
     });
   });
 

@@ -214,32 +214,47 @@ module.exports = runner.command(
     }
 
     function transpileJavascript({ esTarget } = {}) {
-      if (isTypescriptProject() && runIndividualTranspiler()) {
-        return typescript({
-          project: 'tsconfig.json',
-          rootDir: '.',
-          outDir: './dist/',
-        });
-      }
+      const transpilations = [];
 
-      if (isBabelProject() && runIndividualTranspiler()) {
-        const transformOptions = {
-          pattern: globs.babel(),
-          target: globs.dist(),
-        };
-        const babelTransformsChain = [];
+      if (isTypescriptProject() && runIndividualTranspiler()) {
+        transpilations.push(
+          typescript({
+            project: 'tsconfig.json',
+            rootDir: '.',
+            outDir: globs.dist({ esTarget }),
+          }),
+        );
         if (esTarget) {
-          transformOptions.plugins = [
-            require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
-          ];
-          babelTransformsChain.push(
-            babel({ pattern: globs.babel(), target: globs.dist({ esTarget }) }),
+          transpilations.push(
+            typescript({
+              project: 'tsconfig.json',
+              rootDir: '.',
+              outDir: globs.dist({ esTarget: false }),
+              module: 'commonjs',
+            }),
           );
         }
-        return Promise.all([...babelTransformsChain, babel(transformOptions)]);
+      } else if (isBabelProject() && runIndividualTranspiler()) {
+        transpilations.push(
+          babel({
+            pattern: globs.babel(),
+            target: globs.dist({ esTarget }),
+          }),
+        );
+        if (esTarget) {
+          transpilations.push(
+            babel({
+              pattern: globs.babel(),
+              target: globs.dist({ esTarget: false }),
+              plugins: require.resolve(
+                'babel-plugin-transform-es2015-modules-commonjs',
+              ),
+            }),
+          );
+        }
       }
 
-      return Promise.resolve();
+      return Promise.all(transpilations);
     }
   },
   { persistent: !!cliArgs.analyze },
