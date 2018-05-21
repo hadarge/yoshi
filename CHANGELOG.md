@@ -1,13 +1,19 @@
 # Changelog
 
+## 2.5.0 (May 21, 2018)
+
+#### :nail_care: Enhancement
+ * [#298](https://github.com/wix/yoshi/pull/298) Support es transpilation also for typescript
+
+#### :bug: Bug
+  * [#295](https://github.com/wix/yoshi/pull/295) Bump `webpack-hot-client` from `v2.2.0` to `v3.0.0` (fixes hmr multiple entries bug)
+
 ## 2.4.1 (May 19, 2018)
-* `yoshi`
   * [#296](https://github.com/wix/yoshi/pull/296) Fix es modules readme, upgrade `babel-preset-wix` version to 2.0.0
 
 ## 2.4.0 (May 13, 2018)
 
 #### :bug: Bug
-* `yoshi`
   * [#274](https://github.com/wix/yoshi/pull/274) Lint fixes for wallaby config
   * [#277](https://github.com/wix/yoshi/pull/277) Jest Stylable Transform Fix for Windows
 
