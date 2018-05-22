@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.5.1 (May 22, 2018)
+
+#### :bug: Bug
+  * [#300](https://github.com/wix/yoshi/pull/300) Make tree shaking work with babel-preset-wix
+
 ## 2.5.0 (May 21, 2018)
 
 #### :nail_care: Enhancement
