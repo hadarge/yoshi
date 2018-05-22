@@ -32,6 +32,7 @@ const addJsSuffix = suffix('.js');
 const cliArgs = parseArgs(process.argv.slice(2));
 const shouldRunTests = cliArgs.test !== false;
 const debugPort = cliArgs.debug;
+const debugBrkPort = cliArgs['debug-brk'];
 const entryPoint = addJsSuffix(cliArgs['entry-point'] || 'index.js');
 
 module.exports = runner.command(
@@ -56,7 +57,12 @@ module.exports = runner.command(
       }
 
       return wixAppServer(
-        { entryPoint, debugPort, manualRestart: cliArgs['manual-restart'] },
+        {
+          entryPoint,
+          debugPort,
+          debugBrkPort,
+          manualRestart: cliArgs['manual-restart'],
+        },
         { title: 'app-server' },
       );
     };

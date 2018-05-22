@@ -20,7 +20,8 @@ const runner = createRunner({
 const cliArgs = minimist(process.argv.slice(2));
 const isDebugOn = !!cliArgs.debug;
 const debugPort = cliArgs.debug;
-
+const isDebugBrkOn = !!cliArgs['debug-brk'];
+const debugBrkPort = cliArgs['debug-brk'];
 const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
 
 module.exports = runner.command(
@@ -67,7 +68,10 @@ module.exports = runner.command(
         `--reporter=${getMochaReporter()}`,
       ];
 
-      if (isDebugOn) {
+      if (isDebugBrkOn) {
+        mochaArgs.unshift(`--inspect-brk=${debugBrkPort}`);
+        mochaArgs.push('--no-timeouts');
+      } else if (isDebugOn) {
         mochaArgs.unshift(`--inspect=${debugPort}`);
         mochaArgs.push('--no-timeouts');
       }
@@ -127,8 +131,10 @@ module.exports = runner.command(
         `--config=${JSON.stringify(config)}`,
         shouldWatch ? '--watch' : '',
       ];
-
-      if (isDebugOn) {
+      if (isDebugBrkOn) {
+        jestCliOptions.unshift(`--inspect-brk=${debugBrkPort}`);
+        jestCliOptions.push(`--runInBand`);
+      } else if (isDebugOn) {
         jestCliOptions.unshift(`--inspect=${debugPort}`);
         jestCliOptions.push(`--runInBand`);
       }
@@ -156,7 +162,7 @@ module.exports = runner.command(
     }
 
     if (cliArgs.protractor && hasProtractorConfigFile() && !shouldWatch) {
-      return protractor(debugPort);
+      return protractor(debugPort, debugBrkPort);
     }
   },
   { persistent: shouldWatch },

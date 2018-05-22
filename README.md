@@ -53,6 +53,7 @@ Flag | Short Flag | Description | Default Value
 --no-server | | Do not spawn the app server | false
 --ssl | | Serve the app bundle on https | false
 --debug | | Allow server debugging, debugger will be available at 127.0.0.1:[port] | 0
+--debug-brk | | Allow server debugging, debugger will be available at 127.0.0.1:[port], process won't start until debugger will be attached| 0
 This will run the specified (server) `entryPoint` file and mount a CDN server.
 
 The following are the default values for the CDN server's port, mount directory and whether to serve statics over https or regular http. You can change them in your `package.json`:
@@ -109,6 +110,7 @@ Flag | Description
 --protractor | Run e2e tests with Protractor (e2e)
 --watch | Run tests on watch mode (works for mocha, jasmine, jest & karma)
 --debug | Allow test debugging (works for mocha, jest & protractor)
+--debug-brk | Allow test debugging (works for mocha, jest & protractor), process won't start until debugger will be attached
 
 By default, this task executes both unit test (using `mocha` as default) and e2e test using `protractor`.
 Default unit test glob is `{test,app,src}/**/*.spec.+(js|ts)`. You can change this by adding the following to your package.json:
@@ -156,7 +158,6 @@ yoshi: {
     }
   ```
 
-* [How to debug tests](https://github.com/wix/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md)
 ### lint
 
 Flag | Short Flag | Description | Default Value
@@ -320,7 +321,7 @@ The configuration object is the same as in webpack.
 For more info, you can read the [webpack docs](https://webpack.js.org/configuration/performance/).
 
 ## FAQ
-- [How do I debug my application/tests?](https://github.com/wix-private/fed-handbook/blob/master/DEBUGGING.md)
+- [How do I debug my server/tests?](/docs/faq/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)
 - [How to use HMR? And how to customize React project to use it?](docs/faq/USING-HMR.md)
 - [How to add and use babel-preset-yoshi?](packages/babel-preset-yoshi/README.md)

@@ -5,7 +5,7 @@ const terminalLink = require('terminal-link');
 
 const readMoreLink = terminalLink(
   '🔗  Read more',
-  'https://github.com/wix/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md',
+  'https://github.com/wix/yoshi/blob/master/docs/faq/DEBUGGING.md',
 );
 console.warn(`
               ╔════════════════════════════════╗

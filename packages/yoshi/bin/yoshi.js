@@ -27,6 +27,11 @@ prog
   .option('--protractor', 'Run e2e tests with Protractor', BOOL)
   .option('--debug', 'Allow test debugging', INT)
   .option(
+    '--debug-brk',
+    "Allow test debugging, process won't start until debugger will be attached",
+    INT,
+  )
+  .option(
     '-w, --watch',
     'Run tests on watch mode (mocha, jasmine, jest, karma)',
     BOOL,
@@ -60,7 +65,12 @@ prog
   )
   .option('--no-test', 'Do not spawn npm test after start', BOOL, 'false')
   .option('--no-server', 'Do not spawn the app server', BOOL, 'false')
-  .option('--debug', 'Allow app-server debugging', INT, 0)
+  .option('--debug', 'Allow app-server debugging', INT)
+  .option(
+    '--debug-brk',
+    "Allow app-server debugging, process won't start until debugger will be attached",
+    INT,
+  )
   .option('--ssl', 'Serve the app bundle on https', BOOL, 'false')
   .action(() => runCLI('start'));
 

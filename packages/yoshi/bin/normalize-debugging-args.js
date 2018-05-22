@@ -1,6 +1,7 @@
 const normalizeDebuggingArgs = () => {
   const inspectPrefix = '--inspect';
   const debugArgName = '--debug';
+  const debugBrkArgName = '--debug-brk';
   const defaultDebugPort = '9229';
 
   // IDEs start debugging with '--inspect' or '--inspect-brk' option
@@ -16,6 +17,10 @@ const normalizeDebuggingArgs = () => {
   const debugArgIndex = process.argv.indexOf(debugArgName);
   if (debugArgIndex !== -1) {
     process.argv[debugArgIndex] = `${debugArgName}=${defaultDebugPort}`;
+  }
+  const debugBrkArgIndex = process.argv.indexOf(debugBrkArgName);
+  if (debugBrkArgIndex !== -1) {
+    process.argv[debugBrkArgIndex] = `${debugBrkArgName}=${defaultDebugPort}`;
   }
 };
 
