@@ -28,7 +28,7 @@ prog
   .option('--debug', 'Allow test debugging', INT)
   .option(
     '--debug-brk',
-    "Allow test debugging, process won't start until debugger will attached",
+    "Allow test debugging, process won't start until debugger will be attached",
     INT,
   )
   .option(
@@ -68,7 +68,7 @@ prog
   .option('--debug', 'Allow app-server debugging', INT)
   .option(
     '--debug-brk',
-    "Allow  app-server debugging, process won't start until debugger will attached",
+    "Allow app-server debugging, process won't start until debugger will be attached",
     INT,
   )
   .option('--ssl', 'Serve the app bundle on https', BOOL, 'false')

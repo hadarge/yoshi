@@ -53,7 +53,7 @@ Flag | Short Flag | Description | Default Value
 --no-server | | Do not spawn the app server | false
 --ssl | | Serve the app bundle on https | false
 --debug | | Allow server debugging, debugger will be available at 127.0.0.1:[port] | 0
---debug-brk | | Allow server debugging, debugger will be available at 127.0.0.1:[port], process won't start until debugger will attached| 0
+--debug-brk | | Allow server debugging, debugger will be available at 127.0.0.1:[port], process won't start until debugger will be attached| 0
 This will run the specified (server) `entryPoint` file and mount a CDN server.
 
 The following are the default values for the CDN server's port, mount directory and whether to serve statics over https or regular http. You can change them in your `package.json`:
@@ -110,7 +110,7 @@ Flag | Description
 --protractor | Run e2e tests with Protractor (e2e)
 --watch | Run tests on watch mode (works for mocha, jasmine, jest & karma)
 --debug | Allow test debugging (works for mocha, jest & protractor)
---debug-brk | Allow test debugging (works for mocha, jest & protractor), process won't start until debugger will attached
+--debug-brk | Allow test debugging (works for mocha, jest & protractor), process won't start until debugger will be attached
 
 By default, this task executes both unit test (using `mocha` as default) and e2e test using `protractor`.
 Default unit test glob is `{test,app,src}/**/*.spec.+(js|ts)`. You can change this by adding the following to your package.json:

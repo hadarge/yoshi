@@ -1,17 +1,15 @@
 # How to debug tests
 This guide will help you get started debugging your tests.
 
-## Enable Inspector
-When started with the `--debug` switch, Yoshi will allow to attach NodeJS debugger to the relevant child process with the default host and port.
+### Enable Inspector
+When started with the `--debug` option, Yoshi will allow to attach NodeJS debugger to the relevant child process with the default host and port.
 You can configure the default port by: `--debug=XXXX`
 
-## Enable BRK flag
-When started with the `--debug-brk` switch, Yoshi will allow to attach NodeJS debugger and the relevant child process won't start until debugger will attached.
+### Enable BRK flag
+When started with the `--debug-brk` option, Yoshi will allow to attach NodeJS debugger and the relevant child process won't start until debugger will be attached.
 You can configure the default port by: `--debug-brk=XXXX`.
 
-- 📌 yoshi consider `--debug-brk` before `--debug`. so in case you're using both flags `--debug-brk` will take place.
-
-## [Inspector Clients](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients)
+### [Inspector Clients](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients)
 
 Several commercial and open source tools can connect to Node's Inspector and there for can debug Yoshi tasks. Basic info on these follows:
 
@@ -39,7 +37,7 @@ Several commercial and open source tools can connect to Node's Inspector and the
 ```
 #### [JetBrains WebStorm](https://www.jetbrains.com/webstorm/)  [2017.1+ and other JetBrains IDEs](https://nodejs.org/en/docs/guides/debugging-getting-started/#jetbrains-webstorm-2017-1-and-other-jetbrains-ides)
 - Create a new Node.js debug configuration
-![image description](./assets/debug.png)  
+![image description](./assets/debug.png)
 - In order to manually tell WebStorm the debugging port, create another configuration, use type 'Attach to Node.js/Chrome'
 ![image description](./assets/remotedebug.png)
 - Press debug in order to start the remote debugger configuration then start (without debugging) the 'Node.js' configuration
