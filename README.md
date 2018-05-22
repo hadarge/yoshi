@@ -158,7 +158,6 @@ yoshi: {
     }
   ```
 
-* [How to debug tests](https://github.com/wix/yoshi/blob/master/docs/faq/DEBUG_YOUR_TESTS.md)
 ### lint
 
 Flag | Short Flag | Description | Default Value
@@ -322,7 +321,7 @@ The configuration object is the same as in webpack.
 For more info, you can read the [webpack docs](https://webpack.js.org/configuration/performance/).
 
 ## FAQ
-- [How do I debug my application/tests?](https://github.com/wix-private/fed-handbook/blob/master/DEBUGGING.md)
+- [How do I debug my server/tests?](/docs/faq/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)
 - [How to use HMR? And how to customize React project to use it?](docs/faq/USING-HMR.md)
 - [How to add and use babel-preset-yoshi?](packages/babel-preset-yoshi/README.md)
