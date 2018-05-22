@@ -20,7 +20,10 @@ const config = {
     modules: [path.join(__dirname, '..', 'node_modules'), 'node_modules'],
   },
 
-  plugins: [new CaseSensitivePathsPlugin()],
+  plugins: [
+    { apply: () => (process.env.IN_WEBPACK = 'true') },
+    new CaseSensitivePathsPlugin(),
+  ],
 
   module: {
     rules: [

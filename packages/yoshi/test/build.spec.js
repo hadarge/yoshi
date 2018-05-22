@@ -396,6 +396,42 @@ describe('Aggregator: Build', () => {
     });
   });
 
+  describe('simple tree shaking scenario', () => {
+    let resp;
+
+    before(() => {
+      test = tp.create();
+      resp = test
+        .setup({
+          '.babelrc': `{"presets": ["${require.resolve('babel-preset-wix')}"]}`,
+          'src/a.js': `import {xxx} from './b'; console.log(xxx);`,
+          'src/b.js': `export const xxx = 111111; export const yyy = 222222;`,
+          'package.json': fx.packageJson({
+            entry: './a.js',
+          }),
+        })
+        .execute('build');
+    });
+
+    after(() => {
+      test.teardown();
+    });
+
+    it('should build w/o errors', () => {
+      expect(resp.code).to.equal(0);
+    });
+
+    it('should transpile imports to commonjs', () => {
+      expect(test.content('dist/src/a.js')).to.contain("require('./b')");
+    });
+
+    it('should tree shake unused variable', () => {
+      const bundle = test.content('dist/statics/app.bundle.min.js');
+      expect(bundle).to.contain('111111');
+      expect(bundle).not.to.contain('222222');
+    });
+  });
+
   describe('simple development project with 1 entry point, ES modules, non-separate styles, babel, commons chunks and w/o cssModules', () => {
     let resp;
     before(() => {
