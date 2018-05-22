@@ -2,8 +2,8 @@
 This guide will help you get started with debugging. There are multiple things you can debug and you need a different configuration for each one:
 
 1. **Debug your client code** - No configuration needed, just open devtools on your browser.
-2. **Debug your server code** - `yoshi start --debug`.
-3. **Debug your tests** - `yoshi test --debug`.
+2. **Debug your server code** - `yoshi start --debug`
+3. **Debug your tests** - `yoshi test --debug`
 
 When debugging your server/tests you'll need to configure the debugger, depend on your prefered way to debug.
 
