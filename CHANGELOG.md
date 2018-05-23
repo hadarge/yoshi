@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.5.2 (May 22, 2018)
+## 2.6.0 (May 22, 2018)
 
 #### :nail_care: Enhancement
  * [#291](https://github.com/wix/yoshi/pull/291) Add support for `--debug-brk` option on `test` and `start` commands
