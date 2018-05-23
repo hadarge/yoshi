@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.1 (May 23, 2018)
+
+#### :bug: Bug
+ * [#302](https://github.com/wix/yoshi/pull/302) Be able to run protractor after mocha/jest
+
 ## 2.6.0 (May 22, 2018)
 
 #### :nail_care: Enhancement
