@@ -41,6 +41,8 @@ describe('Aggregator: Test', () => {
         .execute('test', undefined, outsideTeamCity);
       expect(res.code).to.equal(0);
       expect(res.stdout).to.contain('1 passing');
+      expect(res.stdout).to.contains('protractor');
+      expect(res.stdout).to.contain('1 spec, 0 failures');
     });
   });
 
@@ -540,7 +542,7 @@ describe('Aggregator: Test', () => {
               'src/style.spec.js': `
                 const assert = require('assert');
                 const style = require('./main.st.css').default;
-  
+
                 it('pass', () => {
                   assert.equal(style.someclass.indexOf('someclass') > -1, true);
                   assert.equal(style('root').className.indexOf('root') > -1, true);

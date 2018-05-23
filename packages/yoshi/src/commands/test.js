@@ -80,7 +80,8 @@ module.exports = runner.command(
         mochaArgs.push('--watch');
         mochaArgs.push('--watch-extensions=js,jsx,ts,tsx');
       }
-      return new Promise((resolve, reject) => {
+
+      await new Promise((resolve, reject) => {
         const mochaSpawn = crossSpawn('node', mochaArgs, { stdio: 'inherit' });
         mochaSpawn.on('exit', code => {
           code === 0
@@ -138,7 +139,8 @@ module.exports = runner.command(
         jestCliOptions.unshift(`--inspect=${debugPort}`);
         jestCliOptions.push(`--runInBand`);
       }
-      return new Promise((resolve, reject) => {
+
+      await new Promise((resolve, reject) => {
         const jest = crossSpawn('node', jestCliOptions, { stdio: 'inherit' });
         jest.on('exit', code => {
           code === 0
