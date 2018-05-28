@@ -502,11 +502,15 @@ describe('Aggregator: Test', () => {
         });
       });
 
-      it('should run typescript tests with runtime compilation for ts projects', () => {
+      it('should run typescript tests with runtime compilation and force commonjs module system', () => {
         const res = customTest
           .setup({
-            'tsconfig.json': fx.tsconfig(),
-            'test/some.spec.ts': `declare var it: any; it.only("pass", () => 1);`,
+            'tsconfig.json': fx.tsconfig({
+              compilerOptions: {
+                module: 'es2015',
+              },
+            }),
+            'test/some.spec.ts': `import * as usageOfFS from 'fs'; declare var it: any; it.only("pass", () => !!usageOfFS);`,
             'package.json': fx.packageJson(),
           })
           .execute('test', ['--mocha'], outsideTeamCity);
