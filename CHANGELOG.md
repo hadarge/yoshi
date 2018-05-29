@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.2 (May 29, 2018)
+
+#### :nail_care: Enhancement
+* [#251](https://github.com/wix/yoshi/pull/251) Force `{ module: 'commonjs' }` for TypeScript projects when running tests with `ts-node`
+
+#### :house: Internal
+* [#306](https://github.com/wix/yoshi/pull/306) Set Stylable’s `classNameOptimizations` option to `false`
+* [#310](https://github.com/wix/yoshi/pull/310) Change `Wix Style React`'s DepKeeper configuration
+
 ## 2.6.1 (May 23, 2018)
 
 #### :bug: Bug
