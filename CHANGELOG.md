@@ -1,10 +1,20 @@
 # Changelog
 
+## 3.0.0-alpha.1 (May 29, 2018)
+
+* `eslint-config-yoshi-base`
+  * [#289](https://github.com/wix/yoshi/pull/289) Loosen up `eslint-config-yoshi-base` import rules.
+    * Change `import/first` and `import/no-extraneous-dependencies` to warnings (It would be hard to migrate in a big project, but we still want users to be aware of it).
+    * Remove `import/no-cycle` (due to its [linting time cost](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-cycle.md#when-not-to-use-it)).
+
+* `babel-preset-yoshi`
+  * [#308](https://github.com/wix/yoshi/pull/308) `babel-preset-yoshi` various optimizations and fixes.
+
 ## 3.0.0-alpha.0 (May 14, 2018)
 
 #### :boom: Breaking Change
 * `yoshi`
-  * [#284](https://github.com/wix/yoshi/pull/284) Upgrade `jest` version from 20 to 22 and `jest-teamcity-reporter` to 0.9
+  * [#284](https://github.com/wix/yoshi/pull/284) Upgrade `jest` version from 20 to 22 and `jest-teamcity-reporter` to 0.9.
   * [#282](https://github.com/wix/yoshi/pull/282) Remove `eslint-config-wix` as a dependnecy, it will not be bundled with yoshi.
 
 #### :nail_care: Enhancement
