@@ -3,23 +3,35 @@ const depkeeper = require('depkeeper');
 
 module.exports = ({ cwd = process.cwd() } = {}) => {
   return depkeeper({ cwd })
-    .rule('{yoshi,wix-style-react}', { major: 1 })
+    .rule('yoshi', { major: 1 })
+    .rule('wix-style-react', { major: 2 })
     .rule('{yoshi,wix-style-react}')
     .rule('wix-bootstrap-*', { patch: 5 })
     .checkRules()
-    .then(([outdated1, outdated2, outdated3]) => {
-      if (outdated1.length) {
-        return fail(outdated1);
-      }
+    .then(
+      ([
+        yoshiOutdated,
+        wixStyleReactOutdated,
+        wsrYoshiOutdated,
+        bootstrapOutdated,
+      ]) => {
+        if (yoshiOutdated.length) {
+          return fail(yoshiOutdated);
+        }
 
-      if (outdated2.length) {
-        return warn(outdated2);
-      }
+        if (wixStyleReactOutdated.length) {
+          return fail(wixStyleReactOutdated);
+        }
 
-      if (outdated3.length) {
-        return warn(outdated3);
-      }
-    });
+        if (wsrYoshiOutdated.length) {
+          return warn(wsrYoshiOutdated);
+        }
+
+        if (bootstrapOutdated.length) {
+          return warn(bootstrapOutdated);
+        }
+      },
+    );
 };
 
 function fail(deps) {
