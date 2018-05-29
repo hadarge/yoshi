@@ -71,17 +71,20 @@ module.exports = function(api, opts = {}) {
       // just add the syntax of Object { ...rest, ...spread }
       (isDevelopment || isTest) &&
         require('babel-plugin-syntax-object-rest-spread'),
-      // Transform Object { ...rest, ...spread } to support old browsers
-      // Remove PropTypes on react projects.
-      ...(isProduction && [
-        require('babel-plugin-transform-object-rest-spread'),
-        !options.ignoreReact && [
-          require('babel-plugin-transform-react-remove-prop-types'),
-          {
-            removeImport: true,
-          },
-        ],
-      ]),
+
+      ...(!isProduction
+        ? []
+        : [
+            // Transform Object { ...rest, ...spread } to support old browsers
+            require('babel-plugin-transform-object-rest-spread'),
+            !options.ignoreReact && [
+              // Remove PropTypes on react projects.
+              require('babel-plugin-transform-react-remove-prop-types'),
+              {
+                removeImport: true,
+              },
+            ],
+          ]),
     ].filter(Boolean),
   };
 };
