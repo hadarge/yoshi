@@ -101,6 +101,7 @@ const config = ({
         outputCSS: separateCss,
         filename: '[name].stylable.bundle.css',
         includeCSSInJS: !separateCss,
+        optimize: { classNameOptimizations: false },
       }),
 
       ...(!separateCss
