@@ -70,7 +70,7 @@ Start by heading to the [CHANGELOG.md](https://github.com/wix/yoshi/blob/master/
 To create a new version use the following command:
 
 ```bash
-npm run createRelease
+npm run createVersion
 ```
 
 This command will open an interactive UI for choosing the version, it will bump it in the relevant packages and add a git tag.
