@@ -1,8 +1,9 @@
 const DEFAULT_ENV = 'development';
 const env = process.env.BABEL_ENV || process.env.NODE_ENV || DEFAULT_ENV;
-const envChecker = env => (...envsToMatch) =>
-  envsToMatch.some(envToMatch => envToMatch === env);
-const isMatchEnvs = envChecker(env);
+
+const isDevelopment = env === 'development';
+const isProduction = env === 'production';
+const isTest = env === 'test';
 
 const normaliseOptions = opts => {
   return {
@@ -26,26 +27,26 @@ module.exports = function(api, opts = {}) {
           // Always use destructuring b/c of import/export support.
           include: ['transform-es2015-destructuring', ...options.include],
           exclude: options.exclude,
-          // We don't need be fully spec compatible, bundle size is matter.
+          // We don't need to be fully spec compatible, bundle size is more important.
           loose: true,
-          // Allow users to provide own targets
-          targets: options.targets,
+          // Allow users to provide its own targets and supply target node for test environment by default.
+          targets: options.targets || (isTest && { node: 'current' }),
         },
       ],
       !options.ignoreReact && [
         require('babel-preset-react'),
         // Uncomment for babel 7.x.
         // {
-        //   development: isMatchEnvs('development', 'test')
+        //   development: isDevelopment || isTest
         // }
       ],
     ].filter(Boolean),
     plugins: [
       [
-        // Use class properties.
+        // Allow the usage of class properties.
         require('babel-plugin-transform-class-properties'),
         {
-          // Bundle size and perf is more prior than tiny ES spec incompatibility.
+          // Bundle size and perf is prior to tiny ES spec incompatibility.
           loose: true,
         },
       ],
@@ -53,24 +54,34 @@ module.exports = function(api, opts = {}) {
         // Add helpers for generators and async/await.
         require('babel-plugin-transform-runtime'),
         {
-          // 2 options above are usualy handled by pollyfil.io.
+          // 2 options blow are usualy handled by pollyfil.io.
           helpers: false,
           polyfill: false,
           regenerator: true,
         },
       ],
-      // Use legacy decorators.
+      // Enable legacy decorators.
       require('babel-plugin-transform-decorators'),
-      // Remove PropTypes from production build
-      isMatchEnvs('production') &&
+      // Transform dynamic import in test environment,
+      // in all other cases Webpack will handle the transformation.
+      isTest
+        ? require('babel-plugin-transform-dynamic-import')
+        : require('babel-plugin-syntax-dynamic-import'),
+      // Current Node and new browsers (in development environment) already implement it so
+      // just add the syntax of Object { ...rest, ...spread }
+      (isDevelopment || isTest) &&
+        require('babel-plugin-syntax-object-rest-spread'),
+      // Transform Object { ...rest, ...spread } to support old browsers
+      // Remove PropTypes on react projects.
+      ...(isProduction && [
+        require('babel-plugin-transform-object-rest-spread'),
         !options.ignoreReact && [
           require('babel-plugin-transform-react-remove-prop-types'),
           {
             removeImport: true,
           },
         ],
-      // Just add syntax for dynamic imports. Other part is handled by webpack.
-      require('babel-plugin-syntax-dynamic-import'),
+      ]),
     ].filter(Boolean),
   };
 };
