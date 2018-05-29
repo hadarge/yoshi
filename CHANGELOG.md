@@ -1,6 +1,13 @@
 # Changelog
 
-## 3.0.0-alpha.1 (May 29, 2018)
+## 3.0.0-alpha.3 (May 29, 2018)
+
+#### :bug: Bug
+
+* `babel-preset-yoshi`
+  * [315](https://github.com/wix/yoshi/pull/315) Fix babel preset require erro
+
+## 3.0.0-alpha.2 (May 29, 2018)
 
 * `eslint-config-yoshi-base`
   * [#289](https://github.com/wix/yoshi/pull/289) Loosen up `eslint-config-yoshi-base` import rules.
