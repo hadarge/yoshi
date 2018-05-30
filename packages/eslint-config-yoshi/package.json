@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-yoshi",
-  "version": "3.0.0-alpha.4",
+  "version": "3.0.0-alpha.6",
   "description": "eslint configuration for react projects using yoshi",
   "main": "index.js",
   "keywords": [
@@ -14,7 +14,7 @@
     "customPublish": "node ../../scripts/customPublish.js"
   },
   "dependencies": {
-    "eslint-config-yoshi-base": "^3.0.0-alpha.4"
+    "eslint-config-yoshi-base": "^3.0.0-alpha.6"
   },
   "peerDependencies": {
     "babel-eslint": "^8.2.2",
