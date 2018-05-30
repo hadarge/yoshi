@@ -18,7 +18,7 @@ Configure `yoshi` to use its built-in preset by adding the following to your `pa
 
 - `targets`: Avoid redundant transformations if specified targets already support some of ESNext features. [Read more](https://babeljs.io/docs/plugins/preset-env/#targets).
 By default, if no `targets` provided, it will compile for **all** targets (`node` on test environment).
-- `modules` (default: `"commonjs"`): Enable transformation of ES6 module syntax to another module type. [Read more](https://babeljs.io/docs/plugins/preset-env/#modules). Set `false` to ignore module transforms.
+- `modules` (defaults to `"commonjs"` in `test` environment and to false in `production` and `development` ): Enable transformation of ES6 module syntax to another module type. [Read more](https://babeljs.io/docs/plugins/preset-env/#modules). Set `false` to ignore module transforms.
 - `ignoreReact` (default: `false`): Ignores plugins and presets related to React.
 - `debug` (default: `false`): Outputs the targets/plugins used according to specified targets. [Read more](https://babeljs.io/docs/plugins/preset-env/#debug).
 
@@ -43,7 +43,7 @@ The preset behaves differently according to the environment. The environment is 
 ### Environment specific plugins:
 
 #### `test`
-  - [transoform-dynamic-import](https://github.com/airbnb/babel-plugin-dynamic-import-node) - Babel plugin to transpile import() to a deferred require(), for node.
+  - [dynamic-import-node](https://github.com/airbnb/babel-plugin-dynamic-import-node) - Babel plugin to transpile import() to a deferred require(), for node.
   - [babel-plugin-syntax-object-rest-spread](https://babeljs.io/docs/plugins/syntax-object-rest-spread) Allow the syntax of Object `{ ...rest, ...spread }`
 
 #### `development`

@@ -21,7 +21,7 @@ module.exports = function(api, opts = {}) {
       [
         require('babel-preset-env'),
         {
-          modules: options.modules,
+          modules: options.modules || (isTest && 'commonjs'),
           // Display targets to compile for.
           debug: options.debug,
           // Always use destructuring b/c of import/export support.
@@ -65,7 +65,7 @@ module.exports = function(api, opts = {}) {
       // Transform dynamic import in test environment,
       // in all other cases Webpack will handle the transformation.
       isTest
-        ? require('babel-plugin-transform-dynamic-import')
+        ? require('babel-plugin-dynamic-import-node').default // https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27
         : require('babel-plugin-syntax-dynamic-import'),
       // Current Node and new browsers (in development environment) already implement it so
       // just add the syntax of Object { ...rest, ...spread }
