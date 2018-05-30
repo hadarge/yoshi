@@ -1,11 +1,20 @@
 # Changelog
 
+## 3.0.0-alpha.4 (May 30, 2018)
+
+#### :nail_care: Enhancement
+  * [#317](https://github.com/wix/yoshi/pull/317) Upgrade Jest version from v22 to v23.
+
+#### :bug: Bug
+  * [#316](https://github.com/wix/yoshi/pull/316) Fix various Babel bugs:
+    * Use `.deafult` for `babel-plugin-transform-dynamic-import`. [Because of this issue](https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27)
+    * Enable `{ modules: "commonjs" }` by default in `test` environment.
+
 ## 3.0.0-alpha.3 (May 29, 2018)
 
 #### :bug: Bug
-
 * `babel-preset-yoshi`
-  * [315](https://github.com/wix/yoshi/pull/315) Fix babel preset require erro
+  * [#315](https://github.com/wix/yoshi/pull/315) Fix babel preset require error.
 
 ## 3.0.0-alpha.2 (May 29, 2018)
 
