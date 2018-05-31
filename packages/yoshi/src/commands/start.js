@@ -118,6 +118,7 @@ module.exports = runner.command(
       wixCdn(
         {
           port: servers.cdn.port(),
+          host: '0.0.0.0',
           ssl,
           publicPath: servers.cdn.url(ssl),
           statics: clientFilesPath(),
