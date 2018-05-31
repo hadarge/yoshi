@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.7.0 (May 31, 2018)
+
+#### :bug: Bug
+* [#320](https://github.com/wix/yoshi/pull/320) Upgrade `haste` dependencies to version `~0.2.8`.
+
+#### :nail_care: Enhancement
+* [#319](https://github.com/wix/yoshi/pull/319) Change cdn host to 0.0.0.0 so it will be available from all network iterfaces.
+
 ## 2.6.2 (May 29, 2018)
 
 #### :nail_care: Enhancement
