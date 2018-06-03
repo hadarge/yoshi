@@ -12,6 +12,9 @@ module.exports = isAngularProject => ({
         // Sets *transpileOnly* to true and WARNING! stops registering all errors to webpack.
         // Needed for HappyPack or thread-loader.
         happyPackMode: true,
+        compilerOptions: isAngularProject
+          ? {}
+          : { module: 'esnext', moduleResolution: 'node' },
       },
     },
   ],

@@ -432,6 +432,51 @@ describe('Aggregator: Build', () => {
     });
   });
 
+  describe('simple tree shaking scenario in typescript', () => {
+    let resp;
+
+    before(() => {
+      test = tp.create();
+      resp = test
+        .setup({
+          'tsconfig.json': fx.tsconfig({
+            compilerOptions: {
+              lib: ['es2015'],
+            },
+          }),
+          'src/a.ts': `import {xxx} from './b'; import('./c').then(() => console.log(xxx));`,
+          'src/b.ts': `export const xxx = 111111; export const yyy = 222222;`,
+          'src/c.ts': `export default 'hello';`,
+          'package.json': fx.packageJson({
+            entry: './a.ts',
+          }),
+        })
+        .execute('build');
+    });
+
+    after(() => {
+      test.teardown();
+    });
+
+    it('should build w/o errors', () => {
+      expect(resp.code).to.equal(0);
+    });
+
+    it('should transpile imports to commonjs', () => {
+      expect(test.content('dist/src/a.js')).to.contain('require("./b")');
+    });
+
+    it('should support code splitting with dynamic import statements', () => {
+      expect(test.content('dist/statics/0.chunk.js')).to.contain(`'hello'`);
+    });
+
+    it('should tree shake unused variable', () => {
+      const bundle = test.content('dist/statics/app.bundle.min.js');
+      expect(bundle).to.contain('111111');
+      expect(bundle).not.to.contain('222222');
+    });
+  });
+
   describe('simple development project with 1 entry point, ES modules, non-separate styles, babel, commons chunks and w/o cssModules', () => {
     let resp;
     before(() => {
@@ -686,7 +731,7 @@ describe('Aggregator: Build', () => {
           'src/something.ts': fx.angularJs(),
           'something/something.js': fx.angularJs(),
           'something.js': fx.angularJs(),
-          'tsconfig.json': fx.tsconfig({ compilerOptions: { module: 'es6' } }),
+          'tsconfig.json': fx.tsconfig(),
           'package.json': fx.packageJson(
             {
               separateCss: 'prod',
