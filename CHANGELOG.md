@@ -1,12 +1,21 @@
 # Changelog
 
+## 2.8.0 (May 31, 2018)
+
+#### :nail_care: Enhancement
+* [#327](https://github.com/wix/yoshi/pull/327) Support `--coverage` option for `test` command
+* [#325](https://github.com/wix/yoshi/pull/325) Add stylable support for karma tests
+* [#322](https://github.com/wix/yoshi/pull/322) Support tree shaking in TypeScript by:
+  * Create an `es` version if a `module` field exist in   `package.json`
+  * Force TypeScript loader to use `{ module: "esnext" }` to enable tree shaking
+
 ## 2.7.0 (May 31, 2018)
 
 #### :bug: Bug
-* [#320](https://github.com/wix/yoshi/pull/320) Upgrade `haste` dependencies to version `~0.2.8`.
+* [#320](https://github.com/wix/yoshi/pull/320) Upgrade `haste` dependencies to version `~0.2.8`
 
 #### :nail_care: Enhancement
-* [#319](https://github.com/wix/yoshi/pull/319) Change cdn host to 0.0.0.0 so it will be available from all network iterfaces.
+* [#319](https://github.com/wix/yoshi/pull/319) Change cdn host to 0.0.0.0 so it will be available from all network iterfaces
 
 ## 2.6.2 (May 29, 2018)
 
