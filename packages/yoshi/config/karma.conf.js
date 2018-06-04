@@ -27,6 +27,11 @@ const baseConfig = {
 const teamCityConfig = {
   plugins: [require('karma-teamcity-reporter')],
   reporters: ['teamcity'],
+  client: {
+    mocha: {
+      reporter: 'html',
+    },
+  },
   // coverageReporter: {
   //   reporters: [{type: 'teamcity'}]
   // }

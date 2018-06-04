@@ -594,6 +594,7 @@ describe('Aggregator: Test', () => {
           'karma.conf.js':
             'module.exports = {frameworks: ["jasmine"], files: ["a.js", "test.spec.js"], exclude: ["excluded.spec.js"]}',
           'node_modules/phantomjs-polyfill/bind-polyfill.js': 'a = 1;',
+          'test/karma-setup.js': 'console.log("setup karma")',
           'a.js': '"use strict";var a = 2; var b = 3;',
           'src/test.spec.js': `
             it("pass result", function () { expect(1).toBe(1); });
@@ -663,6 +664,12 @@ describe('Aggregator: Test', () => {
 
         it('should contain css modules inside specs bundle', () => {
           expect(res.stdout).to.not.contain('pass style from node_modules');
+        });
+
+        it('should bundle the "test/karma-setup.js" file as the first entry point if exists', () => {
+          expect(test.content('dist/specs.bundle.js')).to.contain(
+            'setup karma',
+          );
         });
       });
     });
@@ -759,12 +766,18 @@ describe('Aggregator: Test', () => {
         expect(res.stdout).to.contain('FAILED');
       });
 
-      describe('with browser (chrome) configurations', () => {
-        it('should pass with exit code 0', () => {
+      describe('with browser (chrome) configurations and stylable', () => {
+        it('should pass with exit code 0, not run phantom and understand "st.css" files', () => {
           const res = customTest
             .setup({
-              'src/test.spec.js': 'it("pass", function () {});',
-              'karma.conf.js': 'module.exports = {browsers: ["Chrome"]}',
+              'src/test.spec.js':
+                'require("./style.st.css"), it("pass", function () {});',
+              'src/style.st.css': `
+                .someclass {
+                  color: yellow;
+              }`,
+              'karma.conf.js':
+                'module.exports = {browsers: ["ChromeHeadless"]}',
               'package.json': fx.packageJson(),
             })
             .execute('test', ['--karma'], outsideTeamCity);
@@ -773,6 +786,9 @@ describe('Aggregator: Test', () => {
           expect(res.stdout).to.contain(`browser Chrome`);
           expect(res.stdout).to.not.contain(`browser PhantomJS`);
           expect(res.stdout).to.contain('Executed 1 of 1 SUCCESS');
+          expect(customTest.content('dist/specs.bundle.js')).to.contain(
+            'someclass',
+          );
         });
       });
 
