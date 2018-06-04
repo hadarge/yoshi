@@ -1,4 +1,5 @@
 const path = require('path');
+const execa = require('execa');
 const minimist = require('minimist');
 const { createRunner } = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
@@ -10,7 +11,6 @@ const {
   getMochaReporter,
   watch,
 } = require('../utils');
-const crossSpawn = require('cross-spawn');
 const protractor = require('../../src/tasks/protractor');
 
 const runner = createRunner({
@@ -26,7 +26,7 @@ const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
 
 module.exports = runner.command(
   async tasks => {
-    const { jasmine, karma, webpack } = tasks;
+    const { karma, webpack } = tasks;
 
     const noOptions =
       !cliArgs.mocha &&
@@ -68,6 +68,10 @@ module.exports = runner.command(
         `--reporter=${getMochaReporter()}`,
       ];
 
+      if (cliArgs.coverage) {
+        mochaArgs.unshift(require.resolve('nyc/bin/nyc'));
+      }
+
       if (isDebugBrkOn) {
         mochaArgs.unshift(`--inspect-brk=${debugBrkPort}`);
         mochaArgs.push('--no-timeouts');
@@ -81,30 +85,30 @@ module.exports = runner.command(
         mochaArgs.push('--watch-extensions=js,jsx,ts,tsx');
       }
 
-      await new Promise((resolve, reject) => {
-        const mochaSpawn = crossSpawn('node', mochaArgs, { stdio: 'inherit' });
-        mochaSpawn.on('exit', code => {
-          code === 0
-            ? resolve()
-            : reject(`mocha failed with status code "${code}"`);
-        });
-      });
+      try {
+        await execa('node', mochaArgs, { stdio: 'inherit' });
+      } catch (error) {
+        throw `mocha failed with status code "${error.code}"`;
+      }
     }
 
     if (cliArgs.jasmine) {
-      const options = {
-        config: {
-          spec_dir: '', //eslint-disable-line camelcase
-          spec_files: [
-            //eslint-disable-line camelcase
-            projectConfig.specs.node() || globs.specs(),
-          ],
-          helpers: [path.join(__dirname, '../../config/test-setup.js')],
-        },
-        reportersPath: require.resolve('../../config/jasmine-reporters'),
-      };
+      const jasmineArgs = [
+        require.resolve('jasmine/bin/jasmine'),
+        `--config=${require.resolve('../../config/jasmine-config')}`,
+      ];
 
-      await jasmine({ pattern: specsPattern, ...options });
+      if (cliArgs.coverage) {
+        jasmineArgs.unshift(require.resolve('nyc/bin/nyc'));
+      }
+
+      try {
+        await execa('node', jasmineArgs, { stdio: 'inherit' });
+      } catch (error) {
+        if (!shouldWatch) {
+          throw `jasmine failed with status code "${error.code}"`;
+        }
+      }
 
       if (shouldWatch) {
         watch(
@@ -115,11 +119,8 @@ module.exports = runner.command(
               'index.js',
             ],
           },
-          () => {
-            jasmine({
-              pattern: projectConfig.specs.node() || globs.specs(),
-              ...options,
-            });
+          async () => {
+            await execa('node', jasmineArgs, { stdio: 'inherit' });
           },
         );
       }
@@ -131,6 +132,7 @@ module.exports = runner.command(
         require.resolve('jest-cli/bin/jest'),
         `--config=${JSON.stringify(config)}`,
         shouldWatch ? '--watch' : '',
+        cliArgs.coverage ? '--coverage' : '',
       ];
       if (isDebugBrkOn) {
         jestCliOptions.unshift(`--inspect-brk=${debugBrkPort}`);
@@ -140,14 +142,11 @@ module.exports = runner.command(
         jestCliOptions.push(`--runInBand`);
       }
 
-      await new Promise((resolve, reject) => {
-        const jest = crossSpawn('node', jestCliOptions, { stdio: 'inherit' });
-        jest.on('exit', code => {
-          code === 0
-            ? resolve()
-            : reject(`jest failed with status code "${code}"`);
-        });
-      });
+      try {
+        await execa('node', jestCliOptions, { stdio: 'inherit' });
+      } catch (error) {
+        throw `jest failed with status code "${error.code}"`;
+      }
     }
 
     if (cliArgs.karma) {

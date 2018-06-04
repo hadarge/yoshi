@@ -26,6 +26,7 @@ prog
   .option('--jest', 'Run tests with Jest', BOOL)
   .option('--protractor', 'Run e2e tests with Protractor', BOOL)
   .option('--debug', 'Allow test debugging', INT)
+  .option('--coverage', 'Collect and output code coverage', BOOL)
   .option(
     '--debug-brk',
     "Allow test debugging, process won't start until debugger will be attached",

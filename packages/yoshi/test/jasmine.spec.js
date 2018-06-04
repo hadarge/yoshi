@@ -37,6 +37,18 @@ describe('test --jasmine', () => {
     expect(res.stdout).to.contain('1 spec, 1 failure');
   });
 
+  it('should output test coverage when --coverage is passed', () => {
+    const res = test
+      .setup(passingProject())
+      .verbose()
+      .execute('test', ['--jasmine', '--coverage']);
+
+    expect(res.code).to.equal(0);
+    expect(res.stdout).to.contain(
+      'File      |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |',
+    );
+  });
+
   it('should consider custom globs if configured', () => {
     const res = test
       .setup({

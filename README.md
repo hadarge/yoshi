@@ -111,6 +111,7 @@ Flag | Description
 --watch | Run tests on watch mode (works for mocha, jasmine, jest & karma)
 --debug | Allow test debugging (works for mocha, jest & protractor)
 --debug-brk | Allow test debugging (works for mocha, jest & protractor), process won't start until debugger will be attached
+--coverage | Collect and output code coverage
 
 By default, this task executes both unit test (using `mocha` as default) and e2e test using `protractor`.
 Default unit test glob is `{test,app,src}/**/*.spec.+(js|ts)`. You can change this by adding the following to your package.json:

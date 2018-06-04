@@ -264,6 +264,26 @@ describe('Aggregator: Test', () => {
       expect(res.stderr).to.contain('1 failed');
       test.teardown();
     });
+
+    it('should output test coverage when --coverage is passed', () => {
+      const test = tp.create();
+      const res = test
+        .setup({
+          '__tests__/foo.js': `
+            describe('Foo', () => {
+              it('should return value', () => {});
+            });
+          `,
+          'package.json': fx.packageJson(),
+        })
+        .execute('test', ['--jest', '--coverage']);
+
+      expect(res.code).to.equal(0);
+      expect(res.stdout).to.contain(
+        'File      |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |',
+      );
+      test.teardown();
+    });
   });
 
   describe('--mocha', () => {
@@ -458,6 +478,21 @@ describe('Aggregator: Test', () => {
 
         expect(res.code).to.equal(0);
         expect(res.stdout).to.contain('✈');
+      });
+
+      it('should output test coverage when --coverage is passed', () => {
+        const res = customTest
+          .setup({
+            'test/some.spec.js': `it.only("pass", () => 1);`,
+            'package.json': fx.packageJson(),
+          })
+          .verbose()
+          .execute('test', ['--mocha', '--coverage']);
+
+        expect(res.code).to.equal(0);
+        expect(res.stdout).to.contain(
+          'All files |        0 |        0 |        0 |        0 |                   |',
+        );
       });
 
       describe('with babel-register', () => {
