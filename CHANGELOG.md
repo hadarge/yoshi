@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.8.1 (May 31, 2018)
+
+#### :bug: Bug
+* [#330](https://github.com/wix/yoshi/pull/330) Fix library (UMD) bundles to work when loaded by Node.js and as WebWorkers
+* [#329](https://github.com/wix/yoshi/pull/329) Patch stylable to always be part of the app's JavaScript bundle
+
 ## 2.8.0 (May 31, 2018)
 
 #### :nail_care: Enhancement
