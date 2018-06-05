@@ -1,49 +1,54 @@
 # Changelog
 
+## 3.0.0-alpha.9 (Jun 5, 2018)
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#339](https://github.com/wix/yoshi/pull/339) support a configuration option to not transpile tests with babel (#339)
+
 ## 3.0.0-alpha.8 (Jun 5, 2018)
 
 #### :bug: Bug
 * `babel-preset-yoshi`
-  * [#334](https://github.com/wix/yoshi/pull/334) Use `{ modules: "commonjs" }` as default to the babel preset.
-
+  * [#334](https://github.com/wix/yoshi/pull/334) Use `{ modules: "commonjs" }` as default to the babel preset
 
 ## 3.0.0-alpha.4 (May 30, 2018)
 
 #### :nail_care: Enhancement
-  * [#317](https://github.com/wix/yoshi/pull/317) Upgrade Jest version from v22 to v23.
+  * [#317](https://github.com/wix/yoshi/pull/317) Upgrade Jest version from v22 to v23
 
 #### :bug: Bug
   * [#316](https://github.com/wix/yoshi/pull/316) Fix various Babel bugs:
     * Use `.deafult` for `babel-plugin-transform-dynamic-import`. [Because of this issue](https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27)
-    * Enable `{ modules: "commonjs" }` by default in `test` environment.
+    * Enable `{ modules: "commonjs" }` by default in `test` environment
 
 ## 3.0.0-alpha.3 (May 29, 2018)
 
 #### :bug: Bug
 * `babel-preset-yoshi`
-  * [#315](https://github.com/wix/yoshi/pull/315) Fix babel preset require error.
+  * [#315](https://github.com/wix/yoshi/pull/315) Fix babel preset require error
 
 ## 3.0.0-alpha.2 (May 29, 2018)
 
 * `eslint-config-yoshi-base`
   * [#289](https://github.com/wix/yoshi/pull/289) Loosen up `eslint-config-yoshi-base` import rules.
-    * Change `import/first` and `import/no-extraneous-dependencies` to warnings (It would be hard to migrate in a big project, but we still want users to be aware of it).
-    * Remove `import/no-cycle` (due to its [linting time cost](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-cycle.md#when-not-to-use-it)).
+    * Change `import/first` and `import/no-extraneous-dependencies` to warnings (It would be hard to migrate in a big project, but we still want users to be aware of it)
+    * Remove `import/no-cycle` (due to its [linting time cost](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-cycle.md#when-not-to-use-it))
 
 * `babel-preset-yoshi`
-  * [#308](https://github.com/wix/yoshi/pull/308) `babel-preset-yoshi` various optimizations and fixes.
+  * [#308](https://github.com/wix/yoshi/pull/308) `babel-preset-yoshi` various optimizations and fixes
 
 ## 3.0.0-alpha.0 (May 14, 2018)
 
 #### :boom: Breaking Change
 * `yoshi`
-  * [#284](https://github.com/wix/yoshi/pull/284) Upgrade `jest` version from 20 to 22 and `jest-teamcity-reporter` to 0.9.
-  * [#282](https://github.com/wix/yoshi/pull/282) Remove `eslint-config-wix` as a dependnecy, it will not be bundled with yoshi.
+  * [#284](https://github.com/wix/yoshi/pull/284) Upgrade `jest` version from 20 to 22 and `jest-teamcity-reporter` to 0.9
+  * [#282](https://github.com/wix/yoshi/pull/282) Remove `eslint-config-wix` as a dependnecy, it will not be bundled with yoshi
 
 #### :nail_care: Enhancement
 * `yoshi`
   * [#281](https://github.com/wix/yoshi/pull/281) Replace `extract-test-plugin` with `mini-css-extract-plugin` and add `css-hot-loader`. (enable `HMR` for `CSS`)
-  * [#282](https://github.com/wix/yoshi/pull/282) Provide `eslint-config-yoshi` & `eslint-config-yoshi-base` with all peer dependencies.
+  * [#282](https://github.com/wix/yoshi/pull/282) Provide `eslint-config-yoshi` & `eslint-config-yoshi-base` with all peer dependencies
 
 ## 2.12.0 (Jul 3, 2018)
 
