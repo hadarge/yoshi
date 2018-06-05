@@ -13,6 +13,8 @@ const normaliseOptions = opts => {
   };
 };
 
+const loose = true;
+
 module.exports = function(api, opts = {}) {
   const options = normaliseOptions(opts);
 
@@ -21,7 +23,10 @@ module.exports = function(api, opts = {}) {
       [
         require('babel-preset-env'),
         {
-          modules: options.modules || 'commonjs',
+          // Configure "transform-es2015-modules-commonjs" plugin ourselves to allow top level `this`
+          // usage in Mocha and Jasmine
+          // Without it, top level `this` will be transpiled to `undefined`
+          modules: false,
           // Display targets to compile for.
           debug: options.debug,
           // Always use destructuring b/c of import/export support.
@@ -42,12 +47,19 @@ module.exports = function(api, opts = {}) {
       ],
     ].filter(Boolean),
     plugins: [
+      options.modules && [
+        'transform-es2015-modules-commonjs',
+        {
+          allowTopLevelThis: isTest,
+          loose,
+        },
+      ],
       [
         // Allow the usage of class properties.
         require('babel-plugin-transform-class-properties'),
         {
           // Bundle size and perf is prior to tiny ES spec incompatibility.
-          loose: true,
+          loose,
         },
       ],
       [
