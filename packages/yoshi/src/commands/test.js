@@ -18,9 +18,9 @@ const runner = createRunner({
 });
 
 const cliArgs = minimist(process.argv.slice(2));
-const isDebugOn = !!cliArgs.debug;
+const isDebugOn = !!cliArgs.debug || cliArgs.debug === 0;
 const debugPort = cliArgs.debug;
-const isDebugBrkOn = !!cliArgs['debug-brk'];
+const isDebugBrkOn = !!cliArgs['debug-brk'] || cliArgs['debug-brk'] === 0;
 const debugBrkPort = cliArgs['debug-brk'];
 const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
 
