@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.0-alpha.8 (Jun 5, 2018)
+
+#### :bug: Bug
+* `babel-preset-yoshi`
+  * [#334](https://github.com/wix/yoshi/pull/334) Use `{ modules: "commonjs" }` as default to the babel preset.
+
+
 ## 3.0.0-alpha.4 (May 30, 2018)
 
 #### :nail_care: Enhancement
