@@ -1,3 +1,5 @@
+const path = require('path');
+const execa = require('execa');
 const expect = require('chai').expect;
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
@@ -113,6 +115,12 @@ describe('Aggregator: Build', () => {
 
     it('should build w/o errors', () => {
       expect(resp.code).to.equal(0);
+    });
+
+    it('should work when run with node', async () => {
+      await execa('node', [
+        path.join(test.tmp, './dist/statics/first.bundle.js'),
+      ]);
     });
 
     describe('stylable integration', () => {

@@ -67,6 +67,7 @@ function getOutput() {
     return Object.assign({}, output, {
       library: libraryExports,
       libraryTarget: 'umd',
+      globalObject: "typeof self !== 'undefined' ? self : this",
     });
   }
 
