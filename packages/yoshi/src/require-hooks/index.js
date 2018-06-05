@@ -1,4 +1,7 @@
-const { runIndividualTranspiler } = require('../../config/project');
+const {
+  runIndividualTranspiler,
+  transpileTests,
+} = require('../../config/project');
 const { isTypescriptProject, isBabelProject } = require('../utils');
 
 if (runIndividualTranspiler()) {
@@ -8,7 +11,7 @@ if (runIndividualTranspiler()) {
 function runtimeTranspiler() {
   if (isTypescriptProject()) {
     require('./ts-node-register');
-  } else if (isBabelProject()) {
+  } else if (isBabelProject() && transpileTests()) {
     require('./babel-register');
   }
 }

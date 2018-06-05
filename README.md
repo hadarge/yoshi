@@ -294,6 +294,10 @@ For example:
 
 In case you don't want to transpile your server (node) code, and you still need `.babelrc`/`tsconfig`, you can add `runIndividualTranspiler` flag to skip server transpiling.
 
+#### yoshi.transpileTests
+
+An option to not transpile tests with Babel (via `babel-register`). Defaults to `true`.
+
 #### yoshi.externalUnprocessedModules
 
 You can explicitly ask build process to transpile some node modules in case those modules do not contain transpiled code.

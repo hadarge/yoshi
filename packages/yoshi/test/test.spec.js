@@ -480,6 +480,20 @@ describe('Aggregator: Test', () => {
         expect(res.stdout).to.contain('✈');
       });
 
+      it('should not transpile tests if `transpileTests` is `false`', () => {
+        const res = customTest
+          .setup({
+            'test/bar.js': 'export default 5;',
+            'test/some.spec.js': `import foo from './bar';`,
+            'package.json': fx.packageJson({ transpileTests: false }),
+            '.babelrc': JSON.stringify({ presets: ['yoshi'] }),
+          })
+          .execute('test', ['--mocha']);
+
+        expect(res.code).to.equal(1);
+        expect(res.stderr).to.contain('Unexpected token import');
+      });
+
       it('should output test coverage when --coverage is passed', () => {
         const res = customTest
           .setup({

@@ -71,6 +71,7 @@ module.exports = {
   features: () => getConfig('features', {}),
   externals: () => getConfig('externals', []),
   babel: () => _.get(packagejson, 'babel'),
+  transpileTests: () => getConfig('transpileTests', true),
   runIndividualTranspiler: () => getConfig('runIndividualTranspiler', true),
   unprocessedModules: () => path => {
     const externalRegexList = externalUnprocessedModules.map(
