@@ -21,7 +21,7 @@ module.exports = function(api, opts = {}) {
       [
         require('babel-preset-env'),
         {
-          modules: options.modules || (isTest && 'commonjs'),
+          modules: options.modules || 'commonjs',
           // Display targets to compile for.
           debug: options.debug,
           // Always use destructuring b/c of import/export support.
