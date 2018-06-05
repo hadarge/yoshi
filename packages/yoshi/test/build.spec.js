@@ -50,7 +50,7 @@ describe('Aggregator: Build', () => {
               .join(';'),
             'src/entry.js': 'export default "I\'m a module!";',
             'src/dep.js': `module.exports = function(a){return a + 1;};`,
-            'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app.json');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss')`,
+            'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app.json');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss'); require('./styles/my-file.st.css')`,
             'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1); require('../app/e/style.less'); require('../app/b/style.less'); require('./moment-locale'); require('awesome-module1/entry.js'); require('lodash/map')`,
             'src/app.json': `{"json-content": 1}`,
             'src/moment-no-locale.js': `import 'moment-no-locale';`,
@@ -65,6 +65,7 @@ describe('Aggregator: Build', () => {
             'src/styles/my-file.global.scss': `.x {.y {color: blue;}}`,
             'src/styles/my-file-less.global.less': `.q {.w {color: blue;}}`,
             'src/styles/my-file.scss': `.a {.b {color: blue;}}`,
+            'src/styles/my-file.st.css': `.root {.stylableClass {color: pink;}}`,
             'app/a/style.scss': fx.scss(),
             'app/b/style.less': fx.less(),
             'app/c/style.less': `@import (once) '../b/style.less';`,
@@ -112,6 +113,21 @@ describe('Aggregator: Build', () => {
 
     it('should build w/o errors', () => {
       expect(resp.code).to.equal(0);
+    });
+
+    describe('stylable integration', () => {
+      it('should include stylable output as part of the app js bundle', () => {
+        expect(test.content('./dist/statics/first.bundle.js')).to.match(
+          /stylableClass/g,
+        );
+      });
+
+      it('should not create a separate css bundle for stylable css', () => {
+        expect(test.list('./dist/statics')).to.not.contain.members([
+          'first.stylable.bundle.css',
+          'second.stylable.bundle.css',
+        ]);
+      });
     });
 
     describe('Output for sass, less and babel project', () => {
@@ -488,8 +504,9 @@ describe('Aggregator: Build', () => {
             '.babelrc': `{"presets": [["${require.resolve(
               'babel-preset-env',
             )}", {"modules": false}]]}`,
-            'src/a.js': `export default "I'm a module!"; import './a.scss'; require('lodash/map')`,
+            'src/a.js': `export default "I'm a module!"; import './a.scss'; import './a.st.css'; require('lodash/map')`,
             'src/a.scss': `.x {.y {display: flex;}}`,
+            'src/a.st.css': `.root {.stylableClass {color: pink;}}`,
             'src/assets/file': '1',
             'src/something.js': fx.angularJs(),
             'something/something.js': fx.angularJs(),
@@ -561,6 +578,20 @@ describe('Aggregator: Build', () => {
       expect(test.content(`dist/statics/app.bundle.js`)).to.match(
         /display: flex;/g,
       );
+    });
+
+    describe('stylable integration', () => {
+      it('should include stylable output as part of the app js bundle', () => {
+        expect(test.content('dist/statics/app.bundle.js')).to.match(
+          /stylableClass/g,
+        );
+      });
+
+      it('should not create a separate css bundle for stylable css', () => {
+        expect(test.list('./dist/statics')).to.not.contain(
+          'app.stylable.bundle.css',
+        );
+      });
     });
   });
 

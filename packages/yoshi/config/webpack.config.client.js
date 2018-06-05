@@ -47,6 +47,8 @@ const config = ({
     }
   }
 
+  const stylableSeparateCss = false; //this is a temporary fix until stylable will be concatenated into a single css bundle of the app
+
   return mergeByConcat(webpackConfigCommon, {
     entry: getEntry(),
 
@@ -98,9 +100,9 @@ const config = ({
       }),
 
       new StylableWebpackPlugin({
-        outputCSS: separateCss,
+        outputCSS: stylableSeparateCss,
         filename: '[name].stylable.bundle.css',
-        includeCSSInJS: !separateCss,
+        includeCSSInJS: !stylableSeparateCss,
         optimize: { classNameOptimizations: false },
       }),
 
