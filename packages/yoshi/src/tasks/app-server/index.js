@@ -50,7 +50,7 @@ function initializeServerStartDelegate({ serverScript, debugPort, log }) {
       'Application is now available at ',
       chalk.magenta(`http://localhost:${env.PORT}${env.MOUNT_POINT || '/'}`),
     );
-    if (debugPort) {
+    if (debugPort || debugPort === 0) {
       console.log(
         'Debugger is available at ',
         chalk.magenta(`${serverDebugHost}:${debugPort}`),
@@ -63,7 +63,7 @@ function initializeServerStartDelegate({ serverScript, debugPort, log }) {
 
     mkdirp.sync(path.resolve('target'));
     const runScripts = [serverScript];
-    if (debugPort) {
+    if (debugPort || debugPort === 0) {
       runScripts.unshift(`--inspect=${serverDebugHost}:${debugPort}`);
     }
 

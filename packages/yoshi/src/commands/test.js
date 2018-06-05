@@ -18,7 +18,6 @@ const runner = createRunner({
 });
 
 const cliArgs = minimist(process.argv.slice(2));
-const isDebugOn = !!cliArgs.debug;
 const debugPort = cliArgs.debug;
 
 const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
@@ -67,7 +66,7 @@ module.exports = runner.command(
         `--reporter=${getMochaReporter()}`,
       ];
 
-      if (isDebugOn) {
+      if (debugPort || debugPort === 0) {
         mochaArgs.unshift(`--inspect=${debugPort}`);
         mochaArgs.push('--no-timeouts');
       }
@@ -128,7 +127,7 @@ module.exports = runner.command(
         shouldWatch ? '--watch' : '',
       ];
 
-      if (isDebugOn) {
+      if (debugPort || debugPort === 0) {
         jestCliOptions.unshift(`--inspect=${debugPort}`);
         jestCliOptions.push(`--runInBand`);
       }
