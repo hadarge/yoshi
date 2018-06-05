@@ -49,6 +49,7 @@
 * `yoshi`
   * [#281](https://github.com/wix/yoshi/pull/281) Replace `extract-test-plugin` with `mini-css-extract-plugin` and add `css-hot-loader`. (enable `HMR` for `CSS`)
   * [#282](https://github.com/wix/yoshi/pull/282) Provide `eslint-config-yoshi` & `eslint-config-yoshi-base` with all peer dependencies
+
 ## 2.8.2 (Jun 6, 2018)
 
 #### :nail_care: Enhancement
