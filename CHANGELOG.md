@@ -1,10 +1,14 @@
 # Changelog
 
+## 3.0.0-alpha.10 (Jun 5, 2018)
+
+#### :bug: Bug
+* [#340](https://github.com/wix/yoshi/pull/340) Fix jasmine base reporter printing
+
 ## 3.0.0-alpha.9 (Jun 5, 2018)
 
 #### :nail_care: Enhancement
-* `yoshi`
-  * [#339](https://github.com/wix/yoshi/pull/339) support a configuration option to not transpile tests with babel (#339)
+* [#339](https://github.com/wix/yoshi/pull/339) Support a configuration option to not transpile tests with Babel
 
 ## 3.0.0-alpha.8 (Jun 5, 2018)
 
