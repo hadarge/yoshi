@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.2 (Jun 6, 2018)
+
+#### :nail_care: Enhancement
+* [#341](https://github.com/wix/yoshi/pull/341) Add `.json` to the list of resolved extensions by Webpack
+
 ## 2.8.1 (May 31, 2018)
 
 #### :bug: Bug
