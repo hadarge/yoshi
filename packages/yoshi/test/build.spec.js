@@ -52,7 +52,7 @@ describe('Aggregator: Build', () => {
               .join(';'),
             'src/entry.js': 'export default "I\'m a module!";',
             'src/dep.js': `module.exports = function(a){return a + 1;};`,
-            'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app.json');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss'); require('./styles/my-file.st.css')`,
+            'src/app1.js': `const thisIsWorks = true; const aFunction = require('./dep');const a = aFunction(1); require('./app');  require('../app/e/style.scss'); require('../app/b/style.less'); require('./styles/my-file.global.scss'); require('./styles/my-file-less.global.less'); require('./styles/my-file.scss'); require('./styles/my-file.st.css')`,
             'src/app2.js': `const hello = "world"; const aFunction = require('./dep');const a = aFunction(1); require('../app/e/style.less'); require('../app/b/style.less'); require('./moment-locale'); require('awesome-module1/entry.js'); require('lodash/map')`,
             'src/app.json': `{"json-content": 1}`,
             'src/moment-no-locale.js': `import 'moment-no-locale';`,

@@ -12,7 +12,7 @@ const config = {
   resolve: {
     modules: ['node_modules', context],
 
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     symlinks: false,
   },
 
