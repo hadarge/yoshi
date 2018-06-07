@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const execa = require('execa');
 const minimist = require('minimist');
@@ -96,9 +97,15 @@ module.exports = runner.command(
     }
 
     if (cliArgs.jasmine) {
+      const jasmineJsonPath = path.join(process.cwd(), 'test', 'jasmine.json');
+
+      const jasmineConfig = fs.existsSync(jasmineJsonPath)
+        ? jasmineJsonPath
+        : require.resolve('../../config/jasmine-config');
+
       const jasmineArgs = [
         require.resolve('jasmine/bin/jasmine'),
-        `--config=${require.resolve('../../config/jasmine-config')}`,
+        `--config=${jasmineConfig}`,
       ];
 
       if (cliArgs.coverage) {

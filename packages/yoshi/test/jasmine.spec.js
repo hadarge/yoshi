@@ -121,6 +121,24 @@ describe('test --jasmine', () => {
     expect(res.stdout).to.contain('1 spec, 0 failures');
     expect(res.stdout).to.contain('a helper file was loaded');
   });
+
+  it('should use "test/jasmine.json" to configure jasmine if exist', () => {
+    const res = test
+      .setup({
+        'test/some.spec.js': passingTest(),
+        'different/some.spec.js': failingTest(),
+        'test/jasmine.json': JSON.stringify({
+          // when yoshi respects the config, it will look at the "different" directory and fail
+          spec_dir: 'different',
+          spec_files: ['different/**/*.spec.js'],
+        }),
+        'package.json': fx.packageJson(),
+      })
+      .execute('test', ['--jasmine']);
+
+    expect(res.code).to.equal(1);
+    expect(res.stdout).to.not.contain('1 spec, 0 failures');
+  });
 });
 
 function passingProject() {
@@ -156,6 +174,7 @@ function failingTest() {
 function passingTestWithHelper() {
   return `it('should pass if helper called', function () {expect(this.helperLoaded).toBe(true)})`;
 }
+
 function jasmineSetup() {
   return "console.log('a helper file was loaded'); beforeEach(function() {this.helperLoaded = true})";
 }
