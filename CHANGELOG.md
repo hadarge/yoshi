@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0-alpha.11 (Jun 7, 2018)
+
+#### :boom: Breaking Change
+
+* [#342](https://github.com/wix/yoshi/pull/342) Upgrade jasmine to `v3.1.0`
+
 ## 3.0.0-alpha.10 (Jun 5, 2018)
 
 #### :bug: Bug
