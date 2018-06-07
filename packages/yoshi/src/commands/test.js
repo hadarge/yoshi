@@ -18,9 +18,7 @@ const runner = createRunner({
 });
 
 const cliArgs = minimist(process.argv.slice(2));
-const isDebugOn = !!cliArgs.debug;
 const debugPort = cliArgs.debug;
-const isDebugBrkOn = !!cliArgs['debug-brk'];
 const debugBrkPort = cliArgs['debug-brk'];
 const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
 
@@ -72,10 +70,10 @@ module.exports = runner.command(
         mochaArgs.unshift(require.resolve('nyc/bin/nyc'));
       }
 
-      if (isDebugBrkOn) {
+      if (debugBrkPort !== undefined) {
         mochaArgs.unshift(`--inspect-brk=${debugBrkPort}`);
         mochaArgs.push('--no-timeouts');
-      } else if (isDebugOn) {
+      } else if (debugPort !== undefined) {
         mochaArgs.unshift(`--inspect=${debugPort}`);
         mochaArgs.push('--no-timeouts');
       }
@@ -134,10 +132,10 @@ module.exports = runner.command(
         shouldWatch ? '--watch' : '',
         cliArgs.coverage ? '--coverage' : '',
       ];
-      if (isDebugBrkOn) {
+      if (debugBrkPort !== undefined) {
         jestCliOptions.unshift(`--inspect-brk=${debugBrkPort}`);
         jestCliOptions.push(`--runInBand`);
-      } else if (isDebugOn) {
+      } else if (debugPort !== undefined) {
         jestCliOptions.unshift(`--inspect=${debugPort}`);
         jestCliOptions.push(`--runInBand`);
       }

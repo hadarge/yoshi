@@ -24,9 +24,9 @@ const protractor = (debugPort, debugBrkPort) => {
   const PROTRACTOR_BIN = require.resolve('protractor/bin/protractor');
   protractorArgs.unshift(PROTRACTOR_BIN);
 
-  if (!!debugBrkPort) {
+  if (debugBrkPort !== undefined) {
     protractorArgs.unshift(`--inspect-brk=${debugBrkPort}`);
-  } else if (!!debugPort) {
+  } else if (debugPort !== undefined) {
     protractorArgs.unshift(`--inspect=${debugPort}`);
   }
   const WEBDRIVER_BIN = require.resolve('protractor/bin/webdriver-manager');
