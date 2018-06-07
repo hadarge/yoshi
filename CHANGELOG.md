@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.8.3 (Jun 7, 2018)
+
+#### :bug: Bug
+* [#345](https://github.com/wix/yoshi/pull/345) Revert `esnext` enforced configuration for `ts-loader`.
+* [#335](https://github.com/wix/yoshi/pull/335) Support `--debug=0` option (enable debug with auto port generation)
+
 ## 2.8.2 (Jun 6, 2018)
 
 #### :nail_care: Enhancement
