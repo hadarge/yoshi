@@ -950,7 +950,7 @@ describe('Aggregator: Build', () => {
         expect(resp.stderr).to.contain(`Unrecognised input`);
       });
 
-      it("should fail with exit code 1 when yoshi can't transpile js file ", () => {
+      it("should fail with exit code 1 when yoshi can't transpile js file", () => {
         const res = test
           .setup({
             'src/client.js': `const aFunction = require('./dep');const a = aFunction(1);`,
@@ -960,7 +960,7 @@ describe('Aggregator: Build', () => {
           })
           .execute('build');
         expect(res.code).to.equal(1);
-        expect(res.stdout).to.contain('Module build failed:');
+        expect(res.stdout).to.contain('Module build failed');
         expect(res.stderr).to.contain('Unexpected token (2:0)');
       });
     });
