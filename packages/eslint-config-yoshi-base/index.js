@@ -139,9 +139,8 @@ module.exports = {
 
     // https://github.com/benmosher/eslint-plugin-import
     'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
-    'import/no-extraneous-dependencies': 'warn',
+    // 'import/no-extraneous-dependencies': 'warn',
     'import/no-amd': 'error',
-    'import/first': ['warn', 'absolute-first'],
     'import/no-duplicates': 'error',
     'import/extensions': [
       'error',
