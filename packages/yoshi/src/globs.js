@@ -24,7 +24,6 @@ module.exports = {
   multipleModules: {
     clientDist: () => dist,
   },
-  tslint: () => [`${base}/**/*.ts{,x}`],
   less: () => [`${base}/**/*.less`, `!${base}/assets/**/*`],
   scss: () => [`${base}/**/*.scss`, `!${base}/assets/**/*`],
 };

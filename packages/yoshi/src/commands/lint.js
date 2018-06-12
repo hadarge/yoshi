@@ -1,7 +1,10 @@
+const path = require('path');
 const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
+const tslint = require('../tasks/tslint');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
+
 const {
   isTypescriptProject,
   shouldRunStylelint,
@@ -20,7 +23,7 @@ module.exports = runner.command(async tasks => {
     return;
   }
 
-  const { eslint, tslint, stylelint } = tasks;
+  const { eslint, stylelint } = tasks;
   // Variadic arguments are placed inside the "_" property array
   // https://github.com/substack/minimist#var-argv--parseargsargs-opts
   // The first argument is the command itself (lint), we retrieve all the rest
@@ -56,26 +59,32 @@ module.exports = runner.command(async tasks => {
   }
 
   if (isTypescriptProject()) {
-    await runTsLint([`${globs.base()}/**/*.ts{,x}`]);
+    await runTsLint();
   } else {
     await runEsLint(['*.js', `${globs.base()}/**/*.js`]);
   }
 
   function runStyleLint(pattern) {
-    console.log('running style lint on', pattern);
+    console.log(`running style lint on ${pattern}`);
+
     return stylelint({ pattern, options: { formatter: 'string' } });
   }
 
   function runTsLint(pattern) {
-    console.log('running ts lint on', pattern);
+    const tsconfigFilePath = path.resolve('tsconfig.json');
+    const tslintFilePath = path.resolve('tslint.json');
+
     return tslint({
+      tsconfigFilePath,
+      tslintFilePath,
       pattern,
       options: { fix: cliArgs.fix, formatter: cliArgs.format || 'stylish' },
     });
   }
 
   function runEsLint(pattern) {
-    console.log('running es lint on', pattern);
+    console.log(`running es lint on ${pattern}`);
+
     return eslint({
       pattern,
       options: {

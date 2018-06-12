@@ -7,13 +7,29 @@ describe('Aggregator: Lint', () => {
   const test = tp.create();
   afterEach(() => test.teardown());
 
-  describe('yoshi-tslint', () => {
-    it('should use yoshi-tslint', () => {
+  describe('tslint', () => {
+    it('should run tslint on files according to tsconfig.json', () => {
       const res = test
         .setup({
-          'app/a.ts': `parseInt("1", 10);`,
+          'app/a.ts': `import '../not-in-glob/b';`,
+          'not-in-glob/b.ts': 'parseInt("1")',
           'package.json': fx.packageJson(),
-          'tsconfig.json': fx.tsconfig(),
+          'tsconfig.json': fx.tsconfig({ files: ['app/a.ts'] }),
+          'tslint.json': fx.tslint({ radix: true }),
+        })
+        .execute('lint');
+
+      expect(res.code).to.equal(1);
+      expect(res.stderr).to.contain('radix  Missing radix parameter');
+    });
+
+    it('should pass with no errors', () => {
+      const res = test
+        .setup({
+          'app/a.ts': `import '../not-in-glob/b';`,
+          'not-in-glob/b.ts': 'parseInt("1", 10)',
+          'package.json': fx.packageJson(),
+          'tsconfig.json': fx.tsconfig({ files: ['app/a.ts'] }),
           'tslint.json': fx.tslint({ radix: true }),
         })
         .execute('lint');
