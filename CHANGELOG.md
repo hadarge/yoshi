@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.0.0-alpha.12 (Jun 12, 2018)
+
+#### :boom: Breaking Change
+* `yoshi`
+  * [#354](https://github.com/wix/yoshi/pull/354) Use `tsconfig.json` instead of a glob pattern to determine the files tslint should work on
+
+#### :nail_care: Enhancement
+* `eslint-config-yoshi-base`
+  * [#350](https://github.com/wix/yoshi/pull/350) Remove `import/first` and `import/no-extraneous-dependencies` warnings
+* `tslint-config-yoshi-base`
+  * [#360](https://github.com/wix/yoshi/pull/360) New package to lint typescript projects using yoshi
+* `tslint-config-yoshi`
+  * [#360](https://github.com/wix/yoshi/pull/360) New package to lint typescript & react projects using yoshi
+
 ## 3.0.0-alpha.11 (Jun 7, 2018)
 
 #### :boom: Breaking Change
