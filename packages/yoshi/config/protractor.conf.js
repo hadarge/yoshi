@@ -37,6 +37,7 @@ const merged = ld.mergeWith(
   {
     framework: 'jasmine',
     specs: [globs.e2e()],
+    exclude: [],
     directConnect: true,
 
     beforeLaunch: () => {
@@ -82,8 +83,11 @@ const merged = ld.mergeWith(
 
 function normaliseSpecs(config) {
   const specs = [].concat(config.specs || []);
+  const exclude = [].concat(config.exclude || []);
+
   return Object.assign({}, config, {
     specs: specs.map(spec => path.resolve(spec)),
+    exclude: exclude.map(spec => path.resolve(spec)),
   });
 }
 
