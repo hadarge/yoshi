@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.0.0-alpha.11",
+  "version": "3.0.0-alpha.12",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -23,7 +23,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "~6.24.1",
     "babel-polyfill": "~6.23.0",
     "babel-preset-wix": "^2.0.0",
-    "babel-preset-yoshi": "^3.0.0-alpha.11",
+    "babel-preset-yoshi": "^3.0.0-alpha.12",
     "babel-register": "~6.24.1",
     "caporal": "~0.9.0",
     "case-sensitive-paths-webpack-plugin": "~2.1.1",
@@ -41,8 +41,8 @@
     "envinfo": "^5.1.2",
     "eslint": "4.13.1",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-config-yoshi": "^3.0.0-alpha.11",
-    "eslint-config-yoshi-base": "^3.0.0-alpha.11",
+    "eslint-config-yoshi": "^3.0.0-alpha.12",
+    "eslint-config-yoshi-base": "^3.0.0-alpha.12",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
