@@ -456,7 +456,7 @@ describe('Aggregator: Build', () => {
     });
   });
 
-  describe.skip('simple tree shaking scenario in typescript', () => {
+  describe('simple tree shaking scenario in typescript', () => {
     let resp;
 
     before(() => {
@@ -771,7 +771,7 @@ describe('Aggregator: Build', () => {
           'src/something.ts': fx.angularJs(),
           'something/something.js': fx.angularJs(),
           'something.js': fx.angularJs(),
-          'tsconfig.json': fx.tsconfig(),
+          'tsconfig.json': fx.tsconfig({ compilerOptions: { module: 'es6' } }),
           'package.json': fx.packageJson(
             {
               separateCss: 'prod',
