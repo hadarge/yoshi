@@ -123,6 +123,24 @@ describe('Aggregator: Start', () => {
       });
     });
 
+    describe('hot reload', () => {
+      it('should not run hotReload if hotReload if configured as false', () => {
+        child = test
+          .setup(
+            {
+              'src/client.js': `module.exports.wat = 'hotReload';\n`,
+              'package.json': fx.packageJson({ hotReload: false }),
+            },
+            [],
+          )
+          .spawn('start');
+
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content => expect(content).to.contain(`"reload":false`),
+        );
+      });
+    });
+
     describe('HMR', () => {
       it('should create bundle with enabled hot module replacement', () => {
         child = test
@@ -207,6 +225,26 @@ describe('Aggregator: Start', () => {
       });
     });
 
+    describe('hot reload & HMR', () => {
+      it('should not run webpack-hot-client if both hmr and hotReload are configured as false', () => {
+        child = test
+          .setup(
+            {
+              'src/client.js': `module.exports.wat = 'hotReload + hmr';\n`,
+              'package.json': fx.packageJson({ hotReload: false, hmr: false }),
+            },
+            [],
+          )
+          .spawn('start');
+
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content => {
+            expect(content).to.not.contain(`"reload":false`);
+            expect(content).to.not.contain(`"hot":false`);
+          },
+        );
+      });
+    });
     describe('Public path', () => {
       it('should set proper public path', () => {
         child = test

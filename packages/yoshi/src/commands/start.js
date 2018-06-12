@@ -9,6 +9,7 @@ const {
   entry,
   defaultEntry,
   hmr,
+  hotReload,
   petriSpecsConfig,
   clientProjectName,
 } = require('../../config/project');
@@ -128,6 +129,7 @@ module.exports = runner.command(
           configuredEntry: entry(),
           defaultEntry: defaultEntry(),
           hmr: hmr(),
+          hotReload: hotReload(),
           transformHMRRuntime: shouldTransformHMRRuntime(),
         },
         { title: 'cdn' },

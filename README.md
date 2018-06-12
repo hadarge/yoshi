@@ -312,8 +312,15 @@ Use this if you are writing a library and want to publish it as single file. Lib
 
 ##### yoshi.hmr
 `Boolean` | `"auto"`
-Set to false in order to disable hot module replacement. (defaults to true)
+
+Set to `false` in order to disable hot module replacement. (defaults to true)
+
 `"auto"` is an experimental feature which provides zero configuration HMR for react. It will include `react-hot-loader` to the top of the entry file and will wrap React's root component in special Higher Order Component which enables hot module reload for react. Also it will call `module.hot.accept` on the project's entry file.
+
+##### yoshi.hotReload
+`Boolean`
+
+If true, instructs the browser to physically refresh the entire page if / when webpack indicates that a hot patch cannot be applied and a full refresh is needed.
 
 #### yoshi.performance
 

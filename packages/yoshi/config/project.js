@@ -30,6 +30,7 @@ module.exports = {
     browser: () => getConfig('specs.browser'),
   },
   hmr: () => getConfig('hmr', true),
+  hotReload: () => getConfig('hotReload', true),
   exports: () => getConfig('exports'),
   clientProjectName: () => getConfig('clientProjectName'),
   clientFilesPath: () => {

@@ -52,6 +52,11 @@ if (module.hot) {
 ```
 to your entry files and initializes HMR.
 
+## `hmr: false`
+Using this option, you opt out from using hot module replacement.
+
+**NOTE:** If you want to also opt out from `hotReload` configure `{ hotReload: false }` in your yoshi config.
+
 ### Caveats:
 - It doesn't work yet with `render(React.createElement('div'), el)`. Just with JSX elements. But we are working on this.
 - Despite that it isn't somehow affect production, it's not stable yet. So you could try it and [open an issue](https://github.com/wix/yoshi/issues) in case of bugs. 🙏
