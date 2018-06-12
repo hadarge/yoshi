@@ -1,0 +1,26 @@
+{
+  "name": "tslint-config-yoshi",
+  "version": "3.0.0-alpha.12",
+  "description": "tslint configuration for react projects using yoshi",
+  "main": "index.js",
+  "keywords": [
+    "tslint",
+    "yoshi",
+    "react"
+  ],
+  "author": "Ronen Amiel & Ran Yitzhaki",
+  "license": "ISC",
+  "scripts": {
+    "customPublish": "node ../../scripts/customPublish.js"
+  },
+  "dependencies": {
+    "tslint-config-yoshi-base": "^3.0.0-alpha.12",
+    "tslint-react": "^3.6.0"
+  },
+  "peerDependencies": {
+    "tslint": ">=5.10.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
