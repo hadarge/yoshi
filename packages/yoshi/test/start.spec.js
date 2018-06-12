@@ -38,6 +38,45 @@ describe('Aggregator: Start', () => {
       });
     });
 
+    describe('process.env', function() {
+      it('should have default values', () => {
+        const expected = {
+          DEBUG: 'wix:*,wnp:*',
+          NODE_ENV: 'development',
+          PORT: '3000',
+        };
+
+        child = test
+          .setup({
+            'src/client.js': '',
+            'index.js': `console.log(JSON.stringify(process.env))`,
+            'package.json': fx.packageJson(),
+            'pom.xml': fx.pom(),
+          })
+          .spawn('start');
+
+        return checkServerLogContainsJson(expected);
+      });
+
+      it('should override values', () => {
+        const expected = {
+          DEBUG: 'wixstores:*',
+          NODE_ENV: 'dev',
+        };
+
+        child = test
+          .setup({
+            'src/client.js': '',
+            'index.js': `console.log(JSON.stringify(process.env))`,
+            'package.json': fx.packageJson(),
+            'pom.xml': fx.pom(),
+          })
+          .spawn('start', undefined, { DEBUG: 'wixstores:*', NODE_ENV: 'dev' });
+
+        return checkServerLogContainsJson(expected);
+      });
+    });
+
     describe('--debug', () => {
       it('should not pass --inspect flag when parameter is not passed', () => {
         const checkIfInspectIsPassedInArgs = function() {
@@ -712,6 +751,17 @@ describe('Aggregator: Start', () => {
                 `Expect server.log to contain "${str}", got "${content}" instead`,
               ),
             );
+      }),
+    );
+  }
+
+  function checkServerLogContainsJson(expected, { backoff = 100 } = {}) {
+    return checkServerLogCreated({ backoff }).then(() =>
+      retryPromise({ backoff }, async () => {
+        const content = serverLogContent();
+        const json = JSON.parse(content);
+
+        return expect(json).to.include(expected);
       }),
     );
   }
