@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.9.0 (Jun 12, 2018)
+
+* [#358](https://github.com/wix/yoshi/pull/358) [#361](https://github.com/wix/yoshi/pull/358) Add an option to configure live-reload
+* [#352](https://github.com/wix/yoshi/pull/352) Add support for exclude property in `protractor.conf.js`
+* [#332](https://github.com/wix/yoshi/pull/332) Add an option to override DEBUG environment parameter in app-server
+
 ## 2.8.3 (Jun 7, 2018)
 
 #### :bug: Bug
