@@ -13,7 +13,7 @@ module.exports = ({
   port = '3000',
   ssl,
   hmr = true,
-  hotReload = true,
+  liveReload = true,
   transformHMRRuntime,
   host = 'localhost',
   publicPath,
@@ -73,9 +73,9 @@ module.exports = ({
 
         // If both hmr and reload are false it makes this module fairly useless
         // https://github.com/webpack-contrib/webpack-hot-client#reload
-        if (hotReload || hmr) {
+        if (liveReload || hmr) {
           hotClient(compiler, {
-            reload: hotReload,
+            reload: liveReload,
             hot: Boolean(hmr),
             logLevel: 'warn',
           });

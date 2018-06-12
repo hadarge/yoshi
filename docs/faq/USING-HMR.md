@@ -55,7 +55,7 @@ to your entry files and initializes HMR.
 ## `hmr: false`
 Using this option, you opt out from using hot module replacement.
 
-**NOTE:** If you want to also opt out from `hotReload` configure `{ hotReload: false }` in your yoshi config.
+**NOTE:** If you want to also opt out from `liveReload` configure `{ liveReload: false }` in your yoshi config.
 
 ### Caveats:
 - It doesn't work yet with `render(React.createElement('div'), el)`. Just with JSX elements. But we are working on this.

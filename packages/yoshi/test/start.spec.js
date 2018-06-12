@@ -163,12 +163,12 @@ describe('Aggregator: Start', () => {
     });
 
     describe('hot reload', () => {
-      it('should not run hotReload if hotReload if configured as false', () => {
+      it('should not run liveReload if liveReload if configured as false', () => {
         child = test
           .setup(
             {
-              'src/client.js': `module.exports.wat = 'hotReload';\n`,
-              'package.json': fx.packageJson({ hotReload: false }),
+              'src/client.js': `module.exports.wat = 'liveReload';\n`,
+              'package.json': fx.packageJson({ liveReload: false }),
             },
             [],
           )
@@ -265,12 +265,12 @@ describe('Aggregator: Start', () => {
     });
 
     describe('hot reload & HMR', () => {
-      it('should not run webpack-hot-client if both hmr and hotReload are configured as false', () => {
+      it('should not run webpack-hot-client if both hmr and liveReload are configured as false', () => {
         child = test
           .setup(
             {
-              'src/client.js': `module.exports.wat = 'hotReload + hmr';\n`,
-              'package.json': fx.packageJson({ hotReload: false, hmr: false }),
+              'src/client.js': `module.exports.wat = 'liveReload + hmr';\n`,
+              'package.json': fx.packageJson({ liveReload: false, hmr: false }),
             },
             [],
           )
