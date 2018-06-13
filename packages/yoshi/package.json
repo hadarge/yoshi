@@ -81,7 +81,7 @@
     "mocha": "^3.4.2",
     "mocha-teamcity-reporter": "~1.1.1",
     "ng-annotate-loader": "~0.6.1",
-    "node-sass": "^4.5.3",
+    "node-sass": "~4.5.3",
     "nyc": "^12.0.1",
     "petri-specs": "~1.1.39",
     "phantomjs-polyfill": "~0.0.2",
