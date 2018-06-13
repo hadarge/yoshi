@@ -1,8 +1,7 @@
 module.exports = {
-  rulesDirectory: ['tslint-plugin-prettier'],
+  rulesDirectory: ['tslint-microsoft-contrib', 'tslint-plugin-prettier'],
 
   extends: [
-    'tslint-microsoft-contrib',
     'tslint-consistent-codestyle',
     'tslint-eslint-rules',
     'tslint-config-prettier',
