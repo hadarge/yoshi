@@ -1,10 +1,11 @@
 module.exports = {
-  rulesDirectory: ['tslint-plugin-prettier'],
+  rulesDirectory: ['tslint-react'],
 
-  extends: ['tslint-config-yoshi-base', 'tslint-react'],
+  extends: ['tslint-config-yoshi-base'],
 
   rules: {
     // // https://github.com/palantir/tslint-react
-    'jsx-no-lambda': false,
+    'jsx-no-bind': true,
+    'jsx-no-string-ref': true,
   },
 };
