@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.0-beta.0 (Jun 13, 2018)
+* `yoshi-config-tslint` & `yoshi-config-tslint-base`
+  * Various changes to the tslint config:
+    * Don't extend the default rules from `tslint-react`
+    * Remove various tslint rules from base `tslint` config
+    * Don't use recommended rule defaults from `tslint-microsoft-contrib`
+
 ## 3.0.0-alpha.12 (Jun 12, 2018)
 
 #### :boom: Breaking Change
