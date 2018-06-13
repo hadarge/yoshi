@@ -1,7 +1,13 @@
 # Changelog
 
+## 2.10.0 (Jun 13, 2018)
+
+#### :nail_care: Enhancement
+* [#364](https://github.com/wix/yoshi/pull/364) Bump `node-sass` version from `~4.5.3` to `^4.5.3`
+
 ## 2.9.0 (Jun 12, 2018)
 
+#### :nail_care: Enhancement
 * [#358](https://github.com/wix/yoshi/pull/358) [#361](https://github.com/wix/yoshi/pull/358) Add an option to configure live-reload
 * [#352](https://github.com/wix/yoshi/pull/352) Add support for exclude property in `protractor.conf.js`
 * [#332](https://github.com/wix/yoshi/pull/332) Add an option to override DEBUG environment parameter in app-server
