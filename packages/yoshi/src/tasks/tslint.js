@@ -1,8 +1,11 @@
 const globby = require('globby');
 
-const { Linter, Configuration } = require('tslint');
-
 function runLinter({ options, tslintFilePath, tsconfigFilePath, filesPaths }) {
+  // not all of our users have typescript installed.
+  // tslint requires typescript to exist in node_modules when imported,
+  // that should happen only when runLinter function is called in oppose to upon import
+  const { Linter, Configuration } = require('tslint');
+
   const program = Linter.createProgram(tsconfigFilePath);
   const linter = new Linter(options, program);
 
