@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.10.1 (Jun 13, 2018)
+
+#### :bug: Bug
+* Revert [#364](https://github.com/wix/yoshi/pull/364) as it contains several breaking changes and it will be merged again into `v3.x.x`
+
 ## 2.10.0 (Jun 13, 2018)
 
 #### :nail_care: Enhancement
