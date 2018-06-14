@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.11.0 (Jun 14, 2018)
+
+#### :nail_care: Enhancement
+* [#367](https://github.com/wix/yoshi/pull/367) Add support for a new font type (otf)
+* [#371](https://github.com/wix/yoshi/pull/371) Configure Stylable with `{ "shortNamespaces": false }` for optimization
+
 ## 2.10.1 (Jun 13, 2018)
 
 #### :bug: Bug
