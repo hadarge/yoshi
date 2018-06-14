@@ -52,6 +52,7 @@ describe('Loaders', () => {
             require('./img.jpeg');
             require('./img.gif');
             require('./font.ttf');
+            require('./font.otf');
             require('./font.woff');
             require('./font.woff2');
             require('./font.eot');
@@ -101,6 +102,7 @@ describe('Loaders', () => {
           'src/img.jpeg': createAboveTheLimitFile(),
           'src/img.gif': createAboveTheLimitFile(),
           'src/font.ttf': createAboveTheLimitFile(),
+          'src/font.otf': createAboveTheLimitFile(),
           'src/font.woff': createAboveTheLimitFile(),
           'src/font.woff2': createAboveTheLimitFile(),
           'src/font.eot': createAboveTheLimitFile(),
@@ -308,6 +310,7 @@ describe('Loaders', () => {
         expect(content).to.contain(fileAboveTheLimit('font.woff'));
         expect(content).to.contain(fileAboveTheLimit('font.woff2'));
         expect(content).to.contain(fileAboveTheLimit('font.eot'));
+        expect(content).to.contain(fileAboveTheLimit('font.otf'));
       });
 
       it('should load wav and mp3 files', () => {
