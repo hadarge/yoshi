@@ -104,6 +104,7 @@ const config = ({
         filename: '[name].stylable.bundle.css',
         includeCSSInJS: !stylableSeparateCss,
         optimize: { classNameOptimizations: false },
+        shortNamespaces: false,
       }),
 
       ...(!separateCss
