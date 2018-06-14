@@ -20,7 +20,8 @@ describe('Aggregator: Lint', () => {
         .execute('lint');
 
       expect(res.code).to.equal(1);
-      expect(res.stderr).to.contain('radix  Missing radix parameter');
+      expect(res.stdout).to.contain('radix  Missing radix parameter');
+      expect(res.stderr).to.contain('tslint exited with 1 error');
     });
 
     it('should pass with no errors', () => {
@@ -35,20 +36,6 @@ describe('Aggregator: Lint', () => {
         .execute('lint');
 
       expect(res.code).to.equal(0);
-    });
-
-    it('should fail with exit code 1', () => {
-      const res = test
-        .setup({
-          'app/a.ts': `parseInt("1");`,
-          'package.json': fx.packageJson(),
-          'tsconfig.json': fx.tsconfig(),
-          'tslint.json': fx.tslint({ radix: true }),
-        })
-        .execute('lint');
-
-      expect(res.code).to.equal(1);
-      expect(res.stderr).to.contain('radix  Missing radix parameter');
     });
 
     it('should fix linting errors and exit with exit code 0 if executed with --fix flag & there are only fixable errors', () => {
@@ -76,34 +63,28 @@ describe('Aggregator: Lint', () => {
         .execute('lint', ['--format json']);
 
       expect(res.code).to.equal(1);
-      expect(JSON.parse(res.stderr)[0].failure).to.eq(
-        'Missing radix parameter',
-      );
+      // endPoisition is a json only parameter
+      expect(res.stdout).to.contain('endPosition');
+      expect(res.stdout).to.contain('Missing radix parameter');
     });
 
-    it('should support a list of files to run lint on', () => {
+    it('should support a list of files to run lint on (not necessarily on tsconfig)', () => {
       const res = test
         .setup({
           'app/a.ts': `parseInt("1");`,
-          'app/b.tsx': `parseInt("1");`,
+          'other-dir/b.tsx': `parseInt("1");`,
           'app/dontrunonme.js': `parseInt("1");`,
           'package.json': fx.packageJson(),
-          'tsconfig.json': fx.tsconfig(),
+          'tsconfig.json': fx.tsconfig({ include: ['app/a.ts'] }),
           'tslint.json': fx.tslint({ radix: true }),
         })
-        .execute(
-          'lint',
-          ['--format json', 'app/a.ts', 'app/b.tsx'],
-          insideTeamCity,
-        );
+        .execute('lint', ['app/a.ts', 'other-dir/b.tsx'], insideTeamCity);
 
-      const stderr = JSON.parse(res.stderr);
       expect(res.code).to.equal(1);
-      expect(stderr[0].name).to.contain('app/a.ts');
-      expect(stderr[0].failure).to.eq('Missing radix parameter');
-      expect(stderr[1].name).to.contain('app/b.tsx');
-      expect(stderr[1].failure).to.eq('Missing radix parameter');
-      expect(stderr.length).to.equal(2);
+      expect(res.stdout).to.contain('app/a.ts:1:1');
+      expect(res.stdout).to.contain('Missing radix parameter');
+      expect(res.stdout).to.contain('other-dir/b.tsx:1:1');
+      expect(res.stderr).to.contain('tslint exited with 2 errors');
     });
   });
 
@@ -170,19 +151,12 @@ describe('Aggregator: Lint', () => {
         'app/a.js': `parseInt("1");`,
         'app/b.js': `parseInt("1");`,
         'app/dontrunonme.js': `parseInt("1");`,
-      }).execute(
-        'lint',
-        ['--format json', 'app/a.js', 'app/b.js'],
-        insideTeamCity,
-      );
+      }).execute('lint', ['app/a.js', 'app/b.js'], insideTeamCity);
 
-      const stderr = JSON.parse(res.stderr);
       expect(res.code).to.equal(1);
-      expect(stderr[0].filePath).to.contain('app/a.js');
-      expect(stderr[0].messages[0].message).to.eq('Missing radix parameter.');
-      expect(stderr[1].filePath).to.contain('app/b.js');
-      expect(stderr[1].messages[0].message).to.eq('Missing radix parameter.');
-      expect(stderr.length).to.equal(2);
+      expect(res.stderr).to.contain('app/a.js');
+      expect(res.stderr).to.contain('Missing radix parameter');
+      expect(res.stderr).to.contain('app/b.js');
     });
   });
 
