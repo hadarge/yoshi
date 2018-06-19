@@ -173,7 +173,7 @@ describe('Aggregator: Build', () => {
 
       it('should generate RTL Css from bundle', () => {
         expect(test.content('dist/statics/first.rtl.css')).to.contain(
-          '{\n  color: black; }',
+          'color: black;',
         );
         expect(test.content('dist/statics/first.rtl.min.css')).to.contain(
           '{color:#000}',
@@ -661,11 +661,9 @@ describe('Aggregator: Build', () => {
 
     it('should separate Css with prod setting on teamcity', () => {
       expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
-        '{\n  color: red; }',
+        'color: red',
       );
-      expect(test.content('dist/statics/app.css')).to.contain(
-        '{\n  color: red; }',
-      );
+      expect(test.content('dist/statics/app.css')).to.contain('color: red');
     });
 
     it('should generate css modules on CI with hash only', () => {
@@ -729,11 +727,9 @@ describe('Aggregator: Build', () => {
 
     it('should separate Css with prod setting on production', () => {
       expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
-        '{\n  color: red; }',
+        'color: red',
       );
-      expect(test.content('dist/statics/app.css')).to.contain(
-        '{\n  color: red; }',
-      );
+      expect(test.content('dist/statics/app.css')).to.contain('color: red');
     });
 
     it('should generate (runtime) css modules on production with hash only', function() {

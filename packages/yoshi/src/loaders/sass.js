@@ -3,8 +3,6 @@ const { merge } = require('lodash/fp');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { cssModulesPattren } = require('yoshi-runtime');
 
-const useResolveUrlLoader = process.env.RESOLVE_URL_LOADER === 'true';
-
 module.exports = ({ separateCss, cssModules, tpaStyle, projectName, hmr }) => {
   const cssLoaderOptions = {
     camelCase: true,
@@ -13,9 +11,8 @@ module.exports = ({ separateCss, cssModules, tpaStyle, projectName, hmr }) => {
     hashPrefix: projectName,
     modules: cssModules,
     importLoaders:
-      2 /* postcss plugins and sass-loader (so composition will work with import) */ +
-      Number(tpaStyle) +
-      Number(useResolveUrlLoader),
+      3 /* postcss, sass-loader, resolve url loader (so composition will work with import) */ +
+      Number(tpaStyle),
   };
 
   const sassLoaderOptions = {
@@ -52,7 +49,10 @@ module.exports = ({ separateCss, cssModules, tpaStyle, projectName, hmr }) => {
               sourceMap: true,
             },
           },
-          ...(useResolveUrlLoader ? ['resolve-url-loader'] : []),
+          {
+            loader: 'resolve-url-loader',
+            options: { attempts: 1 },
+          },
           ...(tpaStyle ? ['wix-tpa-style-loader'] : []),
           {
             loader: 'sass-loader',
