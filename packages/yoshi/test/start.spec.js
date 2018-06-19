@@ -210,6 +210,7 @@ describe('Aggregator: Start', () => {
             ),
           })
           .spawn('start');
+
         return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
           content => {
             expect(content).to.contain('module.hot.accept()');
@@ -236,6 +237,7 @@ describe('Aggregator: Start', () => {
             ),
           })
           .spawn('start');
+
         return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
           content => {
             expect(content).to.contain('module.hot.accept()');

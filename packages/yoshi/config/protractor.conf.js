@@ -4,23 +4,8 @@ const path = require('path');
 const ld = require('lodash');
 const sass = require('node-sass');
 const { wixCssModulesRequireHook } = require('yoshi-runtime');
-const {
-  tryRequire,
-  getMochaReporter,
-  exists,
-  inTeamCity,
-} = require('../src/utils');
+const { getMochaReporter, exists, inTeamCity } = require('../src/utils');
 const globs = require('../src/globs');
-
-// Private wix applitools key
-// skip wix' key for applitools
-// In case you want to use applitools & eyes.it (https://github.com/wix/eyes.it)
-// in your project, please use your own key
-tryRequire('../private/node_modules/wix-eyes-env');
-
-// Private Wix environment config for screenshot reporter
-// Read how to set your own params (if needed) here: https://github.com/wix/screenshot-reporter#usage
-tryRequire('../private/node_modules/screenshot-reporter-env');
 
 require('../src/require-hooks');
 
