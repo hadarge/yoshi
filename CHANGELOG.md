@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0-beta.1 (Jun 20, 2018)
+
+#### :boom: Breaking Change
+* `yoshi`
+  * [#381](https://github.com/wix/yoshi/pull/381) Require users to install `node-sass`/`karma` packages if they need them. The purpose is to decrease the `npm install` time for people that don't use the above packages. This is a breaking change for `scss` files or `yoshi test --karma`
+
 ## 3.0.0-beta.0 (Jun 13, 2018)
 * `yoshi-config-tslint` & `yoshi-config-tslint-base`
   * Various changes to the tslint config:
