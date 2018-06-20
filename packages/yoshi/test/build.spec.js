@@ -693,7 +693,7 @@ describe('Aggregator: Build', () => {
     });
   });
 
-  describe('simple project with typescript and angular that runs on CI (Teamcity) and with 1 entry point w/o extenstion', () => {
+  describe('simple project with typescript and angular that runs on CI (Teamcity) and with 1 entry point w/o extension', () => {
     let resp;
 
     before(() => {
@@ -764,9 +764,10 @@ describe('Aggregator: Build', () => {
 
       resp = test
         .setup({
-          'src/client.ts': `console.log("hello"); import './styles/style.scss';`,
+          'src/client.ts': `console.log("hello"); import './styles/style.scss'; import './styles/stylableFile.st.css'`,
           'src/a.ts': 'export default "I\'m a module!";',
           'src/styles/style.scss': `.a {.b {color: red;}}`,
+          'src/styles/stylableFile.st.css': `.root {.stylableClass {color: pink;}}`,
           'src/something.ts': fx.angularJs(),
           'something/something.js': fx.angularJs(),
           'something.js': fx.angularJs(),
@@ -798,6 +799,14 @@ describe('Aggregator: Build', () => {
       expect(test.content('dist/src/a.js')).to.contain('exports.default =');
       expect(test.list('dist/es/src/styles')).to.contain('style.scss');
       expect(test.list('dist/src/styles')).to.contain('style.scss');
+    });
+
+    describe('stylable integration', () => {
+      it('should hash with {shortNamespaces:false} in the generated stylable output', () => {
+        expect(test.content('dist/statics/app.bundle.min.js')).to.match(
+          /stylableFile\d+/g,
+        );
+      });
     });
   });
 
