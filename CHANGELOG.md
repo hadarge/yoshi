@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.11.1 (Jun 20, 2018)
+
+#### :bug: Bug
+* [#383](https://github.com/wix/yoshi/pull/383) Fix configuration done in [#371](https://github.com/wix/yoshi/pull/371)
+
 ## 2.11.0 (Jun 14, 2018)
 
 #### :nail_care: Enhancement
