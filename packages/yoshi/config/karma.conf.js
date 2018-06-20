@@ -8,33 +8,18 @@ const projectConfig = tryRequire(path.resolve('karma.conf.js')) || {
 
 const baseConfig = {
   basePath: process.cwd(),
-  browsers: projectConfig.browsers ? [] : ['PhantomJS'],
-  frameworks: ['mocha'],
-  files: [
-    'node_modules/phantomjs-polyfill/bind-polyfill.js',
-    'dist/specs.bundle.js',
-  ],
+  browsers: projectConfig.browsers || [],
+  frameworks: [],
+  files: ['dist/specs.bundle.js'],
   exclude: [],
-  plugins: [
-    require('karma-jasmine'),
-    require('karma-mocha'),
-    require('karma-phantomjs-launcher'),
-    require('karma-chrome-launcher'),
-  ],
+  // the user must specify the plugins
+  plugins: [],
   colors: true,
 };
 
 const teamCityConfig = {
   plugins: [require('karma-teamcity-reporter')],
   reporters: ['teamcity'],
-  client: {
-    mocha: {
-      reporter: 'html',
-    },
-  },
-  // coverageReporter: {
-  //   reporters: [{type: 'teamcity'}]
-  // }
 };
 
 module.exports = config => {

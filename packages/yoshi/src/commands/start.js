@@ -44,8 +44,6 @@ module.exports = runner.command(
     const wixCdn = tasks[require.resolve('../tasks/cdn')];
     const migrateScopePackages =
       tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
-    const migrateBowerArtifactory =
-      tasks[require.resolve('../tasks/migrate-bower-artifactory')];
     const wixUpdateNodeVersion =
       tasks[require.resolve('../tasks/update-node-version')];
     const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
@@ -74,10 +72,6 @@ module.exports = runner.command(
       migrateScopePackages(
         {},
         { title: 'scope-packages-migration', log: false },
-      ),
-      migrateBowerArtifactory(
-        {},
-        { title: 'migrate-bower-artifactory', log: false },
       ),
       wixDepCheck({}, { title: 'dep-check', log: false }),
     ]);

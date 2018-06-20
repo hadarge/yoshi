@@ -218,7 +218,15 @@ const fx = {
   `,
   karmaWithJasmine: () => `
     'use strict';
-    module.exports = {frameworks: ['jasmine']};
+
+    module.exports = {
+      browsers: ["PhantomJS"],
+      frameworks: ["jasmine"],
+      plugins: [
+        require("karma-jasmine"),
+        require("karma-phantomjs-launcher")
+      ]
+    }
   `,
   petriSpec: () => `
   {

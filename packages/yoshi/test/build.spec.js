@@ -387,20 +387,6 @@ describe('Aggregator: Build', () => {
       });
     });
 
-    describe('Migrate Bower Artifactory', () => {
-      it('should migrate .bowerrc', () => {
-        const newBowerrc = JSON.parse(test.content('.bowerrc'));
-        const newPj = JSON.parse(test.content('package.json'));
-
-        expect(newBowerrc).to.eql({
-          registry: 'https://bower.dev.wixpress.com',
-          resolvers: ['bower-art-resolver'],
-        });
-
-        expect(newPj.devDependencies['bower-art-resolver']).to.exist;
-      });
-    });
-
     describe('Externalize relative lodash (lodash/map -> lodash.map)', function() {
       it('should be disabled when features.externalizeRelativeLodash = false', () => {
         expect(test.content('dist/statics/second.bundle.js')).not.to.contain(

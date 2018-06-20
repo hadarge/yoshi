@@ -8,6 +8,7 @@ describe('Aggregator: Test', () => {
     let test;
     beforeEach(() => (test = tp.create()));
     afterEach(() => test.teardown());
+
     it('should pass with exit code 0 with mocha as default', function() {
       this.timeout(40000);
       const res = test
@@ -641,14 +642,11 @@ describe('Aggregator: Test', () => {
       res = test
         .setup({
           'karma.conf.js':
-            'module.exports = {frameworks: ["jasmine"], files: ["a.js", "test.spec.js"], exclude: ["excluded.spec.js"]}',
-          'node_modules/phantomjs-polyfill/bind-polyfill.js': 'a = 1;',
+            'module.exports = { browsers: ["PhantomJS"], frameworks: ["jasmine"], plugins: [require("karma-jasmine"), require("karma-phantomjs-launcher")], files: ["a.js", "test.spec.js"], exclude: ["excluded.spec.js"]}',
           'test/karma-setup.js': 'console.log("setup karma")',
           'a.js': '"use strict";var a = 2; var b = 3;',
           'src/test.spec.js': `
             it("pass result", function () { expect(1).toBe(1); });
-            it("pass polyfill", function () { expect(global.a).toBe(1); console.log('passed polyfill') });
-            it("pass correct sequence", function () { expect(a).toBe(1);expect(b).toBe(3); console.log('passed correct sequence')});
           `,
           'src/test2.spec.js':
             'it("pass", function () { expect(1).toBe(1); });',
@@ -685,16 +683,8 @@ describe('Aggregator: Test', () => {
         expect(res.stdout).to.match(/Executed \d of \d SUCCESS/);
       });
 
-      it('should attach phantomjs-polyfill', () => {
-        expect(res.stdout).to.contain('passed polyfill');
-      });
-
       it('should load local karma config', () => {
         expect(res.stdout).to.not.contain('passed excluded');
-      });
-
-      it('should load local config files first and then base config files', function() {
-        expect(res.stdout).to.contain('passed correct sequence');
       });
 
       describe('Specs Bundle', () => {
@@ -826,7 +816,7 @@ describe('Aggregator: Test', () => {
                   color: yellow;
               }`,
               'karma.conf.js':
-                'module.exports = {browsers: ["ChromeHeadless"]}',
+                'module.exports = {browsers: ["ChromeHeadless"], frameworks: ["mocha"], plugins: [require("karma-mocha"),	require("karma-chrome-launcher")]}',
               'package.json': fx.packageJson(),
             })
             .execute('test', ['--karma'], outsideTeamCity);
@@ -841,7 +831,7 @@ describe('Aggregator: Test', () => {
         });
       });
 
-      describe('with default (mocha) configuration', () => {
+      describe('with mocha and chrome configuration', () => {
         it('should pass with exit code 0', () => {
           const res = customTest
             .setup(passingMochaTest())
@@ -864,22 +854,6 @@ describe('Aggregator: Test', () => {
             .and.contain("##teamcity[testStarted name='should just pass'");
         });
       });
-
-      describe('with mocha configuration', () => {
-        it('should pass with exit code 0', () => {
-          const res = customTest
-            .setup({
-              'src/test.spec.js': 'it.only("pass", function () {});',
-              'karma.conf.js': 'module.exports = {frameworks: ["mocha"]}',
-              'package.json': fx.packageJson(),
-            })
-            .execute('test', ['--karma'], outsideTeamCity);
-
-          expect(res.code).to.equal(0);
-          expect(res.stdout).to.contain(`Finished 'karma'`);
-          expect(res.stdout).to.contain('Executed 1 of 1 SUCCESS');
-        });
-      });
     });
   });
 });
@@ -888,6 +862,8 @@ function passingMochaTest() {
   return {
     'src/test.spec.js': `it('should just pass', function () {});`,
     'package.json': fx.packageJson(),
+    'karma.conf.js':
+      'module.exports = {browsers: ["Chrome"], frameworks: ["mocha"], plugins: [require("karma-mocha"),	require("karma-chrome-launcher")]}',
   };
 }
 

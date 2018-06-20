@@ -664,44 +664,6 @@ describe('Aggregator: Start', () => {
           );
       });
     });
-
-    describe('Migrate Bower Artifactory', () => {
-      it('should migrate .bowerrc', () => {
-        const bowerrc = {
-          registry: {
-            search: [
-              'https://bower.herokuapp.com',
-              'http://wix:wix@mirror.wixpress.com:3333',
-            ],
-            register: 'http://wix:wix@mirror.wixpress.com:3333',
-            publish: 'http://wix:wix@mirror.wixpress.com:3333',
-          },
-        };
-
-        child = test
-          .setup({
-            'package.json': fx.packageJson(),
-            '.bowerrc': JSON.stringify(bowerrc, null, 2),
-          })
-          .spawn('start');
-
-        return retryPromise({ backoff: 100 }, () => {
-          try {
-            const newBowerrc = JSON.parse(test.content('.bowerrc'));
-            expect(newBowerrc).to.eql({
-              registry: 'https://bower.dev.wixpress.com',
-              resolvers: ['bower-art-resolver'],
-            });
-
-            const newPj = JSON.parse(test.content('package.json'));
-            expect(newPj.devDependencies['bower-art-resolver']).to.exist;
-            return Promise.resolve();
-          } catch (e) {
-            return Promise.reject(e);
-          }
-        });
-      });
-    });
   });
 
   function checkServerLogCreated({ backoff = 100 } = {}) {
