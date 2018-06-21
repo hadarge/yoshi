@@ -143,25 +143,6 @@ describe('Aggregator: Start', () => {
       });
     });
 
-    describe('--no-server', () => {
-      it('should not start a server if --no-server is passed', () => {
-        child = test
-          .setup({
-            'src/assets/image.png': '',
-            'index.js': `console.log('should not run');`,
-            'package.json': fx.packageJson({
-              servers: { cdn: { port: 3005 } },
-            }),
-            '.babelrc': '{}',
-          })
-          .spawn('start', ['--no-server']);
-
-        return cdnIsServing('assets/image.png').then(() =>
-          expect(test.stdout).not.to.contain('should not run'),
-        );
-      });
-    });
-
     describe('hot reload', () => {
       it('should not run liveReload if liveReload if configured as false', () => {
         child = test

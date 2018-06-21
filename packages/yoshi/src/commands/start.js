@@ -53,7 +53,7 @@ module.exports = runner.command(
     const wixDepCheck = tasks[require.resolve('../tasks/dep-check')];
 
     const appServer = async () => {
-      if (cliArgs['no-server']) {
+      if (cliArgs.server === false) {
         return;
       }
 
