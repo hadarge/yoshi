@@ -338,6 +338,29 @@ Allows you to use the Webpack Resolve Alias feature.
 The configuration object is the same as in Webpack, note that the paths are relative to Webpacks context.
 For more info, you can read the [webpack docs](https://webpack.js.org/configuration/resolve/#resolve-alias).
 
+#### yoshi.hooks
+
+Run a shell script at a specific time in yoshi's execution.
+
+For exmaple:
+```json
+{
+  "yoshi": {
+    "hooks": {
+      "prelint": "echo running-before-lint"
+    }
+  }
+}
+```
+
+Next time you'll run `yoshi lint`, this command will execute and only then the linter will run.
+
+**supported hooks:**
+
+* `prelint` - Runs before the linter
+
+**Missing a hook?** Feel free to open issues/PRs for more hooks if needed.
+
 ## FAQ
 - [How do I debug my server/tests?](/docs/faq/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)

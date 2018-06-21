@@ -29,6 +29,7 @@ module.exports = {
     node: () => getConfig('specs.node'),
     browser: () => getConfig('specs.browser'),
   },
+  hooks: () => getConfig('hooks', {}),
   hmr: () => getConfig('hmr', true),
   liveReload: () => getConfig('liveReload', true),
   exports: () => getConfig('exports'),

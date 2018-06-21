@@ -1,4 +1,5 @@
 const path = require('path');
+const execa = require('execa');
 const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
 const tslint = require('../tasks/tslint');
@@ -10,6 +11,8 @@ const {
   shouldRunStylelint,
   watchMode,
 } = require('../utils');
+
+const { hooks } = require('../../config/project');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -36,6 +39,8 @@ module.exports = runner.command(async tasks => {
     tsFiles.length ||
     styleFiles.length
   );
+
+  const { prelint } = hooks();
 
   if (shouldRunOnSpecificFiles) {
     if (styleFiles.length) {
@@ -70,9 +75,13 @@ module.exports = runner.command(async tasks => {
     return stylelint({ pattern, options: { formatter: 'string' } });
   }
 
-  function runTsLint(pattern) {
+  async function runTsLint(pattern) {
     const tsconfigFilePath = path.resolve('tsconfig.json');
     const tslintFilePath = path.resolve('tslint.json');
+
+    if (prelint) {
+      await execa.shell(prelint, { stdio: 'inherit' });
+    }
 
     return tslint({
       tsconfigFilePath,
@@ -82,7 +91,11 @@ module.exports = runner.command(async tasks => {
     });
   }
 
-  function runEsLint(pattern) {
+  async function runEsLint(pattern) {
+    if (prelint) {
+      await execa.shell(prelint, { stdio: 'inherit' });
+    }
+
     console.log(`running es lint on ${pattern}`);
 
     return eslint({

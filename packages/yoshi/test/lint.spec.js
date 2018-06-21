@@ -265,4 +265,24 @@ p {
       expect(res.code).to.equal(0);
     });
   });
+
+  describe('hooks', () => {
+    describe('prelint', () => {
+      it('should run a bash command before lint', () => {
+        const res = test
+          .setup({
+            '.eslintrc': fx.eslintrc(),
+            'app/a.js': `parseInt("1");`,
+            'package.json': fx.packageJson({
+              hooks: { prelint: 'echo "hello world" && exit 1' },
+            }),
+          })
+          .execute('lint', [], insideTeamCity);
+
+        expect(res.code).to.equal(1);
+        expect(res.stdout).to.contain('hello world');
+        expect(res.stderr).to.not.contain('Missing radix parameter');
+      });
+    });
+  });
 });
