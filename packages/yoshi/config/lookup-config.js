@@ -6,4 +6,17 @@ const explorer = cosmiconfig('yoshi', {
   sync: true,
 });
 
-module.exports = () => get(explorer.load(), 'config', {});
+module.exports = () => {
+  const projectConfig = get(explorer.load(), 'config', {});
+
+  if (projectConfig.extends) {
+    const extendsConfig = require(projectConfig.extends);
+
+    return {
+      ...extendsConfig.defaultConfig,
+      ...projectConfig,
+    };
+  }
+
+  return projectConfig;
+};

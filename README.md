@@ -179,6 +179,25 @@ Bump `package.json` version and publish to npm using `wnpm-release`.
 
 Configurations are meant to be inside `package.json` under `yoshi` section or by passing flags to common tasks.
 
+#### yoshi.extends
+
+A path to a package that sets up defaults for `yoshi`'s config. The project's config can override those defaults.
+
+The purpose of this option is to allow reusing configurations that are the same across multiple (similar) projects.
+
+Here's an example of how a simple `extends` file looks like:
+
+```js
+module.exports = {
+  defaultConfig: {
+    exports: '[name]',
+    externals: {
+      lodash: 'lodash',
+    },
+  },
+};
+```
+
 #### yoshi.separateCss
 
 By default, your `require`d css will bundled to a separate `app.css` bundle. You can leave your css in main js bundle by adding the following to your `package.json`:
