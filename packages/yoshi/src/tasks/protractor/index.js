@@ -1,7 +1,34 @@
 const dargs = require('dargs');
 const crossSpawn = require('cross-spawn');
 
-const protractor = (debugPort, debugBrkPort) => {
+const protractor = async (debugPort, debugBrkPort) => {
+  let protractorBin;
+  let webdriverBin;
+  let protractorVersion;
+
+  try {
+    protractorVersion = /^(\d+)/
+      .exec(require('protractor/package.json').version)
+      .pop();
+
+    protractorBin = require.resolve('protractor/bin/protractor');
+    webdriverBin = require.resolve('protractor/bin/webdriver-manager');
+  } catch (error) {
+    if (error.code === 'MODULE_NOT_FOUND') {
+      throw new Error(
+        'Running this requires `protractor` >=5. Please install it and re-run.',
+      );
+    }
+
+    throw error;
+  }
+
+  if (Number(protractorVersion) < 5) {
+    throw new Error(
+      `The installed version of \`protractor\` is not compatible (expected: >= 5, actual: ${protractorVersion}).`,
+    );
+  }
+
   // Only install specific version of chrome driver in CI, install latest locally
   const webdriverManagerOptions = !!process.env.IS_BUILD_AGENT // eslint-disable-line no-extra-boolean-cast
     ? { 'versions.chrome': process.env.CHROMEDRIVER_VERSION || '2.29' }
@@ -19,20 +46,20 @@ const protractor = (debugPort, debugBrkPort) => {
     { ...defaultWebdriverOptions, ...webdriverManagerOptions },
     dargsSettings,
   );
+
   const protractorArgs = [...dargs(dargsSettings), configPath];
 
-  const PROTRACTOR_BIN = require.resolve('protractor/bin/protractor');
-  protractorArgs.unshift(PROTRACTOR_BIN);
+  protractorArgs.unshift(protractorBin);
 
   if (debugBrkPort !== undefined) {
     protractorArgs.unshift(`--inspect-brk=${debugBrkPort}`);
   } else if (debugPort !== undefined) {
     protractorArgs.unshift(`--inspect=${debugPort}`);
   }
-  const WEBDRIVER_BIN = require.resolve('protractor/bin/webdriver-manager');
+
   return new Promise((resolve, reject) => {
     const webDriverUpdate = crossSpawn(
-      WEBDRIVER_BIN,
+      webdriverBin,
       ['update', ...webdriverArgs],
       {
         stdio: 'inherit',
