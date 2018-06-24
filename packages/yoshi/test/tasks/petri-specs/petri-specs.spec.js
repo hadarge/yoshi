@@ -76,34 +76,4 @@ describe('haste-task-wix-petri-specs', () => {
       fs.readJsonSync(require.resolve('./fixtures/petri-experiments'), 'utf8'),
     );
   });
-
-  it('should fail with an error when converting deprecated json files', async () => {
-    const tempDir = tempy.directory();
-
-    const fsObj = {
-      'package.json': '',
-      'pom.xml': fs.readFileSync(pomPath),
-      'petri-specs/specs.infra.Dummy.json': fs.readFileSync(
-        require.resolve('./fixtures/single-scope-spec'),
-      ),
-    };
-
-    writeFsObject(tempDir, fsObj);
-
-    try {
-      await petriSpecsTask({
-        base: tempDir,
-        destDir,
-        config: {
-          pom: pomPath,
-        },
-      });
-
-      throw new Error('TestFailed');
-    } catch (err) {
-      expect(err.message).to.equal(
-        'Error: yoshi-petri detected 1 deprecated specs that got converted. More info: https://github.com/wix-private/petri-specs/docs/CONVERT_SPECS.md',
-      );
-    }
-  });
 });
