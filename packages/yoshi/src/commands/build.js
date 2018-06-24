@@ -2,6 +2,7 @@ const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('../globs');
+const path = require('path');
 const {
   runIndividualTranspiler,
   petriSpecsConfig,
@@ -32,16 +33,7 @@ module.exports = runner.command(
       return;
     }
 
-    const {
-      less,
-      clean,
-      copy,
-      babel,
-      sass,
-      webpack,
-      typescript,
-      ngAnnotate,
-    } = tasks;
+    const { less, clean, copy, babel, sass, webpack, typescript } = tasks;
 
     const migrateScopePackages =
       tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
@@ -50,6 +42,7 @@ module.exports = runner.command(
     const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
     const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
     const wixDepCheck = tasks[require.resolve('../tasks/dep-check')];
+    const ngAnnotate = tasks[require.resolve('../tasks/ng-annotate')];
 
     await Promise.all([
       clean({ pattern: `{dist,target}/*` }),
@@ -201,9 +194,13 @@ module.exports = runner.command(
 
     function transpileNgAnnotate() {
       if (isAngularProject()) {
-        return ngAnnotate({
-          glob: 'dist/' + globs.base(),
-        });
+        return ngAnnotate(
+          {
+            pattern: path.join(globs.dist(), globs.base(), '**', '*.js'),
+            target: './',
+          },
+          { title: 'ng-annotate' },
+        );
       }
     }
 
