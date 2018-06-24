@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.11.2 (Jun 24, 2018)
+
+#### :bug: Bug
+* [#382](https://github.com/wix/yoshi/pull/382) Fix `start --no-server` work
+* [#390](https://github.com/wix/yoshi/pull/390) Drop `petri-specs` convert task
+
 ## 2.11.1 (Jun 20, 2018)
 
 #### :bug: Bug
