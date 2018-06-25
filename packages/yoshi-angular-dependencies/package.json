@@ -1,0 +1,28 @@
+{
+  "name": "yoshi-angular-dependencies",
+  "version": "3.0.0-beta.1",
+  "description": "",
+  "keywords": [
+    "yoshi",
+    "angular"
+  ],
+  "author": "Ronen Amiel & Ran Yitzhaki",
+  "license": "ISC",
+  "scripts": {
+    "customPublish": "node ../../scripts/customPublish.js"
+  },
+  "dependencies": {
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-mocha": "~1.3.0",
+    "karma-teamcity-reporter": "^1.0.0",
+    "ng-annotate": "1.2.1",
+    "ng-annotate-loader": "~0.6.1",
+    "protractor": "^5.1.2",
+    "protractor-browser-logs": "~1.0.351",
+    "screenshot-reporter": "~1.1.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
