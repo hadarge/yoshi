@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-yoshi-base",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.2",
   "description": "eslint configuration for yoshi",
   "main": "index.js",
   "keywords": [
