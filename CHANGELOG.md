@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.0.0-beta.2 (Jun 25, 2018)
+
+#### :boom: Breaking Change
+* `yoshi`
+  * [#389](https://github.com/wix/yoshi/pull/389) Remove `protractor` from yoshi's dependencies
+  * [#393](https://github.com/wix/yoshi/pull/393) Remove `ng-annotate` and `ng-annotate-loader` from yoshi's dependencies
+  * [#394](https://github.com/wix/yoshi/pull/394) By default, `yoshi --karma` works with `Chrome` browser (Instead of `phantomJS`) and `mocha` framework. Meaning that devs that rely on `phantomJS` and configuration like [`phantomjs-polyfill`](https://github.com/tom-james-watson/phantomjs-polyfill) need to configure it for themselves, or migrate to use `Chrome` (recommended)
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#387](https://github.com/wix/yoshi/pull/387) Add support for `prelint` hook.
+  * [#384](https://github.com/wix/yoshi/pull/384) Add support for `extend` configuration option.
+
+* `yoshi-angular-dependencies`
+  * [#394](https://github.com/wix/yoshi/pull/394) Add a new package that brings `karma`, `ng-annotate`, `protractor` and some plugins for `angular` projects that use `yoshi`.
+
+* `yoshi-style-dependencies`
+  * [#392](https://github.com/wix/yoshi/pull/392) Add a new package that brings `css-loader`, `node-sass`, `post-css-loader` and more packages for projects that use `styles`/`css`.
+
+#### :house: Internal
+* `yoshi`
+  * [#386](https://github.com/wix/yoshi/pull/386) Replace [caporal](https://github.com/mattallty/Caporal.js) with [commander](https://github.com/tj/commander.js) CLI framework to reduce yoshi's install time.
+
 ## 3.0.0-beta.1 (Jun 20, 2018)
 
 #### :boom: Breaking Change
@@ -7,6 +30,7 @@
   * [#381](https://github.com/wix/yoshi/pull/381) Require users to install `node-sass`/`karma` packages if they need them. The purpose is to decrease the `npm install` time for people that don't use the above packages. This is a breaking change for `scss` files or `yoshi test --karma`
 
 ## 3.0.0-beta.0 (Jun 13, 2018)
+
 * `yoshi-config-tslint` & `yoshi-config-tslint-base`
   * Various changes to the tslint config:
     * Don't extend the default rules from `tslint-react`
