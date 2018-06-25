@@ -2,7 +2,6 @@
 
 const path = require('path');
 const ld = require('lodash');
-const sass = require('node-sass');
 const { wixCssModulesRequireHook } = require('yoshi-runtime');
 const { getMochaReporter, exists, inTeamCity } = require('../src/utils');
 const globs = require('../src/globs');
@@ -29,7 +28,7 @@ const merged = ld.mergeWith(
       const rootDir = './src';
       wixCssModulesRequireHook(rootDir, {
         preprocessCss: (data, file) =>
-          sass.renderSync({
+          require('node-sass').renderSync({
             data,
             file,
             includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
