@@ -79,8 +79,13 @@ module.exports = runner.command(
       }
 
       if (shouldWatch) {
-        mochaArgs.push('--watch');
-        mochaArgs.push('--watch-extensions=js,jsx,ts,tsx');
+        watch({ pattern: [globs.testFilesWatch()] }, async () => {
+          try {
+            await execa('node', mochaArgs, { stdio: 'inherit' });
+          } catch (error) {
+            throw `mocha failed with status code "${error.code}"`;
+          }
+        });
       }
 
       try {
