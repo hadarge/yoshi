@@ -413,7 +413,9 @@ describe('Aggregator: Build', () => {
       test = tp.create();
       resp = test
         .setup({
-          '.babelrc': `{"presets": ["${require.resolve('babel-preset-wix')}"]}`,
+          '.babelrc': `{"presets": ["${require.resolve(
+            'babel-preset-yoshi',
+          )}"]}`,
           'src/a.js': `import {xxx} from './b'; console.log(xxx);`,
           'src/b.js': `export const xxx = 111111; export const yyy = 222222;`,
           'package.json': fx.packageJson({

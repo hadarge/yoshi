@@ -20,7 +20,6 @@
     "babel-eslint": "^8.2.3",
     "babel-loader": "~7.1.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-preset-wix": "^2.0.0",
     "babel-preset-yoshi": "^3.0.0-beta.2",
     "babel-register": "^6.26.0",
     "case-sensitive-paths-webpack-plugin": "~2.1.1",
