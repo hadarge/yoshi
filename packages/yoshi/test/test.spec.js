@@ -555,18 +555,29 @@ describe('Aggregator: Test', () => {
       it('should run typescript tests with runtime compilation and force commonjs module system', () => {
         const res = customTest
           .setup({
-            'tsconfig.json': fx.tsconfig({
-              compilerOptions: {
-                module: 'es2015',
-              },
-            }),
-            'test/some.spec.ts': `import * as usageOfFS from 'fs'; declare var it: any; it.only("pass", () => !!usageOfFS);`,
+            'tsconfig.json': fx.tsconfig(),
+            'test/some.spec.ts': `import * as usageOfFS from 'fs'; it.only("pass", () => !!usageOfFS);`,
             'package.json': fx.packageJson(),
           })
           .execute('test', ['--mocha'], outsideTeamCity);
 
         expect(res.code).to.equal(0);
         expect(res.stdout).to.contain('1 passing');
+      });
+
+      it('should support dynamic imports syntax for node js', () => {
+        const res = customTest
+          .setup({
+            'tsconfig.json': fx.tsconfig(),
+            'test/foo.ts': `console.log('hello');`,
+            'test/some.spec.ts': `it.only("pass", async () => { await import('./foo'); });`,
+            'package.json': fx.packageJson(),
+          })
+          .execute('test', ['--mocha'], outsideTeamCity);
+
+        expect(res.code).to.equal(0);
+        expect(res.stdout).to.contain('1 passing');
+        expect(res.stdout).to.contain('hello');
       });
 
       it('should not transpile tests if no tsconfig/.babelrc/babel configuration', () => {
