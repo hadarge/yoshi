@@ -14,6 +14,16 @@ A Toolkit that supports building all kinds of applications in wix.
 $ npm install --save-dev yoshi
 ```
 
+For Fullstack/Client applications:
+- React:
+  ```sh
+  $ npm i --save-dev yoshi yoshi-style-dependencies
+  ```
+- Angular:
+  ```sh
+  $ npm i --save-dev yoshi yoshi-style-dependencies yoshi-angular-dependencies
+  ```
+
 ## Quickstart
 
 Configure `package.json` scripts,
@@ -31,7 +41,7 @@ Configure `package.json` scripts,
   }
 }
 ```
-Make sure your node version is above 8.9.1
+Make sure your node version is 8.9.1 and above
 
 ```
 // .nvmrc
