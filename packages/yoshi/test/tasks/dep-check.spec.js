@@ -49,18 +49,6 @@ describe('haste-task-wix-dep-check', () => {
       expect(stripAnsi(warning)).to.equal(message);
     });
 
-    it('should throw an error when yoshi is 2 major versions behind', async () => {
-      mockMeta('yoshi', ['1.0.0', '2.0.0', '3.0.0', '4.0.0']);
-
-      const message = [
-        'ERROR: the following dependencies must be updated:',
-        'yoshi@1.0.0 must be at least @3.0.0',
-      ].join('\n');
-
-      const error = await invertPromise(task);
-      expect(stripAnsi(error)).to.equal(message);
-    });
-
     it('should show nothing if yoshi is up to date', async () => {
       mockMeta('yoshi', '1.0.0');
 
