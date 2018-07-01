@@ -1,3 +1,8 @@
+/* eslint-disable no-throw-literal */
+// Assign env vars before requiring anything so that it is available to all files
+process.env.BABEL_ENV = 'test';
+process.env.NODE_ENV = 'test';
+
 const fs = require('fs');
 const path = require('path');
 const execa = require('execa');

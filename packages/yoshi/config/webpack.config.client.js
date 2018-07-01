@@ -23,15 +23,14 @@ const defaultSplitChunksConfig = {
 };
 
 const config = ({
-  debug,
+  min,
+  production,
   separateCss = projectConfig.separateCss(),
   hmr,
   analyze,
-  disableModuleConcatenation,
 } = {}) => {
   const disableModuleConcat =
-    process.env.DISABLE_MODULE_CONCATENATION === 'true' ||
-    disableModuleConcatenation;
+    process.env.DISABLE_MODULE_CONCATENATION === 'true';
   const projectName = projectConfig.name();
   const cssModules = projectConfig.cssModules();
   const tpaStyle = projectConfig.tpaStyle();
@@ -48,16 +47,17 @@ const config = ({
     }
   }
 
-  const stylableSeparateCss = false; //this is a temporary fix until stylable will be concatenated into a single css bundle of the app
+  const stylableSeparateCss = false; // this is a temporary fix until stylable will be concatenated into a single css bundle of the app
 
   return mergeByConcat(webpackConfigCommon, {
     entry: getEntry(),
 
-    mode: debug ? 'development' : 'production',
+    mode: production ? 'production' : 'development',
 
     optimization: {
-      minimize: !debug,
+      minimize: min,
       splitChunks: useSplitChunks ? splitChunksConfig : false,
+      concatenateModules: production && !disableModuleConcat,
     },
 
     module: {
@@ -68,6 +68,7 @@ const config = ({
           tpaStyle,
           projectName,
           hmr,
+          min,
         }).client,
         ...require('../src/loaders/less')({
           separateCss,
@@ -75,20 +76,18 @@ const config = ({
           tpaStyle,
           projectName,
           hmr,
+          min,
         }).client,
       ],
     },
 
     plugins: [
-      ...(disableModuleConcat
-        ? []
-        : [new webpack.optimize.ModuleConcatenationPlugin()]),
       ...(analyze ? [new BundleAnalyzerPlugin()] : []),
 
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
       new webpack.LoaderOptionsPlugin({
-        minimize: !debug,
+        minimize: min,
       }),
 
       new DuplicatePackageCheckerPlugin({ verbose: true }),
@@ -96,7 +95,7 @@ const config = ({
       new DynamicPublicPath(),
 
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': debug ? '"development"' : '"production"',
+        'process.env.NODE_ENV': production ? '"production"' : '"development"',
         'window.__CI_APP_VERSION__': process.env.ARTIFACT_VERSION
           ? `"${process.env.ARTIFACT_VERSION}"`
           : '"0.0.0"',
@@ -113,24 +112,24 @@ const config = ({
         ? []
         : [
             new MiniCssExtractPlugin({
-              filename: debug ? '[name].css' : '[name].min.css',
+              filename: min ? '[name].min.css' : '[name].css',
             }),
-            new RtlCssPlugin(debug ? '[name].rtl.css' : '[name].rtl.min.css'),
+            new RtlCssPlugin(min ? '[name].rtl.min.css' : '[name].rtl.css'),
           ]),
     ],
 
     devtool: inTeamCity() ? 'source-map' : 'cheap-module-source-map',
 
     performance: {
-      ...(debug ? {} : projectConfig.performanceBudget()),
+      ...(production ? projectConfig.performanceBudget() : {}),
     },
 
     output: {
       umdNamedDefine: true,
       path: path.resolve('./dist/statics'),
-      filename: debug ? '[name].bundle.js' : '[name].bundle.min.js',
-      chunkFilename: debug ? '[name].chunk.js' : '[name].chunk.min.js',
-      pathinfo: debug,
+      filename: min ? '[name].bundle.min.js' : '[name].bundle.js',
+      chunkFilename: min ? '[name].chunk.min.js' : '[name].chunk.js',
+      pathinfo: !min,
     },
 
     target: 'web',

@@ -229,28 +229,29 @@ describe('Webpack basic configs', () => {
       });
     });
 
-    it('should be enabled by default for build', () => {
+    it('should enable scope hoisting by default', () => {
       test.execute('build', [], {});
+
       expect(test.content('./dist/statics/app.bundle.js')).to.contain(
-        '// CONCATENATED MODULE: ./dep.js',
+        'CONCATENATED MODULE',
       );
     });
 
-    it('should be disabled when DISABLE_MODULE_CONCATENATION is set', () => {
+    it('should disable scope hoisting when DISABLE_MODULE_CONCATENATION is set', () => {
       test.execute('build', [], {
         DISABLE_MODULE_CONCATENATION: 'true',
       });
+
       expect(test.content('./dist/statics/app.bundle.js')).to.not.contain(
-        '// CONCATENATED MODULE: ./dep.js',
+        'CONCATENATED MODULE',
       );
     });
 
-    it('should be disabled for start', () => {
+    it('should disable scope hoisting when running start (development bundle)', () => {
       child = test.spawn('start');
 
       return fetchClientBundle({ port: 3200, file: 'app.bundle.js' }).then(
-        bundle =>
-          expect(bundle).to.not.contain('// CONCATENATED MODULE: ./dep.js'),
+        bundle => expect(bundle).to.not.contain('CONCATENATED MODULE'),
       );
     });
 

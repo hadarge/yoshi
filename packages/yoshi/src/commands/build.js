@@ -1,3 +1,7 @@
+// Assign env vars before requiring anything so that it is available to all files
+process.env.BABEL_ENV = 'production';
+process.env.NODE_ENV = 'production';
+
 const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
@@ -79,34 +83,45 @@ module.exports = runner.command(
       const productionCallbackPath = require.resolve(
         '../webpack-production-callback',
       );
-      const developmentCallbackPath = require.resolve(
-        '../webpack-development-callback',
-      );
+      const debugCallbackPath = require.resolve('../webpack-debug-callback');
       const webpackConfig = require(configPath)();
 
       const defaultOptions = {
         configPath,
       };
 
+      const webpackProduction = () => {
+        return webpack(
+          {
+            ...defaultOptions,
+            callbackPath: productionCallbackPath,
+            configParams: {
+              min: true,
+              production: true,
+              analyze: cliArgs.analyze,
+            },
+          },
+          { title: 'webpack-production' },
+        );
+      };
+
+      const webpackDebug = () => {
+        return webpack(
+          {
+            ...defaultOptions,
+            callbackPath: debugCallbackPath,
+            configParams: { min: false, production: true },
+          },
+          { title: 'webpack-debug' },
+        );
+      };
+
       if (shouldRunWebpack(webpackConfig)) {
-        return Promise.all([
-          webpack(
-            {
-              ...defaultOptions,
-              callbackPath: productionCallbackPath,
-              configParams: { debug: false, analyze: cliArgs.analyze },
-            },
-            { title: 'webpack-production' },
-          ),
-          webpack(
-            {
-              ...defaultOptions,
-              callbackPath: developmentCallbackPath,
-              configParams: { debug: true },
-            },
-            { title: 'webpack-development' },
-          ),
-        ]);
+        if (cliArgs.min === false) {
+          return webpackDebug();
+        }
+
+        return Promise.all([webpackProduction(), webpackDebug()]);
       }
 
       return Promise.resolve();

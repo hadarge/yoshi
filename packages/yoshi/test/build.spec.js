@@ -4,12 +4,13 @@ const expect = require('chai').expect;
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const hooks = require('./helpers/hooks');
-const getMockedCI = require('./helpers/get-mocked-ci');
-const { outsideTeamCity, insideTeamCity } = require('./helpers/env-variables');
+const { insideTeamCity } = require('./helpers/env-variables');
 const retryPromise = require('retry-promise').default;
 const fetch = require('node-fetch');
+const { localIdentName } = require('../src/constants');
 
-const generateCssModulesPattern = (name, path, pattern = `[hash:base64:5]`) => {
+const generateCssModulesPattern = ({ name, path, short }) => {
+  const pattern = short ? localIdentName.short : localIdentName.long;
   const genericNames = require('generic-names');
   const generate = genericNames(pattern, { hashPrefix: 'a' });
   return generate(name, path);
@@ -17,7 +18,6 @@ const generateCssModulesPattern = (name, path, pattern = `[hash:base64:5]`) => {
 const $inject = 'something.$inject = ["$http"];';
 
 describe('Aggregator: Build', () => {
-  const defaultOutput = 'statics';
   let test;
 
   describe('simple development project with separate styles (sass and less), babel, JSON, commons chunks with custom name and some UMD modules', () => {
@@ -107,8 +107,9 @@ describe('Aggregator: Build', () => {
             ),
           ],
         )
-        .execute('build', [], getMockedCI({ ci: false }));
+        .execute('build', []);
     });
+
     after(() => {
       test.teardown();
     });
@@ -212,6 +213,7 @@ describe('Aggregator: Build', () => {
         expect(test.content(`dist/statics/first.bundle.js`)).not.to.match(
           regex,
         );
+
         expect(test.content(`dist/statics/first.css`)).to.match(regex);
       });
     });
@@ -283,8 +285,8 @@ describe('Aggregator: Build', () => {
       });
 
       it('should generate stats files', () => {
-        expect(test.list('target')).to.contain('webpack-stats.prod.json');
-        expect(test.list('target')).to.contain('webpack-stats.dev.json');
+        expect(test.list('target')).to.contain('webpack-stats.json');
+        expect(test.list('target')).to.contain('webpack-stats.min.json');
       });
 
       it('should ignore locale modules from within moment', () => {
@@ -495,37 +497,33 @@ describe('Aggregator: Build', () => {
       test = tp.create();
 
       resp = test
-        .setup(
-          {
-            '.babelrc': `{"presets": [["${require.resolve(
-              'babel-preset-env',
-            )}", {"modules": false}]]}`,
-            'src/a.js': `export default "I'm a module!"; import './a.scss'; import './a.st.css'; require('lodash/map')`,
-            'src/a.scss': `.x {.y {display: flex;}}`,
-            'src/a.st.css': `.root {.stylableClass {color: pink;}}`,
-            'src/assets/file': '1',
-            'src/something.js': fx.angularJs(),
-            'something/something.js': fx.angularJs(),
-            'something.js': fx.angularJs(),
-            'package.json': fx.packageJson(
-              {
-                entry: './a.js',
-                separateCss: false,
-                cssModules: false,
-                features: {
-                  externalizeRelativeLodash: true,
-                },
-                externals: ['lodash'],
+        .setup({
+          '.babelrc': `{"presets": [["${require.resolve(
+            'babel-preset-env',
+          )}", {"modules": false}]]}`,
+          'src/a.js': `export default "I'm a module!"; import './a.scss'; import './a.st.css'; require('lodash/map')`,
+          'src/a.scss': `.x {.y {display: flex;}}`,
+          'src/a.st.css': `.root {.stylableClass {color: pink;}}`,
+          'src/assets/file': '1',
+          'src/something.js': fx.angularJs(),
+          'something/something.js': fx.angularJs(),
+          'something.js': fx.angularJs(),
+          'package.json': fx.packageJson(
+            {
+              entry: './a.js',
+              separateCss: false,
+              cssModules: false,
+              features: {
+                externalizeRelativeLodash: true,
               },
-              {},
-              {
-                module: 'dist/es/src/a.js',
-              },
-            ),
-          },
-          [],
-          outsideTeamCity,
-        )
+              externals: ['lodash'],
+            },
+            {},
+            {
+              module: 'dist/es/src/a.js',
+            },
+          ),
+        })
         .execute('build');
     });
     after(() => {
@@ -647,19 +645,46 @@ describe('Aggregator: Build', () => {
       expect(test.list('dist/statics')).to.contain('app.bundle.min.js.map');
     });
 
-    it('should separate Css with prod setting on teamcity', () => {
+    it('should separate css with prod setting on teamcity', () => {
       expect(test.content('dist/statics/app.bundle.js')).not.to.contain(
         'color: red',
       );
       expect(test.content('dist/statics/app.css')).to.contain('color: red');
     });
 
-    it('should generate css modules on CI with hash only', () => {
-      const hashA = generateCssModulesPattern('a', 'styles/style.scss');
-      const hashB = generateCssModulesPattern('b', 'styles/style.scss');
+    it('should generate css modules on minified css bundle with hash only', () => {
+      const hashA = generateCssModulesPattern({
+        name: 'a',
+        path: 'styles/style.scss',
+        short: true,
+      });
+
+      const hashB = generateCssModulesPattern({
+        name: 'b',
+        path: 'styles/style.scss',
+        short: true,
+      });
+
+      const expectedCssPattern = `.${hashA} .${hashB}{`;
+      expect(test.content(`dist/statics/app.min.css`)).to.contain(
+        expectedCssPattern,
+      );
+    });
+
+    it('should generate css modules on regular bundle with long name and hash', function() {
+      const hashA = generateCssModulesPattern({
+        name: 'a',
+        path: 'styles/style.scss',
+        short: false,
+      });
+      const hashB = generateCssModulesPattern({
+        name: 'b',
+        path: 'styles/style.scss',
+        short: false,
+      });
 
       const expectedCssPattern = `.${hashA} .${hashB} {`;
-      expect(test.content(`dist/${defaultOutput}/app.css`)).to.contain(
+      expect(test.content(`dist/statics/app.css`)).to.contain(
         expectedCssPattern,
       );
     });
@@ -701,6 +726,7 @@ describe('Aggregator: Build', () => {
         })
         .execute('build', [], { NODE_ENV: 'PRODUCTION' });
     });
+
     after(() => {
       test.teardown();
     });
@@ -718,16 +744,6 @@ describe('Aggregator: Build', () => {
         'color: red',
       );
       expect(test.content('dist/statics/app.css')).to.contain('color: red');
-    });
-
-    it('should generate (runtime) css modules on production with hash only', function() {
-      const hashA = generateCssModulesPattern('a', 'styles/style.scss');
-      const hashB = generateCssModulesPattern('b', 'styles/style.scss');
-
-      const expectedCssPattern = `.${hashA} .${hashB} {`;
-      expect(test.content(`dist/statics/app.css`)).to.contain(
-        expectedCssPattern,
-      );
     });
 
     it('are not executed when project is not Angular and TypeScript', () => {

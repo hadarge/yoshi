@@ -4,8 +4,7 @@ const presetPath = require.resolve('../src/index.js');
 
 module.exports = async command => {
   const appDirectory = fs.realpathSync(process.cwd());
-  const preset = require(presetPath);
-  const action = preset[command];
+  const action = require(`./commands/${command}`);
 
   try {
     const { persistent = false } = await action({

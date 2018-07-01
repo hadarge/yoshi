@@ -28,9 +28,9 @@ module.exports = ({
     if (webpackConfigPath) {
       const getConfig = require(webpackConfigPath);
       const webpackConfig = getConfig({
-        debug: true,
+        min: false,
+        production: false,
         hmr,
-        disableModuleConcatenation: true,
       });
 
       if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {

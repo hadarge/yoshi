@@ -19,7 +19,7 @@ module.exports = function(api, opts = {}) {
   return {
     presets: [
       [
-        require('babel-preset-env'),
+        require('babel-preset-env').default,
         {
           modules:
             options.modules || process.env.IN_WEBPACK ? false : 'commonjs',
@@ -53,7 +53,7 @@ module.exports = function(api, opts = {}) {
       ],
       [
         // Add helpers for generators and async/await.
-        require('babel-plugin-transform-runtime'),
+        require('babel-plugin-transform-runtime').default,
         {
           // 2 options blow are usualy handled by pollyfil.io.
           helpers: false,
@@ -80,7 +80,7 @@ module.exports = function(api, opts = {}) {
             require('babel-plugin-transform-object-rest-spread'),
             !options.ignoreReact && [
               // Remove PropTypes on react projects.
-              require('babel-plugin-transform-react-remove-prop-types'),
+              require('babel-plugin-transform-react-remove-prop-types').default,
               {
                 removeImport: true,
               },

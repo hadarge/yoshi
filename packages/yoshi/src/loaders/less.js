@@ -1,13 +1,20 @@
 const path = require('path');
 const { merge } = require('lodash/fp');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { cssModulesPattren } = require('yoshi-runtime');
+const { localIdentName } = require('../constants');
 
-module.exports = ({ separateCss, cssModules, tpaStyle, projectName, hmr }) => {
+module.exports = ({
+  separateCss,
+  cssModules,
+  tpaStyle,
+  projectName,
+  hmr,
+  min,
+}) => {
   const cssLoaderOptions = {
     camelCase: true,
     sourceMap: !!separateCss,
-    localIdentName: cssModulesPattren(),
+    localIdentName: min ? localIdentName.short : localIdentName.long,
     hashPrefix: projectName,
     modules: cssModules,
     importLoaders: tpaStyle ? 4 : 3,

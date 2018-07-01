@@ -61,7 +61,6 @@ describe('Aggregator: Start', () => {
       it('should override values', () => {
         const expected = {
           DEBUG: 'wixstores:*',
-          NODE_ENV: 'dev',
         };
 
         child = test
@@ -71,7 +70,9 @@ describe('Aggregator: Start', () => {
             'package.json': fx.packageJson(),
             'pom.xml': fx.pom(),
           })
-          .spawn('start', undefined, { DEBUG: 'wixstores:*', NODE_ENV: 'dev' });
+          .spawn('start', undefined, {
+            DEBUG: 'wixstores:*',
+          });
 
         return checkServerLogContainsJson(expected);
       });

@@ -1,3 +1,7 @@
+// Assign env vars before requiring anything so that it is available to all files
+process.env.BABEL_ENV = 'development';
+process.env.NODE_ENV = 'development';
+
 const { createRunner } = require('haste-core');
 const path = require('path');
 const parseArgs = require('minimist');

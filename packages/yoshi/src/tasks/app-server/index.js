@@ -38,8 +38,8 @@ function initializeServerStartDelegate({
   return port => {
     const defaultEnv = {
       DEBUG: 'wix:*,wnp:*',
-      NODE_ENV: 'development',
     };
+
     const env = Object.assign(defaultEnv, process.env, {
       PORT: port,
     });
