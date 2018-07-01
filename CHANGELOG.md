@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.0.0-rc.0 (Jul 1, 2018)
+
+#### :boom: Breaking Change
+* `yoshi`
+  * [#401](https://github.com/wix/yoshi/pull/401) Remove `babel-preset-wix` from yoshi's dependencies
+  * [#402](https://github.com/wix/yoshi/pull/402) Change emitted `webpack-stats` file names:
+    * `webpack-stats.prod.json` => `webpack-stats.min.json`
+    * `webpack-stats.dev.json` => `webpack-stats.json`
+  * [#402](https://github.com/wix/yoshi/pull/402) `localIdentName` (css modules generated class name) will be short only on minified bundles
+
+#### :house: Internal
+* `yoshi`
+  * [#402](https://github.com/wix/yoshi/pull/402) Run every command with the proper `NODE_ENV`:
+    * build with `NODE_ENV="production"`
+    * test with `NODE_ENV="test"`
+    * start with `NODE_ENV="development"`
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#398](https://github.com/wix/yoshi/pull/398) In tests, transpile TypeScript for node version 8.x (for example, do not transpile `async`/`await`)
+  * [#409](https://github.com/wix/yoshi/pull/409) Optimize TypeScript (loader) for latest Chrome on `start` (local development)
+* `babel-preset-yoshi`
+  * [#401](https://github.com/wix/yoshi/pull/401) Add support for tree-shaking when using yoshi
+
 ## 3.0.0-beta.2 (Jun 25, 2018)
 
 #### :boom: Breaking Change
