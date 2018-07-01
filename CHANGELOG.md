@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.11.3 (Jul 1, 2018)
+
+#### :bug: Bug
+
+* [#395](https://github.com/wix/yoshi/pull/395) Mocha `--watch` mode do not run the tests after a change in the `dist` directory
+* [#408](https://github.com/wix/yoshi/pull/408) Do not fail the build on an older yoshi version.
+
 ## 2.11.2 (Jun 24, 2018)
 
 #### :bug: Bug
