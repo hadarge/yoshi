@@ -22,6 +22,24 @@ describe('Aggregator: Start', () => {
       return killSpawnProcessAndHisChildren(child);
     });
 
+    describe('local development', () => {
+      it('should target latest chrome in development mode', () => {
+        child = test
+          .setup(
+            {
+              'src/client.ts': `async function hello() {}`,
+              'package.json': fx.packageJson(),
+            },
+            [],
+          )
+          .spawn('start');
+
+        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
+          content => expect(content).to.contain(`async function hello`),
+        );
+      });
+    });
+
     describe('tests', function() {
       it('should run tests initially', () => {
         child = test
