@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0-rc.1 (Jul 2, 2018)
+
+#### :boom: Breaking Change
+* `yoshi`
+  * [#410](https://github.com/wix/yoshi/pull/410) Configure Jasmine to not run tests randomly and not bail on first failure
+
+* `eslint-config-yoshi-base`
+  * [#411](https://github.com/wix/yoshi/pull/411) Add linting rules and globals for testing environments
+
+* `tslint-config-yoshi-base`
+  * [#411](https://github.com/wix/yoshi/pull/411) Add linting rules for testing environments
+
 ## 3.0.0-rc.0 (Jul 1, 2018)
 
 #### :boom: Breaking Change
