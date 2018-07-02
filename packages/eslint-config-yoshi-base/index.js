@@ -1,5 +1,5 @@
 module.exports = {
-  extends: 'prettier',
+  extends: ['prettier', require.resolve('./test')],
 
   parser: 'babel-eslint',
 

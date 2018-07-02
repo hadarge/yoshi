@@ -35,5 +35,8 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "eslint-plugin-jest": "^21.17.0"
   }
 }

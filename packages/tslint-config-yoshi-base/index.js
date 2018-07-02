@@ -139,6 +139,16 @@ module.exports = {
     // 'underscore-consistent-invocation': true,
     // 'use-named-parameter': true,
 
+    // custom rules
+    ban: [
+      true,
+      { name: 'fdescribe', message: 'no-focused-test' },
+      { name: 'fit', message: 'no-focused-test' },
+      { name: ['describe', 'only'], message: 'no-focused-test' },
+      { name: ['it', 'only'], message: 'no-focused-test' },
+      { name: ['test', 'only'], message: 'no-focused-test' },
+    ],
+
     // https://github.com/ikatyang/tslint-plugin-prettier
     prettier: [
       true,
