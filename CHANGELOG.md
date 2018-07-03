@@ -1,9 +1,13 @@
 # Changelog
 
+## 2.12.0 (Jul 3, 2018)
+
+#### :nail_care: Enhancement
+* [#413](https://github.com/wix/yoshi/pull/413) Add configuration for Webpack's `resolve.alias` Using Yoshi's `resolveAlias` option
+
 ## 2.11.3 (Jul 1, 2018)
 
 #### :bug: Bug
-
 * [#395](https://github.com/wix/yoshi/pull/395) Mocha `--watch` mode do not run the tests after a change in the `dist` directory
 * [#408](https://github.com/wix/yoshi/pull/408) Do not fail the build on an older yoshi version.
 
