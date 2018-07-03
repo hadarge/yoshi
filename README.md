@@ -328,6 +328,12 @@ Allows to use the Webpack Performance Budget feature.
 The configuration object is the same as in webpack.
 For more info, you can read the [webpack docs](https://webpack.js.org/configuration/performance/).
 
+#### yoshi.resolveAlias
+
+Allows you to use the Webpack Resolve Alias feature.
+The configuration object is the same as in Webpack, note that the paths are relative to Webpacks context.
+For more info, you can read the [webpack docs](https://webpack.js.org/configuration/resolve/#resolve-alias).
+
 ## FAQ
 - [How do I debug my server/tests?](/docs/faq/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)

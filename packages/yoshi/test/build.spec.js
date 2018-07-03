@@ -973,6 +973,24 @@ describe('Aggregator: Build', () => {
         expect(res.stderr).to.contain('Unexpected token (2:0)');
       });
     });
+
+    describe('build project with resolve alias', () => {
+      it('should exit with exit code 0', () => {
+        const res = test
+          .setup({
+            'node_modules/foo/index.js': '',
+            'src/client.js': "require('bar');",
+            'package.json': fx.packageJson({
+              resolveAlias: {
+                bar: 'foo',
+              },
+            }),
+          })
+          .execute('build');
+
+        expect(res.code).to.equal(0);
+      });
+    });
   });
 
   describe.skip('yoshi-check-deps', () => {

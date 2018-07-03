@@ -85,6 +85,7 @@ module.exports = {
   jestConfig: () => _.get(packagejson, 'jest', {}),
   petriSpecsConfig: () => getConfig('petriSpecs', {}),
   performanceBudget: () => getConfig('performance', {}),
+  resolveAlias: () => getConfig('resolveAlias', {}),
 };
 
 function serverProtocol(ssl) {

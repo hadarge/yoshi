@@ -11,7 +11,7 @@ const config = {
 
   resolve: {
     modules: ['node_modules', context],
-
+    alias: projectConfig.resolveAlias(),
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     symlinks: false,
   },
