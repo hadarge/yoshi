@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -20,7 +20,7 @@
     "babel-eslint": "^8.2.3",
     "babel-loader": "~7.1.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-preset-yoshi": "^3.0.0-rc.1",
+    "babel-preset-yoshi": "^3.0.0",
     "babel-register": "^6.26.0",
     "case-sensitive-paths-webpack-plugin": "~2.1.1",
     "chalk": "~2.3.1",
@@ -35,8 +35,8 @@
     "envinfo": "^5.1.2",
     "eslint": "^4.13.1",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-config-yoshi": "^3.0.0-rc.1",
-    "eslint-config-yoshi-base": "^3.0.0-rc.1",
+    "eslint-config-yoshi": "^3.0.0",
+    "eslint-config-yoshi-base": "^3.0.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
@@ -88,8 +88,8 @@
     "ts-loader": "^4.1.0",
     "ts-node": "~3.3.0",
     "tslint": "^5.10.0",
-    "tslint-config-yoshi": "^3.0.0-rc.1",
-    "tslint-config-yoshi-base": "^3.0.0-rc.1",
+    "tslint-config-yoshi": "^3.0.0",
+    "tslint-config-yoshi-base": "^3.0.0",
     "url-loader": "^1.0.0",
     "webpack": "^4.1.1",
     "webpack-bundle-analyzer": "^2.8.3",
