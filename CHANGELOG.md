@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.0.0 (Jul 4, 2018)
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#415](https://github.com/wix/yoshi/pull/415) Allow running `start` (local development) in production mode with `--production`
+  * [#414](https://github.com/wix/yoshi/pull/414) Do not run `webpack-dev-server` when there are no e2e test files
+
+* `tslint-config-yoshi-base`
+  * [#417](https://github.com/wix/yoshi/pull/417) Configure several TSLint rules to be a bit less strict
+
 ## 3.0.0-rc.1 (Jul 2, 2018)
 
 #### :boom: Breaking Change
