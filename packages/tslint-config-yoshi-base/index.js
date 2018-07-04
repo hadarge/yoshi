@@ -11,7 +11,7 @@ module.exports = {
     // https://github.com/palantir/tslint
     'adjacent-overload-signatures': true,
     'ban-comma-operator': true,
-    'no-empty-interface': true,
+    // 'no-empty-interface': true,
     'no-internal-module': true,
     'no-namespace': true,
     'no-non-null-assertion': true,
@@ -42,7 +42,7 @@ module.exports = {
     'no-this-assignment': true,
     'no-unnecessary-class': true,
     'no-unsafe-finally': true,
-    'no-unused-expression': true,
+    'no-unused-expression': [true, 'allow-fast-null-checks'],
     'no-unused-variable': true,
     'no-var-keyword': true,
     'prefer-object-spread': true,
