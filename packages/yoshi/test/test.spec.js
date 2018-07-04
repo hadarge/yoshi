@@ -40,6 +40,7 @@ describe('Aggregator: Test', () => {
           'package.json': fx.packageJson(),
         })
         .execute('test', undefined, outsideTeamCity);
+
       expect(res.code).to.equal(0);
       expect(res.stdout).to.contain('1 passing');
       expect(res.stdout).to.contains('protractor');
@@ -214,7 +215,7 @@ describe('Aggregator: Test', () => {
     });
 
     it('should pass all tests', () => {
-      expect(res.stdout).to.contain("Finished 'cdn' after");
+      expect(res.stderr).to.contain('5 passed, 5 total');
     });
 
     it('should work load jest configuration and work with css', () => {
@@ -405,6 +406,20 @@ describe('Aggregator: Test', () => {
       expect(res.stdout).to.contain('passed css');
     });
 
+    describe('with babel-register', () => {
+      it('should transpile both sources and specified 3rd party modules in runtime', () => {
+        expect(res.stdout).to.contain('passed babel');
+      });
+    });
+
+    it('should require "test/mocha-setup.js" configuration file', () => {
+      expect(res.stdout).to.contain('accepted configuration file');
+    });
+
+    it('should run e2e tests using mocha', () => {
+      expect(res.stdout).to.contain('passed e2e');
+    });
+
     describe('with custom build', () => {
       let customTest;
       beforeEach(() => (customTest = tp.create()));
@@ -508,6 +523,19 @@ describe('Aggregator: Test', () => {
         expect(res.stdout).to.contain(
           'All files |        0 |        0 |        0 |        0 |                   |',
         );
+      });
+
+      it('should not run webpack-dev-server (cdn) when there are no e2e tests', () => {
+        const res = customTest
+          .setup({
+            'test/bla/comp.spec.js': `it("pass", () => 1);`,
+            'package.json': fx.packageJson(),
+          })
+          .execute('test', ['--mocha'], outsideTeamCity);
+
+        expect(res.code).to.equal(0);
+        expect(res.stdout).to.contain('1 passing');
+        expect(res.stdout).to.not.contain('cdn');
       });
 
       describe('with babel-register', () => {
@@ -620,20 +648,6 @@ describe('Aggregator: Test', () => {
           expect(res.stdout).to.contain('1 passing');
         });
       });
-    });
-
-    describe('with babel-register', () => {
-      it('should transpile both sources and specified 3rd party modules in runtime', function() {
-        expect(res.stdout).to.contain('passed babel');
-      });
-    });
-
-    it('should require "test/mocha-setup.js" configuration file', () => {
-      expect(res.stdout).to.contain('accepted configuration file');
-    });
-
-    it('should run e2e tests using mocha', () => {
-      expect(res.stdout).to.contain('passed e2e');
     });
   });
 

@@ -15,6 +15,7 @@ const {
   watchMode,
   hasProtractorConfigFile,
   getMochaReporter,
+  hasE2ETests,
   watch,
 } = require('../utils');
 const protractor = require('../../src/tasks/protractor');
@@ -24,31 +25,35 @@ const runner = createRunner({
 });
 
 const cliArgs = minimist(process.argv.slice(2));
+const noOptions =
+  !cliArgs.mocha &&
+  !cliArgs.jasmine &&
+  !cliArgs.karma &&
+  !cliArgs.jest &&
+  !cliArgs.protractor;
+
+if (noOptions) {
+  cliArgs.mocha = true;
+  cliArgs.protractor = true;
+}
+
 const debugPort = cliArgs.debug;
 const debugBrkPort = cliArgs['debug-brk'];
 const shouldWatch = cliArgs.watch || cliArgs.w || watchMode();
+const shouldRunProtractor =
+  cliArgs.protractor && hasProtractorConfigFile() && !shouldWatch;
+const shouldRunPuppeteer =
+  hasE2ETests() && !shouldWatch && !hasProtractorConfigFile();
 
 module.exports = runner.command(
   async tasks => {
     const { karma, webpack } = tasks;
 
-    const noOptions =
-      !cliArgs.mocha &&
-      !cliArgs.jasmine &&
-      !cliArgs.karma &&
-      !cliArgs.jest &&
-      !cliArgs.protractor;
-
-    if (noOptions) {
-      cliArgs.mocha = true;
-      cliArgs.protractor = true;
-    }
-
     const wixCdn = tasks[require.resolve('../tasks/cdn/index')];
     const specsPattern = [projectConfig.specs.node() || globs.specs()];
 
-    if (!shouldWatch) {
-      await wixCdn(
+    function bootstrapCdn() {
+      return wixCdn(
         {
           port: projectConfig.servers.cdn.port(),
           ssl: projectConfig.servers.cdn.ssl(),
@@ -57,10 +62,11 @@ module.exports = runner.command(
         },
         { title: 'cdn' },
       );
+    }
 
-      if (!hasProtractorConfigFile()) {
-        specsPattern.push(globs.e2e());
-      }
+    if (shouldRunPuppeteer) {
+      specsPattern.push(globs.e2e());
+      await bootstrapCdn();
     }
 
     if (cliArgs.mocha) {
@@ -177,7 +183,8 @@ module.exports = runner.command(
       });
     }
 
-    if (cliArgs.protractor && hasProtractorConfigFile() && !shouldWatch) {
+    if (shouldRunProtractor) {
+      await bootstrapCdn();
       return protractor(debugPort, debugBrkPort);
     }
   },

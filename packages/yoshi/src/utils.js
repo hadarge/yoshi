@@ -52,6 +52,10 @@ function logIfAny(log) {
   }
 }
 
+module.exports.hasE2ETests = () => {
+  return glob.sync(globs.e2e()).length > 0;
+};
+
 module.exports.noop = () => {};
 
 module.exports.logIfAny = logIfAny;
