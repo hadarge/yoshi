@@ -56,6 +56,7 @@ prog
   .option('--no-test', 'Do not spawn npm test after start')
   .option('--no-server', 'Do not spawn the app server')
   .option('--debug', 'Allow app-server debugging')
+  .option('--production', 'start using unminified production build')
   .option(
     '--debug-brk',
     "Allow app-server debugging, process won't start until debugger will be attached",

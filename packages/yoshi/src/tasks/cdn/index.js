@@ -29,7 +29,6 @@ module.exports = ({
       const getConfig = require(webpackConfigPath);
       const webpackConfig = getConfig({
         min: false,
-        production: false,
         hmr,
       });
 

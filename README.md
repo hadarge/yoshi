@@ -55,6 +55,8 @@ The following sections describe the available tasks in `yoshi`. You can always u
 
 ### start
 
+This will run the specified (server) `entryPoint` file and mount a CDN server.
+
 Flag | Short Flag | Description | Default Value
 ---- | ---------- | ----------- | --------------
 --entry-point | -e | Entry point for the app. | `./dist/index.js`
@@ -64,7 +66,7 @@ Flag | Short Flag | Description | Default Value
 --ssl | | Serve the app bundle on https | false
 --debug | | Allow server debugging, debugger will be available at 127.0.0.1:[port] | 0
 --debug-brk | | Allow server debugging, debugger will be available at 127.0.0.1:[port], process won't start until debugger will be attached| 0
-This will run the specified (server) `entryPoint` file and mount a CDN server.
+--production | | Start using unminified production build (the tests would not run in this mode)
 
 The following are the default values for the CDN server's port, mount directory and whether to serve statics over https or regular http. You can change them in your `package.json`:
 

@@ -24,7 +24,6 @@ const defaultSplitChunksConfig = {
 
 const config = ({
   min,
-  production,
   separateCss = projectConfig.separateCss(),
   hmr,
   analyze,
@@ -52,12 +51,12 @@ const config = ({
   return mergeByConcat(webpackConfigCommon, {
     entry: getEntry(),
 
-    mode: production ? 'production' : 'development',
+    mode: isProduction() ? 'production' : 'development',
 
     optimization: {
       minimize: min,
       splitChunks: useSplitChunks ? splitChunksConfig : false,
-      concatenateModules: production && !disableModuleConcat,
+      concatenateModules: isProduction() && !disableModuleConcat,
     },
 
     module: {
@@ -95,7 +94,9 @@ const config = ({
       new DynamicPublicPath(),
 
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': production ? '"production"' : '"development"',
+        'process.env.NODE_ENV': isProduction()
+          ? '"production"'
+          : '"development"',
         'window.__CI_APP_VERSION__': process.env.ARTIFACT_VERSION
           ? `"${process.env.ARTIFACT_VERSION}"`
           : '"0.0.0"',
@@ -121,7 +122,7 @@ const config = ({
     devtool: inTeamCity() ? 'source-map' : 'cheap-module-source-map',
 
     performance: {
-      ...(production ? projectConfig.performanceBudget() : {}),
+      ...(isProduction() ? projectConfig.performanceBudget() : {}),
     },
 
     output: {

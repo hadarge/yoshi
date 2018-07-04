@@ -22,21 +22,56 @@ describe('Aggregator: Start', () => {
       return killSpawnProcessAndHisChildren(child);
     });
 
-    describe('local development', () => {
-      it('should target latest chrome in development mode', () => {
-        child = test
-          .setup(
-            {
-              'src/client.ts': `async function hello() {}`,
-              'package.json': fx.packageJson(),
-            },
-            [],
-          )
-          .spawn('start');
+    describe('transpilation', () => {
+      describe('typescript', () => {
+        it('should target latest chrome in development mode', () => {
+          child = test
+            .setup(
+              {
+                'src/client.ts': `async function hello() {}`,
+                'package.json': fx.packageJson(),
+              },
+              [],
+            )
+            .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
-          content => expect(content).to.contain(`async function hello`),
-        );
+          return checkServerIsServing({
+            port: 3200,
+            file: 'app.bundle.js',
+          }).then(content =>
+            expect(content).to.contain(`async function hello`),
+          );
+        });
+      });
+
+      describe('start --production', () => {
+        it('should run start with NODE_ENV="production"', () => {
+          child = test
+            .setup({
+              'src/client.js': `
+            const styles = require('./styles.css');
+            const Baz = (props) => (
+              <div className={styles.a} />
+            );
+
+            Baz.propTypes = {
+              className: PropTypes.string
+            };`,
+              'src/styles.css': `.a { color: red }`,
+              '.babelrc': `{"presets": ["babel-preset-yoshi"]}`,
+              'package.json': fx.packageJson(),
+            })
+            .spawn('start', '--production');
+
+          return checkServerIsServing({
+            port: 3200,
+            file: 'app.bundle.js',
+          }).then(content => {
+            expect(content).to.contain(`Baz`);
+            // babel-preset-yoshi removes propTypes on production builds
+            expect(content).to.not.contain(`PropTypes`);
+          });
+        });
       });
     });
 

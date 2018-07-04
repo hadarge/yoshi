@@ -2,9 +2,18 @@
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
+const parseArgs = require('minimist');
+
+const cliArgs = parseArgs(process.argv.slice(2));
+
+if (cliArgs.production) {
+  // run start with production configuration
+  process.env.BABEL_ENV = 'production';
+  process.env.NODE_ENV = 'production';
+}
+
 const { createRunner } = require('haste-core');
 const path = require('path');
-const parseArgs = require('minimist');
 const crossSpawn = require('cross-spawn');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const {
@@ -26,6 +35,7 @@ const {
   shouldTransformHMRRuntime,
   suffix,
   watch,
+  isProduction,
 } = require('../utils');
 const { debounce } = require('lodash');
 
@@ -34,7 +44,6 @@ const runner = createRunner({
 });
 
 const addJsSuffix = suffix('.js');
-const cliArgs = parseArgs(process.argv.slice(2));
 const shouldRunTests = cliArgs.test !== false;
 const debugPort = cliArgs.debug;
 const debugBrkPort = cliArgs['debug-brk'];
@@ -145,7 +154,7 @@ module.exports = runner.command(
       ),
     ]);
 
-    if (shouldRunTests) {
+    if (shouldRunTests && !isProduction()) {
       crossSpawn('npm', ['test', '--silent'], {
         stdio: 'inherit',
         env: {
