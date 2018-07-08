@@ -189,7 +189,31 @@ Bump `package.json` version and publish to npm using `wnpm-release`.
 
 ## Configurations
 
-Configurations are meant to be inside `package.json` under `yoshi` section or by passing flags to common tasks.
+Configurations are meant to be inside `package.json` under `yoshi` section or by passing flags to common tasks, for example:
+
+```json
+{
+  "name": "my-project",
+  "version": "0.0.1",
+  "yoshi": {
+    "entry": {
+      "app": "./app2.js"
+    }
+  }
+}
+```
+
+Alternatively, you can create a file named `yoshi.config.js` in your project's root directory, and export an object with the configuration you need. For example:
+
+```js
+module.exports = {
+  entry: {
+    app: './app2.js',
+  },
+};
+```
+
+> Yoshi will prefer configuration from `package.json` over `yoshi.config.js` file.
 
 #### yoshi.extends
 
