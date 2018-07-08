@@ -30,7 +30,7 @@
     "cross-spawn": "^5.1.0",
     "dargs": "^6.0.0",
     "depkeeper": "~1.0.36",
-    "detect-port": "~1.2.2",
+    "detect-port": "~1.2.3",
     "duplicate-package-checker-webpack-plugin": "^1.2.5",
     "envinfo": "^5.1.2",
     "eslint": "^4.13.1",

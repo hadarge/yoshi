@@ -3,6 +3,8 @@ const path = require('path');
 const glob = require('glob');
 const mkdirp = require('mkdirp');
 const chokidar = require('chokidar');
+const childProcess = require('child_process');
+const detect = require('detect-port');
 const { mergeWith } = require('lodash/fp');
 const cosmiconfig = require('cosmiconfig');
 const project = require('../config/project');
@@ -187,4 +189,39 @@ module.exports.getListOfEntries = entry => {
 
 module.exports.shouldTransformHMRRuntime = () => {
   return project.hmr() === 'auto' && project.isReactProject();
+};
+
+function getProcessIdOnPort(port) {
+  return childProcess
+    .execSync(`lsof -i:${port} -P -t -sTCP:LISTEN`, { encoding: 'utf-8' })
+    .split('\n')[0]
+    .trim();
+}
+
+function getDirectoryOfProcessById(processId) {
+  return childProcess
+    .execSync(`lsof -p ${processId} | grep cwd | awk '{print $9}'`, {
+      encoding: 'utf-8',
+    })
+    .trim();
+}
+
+module.exports.getProcessOnPort = async port => {
+  const portTestResult = await detect(port);
+
+  if (port === portTestResult) {
+    return null;
+  }
+
+  try {
+    const pid = getProcessIdOnPort(port);
+    const cwd = getDirectoryOfProcessById(pid);
+
+    return {
+      pid,
+      cwd,
+    };
+  } catch (e) {
+    return null;
+  }
 };

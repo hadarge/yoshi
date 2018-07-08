@@ -2,8 +2,89 @@ const expect = require('chai').expect;
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const { outsideTeamCity, insideTeamCity } = require('./helpers/env-variables');
+const {
+  takePort,
+  takePortFromAnotherProcess,
+} = require('./helpers/http-helpers');
 
 describe('Aggregator: Test', () => {
+  describe('CDN Port', () => {
+    let test;
+    let server;
+    let child;
+
+    beforeEach(() => (test = tp.create()));
+    afterEach(() => test.teardown());
+
+    afterEach(done => {
+      if (server) {
+        server.close(() => {
+          server = null;
+          done();
+        });
+      } else {
+        done();
+      }
+    });
+
+    afterEach(done => {
+      if (child) {
+        child.on('exit', () => {
+          done();
+          child = null;
+        });
+        child.kill('SIGINT');
+      } else {
+        done();
+      }
+    });
+
+    const executionOptions = port => ({
+      'test/component.spec.js': 'it.only("pass", () => 1);',
+      'test/some.e2e.js': `
+        it("should write to body", () => {
+          browser.ignoreSynchronization = true;
+          browser.get("http://localhost:1337");
+          expect(element(by.css("body")).getText()).toEqual("");
+        });
+      `,
+      'package.json': fx.packageJson({
+        servers: {
+          cdn: {
+            port,
+          },
+        },
+      }),
+    });
+
+    it('should throw an error when CDN port is in use by another directory', async function() {
+      const TEST_PORT = 3335;
+      server = await takePort(TEST_PORT);
+      const res = test
+        .verbose()
+        .setup(executionOptions(TEST_PORT))
+        .execute('test', undefined, outsideTeamCity);
+
+      expect(res.code).to.equal(1);
+      expect(res.stderr).to.include(
+        `port ${TEST_PORT} is already in use by another process`,
+      );
+    });
+
+    it('should skip cdn startup when yoshi is already running in the same path', async function() {
+      const TEST_PORT = 3336;
+      test.setup(executionOptions(TEST_PORT));
+      const testPath = test.tmp;
+      child = await takePortFromAnotherProcess(testPath, TEST_PORT);
+      const res = test.execute('test', undefined, outsideTeamCity);
+
+      expect(res.code).to.equal(0);
+      expect(res.stdout).to.include(
+        `cdn is already running on ${TEST_PORT}, skipping`,
+      );
+    });
+  });
+
   describe('defaults', () => {
     let test;
     beforeEach(() => (test = tp.create()));

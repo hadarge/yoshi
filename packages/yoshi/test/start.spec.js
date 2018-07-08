@@ -1,4 +1,3 @@
-const express = require('express');
 const { expect } = require('chai');
 const { killSpawnProcessAndHisChildren } = require('./helpers/process');
 const tp = require('./helpers/test-phases');
@@ -7,6 +6,7 @@ const fetch = require('node-fetch');
 const retryPromise = require('retry-promise').default;
 const { outsideTeamCity } = require('./helpers/env-variables');
 const https = require('https');
+const { takePort } = require('./helpers/http-helpers');
 
 describe('Aggregator: Start', () => {
   let test, child;
@@ -524,7 +524,7 @@ describe('Aggregator: Start', () => {
     describe('when the default port is taken', () => {
       let server;
 
-      beforeEach(() => (server = takePort(3000)));
+      beforeEach(async () => (server = await takePort(3000)));
       afterEach(() => server.close());
 
       it('it should use the next available port', () => {
@@ -771,10 +771,6 @@ describe('Aggregator: Start', () => {
       () =>
         test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
     );
-  }
-
-  function takePort(port) {
-    return express().listen(port);
   }
 
   function fetchCDN(port) {
