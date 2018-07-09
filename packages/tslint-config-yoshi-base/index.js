@@ -1,4 +1,6 @@
-module.exports = {
+const addJsRules = require('./addJsRules');
+
+module.exports = addJsRules({
   rulesDirectory: ['tslint-microsoft-contrib', 'tslint-plugin-prettier'],
 
   extends: [
@@ -158,4 +160,4 @@ module.exports = {
       },
     ],
   },
-};
+});
