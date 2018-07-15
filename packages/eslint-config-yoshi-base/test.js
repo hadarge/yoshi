@@ -1,9 +1,9 @@
 module.exports = {
   env: {
     mocha: true,
+    jest: true,
     jasmine: true,
     protractor: true,
-    'jest/globals': true,
   },
   plugins: ['jest'],
   overrides: [

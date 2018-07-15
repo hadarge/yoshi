@@ -8,7 +8,6 @@ module.exports = {
   env: {
     commonjs: true,
     es6: true,
-    jest: true,
     node: true,
   },
 
@@ -24,12 +23,9 @@ module.exports = {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
     'default-case': ['warn', { commentPattern: '^no default$' }],
-    'dot-location': ['warn', 'property'],
     eqeqeq: ['warn', 'allow-null'],
-    'new-parens': 'warn',
     'no-array-constructor': 'warn',
     'no-caller': 'warn',
-    'no-cond-assign': ['warn', 'except-parens'],
     'no-const-assign': 'warn',
     'no-control-regex': 'warn',
     'no-delete-var': 'warn',
@@ -53,18 +49,6 @@ module.exports = {
     'no-labels': ['warn', { allowLoop: true, allowSwitch: false }],
     'no-lone-blocks': 'warn',
     'no-loop-func': 'warn',
-    'no-mixed-operators': [
-      'warn',
-      {
-        groups: [
-          ['&', '|', '^', '~', '<<', '>>', '>>>'],
-          ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
-          ['&&', '||'],
-          ['in', 'instanceof'],
-        ],
-        allowSamePrecedence: false,
-      },
-    ],
     'no-multi-str': 'warn',
     'no-native-reassign': 'warn',
     'no-negated-in-lhs': 'warn',
@@ -89,7 +73,6 @@ module.exports = {
     'no-throw-literal': 'warn',
     'no-undef': 'error',
     'no-restricted-globals': ['error'],
-    'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
     'no-unused-expressions': [
       'error',
@@ -127,28 +110,19 @@ module.exports = {
         ignoreExport: false,
       },
     ],
+    'no-var': 'warn',
     'no-with': 'warn',
-    'no-whitespace-before-property': 'warn',
+    'prefer-const': 'warn',
     'require-yield': 'warn',
-    'rest-spread-spacing': ['warn', 'never'],
     strict: ['warn', 'never'],
-    'unicode-bom': ['warn', 'never'],
     'use-isnan': 'warn',
     'valid-typeof': 'warn',
     'getter-return': 'warn',
 
     // https://github.com/benmosher/eslint-plugin-import
     'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
-    // 'import/no-extraneous-dependencies': 'warn',
     'import/no-amd': 'error',
     'import/no-duplicates': 'error',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-      },
-    ],
     'import/newline-after-import': 'error',
     'import/no-absolute-path': 'error',
     'import/no-useless-path-segments': 'error',

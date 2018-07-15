@@ -10,6 +10,7 @@
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
   "scripts": {
+    "test": "mocha",
     "customPublish": "node ../../scripts/customPublish.js"
   },
   "peerDependencies": {
@@ -25,5 +26,11 @@
   },
   "dependencies": {
     "eslint-plugin-jest": "^21.17.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "glob": "^7.1.2",
+    "lodash": "^4.17.10",
+    "mocha": "^5.2.0"
   }
 }
