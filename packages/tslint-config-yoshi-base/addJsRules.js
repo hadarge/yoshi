@@ -26,6 +26,10 @@ const tsOnlyRules = [
   'type-literal-delimiter',
   'no-banned-terms',
   'no-with-statement',
+
+  // not a typescript specific rule
+  // see https://github.com/wix/yoshi/pull/431 for more information
+  'restrict-plus-operands',
 ];
 
 module.exports = config => {
