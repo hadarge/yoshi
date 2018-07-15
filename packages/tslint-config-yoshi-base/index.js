@@ -1,7 +1,11 @@
 const addJsRules = require('./addJsRules');
 
 module.exports = addJsRules({
-  rulesDirectory: ['tslint-microsoft-contrib', 'tslint-plugin-prettier'],
+  rulesDirectory: [
+    'tslint-microsoft-contrib',
+    'tslint-plugin-prettier',
+    'tslint-no-unused-expression-chai',
+  ],
 
   extends: [
     'tslint-consistent-codestyle',
@@ -35,9 +39,7 @@ module.exports = addJsRules({
     'no-string-literal': true,
     'no-string-throw': true,
     'no-switch-case-fall-through': true,
-    'no-this-assignment': true,
     'no-unsafe-finally': true,
-    'no-unused-expression': [true, 'allow-fast-null-checks'],
     'no-unused-variable': true,
     'no-var-keyword': true,
     'prefer-object-spread': true,
@@ -63,10 +65,12 @@ module.exports = addJsRules({
     'no-unnecessary-qualifier': true,
     'object-literal-shorthand': true,
     'prefer-method-signature': true,
-    'prefer-template': [true, 'allow-single-concat'],
     'prefer-while': true,
     'switch-final-break': true,
     'type-literal-delimiter': true,
+
+    // https://github.com/kwonoj/tslint-no-unused-expression-chai
+    'no-unused-expression-chai': [true, 'allow-fast-null-checks'],
 
     // https://github.com/buzinas/tslint-eslint-rules
     'no-constant-condition': true,
@@ -90,7 +94,6 @@ module.exports = addJsRules({
     // https://github.com/ajafff/tslint-consistent-codestyle
     'no-accessor-recursion': true,
     'no-collapsible-if': true,
-    'no-else-after-return': true,
     'no-return-undefined': true,
     'no-static-this': true,
     'no-unnecessary-else': true,

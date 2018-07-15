@@ -1,4 +1,4 @@
-/* eslint-disable no-undef*/
+/* eslint-disable no-undef, no-unused-vars*/
 
 define(['a', 'b'], function(a, b) {
   /* ... */

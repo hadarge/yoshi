@@ -66,6 +66,7 @@ module.exports = {
     'no-self-assign': 'warn',
     'no-self-compare': 'warn',
     'no-sequences': 'warn',
+    'no-shadow': 'warn',
     'no-shadow-restricted-names': 'warn',
     'no-sparse-arrays': 'warn',
     'no-template-curly-in-string': 'warn',
@@ -86,7 +87,7 @@ module.exports = {
     'no-unused-vars': [
       'warn',
       {
-        args: 'none',
+        args: 'after-used',
         ignoreRestSiblings: true,
       },
     ],
