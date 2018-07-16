@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.1.0 (Jul 16, 2018)
+
+#### :bug: Bug
+* `yoshi`
+  * [#418](https://github.com/wix/yoshi/pull/418) Always start dev server with `NODE_ENV=development`
+  * [#416](https://github.com/wix/yoshi/pull/416) Adjust `externalize-relative-lodash` to windows
+  * [#391](https://github.com/wix/yoshi/pull/391) Allow `npm test` and `npm start` run on the same time (`webpack-dev-server` will check if it is already up and won't throw)
+
+* `tslint-config-yoshi-base`
+  * [#427](https://github.com/wix/yoshi/pull/427) Add js-rules to TSLint configs
+  * [#431](https://github.com/wix/yoshi/pull/431) [#436](https://github.com/wix/yoshi/pull/436) [#437](https://github.com/wix/yoshi/pull/437) Various changes to TSLint rules
+
+* `eslint-config-yoshi-base`
+  * [#437](https://github.com/wix/yoshi/pull/437) [#441](https://github.com/wix/yoshi/pull/441) Various changes to ESLint rules
+
 ## 3.0.0 (Jul 4, 2018)
 
 #### :nail_care: Enhancement
