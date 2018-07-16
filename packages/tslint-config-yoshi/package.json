@@ -1,6 +1,6 @@
 {
   "name": "tslint-config-yoshi",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "tslint configuration for react projects using yoshi",
   "main": "index.js",
   "keywords": [
@@ -14,7 +14,7 @@
     "customPublish": "node ../../scripts/customPublish.js"
   },
   "dependencies": {
-    "tslint-config-yoshi-base": "^3.0.0",
+    "tslint-config-yoshi-base": "^3.1.0",
     "tslint-react": "^3.6.0"
   },
   "peerDependencies": {
