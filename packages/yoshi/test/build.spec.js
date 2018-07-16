@@ -481,7 +481,7 @@ describe('Aggregator: Build', () => {
     });
 
     it('should support code splitting with dynamic import statements', () => {
-      expect(test.content('dist/statics/0.chunk.js')).to.contain(`'hello'`);
+      expect(test.content('dist/statics/1.chunk.js')).to.contain(`'hello'`);
     });
 
     it('should tree shake unused variable', () => {
