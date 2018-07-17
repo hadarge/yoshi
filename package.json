@@ -6,7 +6,7 @@
     "test": "lerna exec --concurrency 1 -- npm test",
     "e2e": "node scripts/runE2E.js",
     "build": "eslint .",
-    "customPublish": "lerna exec --concurrency 1 -- npm run customPublish",
+    "customPublish": "lerna exec --concurrency 1 -- npm run customPublish --if-present",
     "createVersion": "node scripts/createVersion"
   },
   "husky": {
