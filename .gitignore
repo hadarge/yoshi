@@ -3,6 +3,6 @@ node_modules
 package-lock.json
 yarn.lock
 dist
-.vscode
+/.vscode
 .DS_Store
 lerna-debug.log

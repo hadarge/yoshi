@@ -18,6 +18,7 @@ Please **ask first** if somebody else is already working on this or the core dev
 That's it, you're good to go.
 
 * `npm test` - Run yoshi's tests.
+* `npm run E2E` - create all yoshi projects and install, build and test each one of them.
 * `npm run build` - Run [eslint](https://eslint.org/) on all packages with the following [rules](https://github.com/wix/yoshi/blob/master/.eslintrc).
 * `npm run test:watch` Run the tests using watch mode.
 
@@ -57,6 +58,26 @@ Alternatively, you can run all your tests (or just the focused ones) with the ve
 VERBOSE_TESTS=true npm test
 ```
 This is the same as adding the `.verbose()` method to each and every test.
+
+## Running E2E Tests
+The E2E suite will create a corresponding E2E test for each template from `projects/create-yoshi-app/templates` directory. It will generate the project in a temporary directory, it will then run `npm install` & `npm test` to verify that it's not failing.
+
+* Verbose mode:
+
+`-v`/`--verbose` output verbose logs, good for debugging
+```bash
+./scripts/runE2E.js --verbose
+```
+
+* Focus specific templates using regex:
+
+Example: will match `client` & `client-typescript` projects
+```bash
+./scripts/runE2E.js client
+```
+
+## Adding a Template
+Create a directory in  `packages/create-yoshi-app/templates/<template-name>` and another one for typescript `packages/create-yoshi-app/templates/<template-name>-typescript`. It will be tested automatically in the `E2E` suite.
 
 ## Release a New Version
 Start by heading to the [CHANGELOG.md](https://github.com/wix/yoshi/blob/master/CHANGELOG.md) and insert the version's changes. See [commits section](https://github.com/wix/yoshi/commits/master) to verify you haven't missed anything

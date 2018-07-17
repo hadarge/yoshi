@@ -1,0 +1,65 @@
+{
+  "name": "{%projectName%}",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "author": {
+    "name": "{%authorName%}",
+    "email": "{%authorEmail%}"
+  },
+  "scripts": {
+    "start": "yoshi start",
+    "precommit": "yoshi lint",
+    "pretest": "yoshi build",
+    "test": "yoshi test",
+    "posttest": "yoshi lint",
+    "release": "yoshi release"
+  },
+  "dependencies": {
+    "axios": "~0.16.0",
+    "ejs": "~2.5.0",
+    "express": "~4.15.0",
+    "i18next": "~8.4.0",
+    "i18next-xhr-backend": "~1.4.0",
+    "prop-types": "~15.6.0",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "react-i18next": "~4.6.0",
+    "wix-axios-config": "latest",
+    "wix-bootstrap-ng": "latest",
+    "wix-express-csrf": "latest",
+    "wix-express-require-https": "latest",
+    "wix-run-mode": "latest",
+    "yoshi-style-dependencies": "^3.0.0"
+  },
+  "devDependencies": {
+    "react-test-renderer": "~15.6.0",
+    "chai": "~4.1.0",
+    "enzyme": "~2.9.0",
+    "husky": "~0.14.0",
+    "jsdom": "~11.2.0",
+    "jsdom-global": "~3.0.0",
+    "puppeteer": "^1.1.0",
+    "wix-bootstrap-testkit": "latest",
+    "wix-config-emitter": "latest",
+    "yoshi": "^3.0.0",
+    "typescript": "~2.9.0",
+    "@types/node": "^8.0.0",
+    "@types/chai": "~4.0.0",
+    "@types/ejs": "~2.5.0",
+    "@types/express": "~4.0.0",
+    "@types/i18next": "~8.4.0",
+    "@types/mocha": "~2.2.0",
+    "@types/prop-types": "~15.5.0",
+    "@types/react": "~15.6.0",
+    "@types/react-dom": "~15.5.0",
+    "@types/react-i18next": "~4.6.0"
+  },
+  "yoshi": {
+    "externals": {
+      "react": "React",
+      "react-dom": "ReactDOM"
+    },
+    "hmr": "auto"
+  }
+}

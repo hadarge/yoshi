@@ -1,0 +1,2071 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`client 1`] = `
+Object {
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+velocity.private.data.js
+test/e2e/screenshots
+package-lock.json
+*npm-debug.log
+.history
+.idea
+*.iml
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"wallabyjs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "README.md": "# test-client
+",
+  "index.js": "require('babel-register');
+const { start } = require('./test/dev/server');
+
+start();
+",
+  "package.json": "{
+  \\"name\\": \\"test-client\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"devDependencies\\": {
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"express\\": \\"~4.15.0\\",
+    \\"express-session\\": \\"~1.15.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.2.0\\",
+    \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"puppeteer\\": \\"^1.1.0\\",
+    \\"react-test-renderer\\": \\"~15.6.0\\",
+    \\"velocity\\": \\"~0.7.0\\",
+    \\"yoshi\\": \\"^3.0.0\\"
+  },
+  \\"dependencies\\": {
+    \\"axios\\": \\"~0.16.0\\",
+    \\"i18next\\": \\"~8.4.0\\",
+    \\"i18next-xhr-backend\\": \\"~1.4.0\\",
+    \\"prop-types\\": \\"~15.6.0\\",
+    \\"react\\": \\"15.6.1\\",
+    \\"react-dom\\": \\"15.6.1\\",
+    \\"react-i18next\\": \\"~4.8.0\\",
+    \\"regenerator-runtime\\": \\"^0.11.0\\",
+    \\"wix-axios-config\\": \\"latest\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"yoshi\\": {
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\"
+    },
+    \\"hmr\\": \\"auto\\"
+  },
+  \\"babel\\": {
+    \\"presets\\": [
+      \\"yoshi\\"
+    ]
+  },
+  \\"eslintConfig\\": {
+    \\"extends\\": \\"yoshi\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-client</artifactId>
+    <packaging>pom</packaging>
+    <name>test-client</name>
+    <description>test-client</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name>wix</name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>\${project.artifactId}-\${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+",
+  "src/assets/locale/messages_de.json": "{
+  \\"app.title\\": \\"Hallo Wereld\\",
+  \\"app.intro\\": \\"Get begonnen hier: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/assets/locale/messages_en.json": "{
+  \\"app.title\\": \\"Hello World!\\",
+  \\"app.intro\\": \\"Get started here: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/client.js": "import 'regenerator-runtime/runtime';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import axios from 'axios';
+import { I18nextProvider } from 'react-i18next';
+import { wixAxiosConfig } from 'wix-axios-config';
+import App from './components/App';
+import i18n from './i18n';
+
+const locale = window.__LOCALE__;
+const baseURL = window.__BASEURL__;
+const staticsBaseUrl = window.__STATICS_BASE_URL__;
+
+wixAxiosConfig(axios, { baseURL });
+
+ReactDOM.render(
+  <I18nextProvider i18n={i18n({ locale, baseUrl: staticsBaseUrl })}>
+    <App />
+  </I18nextProvider>,
+  document.getElementById('root'),
+);
+",
+  "src/components/App/App.js": "import React from 'react';
+import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
+import s from './App.scss';
+
+class App extends React.Component {
+  static propTypes = {
+    t: PropTypes.func,
+  };
+
+  render() {
+    const { t } = this.props;
+
+    return (
+      <div className={s.root}>
+        <div className={s.header}>
+          <h2>{t('app.title')}</h2>
+        </div>
+        <p className={s.intro}>{t('app.intro')}</p>
+      </div>
+    );
+  }
+}
+
+export default translate(null, { wait: true })(App);
+",
+  "src/components/App/App.scss": ".root {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  padding: 10px;
+  color: white;
+  font-size: 20pt;
+}
+
+.intro {
+  font-size: 15pt;
+}
+",
+  "src/components/App/App.spec.js": "import 'jsdom-global/register';
+import React from 'react';
+import { expect } from 'chai';
+import { mount } from 'enzyme';
+import i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
+import App from './App';
+import translation from '../../assets/locale/messages_en.json';
+
+const i18nData = {
+  lng: 'en',
+  keySeparator: '$',
+  resources: {
+    en: { translation },
+  },
+};
+
+describe('App', () => {
+  let wrapper;
+
+  afterEach(() => wrapper.detach());
+
+  it('renders a title correctly', () => {
+    wrapper = mount(
+      <I18nextProvider i18n={i18next.init(i18nData)}>
+        <App />
+      </I18nextProvider>,
+      { attachTo: document.createElement('div') },
+    );
+    expect(wrapper.find('h2').length).to.eq(1);
+  });
+});
+",
+  "src/components/App/index.js": "export { default } from './App';
+",
+  "src/i18n.js": "import i18next from 'i18next';
+import i18nextXHRBackend from 'i18next-xhr-backend';
+
+export default function i18n({ locale, baseUrl = '' }) {
+  return i18next.use(i18nextXHRBackend).init({
+    lng: locale,
+    fallbackLng: 'en',
+    keySeparator: '$',
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: \`\${baseUrl}assets/locale/messages_{{lng}}.json\`,
+      crossDomain: true,
+    },
+  });
+}
+",
+  "src/index.vm": "<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=\\"utf-8\\">
+    <title>\${title}</title>
+    <link type=\\"image/png\\" href=\\"https://www.wix.com/favicon.ico\\" rel=\\"shortcut icon\\">
+    <link rel=\\"stylesheet\\" href=\\"\${clientTopology.staticsBaseUrl}app#if(!\${debug}).min#{end}.css\\">
+    <script src=\\"https://\${clientTopology.staticsDomain}/polyfill/v2/polyfill#if(!\${debug}).min#{end}.js?features=default,es6,es7,es2017&flags=gated&unknown=polyfill&rum=0\\"></script>
+    <script src=\\"https://\${clientTopology.staticsDomain}/unpkg/react@15.6.1/dist/react#if(!\${debug}).min#{end}.js\\"></script>
+    <script src=\\"https://\${clientTopology.staticsDomain}/unpkg/react-dom@15.6.1/dist/react-dom#if(!\${debug}).min#{end}.js\\"></script>
+  </head>
+  <body>
+    <div id=\\"visit-count\\">Visit count: \${visitCount}</div>
+    <div id=\\"root\\"></div>
+    <script>
+      window.__BASEURL__ = '\${basename}';
+      window.__LOCALE__ = '\${locale}';
+      window.__STATICS_BASE_URL__ = '\${clientTopology.staticsBaseUrl}';
+    </script>
+    <script src=\\"\${clientTopology.staticsBaseUrl}app.bundle#if(!\${debug}).min#{end}.js\\"></script>
+  </body>
+</html>
+",
+  "test/dev/server.js": "import express from 'express';
+import session from 'express-session';
+import { renderVM } from './vm';
+
+export function start(port = process.env.PORT || 3000) {
+  const app = express();
+
+  app.use(
+    session({
+      secret: 'secret',
+      resave: true,
+      saveUninitialized: true,
+    }),
+  );
+
+  app.use('/', (req, res) => {
+    if (!req.session.visitCount) {
+      req.session.visitCount = 0;
+    }
+
+    req.session.visitCount++;
+
+    res.send(
+      renderVM('./src/index.vm', {
+        visitCount: req.session.visitCount,
+      }),
+    );
+  });
+
+  return app.listen(port, () => {
+    console.info(\`Fake server is running on port \${port}\`);
+  });
+}
+",
+  "test/dev/vm.js": "import fs from 'fs';
+import { Engine } from 'velocity';
+
+function loadData(file) {
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf-8').toString());
+  } catch (ex) {
+    throw ex;
+  }
+}
+
+export function renderVM(template, data) {
+  const engine = new Engine({ template });
+  const velocityData = loadData('./velocity.data.json');
+  const velocityDataPrivate = loadData('./velocity.private.data.json');
+
+  return engine.render(
+    Object.assign({}, velocityData, velocityDataPrivate, data),
+  );
+}
+",
+  "test/e2e/app.e2e.js": "import { expect } from 'chai';
+import { baseURL } from './e2e-common';
+
+describe('React application', () => {
+  describe('open page', () => {
+    it('should display title', async () => {
+      const page = await browser.newPage();
+      await page.goto(baseURL);
+      await page.waitForSelector('h2', { timeout: 1000 });
+      expect(await page.$eval('h2', e => e.innerText)).to.equal('Hello World!');
+    });
+  });
+});
+",
+  "test/e2e/e2e-common.js": "import puppeteer from 'puppeteer';
+import { start } from '../dev/server';
+
+before(async () => {
+  await start(3100);
+  global.browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+});
+
+after(async () => {
+  await global.browser.close();
+});
+
+export const baseURL = \`http://localhost:3100\`;
+",
+  "test/mocha-setup.js": "import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { baseURL } from './test-common';
+
+wixAxiosConfig(axios, { baseURL });
+",
+  "test/test-common.js": "export const baseURL = \`http://localhost:5554\`;
+",
+  "velocity.data.json": "{
+  \\"title\\": \\"Wix Stack React Example Application\\",
+  \\"debug\\": true,
+  \\"experiments\\": {
+
+  },
+  \\"locale\\": \\"en\\",
+  \\"basename\\": \\"/\\",
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"static.parastorage.com\\",
+    \\"staticsBaseUrl\\": \\"//localhost:3200/\\"
+  }
+}
+",
+  "velocity.private.data.json": "{
+  \\"experiments\\": {
+
+  }
+}
+",
+  "wallaby.js": "module.exports = function(wallaby) {
+  return Object.assign({}, require('yoshi/config/wallaby-mocha')(wallaby), {
+    // set to undefined to let Wallaby decide the number of processes based on the system's capacity
+    workers: undefined,
+  });
+};
+",
+}
+`;
+
+exports[`client-typescript 1`] = `
+Object {
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+velocity.private.data.js
+test/e2e/screenshots
+package-lock.json
+*npm-debug.log
+.history
+.idea
+*.iml
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"wallabyjs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "README.md": "# test-client-typescript
+",
+  "index.js": "require('ts-node/register');
+const {start} = require('./test/dev/server');
+
+start();
+",
+  "package.json": "{
+  \\"name\\": \\"test-client-typescript\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"devDependencies\\": {
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"express\\": \\"~4.15.0\\",
+    \\"express-session\\": \\"~1.15.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.2.0\\",
+    \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"puppeteer\\": \\"^1.1.0\\",
+    \\"react-test-renderer\\": \\"~15.6.0\\",
+    \\"velocity\\": \\"~0.7.0\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"typescript\\": \\"~2.9.0\\",
+    \\"@types/node\\": \\"^8.0.0\\",
+    \\"@types/chai\\": \\"~4.0.0\\",
+    \\"@types/express\\": \\"~4.0.0\\",
+    \\"@types/express-session\\": \\"~1.15.0\\",
+    \\"@types/i18next\\": \\"~8.4.0\\",
+    \\"@types/mocha\\": \\"~2.2.0\\",
+    \\"@types/prop-types\\": \\"~15.5.0\\",
+    \\"@types/react\\": \\"~15.6.0\\",
+    \\"@types/react-dom\\": \\"~15.5.0\\",
+    \\"@types/react-i18next\\": \\"~4.6.0\\"
+  },
+  \\"dependencies\\": {
+    \\"axios\\": \\"~0.16.0\\",
+    \\"i18next\\": \\"~8.4.0\\",
+    \\"i18next-xhr-backend\\": \\"~1.4.0\\",
+    \\"prop-types\\": \\"~15.6.0\\",
+    \\"react\\": \\"15.6.1\\",
+    \\"react-dom\\": \\"15.6.1\\",
+    \\"react-i18next\\": \\"~4.8.0\\",
+    \\"wix-axios-config\\": \\"latest\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"yoshi\\": {
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\"
+    },
+    \\"hmr\\": \\"auto\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-client-typescript</artifactId>
+    <packaging>pom</packaging>
+    <name>test-client-typescript</name>
+    <description>test-client-typescript</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name>wix</name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>\${project.artifactId}-\${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+",
+  "src/assets/locale/messages_de.json": "{
+  \\"app.title\\": \\"Hallo Wereld\\",
+  \\"app.intro\\": \\"Get begonnen hier: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/assets/locale/messages_en.json": "{
+  \\"app.title\\": \\"Hello World!\\",
+  \\"app.intro\\": \\"Get started here: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/client.tsx": "import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as axios from 'axios';
+import { I18nextProvider } from 'react-i18next';
+import { wixAxiosConfig } from 'wix-axios-config';
+import App from './components/App';
+import i18n from './i18n';
+
+const locale = window.__LOCALE__;
+const baseURL = window.__BASEURL__;
+const staticsBaseUrl = window.__STATICS_BASE_URL__;
+
+wixAxiosConfig(axios, { baseURL });
+
+ReactDOM.render(
+  <I18nextProvider i18n={i18n({ locale, baseUrl: staticsBaseUrl })}>
+    <App />
+  </I18nextProvider>,
+  document.getElementById('root'),
+);
+",
+  "src/components/App/App.scss": ".root {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  padding: 10px;
+  color: white;
+  font-size: 20pt;
+}
+
+.intro {
+  font-size: 15pt;
+}
+",
+  "src/components/App/App.spec.tsx": "import 'jsdom-global/register';
+import * as React from 'react';
+import {expect} from 'chai';
+import {mount} from 'enzyme';
+import * as i18next from 'i18next';
+import {I18nextProvider} from 'react-i18next';
+import App from './App';
+import * as translation from '../../assets/locale/messages_en.json';
+
+const i18nData = {
+  lng: 'en',
+  keySeparator: '$',
+  resources: {
+    en: {translation}
+  }
+};
+
+describe('App', () => {
+  let wrapper;
+
+  afterEach(() => wrapper.detach());
+
+  it('renders a title correctly', () => {
+    wrapper = mount(
+      <I18nextProvider i18n={i18next.init(i18nData)}>
+        <App/>
+      </I18nextProvider>,
+      {attachTo: document.createElement('div')}
+    );
+    expect(wrapper.find('h2').length).to.eq(1);
+  });
+});
+",
+  "src/components/App/App.tsx": "import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import { translate, InjectedTranslateProps } from 'react-i18next';
+import * as s from './App.scss';
+
+interface AppProps extends InjectedTranslateProps {}
+
+class App extends React.Component<AppProps> {
+  static propTypes = {
+    t: PropTypes.func,
+  };
+
+  render() {
+    const { t } = this.props;
+
+    return (
+      <div className={s.root}>
+        <div className={s.header}>
+          <h2>{t('app.title')}</h2>
+        </div>
+        <p className={s.intro}>{t('app.intro')}</p>
+      </div>
+    );
+  }
+}
+
+export default translate(null, { wait: true })(App);
+",
+  "src/components/App/index.ts": "export { default } from './App';
+",
+  "src/external-types.d.ts": "declare module '*.scss';
+declare module '*.json';
+declare var browser: any;
+
+interface Window {
+  __LOCALE__: string;
+  __BASEURL__: string;
+  __STATICS_BASE_URL__: string;
+}
+
+declare module NodeJS {
+  interface Global {
+    browser: any;
+  }
+}
+",
+  "src/i18n.ts": "import * as i18next from 'i18next';
+import * as i18nextXHRBackend from 'i18next-xhr-backend';
+
+export default function i18n({ locale, baseUrl = '' }) {
+  return i18next.use(i18nextXHRBackend).init({
+    lng: locale,
+    fallbackLng: 'en',
+    keySeparator: '$',
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: \`\${baseUrl}assets/locale/messages_{{lng}}.json\`,
+      crossDomain: true,
+    },
+  });
+}
+",
+  "src/index.vm": "<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=\\"utf-8\\">
+    <title>\${title}</title>
+    <link type=\\"image/png\\" href=\\"https://www.wix.com/favicon.ico\\" rel=\\"shortcut icon\\">
+    <link rel=\\"stylesheet\\" href=\\"\${clientTopology.staticsBaseUrl}app#if(!\${debug}).min#{end}.css\\">
+    <script src=\\"https://\${clientTopology.staticsDomain}/polyfill/v2/polyfill#if(!\${debug}).min#{end}.js?features=default,es6,es7,es2017&flags=gated&unknown=polyfill&rum=0\\"></script>
+    <script src=\\"https://\${clientTopology.staticsDomain}/unpkg/react@15.6.1/dist/react#if(!\${debug}).min#{end}.js\\"></script>
+    <script src=\\"https://\${clientTopology.staticsDomain}/unpkg/react-dom@15.6.1/dist/react-dom#if(!\${debug}).min#{end}.js\\"></script>
+  </head>
+  <body>
+    <div id=\\"visit-count\\">Visit count: \${visitCount}</div>
+    <div id=\\"root\\"></div>
+    <script>
+      window.__BASEURL__ = '\${basename}';
+      window.__LOCALE__ = '\${locale}';
+      window.__STATICS_BASE_URL__ = '\${clientTopology.staticsBaseUrl}';
+    </script>
+    <script src=\\"\${clientTopology.staticsBaseUrl}app.bundle#if(!\${debug}).min#{end}.js\\"></script>
+  </body>
+</html>
+",
+  "test/dev/server.ts": "import * as express from 'express';
+import * as session from 'express-session';
+import { renderVM } from './vm';
+
+export function start(port = process.env.PORT || 3000) {
+  const app = express();
+
+  app.use(
+    session({
+      secret: 'secret',
+      resave: true,
+      saveUninitialized: true,
+    }),
+  );
+
+  app.use('/', (req, res) => {
+    if (!req.session.visitCount) {
+      req.session.visitCount = 0;
+    }
+
+    req.session.visitCount++;
+
+    res.send(
+      renderVM('./src/index.vm', {
+        visitCount: req.session.visitCount,
+      }),
+    );
+  });
+
+  return app.listen(port, () => {
+    console.info(\`Fake server is running on port \${port}\`);
+  });
+}
+",
+  "test/dev/vm.ts": "import * as fs from 'fs';
+import { Engine } from 'velocity';
+
+function loadData(file) {
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf-8').toString());
+  } catch (ex) {
+    throw ex;
+  }
+}
+
+export function renderVM(template, data) {
+  const engine = new Engine({ template });
+  const velocityData = loadData('./velocity.data.json');
+  const velocityDataPrivate = loadData('./velocity.private.data.json');
+
+  return engine.render({ ...velocityData, ...velocityDataPrivate, ...data });
+}
+",
+  "test/e2e/app.e2e.ts": "import { expect } from 'chai';
+import { baseURL } from './e2e-common';
+
+describe('React application', () => {
+  describe('open page', () => {
+    it('should display title', async () => {
+      const page = await browser.newPage();
+      await page.goto(baseURL);
+      await page.waitForSelector('h2', { timeout: 1000 });
+      expect(await page.$eval('h2', e => e.innerText)).to.equal('Hello World!');
+    });
+  });
+});
+",
+  "test/e2e/e2e-common.ts": "import * as puppeteer from 'puppeteer';
+import { start } from '../dev/server';
+
+before(async () => {
+  start(3100);
+  global.browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+});
+
+after(async () => {
+  await global.browser.close();
+});
+
+export const baseURL = \`http://localhost:3100\`;
+",
+  "test/mocha-setup.ts": "import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { baseURL } from './test-common';
+
+wixAxiosConfig(axios, { baseURL });
+",
+  "test/test-common.ts": "export const baseURL = \`http://localhost:5554\`;
+",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"sourceMap\\": true,
+    \\"noImplicitAny\\": false,
+    \\"module\\": \\"commonjs\\",
+    \\"moduleResolution\\": \\"node\\",
+    \\"target\\": \\"es5\\",
+    \\"importHelpers\\": true,
+    \\"noUnusedLocals\\": true,
+    \\"jsx\\": \\"react\\",
+    \\"lib\\": [\\"dom\\", \\"es2016\\"]
+  },
+  \\"include\\": [
+    \\"./test/**/*.ts\\"
+  ],
+  \\"files\\": [
+    \\"./src/external-types.d.ts\\",
+    \\"./src/client.tsx\\"
+  ]
+}
+",
+  "tslint.json": "{
+  \\"extends\\": \\"tslint-config-yoshi\\"
+}
+",
+  "velocity.data.json": "{
+  \\"title\\": \\"Wix Stack React Example Application\\",
+  \\"debug\\": true,
+  \\"experiments\\": {
+
+  },
+  \\"locale\\": \\"en\\",
+  \\"basename\\": \\"/\\",
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"static.parastorage.com\\",
+    \\"staticsBaseUrl\\": \\"//localhost:3200/\\"
+  }
+}
+",
+  "velocity.private.data.json": "{
+  \\"experiments\\": {
+
+  }
+}
+",
+  "wallaby.js": "module.exports = function (wallaby) {
+  return Object.assign({}, require('yoshi/config/wallaby-mocha')(wallaby), {
+    // set to undefined to let Wallaby decide the number of processes based on the system's capacity
+    workers: undefined
+  });
+};
+",
+}
+`;
+
+exports[`fullstack 1`] = `
+Object {
+  ".dockerignore": "node_modules
+target
+",
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+.history
+.idea
+*.iml
+test/e2e/screenshots
+package-lock.json
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "Dockerfile": "FROM docker-repo.wixpress.com/wix-bootstrap-onbuild:stable
+MAINTAINER Tomas Miliauskas <tomas@wix.com>
+",
+  "README.md": "# test-fullstack
+",
+  "index.js": "const path = require('path');
+const bootstrap = require('wix-bootstrap-ng');
+
+const rootDir = process.env.SRC_PATH || './dist/src';
+const getPath = filename => path.join(rootDir, filename);
+
+bootstrap()
+  .express(getPath('server'))
+  .start({ disableCluster: process.env.NODE_ENV === 'development' });
+",
+  "package.json": "{
+  \\"name\\": \\"test-fullstack\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"dependencies\\": {
+    \\"axios\\": \\"~0.16.0\\",
+    \\"ejs\\": \\"~2.5.0\\",
+    \\"express\\": \\"~4.15.0\\",
+    \\"i18next\\": \\"~8.4.0\\",
+    \\"i18next-xhr-backend\\": \\"~1.4.0\\",
+    \\"prop-types\\": \\"~15.6.0\\",
+    \\"react\\": \\"15.6.1\\",
+    \\"react-dom\\": \\"15.6.1\\",
+    \\"react-i18next\\": \\"~4.6.0\\",
+    \\"regenerator-runtime\\": \\"^0.11.0\\",
+    \\"wix-axios-config\\": \\"latest\\",
+    \\"wix-bootstrap-ng\\": \\"latest\\",
+    \\"wix-express-csrf\\": \\"latest\\",
+    \\"wix-express-require-https\\": \\"latest\\",
+    \\"wix-run-mode\\": \\"latest\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"devDependencies\\": {
+    \\"react-test-renderer\\": \\"~15.6.0\\",
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.2.0\\",
+    \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"puppeteer\\": \\"^1.1.0\\",
+    \\"wix-bootstrap-testkit\\": \\"latest\\",
+    \\"wix-config-emitter\\": \\"latest\\",
+    \\"yoshi\\": \\"^3.0.0\\"
+  },
+  \\"yoshi\\": {
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\"
+    },
+    \\"hmr\\": \\"auto\\"
+  },
+  \\"babel\\": {
+    \\"presets\\": [
+      \\"yoshi\\"
+    ]
+  },
+  \\"eslintConfig\\": {
+    \\"extends\\": \\"yoshi\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-fullstack</artifactId>
+    <packaging>pom</packaging>
+    <name>test-fullstack</name>
+    <description>test-fullstack</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name>wix</name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>\${project.artifactId}-\${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+",
+  "src/assets/locale/messages_de.json": "{
+  \\"app.title\\": \\"Hallo Wereld\\",
+  \\"app.intro\\": \\"Get begonnen hier: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/assets/locale/messages_en.json": "{
+  \\"app.title\\": \\"Hello World!\\",
+  \\"app.intro\\": \\"Get started here: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/client.js": "import 'regenerator-runtime/runtime';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { I18nextProvider } from 'react-i18next';
+import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import i18n from './i18n';
+import App from './components/App';
+
+const baseURL = window.__BASEURL__;
+const locale = window.__LOCALE__;
+const staticsBaseUrl = window.__STATICS_BASE_URL__;
+
+wixAxiosConfig(axios, { baseURL });
+
+ReactDOM.render(
+  <I18nextProvider i18n={i18n({ locale, baseUrl: staticsBaseUrl })}>
+    <App />
+  </I18nextProvider>,
+  document.getElementById('root'),
+);
+",
+  "src/components/App/App.js": "import React from 'react';
+import { translate } from 'react-i18next';
+import s from './App.scss';
+import PropTypes from 'prop-types';
+
+class App extends React.Component {
+  static propTypes = {
+    t: PropTypes.func,
+  };
+
+  render() {
+    const { t } = this.props;
+    return (
+      <div className={s.root}>
+        <div className={s.header}>
+          <h2>{t('app.title')}</h2>
+        </div>
+        <p className={s.intro}>{t('app.intro')}</p>
+      </div>
+    );
+  }
+}
+
+export default translate(null, { wait: true })(App);
+",
+  "src/components/App/App.scss": ".root {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  padding: 10px;
+  color: white;
+  font-size: 20pt;
+}
+
+.intro {
+  font-size: 15pt;
+}
+",
+  "src/components/App/App.spec.js": "import 'jsdom-global/register';
+import React from 'react';
+import { expect } from 'chai';
+import { mount } from 'enzyme';
+import i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
+import App from './App';
+import translation from '../../assets/locale/messages_en.json';
+
+const i18nData = {
+  lng: 'en',
+  keySeparator: '$',
+  resources: {
+    en: { translation },
+  },
+};
+
+describe('App', () => {
+  let wrapper;
+
+  afterEach(() => wrapper.detach());
+
+  it('renders a title correctly', () => {
+    wrapper = mount(
+      <I18nextProvider i18n={i18next.init(i18nData)}>
+        <App />
+      </I18nextProvider>,
+      { attachTo: document.createElement('div') },
+    );
+    expect(wrapper.find('h2').length).to.eq(1);
+  });
+});
+",
+  "src/components/App/index.js": "export { default } from './App';
+",
+  "src/i18n.js": "import i18next from 'i18next';
+import i18nextXHRBackend from 'i18next-xhr-backend';
+
+export default function i18n({ locale = 'en', baseUrl = '' } = {}) {
+  return i18next.use(i18nextXHRBackend).init({
+    lng: locale,
+    fallbackLng: 'en',
+    keySeparator: '$',
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: \`\${baseUrl}assets/locale/messages_{{lng}}.json\`,
+      crossDomain: true,
+    },
+  });
+}
+",
+  "src/index.ejs": "<!doctype html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link type=\\"image/png\\" href=\\"https://www.wix.com/favicon.ico\\" rel=\\"shortcut icon\\">
+    <link rel=\\"stylesheet\\" href=\\"<%= clientTopology.staticsBaseUrl %>app<% if (!debug) { %>.min<% } %>.css\\">
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/polyfill/v2/polyfill<% if (!debug) { %>.min<% } %>.js?features=default,es6,es7,es2017&flags=gated&unknown=polyfill&rum=0\\"></script>
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/unpkg/react@15.6.1/dist/react<% if (!debug) { %>.min<% } %>.js\\"></script>
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/unpkg/react-dom@15.6.1/dist/react-dom<% if (!debug) { %>.min<% } %>.js\\"></script>
+  </head>
+  <body>
+    <div id=\\"root\\"></div>
+    <script>
+      window.__BASEURL__ = '<%= basename %>';
+      window.__LOCALE__ = '<%= locale %>';
+      window.__STATICS_BASE_URL__ = '<%= clientTopology.staticsBaseUrl %>';
+    </script>
+    <script src=\\"<%= clientTopology.staticsBaseUrl %>app.bundle<% if (!debug) { %>.min<% } %>.js\\"></script>
+  </body>
+</html>
+",
+  "src/server.js": "import 'regenerator-runtime/runtime';
+import wixRunMode from 'wix-run-mode';
+import ejs from 'ejs';
+import wixExpressCsrf from 'wix-express-csrf';
+import wixExpressRequireHttps from 'wix-express-require-https';
+import { readFileSync } from 'fs';
+
+module.exports = (app, context) => {
+  const config = context.config.load('autogenerated-fullstack');
+  const templatePath = './src/index.ejs';
+  const templateFile = readFileSync(templatePath, 'utf8');
+  const isProduction = wixRunMode.isProduction();
+
+  app.use(wixExpressCsrf());
+  app.use(wixExpressRequireHttps);
+
+  app.get('/', (req, res) => {
+    const renderModel = getRenderModel(req);
+    const html = ejs.render(templateFile, renderModel, {
+      cache: isProduction,
+      filename: templatePath,
+    });
+    res.send(html);
+  });
+
+  function getRenderModel(req) {
+    return {
+      locale: req.aspects['web-context'].language,
+      basename: req.aspects['web-context'].basename,
+      debug:
+        req.aspects['web-context'].debug ||
+        process.env.NODE_ENV === 'development',
+      clientTopology: config.clientTopology,
+      title: 'Wix Full Stack Project Boilerplate',
+    };
+  }
+
+  return app;
+};
+",
+  "templates/autogenerated-fullstack.json.erb": "{
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"<%= scripts_domain %>\\",
+    \\"staticsBaseUrl\\": \\"<%= static_url(\\"com.wixpress.autogenerated-fullstack\\") %>\\"
+  },
+  \\"petriScopes\\": []
+}
+",
+  "test/configs/autogenerated-fullstack.json": "{
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"static.parastorage.com\\",
+    \\"staticsBaseUrl\\": \\"http://localhost:3200/\\"
+  },
+  \\"petriScopes\\": []
+}
+",
+  "test/e2e/app.e2e.js": "import { expect } from 'chai';
+import { beforeAndAfter, app } from '../environment';
+import './e2e-common';
+
+describe('React application', () => {
+  beforeAndAfter();
+
+  describe('open page', () => {
+    it('should display title', async () => {
+      const page = await browser.newPage();
+      await page.goto(app.getUrl('/'));
+      await page.waitForSelector('h2', { timeout: 1000 });
+      expect(await page.$eval('h2', e => e.innerText)).to.equal('Hello World!');
+    });
+  });
+});
+",
+  "test/e2e/e2e-common.js": "import puppeteer from 'puppeteer';
+
+before(async () => {
+  global.browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+});
+
+after(async () => {
+  await global.browser.close();
+});
+",
+  "test/environment.js": "import testkit from 'wix-bootstrap-testkit';
+import configEmitter from 'wix-config-emitter';
+
+export const app = bootstrapServer();
+
+export function beforeAndAfter() {
+  before(() => emitConfigs());
+  app.beforeAndAfter();
+}
+
+function emitConfigs() {
+  return configEmitter({
+    sourceFolders: ['./templates'],
+    targetFolder: './target/configs',
+  })
+    .fn('scripts_domain', 'static.parastorage.com')
+    .fn(
+      'static_url',
+      'com.wixpress.autogenerated-fullstack',
+      'http://localhost:3200/',
+    )
+    .emit();
+}
+
+function bootstrapServer() {
+  return testkit.app('./index', {
+    env: {
+      PORT: 3100,
+      MANAGEMENT_PORT: 3104,
+      NEW_RELIC_LOG_LEVEL: 'warn',
+      DEBUG: '',
+    },
+  });
+}
+",
+  "test/it/server.spec.js": "import { expect } from 'chai';
+import axios from 'axios';
+import adapter from 'axios/lib/adapters/http';
+import { beforeAndAfter, app } from '../environment';
+import { baseURL } from '../test-common';
+import { wixAxiosInstanceConfig } from 'wix-axios-config';
+
+const axiosInstance = wixAxiosInstanceConfig(axios, { baseURL, adapter });
+
+describe('When rendering', () => {
+  beforeAndAfter();
+
+  it('should display a title', async () => {
+    const url = app.getUrl('/');
+    const response = await axiosInstance.get(url);
+
+    expect(response.data).to.contain('Wix Full Stack Project Boilerplate');
+  });
+});
+",
+  "test/mocha-setup.js": "import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { baseURL } from './test-common';
+
+wixAxiosConfig(axios, { baseURL });
+",
+  "test/test-common.js": "export const baseURL = \`http://localhost:5554\`;
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`fullstack-typescript 1`] = `
+Object {
+  ".dockerignore": "node_modules
+target
+",
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+.history
+.idea
+*.iml
+test/e2e/screenshots
+package-lock.json
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "Dockerfile": "FROM docker-repo.wixpress.com/wix-bootstrap-onbuild:stable
+MAINTAINER Tomas Miliauskas <tomas@wix.com>
+",
+  "README.md": "# test-fullstack-typescript
+",
+  "index.js": "const path = require('path');
+const bootstrap = require('wix-bootstrap-ng');
+
+const rootDir = process.env.SRC_PATH || './dist/src';
+const getPath = filename => path.join(rootDir, filename);
+
+bootstrap()
+  .express(getPath('server'))
+  .start({disableCluster: process.env.NODE_ENV === 'development'});
+",
+  "package.json": "{
+  \\"name\\": \\"test-fullstack-typescript\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"dependencies\\": {
+    \\"axios\\": \\"~0.16.0\\",
+    \\"ejs\\": \\"~2.5.0\\",
+    \\"express\\": \\"~4.15.0\\",
+    \\"i18next\\": \\"~8.4.0\\",
+    \\"i18next-xhr-backend\\": \\"~1.4.0\\",
+    \\"prop-types\\": \\"~15.6.0\\",
+    \\"react\\": \\"15.6.1\\",
+    \\"react-dom\\": \\"15.6.1\\",
+    \\"react-i18next\\": \\"~4.6.0\\",
+    \\"wix-axios-config\\": \\"latest\\",
+    \\"wix-bootstrap-ng\\": \\"latest\\",
+    \\"wix-express-csrf\\": \\"latest\\",
+    \\"wix-express-require-https\\": \\"latest\\",
+    \\"wix-run-mode\\": \\"latest\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"devDependencies\\": {
+    \\"react-test-renderer\\": \\"~15.6.0\\",
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.2.0\\",
+    \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"puppeteer\\": \\"^1.1.0\\",
+    \\"wix-bootstrap-testkit\\": \\"latest\\",
+    \\"wix-config-emitter\\": \\"latest\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"typescript\\": \\"~2.9.0\\",
+    \\"@types/node\\": \\"^8.0.0\\",
+    \\"@types/chai\\": \\"~4.0.0\\",
+    \\"@types/ejs\\": \\"~2.5.0\\",
+    \\"@types/express\\": \\"~4.0.0\\",
+    \\"@types/i18next\\": \\"~8.4.0\\",
+    \\"@types/mocha\\": \\"~2.2.0\\",
+    \\"@types/prop-types\\": \\"~15.5.0\\",
+    \\"@types/react\\": \\"~15.6.0\\",
+    \\"@types/react-dom\\": \\"~15.5.0\\",
+    \\"@types/react-i18next\\": \\"~4.6.0\\"
+  },
+  \\"yoshi\\": {
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\"
+    },
+    \\"hmr\\": \\"auto\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-fullstack-typescript</artifactId>
+    <packaging>pom</packaging>
+    <name>test-fullstack-typescript</name>
+    <description>test-fullstack-typescript</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name>wix</name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>\${project.artifactId}-\${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+",
+  "src/assets/locale/messages_de.json": "{
+  \\"app.title\\": \\"Hallo Wereld\\",
+  \\"app.intro\\": \\"Get begonnen hier: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/assets/locale/messages_en.json": "{
+  \\"app.title\\": \\"Hello World!\\",
+  \\"app.intro\\": \\"Get started here: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/client.tsx": "import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { I18nextProvider } from 'react-i18next';
+import * as axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import i18n from './i18n';
+import App from './components/App';
+
+const baseURL = window.__BASEURL__;
+const locale: string = window.__LOCALE__;
+const staticsBaseUrl: string = window.__STATICS_BASE_URL__;
+
+wixAxiosConfig(axios, { baseURL });
+
+ReactDOM.render(
+  <I18nextProvider i18n={i18n({ locale, baseUrl: staticsBaseUrl })}>
+    <App />
+  </I18nextProvider>,
+  document.getElementById('root'),
+);
+",
+  "src/components/App/App.scss": ".root {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  padding: 10px;
+  color: white;
+  font-size: 20pt;
+}
+
+.intro {
+  font-size: 15pt;
+}
+",
+  "src/components/App/App.spec.tsx": "import 'jsdom-global/register';
+import * as React from 'react';
+import {expect} from 'chai';
+import {mount} from 'enzyme';
+import * as i18next from 'i18next';
+import {I18nextProvider} from 'react-i18next';
+import App from './App';
+import translation from '../../assets/locale/messages_en.json';
+
+const i18nData = {
+  lng: 'en',
+  keySeparator: '$',
+  resources: {
+    en: {translation}
+  }
+};
+
+describe('App', () => {
+  let wrapper;
+
+  afterEach(() => wrapper.detach());
+
+  it('renders a title correctly', () => {
+    wrapper = mount(
+      <I18nextProvider i18n={i18next.init(i18nData)}>
+        <App/>
+      </I18nextProvider>,
+      {attachTo: document.createElement('div')}
+    );
+    expect(wrapper.find('h2').length).to.eq(1);
+  });
+});
+",
+  "src/components/App/App.tsx": "import * as React from 'react';
+import { translate, InjectedTranslateProps } from 'react-i18next';
+import * as s from './App.scss';
+import * as PropTypes from 'prop-types';
+
+interface AppProps extends InjectedTranslateProps {}
+
+class App extends React.Component<AppProps, null> {
+  static propTypes = {
+    t: PropTypes.func,
+  };
+
+  render() {
+    const { t } = this.props;
+    return (
+      <div className={s.root}>
+        <div className={s.header}>
+          <h2>{t('app.title')}</h2>
+        </div>
+        <p className={s.intro}>{t('app.intro')}</p>
+      </div>
+    );
+  }
+}
+
+export default translate(null, { wait: true })(App);
+",
+  "src/components/App/index.ts": "export { default } from './App';
+",
+  "src/external-types.d.ts": "declare module 'chai';
+declare module 'axios';
+declare module 'wix-axios-config';
+declare module 'wix-run-mode';
+declare module 'wix-bootstrap-testkit';
+declare module 'wix-config-emitter';
+declare module 'i18next-xhr-backend';
+declare module '*.scss';
+declare module '*.json';
+declare module 'enzyme';
+declare var browser: any;
+
+interface Window {
+  __STATICS_BASE_URL__: string;
+  __LOCALE__: string;
+  __BASEURL__: string;
+}
+
+declare module NodeJS {
+  interface Global {
+    browser: any;
+  }
+}
+",
+  "src/i18n.ts": "import * as i18next from 'i18next';
+import * as i18nextXHRBackend from 'i18next-xhr-backend';
+
+export default function i18n({ locale = 'en', baseUrl = '' } = {}) {
+  return i18next.use(i18nextXHRBackend).init({
+    lng: locale,
+    fallbackLng: 'en',
+    keySeparator: '$',
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: \`\${baseUrl}assets/locale/messages_{{lng}}.json\`,
+      crossDomain: true,
+    },
+  });
+}
+",
+  "src/index.ejs": "<!doctype html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link type=\\"image/png\\" href=\\"https://www.wix.com/favicon.ico\\" rel=\\"shortcut icon\\">
+    <link rel=\\"stylesheet\\" href=\\"<%= clientTopology.staticsBaseUrl %>app<% if (!debug) { %>.min<% } %>.css\\">
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/polyfill/v2/polyfill<% if (!debug) { %>.min<% } %>.js?features=default,es6,es7,es2017&flags=gated&unknown=polyfill&rum=0\\"></script>
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/unpkg/react@15.6.1/dist/react<% if (!debug) { %>.min<% } %>.js\\"></script>
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/unpkg/react-dom@15.6.1/dist/react-dom<% if (!debug) { %>.min<% } %>.js\\"></script>
+  </head>
+  <body>
+    <div id=\\"root\\"></div>
+    <script>
+      window.__BASEURL__ = '<%= basename %>';
+      window.__LOCALE__ = '<%= locale %>';
+      window.__STATICS_BASE_URL__ = '<%= clientTopology.staticsBaseUrl %>';
+    </script>
+    <script src=\\"<%= clientTopology.staticsBaseUrl %>app.bundle<% if (!debug) { %>.min<% } %>.js\\"></script>
+  </body>
+</html>
+",
+  "src/server.ts": "import { Router } from 'express';
+import * as wixRunMode from 'wix-run-mode';
+import * as ejs from 'ejs';
+import * as wixExpressCsrf from 'wix-express-csrf';
+import * as wixExpressRequireHttps from 'wix-express-require-https';
+import { readFileSync } from 'fs';
+
+module.exports = (app: Router, context) => {
+  const config = context.config.load('autogenerated-fullstack-ts');
+  const templatePath = './src/index.ejs';
+  const templateFile = readFileSync(templatePath, 'utf8');
+  const isProduction = wixRunMode.isProduction();
+
+  app.use(wixExpressCsrf());
+  app.use(wixExpressRequireHttps);
+
+  app.get('/', (req, res) => {
+    const renderModel = getRenderModel(req);
+    const html = ejs.render(templateFile, renderModel, {
+      cache: isProduction,
+      filename: templatePath,
+    });
+    res.send(html);
+  });
+
+  function getRenderModel(req) {
+    return {
+      locale: req.aspects['web-context'].language,
+      basename: req.aspects['web-context'].basename,
+      debug:
+        req.aspects['web-context'].debug ||
+        process.env.NODE_ENV === 'development',
+      clientTopology: config.clientTopology,
+      title: 'Wix Full Stack Project Boilerplate',
+    };
+  }
+
+  return app;
+};
+",
+  "templates/autogenerated-fullstack-ts.json.erb": "{
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"<%= scripts_domain %>\\",
+    \\"staticsBaseUrl\\": \\"<%= static_url(\\"com.wixpress.autogenerated-fullstack-ts\\") %>\\"
+  },
+  \\"petriScopes\\": []
+}
+",
+  "test/configs/autogenerated-fullstack-ts.json": "{
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"static.parastorage.com\\",
+    \\"staticsBaseUrl\\": \\"http://localhost:3200/\\"
+  },
+  \\"petriScopes\\": []
+}
+",
+  "test/e2e/app.e2e.ts": "import { expect } from 'chai';
+import { beforeAndAfter, app } from './../environment';
+import './e2e-common';
+
+describe('React application', () => {
+  beforeAndAfter();
+
+  describe('open page', () => {
+    it('should display title', async () => {
+      const page = await browser.newPage();
+      await page.goto(app.getUrl('/'));
+      await page.waitForSelector('h2', { timeout: 1000 });
+      expect(await page.$eval('h2', e => e.innerText)).to.equal('Hello World!');
+    });
+  });
+});
+",
+  "test/e2e/e2e-common.ts": "import * as puppeteer from 'puppeteer';
+
+before(async () => {
+  global.browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+});
+
+after(async () => {
+  await global.browser.close();
+});
+",
+  "test/environment.ts": "import * as testkit from 'wix-bootstrap-testkit';
+import * as configEmitter from 'wix-config-emitter';
+
+export const app = bootstrapServer();
+
+export function beforeAndAfter() {
+  before(() => emitConfigs());
+  app.beforeAndAfter();
+}
+
+function emitConfigs() {
+  return configEmitter({
+    sourceFolders: ['./templates'],
+    targetFolder: './target/configs',
+  })
+    .fn('scripts_domain', 'static.parastorage.com')
+    .fn(
+      'static_url',
+      'com.wixpress.autogenerated-fullstack-ts',
+      'http://localhost:3200/',
+    )
+    .emit();
+}
+
+function bootstrapServer() {
+  return testkit.app('./index', {
+    env: {
+      PORT: 3100,
+      MANAGEMENT_PORT: 3104,
+      NEW_RELIC_LOG_LEVEL: 'warn',
+      DEBUG: '',
+    },
+  });
+}
+",
+  "test/it/server.spec.ts": "import { expect } from 'chai';
+import axios from 'axios';
+import * as adapter from 'axios/lib/adapters/http';
+import { beforeAndAfter, app } from '../environment';
+import { baseURL } from '../test-common';
+import { wixAxiosInstanceConfig } from 'wix-axios-config';
+
+const axiosInstance = wixAxiosInstanceConfig(axios, { baseURL, adapter });
+
+describe('When rendering', () => {
+  beforeAndAfter();
+
+  it('should display a title', async () => {
+    const url = app.getUrl('/');
+    const response = await axiosInstance.get(url);
+
+    expect(response.data).to.contain('Wix Full Stack Project Boilerplate');
+  });
+});
+",
+  "test/mocha-setup.ts": "import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { baseURL } from './test-common';
+
+wixAxiosConfig(axios, { baseURL });
+",
+  "test/test-common.ts": "export const baseURL = \`http://localhost:5554\`;
+",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"allowSyntheticDefaultImports\\": true,
+    \\"outDir\\": \\"./dist/\\",
+    \\"sourceMap\\": true,
+    \\"noImplicitAny\\": false,
+    \\"module\\": \\"commonjs\\",
+    \\"moduleResolution\\": \\"node\\",
+    \\"importHelpers\\": true,
+    \\"target\\": \\"es5\\",
+    \\"jsx\\": \\"react\\",
+    \\"lib\\": [\\"dom\\", \\"es2016\\"]
+  },
+  \\"include\\": [
+    \\"./test/**/*.ts\\"
+  ],
+  \\"files\\": [
+    \\"./src/external-types.d.ts\\",
+    \\"./src/server.ts\\",
+    \\"./src/client.tsx\\"
+  ]
+}
+",
+  "tslint.json": "{
+  \\"extends\\": \\"tslint-config-yoshi\\"
+}
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
