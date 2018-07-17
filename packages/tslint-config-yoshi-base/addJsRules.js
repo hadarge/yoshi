@@ -1,7 +1,7 @@
 function withoutKeys(obj, keys) {
   return Object.keys(obj)
     .filter(key => !keys.includes(key))
-    .reduce((prev, key) => ({ ...prev, [key]: obj[key] }), {});
+    .reduce((prev, key) => Object.assign({}, prev, { [key]: obj[key] }), {});
 }
 
 const tsOnlyRules = [
@@ -33,8 +33,7 @@ const tsOnlyRules = [
 ];
 
 module.exports = config => {
-  return {
-    ...config,
+  return Object.assign({}, config, {
     jsRules: withoutKeys(config.rules, tsOnlyRules),
-  };
+  });
 };
