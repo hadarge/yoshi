@@ -225,8 +225,34 @@ describe('Aggregator: Start', () => {
           .spawn('start');
 
         return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
-          content => expect(content).to.contain('"hot":true'),
+          content => expect(content).to.contain('"hmr":true'),
         );
+      });
+
+      it('should create bundle with enabled hot module replacement with multiple entry points', async () => {
+        child = test
+          .setup({
+            'src/client.js': `module.exports.wat = 'hmr';\n`,
+            'src/client2.js': `module.exports.wat = 'hmr';\n`,
+            'package.json': fx.packageJson({
+              entry: {
+                app: './client.js',
+                app2: './client2.js',
+              },
+            }),
+          })
+          .spawn('start');
+
+        const appBundleContent = await checkServerIsServing({
+          port: 3200,
+          file: 'app.bundle.js',
+        });
+        expect(appBundleContent).to.contain('"hmr":true');
+        const app2BundleContent = await checkServerIsServing({
+          port: 3200,
+          file: 'app2.bundle.js',
+        });
+        expect(app2BundleContent).to.contain('"hmr":true');
       });
 
       it('should create bundle with disabled hot module replacement if there is {hmr: false} in config', () => {
@@ -241,7 +267,7 @@ describe('Aggregator: Start', () => {
           .spawn('start');
 
         return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
-          content => expect(content).to.contain(`"hot":false`),
+          content => expect(content).to.contain(`"hmr":false`),
         );
       });
 

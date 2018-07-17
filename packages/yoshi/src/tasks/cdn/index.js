@@ -87,7 +87,6 @@ module.exports = async ({
       }
 
       webpackConfig.entry = normalizeEntries(webpackConfig.entry);
-
       const compiler = webpack(webpackConfig);
 
       // If both hmr and reload are false it makes this module fairly useless
@@ -95,8 +94,11 @@ module.exports = async ({
       if (liveReload || hmr) {
         hotClient(compiler, {
           reload: liveReload,
-          hot: Boolean(hmr),
+          hmr: Boolean(hmr),
           logLevel: 'warn',
+          autoConfigure: true,
+          allEntries: true,
+          port: parseInt(port) + 1,
         });
       }
 
