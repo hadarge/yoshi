@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.1.1 (Jul 17, 2018)
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#419](https://github.com/wix/yoshi/pull/419) Update the version of `wnpm-ci` and add support for `--minor` option
+
+#### :bug: Bug
+* `tslint-config-yoshi-base`
+  * [#445](https://github.com/wix/yoshi/pull/445) Fix `tslint-config-yoshi-base` failing on VSCode
+* `yoshi`
+  * [#444](https://github.com/wix/yoshi/pull/444) Fix for HMR settings and support for multiple entries
+
 ## 3.1.0 (Jul 16, 2018)
 
 #### :bug: Bug
