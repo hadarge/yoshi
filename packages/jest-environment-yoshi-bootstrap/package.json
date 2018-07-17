@@ -1,0 +1,32 @@
+{
+  "name": "jest-environment-yoshi-bootstrap",
+  "version": "3.0.0",
+  "private": true,
+  "description": "bootstrap environment for jest",
+  "main": "index.js",
+  "keywords": [
+    "jest",
+    "yoshi",
+    "bootstrap"
+  ],
+  "author": "Ronen Amiel & Ran Yitzhaki",
+  "license": "ISC",
+  "scripts": {
+    "customPublish": "node ../../scripts/customPublish.js"
+  },
+  "peerDependencies": {
+    "jest": "^23.0.0",
+    "wix-bootstrap-testkit": "^1.1.2021",
+    "wix-config-emitter": "^1.0.1030",
+    "wix-rpc-testkit": "^1.0.1210"
+  },
+  "devDependencies": {
+    "jest-environment-node": "^23.0.0",
+    "wix-bootstrap-testkit": "^1.1.2021",
+    "wix-config-emitter": "^1.0.1030",
+    "wix-rpc-testkit": "^1.0.1210"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

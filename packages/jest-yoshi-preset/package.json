@@ -1,0 +1,29 @@
+{
+  "name": "jest-yoshi-preset",
+  "version": "3.0.0",
+  "private": true,
+  "description": "jest configuration for a yoshi fullstack project",
+  "main": "index.js",
+  "keywords": [
+    "jest",
+    "yoshi",
+    "fullstack"
+  ],
+  "author": "Ronen Amiel & Ran Yitzhaki",
+  "license": "ISC",
+  "scripts": {
+    "customPublish": "node ../../scripts/customPublish.js"
+  },
+  "peerDependencies": {
+    "jest": "^23.0.0"
+  },
+  "dependencies": {
+    "babel-jest": "^23.2.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-environment-yoshi-bootstrap": "^3.0.0",
+    "jest-environment-yoshi-puppeteer": "^3.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
