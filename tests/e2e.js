@@ -33,7 +33,10 @@ console.log('Running e2e tests for the following projects:\n');
 projectTypes.forEach(type => console.log(`> ${chalk.cyan(type)}`));
 
 const testTemplate = mockedAnswers => {
-  describe(`${mockedAnswers.projectType}`, () => {
+  const typescriptSuffix =
+    mockedAnswers.transpiler === 'typescript' ? '-typescript' : '';
+
+  describe(`${mockedAnswers.projectType}${typescriptSuffix}`, () => {
     const tempDir = tempy.directory();
 
     it(`should create the project`, async () => {
@@ -50,6 +53,14 @@ const testTemplate = mockedAnswers => {
     it(`should run npm install`, () => {
       console.log('running npm install...');
       execa.shellSync('npm install', {
+        cwd: tempDir,
+        stdio,
+      });
+    });
+
+    it(`should fix all autofixable lint errors after using generation`, () => {
+      console.log('running npx yoshi lint --fix ...');
+      execa.shellSync('npx yoshi lint --fix', {
         cwd: tempDir,
         stdio,
       });

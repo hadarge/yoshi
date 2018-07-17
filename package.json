@@ -3,8 +3,11 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "postinstall": "npm run bootstrap",
-    "test": "lerna exec --concurrency 1 -- npm test",
+    "test-yoshi": "npm test --prefix ./packages/yoshi",
+    "test": "lerna run test --concurrency 1",
     "e2e": "node scripts/runE2E.js",
+    "test-configs": "lerna run test --concurrency 1 --scope *config*",
+    "test-create-yoshi-app": "npm test --prefix ./packages/create-yoshi-app",
     "build": "eslint .",
     "customPublish": "lerna exec --concurrency 1 -- npm run customPublish --if-present",
     "createVersion": "node scripts/createVersion"

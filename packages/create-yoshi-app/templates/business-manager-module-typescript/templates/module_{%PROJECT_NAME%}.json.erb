@@ -1,0 +1,19 @@
+
+{
+  "moduleId": "{%PROJECT_NAME%}",
+  "minifiedBundleFile": "<%= static_url('com.wixpress.{%projectName%}-app') %>{%projectName%}-module.bundle.min.js",
+  "bundleFile": "<%= static_url('com.wixpress.{%projectName%}-app') %>{%projectName%}-module.bundle.js",
+  "mainPageComponentId": "{%projectName%}-lazy-component-id",
+  "pageComponents": [
+    {
+      "pageComponentId": "{%projectName%}-lazy-component-id",
+      "pageComponentName": "{%projectName%}-lazy-component-id",
+      "route": "{%projectName%}"
+    }
+  ],
+  "config": {
+    "topology": {
+      "staticsUrl": "<%= static_url('com.wixpress.{%projectName%}-app') %>"
+    }
+  }
+}

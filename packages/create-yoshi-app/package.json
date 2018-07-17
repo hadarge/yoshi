@@ -22,6 +22,7 @@
     ]
   },
   "dependencies": {
+    "constant-case": "^2.0.0",
     "git-config": "^0.0.7",
     "globby": "^8.0.1",
     "mkdirp": "^0.5.1",

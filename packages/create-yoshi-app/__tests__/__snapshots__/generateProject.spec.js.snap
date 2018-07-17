@@ -1,5 +1,1068 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`business-manager-module 1`] = `
+Object {
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+test/e2e/screenshots
+package-lock.json
+*npm-debug.log
+.history
+.idea
+*.iml
+.yo-rc.json
+",
+  ".nvmrc": "8.9.4",
+  "README.md": "# test-business-manager-module
+
+## Installation
+**Detailed explanations are available [here](https://github.com/wix-private/business-manager/blob/master/docs/step-by-step.md#integrate-your-app-into-business-manager)**
+\`\`\`shell
+npm install
+npm start
+Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91/test-business-manager-module
+\`\`\`
+- If needed update your **[json.erb file](templates/module_test-business-manager-module.json.erb)**
+- If needed update [module, page component and lazy component ids](src/config.js)
+- GA your project
+- PR your module config file to business manager as explained [here](https://github.com/wix-private/business-manager/blob/master/docs/module-config-file.md#file-name-and-location)
+- Wait for business manager GA
+- See it in production
+",
+  "package.json": "{
+  \\"name\\": \\"test-business-manager-module\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start --entry-point ./dist/test/dev/server.js\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"devDependencies\\": {
+    \\"@wix/business-manager\\": \\"latest\\",
+    \\"@wix/business-manager-api\\": \\"latest\\",
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.2.0\\",
+    \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"prop-types\\": \\"~15.5.0\\",
+    \\"protractor\\": \\"^5.3.2\\",
+    \\"react\\": \\"15.5.4\\",
+    \\"react-dom\\": \\"15.5.4\\",
+    \\"react-module-container\\": \\"~1.0.0\\",
+    \\"react-test-renderer\\": \\"15.5.4\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"dependencies\\": {
+    \\"axios\\": \\"^0.16.2\\",
+    \\"fedops-logger\\": \\"^3.0.5\\",
+    \\"i18next\\": \\"~8.4.0\\",
+    \\"i18next-xhr-backend\\": \\"~1.4.0\\",
+    \\"react-i18next\\": \\"~4.8.0\\",
+    \\"wix-axios-config\\": \\"latest\\",
+    \\"regenerator-runtime\\": \\"^0.11.0\\"
+  },
+  \\"yoshi\\": {
+    \\"entry\\": {
+      \\"test-business-manager-module-module\\": \\"./module\\",
+      \\"test-business-manager-module-app\\": \\"./client\\"
+    },
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\",
+      \\"react-addons-css-transition-group\\": \\"React.addons.CSSTransitionGroup\\",
+      \\"lodash\\": \\"_\\",
+      \\"urijs\\": \\"URI\\",
+      \\"@wix/business-manager-api\\": \\"BusinessManagerAPI\\",
+      \\"react-module-container\\": \\"reactModuleContainer\\"
+    }
+  },
+  \\"babel\\": {
+    \\"presets\\": [
+      \\"yoshi\\"
+    ]
+  },
+  \\"eslintConfig\\": {
+    \\"extends\\": \\"yoshi\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-business-manager-module</artifactId>
+    <packaging>pom</packaging>
+    <name>test-business-manager-module</name>
+    <description>test-business-manager-module</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>\${project.artifactId}-\${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+",
+  "protractor.conf.js": "module.exports.config = {
+  framework: 'mocha',
+  SELENIUM_PROMISE_MANAGER: false,
+  onPrepare() {
+    browser.ignoreSynchronization = true;
+  },
+};
+",
+  "src/assets/locale/messages_de.json": "{
+  \\"app.title\\": \\"Hallo Wereld\\",
+  \\"app.intro\\": \\"Get begonnen hier: https://github.com/wix-private/business-manager-test-app/blob/master/docs/step-by-step.md\\"
+}
+",
+  "src/assets/locale/messages_en.json": "{
+  \\"app.title\\": \\"Hello World!\\",
+  \\"app.intro\\": \\"Get started here: https://github.com/wix-private/business-manager-test-app/blob/master/docs/step-by-step.md\\"
+}
+",
+  "src/client.js": "import axios from 'axios';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { I18nextProvider } from 'react-i18next';
+import { ModuleRegistry } from 'react-module-container';
+import { create } from 'fedops-logger';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { COMPONENT_ID, BI_VIEW_ID, LAZY_COMPONENT_ID } from './config';
+import i18n from './i18n';
+import App from './components/App';
+
+wixAxiosConfig(axios, {
+  baseURL: '/',
+});
+
+class AppContainer extends React.Component {
+  static propTypes = {
+    locale: PropTypes.string,
+    config: PropTypes.object,
+  };
+
+  constructor(props) {
+    super(props);
+    ModuleRegistry.notifyListeners(
+      'businessManager.viewStartLoading',
+      BI_VIEW_ID,
+    );
+  }
+
+  componentDidMount() {
+    // Note: you might want to invoke notify after initial data fetch (to keep BM loader during fetch)
+    ModuleRegistry.notifyListeners(
+      'businessManager.viewFinishedLoading',
+      BI_VIEW_ID,
+    );
+    const fedopsLogger = create(LAZY_COMPONENT_ID);
+    fedopsLogger.appLoaded();
+  }
+
+  render() {
+    const { locale, config } = this.props;
+    return (
+      <I18nextProvider
+        i18n={i18n({ locale, baseUrl: config.topology.staticsUrl })}
+      >
+        <App />
+      </I18nextProvider>
+    );
+  }
+}
+
+ModuleRegistry.registerComponent(COMPONENT_ID, () => AppContainer);
+",
+  "src/components/App/App.js": "import React from 'react';
+import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
+import s from './App.scss';
+
+class App extends React.Component {
+  static propTypes = {
+    t: PropTypes.func,
+  };
+
+  render() {
+    const { t } = this.props;
+    return (
+      <div className={s.root}>
+        <div className={s.header}>
+          <h2 data-hook=\\"app-title\\">{t('app.title')}</h2>
+        </div>
+        <p className={s.intro}>{t('app.intro')}</p>
+      </div>
+    );
+  }
+}
+
+export default translate(null, { wait: true })(App);
+",
+  "src/components/App/App.scss": ".root {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  padding: 10px;
+  color: white;
+  font-size: 20pt;
+}
+
+.intro {
+  font-size: 15pt;
+}
+",
+  "src/components/App/App.spec.js": "import 'jsdom-global/register';
+import React from 'react';
+import { expect } from 'chai';
+import { mount } from 'enzyme';
+import i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
+import App from './App';
+import translation from '../../assets/locale/messages_en.json';
+
+const i18nData = {
+  lng: 'en',
+  keySeparator: '$',
+  resources: {
+    en: { translation },
+  },
+};
+
+describe('App', () => {
+  let wrapper;
+
+  afterEach(() => wrapper.detach());
+
+  it('renders a title correctly', () => {
+    wrapper = mount(
+      <I18nextProvider i18n={i18next.init(i18nData)}>
+        <App />
+      </I18nextProvider>,
+      { attachTo: document.createElement('div') },
+    );
+    expect(wrapper.find('h2').length).to.eq(1);
+  });
+});
+",
+  "src/components/App/index.js": "export { default } from './App';
+",
+  "src/config.js": "/**
+ NOTE: after submitting PR to BM you have to replace MODULE_ID and LAZY_COMPONENT_ID
+  with real ENUM values from business-manager-api package (the ones that were used in .json.erb)
+ Example:
+  export const MODULE_ID = ModuleId.HelloWorld;
+  export const LAZY_COMPONENT_ID = PageComponentId.HelloWorld;
+ **/
+// Note: should be in sync with the config inside your BM module ERB
+export const MODULE_ID = 'TEST_BUSINESS_MANAGER_MODULE';
+export const LAZY_COMPONENT_ID = 'test-business-manager-module-lazy-component-id';
+
+export const COMPONENT_ID = 'test-business-manager-module-component-id';
+export const BI_VIEW_ID = 'test-business-manager-module_APP_VIEW_ID';
+",
+  "src/i18n.js": "import i18next from 'i18next';
+import i18nextXHRBackend from 'i18next-xhr-backend';
+
+export default function i18n({ locale, baseUrl = '' }) {
+  return i18next.use(i18nextXHRBackend).init({
+    lng: locale,
+    fallbackLng: 'en',
+    keySeparator: '$',
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: \`\${baseUrl}assets/locale/messages_{{lng}}.json\`,
+      crossDomain: true,
+    },
+  });
+}
+",
+  "src/module.js": "import {
+  BusinessManagerModule,
+  registerModule,
+} from '@wix/business-manager-api';
+import { ModuleRegistry, ReactLazyComponent } from 'react-module-container';
+import { MODULE_ID, LAZY_COMPONENT_ID, COMPONENT_ID } from './config';
+
+const files = props => {
+  const minified = debug => (debug ? '' : '.min');
+  const APP_BUNDLE_FILE = 'test-business-manager-module-app'; // should be in sync with app's entry-point name in package.json
+  return [
+    \`\${props.config.topology.staticsUrl}\${APP_BUNDLE_FILE}.bundle\${minified(
+      props.debug,
+    )}.js\`,
+    \`\${props.config.topology.staticsUrl}\${APP_BUNDLE_FILE}\${minified(
+      props.debug,
+    )}.css\`,
+  ];
+};
+
+class BMLazyComponent extends ReactLazyComponent {
+  static prefetch(params) {
+    return files(params);
+  }
+
+  constructor(props) {
+    const options = {
+      files: files(props),
+      component: COMPONENT_ID,
+    };
+    super(props, options);
+  }
+}
+
+class BMModule extends BusinessManagerModule {
+  constructor(moduleId) {
+    super(moduleId);
+    ModuleRegistry.registerComponent(LAZY_COMPONENT_ID, () => BMLazyComponent);
+  }
+}
+
+registerModule(MODULE_ID, BMModule);
+",
+  "templates/module_TEST_BUSINESS_MANAGER_MODULE.json.erb": "
+{
+  \\"moduleId\\": \\"TEST_BUSINESS_MANAGER_MODULE\\",
+  \\"minifiedBundleFile\\": \\"<%= static_url('com.wixpress.test-business-manager-module-app') %>test-business-manager-module-module.bundle.min.js\\",
+  \\"bundleFile\\": \\"<%= static_url('com.wixpress.test-business-manager-module-app') %>test-business-manager-module-module.bundle.js\\",
+  \\"mainPageComponentId\\": \\"test-business-manager-module-lazy-component-id\\",
+  \\"pageComponents\\": [
+    {
+      \\"pageComponentId\\": \\"test-business-manager-module-lazy-component-id\\",
+      \\"pageComponentName\\": \\"test-business-manager-module-lazy-component-id\\",
+      \\"route\\": \\"test-business-manager-module\\"
+    }
+  ],
+  \\"config\\": {
+    \\"topology\\": {
+      \\"staticsUrl\\": \\"<%= static_url('com.wixpress.test-business-manager-module-app') %>\\"
+    }
+  }
+}
+",
+  "test/dev/server.js": "require('../environment')
+  .environment()
+  .then(env => env.start());
+",
+  "test/e2e/app.e2e.js": "import { expect } from 'chai';
+import { appDriver } from './drivers/app.driver';
+import { environment } from '../environment';
+
+describe('load app inside biz mgr', () => {
+  let env;
+  let driver;
+
+  before(async () => {
+    env = await environment();
+    driver = appDriver(env);
+    await env.start();
+  });
+  after(() => env.stop());
+
+  it('should render app', async () => {
+    await driver.navigateToApp();
+    expect(await driver.getAppTitleText()).to.equal('Hello World!');
+  });
+});
+",
+  "test/e2e/drivers/app.driver.js": "import { browser, ExpectedConditions, $ } from 'protractor';
+
+const chance = require('chance');
+
+export const appDriver = env => {
+  const waitForVisibilityOf = async (element, timeout = 4000) => {
+    await browser.wait(ExpectedConditions.visibilityOf(element), timeout);
+    return element;
+  };
+
+  return {
+    navigateToApp: async () => {
+      const changeInstance = new chance.Chance();
+      const metaSiteId = changeInstance.guid();
+      await browser.get(
+        await env.businessManager.getUrl(\`\${metaSiteId}/test-business-manager-module\`),
+      );
+    },
+    getAppTitleText: async () => {
+      return waitForVisibilityOf($('[data-hook=\\"app-title\\"]')).then(e =>
+        e.getText(),
+      );
+    },
+  };
+};
+",
+  "test/environment.js": "import 'regenerator-runtime/runtime';
+import {
+  createTestkit,
+  testkitConfigBuilder,
+  ModuleConfigFileEmitter,
+} from '@wix/business-manager/dist/testkit';
+
+const getTestkitConfig = async () => {
+  const serverUrl = 'http://localhost:3200/';
+  const path = './templates/module_TEST_BUSINESS_MANAGER_MODULE.json.erb';
+  const serviceId = 'com.wixpress.test-business-manager-module-app';
+
+  const moduleConfig = await new ModuleConfigFileEmitter(path)
+    .registerStaticService({ serviceId, serverUrl })
+    .emit();
+
+  return testkitConfigBuilder()
+    .withModulesConfig(moduleConfig)
+    .autoLogin()
+    .build();
+};
+
+export const environment = async () => {
+  const testkit = createTestkit(await getTestkitConfig());
+  return {
+    start: () => testkit.start(),
+    stop: () => testkit.stop(),
+    businessManager: testkit,
+  };
+};
+",
+  "test/mocha-setup.js": "import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { baseURL } from './test-common';
+
+wixAxiosConfig(axios, { baseURL });
+",
+  "test/test-common.js": "export const baseURL = \`http://localhost:5554\`;
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`business-manager-module-typescript 1`] = `
+Object {
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+test/e2e/screenshots
+package-lock.json
+*npm-debug.log
+.history
+.idea
+*.iml
+.yo-rc.json
+",
+  ".nvmrc": "8.9.4",
+  "README.md": "# test-business-manager-module-typescript
+
+## Installation
+**Detailed explanations are available [here](https://github.com/wix-private/business-manager/blob/master/docs/step-by-step.md#integrate-your-app-into-business-manager)**
+\`\`\`shell
+npm install
+npm start
+Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91/test-business-manager-module-typescript
+\`\`\`
+- If needed update your **[json.erb file](templates/module_test-business-manager-module-typescript.json.erb)**
+- If needed update [module, page component and lazy component ids](src/config.ts)
+- GA your project
+- PR your module config file to business manager as explained [here](https://github.com/wix-private/business-manager/blob/master/docs/module-config-file.md#file-name-and-location)
+- Wait for business manager GA
+- See it in production
+",
+  "package.json": "{
+  \\"name\\": \\"test-business-manager-module-typescript\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start --entry-point ./dist/test/dev/server.js\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"devDependencies\\": {
+    \\"@types/chai\\": \\"~4.0.0\\",
+    \\"@types/i18next\\": \\"~8.4.0\\",
+    \\"@types/mocha\\": \\"~2.2.0\\",
+    \\"@types/node\\": \\"^8.0.0\\",
+    \\"@types/prop-types\\": \\"~15.5.0\\",
+    \\"@types/react\\": \\"~15.6.0\\",
+    \\"@types/react-dom\\": \\"~15.5.0\\",
+    \\"@types/react-i18next\\": \\"~4.6.0\\",
+    \\"@wix/business-manager\\": \\"latest\\",
+    \\"@wix/business-manager-api\\": \\"latest\\",
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.2.0\\",
+    \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"prop-types\\": \\"~15.5.0\\",
+    \\"protractor\\": \\"^5.3.2\\",
+    \\"react\\": \\"15.5.4\\",
+    \\"react-dom\\": \\"15.5.4\\",
+    \\"react-module-container\\": \\"~1.0.0\\",
+    \\"react-test-renderer\\": \\"15.5.4\\",
+    \\"typescript\\": \\"~2.9.0\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"dependencies\\": {
+    \\"axios\\": \\"^0.16.2\\",
+    \\"fedops-logger\\": \\"^3.0.5\\",
+    \\"i18next\\": \\"~8.4.0\\",
+    \\"i18next-xhr-backend\\": \\"~1.4.0\\",
+    \\"react-i18next\\": \\"~4.8.0\\",
+    \\"wix-axios-config\\": \\"latest\\"
+  },
+  \\"yoshi\\": {
+    \\"entry\\": {
+      \\"test-business-manager-module-typescript-module\\": \\"./module\\",
+      \\"test-business-manager-module-typescript-app\\": \\"./client\\"
+    },
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\",
+      \\"react-addons-css-transition-group\\": \\"React.addons.CSSTransitionGroup\\",
+      \\"lodash\\": \\"_\\",
+      \\"urijs\\": \\"URI\\",
+      \\"@wix/business-manager-api\\": \\"BusinessManagerAPI\\",
+      \\"react-module-container\\": \\"reactModuleContainer\\"
+    }
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-business-manager-module-typescript</artifactId>
+    <packaging>pom</packaging>
+    <name>test-business-manager-module-typescript</name>
+    <description>test-business-manager-module-typescript</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>\${project.artifactId}-\${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+",
+  "protractor.conf.js": "module.exports.config = {
+  framework: 'mocha',
+  SELENIUM_PROMISE_MANAGER: false,
+  onPrepare() {
+    browser.ignoreSynchronization = true;
+  }
+};
+",
+  "src/assets/locale/messages_de.json": "{
+  \\"app.title\\": \\"Hallo Wereld\\",
+  \\"app.intro\\": \\"Get begonnen hier: https://github.com/wix-private/business-manager-test-app/blob/master/docs/step-by-step.md\\"
+}
+",
+  "src/assets/locale/messages_en.json": "{
+  \\"app.title\\": \\"Hello World!\\",
+  \\"app.intro\\": \\"Get started here: https://github.com/wix-private/business-manager-test-app/blob/master/docs/step-by-step.md\\"
+}
+",
+  "src/client.tsx": "import * as axios from 'axios';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import { I18nextProvider } from 'react-i18next';
+import { ModuleRegistry } from 'react-module-container';
+import { create } from 'fedops-logger';
+import { wixAxiosConfig } from 'wix-axios-config';
+import {
+  COMPONENT_ID,
+  BI_VIEW_ID,
+  LAZY_COMPONENT_ID,
+  IBMModuleParams,
+} from './config';
+import i18n from './i18n';
+import App from './components/App';
+
+wixAxiosConfig(axios, {
+  baseURL: '/',
+});
+
+class AppContainer extends React.Component<IBMModuleParams> {
+  static propTypes = {
+    locale: PropTypes.string,
+    config: PropTypes.object,
+  };
+
+  constructor(props) {
+    super(props);
+    ModuleRegistry.notifyListeners(
+      'businessManager.viewStartLoading',
+      BI_VIEW_ID,
+    );
+  }
+
+  componentDidMount() {
+    // Note: you might want to invoke notify after initial data fetch (to keep BM loader during fetch)
+    ModuleRegistry.notifyListeners(
+      'businessManager.viewFinishedLoading',
+      BI_VIEW_ID,
+    );
+    const fedopsLogger = create(LAZY_COMPONENT_ID);
+    fedopsLogger.appLoaded();
+  }
+
+  render() {
+    const { locale, config } = this.props;
+    return (
+      <I18nextProvider
+        i18n={i18n({ locale, baseUrl: config.topology.staticsUrl })}
+      >
+        <App />
+      </I18nextProvider>
+    );
+  }
+}
+
+ModuleRegistry.registerComponent(COMPONENT_ID, () => AppContainer);
+",
+  "src/components/App/App.scss": ".root {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  padding: 10px;
+  color: white;
+  font-size: 20pt;
+}
+
+.intro {
+  font-size: 15pt;
+}
+",
+  "src/components/App/App.spec.tsx": "import 'jsdom-global/register';
+import * as React from 'react';
+import { expect } from 'chai';
+import { mount } from 'enzyme';
+import * as i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
+import App from './App';
+import * as translation from '../../assets/locale/messages_en.json';
+
+const i18nData = {
+  lng: 'en',
+  keySeparator: '$',
+  resources: {
+    en: { translation },
+  },
+};
+
+describe('App', () => {
+  let wrapper;
+
+  afterEach(() => wrapper.detach());
+
+  it('renders a title correctly', () => {
+    wrapper = mount(
+      <I18nextProvider i18n={i18next.init(i18nData)}>
+        <App />
+      </I18nextProvider>,
+      { attachTo: document.createElement('div') },
+    );
+    expect(wrapper.find('h2').length).to.eq(1);
+  });
+});
+",
+  "src/components/App/App.tsx": "import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import { translate, InjectedTranslateProps } from 'react-i18next';
+import * as s from './App.scss';
+
+interface IAppProps extends InjectedTranslateProps {}
+
+class App extends React.Component<IAppProps> {
+  static propTypes = {
+    t: PropTypes.func,
+  };
+
+  render() {
+    const { t } = this.props;
+    return (
+      <div className={s.root}>
+        <div className={s.header}>
+          <h2 data-hook=\\"app-title\\">{t('app.title')}</h2>
+        </div>
+        <p className={s.intro}>{t('app.intro')}</p>
+      </div>
+    );
+  }
+}
+
+export default translate(null, { wait: true })(App);
+",
+  "src/components/App/index.ts": "export { default } from './App';
+",
+  "src/config.ts": "import { TModuleParams } from '@wix/business-manager-api';
+/**
+ NOTE: after submitting PR to BM you have to replace MODULE_ID and LAZY_COMPONENT_ID
+  with real ENUM values from business-manager-api package (the ones that were used in .json.erb)
+ Example:
+  export const MODULE_ID = ModuleId.HelloWorld;
+  export const LAZY_COMPONENT_ID = PageComponentId.HelloWorld;
+ **/
+// Note: should be in sync with the config inside your BM module ERB
+export const MODULE_ID: any = 'TEST_BUSINESS_MANAGER_MODULE_TYPESCRIPT';
+export const LAZY_COMPONENT_ID: any = 'test-business-manager-module-typescript-lazy-component-id';
+
+export const COMPONENT_ID: any = 'test-business-manager-module-typescript-component-id';
+export const BI_VIEW_ID = 'test-business-manager-module-typescript_APP_VIEW_ID';
+
+export interface IERBConfig {
+  topology: {
+    staticsUrl: string;
+  };
+}
+
+export interface IBMModuleParams extends TModuleParams {
+  config: IERBConfig;
+}
+",
+  "src/external-types.d.ts": "declare module '*.scss';
+declare module '*.json';
+declare module 'react-module-container' {
+  import * as React from 'react';
+  import {PageComponentId} from '@wix/business-manager-api';
+  export interface ReactLazyComponentOptions {
+    files: string[];
+    component: string;
+    unloadStylesOnDestroy?: boolean;
+    resolve?(): Promise<any>;
+  }
+  export class ReactLazyComponent<P, S = {}> extends React.Component<P, S> {}
+  export const ModuleRegistry: {
+    registerComponent(pageComponentId: PageComponentId, componentFactory: () => any): void;
+    invoke(eventName: string, payload: any): void;
+    component(name: string): typeof React.Component;
+    addListener(eventName: string, callback: (payload: any) => void): { remove(): void };
+    notifyListeners(eventName: string, viewID: string): void;
+  };
+}
+",
+  "src/i18n.ts": "import * as i18next from 'i18next';
+import * as i18nextXHRBackend from 'i18next-xhr-backend';
+
+export default function i18n({ locale, baseUrl = '' }) {
+  return i18next.use(i18nextXHRBackend).init({
+    lng: locale,
+    fallbackLng: 'en',
+    keySeparator: '$',
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: \`\${baseUrl}assets/locale/messages_{{lng}}.json\`,
+      crossDomain: true,
+    },
+  });
+}
+",
+  "src/module.ts": "import {
+  BusinessManagerModule,
+  registerModule,
+  ModuleId,
+  TPrefetchParams,
+  TModuleParams,
+} from '@wix/business-manager-api';
+import {
+  ModuleRegistry,
+  ReactLazyComponent,
+  ReactLazyComponentOptions,
+} from 'react-module-container';
+import {
+  MODULE_ID,
+  LAZY_COMPONENT_ID,
+  COMPONENT_ID,
+  IBMModuleParams,
+} from './config';
+
+const files = props => {
+  const minified = debug => (debug ? '' : '.min');
+  const APP_BUNDLE_FILE = 'test-business-manager-module-typescript-app'; // should be in sync with app's entry-point name in package.json
+  return [
+    \`\${props.config.topology.staticsUrl}\${APP_BUNDLE_FILE}.bundle\${minified(
+      props.debug,
+    )}.js\`,
+    \`\${props.config.topology.staticsUrl}\${APP_BUNDLE_FILE}\${minified(
+      props.debug,
+    )}.css\`,
+  ];
+};
+
+class BMLazyComponent extends ReactLazyComponent<IBMModuleParams> {
+  static prefetch(params: TPrefetchParams) {
+    return files(params);
+  }
+
+  constructor(props: TModuleParams) {
+    const options: ReactLazyComponentOptions = {
+      files: files(props),
+      component: COMPONENT_ID,
+    };
+    super(props, options);
+  }
+}
+
+class BMModule extends BusinessManagerModule {
+  constructor(moduleId: ModuleId) {
+    super(moduleId);
+    ModuleRegistry.registerComponent(LAZY_COMPONENT_ID, () => BMLazyComponent);
+  }
+}
+
+registerModule(MODULE_ID, BMModule);
+",
+  "templates/module_TEST_BUSINESS_MANAGER_MODULE_TYPESCRIPT.json.erb": "
+{
+  \\"moduleId\\": \\"TEST_BUSINESS_MANAGER_MODULE_TYPESCRIPT\\",
+  \\"minifiedBundleFile\\": \\"<%= static_url('com.wixpress.test-business-manager-module-typescript-app') %>test-business-manager-module-typescript-module.bundle.min.js\\",
+  \\"bundleFile\\": \\"<%= static_url('com.wixpress.test-business-manager-module-typescript-app') %>test-business-manager-module-typescript-module.bundle.js\\",
+  \\"mainPageComponentId\\": \\"test-business-manager-module-typescript-lazy-component-id\\",
+  \\"pageComponents\\": [
+    {
+      \\"pageComponentId\\": \\"test-business-manager-module-typescript-lazy-component-id\\",
+      \\"pageComponentName\\": \\"test-business-manager-module-typescript-lazy-component-id\\",
+      \\"route\\": \\"test-business-manager-module-typescript\\"
+    }
+  ],
+  \\"config\\": {
+    \\"topology\\": {
+      \\"staticsUrl\\": \\"<%= static_url('com.wixpress.test-business-manager-module-typescript-app') %>\\"
+    }
+  }
+}
+",
+  "test/dev/server.ts": "require('../environment')
+  .environment()
+  .then(env => env.start());
+",
+  "test/e2e/app.e2e.ts": "import { expect } from 'chai';
+import { appDriver } from './drivers/app.driver';
+import { environment } from '../environment';
+
+describe('load app inside biz mgr', () => {
+  let env;
+  let driver;
+
+  before(async () => {
+    env = await environment();
+    driver = appDriver(env);
+    await env.start();
+  });
+  after(() => env.stop());
+
+  it('should render app', async () => {
+    await driver.navigateToApp();
+    expect(await driver.getAppTitleText()).to.equal('Hello World!');
+  });
+});
+",
+  "test/e2e/drivers/app.driver.ts": "import { browser, ElementFinder, ExpectedConditions, $ } from 'protractor';
+const chance = require('chance');
+
+export const appDriver = env => {
+  const waitForVisibilityOf = async (
+    element: ElementFinder,
+    timeout: number = 4000,
+  ) => {
+    await browser.wait(ExpectedConditions.visibilityOf(element), timeout);
+    return element;
+  };
+
+  return {
+    navigateToApp: async () => {
+      const changeInstance = new chance.Chance();
+      const metaSiteId = changeInstance.guid();
+      await browser.get(
+        await env.businessManager.getUrl(\`\${metaSiteId}/test-business-manager-module-typescript\`),
+      );
+    },
+    getAppTitleText: async () => {
+      return waitForVisibilityOf($('[data-hook=\\"app-title\\"]')).then(e =>
+        e.getText(),
+      );
+    },
+  };
+};
+",
+  "test/environment.ts": "import {
+  createTestkit,
+  testkitConfigBuilder,
+  ModuleConfigFileEmitter,
+} from '@wix/business-manager/dist/testkit';
+
+const getTestkitConfig = async () => {
+  const serverUrl = 'http://localhost:3200/';
+  const path = './templates/module_TEST_BUSINESS_MANAGER_MODULE_TYPESCRIPT.json.erb';
+  const serviceId = 'com.wixpress.test-business-manager-module-typescript-app';
+
+  const moduleConfig = await new ModuleConfigFileEmitter(path)
+    .registerStaticService({ serviceId, serverUrl })
+    .emit();
+
+  return testkitConfigBuilder()
+    .withModulesConfig(moduleConfig)
+    .autoLogin()
+    .build();
+};
+
+export const environment = async () => {
+  const testkit = createTestkit(await getTestkitConfig());
+  return {
+    start: () => testkit.start(),
+    stop: () => testkit.stop(),
+    businessManager: testkit,
+  };
+};
+",
+  "test/mocha-setup.ts": "import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { baseURL } from './test-common';
+
+wixAxiosConfig(axios, { baseURL });
+",
+  "test/test-common.ts": "export const baseURL = \`http://localhost:5554\`;
+",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"sourceMap\\": true,
+    \\"noImplicitAny\\": false,
+    \\"module\\": \\"commonjs\\",
+    \\"moduleResolution\\": \\"node\\",
+    \\"target\\": \\"es5\\",
+    \\"noUnusedLocals\\": true,
+    \\"importHelpers\\": true,
+    \\"jsx\\": \\"react\\",
+    \\"lib\\": [\\"dom\\", \\"es2016\\"]
+  },
+  \\"include\\": [
+    \\"src/**/*.*\\",
+    \\"test/**/*.*\\"
+  ],
+  \\"files\\": [
+    \\"./src/external-types.d.ts\\"
+  ]
+}
+",
+  "tslint.json": "{
+  \\"extends\\": \\"tslint-config-yoshi\\"
+}
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
 exports[`client 1`] = `
 Object {
   ".gitignore": "node_modules
@@ -114,7 +1177,8 @@ start();
     \\"puppeteer\\": \\"^1.1.0\\",
     \\"react-test-renderer\\": \\"~15.6.0\\",
     \\"velocity\\": \\"~0.7.0\\",
-    \\"yoshi\\": \\"^3.0.0\\"
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
   },
   \\"dependencies\\": {
     \\"axios\\": \\"~0.16.0\\",
@@ -125,8 +1189,7 @@ start();
     \\"react-dom\\": \\"15.6.1\\",
     \\"react-i18next\\": \\"~4.8.0\\",
     \\"regenerator-runtime\\": \\"^0.11.0\\",
-    \\"wix-axios-config\\": \\"latest\\",
-    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+    \\"wix-axios-config\\": \\"latest\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -588,6 +1651,7 @@ start();
     \\"react-test-renderer\\": \\"~15.6.0\\",
     \\"velocity\\": \\"~0.7.0\\",
     \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\",
     \\"typescript\\": \\"~2.9.0\\",
     \\"@types/node\\": \\"^8.0.0\\",
     \\"@types/chai\\": \\"~4.0.0\\",
@@ -608,8 +1672,7 @@ start();
     \\"react\\": \\"15.6.1\\",
     \\"react-dom\\": \\"15.6.1\\",
     \\"react-i18next\\": \\"~4.8.0\\",
-    \\"wix-axios-config\\": \\"latest\\",
-    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+    \\"wix-axios-config\\": \\"latest\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -988,6 +2051,530 @@ wixAxiosConfig(axios, { baseURL });
 }
 `;
 
+exports[`component-library 1`] = `
+Object {
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+.history
+test/e2e/screenshots
+package-lock.json
+.idea
+*.iml
+storybook-static
+storybook-e2e
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".storybook/config.js": "const storybook = require('@storybook/react');
+
+function loadStories() {
+  require('../stories');
+}
+
+storybook.configure(loadStories, module);
+",
+  ".storybook/webpack.config.js": "const yoshiWebpackConfig = require('yoshi/config/webpack.config.storybook');
+
+module.exports = (config, env, defaultConfig) => {
+  return yoshiWebpackConfig(defaultConfig);
+};
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  },
+  {
+    \\"name\\": \\"Launch Protractor\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/protractor\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "README.md": "# test-component-library
+",
+  "package.json": "{
+  \\"name\\": \\"test-component-library\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"main\\": \\"dist/src/index.js\\",
+  \\"files\\": [
+    \\"dist\\",
+    \\"src\\",
+    \\"testkit\\"
+  ],
+  \\"publishConfig\\": {
+    \\"registry\\": \\"http://npm.dev.wixpress.com/\\"
+  },
+  \\"scripts\\": {
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build && build-storybook\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"start\\": \\"yoshi start & npm run storybook\\",
+    \\"release\\": \\"yoshi release && teamcity-surge-autorelease --dist=storybook-static\\",
+    \\"pr-release\\": \\"teamcity-surge-autorelease --dist=storybook-static\\",
+    \\"storybook\\": \\"start-storybook -p 6006\\"
+  },
+  \\"devDependencies\\": {
+    \\"@storybook/react\\": \\"^4.0.0-alpha.0\\",
+    \\"@storybook/storybook-deployer\\": \\"~2.0.0\\",
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.1.0\\",
+    \\"prop-types\\": \\"~15.6.0\\",
+    \\"react\\": \\"15.6.1\\",
+    \\"react-dom\\": \\"15.6.1\\",
+    \\"react-test-renderer\\": \\"~15.6.0\\",
+    \\"teamcity-surge-autorelease\\": \\"^1.0.3\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"yoshi\\": {
+    \\"entry\\": {
+      \\"app\\": \\"index.js\\"
+    },
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\"
+    },
+    \\"hmr\\": \\"auto\\"
+  },
+  \\"module\\": \\"dist/es/src/index.js\\",
+  \\"babel\\": {
+    \\"presets\\": [
+      \\"yoshi\\"
+    ]
+  },
+  \\"eslintConfig\\": {
+    \\"extends\\": \\"yoshi\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-component-library</artifactId>
+    <packaging>pom</packaging>
+    <name>test-component-library</name>
+    <description>test-component-library</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+</project>
+",
+  "src/Hello/Hello.js": "import React from 'react';
+import PropTypes from 'prop-types';
+import s from './Hello.scss';
+
+const Hello = ({ name }) => (
+  <div>
+    Hello <span className={s.underline}>{name}!</span>
+  </div>
+);
+
+Hello.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+export default Hello;
+",
+  "src/Hello/Hello.scss": ".underline {
+  text-decoration: underline;
+}
+",
+  "src/Hello/index.js": "export { default } from './Hello';
+",
+  "src/index.js": "export { default as Hello } from './Hello';
+",
+  "stories/index.js": "import React from 'react';
+import { storiesOf } from '@storybook/react';
+import Hello from '../src/Hello';
+
+storiesOf('Hello', module)
+  .add('default view', () => <Hello name=\\"world\\" />)
+  .add('with emojis', () => <Hello name=\\"😀 😎 👍\\" />);
+",
+  "test/Hello/Hello.spec.js": "import React from 'react';
+import { shallow } from 'enzyme';
+import { expect } from 'chai';
+import Hello from '../../src/Hello';
+
+describe('<Hello />', () => {
+  it('should render a hello message with a custom name', () => {
+    const name = 'Skywalker';
+    const wrapper = shallow(<Hello name={name} />);
+    expect(wrapper.text()).to.equal(\`Hello \${name}!\`);
+  });
+});
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`component-library-typescript 1`] = `
+Object {
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+.history
+test/e2e/screenshots
+package-lock.json
+.idea
+*.iml
+storybook-static
+storybook-e2e
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".storybook/config.js": "const storybook = require('@storybook/react');
+
+function loadStories() {
+  require('../stories');
+}
+
+storybook.configure(loadStories, module);
+",
+  ".storybook/webpack.config.js": "const yoshiWebpackConfig = require('yoshi/config/webpack.config.storybook');
+
+module.exports = (config, env, defaultConfig) => {
+  return yoshiWebpackConfig(defaultConfig);
+};
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  },
+  {
+    \\"name\\": \\"Launch Protractor\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/protractor\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "README.md": "# test-component-library-typescript
+",
+  "package.json": "{
+  \\"name\\": \\"test-component-library-typescript\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"main\\": \\"dist/src/index.js\\",
+  \\"files\\": [
+    \\"dist\\",
+    \\"src\\",
+    \\"testkit\\"
+  ],
+  \\"publishConfig\\": {
+    \\"registry\\": \\"http://npm.dev.wixpress.com/\\"
+  },
+  \\"scripts\\": {
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build && build-storybook\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"start\\": \\"yoshi start & npm run storybook\\",
+    \\"release\\": \\"yoshi release && teamcity-surge-autorelease --dist=storybook-static\\",
+    \\"pr-release\\": \\"teamcity-surge-autorelease --dist=storybook-static\\",
+    \\"storybook\\": \\"start-storybook -p 6006\\"
+  },
+  \\"devDependencies\\": {
+    \\"@storybook/react\\": \\"^4.0.0-alpha.0\\",
+    \\"@storybook/storybook-deployer\\": \\"~2.0.0\\",
+    \\"@types/chai\\": \\"~4.0.0\\",
+    \\"@types/mocha\\": \\"~2.2.0\\",
+    \\"@types/node\\": \\"^8.0.0\\",
+    \\"@types/prop-types\\": \\"~15.5.0\\",
+    \\"@types/react\\": \\"~15.6.0\\",
+    \\"@types/react-dom\\": \\"~15.5.0\\",
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.1.0\\",
+    \\"prop-types\\": \\"~15.6.0\\",
+    \\"react\\": \\"15.6.1\\",
+    \\"react-dom\\": \\"15.6.1\\",
+    \\"react-test-renderer\\": \\"~15.6.0\\",
+    \\"teamcity-surge-autorelease\\": \\"^1.0.3\\",
+    \\"typescript\\": \\"~2.9.0\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"yoshi\\": {
+    \\"entry\\": {
+      \\"app\\": \\"index.ts\\"
+    },
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\"
+    },
+    \\"hmr\\": \\"auto\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-component-library-typescript</artifactId>
+    <packaging>pom</packaging>
+    <name>test-component-library-typescript</name>
+    <description>test-component-library-typescript</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+</project>
+",
+  "src/Hello/Hello.scss": ".underline {
+  text-decoration: underline;
+}
+",
+  "src/Hello/Hello.tsx": "import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as s from './Hello.scss';
+
+const Hello: React.StatelessComponent<{ name: string }> = ({ name }) => (
+  <div>
+    Hello <span className={s.underline}>{name}!</span>
+  </div>
+);
+
+Hello.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+export default Hello;
+",
+  "src/Hello/index.ts": "export { default } from './Hello';
+",
+  "src/external-types.d.ts": "declare module '*.scss';
+declare module '*.json';
+",
+  "src/index.ts": "export { default as Hello } from './Hello';
+",
+  "stories/index.tsx": "import * as React from 'react';
+import {storiesOf} from '@storybook/react';
+import Hello from '../src/Hello';
+
+storiesOf('Hello', module)
+  .add('default view', () => (
+    <Hello name=\\"world\\"/>
+  ))
+  .add('with emojis', () => (
+    <Hello name=\\"😀 😎 👍\\"/>
+  ));
+",
+  "test/Hello/Hello.spec.tsx": "import * as React from 'react';
+import {shallow} from 'enzyme';
+import {expect} from 'chai';
+import Hello from '../../src/Hello';
+
+describe('<Hello />', () => {
+  it('should render a hello message with a custom name', () => {
+    const name = 'Skywalker';
+    const wrapper = shallow(<Hello name={name}/>);
+    expect(wrapper.text()).to.equal(\`Hello \${name}!\`);
+  });
+});
+",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"declaration\\": true,
+    \\"allowSyntheticDefaultImports\\": true,
+    \\"outDir\\": \\"./dist/\\",
+    \\"sourceMap\\": true,
+    \\"noImplicitAny\\": false,
+    \\"module\\": \\"commonjs\\",
+    \\"moduleResolution\\": \\"node\\",
+    \\"importHelpers\\": true,
+    \\"target\\": \\"es5\\",
+    \\"jsx\\": \\"react\\",
+    \\"lib\\": [\\"dom\\", \\"es2016\\"]
+  },
+  \\"include\\": [
+    \\"./test/**/*.ts\\"
+  ],
+  \\"files\\": [
+    \\"./src/external-types.d.ts\\",
+    \\"./src/index.ts\\"
+  ]
+}
+",
+  "tslint.json": "{
+  \\"extends\\": \\"tslint-config-yoshi\\"
+}
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
 exports[`fullstack 1`] = `
 Object {
   ".dockerignore": "node_modules
@@ -1069,7 +2656,7 @@ package-lock.json
 }
 ",
   "Dockerfile": "FROM docker-repo.wixpress.com/wix-bootstrap-onbuild:stable
-MAINTAINER Tomas Miliauskas <tomas@wix.com>
+MAINTAINER rany <rany@wix.com>
 ",
   "README.md": "# test-fullstack
 ",
@@ -1115,8 +2702,7 @@ bootstrap()
     \\"wix-bootstrap-ng\\": \\"latest\\",
     \\"wix-express-csrf\\": \\"latest\\",
     \\"wix-express-require-https\\": \\"latest\\",
-    \\"wix-run-mode\\": \\"latest\\",
-    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+    \\"wix-run-mode\\": \\"latest\\"
   },
   \\"devDependencies\\": {
     \\"react-test-renderer\\": \\"~15.6.0\\",
@@ -1128,7 +2714,8 @@ bootstrap()
     \\"puppeteer\\": \\"^1.1.0\\",
     \\"wix-bootstrap-testkit\\": \\"latest\\",
     \\"wix-config-emitter\\": \\"latest\\",
-    \\"yoshi\\": \\"^3.0.0\\"
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -1583,7 +3170,7 @@ package-lock.json
 }
 ",
   "Dockerfile": "FROM docker-repo.wixpress.com/wix-bootstrap-onbuild:stable
-MAINTAINER Tomas Miliauskas <tomas@wix.com>
+MAINTAINER rany <rany@wix.com>
 ",
   "README.md": "# test-fullstack-typescript
 ",
@@ -1628,8 +3215,7 @@ bootstrap()
     \\"wix-bootstrap-ng\\": \\"latest\\",
     \\"wix-express-csrf\\": \\"latest\\",
     \\"wix-express-require-https\\": \\"latest\\",
-    \\"wix-run-mode\\": \\"latest\\",
-    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+    \\"wix-run-mode\\": \\"latest\\"
   },
   \\"devDependencies\\": {
     \\"react-test-renderer\\": \\"~15.6.0\\",
@@ -1642,6 +3228,7 @@ bootstrap()
     \\"wix-bootstrap-testkit\\": \\"latest\\",
     \\"wix-config-emitter\\": \\"latest\\",
     \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\",
     \\"typescript\\": \\"~2.9.0\\",
     \\"@types/node\\": \\"^8.0.0\\",
     \\"@types/chai\\": \\"~4.0.0\\",
@@ -2057,6 +3644,2144 @@ wixAxiosConfig(axios, { baseURL });
   \\"files\\": [
     \\"./src/external-types.d.ts\\",
     \\"./src/server.ts\\",
+    \\"./src/client.tsx\\"
+  ]
+}
+",
+  "tslint.json": "{
+  \\"extends\\": \\"tslint-config-yoshi\\"
+}
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`node-library 1`] = `
+Object {
+  ".gitignore": "dist
+node_modules
+*npm-debug.log
+target
+maven
+package-lock.json
+coverage
+typings
+.history
+.idea
+*.iml
+test/e2e/screenshots
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  },
+  {
+    \\"name\\": \\"Launch Protractor\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/protractor\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "package.json": "{
+  \\"name\\": \\"test-node-library\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"main\\": \\"dist/src/index.js\\",
+  \\"files\\": [
+    \\"dist\\"
+  ],
+  \\"publishConfig\\": {
+    \\"registry\\": \\"http://npm.dev.wixpress.com/\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"devDependencies\\": {
+    \\"chai\\": \\"~4.1.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"yoshi\\": \\"^3.0.0\\"
+  },
+  \\"yoshi\\": {
+    \\"hmr\\": \\"auto\\"
+  },
+  \\"module\\": \\"dist/es/src/index.js\\",
+  \\"babel\\": {
+    \\"presets\\": [
+      \\"yoshi\\"
+    ]
+  },
+  \\"eslintConfig\\": {
+    \\"extends\\": \\"yoshi\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-node-library</artifactId>
+    <packaging>pom</packaging>
+    <name>test-node-library</name>
+    <description>test-node-library</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+</project>
+",
+  "src/counter.js": "export default class Counter {
+  _count = 0;
+
+  increment(n = 1) {
+    this._count += n;
+  }
+}
+",
+  "src/index.js": "import Counter from './counter';
+
+export default new Counter();
+",
+  "test/counter.spec.js": "import { expect } from 'chai';
+import Counter from '../src/counter';
+
+describe('Counter', () => {
+  let counter;
+
+  beforeEach(() => {
+    counter = new Counter();
+  });
+
+  describe('constructor', () => {
+    it('should create a new count property', () => {
+      expect(counter._count).to.be.equal(0);
+    });
+  });
+
+  describe('increment', () => {
+    it('should increment the counter by 1 if nothing provided', () => {
+      counter.increment();
+      expect(counter._count).to.be.equal(1);
+    });
+
+    it('should increment the counter by the provided number', () => {
+      counter.increment(5);
+      expect(counter._count).to.be.equal(5);
+    });
+  });
+});
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`node-library-typescript 1`] = `
+Object {
+  ".gitignore": "dist
+node_modules
+*npm-debug.log
+target
+maven
+package-lock.json
+coverage
+typings
+.history
+.idea
+*.iml
+test/e2e/screenshots
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  },
+  {
+    \\"name\\": \\"Launch Protractor\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/protractor\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "package.json": "{
+  \\"name\\": \\"test-node-library-typescript\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"main\\": \\"dist/src/index.js\\",
+  \\"files\\": [
+    \\"dist\\"
+  ],
+  \\"publishConfig\\": {
+    \\"registry\\": \\"http://npm.dev.wixpress.com/\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"devDependencies\\": {
+    \\"chai\\": \\"~4.1.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"typescript\\": \\"~2.9.0\\",
+    \\"@types/node\\": \\"^8.0.0\\",
+    \\"@types/chai\\": \\"~4.0.0\\",
+    \\"@types/mocha\\": \\"~2.2.0\\"
+  },
+  \\"yoshi\\": {
+    \\"hmr\\": \\"auto\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-node-library-typescript</artifactId>
+    <packaging>pom</packaging>
+    <name>test-node-library-typescript</name>
+    <description>test-node-library-typescript</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+</project>
+",
+  "src/counter.ts": "export default class Counter {
+  _count = 0;
+
+  increment(n = 1) {
+    this._count += n;
+  }
+}
+",
+  "src/index.ts": "import Counter from './counter';
+export default new Counter();
+",
+  "test/counter.spec.ts": "import { expect } from 'chai';
+import Counter from '../src/counter';
+
+describe('Counter', () => {
+  let counter;
+
+  beforeEach(() => {
+    counter = new Counter();
+  });
+
+  describe('constructor', () => {
+    it('should create a new count property', () => {
+      expect(counter._count).to.be.equal(0);
+    });
+  });
+
+  describe('increment', () => {
+    it('should increment the counter by 1 if nothing provided', () => {
+      counter.increment();
+      expect(counter._count).to.be.equal(1);
+    });
+
+    it('should increment the counter by the provided number', () => {
+      counter.increment(5);
+      expect(counter._count).to.be.equal(5);
+    });
+  });
+});
+",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"declaration\\": true,
+    \\"allowSyntheticDefaultImports\\": true,
+    \\"outDir\\": \\"./dist/\\",
+    \\"sourceMap\\": true,
+    \\"noImplicitAny\\": false,
+    \\"module\\": \\"commonjs\\",
+    \\"moduleResolution\\": \\"node\\",
+    \\"importHelpers\\": true,
+    \\"target\\": \\"es5\\",
+    \\"jsx\\": \\"react\\",
+    \\"lib\\": [\\"dom\\", \\"es2016\\"]
+  },
+  \\"include\\": [
+    \\"./test/**/*.ts\\"
+  ],
+  \\"files\\": [
+    \\"./src/index.ts\\"
+  ]
+}
+",
+  "tslint.json": "{
+  \\"extends\\": \\"tslint-config-yoshi\\"
+}
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`server 1`] = `
+Object {
+  ".dockerignore": "node_modules
+target
+",
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+.history
+.idea
+*.iml
+test/e2e/screenshots
+package-lock.json
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "Dockerfile": "FROM docker-repo.wixpress.com/wix-bootstrap-onbuild:stable
+MAINTAINER rany <rany@wix.com>
+",
+  "index.js": "const path = require('path');
+const bootstrap = require('wix-bootstrap-ng');
+
+const src = process.env.SRC_PATH || path.join('.', 'dist', 'src');
+const server = path.join(src, 'server');
+
+bootstrap()
+  .express(server)
+  .start({ disableCluster: process.env.NODE_ENV === 'development' });
+",
+  "package.json": "{
+  \\"name\\": \\"test-server\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"devDependencies\\": {
+    \\"axios\\": \\"~0.16.0\\",
+    \\"chai\\": \\"~4.1.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"wix-bootstrap-testkit\\": \\"latest\\",
+    \\"wix-config-emitter\\": \\"latest\\",
+    \\"wix-rpc-testkit\\": \\"latest\\",
+    \\"yoshi\\": \\"^3.0.0\\"
+  },
+  \\"dependencies\\": {
+    \\"ejs\\": \\"~2.5.0\\",
+    \\"express\\": \\"~4.15.0\\",
+    \\"wix-bootstrap-ng\\": \\"latest\\",
+    \\"wix-express-csrf\\": \\"latest\\",
+    \\"wix-express-require-https\\": \\"latest\\",
+    \\"wix-run-mode\\": \\"latest\\",
+    \\"regenerator-runtime\\": \\"^0.11.0\\"
+  },
+  \\"yoshi\\": {
+    \\"hmr\\": \\"auto\\"
+  },
+  \\"babel\\": {
+    \\"presets\\": [
+      \\"yoshi\\"
+    ]
+  },
+  \\"eslintConfig\\": {
+    \\"extends\\": \\"yoshi\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-server</artifactId>
+    <packaging>pom</packaging>
+    <name>test-server</name>
+    <description>test-server</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+</project>
+",
+  "src/server.js": "import 'regenerator-runtime/runtime';
+import wixExpressCsrf from 'wix-express-csrf';
+import wixExpressRequireHttps from 'wix-express-require-https';
+
+module.exports = app => {
+  app.use(wixExpressCsrf());
+  app.use(wixExpressRequireHttps);
+
+  app.get('/', (req, res) => {
+    res.json({
+      success: true,
+      payload: 'Hello world!',
+    });
+  });
+
+  return app;
+};
+",
+  "templates/test-server.json.erb": "{
+  \\"petriScopes\\": []
+}
+",
+  "test/configs/test-server.json": "{
+  \\"petriScopes\\": []
+}
+",
+  "test/environment.js": "import testkit from 'wix-bootstrap-testkit';
+import configEmitter from 'wix-config-emitter';
+
+export const app = bootstrapServer();
+
+export function beforeAndAfter() {
+  before(() => emitConfigs());
+  app.beforeAndAfter();
+}
+
+function emitConfigs() {
+  return configEmitter({
+    sourceFolders: ['./templates'],
+    targetFolder: './target/configs',
+  }).emit();
+}
+
+function bootstrapServer() {
+  return testkit.app('./index', {
+    env: {
+      PORT: 3100,
+      MANAGEMENT_PORT: 3104,
+      NEW_RELIC_LOG_LEVEL: 'warn',
+      DEBUG: '',
+    },
+  });
+}
+",
+  "test/it/server.it.js": "import { expect } from 'chai';
+import axios from 'axios';
+import { beforeAndAfter, app } from '../environment';
+
+describe('API', () => {
+  beforeAndAfter();
+
+  it('should return a valid response', async () => {
+    const url = app.getUrl('/');
+    const response = await axios.get(url);
+
+    expect(response.data).to.deep.include({
+      success: true,
+      payload: 'Hello world!',
+    });
+  });
+});
+",
+  "test/mocha-setup.js": "",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`server-typescript 1`] = `
+Object {
+  ".dockerignore": "node_modules
+target
+",
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+.history
+.idea
+*.iml
+test/e2e/screenshots
+package-lock.json
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "Dockerfile": "FROM docker-repo.wixpress.com/wix-bootstrap-onbuild:stable
+MAINTAINER rany <rany@wix.com>
+",
+  "index.js": "const path = require('path');
+const bootstrap = require('wix-bootstrap-ng');
+const src = process.env.SRC_PATH || path.join('.', 'dist', 'src');
+const server = path.join(src, 'server');
+
+bootstrap()
+  .express(server)
+  .start({disableCluster: process.env.NODE_ENV === 'development'});
+",
+  "package.json": "{
+  \\"name\\": \\"test-server-typescript\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release\\"
+  },
+  \\"devDependencies\\": {
+    \\"axios\\": \\"~0.16.0\\",
+    \\"chai\\": \\"~4.1.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"wix-bootstrap-testkit\\": \\"latest\\",
+    \\"wix-config-emitter\\": \\"latest\\",
+    \\"wix-rpc-testkit\\": \\"latest\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"typescript\\": \\"~2.9.0\\",
+    \\"@types/axios\\": \\"~0.14.0\\",
+    \\"@types/ejs\\": \\"~2.5.0\\",
+    \\"@types/express\\": \\"~4.0.0\\",
+    \\"@types/chai\\": \\"~4.0.0\\",
+    \\"@types/mocha\\": \\"~2.2.0\\"
+  },
+  \\"dependencies\\": {
+    \\"ejs\\": \\"~2.5.0\\",
+    \\"express\\": \\"~4.15.0\\",
+    \\"wix-bootstrap-ng\\": \\"latest\\",
+    \\"wix-express-csrf\\": \\"latest\\",
+    \\"wix-express-require-https\\": \\"latest\\",
+    \\"wix-run-mode\\": \\"latest\\"
+  },
+  \\"yoshi\\": {
+    \\"hmr\\": \\"auto\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-server-typescript</artifactId>
+    <packaging>pom</packaging>
+    <name>test-server-typescript</name>
+    <description>test-server-typescript</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+</project>
+",
+  "src/external-types.d.ts": "declare module 'wix-run-mode';
+declare module 'wix-express-csrf';
+declare module 'wix-bootstrap-testkit';
+declare module 'wix-config-emitter';
+",
+  "src/server.ts": "import { Router } from 'express';
+import * as wixExpressCsrf from 'wix-express-csrf';
+import * as wixExpressRequireHttps from 'wix-express-require-https';
+
+module.exports = (app: Router) => {
+  app.use(wixExpressCsrf());
+  app.use(wixExpressRequireHttps);
+
+  app.get('/', (req, res) => {
+    res.json({
+      success: true,
+      payload: 'Hello world!',
+    });
+  });
+
+  return app;
+};
+",
+  "templates/test-server-typescript.json.erb": "{
+  \\"petriScopes\\": []
+}
+",
+  "test/configs/autogenerated-server-ts.json": "{
+  \\"petriScopes\\": []
+}
+",
+  "test/environment.ts": "import * as testkit from 'wix-bootstrap-testkit';
+import * as configEmitter from 'wix-config-emitter';
+
+export const app = bootstrapServer();
+
+export function beforeAndAfter() {
+  before(() => emitConfigs());
+  app.beforeAndAfter();
+}
+
+function emitConfigs() {
+  return configEmitter({
+    sourceFolders: ['./templates'],
+    targetFolder: './target/configs',
+  }).emit();
+}
+
+function bootstrapServer() {
+  return testkit.app('./index', {
+    env: {
+      PORT: 3100,
+      MANAGEMENT_PORT: 3104,
+      NEW_RELIC_LOG_LEVEL: 'warn',
+      DEBUG: '',
+    },
+  });
+}
+",
+  "test/it/server.it.ts": "import { expect } from 'chai';
+import axios from 'axios';
+import { beforeAndAfter, app } from '../environment';
+
+describe('API', () => {
+  beforeAndAfter();
+
+  it('should return a valid response', async () => {
+    const url = app.getUrl('/');
+    const response = await axios.get(url);
+
+    expect(response.data).to.deep.include({
+      success: true,
+      payload: 'Hello world!',
+    });
+  });
+});
+",
+  "test/mocha-setup.ts": "",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"allowSyntheticDefaultImports\\": true,
+    \\"outDir\\": \\"./dist/\\",
+    \\"sourceMap\\": true,
+    \\"noImplicitAny\\": false,
+    \\"module\\": \\"commonjs\\",
+    \\"moduleResolution\\": \\"node\\",
+    \\"importHelpers\\": true,
+    \\"target\\": \\"es5\\",
+    \\"jsx\\": \\"react\\",
+    \\"lib\\": [\\"dom\\", \\"es2016\\"]
+  },
+  \\"include\\": [
+    \\"./test/**/*.ts\\"
+  ],
+  \\"files\\": [
+    \\"./src/external-types.d.ts\\",
+    \\"./src/server.ts\\"
+  ]
+}
+",
+  "tslint.json": "{
+  \\"extends\\": \\"tslint-config-yoshi\\"
+}
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`universal 1`] = `
+Object {
+  ".dockerignore": "node_modules
+target
+",
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+test/e2e/screenshots
+package-lock.json
+*npm-debug.log
+.history
+.idea
+*.iml
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "Dockerfile": "FROM docker-repo.wixpress.com/wix-bootstrap-onbuild:stable
+MAINTAINER rany <rany@wix.com>
+",
+  "index.js": "const bootstrap = require('wix-bootstrap-ng');
+const { wixCssModulesRequireHook } = require('yoshi-runtime');
+
+const rootDir = './dist/src';
+const getPath = path =>
+  process.env.NODE_ENV === 'test' || process.env.DEBUGGER === 'true'
+    ? \`./src/\${path}\`
+    : \`\${rootDir}/\${path}\`;
+
+wixCssModulesRequireHook();
+
+bootstrap()
+  .express(getPath('server'))
+  .start({ disableCluster: process.env.NODE_ENV === 'development' });
+",
+  "package.json": "{
+  \\"name\\": \\"test-universal\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release && npm shrinkwrap\\"
+  },
+  \\"devDependencies\\": {
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.2.0\\",
+    \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"puppeteer\\": \\"^1.1.0\\",
+    \\"react-test-renderer\\": \\"~15.6.0\\",
+    \\"wix-bootstrap-testkit\\": \\"latest\\",
+    \\"wix-config-emitter\\": \\"latest\\",
+    \\"wix-req-options\\": \\"latest\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"dependencies\\": {
+    \\"axios\\": \\"~0.16.0\\",
+    \\"ejs\\": \\"~2.5.0\\",
+    \\"express\\": \\"~4.15.0\\",
+    \\"i18next\\": \\"~8.4.0\\",
+    \\"i18next-node-fs-backend\\": \\"~1.0.0\\",
+    \\"prop-types\\": \\"~15.6.0\\",
+    \\"react\\": \\"15.6.1\\",
+    \\"react-dom\\": \\"15.6.1\\",
+    \\"react-i18next\\": \\"~4.8.0\\",
+    \\"regenerator-runtime\\": \\"^0.11.0\\",
+    \\"serialize-javascript\\": \\"~1.4.0\\",
+    \\"wix-axios-config\\": \\"latest\\",
+    \\"wix-bootstrap-ng\\": \\"latest\\",
+    \\"wix-express-csrf\\": \\"latest\\",
+    \\"wix-express-require-https\\": \\"latest\\",
+    \\"wix-run-mode\\": \\"latest\\",
+    \\"yoshi-runtime\\": \\"latest\\"
+  },
+  \\"yoshi\\": {
+    \\"universalProject\\": true,
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\"
+    },
+    \\"hmr\\": \\"auto\\"
+  },
+  \\"babel\\": {
+    \\"presets\\": [
+      \\"yoshi\\"
+    ]
+  },
+  \\"eslintConfig\\": {
+    \\"extends\\": \\"yoshi\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-universal</artifactId>
+    <packaging>pom</packaging>
+    <name>test-universal</name>
+    <description>test-universal</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>\${project.artifactId}-\${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+",
+  "src/assets/locale/messages_de.json": "{
+  \\"app.title\\": \\"Hallo Wereld\\",
+  \\"app.intro\\": \\"Get begonnen hier: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/assets/locale/messages_en.json": "{
+  \\"app.title\\": \\"Hello World!\\",
+  \\"app.intro\\": \\"Get started here: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/client.js": "import 'regenerator-runtime/runtime';
+import React from 'react';
+import axios from 'axios';
+import ReactDOM from 'react-dom';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n/client-i18n';
+import App from './components/App';
+
+const initialI18n = window.__INITIAL_I18N__;
+const baseURL = window.__BASEURL__;
+
+wixAxiosConfig(axios, { baseURL });
+
+ReactDOM.render(
+  <I18nextProvider i18n={i18n(initialI18n)}>
+    <App />
+  </I18nextProvider>,
+  document.getElementById('root'),
+);
+",
+  "src/components/App/App.js": "import React from 'react';
+import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
+import s from './App.scss';
+
+class App extends React.Component {
+  static propTypes = {
+    t: PropTypes.func,
+  };
+
+  render() {
+    const { t } = this.props;
+
+    return (
+      <div className={s.root}>
+        <div className={s.header}>
+          <h2>{t('app.title')}</h2>
+        </div>
+        <p className={s.intro}>{t('app.intro')}</p>
+      </div>
+    );
+  }
+}
+
+export default translate()(App);
+",
+  "src/components/App/App.scss": ".root {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  padding: 10px;
+  color: white;
+  font-size: 20pt;
+}
+
+.intro {
+  font-size: 15pt;
+}
+",
+  "src/components/App/App.spec.js": "import 'jsdom-global/register';
+import React from 'react';
+import { expect } from 'chai';
+import { mount } from 'enzyme';
+import i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
+import App from './App';
+import translation from '../../assets/locale/messages_en.json';
+
+const i18nData = {
+  lng: 'en',
+  keySeparator: '$',
+  resources: {
+    en: { translation },
+  },
+};
+
+describe('App', () => {
+  let wrapper;
+
+  afterEach(() => wrapper.detach());
+
+  it('renders a title correctly', () => {
+    wrapper = mount(
+      <I18nextProvider i18n={i18next.createInstance().init(i18nData)}>
+        <App />
+      </I18nextProvider>,
+      { attachTo: document.createElement('div') },
+    );
+    expect(wrapper.find('h2').length).to.eq(1);
+  });
+});
+",
+  "src/components/App/index.js": "export { default } from './App';
+",
+  "src/i18n/client-i18n.js": "import i18next from 'i18next';
+
+export default function i18n({ locale, resources }) {
+  return i18next.init({
+    keySeparator: '$',
+    lng: locale,
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+    resources: {
+      [locale]: {
+        translation: resources,
+      },
+    },
+  });
+}
+",
+  "src/i18n/middleware-i18n.js": "export default i18n => (req, res, next) => {
+  const { language } = req.aspects['web-context'];
+
+  req.i18n = i18n.cloneInstance();
+  req.i18n.changeLanguage(language || i18n.options.fallbackLng[0], () =>
+    next(),
+  );
+};
+",
+  "src/i18n/server-i18n.js": "import path from 'path';
+import i18next from 'i18next';
+import i18nextFSBackend from 'i18next-node-fs-backend';
+
+export default i18next.use(i18nextFSBackend).init({
+  keySeparator: '$',
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+  backend: {
+    loadPath: path.resolve('src/assets/locale/messages_{{lng}}.json'),
+    jsonIndent: 2,
+  },
+});
+",
+  "src/index.ejs": "<!doctype html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link type=\\"image/png\\" href=\\"https://www.wix.com/favicon.ico\\" rel=\\"shortcut icon\\">
+    <link rel=\\"stylesheet\\" href=\\"<%= clientTopology.staticsBaseUrl %>app<% if (!debug) { %>.min<% } %>.css\\">
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/polyfill/v2/polyfill<% if (!debug) { %>.min<% } %>.js?features=default,es6,es7,es2017&flags=gated&unknown=polyfill&rum=0\\"></script>
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/unpkg/react@15.6.1/dist/react<% if (!debug) { %>.min<% } %>.js\\"></script>
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/unpkg/react-dom@15.6.1/dist/react-dom<% if (!debug) { %>.min<% } %>.js\\"></script>
+  </head>
+  <body>
+    <div id=\\"root\\"><%- appHtml %></div>
+    <script>
+      window.__BASEURL__ = '<%= basename %>';
+      window.__INITIAL_I18N__ = <%- serialize({locale, resources: i18nResources}, {isJSON: true}) %>
+    </script>
+    <script src=\\"<%= clientTopology.staticsBaseUrl %>app.bundle<% if (!debug) { %>.min<% } %>.js\\"></script>
+  </body>
+</html>
+",
+  "src/server.js": "import 'regenerator-runtime/runtime';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import wixRunMode from 'wix-run-mode';
+import ejs from 'ejs';
+import serialize from 'serialize-javascript';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n/server-i18n';
+import i18nMiddleware from './i18n/middleware-i18n';
+import App from './components/App';
+import wixExpressCsrf from 'wix-express-csrf';
+import wixExpressRequireHttps from 'wix-express-require-https';
+import { readFileSync } from 'fs';
+
+module.exports = (app, context) => {
+  const config = context.config.load('test-universal');
+  const templatePath = './src/index.ejs';
+  const indexTemplate = readFileSync(templatePath, 'utf8');
+  const isProduction = wixRunMode.isProduction();
+
+  app.use(i18nMiddleware(i18n));
+  app.use(wixExpressCsrf());
+  app.use(wixExpressRequireHttps);
+
+  app.get('/', (req, res) => {
+    const renderModel = {
+      ...getRenderModel(req),
+      ...getComponentRenderingData(req),
+    };
+    const html = ejs.render(indexTemplate, renderModel, {
+      cache: isProduction,
+      filename: templatePath,
+    });
+    res.send(html);
+  });
+
+  function getRenderModel(req) {
+    return {
+      locale: req.aspects['web-context'].language,
+      basename: req.aspects['web-context'].basename,
+      debug:
+        req.aspects['web-context'].debug ||
+        process.env.NODE_ENV === 'development',
+      clientTopology: config.clientTopology,
+      title: 'Wix Universal Project Boilerplate',
+    };
+  }
+
+  function getComponentRenderingData(req) {
+    const appHtml = renderToString(
+      <I18nextProvider i18n={req.i18n}>
+        <App />
+      </I18nextProvider>,
+    );
+
+    return {
+      i18nResources: req.i18n.getResourceBundle(req.i18n.language),
+      appHtml,
+      serialize,
+    };
+  }
+
+  return app;
+};
+",
+  "templates/test-universal.json.erb": "{
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"<%= scripts_domain %>\\",
+    \\"staticsBaseUrl\\": \\"<%= static_url(\\"com.wixpress.test-universal\\") %>\\"
+  },
+  \\"petriScopes\\": []
+}
+",
+  "test/configs/test-universal.json": "{
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"static.parastorage.com\\",
+    \\"staticsBaseUrl\\": \\"http://localhost:3200/\\"
+  },
+  \\"petriScopes\\": []
+}
+",
+  "test/e2e/app.e2e.js": "import { expect } from 'chai';
+import { beforeAndAfter, app } from '../environment';
+import './e2e-common';
+
+describe('React application', () => {
+  beforeAndAfter();
+
+  describe('open page', () => {
+    it('should display title', async () => {
+      const page = await browser.newPage();
+      await page.goto(app.getUrl('/'));
+      await page.waitForSelector('h2', { timeout: 1000 });
+      expect(await page.$eval('h2', e => e.innerText)).to.equal('Hello World!');
+    });
+  });
+});
+",
+  "test/e2e/e2e-common.js": "import puppeteer from 'puppeteer';
+
+before(async () => {
+  global.browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+});
+
+after(async () => {
+  await global.browser.close();
+});
+",
+  "test/environment.js": "import testkit from 'wix-bootstrap-testkit';
+import configEmitter from 'wix-config-emitter';
+
+export const app = bootstrapServer();
+
+export const beforeAndAfter = () => {
+  before(() => emitConfigs());
+  app.beforeAndAfter();
+};
+
+function emitConfigs() {
+  return configEmitter({
+    sourceFolders: ['./templates'],
+    targetFolder: './target/configs',
+  })
+    .fn('scripts_domain', 'static.parastorage.com')
+    .fn('static_url', 'com.wixpress.test-universal', 'http://localhost:3200/')
+    .emit();
+}
+
+function bootstrapServer() {
+  return testkit.app('./index', {
+    env: {
+      PORT: 3100,
+      MANAGEMENT_PORT: 3104,
+      NEW_RELIC_LOG_LEVEL: 'warn',
+      DEBUG: '',
+    },
+  });
+}
+",
+  "test/it/server.spec.js": "import { expect } from 'chai';
+import axios from 'axios';
+import adapter from 'axios/lib/adapters/http';
+import { beforeAndAfter, app } from '../environment';
+import { baseURL } from '../test-common';
+import { wixAxiosInstanceConfig } from 'wix-axios-config';
+
+const axiosInstance = wixAxiosInstanceConfig(axios, { baseURL, adapter });
+
+describe('When rendering', () => {
+  beforeAndAfter();
+
+  it('should return server side rendered html', async () => {
+    const url = app.getUrl('/');
+    const response = await axiosInstance.get(url);
+
+    expect(response.data).to.contain('Wix Universal Project Boilerplate');
+    expect(response.data).to.contain('Hello World!');
+  });
+});
+",
+  "test/mocha-setup.js": "import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { baseURL } from './test-common';
+
+wixAxiosConfig(axios, { baseURL });
+",
+  "test/test-common.js": "export const baseURL = \`http://localhost:5554\`;
+",
+  "wallaby.js": "module.exports = require('yoshi/config/wallaby-mocha');
+",
+}
+`;
+
+exports[`universal-typescript 1`] = `
+Object {
+  ".dockerignore": "node_modules
+target
+",
+  ".gitignore": "node_modules
+dist
+target
+coverage
+typings
+maven
+test/e2e/screenshots
+package-lock.json
+*npm-debug.log
+.history
+.idea
+*.iml
+.yo-rc.json
+",
+  ".nvmrc": "8.9.1
+",
+  ".vscode/extensions.json": "{
+  \\"recommendations\\": [
+    \\"gabrielgrinberg.auto-run-command\\",
+    \\"dbaeumer.vscode-eslint\\",
+    \\"WallabyJs.wallaby-vscode\\",
+    \\"shinnn.stylelint\\"
+  ]
+}
+",
+  ".vscode/launch.json": "{
+  \\"version\\": \\"0.2.0\\",
+  \\"configurations\\": [{
+    \\"name\\": \\"Launch Mocha\\",
+    \\"type\\": \\"node\\",
+    \\"request\\": \\"launch\\",
+    \\"program\\": \\"\${workspaceRoot}/node_modules/yoshi/debug/mocha\\",
+    \\"cwd\\": \\"\${workspaceRoot}\\"
+  }]
+}
+",
+  ".vscode/settings.json": "{
+  \\"files.exclude\\": {
+    \\"**/.git\\": true,
+    \\"**/.DS_Store\\": true,
+    \\".tmp\\": true,
+    \\".tscache\\": true,
+    \\".sass-cache\\": true,
+    \\"coverage\\": true,
+    \\"maven\\": true,
+    \\"Gemfile*\\": true,
+    \\"**/reference.ts\\": true,
+    \\"*.sublime-*\\": true
+  },
+  \\"search.exclude\\": {
+    \\"dist\\": true,
+    \\"coverage\\": true,
+    \\"target\\": true,
+    \\"**/node_modules\\": true,
+    \\"**/bower_components\\": true
+  },
+  \\"files.associations\\": {
+    \\"*.vm\\": \\"html\\",
+    \\"*.ejs\\": \\"html\\",
+    \\"*.json.erb\\": \\"json\\"
+  },
+  \\"auto-run-command.rules\\": [{
+    \\"condition\\": \\"hasFile: wallaby.js\\",
+    \\"command\\": \\"wallaby.start\\",
+    \\"message\\": \\"Running wallaby\\"
+  }],
+  \\"javascript.validate.enable\\": false,
+  \\"files.trimTrailingWhitespace\\": true,
+  \\"editor.tabSize\\": 2,
+  \\"html.format.indentInnerHtml\\": true,
+  \\"html.format.extraLiners\\": \\"\\",
+  \\"files.insertFinalNewline\\": true,
+  \\"eslint.autoFixOnSave\\": true,
+  \\"tslint.autoFixOnSave\\": true
+}
+",
+  "Dockerfile": "FROM docker-repo.wixpress.com/wix-bootstrap-onbuild:stable
+MAINTAINER rany <rany@wix.com>
+",
+  "index.js": "const bootstrap = require('wix-bootstrap-ng');
+const {wixCssModulesRequireHook} = require('yoshi-runtime');
+
+const rootDir = './dist/src';
+const getPath = path => (process.env.NODE_ENV === 'test' || process.env.DEBUGGER === 'true') ?
+  \`./src/\${path}\` :
+  \`\${rootDir}/\${path}\`;
+
+wixCssModulesRequireHook();
+
+bootstrap()
+  .express(getPath('server'))
+  .start({disableCluster: process.env.NODE_ENV === 'development'});
+",
+  "package.json": "{
+  \\"name\\": \\"test-universal-typescript\\",
+  \\"version\\": \\"1.0.0\\",
+  \\"license\\": \\"UNLICENSED\\",
+  \\"private\\": true,
+  \\"author\\": {
+    \\"name\\": \\"rany\\",
+    \\"email\\": \\"rany@wix.com\\"
+  },
+  \\"scripts\\": {
+    \\"start\\": \\"yoshi start\\",
+    \\"precommit\\": \\"yoshi lint\\",
+    \\"pretest\\": \\"yoshi build\\",
+    \\"test\\": \\"yoshi test\\",
+    \\"posttest\\": \\"yoshi lint\\",
+    \\"release\\": \\"yoshi release && npm shrinkwrap\\"
+  },
+  \\"devDependencies\\": {
+    \\"chai\\": \\"~4.1.0\\",
+    \\"enzyme\\": \\"~2.9.0\\",
+    \\"husky\\": \\"~0.14.0\\",
+    \\"jsdom\\": \\"~11.2.0\\",
+    \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"puppeteer\\": \\"^1.1.0\\",
+    \\"react-test-renderer\\": \\"~15.6.0\\",
+    \\"wix-bootstrap-testkit\\": \\"latest\\",
+    \\"wix-config-emitter\\": \\"latest\\",
+    \\"wix-req-options\\": \\"latest\\",
+    \\"yoshi\\": \\"^3.0.0\\",
+    \\"yoshi-style-dependencies\\": \\"^3.0.0\\",
+    \\"typescript\\": \\"~2.9.0\\",
+    \\"@types/node\\": \\"^8.0.0\\",
+    \\"@types/chai\\": \\"~4.0.0\\",
+    \\"@types/ejs\\": \\"~2.5.0\\",
+    \\"@types/express\\": \\"~4.0.0\\",
+    \\"@types/i18next\\": \\"~8.4.0\\",
+    \\"@types/mocha\\": \\"~2.2.0\\",
+    \\"@types/prop-types\\": \\"~15.5.0\\",
+    \\"@types/react\\": \\"~15.6.0\\",
+    \\"@types/react-dom\\": \\"~15.5.0\\",
+    \\"@types/react-i18next\\": \\"~4.6.0\\"
+  },
+  \\"dependencies\\": {
+    \\"axios\\": \\"~0.16.0\\",
+    \\"ejs\\": \\"~2.5.0\\",
+    \\"express\\": \\"~4.15.0\\",
+    \\"i18next\\": \\"~8.4.0\\",
+    \\"i18next-node-fs-backend\\": \\"~1.0.0\\",
+    \\"prop-types\\": \\"~15.6.0\\",
+    \\"react\\": \\"15.6.1\\",
+    \\"react-dom\\": \\"15.6.1\\",
+    \\"react-i18next\\": \\"~4.8.0\\",
+    \\"serialize-javascript\\": \\"~1.4.0\\",
+    \\"wix-axios-config\\": \\"latest\\",
+    \\"wix-bootstrap-ng\\": \\"latest\\",
+    \\"wix-express-csrf\\": \\"latest\\",
+    \\"wix-express-require-https\\": \\"latest\\",
+    \\"wix-run-mode\\": \\"latest\\",
+    \\"yoshi-runtime\\": \\"latest\\"
+  },
+  \\"yoshi\\": {
+    \\"universalProject\\": true,
+    \\"externals\\": {
+      \\"react\\": \\"React\\",
+      \\"react-dom\\": \\"ReactDOM\\"
+    },
+    \\"hmr\\": \\"auto\\"
+  }
+}
+",
+  "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wixpress</groupId>
+    <artifactId>test-universal-typescript</artifactId>
+    <packaging>pom</packaging>
+    <name>test-universal-typescript</name>
+    <description>test-universal-typescript</description>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <organization>
+        <name></name>
+    </organization>
+
+    <parent>
+        <groupId>com.wixpress.common</groupId>
+        <artifactId>wix-master-parent</artifactId>
+        <version>100.0.0-SNAPSHOT</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <name>rany</name>
+            <email>rany@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                    </descriptors>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>\${project.artifactId}-\${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+",
+  "src/assets/locale/messages_de.json": "{
+  \\"app.title\\": \\"Hallo Wereld\\",
+  \\"app.intro\\": \\"Get begonnen hier: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/assets/locale/messages_en.json": "{
+  \\"app.title\\": \\"Hello World!\\",
+  \\"app.intro\\": \\"Get started here: https://github.com/wix-private/wix-js-stack\\"
+}
+",
+  "src/client.tsx": "import * as React from 'react';
+import axios from 'axios';
+import * as ReactDOM from 'react-dom';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n/client-i18n';
+import App from './components/App';
+
+const initialI18n = window.__INITIAL_I18N__;
+const baseURL = window.__BASEURL__;
+
+wixAxiosConfig(axios, { baseURL });
+
+ReactDOM.render(
+  <I18nextProvider i18n={i18n(initialI18n)}>
+    <App />
+  </I18nextProvider>,
+  document.getElementById('root'),
+);
+",
+  "src/components/App/App.scss": ".root {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  padding: 10px;
+  color: white;
+  font-size: 20pt;
+}
+
+.intro {
+  font-size: 15pt;
+}
+",
+  "src/components/App/App.spec.tsx": "import 'jsdom-global/register';
+import * as React from 'react';
+import {expect} from 'chai';
+import {mount} from 'enzyme';
+import * as i18next from 'i18next';
+import {I18nextProvider} from 'react-i18next';
+import App from './App';
+import * as translation from '../../assets/locale/messages_en.json';
+
+const i18nData = {
+  lng: 'en',
+  keySeparator: '$',
+  resources: {
+    en: {translation}
+  }
+};
+
+describe('App', () => {
+  let wrapper;
+
+  afterEach(() => wrapper.detach());
+
+  it('renders a title correctly', () => {
+    wrapper = mount(
+      <I18nextProvider i18n={i18next.createInstance().init(i18nData)}>
+        <App/>
+      </I18nextProvider>,
+      {attachTo: document.createElement('div')}
+    );
+    expect(wrapper.find('h2').length).to.eq(1);
+  });
+});
+",
+  "src/components/App/App.tsx": "import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import { translate, InjectedTranslateProps } from 'react-i18next';
+import * as s from './App.scss';
+
+interface AppProps extends InjectedTranslateProps {}
+
+class App extends React.Component<AppProps> {
+  static propTypes = {
+    t: PropTypes.func,
+  };
+
+  render() {
+    const { t } = this.props;
+
+    return (
+      <div className={s.root}>
+        <div className={s.header}>
+          <h2>{t('app.title')}</h2>
+        </div>
+        <p className={s.intro}>{t('app.intro')}</p>
+      </div>
+    );
+  }
+}
+
+export default translate()(App);
+",
+  "src/components/App/index.ts": "export { default } from './App';
+",
+  "src/external-types.d.ts": "declare module 'wix-run-mode';
+declare module 'serialize-javascript';
+declare module '*.scss';
+declare module '*.json';
+declare var browser: any;
+
+interface Window {
+  __INITIAL_I18N__: any;
+  __LOCALE__: string;
+  __BASEURL__: string;
+}
+
+declare module NodeJS {
+  interface Global {
+    browser: any;
+  }
+}
+",
+  "src/i18n/client-i18n.ts": "import * as i18next from 'i18next';
+
+export default function i18n({ locale, resources }) {
+  return i18next.init({
+    keySeparator: '$',
+    lng: locale,
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+    resources: {
+      [locale]: {
+        translation: resources,
+      },
+    },
+  });
+}
+",
+  "src/i18n/middleware-i18n.ts": "export default i18n => (req, res, next) => {
+  const { language } = req.aspects['web-context'];
+
+  req.i18n = i18n.cloneInstance();
+  req.i18n.changeLanguage(language || i18n.options.fallbackLng[0], () =>
+    next(),
+  );
+};
+",
+  "src/i18n/server-i18n.ts": "import * as path from 'path';
+import * as i18next from 'i18next';
+import * as i18nextFSBackend from 'i18next-node-fs-backend';
+
+export default i18next.use(i18nextFSBackend).init({
+  keySeparator: '$',
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+  backend: {
+    loadPath: path.resolve('src/assets/locale/messages_{{lng}}.json'),
+    jsonIndent: 2,
+  },
+});
+",
+  "src/index.ejs": "<!doctype html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link type=\\"image/png\\" href=\\"https://www.wix.com/favicon.ico\\" rel=\\"shortcut icon\\">
+    <link rel=\\"stylesheet\\" href=\\"<%= clientTopology.staticsBaseUrl %>app<% if (!debug) { %>.min<% } %>.css\\">
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/polyfill/v2/polyfill<% if (!debug) { %>.min<% } %>.js?features=default,es6,es7,es2017&flags=gated&unknown=polyfill&rum=0\\"></script>
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/unpkg/react@15.6.1/dist/react<% if (!debug) { %>.min<% } %>.js\\"></script>
+    <script src=\\"https://<%= clientTopology.staticsDomain %>/unpkg/react-dom@15.6.1/dist/react-dom<% if (!debug) { %>.min<% } %>.js\\"></script>
+  </head>
+  <body>
+    <div id=\\"root\\"><%- appHtml %></div>
+    <script>
+      window.__BASEURL__ = '<%= basename %>';
+      window.__INITIAL_I18N__ = <%- serialize({locale, resources: i18nResources}, {isJSON: true}) %>
+    </script>
+    <script src=\\"<%= clientTopology.staticsBaseUrl %>app.bundle<% if (!debug) { %>.min<% } %>.js\\"></script>
+  </body>
+</html>
+",
+  "src/server.tsx": "import * as React from 'react';
+import { renderToString } from 'react-dom/server';
+import { Router } from 'express';
+import * as wixRunMode from 'wix-run-mode';
+import * as ejs from 'ejs';
+import * as serialize from 'serialize-javascript';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n/server-i18n';
+import i18nMiddleware from './i18n/middleware-i18n';
+import App from './components/App';
+import * as wixExpressCsrf from 'wix-express-csrf';
+import * as wixExpressRequireHttps from 'wix-express-require-https';
+import { readFileSync } from 'fs';
+
+module.exports = (app: Router, context) => {
+  const config = context.config.load('test-universal-typescript');
+  const templatePath = './src/index.ejs';
+  const indexTemplate = readFileSync(templatePath, 'utf8');
+  const isProduction = wixRunMode.isProduction();
+
+  app.use(i18nMiddleware(i18n));
+  app.use(wixExpressCsrf());
+  app.use(wixExpressRequireHttps);
+
+  app.get('/', (req, res) => {
+    const renderModel = {
+      ...getRenderModel(req),
+      ...getComponentRenderingData(req),
+    };
+    const html = ejs.render(indexTemplate, renderModel, {
+      cache: isProduction,
+      filename: templatePath,
+    });
+    res.send(html);
+  });
+
+  function getRenderModel(req) {
+    return {
+      locale: req.aspects['web-context'].language,
+      basename: req.aspects['web-context'].basename,
+      debug:
+        req.aspects['web-context'].debug ||
+        process.env.NODE_ENV === 'development',
+      clientTopology: config.clientTopology,
+      title: 'Wix Universal Project Boilerplate',
+    };
+  }
+
+  function getComponentRenderingData(req) {
+    const appHtml = renderToString(
+      <I18nextProvider i18n={req.i18n}>
+        <App />
+      </I18nextProvider>,
+    );
+
+    return {
+      i18nResources: req.i18n.getResourceBundle(req.i18n.language),
+      appHtml,
+      serialize,
+    };
+  }
+
+  return app;
+};
+",
+  "templates/test-universal-typescript.json.erb": "{
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"<%= scripts_domain %>\\",
+    \\"staticsBaseUrl\\": \\"<%= static_url(\\"com.wixpress.test-universal-typescript\\") %>\\"
+  },
+  \\"petriScopes\\": []
+}
+",
+  "test/configs/test-universal-typescript.json": "{
+  \\"clientTopology\\": {
+    \\"staticsDomain\\": \\"static.parastorage.com\\",
+    \\"staticsBaseUrl\\": \\"http://localhost:3200/\\"
+  },
+  \\"petriScopes\\": []
+}
+",
+  "test/e2e/app.e2e.ts": "import { expect } from 'chai';
+import { beforeAndAfter, app } from '../environment';
+import './e2e-common';
+
+describe('React application', () => {
+  beforeAndAfter();
+
+  describe('open page', () => {
+    it('should display title', async () => {
+      const page = await browser.newPage();
+      await page.goto(app.getUrl('/'));
+      await page.waitForSelector('h2', { timeout: 1000 });
+      expect(await page.$eval('h2', e => e.innerText)).to.equal('Hello World!');
+    });
+  });
+});
+",
+  "test/e2e/e2e-common.ts": "import * as puppeteer from 'puppeteer';
+
+before(async () => {
+  global.browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+});
+
+after(async () => {
+  await global.browser.close();
+});
+",
+  "test/environment.ts": "import * as testkit from 'wix-bootstrap-testkit';
+import * as configEmitter from 'wix-config-emitter';
+
+export const app = bootstrapServer();
+
+export const beforeAndAfter = () => {
+  before(() => emitConfigs());
+  app.beforeAndAfter();
+};
+
+function emitConfigs() {
+  return configEmitter({
+    sourceFolders: ['./templates'],
+    targetFolder: './target/configs',
+  })
+    .fn('scripts_domain', 'static.parastorage.com')
+    .fn('static_url', 'com.wixpress.test-universal-typescript', 'http://localhost:3200/')
+    .emit();
+}
+
+function bootstrapServer() {
+  return testkit.app('./index', {
+    env: {
+      PORT: 3100,
+      MANAGEMENT_PORT: 3104,
+      NEW_RELIC_LOG_LEVEL: 'warn',
+      DEBUG: '',
+    },
+  });
+}
+",
+  "test/it/server.spec.ts": "import { expect } from 'chai';
+import axios from 'axios';
+import * as adapter from 'axios/lib/adapters/http';
+import { beforeAndAfter, app } from '../environment';
+import { baseURL } from '../test-common';
+import { wixAxiosInstanceConfig } from 'wix-axios-config';
+
+const axiosInstance = wixAxiosInstanceConfig(axios, { baseURL, adapter });
+
+describe('When rendering', () => {
+  beforeAndAfter();
+
+  it('should return server side rendered html', async () => {
+    const url = app.getUrl('/');
+    const response = await axiosInstance.get(url);
+
+    expect(response.data).to.contain('Wix Universal Project Boilerplate');
+    expect(response.data).to.contain('Hello World!');
+  });
+});
+",
+  "test/mocha-setup.ts": "import axios from 'axios';
+import { wixAxiosConfig } from 'wix-axios-config';
+import { baseURL } from './test-common';
+
+wixAxiosConfig(axios, { baseURL });
+",
+  "test/test-common.ts": "export const baseURL = \`http://localhost:5554\`;
+",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"outDir\\": \\"./dist/\\",
+    \\"sourceMap\\": true,
+    \\"noImplicitAny\\": false,
+    \\"module\\": \\"commonjs\\",
+    \\"moduleResolution\\": \\"node\\",
+    \\"importHelpers\\": true,
+    \\"target\\": \\"es5\\",
+    \\"noUnusedLocals\\": true,
+    \\"jsx\\": \\"react\\",
+    \\"lib\\": [\\"dom\\", \\"es2016\\"]
+  },
+  \\"include\\": [
+    \\"./test/**/*.ts\\"
+  ],
+  \\"files\\": [
+    \\"./src/external-types.d.ts\\",
+    \\"./src/server.tsx\\",
     \\"./src/client.tsx\\"
   ]
 }

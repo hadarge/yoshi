@@ -3,6 +3,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const getFilesInDir = require('./getFilesInDir');
 const replaceTemplates = require('./replaceTemplates');
+const constantCase = require('constant-case');
 
 module.exports = (
   {
@@ -29,13 +30,20 @@ module.exports = (
     organization,
   };
 
+  for (const key in valuesMap) {
+    // create CONSTANT_CASE entries for values map
+    valuesMap[constantCase(key)] = constantCase(valuesMap[key]);
+  }
+
   const files = getFilesInDir(templatePath);
 
   for (const fileName in files) {
     const fullPath = path.join(workingDir, fileName);
     mkdirp.sync(path.dirname(fullPath));
-    const transformed = replaceTemplates(files[fileName], valuesMap);
 
-    fs.writeFileSync(fullPath, transformed);
+    const transformed = replaceTemplates(files[fileName], valuesMap);
+    const transformedPath = replaceTemplates(fullPath, valuesMap);
+
+    fs.writeFileSync(transformedPath, transformed);
   }
 };

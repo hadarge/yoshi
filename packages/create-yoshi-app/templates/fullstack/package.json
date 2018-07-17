@@ -30,8 +30,7 @@
     "wix-bootstrap-ng": "latest",
     "wix-express-csrf": "latest",
     "wix-express-require-https": "latest",
-    "wix-run-mode": "latest",
-    "yoshi-style-dependencies": "^3.0.0"
+    "wix-run-mode": "latest"
   },
   "devDependencies": {
     "react-test-renderer": "~15.6.0",
@@ -43,7 +42,8 @@
     "puppeteer": "^1.1.0",
     "wix-bootstrap-testkit": "latest",
     "wix-config-emitter": "latest",
-    "yoshi": "^3.0.0"
+    "yoshi": "^3.0.0",
+    "yoshi-style-dependencies": "^3.0.0"
   },
   "yoshi": {
     "externals": {

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es5",
+    "noUnusedLocals": true,
+    "jsx": "react",
+    "lib": ["dom", "es2016"]
+  },
+  "include": [
+    "./test/**/*.ts"
+  ],
+  "files": [
+    "./src/external-types.d.ts",
+    "./src/server.tsx",
+    "./src/client.tsx"
+  ]
+}

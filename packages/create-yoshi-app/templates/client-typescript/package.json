@@ -27,6 +27,7 @@
     "react-test-renderer": "~15.6.0",
     "velocity": "~0.7.0",
     "yoshi": "^3.0.0",
+    "yoshi-style-dependencies": "^3.0.0",
     "typescript": "~2.9.0",
     "@types/node": "^8.0.0",
     "@types/chai": "~4.0.0",
@@ -47,8 +48,7 @@
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-i18next": "~4.8.0",
-    "wix-axios-config": "latest",
-    "yoshi-style-dependencies": "^3.0.0"
+    "wix-axios-config": "latest"
   },
   "yoshi": {
     "externals": {
