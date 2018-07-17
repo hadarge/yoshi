@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -88,8 +88,8 @@
     "ts-loader": "^4.1.0",
     "ts-node": "~3.3.0",
     "tslint": "^5.10.0",
-    "tslint-config-yoshi": "^3.1.0",
-    "tslint-config-yoshi-base": "^3.1.0",
+    "tslint-config-yoshi": "^3.1.1",
+    "tslint-config-yoshi-base": "^3.1.1",
     "url-loader": "^1.0.0",
     "webpack": "^4.1.1",
     "webpack-bundle-analyzer": "^2.8.3",
