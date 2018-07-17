@@ -183,8 +183,11 @@ Executes `TSLint` or `ESLint` (depending on the type of the project) over all ma
 
 ### release
 
-Bump `package.json` version and publish to npm using `wnpm-release`.
+Bump the patch version in `package.json` using `wnpm-release`.
 
+Flag | Short Flag | Description | Default Value
+---- | ---------- | ----------- | ------------|
+--minor | | bump a minor version instead of a patch | false
 ---
 
 ## Configurations

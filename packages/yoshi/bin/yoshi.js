@@ -66,7 +66,10 @@ prog
 
 prog
   .command('release')
-  .description('publish the package, should be used by CI')
+  .description(
+    'use wnpm-ci to bump a patch version if needed, should be used by CI',
+  )
+  .option('--minor', 'bump a minor version instead of a patch')
   .action(() => runCLI('release'));
 
 prog

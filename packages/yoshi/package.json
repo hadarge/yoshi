@@ -96,7 +96,7 @@
     "webpack-dev-middleware": "~2.0.5",
     "webpack-hot-client": "^3.0.0",
     "wix-tpa-style-loader": "~1.0.8",
-    "wnpm-ci": "~6.2.54",
+    "wnpm-ci": "^7.0.1",
     "xml2js": "~0.4.19",
     "yoshi-runtime": "^1.0.38"
   },
