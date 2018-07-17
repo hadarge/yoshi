@@ -30,7 +30,7 @@ const getPackageDetails = memoize(name => {
       );
 
       // This script will not publish new packages to npm
-      process.exit(1);
+      process.exit(0);
     }
 
     throw error;
