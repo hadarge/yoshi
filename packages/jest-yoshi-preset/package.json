@@ -1,6 +1,6 @@
 {
   "name": "jest-yoshi-preset",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "private": true,
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
@@ -17,8 +17,8 @@
   "dependencies": {
     "babel-jest": "^23.2.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest-environment-yoshi-bootstrap": "^3.1.1",
-    "jest-environment-yoshi-puppeteer": "^3.1.1"
+    "jest-environment-yoshi-bootstrap": "^3.1.2",
+    "jest-environment-yoshi-puppeteer": "^3.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
