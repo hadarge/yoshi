@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.2 (Jul 19, 2018)
+
+#### :bug: Bug
+* `yoshi`
+  * [#450](https://github.com/wix/yoshi/pull/450) Fix `globalObject` template to work with dynamic imports.
+
 ## 3.1.1 (Jul 17, 2018)
 
 #### :nail_care: Enhancement
