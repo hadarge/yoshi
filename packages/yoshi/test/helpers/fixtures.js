@@ -40,6 +40,7 @@ const fx = {
           compilerOptions: {
             module: 'commonjs',
             target: 'es5',
+            lib: ['es5', 'es6'],
             moduleResolution: 'node',
             sourceMap: true,
             outDir: 'dist',
