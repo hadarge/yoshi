@@ -11,8 +11,7 @@
   },
   "scripts": {
     "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js'",
-    "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch",
-    "customPublish": "node ../../scripts/customPublish.js"
+    "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch"
   },
   "dependencies": {
     "@wix/externalize-relative-module-loader": "~1.0.0",

@@ -1,6 +1,8 @@
 const path = require('path');
 const execSync = require('child_process').execSync;
 const chalk = require('chalk');
+const fs = require('fs');
+const globby = require('globby');
 const semver = require('semver');
 const memoize = require('lodash/memoize');
 const get = require('lodash/get');
@@ -10,16 +12,13 @@ const LATEST_TAG = 'latest';
 const NEXT_TAG = 'next';
 const OLD_TAG = 'old';
 
-const packageJsonPath = path.resolve('./package.json');
-const pkg = require(packageJsonPath);
-const registry = get(pkg, 'publishConfig.registry', DEFAULT_REGISTRY);
-const version = get(pkg, 'version');
-const pkgName = get(pkg, 'name');
+const lernaJsonPath = path.resolve('./lerna.json');
+const lernaConfig = require(lernaJsonPath);
 
-const getPackageDetails = memoize(name => {
+const getPackageDetails = memoize(pkg => {
   try {
     return JSON.parse(
-      execSync(`npm show ${name} --registry=${registry} --json`),
+      execSync(`npm show ${pkg.name} --registry=${pkg.registry} --json`),
     );
   } catch (error) {
     if (error.stderr.toString().includes('npm ERR! code E404')) {
@@ -37,24 +36,23 @@ const getPackageDetails = memoize(name => {
   }
 });
 
-function getPublishedVersions(name) {
-  return getPackageDetails(name).versions || [];
+function getPublishedVersions(pkg) {
+  return getPackageDetails(pkg).versions || [];
 }
 
-function getLatestVersion(name) {
-  return get(getPackageDetails(name), 'dist-tags.latest');
+function getLatestVersion(pkg) {
+  return get(getPackageDetails(pkg), 'dist-tags.latest');
 }
 
-function shouldPublishPackage(name) {
-  const remoteVersionsList = getPublishedVersions(name);
+function shouldPublishPackage(pkg) {
+  const remoteVersionsList = getPublishedVersions(pkg);
 
-  return !remoteVersionsList.includes(version);
+  return !remoteVersionsList.includes(pkg.version);
 }
 
-function getTag(name) {
-  const isLessThanLatest = () => semver.lt(version, getLatestVersion(name));
-
-  const isPreRelease = () => semver.prerelease(version) !== null;
+function getTag(pkg) {
+  const isLessThanLatest = () => semver.lt(pkg.version, getLatestVersion(pkg));
+  const isPreRelease = () => semver.prerelease(pkg.version) !== null;
 
   // if the version is less than the version tagged as latest in the registry
   if (isLessThanLatest()) {
@@ -69,43 +67,60 @@ function getTag(name) {
   return LATEST_TAG;
 }
 
-function publish(name) {
-  const publishCommand = `npm publish --tag=${getTag(
-    name,
-  )} --registry=${registry}`;
+function publish(pkg) {
+  const publishCommand = `npm publish ${pkg.pkgPath} --tag=${getTag(
+    pkg,
+  )} --registry=${pkg.registry}`;
 
-  console.log(
-    chalk.magenta(`Running: "${publishCommand}" for ${name}@${version}`),
-  );
+  console.log(`Running: "${publishCommand}" for ${pkg.name}@${pkg.version}`);
 
   execSync(publishCommand, { stdio: 'inherit' });
 }
 
-function release() {
-  console.log(`Starting the release process for ${chalk.bold(pkgName)}\n`);
-
-  if (!shouldPublishPackage(pkgName)) {
-    console.log(
-      chalk.blue(
-        `${pkgName}@${version} is already exist on registry ${registry}`,
-      ),
-    );
-    console.log('\nNo publish performed');
-
-    process.exit(0);
+function release(pkg) {
+  if (pkg.private) {
+    console.log(`> ${pkg.name}(private) - skip publish`);
+    return;
   }
 
-  publish(pkgName);
+  if (!shouldPublishPackage(pkg)) {
+    console.log(
+      `> ${pkg.name}@${pkg.version} - skip publish (version exist on registry ${
+        pkg.registry
+      })`,
+    );
+
+    return;
+  }
+
+  publish(pkg);
   console.log(
-    chalk.green(`\nPublish "${pkgName}@${version}" succesfully to ${registry}`),
+    `> ${pkg.name}@${pkg.version} - published succesfully to ${pkg.registry}`,
   );
 }
 
-// 1. verify that the package can be published by checking the registry.
-//   (Can only publish versions that doesn't already exist)
-// 2. choose a tag ->
-// * `old` for a release that is less than latest (semver).
-// * `next` for a prerelease (beta/alpha/rc).
-// * `latest` as default.
-// 3. perform npm publish using the chosen tag.
-release(pkgName);
+// 1. load all pacakges using lerna.json
+// 2. If the package is private, skip publish
+// 3. If the package already exist on the registry, skip publish.
+// 4. choose a dist-tag ->
+//    * `old` for a release that is less than latest (semver).
+//    * `next` for a prerelease (beta/alpha/rc).
+//    * `latest` as default.
+// 5. perform npm publish using the chosen tag.
+
+globby
+  .sync(lernaConfig.packages, { onlyDirectories: true })
+  .forEach(pkgPath => {
+    const pkgJsonPath = path.resolve(pkgPath, 'package.json');
+    const pkg = JSON.parse(fs.readFileSync(pkgJsonPath));
+
+    release({
+      private: get(pkg, 'private'),
+      name: get(pkg, 'name'),
+      version: get(pkg, 'version'),
+      registry: get(pkg, 'publishConfig.registry', DEFAULT_REGISTRY),
+      pkgPath,
+    });
+  });
+
+console.log('\nrelease process has finished succesfully');

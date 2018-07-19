@@ -10,9 +10,6 @@
   ],
   "author": "Artem Yavorskyi <artemy@wix.com>",
   "license": "ISC",
-  "scripts": {
-    "customPublish": "node ../../scripts/customPublish.js"
-  },
   "peerDependencies": {
     "babel-core": "^6.26.3"
   },

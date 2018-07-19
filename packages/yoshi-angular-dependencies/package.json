@@ -8,9 +8,6 @@
   ],
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
-  "scripts": {
-    "customPublish": "node ../../scripts/customPublish.js"
-  },
   "dependencies": {
     "karma": "^2.0.0",
     "karma-chrome-launcher": "~2.2.0",
