@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.3 (Jul 19, 2018)
+
+#### :bug: Bug
+* `yoshi`
+  * [#452](https://github.com/wix/yoshi/pull/452) Fix `webpack.config.storybook.js` file sass loader integration.
+
 ## 3.1.2 (Jul 19, 2018)
 
 #### :bug: Bug
