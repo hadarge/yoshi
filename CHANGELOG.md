@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.1.3 (Jul 19, 2018)
+## 3.1.3 (Jul 22, 2018)
 
 #### :bug: Bug
 * `yoshi`
