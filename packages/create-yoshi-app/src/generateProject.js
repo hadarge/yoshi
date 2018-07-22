@@ -1,18 +1,17 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
-const mkdirp = require('mkdirp');
 const getFilesInDir = require('./getFilesInDir');
 const replaceTemplates = require('./replaceTemplates');
 const constantCase = require('constant-case');
 
 module.exports = (
   {
-    projectName,
     authorName,
     authorEmail,
     organization,
     projectType,
     transpiler,
+    projectName,
   },
   workingDir,
 ) => {
@@ -39,11 +38,10 @@ module.exports = (
 
   for (const fileName in files) {
     const fullPath = path.join(workingDir, fileName);
-    mkdirp.sync(path.dirname(fullPath));
 
     const transformed = replaceTemplates(files[fileName], valuesMap);
     const transformedPath = replaceTemplates(fullPath, valuesMap);
 
-    fs.writeFileSync(transformedPath, transformed);
+    fs.outputFileSync(transformedPath, transformed);
   }
 };

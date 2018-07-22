@@ -2,30 +2,27 @@ const fs = require('fs');
 const path = require('path');
 const getGitConfig = require('git-config');
 
-module.exports = async workingDir => {
+module.exports = async () => {
   const projectTypes = fs
     .readdirSync(path.join(__dirname, '../templates'))
     .filter(type => !type.endsWith('-typescript'));
   const gitConfig = getGitConfig.sync();
 
+  const gitName = gitConfig.user.name;
+  const gitEmail = gitConfig.user.email;
+
   return [
-    {
-      type: 'text',
-      name: 'projectName',
-      message: 'Project name',
-      initial: path.basename(workingDir),
-    },
     {
       type: 'text',
       name: 'authorName',
       message: 'Author name',
-      initial: gitConfig.user.name,
+      initial: gitName,
     },
     {
       type: 'text',
       name: 'authorEmail',
-      message: 'Author email@wix',
-      initial: gitConfig.user.email,
+      message: 'Author @wix.com email',
+      initial: gitEmail.endsWith('@wix.com') ? gitEmail : '',
     },
     {
       type: 'text',

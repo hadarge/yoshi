@@ -1,9 +1,13 @@
 {
   "name": "create-yoshi-app",
   "version": "3.1.1",
-  "private": true,
   "description": "create yoshi powered apps",
-  "keywords": [],
+  "keywords": [
+    "create",
+    "yoshi",
+    "init",
+    "generate"
+  ],
   "author": "Ran Yitzhaki & Ronen Amiel",
   "main": "src/index.js",
   "bin": {
@@ -22,10 +26,13 @@
     ]
   },
   "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.16.0",
     "constant-case": "^2.0.0",
+    "execa": "^0.10.0",
+    "fs-extra": "^7.0.0",
     "git-config": "^0.0.7",
     "globby": "^8.0.1",
-    "mkdirp": "^0.5.1",
     "prompts": "^0.1.10"
   },
   "devDependencies": {
