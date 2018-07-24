@@ -17,7 +17,7 @@ const { servers } = require('yoshi/config/project');
 const serverLogPrefixer = () => {
   return new stream.Transform({
     transform(chunk, encoding, callback) {
-      this.push(`${chalk.magentaBright('[DEV SERVER]')}: ${chunk.toString()}`);
+      this.push(`${chalk.magentaBright('[SERVER]')}: ${chunk.toString()}`);
       callback();
     },
   });
