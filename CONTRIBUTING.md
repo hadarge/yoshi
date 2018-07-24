@@ -76,10 +76,40 @@ Example: will match `client` & `client-typescript` projects
 ./scripts/runE2E.js client
 ```
 
-## Adding a Template
-Create a directory in  `packages/create-yoshi-app/templates/<template-name>` and another one for typescript `packages/create-yoshi-app/templates/<template-name>-typescript`. It will be tested automatically in the `E2E` suite.
+## Create Yoshi App
 
-For more details see [create-yoshi-app](./packages/create-yoshi-app/README.md)
+To work on the initializer, first link `create-yoshi-app` so it will be available globaly:
+
+```shell
+cd packages/create-yoshi-app
+npm link
+```
+
+### Adding a Template
+Create a directory in `packages/create-yoshi-app/templates/<template-name>` and another one for typescript `packages/create-yoshi-app/templates/<template-name>-typescript`. It will be tested automatically in the `E2E` suite.
+
+For details about the templating and more see [create-yoshi-app](./packages/create-yoshi-app/README.md)
+
+### Modifying a Template
+
+If you want to modify the content of one of the templates, create a new project:
+
+```shell
+cd /my/playground
+create-yoshi-app test-template
+```
+
+Use `git init` to initiate a git repo, and then `add .` and `commit`, to track the changes you've done starting from a fresh generated project.
+
+After doing some changes, copy them to the template you're working on.
+
+Run `create-yoshi-app`'s tests:
+
+```shell
+npm test
+```
+
+We're using [jest snapshot](https://jestjs.io/docs/en/snapshot-testing) to preserve the results of the generated projects, it means that on every change you'll also need to [update the snapshot](https://jestjs.io/docs/en/snapshot-testing#updating-snapshots). You can do that by running the tests with the `--updateSnapshot` option. Verify you've updated the snaphost before pushing the changes and creating a PR or the tests will fail in the CI.
 
 ## Release a New Version
 Start by heading to the [CHANGELOG.md](https://github.com/wix/yoshi/blob/master/CHANGELOG.md) and insert the version's changes. See [commits section](https://github.com/wix/yoshi/commits/master) to verify you haven't missed anything
