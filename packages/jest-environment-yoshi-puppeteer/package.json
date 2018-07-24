@@ -12,8 +12,10 @@
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^2.4.1",
     "fs-extra": "^6.0.1",
-    "jest-environment-yoshi-bootstrap": "^3.1.2"
+    "jest-environment-yoshi-bootstrap": "^3.1.2",
+    "wait-port": "^0.2.2"
   },
   "peerDependencies": {
     "jest": "^23.0.0",
@@ -21,6 +23,7 @@
     "yoshi": "^3.0.0"
   },
   "devDependencies": {
+    "jest-environment-node": "^23.0.0",
     "puppeteer": "^1.0.0",
     "yoshi": "^3.1.3"
   },

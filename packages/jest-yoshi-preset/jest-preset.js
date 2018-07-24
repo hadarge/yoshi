@@ -3,7 +3,7 @@ const { envs } = require('./constants');
 module.exports = {
   globalSetup: require.resolve('jest-environment-yoshi-puppeteer/globalSetup'),
   globalTeardown: require.resolve(
-    'jest-environment-yoshi-puppeteer/globalSetup',
+    'jest-environment-yoshi-puppeteer/globalTeardown',
   ),
   transform: {
     '^.+\\.(js)$': require.resolve('babel-jest'),

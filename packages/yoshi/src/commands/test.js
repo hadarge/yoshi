@@ -64,12 +64,12 @@ module.exports = runner.command(
       );
     }
 
-    if (shouldRunPuppeteer) {
-      specsPattern.push(globs.e2e());
-      await bootstrapCdn();
-    }
-
     if (cliArgs.mocha) {
+      if (shouldRunPuppeteer) {
+        specsPattern.push(globs.e2e());
+        await bootstrapCdn();
+      }
+
       const mochaArgs = [
         require.resolve('mocha/bin/_mocha'),
         ...specsPattern,
@@ -148,13 +148,20 @@ module.exports = runner.command(
     }
 
     if (cliArgs.jest) {
-      const config = require('../../config/jest.config.js');
+      if (!shouldWatch) {
+        await bootstrapCdn();
+      }
+
+      const configPath = require.resolve('../../config/jest.config.js');
+
       const jestCliOptions = [
         require.resolve('jest/bin/jest'),
-        `--config=${JSON.stringify(config)}`,
+        `--config=${configPath}`,
+        `--rootDir=${process.cwd()}`,
         shouldWatch ? '--watch' : '',
         cliArgs.coverage ? '--coverage' : '',
       ];
+
       if (debugBrkPort !== undefined) {
         jestCliOptions.unshift(`--inspect-brk=${debugBrkPort}`);
         jestCliOptions.push(`--runInBand`);
