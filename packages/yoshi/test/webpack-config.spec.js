@@ -289,4 +289,36 @@ describe('Webpack basic configs', () => {
       ).to.contain(expectedOutput);
     });
   });
+
+  describe('Uglify', () => {
+    it('should not mangle class names with the keepClassNames option', () => {
+      const test = tp.create().setup({
+        'src/client.js': `export default class LongClassName {};`,
+        'pom.xml': fx.pom(),
+        'package.json': fx.packageJson({
+          keepClassNames: true,
+        }),
+      });
+      test.execute('build', [], insideTeamCity);
+
+      expect(test.content('dist/statics/app.bundle.min.js')).to.contain(
+        'class LongClassName',
+      );
+      test.teardown();
+    });
+
+    it('should mangle class names by default', () => {
+      const test = tp.create().setup({
+        'src/client.js': `export default class LongClassName {};`,
+        'pom.xml': fx.pom(),
+        'package.json': fx.packageJson(),
+      });
+      test.execute('build', [], insideTeamCity);
+
+      expect(test.content('dist/statics/app.bundle.min.js')).not.to.contain(
+        'class LongClassName',
+      );
+      test.teardown();
+    });
+  });
 });

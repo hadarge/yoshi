@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { isObject } = require('lodash');
 const StylableWebpackPlugin = require('stylable-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
@@ -57,6 +58,23 @@ const config = ({
       minimize: min,
       splitChunks: useSplitChunks ? splitChunksConfig : false,
       concatenateModules: isProduction() && !disableModuleConcat,
+      minimizer: [
+        new UglifyJsPlugin({
+          // Use multi-process parallel running to improve the build speed
+          // Default number of concurrent runs: os.cpus().length - 1
+          parallel: true,
+          // Enable file caching
+          cache: true,
+          sourceMap: true,
+          uglifyOptions: {
+            output: {
+              // support emojis
+              ascii_only: true,
+            },
+            keep_classnames: projectConfig.keepClassNames(),
+          },
+        }),
+      ],
     },
 
     module: {

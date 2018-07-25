@@ -88,6 +88,7 @@ module.exports = {
   petriSpecsConfig: () => getConfig('petriSpecs', {}),
   performanceBudget: () => getConfig('performance', {}),
   resolveAlias: () => getConfig('resolveAlias', {}),
+  keepClassNames: () => getConfig('keepClassNames', false),
 };
 
 function serverProtocol(ssl) {
