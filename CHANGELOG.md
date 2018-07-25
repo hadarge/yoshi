@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.0 (Jul 25, 2018)
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#459](https://github.com/wix/yoshi/pull/459) Suppresses warnings that arise from typescript `transpile-only` and rexporting types
+  * [#460](https://github.com/wix/yoshi/pull/460) Add configuration for `keepFunctionNames` in yoshi config to prevent `uglifyJS` from mangling them
+
 ## 3.1.3 (Jul 22, 2018)
 
 #### :bug: Bug
