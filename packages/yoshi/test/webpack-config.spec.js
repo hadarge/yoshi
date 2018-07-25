@@ -291,12 +291,12 @@ describe('Webpack basic configs', () => {
   });
 
   describe('Uglify', () => {
-    it('should not mangle class names with the keepClassNames option', () => {
+    it('should not mangle class names with the keepFunctionNames option', () => {
       const test = tp.create().setup({
         'src/client.js': `export default class LongClassName {};`,
         'pom.xml': fx.pom(),
         'package.json': fx.packageJson({
-          keepClassNames: true,
+          keepFunctionNames: true,
         }),
       });
       test.execute('build', [], insideTeamCity);
@@ -317,6 +317,36 @@ describe('Webpack basic configs', () => {
 
       expect(test.content('dist/statics/app.bundle.min.js')).not.to.contain(
         'class LongClassName',
+      );
+      test.teardown();
+    });
+
+    it('should not mangle function names with the keepFunctionNames option', () => {
+      const test = tp.create().setup({
+        'src/client.js': `export default function LongFunctionName() {};`,
+        'pom.xml': fx.pom(),
+        'package.json': fx.packageJson({
+          keepFunctionNames: true,
+        }),
+      });
+      test.execute('build', [], insideTeamCity);
+
+      expect(test.content('dist/statics/app.bundle.min.js')).to.contain(
+        'function LongFunctionName',
+      );
+      test.teardown();
+    });
+
+    it('should mangle function names by default', () => {
+      const test = tp.create().setup({
+        'src/client.js': `export default function LongFunctionName() {};`,
+        'pom.xml': fx.pom(),
+        'package.json': fx.packageJson(),
+      });
+      test.execute('build', [], insideTeamCity);
+
+      expect(test.content('dist/statics/app.bundle.min.js')).not.to.contain(
+        'function LongFunctionName',
       );
       test.teardown();
     });

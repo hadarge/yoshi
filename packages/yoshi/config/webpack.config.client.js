@@ -71,7 +71,7 @@ const config = ({
               // support emojis
               ascii_only: true,
             },
-            keep_classnames: projectConfig.keepClassNames(),
+            keep_fnames: projectConfig.keepFunctionNames(),
           },
         }),
       ],
