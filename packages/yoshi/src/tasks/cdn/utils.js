@@ -14,6 +14,9 @@ module.exports.logStats = compiler => {
         version: false,
         timings: false,
         modules: false,
+        // Suppresses warnings that arise from typescript transpile-only and rexporting types
+        // see https://github.com/TypeStrong/ts-loader#transpileonly-boolean-defaultfalse
+        warningsFilter: /export .* was not found in/,
       }),
     );
   });
