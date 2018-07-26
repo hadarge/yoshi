@@ -5,40 +5,56 @@ module.exports = {
   globalTeardown: require.resolve(
     'jest-environment-yoshi-puppeteer/globalTeardown',
   ),
-  transform: {
-    '^.+\\.(js)$': require.resolve('babel-jest'),
-  },
   projects: [
     ...[
       {
         displayName: 'component',
         testEnvironment: 'jsdom',
         testURL: 'http://localhost',
-        testMatch: ['<rootDir>/src/**/*.spec.js'],
+        testMatch: ['<rootDir>/src/**/*.spec.*'],
+        transformIgnorePatterns: ['/node_modules/(?!(.*?\\.st\\.css$))'],
+        transform: {
+          '\\.st.css?$': require.resolve('./transforms/stylable'),
+        },
         moduleNameMapper: {
-          '^.+\\.(css|scss)$': require.resolve('identity-obj-proxy'),
+          '^.+\\.(sass|scss)$': require.resolve('identity-obj-proxy'),
           '\\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3)$': require.resolve(
-            './transforms/file.js',
+            './transforms/file',
           ),
         },
       },
       {
         displayName: 'server',
         testEnvironment: require.resolve('jest-environment-yoshi-bootstrap'),
-        testMatch: ['<rootDir>/test/it/**/*.spec.js'],
+        testMatch: ['<rootDir>/test/it/**/*.spec.*'],
       },
       {
         displayName: 'e2e',
         testEnvironment: require.resolve('jest-environment-yoshi-puppeteer'),
-        testMatch: ['<rootDir>/test/e2e/**/*.e2e.js'],
+        testMatch: ['<rootDir>/test/e2e/**/*.e2e.*'],
       },
-    ].filter(({ displayName }) => {
-      if (envs) {
-        return envs.includes(displayName);
-      }
+    ]
+      .filter(({ displayName }) => {
+        if (envs) {
+          return envs.includes(displayName);
+        }
 
-      return true;
-    }),
+        return true;
+      })
+      .map(project => {
+        return {
+          ...project,
+
+          transform: {
+            ...project.transform,
+
+            '^.+\\.(js)$': require.resolve('babel-jest'),
+            '^.+\\.tsx?$': require.resolve('ts-jest'),
+          },
+
+          moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
+        };
+      }),
     // workaround for https://github.com/facebook/jest/issues/5866
     {
       displayName: 'dummy',

@@ -16,5 +16,11 @@ module.exports = class PuppeteerEnvironment extends NodeEnvironment {
     this.global.browser = await puppeteer.connect({
       browserWSEndpoint,
     });
+
+    this.global.page = await this.global.browser.newPage();
+  }
+
+  async teardown() {
+    await this.global.page.close();
   }
 };
