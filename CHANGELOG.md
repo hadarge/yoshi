@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.2.1 (Jul 26, 2018)
+
+#### :boom: Breaking Change
+* `eslint-config-yoshi`
+  * [#461](https://github.com/wix/yoshi/pull/461) Add `wix-style-react` lint rules
+
+* `tslint-config-yoshi`
+  * [#461](https://github.com/wix/yoshi/pull/461) Add `wix-style-react` lint rules
+
 ## 3.2.0 (Jul 25, 2018)
 
 #### :nail_care: Enhancement
