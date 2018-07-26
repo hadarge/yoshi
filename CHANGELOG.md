@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.0 (Jul 26, 2018)
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#458](https://github.com/wix/yoshi/pull/458) Add an option to disable `threadLoader` for typescript projects
+  * [#462](https://github.com/wix/yoshi/pull/462) Suppresses warnings that arise from typescript during `build`
+
 ## 3.2.1 (Jul 26, 2018)
 
 #### :boom: Breaking Change
