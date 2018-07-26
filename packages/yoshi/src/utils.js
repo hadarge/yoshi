@@ -96,6 +96,7 @@ module.exports.reportWebpackStats = (stats, outputPath) => {
       version: false,
       timings: false,
       modules: false,
+      warningsFilter: /export .* was not found in/,
     }),
   );
   mkdirp.sync(path.resolve(path.dirname(outputPath)));
