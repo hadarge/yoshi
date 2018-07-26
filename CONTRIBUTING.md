@@ -33,7 +33,7 @@ After the limited scope of tests passes locally you can push your changes and ha
 
 ### Test Phases
 In order to simplify Yoshi's tests we created a helper utility called [`test-phases`](https://github.com/wix/yoshi/blob/master/test/helpers/test-phases.js). This utility is in charge of setting up the environment for the test (`package.json`, `pom.xml`, source files, etc) in a temp directory, running Yoshi's commands (`start`, `build`, `lint`, etc) and asserting against the result (stdout, file content, exit code, etc).
-You can see an example usage of `test-phases` [here](https://github.com/wix/yoshi/blob/master/test/lint.spec.js).
+You can see an example usage of `test-phases` [here](https://github.com/wix/yoshi/blob/master/packages/yoshi/test/lint.spec.js).
 
 ### Debugging Tests
 You might run into an issue where you have a test that seems to run and then hang (neither fail nor pass).
