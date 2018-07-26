@@ -991,6 +991,30 @@ describe('Aggregator: Build', () => {
         expect(res.code).to.equal(0);
       });
     });
+
+    describe('build project with typescript files that use namespaces', () => {
+      describe('environment variable DISABLE_TS_THREAD_OPTIMIZATION=true', () => {
+        it('should add the namespace prefix to referred usages', () => {
+          const res = test
+            .setup({
+              'tsconfig.json': fx.tsconfig({
+                files: ['src/client.ts', 'src/definition.ts', 'src/usage.ts'],
+              }),
+              'package.json': fx.packageJson(),
+              'pom.xml': fx.pom(),
+              'src/client.ts': `require('./definition'); require('./usage');`,
+              'src/definition.ts': `namespace someNamespace { export enum someEnum { a, b } }`,
+              'src/usage.ts': `namespace someNamespace { class SomeClass { someFunc() { return someEnum.a; } } }`,
+            })
+            .execute('build', [], { DISABLE_TS_THREAD_OPTIMIZATION: true });
+
+          expect(res.code).to.equal(0);
+          expect(test.content('dist/statics/app.bundle.js')).to.contain(
+            'SomeClass.prototype.someFunc = function () { return someNamespace.someEnum.a; };',
+          );
+        });
+      });
+    });
   });
 
   describe.skip('yoshi-check-deps', () => {
