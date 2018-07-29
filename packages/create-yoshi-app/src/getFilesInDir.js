@@ -3,7 +3,7 @@ const path = require('path');
 const globby = require('globby');
 
 module.exports = absoulteDirPath => {
-  const filesPaths = globby.sync('**/*', {
+  const filesPaths = globby.sync(['**/*', '!node_modules'], {
     cwd: absoulteDirPath,
     dot: true,
     gitignore: true,
