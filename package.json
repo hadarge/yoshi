@@ -28,6 +28,7 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-mocha": "^5.0.0",
     "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-jest": "^21.17.0",
     "execa": "^0.10.0",
     "expect": "^23.3.0",
     "globby": "^8.0.1",
@@ -45,8 +46,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "dependencies": {
-    "eslint-plugin-jest": "^21.17.0"
   }
 }
