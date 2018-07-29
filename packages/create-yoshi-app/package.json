@@ -23,7 +23,8 @@
     ],
     "modulePathIgnorePatterns": [
       "/templates/"
-    ]
+    ],
+    "testEnvironment": "node"
   },
   "dependencies": {
     "chalk": "^2.4.1",
