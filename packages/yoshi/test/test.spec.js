@@ -281,6 +281,7 @@ describe('Aggregator: Test', () => {
           'package.json': `{
             "name": "a",\n
             "jest": {
+              "testURL": "http://localhost",
               "moduleNameMapper": {
                 ".scss$": "${require.resolve('identity-obj-proxy')}"
               }
@@ -357,7 +358,12 @@ describe('Aggregator: Test', () => {
               it('should return value', () => {});
             });
           `,
-          'package.json': fx.packageJson(),
+          'package.json': `{
+            "name": "a",\n
+            "jest": {
+              "testEnvironment": "node"
+            }
+          }`,
         })
         .execute('test', ['--jest', '--coverage']);
 
