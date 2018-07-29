@@ -90,20 +90,24 @@ module.exports = runner.command(
         mochaArgs.push('--no-timeouts');
       }
 
+      const runMocha = async errorHandler => {
+        try {
+          await execa('node', mochaArgs, { stdio: 'inherit' });
+        } catch (error) {
+          return errorHandler && errorHandler(error);
+        }
+      };
+
       if (shouldWatch) {
         watch({ pattern: [globs.testFilesWatch()] }, async () => {
-          try {
-            await execa('node', mochaArgs, { stdio: 'inherit' });
-          } catch (error) {
-            throw `mocha failed with status code "${error.code}"`;
-          }
+          await runMocha(); // fail silently
         });
-      }
 
-      try {
-        await execa('node', mochaArgs, { stdio: 'inherit' });
-      } catch (error) {
-        throw `mocha failed with status code "${error.code}"`;
+        await runMocha(); // fail silently
+      } else {
+        await runMocha(error => {
+          throw `mocha failed with status code "${error.code}"`;
+        });
       }
     }
 
