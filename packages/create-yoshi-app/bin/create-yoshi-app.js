@@ -84,7 +84,7 @@ async function createApp(workingDir) {
 
   clearConsole();
 
-  console.log(chalk.underline('Please answer the following questions:\n'));
+  console.log('Please answer the following questions:\n');
 
   let promptAborted = false;
   // use customProjectDir to ask less questions
