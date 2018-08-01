@@ -84,7 +84,10 @@ async function createApp(workingDir) {
 
   clearConsole();
 
-  console.log('Please answer the following questions:\n');
+  // Use ' ' due to a technical problem in hyper when you don't see the first char after clearing the console
+  console.log(
+    ' ' + chalk.underline('Please answer the following questions:\n'),
+  );
 
   let promptAborted = false;
   // use customProjectDir to ask less questions
