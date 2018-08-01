@@ -27,6 +27,7 @@ module.exports = (
     authorName,
     authorEmail,
     organization,
+    gitignore: '.gitignore',
   };
 
   for (const key in valuesMap) {
