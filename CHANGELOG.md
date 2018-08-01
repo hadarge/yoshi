@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.4.0 (Aug 1, 2018)
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#455](https://github.com/wix/yoshi/pull/455) Add (webpack) static public path on CI build time according to the CDN location to support assets management in deployable libraries
+
 ## 3.3.1 (Jul 29, 2018)
 
 #### :bug: Bug
