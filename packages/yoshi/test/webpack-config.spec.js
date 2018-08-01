@@ -6,6 +6,7 @@ const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
 const {
   insideTeamCity,
+  outsideTeamCity,
   teamCityArtifactVersion,
   noArtifactVersion,
 } = require('./helpers/env-variables');
@@ -142,7 +143,7 @@ describe('Webpack basic configs', () => {
           .setup({
             'src/client.js': `console.log('test');`,
           })
-          .execute('build');
+          .execute('build', [], outsideTeamCity);
 
         expect(test.content('dist/statics/app.bundle.js')).to.contain(
           `__webpack_require__.p = "/"`,
