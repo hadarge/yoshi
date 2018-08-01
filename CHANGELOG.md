@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.4.1 (Aug 1, 2018)
+
+#### :bug: Bug
+* `create-yoshi-app`
+  * [#472](https://github.com/wix/yoshi/pull/472) Fix `create-yoshi-app` bugs:
+    * `.gitignore` not generated
+    * Wrong file names
+
 ## 3.4.0 (Aug 1, 2018)
 
 #### :nail_care: Enhancement
