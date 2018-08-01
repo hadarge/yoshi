@@ -25,6 +25,8 @@ const allSourcesButExternalModules = function(filePath) {
 
 module.exports = {
   name: () => packagejson.name,
+  // version: () => packagejson.version,
+  unpkg: () => packagejson.unpkg,
   specs: {
     node: () => getConfig('specs.node'),
     browser: () => getConfig('specs.browser'),

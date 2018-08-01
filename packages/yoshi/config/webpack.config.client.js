@@ -6,6 +6,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { isObject } = require('lodash');
+const { staticsDomain } = require('../src/constants');
 const StylableWebpackPlugin = require('stylable-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const {
@@ -22,6 +23,30 @@ const defaultSplitChunksConfig = {
   name: 'commons',
   minChunks: 2,
 };
+
+function getPublicPath() {
+  const artifactName = process.env.ARTIFACT_ID;
+  const artifactVersion = process.env.ARTIFACT_VERSION;
+
+  if (artifactName && artifactVersion) {
+    // Projects that uses `wnpm-ci` have their package.json version field on a fixed version which is not their real version
+    // These projects determine their version on the "release" step, which means they will have a wrong public path
+    // We currently can't support static public path of packages that deploy to unpkg
+
+    // if (projectConfig.unpkg()) {
+    //   return `${unpkgDomain}/${projectConfig.name()}@${projectConfig.version()}/dist/statics/`;
+    // }
+
+    return `${staticsDomain}/${artifactName}/${artifactVersion.replace(
+      '-SNAPSHOT',
+      '',
+    )}/`;
+  }
+
+  return '/';
+}
+
+const publicPath = getPublicPath();
 
 const config = ({
   min,
@@ -149,6 +174,7 @@ const config = ({
       filename: min ? '[name].bundle.min.js' : '[name].bundle.js',
       chunkFilename: min ? '[name].chunk.min.js' : '[name].chunk.js',
       pathinfo: !min,
+      publicPath,
     },
 
     target: 'web',
