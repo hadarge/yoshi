@@ -124,9 +124,9 @@ async function createApp(workingDir) {
   console.log('    Start your app in development mode\n');
   console.log(chalk.cyan('  npm test'));
   console.log('    Run the test runner\n');
-  console.log(chalk.cyan('  npm run lint'));
+  console.log(chalk.cyan('  npx yoshi lint'));
   console.log('    Run the linter\n');
-  console.log(chalk.cyan('  npm run build'));
+  console.log(chalk.cyan('  npx yoshi build'));
   console.log('    Build your app for production\n');
 
   console.log(
