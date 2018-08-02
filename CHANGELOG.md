@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.4.2 (Aug 2, 2018)
+* `create-yoshi-app`
+  * [#474](https://github.com/wix/yoshi/pull/474) Update post create messages
+
 ## 3.4.1 (Aug 1, 2018)
 
 #### :bug: Bug
