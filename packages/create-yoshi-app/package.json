@@ -32,7 +32,7 @@
     "constant-case": "^2.0.0",
     "execa": "^0.10.0",
     "fs-extra": "^7.0.0",
-    "git-config": "^0.0.7",
+    "parse-git-config": "^2.0.2",
     "globby": "^8.0.1",
     "prompts": "^0.1.10"
   },
