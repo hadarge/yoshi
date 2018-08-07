@@ -14,7 +14,6 @@
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch"
   },
   "dependencies": {
-    "@wix/externalize-relative-module-loader": "~1.0.0",
     "autoprefixer": "~7.1.2",
     "babel-eslint": "^8.2.3",
     "babel-loader": "~7.1.1",
@@ -42,6 +41,7 @@
     "eslint-plugin-react": "^7.8.1",
     "execa": "^0.10.0",
     "express": "^4.15.5",
+    "externalize-relative-module-loader": "~1.0.0",
     "file-loader": "~1.1.8",
     "glob": "~7.1.2",
     "globby": "^8.0.1",
