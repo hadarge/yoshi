@@ -11,7 +11,7 @@ const projectConfig = require('./project');
 const specsGlob = projectConfig.specs.browser() || globs.specs();
 const karmaSetupPath = path.join(process.cwd(), 'test', `karma-setup.js`);
 
-let entry = glob.sync(specsGlob).map(p => path.resolve(p));
+const entry = glob.sync(specsGlob).map(p => path.resolve(p));
 
 if (fs.existsSync(karmaSetupPath)) {
   entry.unshift(karmaSetupPath);

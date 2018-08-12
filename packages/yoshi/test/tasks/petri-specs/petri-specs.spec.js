@@ -8,7 +8,7 @@ const destFile = 'petri-experiments.json';
 const destDir = path.join('dist', 'statics');
 
 const writeFsObject = (tempDir, fsObj) => {
-  for (let filePath in fsObj) {
+  for (const filePath in fsObj) {
     if (fsObj[filePath]) {
       fs.outputFileSync(path.join(tempDir, filePath), fsObj[filePath]);
     }
