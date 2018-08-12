@@ -7,9 +7,10 @@ module.exports = async () => {
     .readdirSync(path.join(__dirname, '../templates'))
     .filter(type => !type.endsWith('-typescript'));
   const gitConfig = getGitConfig.sync({ include: true, type: 'global' });
-
-  const gitName = gitConfig.user.name;
-  const gitEmail = gitConfig.user.email;
+  
+  const gitUser = gitConfig.user || {};
+  const gitName = gitUser.name || '';
+  const gitEmail = gitUser.email || '';
 
   return [
     {
