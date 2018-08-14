@@ -1,13 +1,14 @@
 const path = require('path');
 const fs = require('fs-extra');
 const { execSync } = require('child_process');
+const chalk = require('chalk');
 
 const execOptions = {
   encoding: 'utf8',
   stdio: [
     'pipe', // stdin (default)
     'pipe', // stdout (default)
-    'ignore', //stderr
+    'ignore', // stderr
   ],
 };
 
@@ -35,18 +36,4 @@ module.exports.getProcessForPort = port => {
   } catch (e) {
     return null;
   }
-};
-
-module.exports.loadConfig = () => {
-  const configPath = path.join(process.cwd(), 'jest-yoshi.config.js');
-
-  if (!fs.existsSync(configPath)) {
-    throw new Error(
-      `Could't find config file at: '${configPath}', please create one.`,
-    );
-  }
-
-  const config = require(configPath);
-
-  return config;
 };

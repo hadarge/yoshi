@@ -1,3 +1,5 @@
+const fs = require('fs');
+const globby = require('globby');
 const { envs } = require('./constants');
 
 module.exports = {
@@ -11,27 +13,17 @@ module.exports = {
         displayName: 'component',
         testEnvironment: 'jsdom',
         testURL: 'http://localhost',
-        testMatch: ['<rootDir>/src/**/*.spec.*'],
-        transformIgnorePatterns: ['/node_modules/(?!(.*?\\.st\\.css$))'],
-        transform: {
-          '\\.st.css?$': require.resolve('./transforms/stylable'),
-        },
-        moduleNameMapper: {
-          '^.+\\.(sass|scss)$': require.resolve('identity-obj-proxy'),
-          '\\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3)$': require.resolve(
-            './transforms/file',
-          ),
-        },
+        testMatch: ['<rootDir>/src/**/*.spec.(ts|js){,x}'],
       },
       {
         displayName: 'server',
         testEnvironment: require.resolve('jest-environment-yoshi-bootstrap'),
-        testMatch: ['<rootDir>/test/it/**/*.spec.*'],
+        testMatch: ['<rootDir>/test/server/**/*.spec.(ts|js){,x}'],
       },
       {
         displayName: 'e2e',
         testEnvironment: require.resolve('jest-environment-yoshi-puppeteer'),
-        testMatch: ['<rootDir>/test/e2e/**/*.e2e.*'],
+        testMatch: ['<rootDir>/test/e2e/**/*.spec.(ts|js){,x}'],
       },
     ]
       .filter(({ displayName }) => {
@@ -42,15 +34,34 @@ module.exports = {
         return true;
       })
       .map(project => {
+        const [setupTestsPath] = globby.sync(
+          `test/setup.${project.displayName}.(ts|js){,x}`,
+        );
+
+        const setupTestsFile =
+          setupTestsPath && fs.existsSync(setupTestsPath)
+            ? `<rootDir>/${setupTestsPath}`
+            : undefined;
+
         return {
           ...project,
 
-          transform: {
-            ...project.transform,
+          transformIgnorePatterns: ['/node_modules/(?!(.*?\\.st\\.css$))'],
 
-            '^.+\\.(js)$': require.resolve('babel-jest'),
+          transform: {
+            '^.+\\.jsx?$': require.resolve('babel-jest'),
             '^.+\\.tsx?$': require.resolve('ts-jest'),
+            '\\.st.css?$': require.resolve('./transforms/stylable'),
           },
+
+          moduleNameMapper: {
+            '^.+\\.(sass|scss)$': require.resolve('identity-obj-proxy'),
+            '\\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3)$': require.resolve(
+              './transforms/file',
+            ),
+          },
+
+          setupTestFrameworkScriptFile: setupTestsFile,
 
           moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
         };

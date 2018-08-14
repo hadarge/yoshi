@@ -11,8 +11,9 @@ const puppeteer = require('puppeteer');
 const child_process = require('child_process');
 const waitPort = require('wait-port');
 const { WS_ENDPOINT_PATH } = require('./constants');
-const { getProcessForPort, loadConfig } = require('./utils');
+const { getProcessForPort } = require('./utils');
 const { servers } = require('yoshi/config/project');
+const { loadConfig } = require('yoshi/src/utils');
 
 const serverLogPrefixer = () => {
   return new stream.Transform({
