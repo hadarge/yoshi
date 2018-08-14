@@ -18,7 +18,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint"
+    "*.js": ["eslint"]
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
