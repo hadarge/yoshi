@@ -27,6 +27,8 @@ prog
   .option('--protractor', 'Run e2e tests with Protractor')
   .option('--debug', 'Allow test debugging')
   .option('--coverage', 'Collect and output code coverage')
+  .option('--runInBand', 'Run all tests serially in the current process')
+  .option('--forceExit', 'Force Jest to exit after all tests completed')
   .option(
     '--debug-brk',
     "Allow test debugging, process won't start until debugger will be attached",

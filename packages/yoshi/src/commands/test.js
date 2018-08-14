@@ -164,6 +164,8 @@ module.exports = runner.command(
         `--rootDir=${process.cwd()}`,
         shouldWatch ? '--watch' : '',
         cliArgs.coverage ? '--coverage' : '',
+        cliArgs.runInBand ? '--runInBand' : '',
+        cliArgs.forceExit ? '--forceExit' : '',
       ];
 
       if (debugBrkPort !== undefined) {
