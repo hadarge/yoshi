@@ -3,6 +3,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 const context = path.resolve('./src');
 const projectConfig = require('./project');
+const { toIdentifier } = require('../src/utils');
 
 const config = {
   context,
@@ -57,18 +58,21 @@ const config = {
 };
 
 function getOutput() {
-  const libraryExports = projectConfig.exports();
   const output = {
     path: path.resolve('./dist'),
     pathinfo: true,
+    jsonpFunction: `webpackJsonp_${toIdentifier(projectConfig.name())}`,
   };
 
+  const libraryExports = projectConfig.exports();
+
   if (libraryExports) {
-    return Object.assign({}, output, {
+    return {
+      ...output,
       library: libraryExports,
       libraryTarget: 'umd',
       globalObject: "(typeof self !== 'undefined' ? self : this)",
-    });
+    };
   }
 
   return output;

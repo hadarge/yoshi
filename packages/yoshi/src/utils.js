@@ -226,3 +226,13 @@ module.exports.getProcessOnPort = async port => {
     return null;
   }
 };
+
+module.exports.toIdentifier = str => {
+  const IDENTIFIER_NAME_REPLACE_REGEX = /^([^a-zA-Z$_])/;
+  const IDENTIFIER_ALPHA_NUMERIC_NAME_REPLACE_REGEX = /[^a-zA-Z0-9$]+/g;
+
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(IDENTIFIER_NAME_REPLACE_REGEX, '_$1')
+    .replace(IDENTIFIER_ALPHA_NUMERIC_NAME_REPLACE_REGEX, '_');
+};

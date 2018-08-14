@@ -992,6 +992,28 @@ describe('Aggregator: Build', () => {
       });
     });
 
+    describe('jsonpFunction', () => {
+      it('should use custom jsonpFunction name according to the project name', () => {
+        const res = test
+          .setup({
+            'src/client.js': "import('./foo')",
+            'src/foo.js': "console.log('bar')",
+            'package.json': JSON.stringify({
+              name: 'my-project',
+              babel: {
+                presets: [require.resolve('babel-preset-yoshi')],
+              },
+            }),
+          })
+          .execute('build');
+
+        expect(res.code).to.equal(0);
+        expect(test.content('dist/statics/app.bundle.min.js')).to.contain(
+          'webpackJsonp_my_project',
+        );
+      });
+    });
+
     describe('build project with typescript files that use namespaces', () => {
       describe('environment variable DISABLE_TS_THREAD_OPTIMIZATION=true', () => {
         it('should add the namespace prefix to referred usages', () => {
