@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.0 (Aug 14, 2018)
+
+#### :nail_care: Enhancement
+* `jest-yoshi-preset`
+  * [#495](https://github.com/wix/yoshi/pull/495) Initial version of `jest-yoshi-preset`
+
 ## 3.4.4 (Aug 14, 2018)
 
 #### :bug: Bug
