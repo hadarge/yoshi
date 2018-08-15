@@ -8,13 +8,14 @@ const fs = require('fs-extra');
 const path = require('path');
 const program = require('commander');
 const chalk = require('chalk');
-const execa = require('execa');
-const { runPrompts, generateProject } = require('../src/index');
+const { clearConsole, install, lintFix } = require('../src/utils');
+const {
+  runPrompt,
+  generateProject,
+  verifyRegistry,
+  verifyWorkingDirectory,
+} = require('../src/index');
 const pkg = require('../package.json');
-
-const privateRegistry = 'http://npm.dev.wixpress.com';
-
-const clearConsole = () => process.stdout.write('\x1Bc');
 
 program
   .version(pkg.version)
@@ -31,56 +32,9 @@ if (customProjectDir) {
 
 createApp(process.cwd());
 
-function install(dir) {
-  console.log(
-    `Running ${chalk.magenta(
-      'npm install',
-    )}, that might take a few minutes... ⌛ \n`,
-  );
-
-  execa.shellSync('npm install', {
-    cwd: dir,
-    stdio: 'inherit',
-  });
-}
-
-function getRegistry(dir) {
-  // TODO: change to npm ping to the private registry when it will be fixed with the CI team
-  const { stdout } = execa.shellSync('npm config get registry', {
-    cwd: dir,
-    stdio: 'pipe',
-  });
-
-  return stdout;
-}
-
-function lintFix(dir) {
-  console.log(`\nRunning ${chalk.magenta('yoshi lint --fix')}\n`);
-  execa.shellSync('npx yoshi lint --fix', {
-    cwd: dir,
-    stdio: 'inherit',
-  });
-}
-
 async function createApp(workingDir) {
-  const emptyDirectory = fs.readdirSync(workingDir).length === 0;
-
-  if (!emptyDirectory) {
-    console.log(`The directory "${workingDir}" is not an empty directory\n`);
-    console.log('Aborting...');
-
-    process.exit(1);
-  }
-
-  const registry = getRegistry(workingDir);
-
-  if (!registry.includes(privateRegistry)) {
-    console.log(`You should be authenticated to Wix's private registry`);
-    console.log('Run the following command and try again:\n');
-    console.log(chalk.cyan(`  npm config set registry ${privateRegistry}`));
-
-    return;
-  }
+  verifyWorkingDirectory();
+  verifyRegistry();
 
   clearConsole();
 
@@ -89,19 +43,8 @@ async function createApp(workingDir) {
     ' ' + chalk.underline('Please answer the following questions:\n'),
   );
 
-  let promptAborted = false;
   // use customProjectDir to ask less questions
-  const results = await runPrompts(workingDir, {
-    onCancel: () => {
-      promptAborted = true;
-    },
-  });
-
-  if (promptAborted) {
-    console.log();
-    console.log('Aborting ...');
-    return;
-  }
+  const results = await runPrompt(workingDir);
 
   console.log(
     `\nCreating a new ${chalk.cyan(

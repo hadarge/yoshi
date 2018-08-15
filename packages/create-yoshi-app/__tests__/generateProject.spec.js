@@ -1,21 +1,21 @@
-const fs = require('fs');
-const path = require('path');
 const tempy = require('tempy');
+const getProjectTypes = require('../src/getProjectTypes');
 const { generateProject } = require('../src');
 const getFilesInDir = require('../src/getFilesInDir');
+const Answers = require('../src/Answers');
 
-const projectTypes = fs.readdirSync(path.join(__dirname, '../templates'));
+const projectTypes = getProjectTypes();
 
 const mockedAnswers = projectTypes.map(projectType => [
   projectType,
-  {
+  new Answers({
     projectName: `test-${projectType}`,
     authorName: 'rany',
     authorEmail: 'rany@wix.com',
     organization: 'wix',
     projectType: projectType.replace('-typescript', ''),
     transpiler: projectType.endsWith('typescript') ? 'typescript' : 'babel',
-  },
+  }),
 ]);
 
 test.each(mockedAnswers)('%s', (testName, answers) => {

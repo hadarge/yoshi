@@ -1,11 +1,11 @@
-const fs = require('fs');
-const path = require('path');
 const getGitConfig = require('parse-git-config');
+const getProjectTypes = require('./getProjectTypes');
 
 module.exports = async () => {
-  const projectTypes = fs
-    .readdirSync(path.join(__dirname, '../templates'))
-    .filter(type => !type.endsWith('-typescript'));
+  const projectTypes = getProjectTypes().filter(
+    type => !type.endsWith('-typescript'),
+  );
+
   const gitConfig = getGitConfig.sync({ include: true, type: 'global' });
 
   const gitUser = gitConfig.user || {};

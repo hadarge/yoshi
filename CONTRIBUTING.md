@@ -92,22 +92,13 @@ For details about the templating and more see [create-yoshi-app](./packages/crea
 
 ### Modifying a Template
 
-If you want to modify the content of one of the templates, create a new project:
+If you want to modify the content of one of the templates run the following command:
 
 ```shell
-cd /my/playground
-create-yoshi-app test-template
+npm run create-yoshi-app:dev
 ```
 
-Use `git init` to initiate a git repo, and then `add .` and `commit`, to track the changes you've done starting from a fresh generated project.
-
-After doing some changes, copy them to the template you're working on.
-
-Run `create-yoshi-app`'s tests:
-
-```shell
-npm test
-```
+It will create a project in a temp directory. You'll have a watcher that listens to changes from the template and updates the generated project accordingly.
 
 We're using [jest snapshot](https://jestjs.io/docs/en/snapshot-testing) to preserve the results of the generated projects, it means that on every change you'll also need to [update the snapshot](https://jestjs.io/docs/en/snapshot-testing#updating-snapshots). You can do that by running the tests with the `--updateSnapshot` option. Verify you've updated the snaphost before pushing the changes and creating a PR or the tests will fail in the CI.
 

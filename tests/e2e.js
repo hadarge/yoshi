@@ -1,10 +1,13 @@
 const fs = require('fs');
-const path = require('path');
 const tempy = require('tempy');
-const expect = require('expect');
 const execa = require('execa');
 const chalk = require('chalk');
-const { generateProject } = require('../packages/create-yoshi-app/src/index');
+const Answers = require('../packages/create-yoshi-app/src/Answers');
+const {
+  generateProject,
+  verifyRegistry,
+  getProjectTypes,
+} = require('../packages/create-yoshi-app/src/index');
 
 // verbose logs and output
 const verbose = process.env.VERBOSE_TESTS;
@@ -15,12 +18,12 @@ verbose && console.log(`using ${chalk.yellow('VERBOSE')} mode`);
 
 const stdio = verbose ? 'inherit' : 'pipe';
 
-const projectTypes = fs
-  .readdirSync(path.join(__dirname, '../packages/create-yoshi-app/templates'))
-  .filter(
-    projectType =>
-      !focusProjectPattern ? true : projectType.match(focusProjectPattern),
-  );
+verifyRegistry();
+
+const projectTypes = getProjectTypes().filter(
+  projectType =>
+    !focusProjectPattern ? true : projectType.match(focusProjectPattern),
+);
 
 focusProjectPattern &&
   console.log(
@@ -33,10 +36,7 @@ console.log('Running e2e tests for the following projects:\n');
 projectTypes.forEach(type => console.log(`> ${chalk.cyan(type)}`));
 
 const testTemplate = mockedAnswers => {
-  const typescriptSuffix =
-    mockedAnswers.transpiler === 'typescript' ? '-typescript' : '';
-
-  describe(`${mockedAnswers.projectType}${typescriptSuffix}`, () => {
+  describe(mockedAnswers.fullProjectType, () => {
     const tempDir = tempy.directory();
 
     it(`should create the project`, async () => {
@@ -78,13 +78,18 @@ const testTemplate = mockedAnswers => {
 
 describe('create-yoshi-app + yoshi e2e tests', () => {
   projectTypes
-    .map(projectType => ({
-      projectName: `test-${projectType}`,
-      authorName: 'rany',
-      authorEmail: 'rany@wix.com',
-      organization: 'wix',
-      projectType: projectType.replace('-typescript', ''),
-      transpiler: projectType.endsWith('-typescript') ? 'typescript' : 'babel',
-    }))
+    .map(
+      projectType =>
+        new Answers({
+          projectName: `test-${projectType}`,
+          authorName: 'rany',
+          authorEmail: 'rany@wix.com',
+          organization: 'wix',
+          projectType: projectType.replace('-typescript', ''),
+          transpiler: projectType.endsWith('-typescript')
+            ? 'typescript'
+            : 'babel',
+        }),
+    )
     .forEach(testTemplate);
 });

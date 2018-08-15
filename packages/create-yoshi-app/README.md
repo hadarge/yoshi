@@ -34,3 +34,9 @@ This project is called "my-project" and it was created by JOHN_DOE
 ```
 
 You can also use these on file names.
+
+# development
+
+```bash
+npm run dev
+```
