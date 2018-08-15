@@ -90,7 +90,7 @@
     "tslint": "^5.10.0",
     "tslint-config-yoshi": "^3.2.1",
     "tslint-config-yoshi-base": "^3.1.2",
-    "url-loader": "^1.0.0",
+    "url-loader": "1.0.1",
     "webpack": "^4.1.1",
     "webpack-bundle-analyzer": "^2.8.3",
     "webpack-dev-middleware": "~2.0.5",
