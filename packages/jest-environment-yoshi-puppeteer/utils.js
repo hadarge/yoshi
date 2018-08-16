@@ -1,7 +1,5 @@
-const path = require('path');
-const fs = require('fs-extra');
 const { execSync } = require('child_process');
-const chalk = require('chalk');
+const globby = require('globby');
 
 const execOptions = {
   encoding: 'utf8',
@@ -36,4 +34,15 @@ module.exports.getProcessForPort = port => {
   } catch (e) {
     return null;
   }
+};
+
+const { MATCH_ENV } = process.env;
+
+module.exports.shouldRunE2Es = async () => {
+  const filesPaths = await globby('test/e2e/**/*.e2e.(ts|js){,x}');
+
+  return (
+    filesPaths.length > 0 &&
+    (!MATCH_ENV || MATCH_ENV.split(',').includes('e2e'))
+  );
 };

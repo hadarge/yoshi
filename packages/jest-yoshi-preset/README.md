@@ -34,19 +34,18 @@ It's configured for every file under `<rootDir>/src/**/*.spec.js`.
 
 An environment for testing your server (API) code. It starts up a different instance of your server ([wix-ng-bootstarp based](https://github.com/wix-platform/wix-node-platform)) for every test file.
 
-The wrapper that controls your server ([learn more](https://github.com/wix-platform/wix-node-platform/tree/master/bootstrap/wix-bootstrap-testkit)) is available as `global.app`.
+You sohuld define setup and teardown functions to start/stop your server and relevant mocks (learn more: [wix-bootstrap-testkit](https://github.com/wix-platform/wix-node-platform/tree/master/bootstrap/wix-bootstrap-testkit), [wix-rpc-testkit](https://github.com/wix-platform/wix-node-platform/tree/master/rpc/wix-rpc-testkit)).
 
-If you're using RPC calls, you can use the pre-configured RPC wrapper ([learn more](https://github.com/wix-platform/wix-node-platform/tree/master/rpc/wix-json-rpc-client)) that's available as `global.rpcServer`.
 
-Runs for every test file matching `<rootDir>/test/it/**/*.spec.js`.
+Runs for every test file matching `<rootDir>/test/server/**/*.spec.js`.
 
 #### Puppeteer environment
 
 An environment that pre-configures [Puppeteer](https://github.com/GoogleChrome/puppeteer) for running your E2E tests.
 
-It creates a global Browser instance ([learn more](https://github.com/GoogleChrome/puppeteer/blob/v1.5.0/docs/api.md#class-browser)) for every test file that's available as `global.browser`.
+It creates a global Browser instance ([learn more](https://github.com/GoogleChrome/puppeteer/blob/v1.5.0/docs/api.md#class-browser)) and a global Page instance ([learn more](https://github.com/GoogleChrome/puppeteer/blob/v1.5.0/docs/api.md#class-page)) for every test file. They're available as `global.browser` and `global.page` respectively.
 
-Runs for every file that matches `<rootDir>/test/e2e/**/*.e2e.js`.
+Runs for every file that matches `<rootDir>/test/e2e/**/*.spec.js`.
 
 ### Configuration
 
@@ -55,21 +54,12 @@ This preset looks for a `jest-yoshi.config.js` file at the root of your project.
 ```js
 module.exports = {
   bootstrap: {
-    emit: async (emitter, { rpcServer }) => {
-      await emitter
-        .fn('scripts_domain', 'static.parastorage.com')
-        .fn(
-          'static_url',
-          'com.wixpress.{%projectName%}',
-          'http://localhost:3200/',
-        )
-        .fn(
-          'service_url',
-          'com.wixpress.npm.node-workshop-scala-app',
-          rpcServer.getUrl(),
-        )
-        .emit();
-    },
+    setup: async () => {},
+    teardown: async () => {},
+  },
+  server: {
+    command: 'node index.js',
+    port: 1234,
   },
   puppeteer: {
     headless: true,

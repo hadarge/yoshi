@@ -242,13 +242,12 @@ module.exports.toIdentifier = str => {
 module.exports.loadConfig = () => {
   const configPath = path.join(process.cwd(), 'jest-yoshi.config.js');
 
-  if (!fs.existsSync(configPath)) {
-    throw new Error(
-      `Could not find 'jest-yoshi.config.js' file, please create one at the root of your project.`,
-    );
-  }
-
   let config;
+
+  if (!fs.existsSync(configPath)) {
+    // use default config
+    config = {};
+  }
 
   try {
     config = require(configPath);
@@ -266,7 +265,7 @@ module.exports.loadConfig = () => {
         teardown: async () => {},
       },
       server: {
-        filename: 'path/to/some/file',
+        command: 'node index.js',
         port: 1234,
       },
     },
