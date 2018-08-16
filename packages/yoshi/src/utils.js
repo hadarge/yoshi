@@ -242,12 +242,12 @@ module.exports.toIdentifier = str => {
 module.exports.loadConfig = () => {
   const configPath = path.join(process.cwd(), 'jest-yoshi.config.js');
 
-  let config;
-
   if (!fs.existsSync(configPath)) {
     // use default config
-    config = {};
+    return {};
   }
+
+  let config;
 
   try {
     config = require(configPath);

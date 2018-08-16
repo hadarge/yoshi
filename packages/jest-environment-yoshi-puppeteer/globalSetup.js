@@ -27,11 +27,11 @@ const serverLogPrefixer = () => {
 const config = loadConfig();
 
 module.exports = async () => {
-  // start with a few new lines
-  console.log('\n\n');
-
   // a bit hacky, run puppeteer setup only if it's required
   if (await shouldRunE2Es()) {
+    // start with a few new lines
+    console.log('\n\n');
+
     global.BROWSER = await puppeteer.launch({
       // defaults
       headless: true,

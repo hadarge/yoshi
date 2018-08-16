@@ -39,7 +39,7 @@ module.exports.getProcessForPort = port => {
 const { MATCH_ENV } = process.env;
 
 module.exports.shouldRunE2Es = async () => {
-  const filesPaths = await globby('test/e2e/**/*.e2e.(ts|js){,x}');
+  const filesPaths = await globby('test/e2e/**/*.spec.(ts|js){,x}');
 
   return (
     filesPaths.length > 0 &&
