@@ -57,6 +57,7 @@ module.exports = function(wallaby) {
       'testkit/**/*.[j|t]s',
       'test/**/*.[j|t]s',
       'test/**/*.[j|t]sx',
+      'test/**/*.json',
       'src/**/*.scss',
     ],
     tests: [
