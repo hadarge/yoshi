@@ -1037,6 +1037,33 @@ describe('Aggregator: Build', () => {
         });
       });
     });
+
+    describe('build project with 2 entry points which are bundled in UMD modules', () => {
+      it('should be anonymous AMD modules if config has {umdNamedDefine: false}', () => {
+        test
+          .setup({
+            'package.json': fx.packageJson({
+              umdNamedDefine: false,
+              exports: '[name]',
+              entry: {
+                a: './entryA.js',
+                b: './entryB.js',
+              },
+              externals: ['dep-for-a-module', 'dep-for-b-module'],
+            }),
+            'src/entryA.js': `const dependency = require('dep-for-a-module'); module.exports = 'A'`,
+            'src/entryB.js': `const dependency = require('dep-for-b-module'); module.exports = 'B'`,
+          })
+          .execute('build', []);
+
+        expect(test.content('dist/statics/a.bundle.js')).contain(
+          `define(["dep-for-a-module"], `,
+        );
+        expect(test.content('dist/statics/b.bundle.js')).contain(
+          `define(["dep-for-b-module"], `,
+        );
+      });
+    });
   });
 
   describe.skip('yoshi-check-deps', () => {

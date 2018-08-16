@@ -91,6 +91,7 @@ module.exports = {
   performanceBudget: () => getConfig('performance', {}),
   resolveAlias: () => getConfig('resolveAlias', {}),
   keepFunctionNames: () => getConfig('keepFunctionNames', false),
+  umdNamedDefine: () => getConfig('umdNamedDefine', true),
 };
 
 function serverProtocol(ssl) {

@@ -419,6 +419,12 @@ Next time you'll run `yoshi lint`, this command will execute and only then the l
 
 **Missing a hook?** Feel free to open issues/PRs for more hooks if needed.
 
+#### yoshi.umdNamedDefine
+`Boolean`
+
+If option is `true` AMD modules of the UMD build will have names. Otherwise an anonymous define is used(the same as in [webpack](https://webpack.js.org/configuration/output/#output-umdnameddefine)).
+By default it is `true`.
+
 ## FAQ
 - [How do I debug my server/tests?](/docs/faq/DEBUGGING.md)
 - [How to add external assets to my client part of the project?](docs/faq/ASSETS.md)

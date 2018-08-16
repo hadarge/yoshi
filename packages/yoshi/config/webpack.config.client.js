@@ -169,7 +169,7 @@ const config = ({
     },
 
     output: {
-      umdNamedDefine: true,
+      umdNamedDefine: projectConfig.umdNamedDefine(),
       path: path.resolve('./dist/statics'),
       filename: min ? '[name].bundle.min.js' : '[name].bundle.js',
       chunkFilename: min ? '[name].chunk.min.js' : '[name].chunk.js',
