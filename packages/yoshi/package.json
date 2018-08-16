@@ -14,6 +14,7 @@
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch"
   },
   "dependencies": {
+    "@wix/depkeeper-preset-yoshi": "^1.0.0",
     "autoprefixer": "~7.1.2",
     "babel-eslint": "^8.2.3",
     "babel-loader": "~7.1.1",
@@ -73,6 +74,7 @@
     "mkdirp": "~0.5.1",
     "mocha": "^3.4.2",
     "mocha-teamcity-reporter": "~1.1.1",
+    "mock-require": "^2.0.0",
     "nyc": "^12.0.1",
     "petri-specs": "~1.2.0",
     "prettier": "^1.12.1",

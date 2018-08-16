@@ -1,28 +1,18 @@
 const chalk = require('chalk');
-const depkeeper = require('depkeeper');
+const depkeeperPresetYoshi = require('@wix/depkeeper-preset-yoshi');
 
 module.exports = ({ cwd = process.cwd() } = {}) => {
-  return depkeeper({ cwd })
-    .rule('wix-style-react', { major: 2 })
-    .rule('{yoshi,wix-style-react}')
-    .rule('wix-bootstrap-*', { patch: 5 })
-    .checkRules()
-    .then(([wixStyleReactOutdated, wsrYoshiOutdated, bootstrapOutdated]) => {
-      if (wixStyleReactOutdated.length) {
-        return fail(wixStyleReactOutdated);
-      }
-
-      if (wsrYoshiOutdated.length) {
-        return warn(wsrYoshiOutdated);
-      }
-
-      if (bootstrapOutdated.length) {
-        return warn(bootstrapOutdated);
-      }
-    });
+  return depkeeperPresetYoshi({ cwd }).then(({ fail, warn }) => {
+    if (fail.length) {
+      return logFail(fail);
+    }
+    if (warn.length) {
+      return logWarn(warn);
+    }
+  });
 };
 
-function fail(deps) {
+function logFail(deps) {
   const formatedDeps = deps
     .map(
       ({ name, version, minimal }) =>
@@ -35,7 +25,7 @@ function fail(deps) {
   return Promise.reject(message);
 }
 
-function warn(deps) {
+function logWarn(deps) {
   const formatedDeps = deps
     .map(
       ({ name, version, minimal }) =>
