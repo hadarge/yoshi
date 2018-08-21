@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.6.1 (Aug 21, 2018)
+#### :bug: Bug
+* `create-yoshi-app`
+  * [#508](https://github.com/wix/yoshi/pull/508) Fix a bug with generating projects
+
 ## 3.6.0 (Aug 21, 2018)
 
 #### :bug: Bug
