@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.6.0 (Aug 21, 2018)
+
+#### :bug: Bug
+* `yoshi`
+  * [#503](https://github.com/wix/yoshi/pull/503) Allow Wallaby to import json from tests directory as well
+
+#### :nail_care: Enhancement
+* `jest-yoshi-preset`
+  * [#501](https://github.com/wix/yoshi/pull/501) [#504](https://github.com/wix/yoshi/pull/504) Various fixes and improvements
+* `yoshi`
+  * [#502](https://github.com/wix/yoshi/pull/502) Add an option to connfigure Webpack with `umdNamedDefine`
+
+#### :house: Internal
+* `yoshi`
+  * [#475](https://github.com/wix/yoshi/pull/475) Move depkeeper configuration to `depkeeper-preset-yoshi`
+* `create-yoshi-app`
+  * [#499](https://github.com/wix/yoshi/pull/499) Add a dev command that enables fun and fast development for the templates of `create-yoshi-app`
+
 ## 3.5.0 (Aug 14, 2018)
 
 #### :nail_care: Enhancement
