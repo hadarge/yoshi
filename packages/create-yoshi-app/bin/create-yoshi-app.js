@@ -33,8 +33,8 @@ if (customProjectDir) {
 createApp(process.cwd());
 
 async function createApp(workingDir) {
-  verifyWorkingDirectory();
-  verifyRegistry();
+  verifyWorkingDirectory(workingDir);
+  verifyRegistry(workingDir);
 
   clearConsole();
 
