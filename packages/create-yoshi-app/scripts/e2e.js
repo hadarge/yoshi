@@ -1,6 +1,9 @@
+const path = require('path');
+const fs = require('fs-extra');
 const tempy = require('tempy');
 const execa = require('execa');
 const chalk = require('chalk');
+const globby = require('globby');
 const Answers = require('../src/Answers');
 const { createApp, verifyRegistry, getProjectTypes } = require('../src/index');
 const prompts = require('prompts');
@@ -31,6 +34,27 @@ focusProjectPattern &&
 console.log('Running e2e tests for the following projects:\n');
 projectTypes.forEach(type => console.log(`> ${chalk.cyan(type)}`));
 
+const linkLocalModules = async tempDir => {
+  const directories = await globby(path.join(__dirname, '../../**'), {
+    onlyDirectories: true,
+    deep: false,
+  });
+
+  directories.forEach(directory => {
+    const directoryName = path.basename(directory);
+    const destPath = path.join(tempDir, 'node_modules', directoryName);
+
+    if (fs.existsSync(destPath)) {
+      console.log(
+        `linking ${chalk.cyan(directory)} -> ${chalk.cyan(destPath)}`,
+      );
+
+      fs.removeSync(destPath);
+      fs.symlinkSync(directory, destPath);
+    }
+  });
+};
+
 const testTemplate = mockedAnswers => {
   describe(mockedAnswers.fullProjectType, () => {
     const tempDir = tempy.directory();
@@ -40,6 +64,7 @@ const testTemplate = mockedAnswers => {
     it('should create the project', async () => {
       verbose && console.log(chalk.cyan(tempDir));
       await createApp(tempDir);
+      await linkLocalModules(tempDir);
     });
 
     it(`should run npm test`, () => {
