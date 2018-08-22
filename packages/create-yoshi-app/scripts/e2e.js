@@ -1,13 +1,9 @@
-const fs = require('fs');
 const tempy = require('tempy');
 const execa = require('execa');
 const chalk = require('chalk');
-const Answers = require('../packages/create-yoshi-app/src/Answers');
-const {
-  generateProject,
-  verifyRegistry,
-  getProjectTypes,
-} = require('../packages/create-yoshi-app/src/index');
+const Answers = require('../src/Answers');
+const { createApp, verifyRegistry, getProjectTypes } = require('../src/index');
+const prompts = require('prompts');
 
 // verbose logs and output
 const verbose = process.env.VERBOSE_TESTS;
@@ -39,31 +35,11 @@ const testTemplate = mockedAnswers => {
   describe(mockedAnswers.fullProjectType, () => {
     const tempDir = tempy.directory();
 
-    it(`should create the project`, async () => {
+    before(() => prompts.inject(mockedAnswers));
+
+    it('should create the project', async () => {
       verbose && console.log(chalk.cyan(tempDir));
-      await generateProject(mockedAnswers, tempDir);
-
-      if (fs.readdirSync(tempDir).length === 0) {
-        throw new Error(
-          `project dir ${tempDir} is empty, project generation failed`,
-        );
-      }
-    });
-
-    it(`should run npm install`, () => {
-      console.log('running npm install...');
-      execa.shellSync('npm install', {
-        cwd: tempDir,
-        stdio,
-      });
-    });
-
-    it(`should fix all autofixable lint errors after using generation`, () => {
-      console.log('running npx yoshi lint --fix ...');
-      execa.shellSync('npx yoshi lint --fix', {
-        cwd: tempDir,
-        stdio,
-      });
+      await createApp(tempDir);
     });
 
     it(`should run npm test`, () => {

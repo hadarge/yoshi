@@ -3,7 +3,7 @@
 const argv = require('minimist')(process.argv.slice(2));
 const Mocha = require('mocha');
 
-const testFile = require.resolve('../tests/e2e.js');
+const testFile = require.resolve('./e2e.js');
 
 // pass -v or --verbose to be in verbose mode
 const verbose = argv.verbose || argv.v;

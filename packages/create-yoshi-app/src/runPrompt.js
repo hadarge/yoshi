@@ -7,7 +7,6 @@ module.exports = async (workingDir = process.cwd()) => {
   const questions = await getQuestions(workingDir);
 
   let promptAborted = false;
-  // use customProjectDir to ask less questions
   const answers = await prompts(questions, {
     onCancel: () => {
       promptAborted = true;

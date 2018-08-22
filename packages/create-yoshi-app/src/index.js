@@ -1,3 +1,4 @@
+const createApp = require('./createApp');
 const runPrompt = require('./runPrompt');
 const generateProject = require('./generateProject');
 const replaceTemplates = require('./replaceTemplates');
@@ -7,6 +8,7 @@ const verifyRegistry = require('./verifyRegistry');
 const getProjectTypes = require('./getProjectTypes');
 
 module.exports = {
+  createApp,
   runPrompt,
   generateProject,
   replaceTemplates,

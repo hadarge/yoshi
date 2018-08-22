@@ -15,6 +15,7 @@
   },
   "scripts": {
     "test": "jest",
+    "e2e": "node scripts/runE2E.js",
     "dev": "node scripts/dev.js"
   },
   "jest": {
