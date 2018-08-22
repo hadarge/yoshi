@@ -61,7 +61,6 @@ module.exports = runner.command(
       tasks[require.resolve('../tasks/update-node-version')];
     const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
     const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
-    const wixDepCheck = tasks[require.resolve('../tasks/dep-check')];
 
     const appServer = async () => {
       if (cliArgs.server === false) {
@@ -86,7 +85,6 @@ module.exports = runner.command(
         {},
         { title: 'scope-packages-migration', log: false },
       ),
-      wixDepCheck({}, { title: 'dep-check', log: false }),
     ]);
 
     const ssl = cliArgs.ssl || servers.cdn.ssl();
