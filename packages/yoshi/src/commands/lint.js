@@ -43,7 +43,7 @@ module.exports = runner.command(async tasks => {
   const { prelint } = hooks();
 
   if (shouldRunOnSpecificFiles) {
-    if (styleFiles.length) {
+    if ((await shouldRunStylelint()) && styleFiles.length) {
       await runStyleLint(styleFiles);
     }
 
