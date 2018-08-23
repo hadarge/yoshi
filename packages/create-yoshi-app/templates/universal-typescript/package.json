@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "yoshi start",
-    "precommit": "yoshi lint",
+    "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test",
     "posttest": "yoshi lint",
@@ -21,6 +21,7 @@
     "husky": "~0.14.0",
     "jsdom": "~11.2.0",
     "jsdom-global": "~3.0.0",
+    "lint-staged": "^7.2.2",
     "puppeteer": "^1.1.0",
     "react-test-renderer": "~15.6.0",
     "wix-bootstrap-testkit": "latest",
@@ -57,6 +58,9 @@
     "wix-express-require-https": "latest",
     "wix-run-mode": "latest",
     "yoshi-runtime": "latest"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,scss,less}": "yoshi lint"
   },
   "yoshi": {
     "universalProject": true,

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "yoshi start",
-    "precommit": "yoshi lint",
+    "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test",
     "posttest": "yoshi lint",
@@ -19,6 +19,7 @@
     "axios": "~0.16.0",
     "chai": "~4.1.0",
     "husky": "~0.14.0",
+    "lint-staged": "^7.2.2",
     "wix-bootstrap-testkit": "latest",
     "wix-config-emitter": "latest",
     "wix-rpc-testkit": "latest",
@@ -32,6 +33,9 @@
     "wix-express-require-https": "latest",
     "wix-run-mode": "latest",
     "regenerator-runtime": "^0.11.0"
+  },
+  "lint-staged": {
+    "*.js": "yoshi lint"
   },
   "yoshi": {
     "hmr": "auto"

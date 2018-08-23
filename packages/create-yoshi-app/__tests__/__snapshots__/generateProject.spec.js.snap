@@ -44,7 +44,7 @@ Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start --entry-point ./dist/test/dev/server.js\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -58,6 +58,7 @@ Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.2.0\\",
     \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"prop-types\\": \\"~15.5.0\\",
     \\"protractor\\": \\"^5.3.2\\",
     \\"react\\": \\"15.5.4\\",
@@ -75,6 +76,9 @@ Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91
     \\"react-i18next\\": \\"~4.8.0\\",
     \\"wix-axios-config\\": \\"latest\\",
     \\"regenerator-runtime\\": \\"^0.11.0\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{js,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"entry\\": {
@@ -537,7 +541,7 @@ Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start --entry-point ./dist/test/dev/server.js\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -559,6 +563,7 @@ Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.2.0\\",
     \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"prop-types\\": \\"~15.5.0\\",
     \\"protractor\\": \\"^5.3.2\\",
     \\"react\\": \\"15.5.4\\",
@@ -576,6 +581,9 @@ Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91
     \\"i18next-xhr-backend\\": \\"~1.4.0\\",
     \\"react-i18next\\": \\"~4.8.0\\",
     \\"wix-axios-config\\": \\"latest\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"entry\\": {
@@ -1160,7 +1168,7 @@ start();
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -1174,6 +1182,7 @@ start();
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.2.0\\",
     \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"puppeteer\\": \\"^1.1.0\\",
     \\"react-test-renderer\\": \\"~15.6.0\\",
     \\"velocity\\": \\"~0.7.0\\",
@@ -1190,6 +1199,9 @@ start();
     \\"react-i18next\\": \\"~4.8.0\\",
     \\"regenerator-runtime\\": \\"^0.11.0\\",
     \\"wix-axios-config\\": \\"latest\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{js,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -1633,7 +1645,7 @@ start();
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -1647,6 +1659,7 @@ start();
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.2.0\\",
     \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"puppeteer\\": \\"^1.1.0\\",
     \\"react-test-renderer\\": \\"~15.6.0\\",
     \\"velocity\\": \\"~0.7.0\\",
@@ -1673,6 +1686,9 @@ start();
     \\"react-dom\\": \\"15.6.1\\",
     \\"react-i18next\\": \\"~4.8.0\\",
     \\"wix-axios-config\\": \\"latest\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -2171,7 +2187,7 @@ module.exports = (config, env, defaultConfig) => {
     \\"registry\\": \\"http://npm.dev.wixpress.com/\\"
   },
   \\"scripts\\": {
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build && build-storybook\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -2187,6 +2203,7 @@ module.exports = (config, env, defaultConfig) => {
     \\"enzyme\\": \\"~2.9.0\\",
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.1.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"prop-types\\": \\"~15.6.0\\",
     \\"react\\": \\"15.6.1\\",
     \\"react-dom\\": \\"15.6.1\\",
@@ -2194,6 +2211,9 @@ module.exports = (config, env, defaultConfig) => {
     \\"teamcity-surge-autorelease\\": \\"^1.0.3\\",
     \\"yoshi\\": \\"^3.0.0\\",
     \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{js,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"entry\\": {
@@ -2417,7 +2437,7 @@ module.exports = (config, env, defaultConfig) => {
     \\"registry\\": \\"http://npm.dev.wixpress.com/\\"
   },
   \\"scripts\\": {
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build && build-storybook\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -2439,6 +2459,7 @@ module.exports = (config, env, defaultConfig) => {
     \\"enzyme\\": \\"~2.9.0\\",
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.1.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"prop-types\\": \\"~15.6.0\\",
     \\"react\\": \\"15.6.1\\",
     \\"react-dom\\": \\"15.6.1\\",
@@ -2447,6 +2468,9 @@ module.exports = (config, env, defaultConfig) => {
     \\"typescript\\": \\"~2.9.0\\",
     \\"yoshi\\": \\"^3.0.0\\",
     \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"entry\\": {
@@ -2681,7 +2705,7 @@ bootstrap()
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -2711,11 +2735,15 @@ bootstrap()
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.2.0\\",
     \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"puppeteer\\": \\"^1.1.0\\",
     \\"wix-bootstrap-testkit\\": \\"latest\\",
     \\"wix-config-emitter\\": \\"latest\\",
     \\"yoshi\\": \\"^3.0.0\\",
     \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{js,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -3195,7 +3223,7 @@ bootstrap()
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -3224,6 +3252,7 @@ bootstrap()
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.2.0\\",
     \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"puppeteer\\": \\"^1.1.0\\",
     \\"wix-bootstrap-testkit\\": \\"latest\\",
     \\"wix-config-emitter\\": \\"latest\\",
@@ -3240,6 +3269,9 @@ bootstrap()
     \\"@types/react\\": \\"~15.6.0\\",
     \\"@types/react-dom\\": \\"~15.5.0\\",
     \\"@types/react-i18next\\": \\"~4.6.0\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -3759,7 +3791,7 @@ test/e2e/screenshots
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -3768,7 +3800,11 @@ test/e2e/screenshots
   \\"devDependencies\\": {
     \\"chai\\": \\"~4.1.0\\",
     \\"husky\\": \\"~0.14.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"yoshi\\": \\"^3.0.0\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.js\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"hmr\\": \\"auto\\"
@@ -3963,7 +3999,7 @@ test/e2e/screenshots
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -3972,11 +4008,15 @@ test/e2e/screenshots
   \\"devDependencies\\": {
     \\"chai\\": \\"~4.1.0\\",
     \\"husky\\": \\"~0.14.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"yoshi\\": \\"^3.0.0\\",
     \\"typescript\\": \\"~2.9.0\\",
     \\"@types/node\\": \\"^8.0.0\\",
     \\"@types/chai\\": \\"~4.0.0\\",
     \\"@types/mocha\\": \\"~2.2.0\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.ts\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"hmr\\": \\"auto\\"
@@ -4189,7 +4229,7 @@ bootstrap()
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -4199,6 +4239,7 @@ bootstrap()
     \\"axios\\": \\"~0.16.0\\",
     \\"chai\\": \\"~4.1.0\\",
     \\"husky\\": \\"~0.14.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"wix-bootstrap-testkit\\": \\"latest\\",
     \\"wix-config-emitter\\": \\"latest\\",
     \\"wix-rpc-testkit\\": \\"latest\\",
@@ -4212,6 +4253,9 @@ bootstrap()
     \\"wix-express-require-https\\": \\"latest\\",
     \\"wix-run-mode\\": \\"latest\\",
     \\"regenerator-runtime\\": \\"^0.11.0\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.js\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"hmr\\": \\"auto\\"
@@ -4438,7 +4482,7 @@ bootstrap()
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -4448,6 +4492,7 @@ bootstrap()
     \\"axios\\": \\"~0.16.0\\",
     \\"chai\\": \\"~4.1.0\\",
     \\"husky\\": \\"~0.14.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"wix-bootstrap-testkit\\": \\"latest\\",
     \\"wix-config-emitter\\": \\"latest\\",
     \\"wix-rpc-testkit\\": \\"latest\\",
@@ -4466,6 +4511,9 @@ bootstrap()
     \\"wix-express-csrf\\": \\"latest\\",
     \\"wix-express-require-https\\": \\"latest\\",
     \\"wix-run-mode\\": \\"latest\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.ts\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"hmr\\": \\"auto\\"
@@ -4722,7 +4770,7 @@ bootstrap()
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -4734,6 +4782,7 @@ bootstrap()
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.2.0\\",
     \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"puppeteer\\": \\"^1.1.0\\",
     \\"react-test-renderer\\": \\"~15.6.0\\",
     \\"wix-bootstrap-testkit\\": \\"latest\\",
@@ -4760,6 +4809,9 @@ bootstrap()
     \\"wix-express-require-https\\": \\"latest\\",
     \\"wix-run-mode\\": \\"latest\\",
     \\"yoshi-runtime\\": \\"latest\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{js,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"universalProject\\": true,
@@ -5289,7 +5341,7 @@ bootstrap()
   },
   \\"scripts\\": {
     \\"start\\": \\"yoshi start\\",
-    \\"precommit\\": \\"yoshi lint\\",
+    \\"precommit\\": \\"lint-staged\\",
     \\"pretest\\": \\"yoshi build\\",
     \\"test\\": \\"yoshi test\\",
     \\"posttest\\": \\"yoshi lint\\",
@@ -5301,6 +5353,7 @@ bootstrap()
     \\"husky\\": \\"~0.14.0\\",
     \\"jsdom\\": \\"~11.2.0\\",
     \\"jsdom-global\\": \\"~3.0.0\\",
+    \\"lint-staged\\": \\"^7.2.2\\",
     \\"puppeteer\\": \\"^1.1.0\\",
     \\"react-test-renderer\\": \\"~15.6.0\\",
     \\"wix-bootstrap-testkit\\": \\"latest\\",
@@ -5337,6 +5390,9 @@ bootstrap()
     \\"wix-express-require-https\\": \\"latest\\",
     \\"wix-run-mode\\": \\"latest\\",
     \\"yoshi-runtime\\": \\"latest\\"
+  },
+  \\"lint-staged\\": {
+    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"universalProject\\": true,
