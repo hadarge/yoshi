@@ -8,6 +8,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { isObject } = require('lodash');
 const { staticsDomain } = require('../src/constants');
 const StylableWebpackPlugin = require('stylable-webpack-plugin');
+const TpaStyleWebpackPlugin = require('tpa-style-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const {
   mergeByConcat,
@@ -59,6 +60,8 @@ const config = ({
   const projectName = projectConfig.name();
   const cssModules = projectConfig.cssModules();
   const tpaStyle = projectConfig.tpaStyle();
+  const enhancedTpaStyle = projectConfig.enhancedTpaStyle();
+
   const useSplitChunks = projectConfig.splitChunks();
   const splitChunksConfig = isObject(useSplitChunks)
     ? useSplitChunks
@@ -72,7 +75,7 @@ const config = ({
     }
   }
 
-  const stylableSeparateCss = false; // this is a temporary fix until stylable will be concatenated into a single css bundle of the app
+  const stylableSeparateCss = enhancedTpaStyle || false; // this is a temporary fix until stylable will be concatenated into a single css bundle of the app
 
   return mergeByConcat(webpackConfigCommon, {
     entry: getEntry(),
@@ -158,6 +161,7 @@ const config = ({
             new MiniCssExtractPlugin({
               filename: min ? '[name].min.css' : '[name].css',
             }),
+            ...(enhancedTpaStyle ? [new TpaStyleWebpackPlugin()] : []),
             new RtlCssPlugin(min ? '[name].rtl.min.css' : '[name].rtl.css'),
           ]),
     ],

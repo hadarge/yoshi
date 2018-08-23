@@ -71,6 +71,7 @@ module.exports = {
   separateCss: () => getConfig('separateCss', true),
   cssModules: () => getConfig('cssModules', true),
   tpaStyle: () => getConfig('tpaStyle', false),
+  enhancedTpaStyle: () => getConfig('enhancedTpaStyle', false),
   features: () => getConfig('features', {}),
   externals: () => getConfig('externals', []),
   babel: () => _.get(packagejson, 'babel'),

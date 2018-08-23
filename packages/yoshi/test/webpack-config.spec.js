@@ -199,6 +199,23 @@ describe('Webpack basic configs', () => {
     });
   });
 
+  describe('TPA style plugin', () => {
+    it('Should apply tpa style plugin', () => {
+      test
+        .setup({
+          'src/client.js': `require('./style.css')`,
+          'src/style.css': `.foo{color: "color(color-1)"; background: red;}`,
+          'package.json': fx.packageJson({
+            enhancedTpaStyle: true,
+          }),
+        })
+        .execute('build');
+
+      const css = test.content('dist/statics/app.css');
+      expect(css).not.to.contain('"color(color-1)"');
+    });
+  });
+
   describe('Case sensitive plugin', () => {
     it('Should fail on wrong file referance casing not matching', () => {
       const res = test
