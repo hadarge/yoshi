@@ -1,6 +1,6 @@
 {
   "name": "tslint-config-yoshi",
-  "version": "3.2.1",
+  "version": "3.7.0",
   "description": "tslint configuration for react projects using yoshi",
   "main": "index.js",
   "keywords": [
@@ -19,8 +19,8 @@
     "typescript": "~2.9.0"
   },
   "peerDependencies": {
-    "tslint-plugin-wix-style-react": "^1.0.0",
-    "tslint": ">=5.10.0"
+    "tslint": ">=5.10.0",
+    "tslint-plugin-wix-style-react": "^1.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
