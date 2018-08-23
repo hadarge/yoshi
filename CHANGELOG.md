@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.7.0 (Aug 23, 2018)
+#### :bug: Bug
+* `create-yoshi-app`
+  * [#511](https://github.com/wix/yoshi/pull/511) Support generating a project in a directory with initialized git repository
+  * [#522](https://github.com/wix/yoshi/pull/522) Add `lint-staged` to project templates
+* `yoshi`
+  * [#522](https://github.com/wix/yoshi/pull/522) Ensure `shouldRunStylelint` before linting specific style files
+
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#519](https://github.com/wix/yoshi/pull/519) Remove depCheck from start command
+  * [#520](https://github.com/wix/yoshi/pull/520) Add enhanced tpa style webpack plugin
+
+#### :house: Internal
+* [#517](https://github.com/wix/yoshi/pull/517) Link local packages when running create-yoshi-app e2es
+
 ## 3.6.1 (Aug 21, 2018)
 #### :bug: Bug
 * `create-yoshi-app`
