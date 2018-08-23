@@ -40,7 +40,7 @@
     "wix-run-mode": "latest"
   },
   "lint-staged": {
-    "*.ts": "yoshi lint"
+    "*.{js,ts}": "yoshi lint"
   },
   "yoshi": {
     "hmr": "auto"

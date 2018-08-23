@@ -49,7 +49,7 @@
     "yoshi-style-dependencies": "^3.0.0"
   },
   "lint-staged": {
-    "*.{ts,tsx,scss,less}": "yoshi lint"
+    "*.{js,ts,tsx,scss,less}": "yoshi lint"
   },
   "yoshi": {
     "entry": {

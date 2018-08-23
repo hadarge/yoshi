@@ -583,7 +583,7 @@ Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91
     \\"wix-axios-config\\": \\"latest\\"
   },
   \\"lint-staged\\": {
-    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
+    \\"*.{js,ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"entry\\": {
@@ -1688,7 +1688,7 @@ start();
     \\"wix-axios-config\\": \\"latest\\"
   },
   \\"lint-staged\\": {
-    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
+    \\"*.{js,ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -2470,7 +2470,7 @@ module.exports = (config, env, defaultConfig) => {
     \\"yoshi-style-dependencies\\": \\"^3.0.0\\"
   },
   \\"lint-staged\\": {
-    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
+    \\"*.{js,ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"entry\\": {
@@ -3271,7 +3271,7 @@ bootstrap()
     \\"@types/react-i18next\\": \\"~4.6.0\\"
   },
   \\"lint-staged\\": {
-    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
+    \\"*.{js,ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"externals\\": {
@@ -4016,7 +4016,7 @@ test/e2e/screenshots
     \\"@types/mocha\\": \\"~2.2.0\\"
   },
   \\"lint-staged\\": {
-    \\"*.ts\\": \\"yoshi lint\\"
+    \\"*.{js,ts}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"hmr\\": \\"auto\\"
@@ -4513,7 +4513,7 @@ bootstrap()
     \\"wix-run-mode\\": \\"latest\\"
   },
   \\"lint-staged\\": {
-    \\"*.ts\\": \\"yoshi lint\\"
+    \\"*.{js,ts}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"hmr\\": \\"auto\\"
@@ -5392,7 +5392,7 @@ bootstrap()
     \\"yoshi-runtime\\": \\"latest\\"
   },
   \\"lint-staged\\": {
-    \\"*.{ts,tsx,scss,less}\\": \\"yoshi lint\\"
+    \\"*.{js,ts,tsx,scss,less}\\": \\"yoshi lint\\"
   },
   \\"yoshi\\": {
     \\"universalProject\\": true,

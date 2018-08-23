@@ -52,7 +52,7 @@
     "wix-axios-config": "latest"
   },
   "lint-staged": {
-    "*.{ts,tsx,scss,less}": "yoshi lint"
+    "*.{js,ts,tsx,scss,less}": "yoshi lint"
   },
   "yoshi": {
     "externals": {
