@@ -29,7 +29,7 @@
     "wix-req-options": "latest",
     "yoshi": "^3.0.0",
     "yoshi-style-dependencies": "^3.0.0",
-    "typescript": "~2.9.0",
+    "typescript": "~3.0.1",
     "@types/node": "^8.0.0",
     "@types/chai": "~4.0.0",
     "@types/ejs": "~2.5.0",

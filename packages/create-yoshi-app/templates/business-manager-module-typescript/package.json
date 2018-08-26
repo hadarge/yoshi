@@ -38,7 +38,7 @@
     "react-dom": "15.5.4",
     "react-module-container": "~1.0.0",
     "react-test-renderer": "15.5.4",
-    "typescript": "~2.9.0",
+    "typescript": "~3.0.1",
     "yoshi": "^3.0.0",
     "yoshi-style-dependencies": "^3.0.0"
   },
