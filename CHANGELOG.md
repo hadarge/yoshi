@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.8.0 (Aug 27, 2018)
+#### :nail_care: Enhancement
+* [#533](https://github.com/wix/yoshi/pull/511) Update typescript generator templates to use version `3.0.1`
+* [#505](https://github.com/wix/yoshi/pull/505) Move client/fullstack generators to use `jest-yoshi-preset`
+
 ## 3.7.0 (Aug 23, 2018)
 #### :bug: Bug
 * `create-yoshi-app`
