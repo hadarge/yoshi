@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as session from 'express-session';
 import { renderVM } from './vm';
 
-export function start(port = process.env.PORT || 3000) {
+export function start() {
   const app = express();
 
   app.use(
@@ -27,7 +27,7 @@ export function start(port = process.env.PORT || 3000) {
     );
   });
 
-  return app.listen(port, () => {
-    console.info(`Fake server is running on port ${port}`);
+  return app.listen(process.env.PORT, () => {
+    console.info(`Fake server is running on port ${process.env.PORT}`);
   });
 }

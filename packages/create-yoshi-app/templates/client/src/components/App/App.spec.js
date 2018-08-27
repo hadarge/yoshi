@@ -1,6 +1,4 @@
-import 'jsdom-global/register';
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
@@ -27,6 +25,6 @@ describe('App', () => {
       </I18nextProvider>,
       { attachTo: document.createElement('div') },
     );
-    expect(wrapper.find('h2').length).to.eq(1);
+    expect(wrapper.find('h2').length).toEqual(1);
   });
 });

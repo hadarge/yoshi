@@ -1,9 +1,13 @@
-const path = require('path');
 const bootstrap = require('wix-bootstrap-ng');
 
-const rootDir = process.env.SRC_PATH || './dist/src';
-const getPath = filename => path.join(rootDir, filename);
+const app = bootstrap();
 
-bootstrap()
-  .express(getPath('server'))
-  .start({disableCluster: process.env.NODE_ENV === 'development'});
+if (process.env.NODE_ENV === 'production') {
+  app.express('./dist/src/server');
+} else {
+  app.express('./src/server');
+}
+
+app.start({
+  disableCluster: process.env.NODE_ENV !== 'production',
+});

@@ -240,6 +240,10 @@ module.exports.toIdentifier = str => {
 };
 
 module.exports.loadConfig = () => {
+  // the user's config is loaded outside of a jest runtime and should be transpiled
+  // with babel/typescript, this may be run separately for every worker
+  require('./require-hooks');
+
   const configPath = path.join(process.cwd(), 'jest-yoshi.config.js');
 
   if (!fs.existsSync(configPath)) {

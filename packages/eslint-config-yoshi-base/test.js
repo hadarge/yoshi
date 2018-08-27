@@ -5,6 +5,10 @@ module.exports = {
     jasmine: true,
     protractor: true,
   },
+  globals: {
+    browser: false,
+    page: false,
+  },
   plugins: ['jest'],
   overrides: [
     {

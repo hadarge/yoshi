@@ -34,7 +34,7 @@ focusProjectPattern &&
 console.log('Running e2e tests for the following projects:\n');
 projectTypes.forEach(type => console.log(`> ${chalk.cyan(type)}`));
 
-const linkLocalModules = async tempDir => {
+const copyLocalModules = async tempDir => {
   const directories = await globby(path.join(__dirname, '../../**'), {
     onlyDirectories: true,
     deep: false,
@@ -50,7 +50,7 @@ const linkLocalModules = async tempDir => {
       );
 
       fs.removeSync(destPath);
-      fs.symlinkSync(directory, destPath);
+      fs.copySync(directory, destPath);
     }
   });
 };
@@ -64,7 +64,7 @@ const testTemplate = mockedAnswers => {
     it('should create the project', async () => {
       verbose && console.log(chalk.cyan(tempDir));
       await createApp(tempDir);
-      await linkLocalModules(tempDir);
+      await copyLocalModules(tempDir);
     });
 
     it(`should run npm test`, () => {

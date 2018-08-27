@@ -11,7 +11,7 @@ This preset configures Jest with 3 different environments ([learn more](https://
 Install by running:
 
 ```bash
-npm install --save-dev jest-yoshi-preset puppeteer jest
+npm install --save-dev jest-yoshi-preset puppeteer
 ```
 
 Add the following to your Jest config:
@@ -19,6 +19,16 @@ Add the following to your Jest config:
 ```json
 {
     "preset": "jest-yoshi-preset"
+}
+```
+
+> If you're using TypeScript you should add `jest-yoshi-preset` types to your code by adding the following to your `tsconfig.json`:
+
+```json
+{
+  "files": [
+    "./node_modules/jest-yoshi-preset/types.d.ts"
+  ]
 }
 ```
 

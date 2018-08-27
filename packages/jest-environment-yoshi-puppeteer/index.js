@@ -24,6 +24,10 @@ module.exports = class PuppeteerEnvironment extends ParentEnvironment {
     });
 
     this.global.page = await this.global.browser.newPage();
+
+    this.global.page.on('pageerror', error => {
+      throw error;
+    });
   }
 
   async teardown() {
