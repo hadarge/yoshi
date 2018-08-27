@@ -1,6 +1,6 @@
 {
   "name": "jest-environment-yoshi-bootstrap",
-  "version": "3.7.0",
+  "version": "3.8.0",
   "description": "bootstrap environment for jest",
   "main": "index.js",
   "keywords": [
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "jest-environment-node": "^23.0.0",
-    "yoshi": "^3.7.0"
+    "yoshi": "^3.8.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
