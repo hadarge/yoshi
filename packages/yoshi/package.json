@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@wix/depkeeper-preset-yoshi": "^1.0.0",
+    "ajv": "^6.5.3",
+    "ajv-keywords": "^3.2.0",
     "autoprefixer": "~7.1.2",
     "babel-eslint": "^8.2.3",
     "babel-loader": "~7.1.1",

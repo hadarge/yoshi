@@ -106,6 +106,22 @@ You also use the `prod` keyword to only separate css on CI and production, this 
   <p className="mainColor">{counterValue}</p>
   ```
 
+#### yoshi.tpaStyle
+
+Set to true to build with TPA style.
+
+#### yoshi.enhancedTpaStyle ![status experimental](https://img.shields.io/badge/status-experimental-ff69b4.svg)
+
+Set to true to build with enhanced TPA style.
+
+#### yoshi.clientProjectName
+
+The name of the client project.
+
+#### yoshi.keepFunctionNames
+
+Set to true to keep function names when uglifying
+
 #### yoshi.entry
 
 Explanation is in [cli/build](#build) section.

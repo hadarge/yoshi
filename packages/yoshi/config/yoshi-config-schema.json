@@ -1,0 +1,479 @@
+{
+  "additionalProperties": false,
+  "definitions": {
+    "common.nonEmptyArrayOfUniqueStringValues": {
+      "items": {
+        "description": "A non-empty string",
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "externals": {
+      "anyOf": [
+        {
+          "description": "An exact matched dependency becomes external. The same string is used as external dependency.",
+          "type": "string"
+        },
+        {
+          "additionalProperties": {
+            "description": "The dependency used for the external",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "description": "If an dependency matches exactly a property of the object, the property value is used as dependency.",
+          "type": "object"
+        },
+        {
+          "description": "`function(context, request, callback(err, result))` The function is called on each dependency.",
+          "instanceof": "Function"
+        },
+        {
+          "description": "Every matched dependency becomes external.",
+          "instanceof": "RegExp"
+        },
+        {
+          "items": {
+            "description": "External configuration",
+            "anyOf": [
+              {
+                "$ref": "#/definitions/externals"
+              }
+            ]
+          },
+          "type": "array"
+        }
+      ]
+    },
+    "entry": {
+      "oneOf": [
+        {
+          "minProperties": 1,
+          "additionalProperties": {
+            "description": "An entry point with name",
+            "oneOf": [
+              {
+                "description": "The string is resolved to a module which is loaded upon startup.",
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "description": "All modules are loaded upon startup. The last one is exported.",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/common.nonEmptyArrayOfUniqueStringValues"
+                  }
+                ]
+              }
+            ]
+          },
+          "description": "Multiple entry bundles are created. The key is the chunk name. The value can be a string or an array.",
+          "type": "object"
+        },
+        {
+          "description": "An entry point without name. The string is resolved to a module which is loaded upon startup.",
+          "type": "string"
+        },
+        {
+          "description": "An entry point without name. All modules are loaded upon startup. The last one is exported.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/common.nonEmptyArrayOfUniqueStringValues"
+            }
+          ]
+        },
+        {
+          "description": "A Function returning an entry object, an entry string, an entry array or a promise to these things.",
+          "instanceof": "Function"
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "extends": {
+      "description": "A path to a module that exports yoshi config object to use as base config object.",
+      "type": "string"
+    },
+    "separateCss": {
+      "description": "Whether to separate the bundle for css files from the main js bundle.",
+      "enum": [
+        "prod",
+        false
+      ]
+    },
+    "splitChunks": {
+      "description": "Optimize duplication and caching by splitting chunks by shared modules and cache group",
+      "oneOf": [
+        {
+          "enum": [false]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "chunks": {
+              "description": "Select chunks for determining shared modules (defaults to \"async\", \"initial\" and \"all\" requires adding these chunks to the HTML)",
+              "oneOf": [
+                {
+                  "enum": ["initial", "async", "all"]
+                },
+                {
+                  "instanceof": "Function"
+                }
+              ]
+            },
+            "minSize": {
+              "description": "Minimal size for the created chunks",
+              "type": "number",
+              "minimum": 0
+            },
+            "maxSize": {
+              "description": "Maximal size hint for the created chunks",
+              "type": "number",
+              "minimum": 0
+            },
+            "minChunks": {
+              "description": "Minimum number of times a module has to be duplicated until it's considered for splitting",
+              "type": "number",
+              "minimum": 1
+            },
+            "maxAsyncRequests": {
+              "description": "Maximum number of requests which are accepted for on-demand loading",
+              "type": "number",
+              "minimum": 1
+            },
+            "maxInitialRequests": {
+              "description": "Maximum number of initial chunks which are accepted for an entry point",
+              "type": "number",
+              "minimum": 1
+            },
+            "name": {
+              "description": "Give chunks created a name (chunks with equal name are merged)",
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "instanceof": "Function"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "filename": {
+              "description": "Sets the template for the filename for created chunks (Only works for initial chunks)",
+              "type": "string",
+              "minLength": 1
+            },
+            "automaticNameDelimiter": {
+              "description": "Sets the name delimiter for created chunks",
+              "type": "string",
+              "minLength": 1
+            },
+            "hidePathInfo": {
+              "description": "Prevents exposing path info when creating names for parts splitted by maxSize",
+              "type": "boolean"
+            },
+            "fallbackCacheGroup": {
+              "description": "Options for modules not selected by any other cache group",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "minSize": {
+                  "description": "Minimal size for the created chunk",
+                  "type": "number",
+                  "minimum": 0
+                },
+                "maxSize": {
+                  "description": "Maximal size hint for the created chunks",
+                  "type": "number",
+                  "minimum": 0
+                },
+                "automaticNameDelimiter": {
+                  "description": "Sets the name delimiter for created chunks",
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "cacheGroups": {
+              "description": "Assign modules to a cache group (modules from different cache groups are tried to keep in separate chunks)",
+              "type": "object",
+              "additionalProperties": {
+                "description": "Configuration for a cache group",
+                "anyOf": [
+                  {
+                    "enum": [false]
+                  },
+                  {
+                    "instanceof": "Function"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "instanceof": "RegExp"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "test": {
+                        "description": "Assign modules to a cache group",
+                        "oneOf": [
+                          {
+                            "instanceof": "Function"
+                          },
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "instanceof": "RegExp"
+                          }
+                        ]
+                      },
+                      "chunks": {
+                        "description": "Select chunks for determining cache group content (defaults to \"initial\", \"initial\" and \"all\" requires adding these chunks to the HTML)",
+                        "oneOf": [
+                          {
+                            "enum": ["initial", "async", "all"]
+                          },
+                          {
+                            "instanceof": "Function"
+                          }
+                        ]
+                      },
+                      "enforce": {
+                        "description": "Ignore minimum size, minimum chunks and maximum requests and always create chunks for this cache group",
+                        "type": "boolean"
+                      },
+                      "priority": {
+                        "description": "Priority of this cache group",
+                        "type": "number"
+                      },
+                      "minSize": {
+                        "description": "Minimal size for the created chunk",
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "maxSize": {
+                        "description": "Maximal size hint for the created chunks",
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "minChunks": {
+                        "description": "Minimum number of times a module has to be duplicated until it's considered for splitting",
+                        "type": "number",
+                        "minimum": 1
+                      },
+                      "maxAsyncRequests": {
+                        "description": "Maximum number of requests which are accepted for on-demand loading",
+                        "type": "number",
+                        "minimum": 1
+                      },
+                      "maxInitialRequests": {
+                        "description": "Maximum number of initial chunks which are accepted for an entry point",
+                        "type": "number",
+                        "minimum": 1
+                      },
+                      "reuseExistingChunk": {
+                        "description": "Try to reuse existing chunk (with name) when it has matching modules",
+                        "type": "boolean"
+                      },
+                      "name": {
+                        "description": "Give chunks for this cache group a name (chunks with equal name are merged)",
+                        "oneOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "instanceof": "Function"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "automaticNameDelimiter": {
+                        "description": "Sets the name delimiter for created chunks",
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "automaticNamePrefix": {
+                        "description": "Sets the name prefix for created chunks",
+                        "type": "string"
+                      },
+                      "filename": {
+                        "description": "Sets the template for the filename for created chunks (Only works for initial chunks)",
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "cssModules": {
+      "description": "Whether to use css modules. On by default.",
+      "type": "boolean"
+    },
+    "tpaStyle": {
+      "description": "Build using TPA style",
+      "type": "boolean"
+    },
+    "enhancedTpaStyle": {
+      "description": "Build using enhanced TPA style",
+      "type": "boolean"
+    },
+    "features": {
+      "description": "Features of your project",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "externalizeRelativeLodash": {
+          "description": "Set to true to externalize relative lodash",
+          "type": "boolean"
+        }
+      }
+    },
+    "clientProjectName": {
+      "description": "The name of the client project.",
+      "type": "string"
+    },
+    "keepFunctionNames": {
+      "description": "Set to true to keep function names when uglifying",
+      "type": "boolean"
+    },
+    "entry": {
+      "description": "The entry point(s) of the compilation.",
+      "$ref": "#/definitions/entry"
+    },
+    "servers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cdn": {
+          "description": "Configuration for the CDN server",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "url": {
+              "description": "public path of CDN",
+              "type": "string"
+            },
+            "port": {
+              "description": "The port to expose the CDN on. defaults to 3200",
+              "type": "number"
+            },
+            "dir": {
+              "description": "Directory to which static files will be written to. Default to \"dist/statics\"",
+              "type": "string"
+            },
+            "ssl": {
+              "description": "Whether to expose the CDN over HTTPS",
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "externals": {
+      "description": "Specify dependencies that shouldn't be resolved by webpack, but should become dependencies of the resulting bundle. The kind of the dependency depends on `output.libraryTarget`.",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/externals"
+        }
+      ]
+    },
+    "specs": {
+      "description": "Specs globs are configurable. browser is for karma, node is for mocha and jasmine.",
+      "type": "object",
+      "properties": {
+        "browser": {
+          "description": "A glob for all the spec files to run in the browser",
+          "type": "string"
+        },
+        "node": {
+          "description": "A glob for all the spec files to run in node",
+          "type": "string"
+        }
+      }
+    },
+    "runIndividualTranspiler": {
+      "description": "In case you don't want to transpile your server (node) code, and you still need .babelrc/tsconfig, you can add runIndividualTranspiler flag to skip server transpiling.",
+      "type": "boolean"
+    },
+    "transpileTests": {
+      "description": "An option to not transpile tests with Babel (via babel-register). Defaults to true.",
+      "type": "boolean"
+    },
+    "externalUnprocessedModules": {
+      "description": "A list of external node modules to include in the transpilation.",
+      "type": "array",
+      "items": {
+        "description": "A node module to include in transpilation",
+        "type": "string"
+      }
+    },
+    "exports": {
+      "description": "If set, export the bundle as library. yoshi.exports is the name.",
+      "type": "string"
+    },
+    "hmr": {
+      "description": "Set to false in order to disable hot module replacement. (defaults to true)",
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "enum": [
+            "auto"
+          ]
+        }
+      ]
+    },
+    "liveReload": {
+      "description": "If true, instructs the browser to physically refresh the entire page if / when webpack indicates that a hot patch cannot be applied and a full refresh is needed.",
+      "type": "boolean"
+    },
+    "performance": {
+      "description": "Allows to use the Webpack Performance Budget feature. The configuration object is the same as in webpack. For more info, you can read the webpack docs.",
+      "type": "object"
+    },
+    "resolveAlias": {
+      "description": "Allows you to use the Webpack Resolve Alias feature. The configuration object is the same as in Webpack, note that the paths are relative to Webpacks context. For more info, you can read the webpack docs.",
+      "type": "object"
+    },
+    "hooks": {
+      "description": "Run a shell script at a specific time in yoshi's execution.",
+      "type": "object",
+      "properties": {
+        "prelint": {
+          "description": "Runs before the linter",
+          "type": "string"
+        }
+      }
+    },
+    "umdNamedDefine": {
+      "description": "If option is true AMD modules of the UMD build will have names. Otherwise an anonymous define is used(the same as in webpack). By default it is true.",
+      "type": "boolean"
+    }
+  }
+}

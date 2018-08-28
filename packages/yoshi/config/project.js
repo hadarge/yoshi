@@ -1,8 +1,12 @@
 const path = require('path');
 const _ = require('lodash');
+
+const chalk = require('chalk');
 const globs = require('../src/globs');
 const packagejson = require('./get-project-pkg');
 const lookupConfig = require('./lookup-config');
+const validateConfig = require('./validate-config');
+const YoshiOptionsValidationError = require('./YoshiOptionsValidationError');
 
 // Search for yoshi configuration from the file system.
 const config = lookupConfig();
@@ -93,6 +97,17 @@ module.exports = {
   resolveAlias: () => getConfig('resolveAlias', {}),
   keepFunctionNames: () => getConfig('keepFunctionNames', false),
   umdNamedDefine: () => getConfig('umdNamedDefine', true),
+  warnOnConfigValidationErrors: () => {
+    try {
+      validateConfig(config);
+    } catch (err) {
+      if (err instanceof YoshiOptionsValidationError) {
+        console.warn(chalk.yellow('Warning: ' + err.message));
+      } else {
+        throw err;
+      }
+    }
+  },
 };
 
 function serverProtocol(ssl) {

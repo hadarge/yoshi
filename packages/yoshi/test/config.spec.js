@@ -2,6 +2,7 @@ const path = require('path');
 const { expect } = require('chai');
 const tp = require('./helpers/test-phases');
 const fx = require('./helpers/fixtures');
+const retryPromise = require('retry-promise').default;
 
 describe('Lookup and read configuration', () => {
   let test;
@@ -57,6 +58,31 @@ describe('Lookup and read configuration', () => {
     );
   });
 
+  describe('validate configuration', () => {
+    let child;
+
+    afterEach(() => {
+      if (child) child.kill('SIGKILL');
+    });
+
+    ['build', 'test', 'lint', 'release', 'start'].forEach(command => {
+      it(`should print a warning on validation errors for ${command} command`, () => {
+        child = test
+          .setup({
+            'test/component.spec.js':
+              'it.only("pass", function () { return true; });',
+            '.eslintrc': fx.eslintrc(),
+            'package.json': fx.packageJson({
+              nonexistingproperty: true,
+            }),
+          })
+          .spawn(command);
+
+        return checkStderr(test, 'Warning: Invalid configuration object');
+      });
+    });
+  });
+
   describe('extends option', () => {
     it('should allow extending the base config with defaults', () => {
       const res = test
@@ -104,3 +130,11 @@ describe('Lookup and read configuration', () => {
     });
   });
 });
+
+function checkStderr(test, str) {
+  return retryPromise(
+    { backoff: 100, max: 20 },
+    () =>
+      test.stderr.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
+  );
+}
