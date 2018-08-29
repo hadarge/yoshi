@@ -2,10 +2,10 @@ const bootstrap = require('wix-bootstrap-ng');
 
 const app = bootstrap();
 
-if (process.env.NODE_ENV === 'production') {
-  app.express('./dist/src/server.js');
+if (process.env.NODE_ENV === 'test') {
+  app.express('./src/server');
 } else {
-  app.express('./src/server.js');
+  app.express('./dist/src/server');
 }
 
 app.start({
