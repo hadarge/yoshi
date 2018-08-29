@@ -68,6 +68,7 @@ module.exports = function(wallaby) {
     ],
     compilers: {
       '**/*.js{,x}': wallaby.compilers.babel({
+        babel: require('babel-core'), // Make sure wallaby is using babel 6.X
         babelrc: true,
         plugins: [
           require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
