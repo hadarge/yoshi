@@ -1,9 +1,19 @@
 # Changelog
 
+## 3.8.1 (Aug 29, 2018)
+#### :nail_care: Enhancement
+* `yoshi`
+  * [#535](https://github.com/wix/yoshi/pull/535) Validate that Yoshi's config is correct before running a command
+
+#### :bug: Bug
+* `create-yoshi-app`
+  * [#545](https://github.com/wix/yoshi/pull/545) Use files from /src only during test
+
 ## 3.8.0 (Aug 27, 2018)
 #### :nail_care: Enhancement
-* [#533](https://github.com/wix/yoshi/pull/511) Update typescript generator templates to use version `3.0.1`
-* [#505](https://github.com/wix/yoshi/pull/505) Move client/fullstack generators to use `jest-yoshi-preset`
+* `create-yoshi-app`
+  * [#533](https://github.com/wix/yoshi/pull/533) Update typescript generator templates to use version `3.0.1`
+  * [#505](https://github.com/wix/yoshi/pull/505) Move client/fullstack generators to use `jest-yoshi-preset`
 
 ## 3.7.0 (Aug 23, 2018)
 #### :bug: Bug
