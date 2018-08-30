@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "axios": "~0.16.0",
-    "ejs": "~2.5.0",
     "express": "~4.15.0",
     "i18next": "^11.6.0",
     "prop-types": "~15.6.0",
@@ -25,10 +24,12 @@
     "react-dom": "15.6.1",
     "react-i18next": "^7.11.0",
     "wix-axios-config": "latest",
+    "wix-bootstrap-greynode": "latest",
+    "wix-bootstrap-hadron": "latest",
     "wix-bootstrap-ng": "latest",
+    "wix-bootstrap-renderer": "latest",
     "wix-express-csrf": "latest",
-    "wix-express-require-https": "latest",
-    "wix-run-mode": "latest"
+    "wix-express-require-https": "latest"
   },
   "devDependencies": {
     "react-test-renderer": "~15.6.0",
@@ -43,7 +44,6 @@
     "yoshi-style-dependencies": "^3.0.0",
     "typescript": "~3.0.1",
     "@types/node": "^8.0.0",
-    "@types/ejs": "~2.5.0",
     "@types/express": "~4.0.0",
     "@types/i18next": "^8.4.5",
     "@types/jest": "~23.3.1",

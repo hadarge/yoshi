@@ -1,26 +1,17 @@
-import { Router } from 'express';
-import * as wixRunMode from 'wix-run-mode';
-import * as ejs from 'ejs';
+import { Router, Response } from 'express';
 import * as wixExpressCsrf from 'wix-express-csrf';
 import * as wixExpressRequireHttps from 'wix-express-require-https';
-import { readFileSync } from 'fs';
 
 module.exports = (app: Router, context) => {
   const config = context.config.load('{%projectName%}');
-  const templatePath = './src/index.ejs';
-  const templateFile = readFileSync(templatePath, 'utf8');
-  const isProduction = wixRunMode.isProduction();
 
   app.use(wixExpressCsrf());
   app.use(wixExpressRequireHttps);
+  app.use(context.renderer.middleware());
 
-  app.get('/', (req, res) => {
+  app.get('/', (req, res: Response) => {
     const renderModel = getRenderModel(req);
-    const html = ejs.render(templateFile, renderModel, {
-      cache: isProduction,
-      filename: templatePath,
-    });
-    res.send(html);
+    res.renderView('./index.ejs', renderModel);
   });
 
   function getRenderModel(req) {
@@ -30,8 +21,8 @@ module.exports = (app: Router, context) => {
       debug:
         req.aspects['web-context'].debug ||
         process.env.NODE_ENV === 'development',
-      clientTopology: config.clientTopology,
       title: 'Wix Full Stack Project Boilerplate',
+      staticsDomain: config.clientTopology.staticsDomain,
     };
   }
 

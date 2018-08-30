@@ -10,8 +10,8 @@ const { emitConfigs, bootstrapServer } = require('./test/environment');
 // test file globally by that name.
 module.exports = {
   bootstrap: {
-    setup: async ({ globalObject, getPort, staticsUrl, appConfDir }) => {
-      await emitConfigs({ staticsUrl, targetFolder: appConfDir });
+    setup: async ({ globalObject, getPort, appConfDir }) => {
+      await emitConfigs({ targetFolder: appConfDir });
 
       globalObject.app = bootstrapServer({
         port: getPort(),

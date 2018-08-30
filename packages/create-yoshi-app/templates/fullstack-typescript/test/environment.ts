@@ -1,16 +1,13 @@
 import * as testkit from 'wix-bootstrap-testkit';
 import * as configEmitter from 'wix-config-emitter';
 
-export const emitConfigs = ({ targetFolder, staticsUrl }) => {
+export const emitConfigs = ({ targetFolder }) => {
   const emitter = configEmitter({
     sourceFolders: ['./templates'],
     targetFolder,
   });
 
-  return emitter
-    .fn('scripts_domain', 'static.parastorage.com')
-    .fn('static_url', 'com.wixpress.{%projectName%}', staticsUrl)
-    .emit();
+  return emitter.fn('scripts_domain', 'static.parastorage.com').emit();
 };
 
 export const bootstrapServer = ({ port, managementPort, appConfDir }) => {

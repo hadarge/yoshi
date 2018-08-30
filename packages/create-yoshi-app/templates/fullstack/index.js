@@ -1,6 +1,9 @@
 const bootstrap = require('wix-bootstrap-ng');
 
-const app = bootstrap();
+const app = bootstrap()
+  .use(require('wix-bootstrap-greynode'))
+  .use(require('wix-bootstrap-hadron'))
+  .use(require('wix-bootstrap-renderer'));
 
 if (process.env.NODE_ENV === 'test') {
   app.express('./src/server');
