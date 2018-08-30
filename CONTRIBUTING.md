@@ -101,13 +101,19 @@ npm run create-yoshi-app:dev
 It will create a project in a temp directory. You'll have a watcher that listens to changes from the template and updates the generated project accordingly.
 
 ## Release a New Version
-Start by heading to the [CHANGELOG.md](https://github.com/wix/yoshi/blob/master/CHANGELOG.md) and insert the version's changes. See [commits section](https://github.com/wix/yoshi/commits/master) to verify you haven't missed anything
+Start by heading to the [CHANGELOG.md](https://github.com/wix/yoshi/blob/master/CHANGELOG.md) and insert the version's changes.
+
+To autogenerate a changelog using last tagged PR's run:
+
+```bash
+npm run changelog
+```
+
+> __Note:__ For first time you'll need to [export a GITHUB_AUTH token](https://github.com/lerna/lerna-changelog#github-token)
 
 * New releases can be issued from branch `master`.
 
 * `alpha`/`beta`/`rc` versions should be issued from a branch named `version_${version_name}`.
-
-* Hotfixes for an older version should be issued form a branch named `hotfix_${version_name}`.
 
 To create a new version use the following command:
 
@@ -122,7 +128,7 @@ This command will open an interactive UI for choosing the version, it will bump 
 Now Push the commits and tag to GitHub
 
 ```bash
-git push origin master/version_*/hotfix_* --follow-tags
+git push origin master/version_* --follow-tags
 ```
 
 In the end of the [build](http://ci.dev.wix/viewType.html?buildTypeId=Wix_Angular_WixHaste_HastePresetYoshi) (unless there is a failure) the release should be published to npm
