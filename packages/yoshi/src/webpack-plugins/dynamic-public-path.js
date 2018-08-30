@@ -5,9 +5,9 @@ module.exports = class DynamicPublicPath {
   }
 
   apply(compiler) {
-    compiler.plugin('compilation', compilation => {
-      compilation.mainTemplate.plugin(
-        'startup',
+    compiler.hooks.compilation.tap('DynamicPublicPath', compilation => {
+      compilation.mainTemplate.hooks.startup.tap(
+        'DynamicPublicPath',
         source => `${this._script}\n${source}`,
       );
     });

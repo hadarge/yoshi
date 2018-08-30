@@ -87,18 +87,21 @@ module.exports.shouldRunLess = () => {
   return glob.sync(`${globs.base()}/**/*.less`).length > 0;
 };
 
-module.exports.reportWebpackStats = (stats, outputPath) => {
+module.exports.reportWebpackStats = (buildType, stats, outputPath) => {
+  console.log(chalk.magenta(`Webpack summary for ${buildType} build:`));
   logIfAny(
     stats.toString({
       colors: true,
       hash: false,
       chunks: false,
-      assets: false,
+      assets: true,
       children: false,
       version: false,
       timings: false,
       modules: false,
+      entrypoints: false,
       warningsFilter: /export .* was not found in/,
+      builtAt: false,
     }),
   );
   mkdirp.sync(path.resolve(path.dirname(outputPath)));

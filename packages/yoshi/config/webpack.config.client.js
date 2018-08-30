@@ -169,7 +169,11 @@ const config = ({
     devtool: inTeamCity() ? 'source-map' : 'cheap-module-source-map',
 
     performance: {
-      ...(isProduction() ? projectConfig.performanceBudget() : {}),
+      ...(isProduction()
+        ? projectConfig.performanceBudget()
+        : {
+            hints: false,
+          }),
     },
 
     output: {
@@ -180,6 +184,8 @@ const config = ({
       pathinfo: !min,
       publicPath,
     },
+
+    stats: false,
 
     target: 'web',
   });

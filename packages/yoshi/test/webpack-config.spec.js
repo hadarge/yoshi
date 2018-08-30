@@ -254,7 +254,7 @@ describe('Webpack basic configs', () => {
   });
 
   describe('when multiple versions of the same package exist in a build', () => {
-    const warningOutput = 'WARNING in duplicate-package-checker';
+    const warningOutput = 'WARNING in shared-dep';
     let child;
 
     afterEach(() => killSpawnProcessAndHisChildren(child));
