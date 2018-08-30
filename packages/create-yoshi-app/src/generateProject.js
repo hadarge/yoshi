@@ -6,7 +6,6 @@ const getValuesMap = require('./getValuesMap');
 
 module.exports = (answers, workingDir) => {
   const valuesMap = getValuesMap(answers);
-
   const files = getFilesInDir(answers.templatePath);
 
   for (const fileName in files) {

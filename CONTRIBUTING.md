@@ -100,8 +100,6 @@ npm run create-yoshi-app:dev
 
 It will create a project in a temp directory. You'll have a watcher that listens to changes from the template and updates the generated project accordingly.
 
-We're using [jest snapshot](https://jestjs.io/docs/en/snapshot-testing) to preserve the results of the generated projects, it means that on every change you'll also need to [update the snapshot](https://jestjs.io/docs/en/snapshot-testing#updating-snapshots). You can do that by running the tests with the `--updateSnapshot` option. Verify you've updated the snaphost before pushing the changes and creating a PR or the tests will fail in the CI.
-
 ## Release a New Version
 Start by heading to the [CHANGELOG.md](https://github.com/wix/yoshi/blob/master/CHANGELOG.md) and insert the version's changes. See [commits section](https://github.com/wix/yoshi/commits/master) to verify you haven't missed anything
 

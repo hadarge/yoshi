@@ -21,7 +21,8 @@
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/templates/"
+      "/templates/",
+      "__fixtures__"
     ],
     "modulePathIgnorePatterns": [
       "/templates/"
