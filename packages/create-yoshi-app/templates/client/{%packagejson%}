@@ -30,13 +30,11 @@
   },
   "dependencies": {
     "axios": "~0.16.0",
-    "i18next": "~8.4.0",
-    "i18next-xhr-backend": "~1.4.0",
+    "i18next": "^11.6.0",
     "prop-types": "~15.6.0",
     "react": "15.6.1",
     "react-dom": "15.6.1",
-    "react-i18next": "~4.8.0",
-    "regenerator-runtime": "^0.11.0",
+    "react-i18next": "^7.11.0",
     "wix-axios-config": "latest"
   },
   "lint-staged": {

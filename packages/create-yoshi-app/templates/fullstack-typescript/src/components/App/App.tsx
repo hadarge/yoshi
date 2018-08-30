@@ -12,6 +12,7 @@ class App extends React.Component<AppProps, null> {
 
   render() {
     const { t } = this.props;
+
     return (
       <div className={s.root}>
         <div className={s.header}>
@@ -23,4 +24,4 @@ class App extends React.Component<AppProps, null> {
   }
 }
 
-export default translate(null, { wait: true })(App);
+export default translate()(App);

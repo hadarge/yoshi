@@ -21,4 +21,4 @@ class App extends React.Component {
   }
 }
 
-export default translate(null, { wait: true })(App);
+export default translate()(App);
