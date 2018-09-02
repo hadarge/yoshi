@@ -1,4 +1,4 @@
-import { Router, Response } from 'express';
+import { Router } from 'express';
 import * as wixExpressCsrf from 'wix-express-csrf';
 import * as wixExpressRequireHttps from 'wix-express-require-https';
 
@@ -9,7 +9,7 @@ module.exports = (app: Router, context) => {
   app.use(wixExpressRequireHttps);
   app.use(context.renderer.middleware());
 
-  app.get('/', (req, res: Response) => {
+  app.get('/', (req, res) => {
     const renderModel = getRenderModel(req);
     res.renderView('./index.ejs', renderModel);
   });
