@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.9.0 (2018-09-02)
+
+#### :rocket: New Feature
+* `create-yoshi-app`
+  * [#549](https://github.com/wix/yoshi/pull/549) Simplify server code and add basic annotations to it ([@ronami](https://github.com/ronami))
+  * [#556](https://github.com/wix/yoshi/pull/556) Drop explicit Response type in fullstack/TypeScript ([@roymiloh](https://github.com/roymiloh))
+  * [#554](https://github.com/wix/yoshi/pull/554) Add `wix-bootstrap-renderer` to fullstack projects ([@roymiloh](https://github.com/roymiloh))
+  * [#542](https://github.com/wix/yoshi/pull/542) Simplify i18n setup to use webpack's dynamic imports ([@ronami](https://github.com/ronami))
+* `yoshi`
+  * [#552](https://github.com/wix/yoshi/pull/552) Cleanup output of build command ([@netanelgilad](https://github.com/netanelgilad))
+  * [#555](https://github.com/wix/yoshi/pull/555) Add lerna-changelog for autogeneration of changelog based on PRs from last tag ([@ranyitz](https://github.com/ranyitz))
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#550](https://github.com/wix/yoshi/pull/550) Lock wallaby's babel version ([@amitdahan](https://github.com/amitdahan))
+* `create-yoshi-app`
+  * [#548](https://github.com/wix/yoshi/pull/548) Use template var instead of `package.json` to prevent Lerna from analyzing them ([@ronami](https://github.com/ronami))
+
 ## 3.8.1 (Aug 29, 2018)
 #### :nail_care: Enhancement
 * `yoshi`
