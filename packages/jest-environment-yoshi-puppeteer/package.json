@@ -1,6 +1,6 @@
 {
   "name": "jest-environment-yoshi-puppeteer",
-  "version": "3.9.0",
+  "version": "3.9.1",
   "description": "puppeteer environment for jest",
   "main": "index.js",
   "keywords": [
@@ -22,9 +22,9 @@
   },
   "devDependencies": {
     "jest-environment-node": "^23.0.0",
-    "jest-environment-yoshi-bootstrap": "^3.9.0",
+    "jest-environment-yoshi-bootstrap": "^3.9.1",
     "puppeteer": "^1.0.0",
-    "yoshi": "^3.9.0"
+    "yoshi": "^3.9.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
