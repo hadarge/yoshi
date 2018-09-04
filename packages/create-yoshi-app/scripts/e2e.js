@@ -7,6 +7,7 @@ const globby = require('globby');
 const Answers = require('../src/Answers');
 const { createApp, verifyRegistry, getProjectTypes } = require('../src/index');
 const prompts = require('prompts');
+const expect = require('expect');
 
 // verbose logs and output
 const verbose = process.env.VERBOSE_TESTS;
@@ -76,12 +77,14 @@ const testTemplate = mockedAnswers => {
       });
     }
 
-    it(`should run npm test`, () => {
+    it(`should run npm test with no configuration warnings`, () => {
       console.log('running npm test...');
-      execa.shellSync('npm test', {
+      const { stderr } = execa.shellSync('npm test', {
         cwd: tempDir,
         stdio,
       });
+
+      expect(stderr).not.toContain('Warning: Invalid configuration object');
     });
   });
 };

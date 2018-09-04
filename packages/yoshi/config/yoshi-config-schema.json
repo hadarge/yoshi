@@ -474,6 +474,10 @@
     "umdNamedDefine": {
       "description": "If option is true AMD modules of the UMD build will have names. Otherwise an anonymous define is used(the same as in webpack). By default it is true.",
       "type": "boolean"
+    },
+    "universalProject": {
+      "description": "Indicates whether the current project is a universal project.",
+      "type": "boolean"
     }
   }
 }
