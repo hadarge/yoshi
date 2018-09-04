@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.9.1 (2018-09-04)
+
+#### :bug: Bug Fix
+* `create-yoshi-app`, `yoshi`
+  * [#560](https://github.com/wix/yoshi/pull/560) add `universalProject` to configuration schema ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.9.0 (2018-09-02)
 
 #### :rocket: New Feature
