@@ -59,13 +59,22 @@ const testTemplate = mockedAnswers => {
   describe(mockedAnswers.fullProjectType, () => {
     const tempDir = tempy.directory();
 
-    before(() => prompts.inject(mockedAnswers));
-
-    it('should create the project', async () => {
+    before(async () => {
+      prompts.inject(mockedAnswers);
       verbose && console.log(chalk.cyan(tempDir));
       await createApp(tempDir);
       await copyLocalModules(tempDir);
     });
+
+    if (mockedAnswers.transpiler === 'typescript') {
+      it('should not have errors on typescript strict check', () => {
+        console.log('checking strict typescript...');
+        execa.shellSync('./node_modules/.bin/tsc --noEmit --strict', {
+          cwd: tempDir,
+          stdio,
+        });
+      });
+    }
 
     it(`should run npm test`, () => {
       console.log('running npm test...');

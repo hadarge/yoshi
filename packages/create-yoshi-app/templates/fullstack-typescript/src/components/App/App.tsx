@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types';
 
 interface AppProps extends InjectedTranslateProps {}
 
-class App extends React.Component<AppProps, null> {
+class App extends React.Component<AppProps, {}> {
   static propTypes = {
     t: PropTypes.func,
   };

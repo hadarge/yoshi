@@ -14,17 +14,19 @@ export function start() {
   );
 
   app.use('/', (req, res) => {
-    if (!req.session.visitCount) {
-      req.session.visitCount = 0;
+    if (req.session) {
+      if (!req.session.visitCount) {
+        req.session.visitCount = 0;
+      }
+
+      req.session.visitCount++;
+
+      res.send(
+        renderVM('./src/index.vm', {
+          visitCount: req.session.visitCount,
+        }),
+      );
     }
-
-    req.session.visitCount++;
-
-    res.send(
-      renderVM('./src/index.vm', {
-        visitCount: req.session.visitCount,
-      }),
-    );
   });
 
   return app.listen(process.env.PORT, () => {
