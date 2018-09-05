@@ -1,6 +1,6 @@
 {
   "name": "yoshi-helpers",
-  "version": "3.7.0",
+  "version": "3.10.0",
   "main": "index.js",
   "keywords": [
     "helpers",
@@ -21,7 +21,7 @@
     "cosmiconfig": "^4.0.0",
     "detect-port": "^1.2.3",
     "ts-node": "^3.3.0",
-    "yoshi-config": "^3.7.0"
+    "yoshi-config": "^3.10.0"
   },
   "peerDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.0.0",
