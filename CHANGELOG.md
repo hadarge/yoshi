@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.10.0 (2018-09-05)
+
+#### :rocket: New Feature
+* `create-yoshi-app`
+  * [#561](https://github.com/wix/yoshi/pull/561) Simplify local (fake) server for client projects ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+* `eslint-config-yoshi-base`, `jest-environment-yoshi-bootstrap`, `jest-environment-yoshi-puppeteer`, `tslint-config-yoshi-base`, `yoshi-config`, `yoshi-helpers`, `yoshi`
+  * [#558](https://github.com/wix/yoshi/pull/558) create new packages `yoshi-config` and `yoshi-helpers` ([@ranyitz](https://github.com/ranyitz))
+
 ## 3.9.1 (2018-09-04)
 
 #### :bug: Bug Fix
