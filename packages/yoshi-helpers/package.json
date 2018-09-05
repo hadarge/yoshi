@@ -20,6 +20,7 @@
     "chokidar": "^2.0.4",
     "cosmiconfig": "^4.0.0",
     "detect-port": "^1.2.3",
+    "lodash": "~4.17.5",
     "ts-node": "^3.3.0",
     "yoshi-config": "^3.10.0"
   },
