@@ -1,6 +1,6 @@
 {
   "name": "jest-environment-yoshi-puppeteer",
-  "version": "3.10.0",
+  "version": "3.10.1",
   "description": "puppeteer environment for jest",
   "main": "index.js",
   "keywords": [
@@ -15,7 +15,7 @@
     "fs-extra": "^6.0.1",
     "wait-port": "^0.2.2",
     "yoshi-config": "^3.10.0",
-    "yoshi-helpers": "^3.10.0"
+    "yoshi-helpers": "^3.10.1"
   },
   "peerDependencies": {
     "jest": "^23.0.0",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "jest-environment-node": "^23.0.0",
-    "jest-environment-yoshi-bootstrap": "^3.10.0",
+    "jest-environment-yoshi-bootstrap": "^3.10.1",
     "puppeteer": "^1.0.0"
   },
   "publishConfig": {
