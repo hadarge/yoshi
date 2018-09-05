@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.10.1 (2018-09-05)
+
+#### :bug: Bug Fix
+* `yoshi-helpers`
+  * [#564](https://github.com/wix/yoshi/pull/564) Add direct dependency on lodash ([@ronami](https://github.com/ronami))
+
 ## 3.10.0 (2018-09-05)
 
 #### :rocket: New Feature
