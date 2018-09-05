@@ -25,8 +25,8 @@ const {
   liveReload,
   petriSpecsConfig,
   clientProjectName,
-} = require('../../config/project');
-const globs = require('../globs');
+} = require('yoshi-config');
+const globs = require('yoshi-config/globs');
 const {
   isTypescriptProject,
   isBabelProject,
@@ -36,7 +36,7 @@ const {
   suffix,
   watch,
   isProduction,
-} = require('../utils');
+} = require('yoshi-helpers');
 const { debounce } = require('lodash');
 
 const runner = createRunner({
@@ -87,7 +87,7 @@ module.exports = runner.command(
       ),
     ]);
 
-    const ssl = cliArgs.ssl || servers.cdn.ssl();
+    const ssl = cliArgs.ssl || servers.cdn.ssl;
 
     await Promise.all([
       transpileJavascriptAndRunServer(),
@@ -95,9 +95,9 @@ module.exports = runner.command(
       copy(
         {
           pattern: [
-            `${globs.base()}/assets/**/*`,
-            `${globs.base()}/**/*.{ejs,html,vm}`,
-            `${globs.base()}/**/*.{css,json,d.ts}`,
+            `${globs.base}/assets/**/*`,
+            `${globs.base}/**/*.{ejs,html,vm}`,
+            `${globs.base}/**/*.{css,json,d.ts}`,
           ],
           target: 'dist',
         },
@@ -106,8 +106,8 @@ module.exports = runner.command(
       copy(
         {
           pattern: [
-            `${globs.assetsLegacyBase()}/assets/**/*`,
-            `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
+            `${globs.assetsLegacyBase}/assets/**/*`,
+            `${globs.assetsLegacyBase}/**/*.{ejs,html,vm}`,
           ],
           target: 'dist/statics',
         },
@@ -116,37 +116,37 @@ module.exports = runner.command(
       copy(
         {
           pattern: [`assets/**/*`, `**/*.{ejs,html,vm}`],
-          source: globs.assetsBase(),
+          source: globs.assetsBase,
           target: 'dist/statics',
         },
         { title: 'copy-static-assets', log: false },
       ),
       wixCdn(
         {
-          port: servers.cdn.port(),
+          port: servers.cdn.port,
           host: '0.0.0.0',
           ssl,
           publicPath: servers.cdn.url(ssl),
-          statics: clientFilesPath(),
+          statics: clientFilesPath,
           webpackConfigPath: require.resolve(
             '../../config/webpack.config.client',
           ),
-          configuredEntry: entry(),
-          defaultEntry: defaultEntry(),
-          hmr: hmr(),
-          liveReload: liveReload(),
+          configuredEntry: entry,
+          defaultEntry: defaultEntry,
+          hmr,
+          liveReload,
           transformHMRRuntime: shouldTransformHMRRuntime(),
         },
         { title: 'cdn' },
       ),
       wixPetriSpecs(
-        { config: petriSpecsConfig() },
+        { config: petriSpecsConfig },
         { title: 'petri-specs', log: false },
       ),
       wixMavenStatics(
         {
-          clientProjectName: clientProjectName(),
-          staticsDir: clientFilesPath(),
+          clientProjectName,
+          staticsDir: clientFilesPath,
         },
         { title: 'maven-statics', log: false },
       ),
@@ -165,9 +165,9 @@ module.exports = runner.command(
     watch(
       {
         pattern: [
-          `${globs.base()}/assets/**/*`,
-          `${globs.base()}/**/*.{ejs,html,vm}`,
-          `${globs.base()}/**/*.{css,json,d.ts}`,
+          `${globs.base}/assets/**/*`,
+          `${globs.base}/**/*.{ejs,html,vm}`,
+          `${globs.base}/**/*.{css,json,d.ts}`,
         ],
       },
       changed => copy({ pattern: changed, target: 'dist' }),
@@ -176,8 +176,8 @@ module.exports = runner.command(
     watch(
       {
         pattern: [
-          `${globs.assetsLegacyBase()}/assets/**/*`,
-          `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
+          `${globs.assetsLegacyBase}/assets/**/*`,
+          `${globs.assetsLegacyBase}/**/*.{ejs,html,vm}`,
         ],
       },
       changed => copy({ pattern: changed, target: 'dist/statics' }),
@@ -186,19 +186,19 @@ module.exports = runner.command(
     watch(
       {
         pattern: [`assets/**/*`, `**/*.{ejs,html,vm}`],
-        cwd: path.resolve(globs.assetsBase()),
+        cwd: path.resolve(globs.assetsBase),
       },
       changed =>
         copy({
           pattern: changed,
           target: 'dist/statics',
-          source: globs.assetsBase(),
+          source: globs.assetsBase,
         }),
     );
 
     function transpileCss() {
       if (shouldRunSass()) {
-        watch({ pattern: globs.scss() }, changed =>
+        watch({ pattern: globs.scss }, changed =>
           sass({
             pattern: changed,
             target: 'dist',
@@ -210,7 +210,7 @@ module.exports = runner.command(
       }
 
       if (shouldRunLess()) {
-        watch({ pattern: globs.less() }, changed =>
+        watch({ pattern: globs.less }, changed =>
           less({
             pattern: changed,
             target: 'dist',
@@ -223,7 +223,7 @@ module.exports = runner.command(
         !shouldRunSass()
           ? null
           : sass({
-              pattern: globs.scss(),
+              pattern: globs.scss,
               target: 'dist',
               options: {
                 includePaths: [
@@ -235,7 +235,7 @@ module.exports = runner.command(
         !shouldRunLess()
           ? null
           : less({
-              pattern: globs.less(),
+              pattern: globs.less,
               target: 'dist',
               paths: ['.', 'node_modules'],
             }),
@@ -260,7 +260,7 @@ module.exports = runner.command(
 
       if (isBabelProject()) {
         watch(
-          { pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'] },
+          { pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'] },
           async changed => {
             await babel({ pattern: changed, target: 'dist', sourceMaps: true });
             await appServer();
@@ -268,14 +268,14 @@ module.exports = runner.command(
         );
 
         await babel({
-          pattern: [path.join(globs.base(), '**', '*.js{,x}'), 'index.js'],
+          pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'],
           target: 'dist',
           sourceMaps: true,
         });
         return appServer();
       }
 
-      watch({ pattern: globs.babel() }, appServer);
+      watch({ pattern: globs.babel }, appServer);
 
       return appServer();
     }

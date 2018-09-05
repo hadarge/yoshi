@@ -2,8 +2,8 @@ const path = require('path');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 const context = path.resolve('./src');
-const projectConfig = require('./project');
-const { toIdentifier } = require('../src/utils');
+const projectConfig = require('yoshi-config');
+const { toIdentifier } = require('yoshi-helpers');
 
 const config = {
   context,
@@ -12,7 +12,7 @@ const config = {
 
   resolve: {
     modules: ['node_modules', context],
-    alias: projectConfig.resolveAlias(),
+    alias: projectConfig.resolveAlias,
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     symlinks: false,
   },
@@ -28,14 +28,14 @@ const config = {
 
   module: {
     rules: [
-      ...(projectConfig.features().externalizeRelativeLodash
+      ...(projectConfig.features.externalizeRelativeLodash
         ? [require('../src/loaders/externalize-relative-lodash')()]
         : []),
-      ...(projectConfig.isAngularProject()
+      ...(projectConfig.isAngularProject
         ? [require('../src/loaders/ng-annotate')()]
         : []),
       require('../src/loaders/babel')(),
-      require('../src/loaders/typescript')(projectConfig.isAngularProject()),
+      require('../src/loaders/typescript')(projectConfig.isAngularProject),
       require('../src/loaders/graphql')(),
       require('../src/loaders/assets')(),
       require('../src/loaders/svg')(),
@@ -54,17 +54,17 @@ const config = {
 
   devtool: 'source-map',
 
-  externals: projectConfig.externals(),
+  externals: projectConfig.externals,
 };
 
 function getOutput() {
   const output = {
     path: path.resolve('./dist'),
     pathinfo: true,
-    jsonpFunction: `webpackJsonp_${toIdentifier(projectConfig.name())}`,
+    jsonpFunction: `webpackJsonp_${toIdentifier(projectConfig.name)}`,
   };
 
-  const libraryExports = projectConfig.exports();
+  const libraryExports = projectConfig.exports;
 
   if (libraryExports) {
     return {

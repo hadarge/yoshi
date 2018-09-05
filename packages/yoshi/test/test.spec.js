@@ -1,11 +1,14 @@
 const expect = require('chai').expect;
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
-const { outsideTeamCity, insideTeamCity } = require('./helpers/env-variables');
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
+const {
+  outsideTeamCity,
+  insideTeamCity,
+} = require('../../../test-helpers/env-variables');
 const {
   takePort,
   takePortFromAnotherProcess,
-} = require('./helpers/http-helpers');
+} = require('../../../test-helpers/http-helpers');
 
 describe('Aggregator: Test', () => {
   describe('CDN Port', () => {

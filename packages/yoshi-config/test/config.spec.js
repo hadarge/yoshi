@@ -1,8 +1,9 @@
 const path = require('path');
 const { expect } = require('chai');
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
 const retryPromise = require('retry-promise').default;
+
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
 
 describe('Lookup and read configuration', () => {
   let test;

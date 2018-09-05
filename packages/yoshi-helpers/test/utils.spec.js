@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const { isProduction } = require('../src/utils');
+const { isProduction } = require('../index');
 
 describe('Utils', () => {
   describe('isProduction ', () => {

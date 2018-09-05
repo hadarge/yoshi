@@ -3,10 +3,15 @@
 const path = require('path');
 const ld = require('lodash');
 const { wixCssModulesRequireHook } = require('yoshi-runtime');
-const { getMochaReporter, exists, inTeamCity } = require('../src/utils');
-const globs = require('../src/globs');
+const {
+  inTeamCity,
+  exists,
+  getMochaReporter,
+  setupRequireHooks,
+} = require('yoshi-helpers');
+const globs = require('yoshi-config/globs');
 
-require('../src/require-hooks');
+setupRequireHooks();
 
 const userConfPath = path.resolve('protractor.conf.js');
 const userConf = exists(userConfPath) ? require(userConfPath).config : null;
@@ -20,7 +25,7 @@ const onPrepare = (userConf && userConf.onPrepare) || ld.noop;
 const merged = ld.mergeWith(
   {
     framework: 'jasmine',
-    specs: [globs.e2e()],
+    specs: [globs.e2e],
     exclude: [],
     directConnect: true,
 
@@ -35,7 +40,7 @@ const merged = ld.mergeWith(
           }).css,
       });
 
-      require('../src/require-hooks');
+      setupRequireHooks();
 
       return beforeLaunch.call(merged);
     },

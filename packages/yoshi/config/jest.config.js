@@ -1,8 +1,8 @@
 const merge = require('lodash/merge');
-const projectConfig = require('./project');
-const { inTeamCity } = require('../src/utils');
+const projectConfig = require('yoshi-config');
+const { inTeamCity } = require('yoshi-helpers');
 
-const jestProjectConfig = projectConfig.jestConfig();
+const jestProjectConfig = projectConfig.jestConfig;
 
 const config = merge(jestProjectConfig, {
   transform: {

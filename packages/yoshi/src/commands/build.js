@@ -5,7 +5,7 @@ process.env.NODE_ENV = 'production';
 const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
-const globs = require('../globs');
+const globs = require('yoshi-config/globs');
 const path = require('path');
 const {
   runIndividualTranspiler,
@@ -13,7 +13,7 @@ const {
   clientProjectName,
   isAngularProject,
   clientFilesPath,
-} = require('../../config/project');
+} = require('yoshi-config');
 const {
   watchMode,
   isTypescriptProject,
@@ -22,7 +22,7 @@ const {
   shouldRunWebpack,
   shouldRunLess,
   shouldRunSass,
-} = require('../utils');
+} = require('yoshi-helpers');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -66,13 +66,13 @@ module.exports = runner.command(
       ...copyAssets({ esTarget }),
       bundle(),
       wixPetriSpecs(
-        { config: petriSpecsConfig() },
+        { config: petriSpecsConfig },
         { title: 'petri-specs', log: false },
       ),
       wixMavenStatics(
         {
-          clientProjectName: clientProjectName(),
-          staticsDir: clientFilesPath(),
+          clientProjectName,
+          staticsDir: clientFilesPath,
         },
         { title: 'maven-statics', log: false },
       ),
@@ -131,9 +131,9 @@ module.exports = runner.command(
       return copy(
         {
           pattern: [
-            `${globs.base()}/assets/**/*`,
-            `${globs.base()}/**/*.{ejs,html,vm}`,
-            `${globs.base()}/**/*.{css,json,d.ts}`,
+            `${globs.base}/assets/**/*`,
+            `${globs.base}/**/*.{ejs,html,vm}`,
+            `${globs.base}/**/*.{css,json,d.ts}`,
           ],
           target: globs.dist({ esTarget }),
         },
@@ -145,8 +145,8 @@ module.exports = runner.command(
       return copy(
         {
           pattern: [
-            `${globs.assetsLegacyBase()}/assets/**/*`,
-            `${globs.assetsLegacyBase()}/**/*.{ejs,html,vm}`,
+            `${globs.assetsLegacyBase}/assets/**/*`,
+            `${globs.assetsLegacyBase}/**/*.{ejs,html,vm}`,
           ],
           target: 'dist/statics',
         },
@@ -158,7 +158,7 @@ module.exports = runner.command(
       return copy(
         {
           pattern: [`assets/**/*`, `**/*.{ejs,html,vm}`],
-          source: globs.assetsBase(),
+          source: globs.assetsBase,
           target: 'dist/statics',
         },
         { title: 'copy-static-assets', log: false },
@@ -176,7 +176,7 @@ module.exports = runner.command(
 
     function transpileSass({ esTarget } = {}) {
       return sass({
-        pattern: globs.scss(),
+        pattern: globs.scss,
         target: globs.dist({ esTarget }),
         options: {
           includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
@@ -186,7 +186,7 @@ module.exports = runner.command(
 
     function transpileLess({ esTarget } = {}) {
       return less({
-        pattern: globs.less(),
+        pattern: globs.less,
         target: globs.dist({ esTarget }),
         options: { paths: ['.', 'node_modules'] },
       });
@@ -208,10 +208,10 @@ module.exports = runner.command(
     }
 
     function transpileNgAnnotate() {
-      if (isAngularProject()) {
+      if (isAngularProject) {
         return ngAnnotate(
           {
-            pattern: path.join(globs.dist(), globs.base(), '**', '*.js'),
+            pattern: path.join(globs.dist(), globs.base, '**', '*.js'),
             target: './',
           },
           { title: 'ng-annotate' },
@@ -222,7 +222,7 @@ module.exports = runner.command(
     function transpileJavascript({ esTarget } = {}) {
       const transpilations = [];
 
-      if (isTypescriptProject() && runIndividualTranspiler()) {
+      if (isTypescriptProject() && runIndividualTranspiler) {
         transpilations.push(
           typescript({
             project: 'tsconfig.json',
@@ -241,17 +241,17 @@ module.exports = runner.command(
             }),
           );
         }
-      } else if (isBabelProject() && runIndividualTranspiler()) {
+      } else if (isBabelProject() && runIndividualTranspiler) {
         transpilations.push(
           babel({
-            pattern: globs.babel(),
+            pattern: globs.babel,
             target: globs.dist({ esTarget }),
           }),
         );
         if (esTarget) {
           transpilations.push(
             babel({
-              pattern: globs.babel(),
+              pattern: globs.babel,
               target: globs.dist({ esTarget: false }),
               plugins: require.resolve(
                 'babel-plugin-transform-es2015-modules-commonjs',

@@ -1,13 +1,13 @@
 const expect = require('chai').expect;
 const retryPromise = require('retry-promise').default;
 const psTree = require('ps-tree');
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
 const {
   outsideTeamCity,
   insideTeamCity,
   insideWatchMode,
-} = require('./helpers/env-variables');
+} = require('../../../test-helpers/env-variables');
 
 describe('test --jasmine', () => {
   let test, child;

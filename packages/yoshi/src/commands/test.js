@@ -9,15 +9,15 @@ const execa = require('execa');
 const minimist = require('minimist');
 const { createRunner } = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
-const globs = require('../globs');
-const projectConfig = require('../../config/project');
+const globs = require('yoshi-config/globs');
+const projectConfig = require('yoshi-config');
 const {
   watchMode,
   hasProtractorConfigFile,
-  getMochaReporter,
   hasE2ETests,
+  getMochaReporter,
   watch,
-} = require('../utils');
+} = require('yoshi-helpers');
 const protractor = require('../../src/tasks/protractor');
 
 const runner = createRunner({
@@ -50,15 +50,15 @@ module.exports = runner.command(
     const { karma, webpack } = tasks;
 
     const wixCdn = tasks[require.resolve('../tasks/cdn/index')];
-    const specsPattern = [projectConfig.specs.node() || globs.specs()];
+    const specsPattern = [projectConfig.specs.node || globs.specs];
 
     function bootstrapCdn() {
       return wixCdn(
         {
-          port: projectConfig.servers.cdn.port(),
-          ssl: projectConfig.servers.cdn.ssl(),
-          publicPath: projectConfig.servers.cdn.url(),
-          statics: projectConfig.clientFilesPath(),
+          port: projectConfig.servers.cdn.port,
+          ssl: projectConfig.servers.cdn.ssl,
+          publicPath: projectConfig.servers.cdn.url,
+          statics: projectConfig.clientFilesPath,
         },
         { title: 'cdn' },
       );
@@ -66,7 +66,7 @@ module.exports = runner.command(
 
     if (cliArgs.mocha) {
       if (shouldRunPuppeteer) {
-        specsPattern.push(globs.e2e());
+        specsPattern.push(globs.e2e);
         await bootstrapCdn();
       }
 
@@ -99,7 +99,7 @@ module.exports = runner.command(
       };
 
       if (shouldWatch) {
-        watch({ pattern: [globs.testFilesWatch()] }, async () => {
+        watch({ pattern: [globs.testFilesWatch] }, async () => {
           await runMocha(); // fail silently
         });
 
@@ -139,8 +139,8 @@ module.exports = runner.command(
         watch(
           {
             pattern: [
-              globs.specs(),
-              path.join(globs.base(), '**', '*.{js,jsx,ts,tsx}'),
+              globs.specs,
+              path.join(globs.base, '**', '*.{js,jsx,ts,tsx}'),
               'index.js',
             ],
           },

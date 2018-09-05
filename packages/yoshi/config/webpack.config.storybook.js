@@ -1,11 +1,11 @@
 const union = require('lodash/union');
 const StylableWebpackPlugin = require('stylable-webpack-plugin');
 const webpackCommonConfig = require('./webpack.config.common');
-const projectConfig = require('./project');
+const projectConfig = require('yoshi-config');
 
 module.exports = config => {
-  const projectName = projectConfig.name();
-  const cssModules = projectConfig.cssModules();
+  const projectName = projectConfig.name;
+  const cssModules = projectConfig.cssModules;
 
   config.resolve.extensions = union(
     config.resolve.extensions,

@@ -1,7 +1,7 @@
-const { unprocessedModules } = require('../../config/project');
+const { unprocessedModules } = require('yoshi-config');
 
 module.exports = () => ({
   test: /\.js?$/,
   loader: 'ng-annotate-loader',
-  include: unprocessedModules(),
+  include: unprocessedModules,
 });

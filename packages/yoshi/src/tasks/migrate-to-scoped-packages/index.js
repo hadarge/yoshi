@@ -3,10 +3,10 @@ const childProcess = require('child_process');
 const chalk = require('chalk');
 const { isEmpty } = require('lodash');
 const {
-  writeFile,
   inTeamCity,
+  writeFile,
   migrateToScopedPackages,
-} = require('../../utils');
+} = require('yoshi-helpers');
 
 const NOTICE = `
 WARNING: package.json has been updated

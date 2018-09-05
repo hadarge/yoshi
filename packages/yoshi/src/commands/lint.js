@@ -4,15 +4,15 @@ const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
 const tslint = require('../tasks/tslint');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
-const globs = require('../globs');
+const globs = require('yoshi-config/globs');
 
 const {
   isTypescriptProject,
   shouldRunStylelint,
   watchMode,
-} = require('../utils');
+} = require('yoshi-helpers');
 
-const { hooks } = require('../../config/project');
+const { hooks } = require('yoshi-config');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -40,7 +40,7 @@ module.exports = runner.command(async tasks => {
     styleFiles.length
   );
 
-  const { prelint } = hooks();
+  const { prelint } = hooks;
 
   if (shouldRunOnSpecificFiles) {
     if ((await shouldRunStylelint()) && styleFiles.length) {
@@ -57,16 +57,13 @@ module.exports = runner.command(async tasks => {
   }
 
   if (await shouldRunStylelint()) {
-    await runStyleLint([
-      `${globs.base()}/**/*.scss`,
-      `${globs.base()}/**/*.less`,
-    ]);
+    await runStyleLint([`${globs.base}/**/*.scss`, `${globs.base}/**/*.less`]);
   }
 
   if (isTypescriptProject()) {
     await runTsLint();
   } else {
-    await runEsLint(['*.js', `${globs.base()}/**/*.js`]);
+    await runEsLint(['*.js', `${globs.base}/**/*.js`]);
   }
 
   function runStyleLint(pattern) {

@@ -1,10 +1,13 @@
 const path = require('path');
 const expect = require('chai').expect;
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
-const { exists } = require('../src/utils');
-const { outsideTeamCity, insideTeamCity } = require('./helpers/env-variables');
-const getMockedCI = require('./helpers/get-mocked-ci');
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
+const { exists } = require('yoshi-helpers');
+const {
+  outsideTeamCity,
+  insideTeamCity,
+} = require('../../../test-helpers/env-variables');
+const getMockedCI = require('../../../test-helpers/get-mocked-ci');
 
 describe('Aggregator: e2e', () => {
   let test;

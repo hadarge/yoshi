@@ -1,7 +1,7 @@
 /* eslint-env jasmine */
 
 const { TeamCityReporter } = require('jasmine-reporters');
-const { inTeamCity } = require('../src/utils');
+const { inTeamCity } = require('yoshi-helpers');
 
 if (inTeamCity()) {
   jasmine.getEnv().clearReporters();

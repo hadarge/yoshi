@@ -1,10 +1,11 @@
 const fs = require('fs');
-const { warnOnConfigValidationErrors } = require('../config/project');
 
 const presetPath = require.resolve('../src/index.js');
 
+// load can validate the config
+require('yoshi-config');
+
 module.exports = async command => {
-  warnOnConfigValidationErrors();
   const appDirectory = fs.realpathSync(process.cwd());
   const action = require(`./commands/${command}`);
 

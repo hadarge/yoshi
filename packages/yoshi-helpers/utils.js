@@ -1,21 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const glob = require('glob');
 const mkdirp = require('mkdirp');
 const chokidar = require('chokidar');
 const chalk = require('chalk');
-const { validate } = require('jest-validate');
 const childProcess = require('child_process');
 const detect = require('detect-port');
 const { mergeWith } = require('lodash/fp');
-const cosmiconfig = require('cosmiconfig');
-const project = require('../config/project');
-const globs = require('./globs');
-
-const readDir = (module.exports.readDir = patterns =>
-  []
-    .concat(patterns)
-    .reduce((acc, pattern) => acc.concat(glob.sync(pattern)), []));
+const project = require('yoshi-config');
+const queries = require('./queries');
 
 module.exports.copyFile = (source, target) =>
   new Promise((resolve, reject) => {
@@ -31,19 +23,6 @@ module.exports.copyFile = (source, target) =>
     rd.pipe(wr);
   });
 
-const exists = (module.exports.exists = patterns => !!readDir(patterns).length);
-
-const tryRequire = (module.exports.tryRequire = name => {
-  try {
-    return require(name);
-  } catch (ex) {
-    if (ex.code === 'MODULE_NOT_FOUND') {
-      return null;
-    }
-    throw ex;
-  }
-});
-
 function concatCustomizer(objValue, srcValue) {
   if (Array.isArray(objValue)) {
     return objValue.concat(srcValue);
@@ -56,10 +35,6 @@ function logIfAny(log) {
   }
 }
 
-module.exports.hasE2ETests = () => {
-  return glob.sync(globs.e2e()).length > 0;
-};
-
 module.exports.noop = () => {};
 
 module.exports.logIfAny = logIfAny;
@@ -69,22 +44,6 @@ module.exports.mergeByConcat = mergeWith(concatCustomizer);
 module.exports.suffix = suffix => str => {
   const hasSuffix = str.lastIndexOf(suffix) === str.length - suffix.length;
   return hasSuffix ? str : str + suffix;
-};
-
-module.exports.isTypescriptProject = () =>
-  !!tryRequire(path.resolve('tsconfig.json'));
-
-module.exports.isBabelProject = () => {
-  return !!glob.sync(path.resolve('.babelrc')).length || !!project.babel();
-};
-
-module.exports.shouldExportModule = () => {
-  const pkg = tryRequire(path.resolve('package.json'));
-  return !!(pkg && pkg.module);
-};
-
-module.exports.shouldRunLess = () => {
-  return glob.sync(`${globs.base()}/**/*.less`).length > 0;
 };
 
 module.exports.reportWebpackStats = (buildType, stats, outputPath) => {
@@ -108,14 +67,6 @@ module.exports.reportWebpackStats = (buildType, stats, outputPath) => {
   fs.writeFileSync(outputPath, JSON.stringify(stats.toJson({ colors: false })));
 };
 
-module.exports.shouldRunSass = () => {
-  return (
-    glob
-      .sync(`${globs.base()}/**/*.scss`)
-      .filter(file => path.basename(file)[0] !== '_').length > 0
-  );
-};
-
 module.exports.writeFile = (targetFileName, data) => {
   mkdirp.sync(path.dirname(targetFileName));
   fs.writeFileSync(path.resolve(targetFileName), data);
@@ -132,41 +83,8 @@ module.exports.watch = (
   return watcher;
 };
 
-module.exports.isSingleEntry = entry =>
-  typeof entry === 'string' || Array.isArray(entry);
-
-module.exports.watchMode = value => {
-  if (value !== undefined) {
-    process.env.WIX_NODE_BUILD_WATCH_MODE = value;
-  }
-  return !!process.env.WIX_NODE_BUILD_WATCH_MODE;
-};
-
-module.exports.inTeamCity = () =>
-  process.env.BUILD_NUMBER || process.env.TEAMCITY_VERSION;
-
-module.exports.isProduction = () =>
-  (process.env.NODE_ENV || '').toLowerCase() === 'production';
-
-module.exports.shouldRunWebpack = webpackConfig => {
-  const defaultEntryPath = path.join(
-    webpackConfig.context,
-    project.defaultEntry(),
-  );
-  return project.entry() || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
-};
-
-module.exports.migrateToScopedPackages = () =>
-  process.env.MIGRATE_TO_SCOPED_PACKAGES === 'true';
-
-module.exports.shouldRunStylelint = () => {
-  return cosmiconfig('stylelint')
-    .load()
-    .then(Boolean);
-};
-
 module.exports.getMochaReporter = () => {
-  if (module.exports.inTeamCity()) {
+  if (queries.inTeamCity()) {
     return 'mocha-teamcity-reporter';
   }
 
@@ -175,10 +93,6 @@ module.exports.getMochaReporter = () => {
   }
 
   return 'progress';
-};
-
-module.exports.hasProtractorConfigFile = () => {
-  return exists(path.resolve('protractor.conf.js'));
 };
 
 module.exports.getListOfEntries = entry => {
@@ -194,7 +108,7 @@ module.exports.getListOfEntries = entry => {
 };
 
 module.exports.shouldTransformHMRRuntime = () => {
-  return project.hmr() === 'auto' && project.isReactProject();
+  return project.hmr === 'auto' && project.isReactProject;
 };
 
 function getProcessIdOnPort(port) {
@@ -242,43 +156,13 @@ module.exports.toIdentifier = str => {
     .replace(IDENTIFIER_ALPHA_NUMERIC_NAME_REPLACE_REGEX, '_');
 };
 
-module.exports.loadConfig = () => {
-  // the user's config is loaded outside of a jest runtime and should be transpiled
-  // with babel/typescript, this may be run separately for every worker
-  require('./require-hooks');
-
-  const configPath = path.join(process.cwd(), 'jest-yoshi.config.js');
-
-  if (!fs.existsSync(configPath)) {
-    // use default config
-    return {};
-  }
-
-  let config;
-
+module.exports.tryRequire = name => {
   try {
-    config = require(configPath);
-  } catch (error) {
-    throw new Error(
-      `Config ${chalk.bold(configPath)} is invalid:\n  ${error.message}`,
-    );
+    return require(name);
+  } catch (ex) {
+    if (ex.code === 'MODULE_NOT_FOUND') {
+      return null;
+    }
+    throw ex;
   }
-
-  validate(config, {
-    recursiveBlacklist: ['puppeteer'],
-    exampleConfig: {
-      bootstrap: {
-        setup: async () => {},
-        teardown: async () => {},
-      },
-      server: {
-        command: 'node index.js',
-        port: 1234,
-      },
-    },
-    comment:
-      'Please refer to https://github.com/wix/yoshi for more information...',
-  });
-
-  return config;
 };

@@ -1,10 +1,10 @@
 const path = require('path');
 const execa = require('execa');
 const expect = require('chai').expect;
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
-const hooks = require('./helpers/hooks');
-const { insideTeamCity } = require('./helpers/env-variables');
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
+const hooks = require('../../../test-helpers/hooks');
+const { insideTeamCity } = require('../../../test-helpers/env-variables');
 const retryPromise = require('retry-promise').default;
 const fetch = require('node-fetch');
 const { localIdentName } = require('../src/constants');
@@ -15,6 +15,7 @@ const generateCssModulesPattern = ({ name, path, short }) => {
   const generate = genericNames(pattern, { hashPrefix: 'a' });
   return generate(name, path);
 };
+
 const $inject = 'something.$inject = ["$http"];';
 
 describe('Aggregator: Build', () => {

@@ -1,14 +1,16 @@
 const { merge } = require('lodash');
 const { expect } = require('chai');
 const retryPromise = require('retry-promise').default;
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
-const { killSpawnProcessAndHisChildren } = require('./helpers/process');
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
+const {
+  killSpawnProcessAndHisChildren,
+} = require('../../../test-helpers/process');
 const {
   migrateToScopedPackages,
   insideTeamCity,
   outsideTeamCity,
-} = require('./helpers/env-variables');
+} = require('../../../test-helpers/env-variables');
 
 describe('Migrate to scoped packages task', () => {
   let test, child, npm;

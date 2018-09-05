@@ -1,7 +1,7 @@
 const { expect } = require('chai');
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
-const { insideTeamCity } = require('./helpers/env-variables');
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
+const { insideTeamCity } = require('../../../test-helpers/env-variables');
 
 describe('Aggregator: Lint', () => {
   const test = tp.create();

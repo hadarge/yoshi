@@ -1,8 +1,8 @@
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
 const expect = require('chai').expect;
 const _ = require('lodash');
-const getMockedCI = require('./helpers/get-mocked-ci');
+const getMockedCI = require('../../../test-helpers/get-mocked-ci');
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');

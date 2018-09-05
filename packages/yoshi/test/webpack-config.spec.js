@@ -1,14 +1,16 @@
 const { expect } = require('chai');
 const retryPromise = require('retry-promise').default;
 const fetch = require('node-fetch');
-const { killSpawnProcessAndHisChildren } = require('./helpers/process');
-const tp = require('./helpers/test-phases');
-const fx = require('./helpers/fixtures');
+const {
+  killSpawnProcessAndHisChildren,
+} = require('../../../test-helpers/process');
+const tp = require('../../../test-helpers/test-phases');
+const fx = require('../../../test-helpers/fixtures');
 const {
   insideTeamCity,
   teamCityArtifactVersion,
   noArtifactVersion,
-} = require('./helpers/env-variables');
+} = require('../../../test-helpers/env-variables');
 const config = require('../config/webpack.config.common');
 
 describe('Webpack basic configs', () => {

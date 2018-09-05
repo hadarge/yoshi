@@ -15,8 +15,8 @@ const {
   isSingleEntry,
   inTeamCity,
   isProduction,
-} = require('../src/utils');
-const projectConfig = require('./project');
+} = require('yoshi-helpers');
+const projectConfig = require('yoshi-config');
 const webpackConfigCommon = require('./webpack.config.common');
 
 const defaultSplitChunksConfig = {
@@ -34,8 +34,8 @@ function getPublicPath() {
     // These projects determine their version on the "release" step, which means they will have a wrong public path
     // We currently can't support static public path of packages that deploy to unpkg
 
-    // if (projectConfig.unpkg()) {
-    //   return `${unpkgDomain}/${projectConfig.name()}@${projectConfig.version()}/dist/statics/`;
+    // if (projectConfig.unpkg) {
+    //   return `${unpkgDomain}/${projectConfig.name}@${projectConfig.version}/dist/statics/`;
     // }
 
     return `${staticsDomain}/${artifactName}/${artifactVersion.replace(
@@ -51,18 +51,18 @@ const publicPath = getPublicPath();
 
 const config = ({
   min,
-  separateCss = projectConfig.separateCss(),
+  separateCss = projectConfig.separateCss,
   hmr,
   analyze,
 } = {}) => {
   const disableModuleConcat =
     process.env.DISABLE_MODULE_CONCATENATION === 'true';
-  const projectName = projectConfig.name();
-  const cssModules = projectConfig.cssModules();
-  const tpaStyle = projectConfig.tpaStyle();
-  const enhancedTpaStyle = projectConfig.enhancedTpaStyle();
+  const projectName = projectConfig.name;
+  const cssModules = projectConfig.cssModules;
+  const tpaStyle = projectConfig.tpaStyle;
+  const enhancedTpaStyle = projectConfig.enhancedTpaStyle;
 
-  const useSplitChunks = projectConfig.splitChunks();
+  const useSplitChunks = projectConfig.splitChunks;
   const splitChunksConfig = isObject(useSplitChunks)
     ? useSplitChunks
     : defaultSplitChunksConfig;
@@ -99,7 +99,7 @@ const config = ({
               // support emojis
               ascii_only: true,
             },
-            keep_fnames: projectConfig.keepFunctionNames(),
+            keep_fnames: projectConfig.keepFunctionNames,
           },
         }),
       ],
@@ -170,14 +170,14 @@ const config = ({
 
     performance: {
       ...(isProduction()
-        ? projectConfig.performanceBudget()
+        ? projectConfig.performanceBudget
         : {
             hints: false,
           }),
     },
 
     output: {
-      umdNamedDefine: projectConfig.umdNamedDefine(),
+      umdNamedDefine: projectConfig.umdNamedDefine,
       path: path.resolve('./dist/statics'),
       filename: min ? '[name].bundle.min.js' : '[name].bundle.js',
       chunkFilename: min ? '[name].chunk.min.js' : '[name].chunk.js',
@@ -192,7 +192,7 @@ const config = ({
 };
 
 function getEntry() {
-  const entry = projectConfig.entry() || projectConfig.defaultEntry();
+  const entry = projectConfig.entry || projectConfig.defaultEntry;
   return isSingleEntry(entry) ? { app: entry } : entry;
 }
 

@@ -3,12 +3,11 @@ const fs = require('fs');
 const glob = require('glob');
 const StylableWebpackPlugin = require('stylable-webpack-plugin');
 const webpackConfigCommon = require('./webpack.config.common');
-const mergeByConcat = require('../src/utils').mergeByConcat;
-const { cssModules, tpaStyle } = require('./project');
-const globs = require('../src/globs');
-const projectConfig = require('./project');
+const mergeByConcat = require('yoshi-helpers').mergeByConcat;
+const globs = require('yoshi-config/globs');
+const projectConfig = require('yoshi-config');
 
-const specsGlob = projectConfig.specs.browser() || globs.specs();
+const specsGlob = projectConfig.specs.browser || globs.specs;
 const karmaSetupPath = path.join(process.cwd(), 'test', `karma-setup.js`);
 
 const entry = glob.sync(specsGlob).map(p => path.resolve(p));
@@ -28,13 +27,13 @@ module.exports = mergeByConcat(webpackConfigCommon, {
     rules: [
       require('../src/loaders/sass')({
         separateCss: false,
-        cssModules: cssModules(),
-        tpaStyle: tpaStyle(),
+        cssModules: projectConfig.cssModules,
+        tpaStyle: projectConfig.tpaStyle,
       }).specs,
       require('../src/loaders/less')({
         separateCss: false,
-        cssModules: cssModules(),
-        tpaStyle: tpaStyle(),
+        cssModules: projectConfig.cssModules,
+        tpaStyle: projectConfig.tpaStyle,
       }).specs,
     ],
   },

@@ -1,12 +1,11 @@
 const fs = require('fs');
 const rimraf = require('rimraf');
-const process = require('process');
 const path = require('path');
 const sh = require('shelljs');
 const spawn = require('cross-spawn');
 const stripAnsi = require('strip-ansi');
 
-const yoshiCliBin = path.resolve(__dirname, '../../bin/yoshi.js');
+const yoshiCliBin = path.resolve(__dirname, '../packages/yoshi/bin/yoshi.js');
 
 class Test {
   constructor(...args) {
@@ -25,7 +24,10 @@ class Test {
 
     // create a symlink from node_modules one level above testing directory to yoshi's node_modules
     const tmpNodeModules = path.join(this.tmp, '../node_modules');
-    const yoshiNodeModulesPath = path.resolve(__dirname, '../../node_modules');
+    const yoshiNodeModulesPath = path.resolve(
+      __dirname,
+      '../packages/yoshi/node_modules',
+    );
     // remove current tmp/node_modules directory
     rimraf.sync(tmpNodeModules);
     // creates a symlink from tmp/node_modules to yoshi/node_modules
