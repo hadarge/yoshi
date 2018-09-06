@@ -170,7 +170,7 @@ const config = ({
 
     performance: {
       ...(isProduction()
-        ? projectConfig.performanceBudget
+        ? projectConfig.performanceBudget || { hints: false }
         : {
             hints: false,
           }),
