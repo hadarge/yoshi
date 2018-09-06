@@ -127,7 +127,15 @@ const config = ({
     },
 
     plugins: [
-      ...(analyze ? [new BundleAnalyzerPlugin()] : []),
+      ...(analyze
+        ? [
+            new BundleAnalyzerPlugin({
+              generateStatsFile: true,
+              // Path is relative to the output dir
+              statsFilename: '../../target/webpack-stats.min.json',
+            }),
+          ]
+        : []),
 
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 

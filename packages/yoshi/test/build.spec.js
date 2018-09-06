@@ -285,11 +285,6 @@ describe('Aggregator: Build', () => {
         );
       });
 
-      it('should generate stats files', () => {
-        expect(test.list('target')).to.contain('webpack-stats.json');
-        expect(test.list('target')).to.contain('webpack-stats.min.json');
-      });
-
       it('should ignore locale modules from within moment', () => {
         expect(test.content('dist/statics/myChunk.chunk.js')).not.to.contain(
           'spanish',
@@ -811,30 +806,41 @@ describe('Aggregator: Build', () => {
     });
   });
 
+  describe('build project with --analyze flag', () => {
+    const analyzerServerPort = '8888';
+    const analyzerContentPart =
+      'window.chartData = [{"label":"app.bundle.min.js"';
+
+    before(() => {
+      test = tp.create();
+      test
+        .setup({
+          'src/client.js': '',
+          'package.json': fx.packageJson(),
+        })
+        .verbose()
+        .spawn('build', ['--analyze']);
+    });
+
+    it('should serve webpack-bundle-analyzer server', () => {
+      return checkServerIsServing({ port: analyzerServerPort }).then(content =>
+        expect(content).to.contain(analyzerContentPart),
+      );
+    });
+
+    it('should generate stats files', () => {
+      return checkServerIsServing({ port: analyzerServerPort }).then(
+        expect(test.list('target')).to.contain('webpack-stats.min.json'),
+      );
+    });
+  });
+
   describe('build projects with individual cases', () => {
     beforeEach(() => {
       test = tp.create();
     });
     afterEach(() => {
       test.teardown();
-    });
-
-    describe('build project with --analyze flag', () => {
-      it('should serve webpack-bundle-analyzer server', () => {
-        const analyzerServerPort = '8888';
-        const analyzerContentPart =
-          'window.chartData = [{"label":"app.bundle.min.js"';
-        test
-          .setup({
-            'src/client.js': '',
-            'package.json': fx.packageJson(),
-          })
-          .spawn('build', ['--analyze']);
-
-        return checkServerIsServing({ port: analyzerServerPort }).then(
-          content => expect(content).to.contain(analyzerContentPart),
-        );
-      });
     });
 
     describe('build project w/o individual transpilation', () => {

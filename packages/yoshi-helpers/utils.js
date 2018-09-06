@@ -46,7 +46,7 @@ module.exports.suffix = suffix => str => {
   return hasSuffix ? str : str + suffix;
 };
 
-module.exports.reportWebpackStats = (buildType, stats, outputPath) => {
+module.exports.reportWebpackStats = (buildType, stats) => {
   console.log(chalk.magenta(`Webpack summary for ${buildType} build:`));
   logIfAny(
     stats.toString({
@@ -63,8 +63,6 @@ module.exports.reportWebpackStats = (buildType, stats, outputPath) => {
       builtAt: false,
     }),
   );
-  mkdirp.sync(path.resolve(path.dirname(outputPath)));
-  fs.writeFileSync(outputPath, JSON.stringify(stats.toJson({ colors: false })));
 };
 
 module.exports.writeFile = (targetFileName, data) => {
