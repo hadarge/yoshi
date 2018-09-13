@@ -13,8 +13,6 @@ const tsOnlyRules = [
   'await-promise',
   'no-floating-promises',
   'no-misused-new',
-  'no-unused-variable',
-  'strict-type-predicates',
   'use-default-type-parameter',
   'prefer-readonly',
   'array-type',
