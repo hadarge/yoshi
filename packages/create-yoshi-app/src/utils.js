@@ -33,3 +33,27 @@ module.exports.lintFix = dir => {
     stdio: 'inherit',
   });
 };
+
+module.exports.gitInit = dir => {
+  console.log(`\nRunning ${chalk.magenta('git init')}\n`);
+
+  const { stdout } = execa.shellSync('git init', {
+    cwd: dir,
+    stdio: 'pipe',
+  });
+
+  console.log(stdout + '\n');
+};
+
+module.exports.isInsideGitRepo = dir => {
+  try {
+    execa.shellSync('git rev-parse --is-inside-work-tree', {
+      cwd: dir,
+      stdio: 'pipe',
+    });
+
+    return true;
+  } catch (_error) {
+    return false;
+  }
+};

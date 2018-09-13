@@ -1,5 +1,11 @@
 const chalk = require('chalk');
-const { clearConsole, install, lintFix } = require('./utils');
+const {
+  clearConsole,
+  install,
+  lintFix,
+  gitInit,
+  isInsideGitRepo,
+} = require('./utils');
 const verifyWorkingDirectory = require('./verifyWorkingDirectory');
 const runPrompt = require('./runPrompt');
 const generateProject = require('./generateProject');
@@ -27,6 +33,11 @@ module.exports = async (workingDir, projectDirName) => {
   );
 
   generateProject(results, workingDir);
+
+  if (!isInsideGitRepo(workingDir)) {
+    gitInit(workingDir);
+  }
+
   install(workingDir);
   lintFix(workingDir);
 
