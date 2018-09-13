@@ -4,10 +4,12 @@ const verifyWorkingDirectory = require('./verifyWorkingDirectory');
 const runPrompt = require('./runPrompt');
 const generateProject = require('./generateProject');
 const verifyRegistry = require('./verifyRegistry');
+const verifyMinimumNodeVersion = require('./verifyMinimumNodeVersion');
 
 module.exports = async (workingDir, projectDirName) => {
   verifyWorkingDirectory(workingDir);
   verifyRegistry(workingDir);
+  verifyMinimumNodeVersion(`8.7.0`);
 
   clearConsole();
 
