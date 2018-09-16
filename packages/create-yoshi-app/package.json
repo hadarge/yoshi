@@ -45,6 +45,7 @@
     "clipboardy": "^1.2.3",
     "find-cache-dir": "^2.0.0",
     "jest": "^23.3.0",
+    "mocha-env-reporter": "^3.0.0",
     "tempy": "^0.2.1"
   }
 }

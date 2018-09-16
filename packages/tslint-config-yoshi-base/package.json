@@ -29,6 +29,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
+    "mocha-env-reporter": "^3.0.0",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2"
   }

@@ -21,5 +21,8 @@
     "cosmiconfig": "^4.0.0",
     "jest-validate": "^23.5.0",
     "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "mocha-env-reporter": "^3.0.0"
   }
 }

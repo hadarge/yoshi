@@ -25,5 +25,8 @@
   },
   "dependencies": {
     "eslint-plugin-jest": "^21.17.0"
+  },
+  "devDependencies": {
+    "mocha-env-reporter": "^3.0.0"
   }
 }
