@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.11.0 (2018-09-16)
+
+#### :rocket: New Feature
+* `create-yoshi-app`
+  * [#540](https://github.com/wix/yoshi/pull/540) Generate a git repo if needed ([@netanelgilad](https://github.com/netanelgilad))
+  * [#537](https://github.com/wix/yoshi/pull/537) Node version verification ([@yairhaimo](https://github.com/yairhaimo))
+
+#### :bug: Bug Fix
+* `yoshi-helpers`, `yoshi`
+  * [#565](https://github.com/wix/yoshi/pull/565) Generate stats file using BundleAnalyzerPlugin instead of manually ([@netanelgilad](https://github.com/netanelgilad))
+* `yoshi`
+  * [#566](https://github.com/wix/yoshi/pull/566) Don't show Webpack performance hints by default ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :nail_care: Polish
+* `tslint-config-yoshi-base`
+  * [#569](https://github.com/wix/yoshi/pull/569) Remove `no-unused-variables` & `strict-type-predicates` tslint rules ([@yairhaimo](https://github.com/yairhaimo))
+
 ## 3.10.1 (2018-09-05)
 
 #### :bug: Bug Fix
