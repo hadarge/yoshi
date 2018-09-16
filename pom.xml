@@ -29,5 +29,19 @@
                 <role>owner</role>
             </roles>
         </developer>
+        <developer>
+            <name>Netanel Gilad</name>
+            <email>netanelg@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Yair Haimovitch</name>
+            <email>yairh@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
     </developers>
 </project>
