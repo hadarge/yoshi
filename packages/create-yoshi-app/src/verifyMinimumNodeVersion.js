@@ -5,7 +5,7 @@ module.exports = function verifyMinimumNodeVersion(requiredVersion) {
     console.log(
       `Node version ${
         process.version
-      } is less than the required version of v${requiredVersion}\n`
+      } is less than the required version of v${requiredVersion}\n`,
     );
     console.log('Aborting...');
 
