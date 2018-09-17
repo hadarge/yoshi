@@ -10,7 +10,7 @@
     "url": "https://github.com/wix/yoshi"
   },
   "scripts": {
-    "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js'",
+    "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js' --retries=1",
     "test:watch": "mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch"
   },
   "dependencies": {
