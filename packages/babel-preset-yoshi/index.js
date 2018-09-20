@@ -15,14 +15,14 @@ const normaliseOptions = opts => {
 
 module.exports = function(api, opts = {}) {
   const options = normaliseOptions(opts);
+  const inWebpack = process.env.IN_WEBPACK;
 
   return {
     presets: [
       [
         require('babel-preset-env').default,
         {
-          modules:
-            options.modules || process.env.IN_WEBPACK ? false : 'commonjs',
+          modules: options.modules || inWebpack ? false : 'commonjs',
           // Display targets to compile for.
           debug: options.debug,
           // Always use destructuring b/c of import/export support.
@@ -63,11 +63,10 @@ module.exports = function(api, opts = {}) {
       ],
       // Enable legacy decorators.
       require('babel-plugin-transform-decorators'),
-      // Transform dynamic import in test environment,
-      // in all other cases Webpack will handle the transformation.
-      isTest
-        ? require('babel-plugin-dynamic-import-node').default // https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27
-        : require('babel-plugin-syntax-dynamic-import'),
+      // Leave dynamic imports untranspiled for webpack
+      inWebpack
+        ? require('babel-plugin-syntax-dynamic-import')
+        : require('babel-plugin-dynamic-import-node').default, // https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27
       // Current Node and new browsers (in development environment) already implement it so
       // just add the syntax of Object { ...rest, ...spread }
       (isDevelopment || isTest) &&
