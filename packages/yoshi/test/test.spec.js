@@ -972,6 +972,26 @@ describe('Aggregator: Test', () => {
       });
     });
   });
+
+  describe('warnings', () => {
+    let test;
+
+    beforeEach(() => (test = tp.create()));
+    afterEach(() => test.teardown());
+
+    it('should show a warning when there are e2e tests but no bundle was located in dist/statics', () => {
+      const res = test
+        .setup({
+          'test/test.e2e.js': 'it("should pass", () => {})',
+          'package.json': fx.packageJson(),
+        })
+        .execute('test', ['--mocha']);
+
+      expect(res.stderr).to.contain(
+        `● Warning:\n\n   you are running e2e tests and doesn't have any bundle located in the statics directory`,
+      );
+    });
+  });
 });
 
 function passingMochaTest() {

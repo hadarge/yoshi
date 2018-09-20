@@ -10,6 +10,7 @@ const minimist = require('minimist');
 const { createRunner } = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('yoshi-config/globs');
+const chalk = require('chalk');
 const projectConfig = require('yoshi-config');
 const {
   watchMode,
@@ -17,6 +18,7 @@ const {
   hasE2ETests,
   getMochaReporter,
   watch,
+  hasBundleInStaticsDir,
 } = require('yoshi-helpers');
 const protractor = require('../../src/tasks/protractor');
 
@@ -53,6 +55,20 @@ module.exports = runner.command(
     const specsPattern = [projectConfig.specs.node || globs.specs];
 
     function bootstrapCdn() {
+      if (!hasBundleInStaticsDir()) {
+        console.error();
+        console.error(
+          chalk.red(
+            ' ● Warning:\n\n' +
+              "   you are running e2e tests and doesn't have any bundle located in the statics directory\n" +
+              '   you probably need to run ' +
+              chalk.bold('npx yoshi build') +
+              ' before running the tests',
+          ),
+        );
+        console.error();
+      }
+
       return wixCdn(
         {
           port: projectConfig.servers.cdn.port,
