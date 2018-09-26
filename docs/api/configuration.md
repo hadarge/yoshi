@@ -1,4 +1,8 @@
-# Yoshi API
+---
+id: configuration
+title: Configuration
+sidebar_label: Configuration
+---
 
 Configurations are meant to be inside `package.json` under `yoshi` section or by passing flags to common tasks, for example:
 
@@ -26,7 +30,7 @@ module.exports = {
 
 > Yoshi will prefer configuration from `package.json` over `yoshi.config.js` file.
 
-#### yoshi.extends
+## extends
 
 A path to a package that sets up defaults for `yoshi`'s config. The project's config can override those defaults.
 
@@ -45,7 +49,7 @@ module.exports = {
 };
 ```
 
-#### yoshi.separateCss
+## separateCss
 
 By default, your `require`d css will bundled to a separate `app.css` bundle. You can leave your css in main js bundle by adding the following to your `package.json`:
 
@@ -55,7 +59,7 @@ By default, your `require`d css will bundled to a separate `app.css` bundle. You
   }
   ```
 
-#### yoshi.splitChunks
+## splitChunks
 
 Configure webpack's `optimization.splitChunks` option. It's an opt-in feature that creates a separate file (known as a chunk), consisting of common modules shared between multiple entry points.
 
@@ -67,7 +71,7 @@ Supports both `false` value *(default)*, `true` and a [configuration object](htt
     }
   ```
 
-#### yoshi.cssModules
+## cssModules
 
 We use [css modules](https://github.com/css-modules/css-modules) as default. You can disable this option any time by adding the following to wix section inside your `package.json`:
 
@@ -93,7 +97,7 @@ You also use the `prod` keyword to only separate css on CI and production, this 
   Using css modules inside your component is easy:
 
   ```js
-  import s from './Counter.scss';//import css/scss
+  import s from './Counter.scss'; // import css/scss
 
   <p className={s.mainColor}>{counterValue}</p>
   ```
@@ -101,36 +105,38 @@ You also use the `prod` keyword to only separate css on CI and production, this 
   Using css when css modules are turned off:
 
   ```js
-  import './Counter.scss';//import css/scss
+  import './Counter.scss'; // import css/scss
 
   <p className="mainColor">{counterValue}</p>
   ```
 
-#### yoshi.tpaStyle
+## tpaStyle
 
 Set to true to build with TPA style.
 
-#### yoshi.enhancedTpaStyle ![status experimental](https://img.shields.io/badge/status-experimental-ff69b4.svg)
+## enhancedTpaStyle
 
 Set to true to build with enhanced TPA style.
 
-#### yoshi.clientProjectName
+* ![status experimental](https://img.shields.io/badge/status-experimental-ff69b4.svg)
+
+## clientProjectName
 
 The name of the client project.
 
-#### yoshi.keepFunctionNames
+## keepFunctionNames
 
 Set to true to keep function names when uglifying
 
-#### yoshi.entry
+## entry
 
 Explanation is in [cli/build](#build) section.
 
-#### yoshi.servers.cdn
+## servers.cdn
 
 Explanation is in [cli/start](#start) section.
 
-#### yoshi.externals
+## externals
 
 Prevent bundling of certain imported packages and instead retrieve these external dependencies at runtime (as a script tags)
 
@@ -144,7 +150,7 @@ Prevent bundling of certain imported packages and instead retrieve these externa
 }
 ```
 
-#### yoshi.specs
+## specs
 
 Specs globs are configurable. `browser` is for karma, `node` is for mocha and jasmine.
 
@@ -172,15 +178,15 @@ For example:
 }
 ```
 
-#### yoshi.runIndividualTranspiler
+## runIndividualTranspiler
 
 In case you don't want to transpile your server (node) code, and you still need `.babelrc`/`tsconfig`, you can add `runIndividualTranspiler` flag to skip server transpiling.
 
-#### yoshi.transpileTests
+## transpileTests
 
 An option to not transpile tests with Babel (via `babel-register`). Defaults to `true`.
 
-#### yoshi.externalUnprocessedModules
+## externalUnprocessedModules
 
 You can explicitly ask build process to transpile some node modules in case those modules do not contain transpiled code.
 Note that this is not a recommended workflow. It can be very error prone:
@@ -190,37 +196,37 @@ Note that this is not a recommended workflow. It can be very error prone:
 
 Anyway, if you don't have a better alternative you can pass array with module names in this property.
 
-#### yoshi.exports
+## exports
 
 If set, export the bundle as library. `yoshi.exports` is the name.
 
 Use this if you are writing a library and want to publish it as single file. Library will be exported with `UMD` format.
 
-##### yoshi.hmr
+### hmr
 `Boolean` | `"auto"`
 
 Set to `false` in order to disable hot module replacement. (defaults to true)
 
 `"auto"` is an experimental feature which provides zero configuration HMR for react. It will include `react-hot-loader` to the top of the entry file and will wrap React's root component in special Higher Order Component which enables hot module reload for react. Also it will call `module.hot.accept` on the project's entry file.
 
-##### yoshi.liveReload
+### liveReload
 `Boolean`
 
 If true, instructs the browser to physically refresh the entire page if / when webpack indicates that a hot patch cannot be applied and a full refresh is needed.
 
-#### yoshi.performance
+## performance
 
 Allows to use the Webpack Performance Budget feature.
 The configuration object is the same as in webpack.
 For more info, you can read the [webpack docs](https://webpack.js.org/configuration/performance/).
 
-#### yoshi.resolveAlias
+## resolveAlias
 
 Allows you to use the Webpack Resolve Alias feature.
 The configuration object is the same as in Webpack, note that the paths are relative to Webpacks context.
 For more info, you can read the [webpack docs](https://webpack.js.org/configuration/resolve/#resolve-alias).
 
-#### yoshi.hooks
+## hooks
 
 Run a shell script at a specific time in yoshi's execution.
 
@@ -243,13 +249,13 @@ Next time you'll run `yoshi lint`, this command will execute and only then the l
 
 **Missing a hook?** Feel free to open issues/PRs for more hooks if needed.
 
-#### yoshi.umdNamedDefine
+## umdNamedDefine
 `Boolean`
 
 If option is `true` AMD modules of the UMD build will have names. Otherwise an anonymous define is used(the same as in [webpack](https://webpack.js.org/configuration/output/#output-umdnameddefine)).
 By default it is `true`.
 
-#### yoshi.universalProject
+## universalProject
 `Boolean`
 
 Indicates whether the current project is a universal project.

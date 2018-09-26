@@ -1,4 +1,8 @@
-# Setup tests with enzyme
+---
+id: enzyme-support
+title: Testing With Enzyme
+sidebar_label: Testing With Enzyme
+---
 
 ## Why do I need this?
 

@@ -1,0 +1,26 @@
+{
+  "docs": {
+    "Getting Started": [
+      "getting-started/create-app",
+      "getting-started/usage",
+      "getting-started/project-types"
+    ],
+    "API": [
+      "api/configuration",
+      "api/cli"
+    ],
+    "Guides": [
+      "guides/ab-translate",
+      "guides/assets",
+      "guides/bundle-analyze",
+      "guides/debugging",
+      "guides/disable-css-modules",
+      "guides/enzyme-support",
+      "guides/export-es-modules",
+      "guides/hmr",
+      "guides/momentjs-optimization",
+      "guides/split-chunks",
+      "guides/svg"
+    ]
+  }
+}

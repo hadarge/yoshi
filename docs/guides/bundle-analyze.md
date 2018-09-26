@@ -1,4 +1,8 @@
-# How do I analyze my webpack bundle contents
+---
+id: bundle-analyze
+title: Analyze Your Bundle
+sidebar_label: Analyze Your Bundle
+---
 
 __You can do one of the following:__
 

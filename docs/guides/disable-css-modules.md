@@ -1,4 +1,8 @@
-# How to disable css modules in specific places
+---
+id: disable-css-modules
+title: Disable CSS Modules
+sidebar_label: Disable CSS Modules
+---
 
 There are situations when you are using css modules inside you project, but you need to disable them in specific places (for example, when importing css from 3rd party vendor).
 
@@ -12,9 +16,9 @@ In those cases you can wrap your css with `:global`:
   }
 ```
 
-Please find more details [here](https://github.com/css-modules/css-modules#exceptions).  
+Please find more details [here](https://github.com/css-modules/css-modules#exceptions).
 
-#### Importing css from node_modules
+## Importing css from node_modules
 
 In case you want to import a css from your node modules, just `@import` it inside your scss file, and wrap it with `:global`:
 

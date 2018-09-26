@@ -1,4 +1,9 @@
-# How to debug your code
+---
+id: debugging
+title: Debugging
+sidebar_label: Debugging
+---
+
 This guide will help you get started with debugging. There are multiple things you can debug and you need a different configuration for each one:
 
 1. **Debug your client code** - No configuration needed, just open devtools on your browser.

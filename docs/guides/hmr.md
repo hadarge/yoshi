@@ -1,4 +1,9 @@
-# How to use HMR?
+---
+id: hmr
+title: HMR
+sidebar_label: HMR
+---
+
 HMR is a way to speed up development built with webpack. You could retain local state of your application after each time the code was changed, save some time and allow your bundler to update only needed modules, tweak styling, etc.
 
 ## `hmr: true` (default)

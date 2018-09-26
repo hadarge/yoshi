@@ -1,4 +1,10 @@
-# How to export ES modules along with commonjs?
+---
+id: export-es-modules
+title: Export ES Modules
+sidebar_label: Export ES Modules
+---
+
+## How to export ES modules along with commonjs?
 
 ### TL;DR
 Add `module: 'path/to/entry.js'` in your `package.json` and make sure you are **not** using[`babel-plugin-transform-es2015-modules-commonjs`](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-modules-commonjs) in `.babelrc`. Similarly, for typescript project, make sure you have `{"module": "es6"}` in `tsconfig.json`.

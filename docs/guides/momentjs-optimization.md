@@ -1,4 +1,8 @@
-# Moment.js bundle size optimization
+---
+id: momentjs-optimization
+title: Moment.js optimization
+sidebar_label: Moment.js optimization
+---
 
 If you require `moment.js` in your client-side code `webpack` will put all of `moment.js`'s locale files into your bundle (over 90 different locales). This causes a significant bundle increase and it's usually unnecessary.
 

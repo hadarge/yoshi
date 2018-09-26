@@ -1,8 +1,12 @@
-## Yoshi CLI
+---
+id: cli
+title: CLI Options
+sidebar_label: CLI Options
+---
 
 The following sections describe the available tasks in `yoshi`. You can always use the `--help` flag for every task to see its usage.
 
-### start
+## start
 
 This will run the specified (server) `entryPoint` file and mount a CDN server.
 
@@ -31,7 +35,7 @@ The following are the default values for the CDN server's port, mount directory 
 }
 ```
 
-### build
+## build
 
 Flag | Short Flag | Description | Default Value
 ---- | ---------- | ----------- | ------------
@@ -60,7 +64,7 @@ You can specify multiple entry points in your `package.json` file. This gives th
 
 **Note2:** the decision whether to use `TypeScript` or `babel` is done by searching `tsconfig.json` inside the root directory.
 
-### test
+## test
 
 Flag | Description
 ---- | -----------
@@ -120,7 +124,7 @@ yoshi: {
     }
   ```
 
-### lint
+## lint
 
 Flag | Short Flag | Description | Default Value
 ---- | ---------- | ----------- | ------------|
@@ -130,7 +134,7 @@ Flag | Short Flag | Description | Default Value
 
 Executes `TSLint` or `ESLint` (depending on the type of the project) over all matched files. An '.eslintrc' / `tslint.json` file with proper configurations is required.
 
-### release
+## release
 
 Bump the patch version in `package.json` using `wnpm-release`.
 
