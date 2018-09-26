@@ -5,7 +5,6 @@ const chokidar = require('chokidar');
 const chalk = require('chalk');
 const childProcess = require('child_process');
 const detect = require('detect-port');
-const { mergeWith } = require('lodash/fp');
 const project = require('yoshi-config');
 const queries = require('./queries');
 
@@ -23,12 +22,6 @@ module.exports.copyFile = (source, target) =>
     rd.pipe(wr);
   });
 
-function concatCustomizer(objValue, srcValue) {
-  if (Array.isArray(objValue)) {
-    return objValue.concat(srcValue);
-  }
-}
-
 function logIfAny(log) {
   if (log) {
     console.log(log);
@@ -38,8 +31,6 @@ function logIfAny(log) {
 module.exports.noop = () => {};
 
 module.exports.logIfAny = logIfAny;
-
-module.exports.mergeByConcat = mergeWith(concatCustomizer);
 
 module.exports.suffix = suffix => str => {
   const hasSuffix = str.lastIndexOf(suffix) === str.length - suffix.length;

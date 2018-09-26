@@ -2,8 +2,10 @@ const path = require('path');
 const fs = require('fs');
 const glob = require('glob');
 const StylableWebpackPlugin = require('stylable-webpack-plugin');
-const webpackConfigCommon = require('./webpack.config.common');
-const mergeByConcat = require('yoshi-helpers').mergeByConcat;
+const {
+  createCommonWebpackConfig,
+  getStyleLoaders,
+} = require('./webpack.config');
 const globs = require('yoshi-config/globs');
 const projectConfig = require('yoshi-config');
 
@@ -16,28 +18,34 @@ if (fs.existsSync(karmaSetupPath)) {
   entry.unshift(karmaSetupPath);
 }
 
-module.exports = mergeByConcat(webpackConfigCommon, {
+const config = createCommonWebpackConfig({ isDebug: true });
+
+const styleLoaders = getStyleLoaders({
+  embedCss: false,
+  isDebug: true,
+  separateCss: false,
+});
+
+module.exports = {
+  ...config,
+
   entry,
-  mode: 'development',
+
   output: {
+    ...config.output,
     path: path.resolve('dist'),
     filename: 'specs.bundle.js',
   },
+
   module: {
-    rules: [
-      require('../src/loaders/sass')({
-        separateCss: false,
-        cssModules: projectConfig.cssModules,
-        tpaStyle: projectConfig.tpaStyle,
-      }).specs,
-      require('../src/loaders/less')({
-        separateCss: false,
-        cssModules: projectConfig.cssModules,
-        tpaStyle: projectConfig.tpaStyle,
-      }).specs,
-    ],
+    ...config.module,
+
+    rules: [...config.module.rules, ...styleLoaders],
   },
+
   plugins: [
+    ...config.plugins,
+
     new StylableWebpackPlugin({
       outputCSS: false,
       filename: '[name].stylable.bundle.css',
@@ -45,10 +53,13 @@ module.exports = mergeByConcat(webpackConfigCommon, {
       optimize: { classNameOptimizations: false },
     }),
   ],
+
   externals: {
+    ...config.externals,
+
     cheerio: 'window',
     'react/addons': true,
     'react/lib/ExecutionEnvironment': true,
     'react/lib/ReactContext': true,
   },
-});
+};

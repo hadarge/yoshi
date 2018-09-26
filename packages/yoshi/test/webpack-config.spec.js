@@ -11,7 +11,9 @@ const {
   teamCityArtifactVersion,
   noArtifactVersion,
 } = require('../../../test-helpers/env-variables');
-const config = require('../config/webpack.config.common');
+const { createCommonWebpackConfig } = require('../config/webpack.config');
+
+const config = createCommonWebpackConfig({ isDebug: true });
 
 describe('Webpack basic configs', () => {
   let res, test;

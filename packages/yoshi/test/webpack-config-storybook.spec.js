@@ -1,7 +1,9 @@
 const { expect } = require('chai');
 const uniq = require('lodash/uniq');
-const commonConfig = require('../config/webpack.config.common');
 const buildStoryBookConfig = require('../config/webpack.config.storybook');
+const { createCommonWebpackConfig } = require('../config/webpack.config');
+
+const commonConfig = createCommonWebpackConfig({ isDebug: true });
 
 describe('Webpack config storybook', () => {
   let originalConfig;

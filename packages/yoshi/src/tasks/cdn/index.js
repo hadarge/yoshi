@@ -47,8 +47,7 @@ module.exports = async ({
   if (webpackConfigPath) {
     const getConfig = require(webpackConfigPath);
     const webpackConfig = getConfig({
-      min: false,
-      hmr,
+      isDebug: true,
     });
 
     if (shouldRunWebpack(webpackConfig, defaultEntry, configuredEntry)) {

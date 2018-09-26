@@ -96,9 +96,8 @@ module.exports = runner.command(
             ...defaultOptions,
             callbackPath: productionCallbackPath,
             configParams: {
-              min: true,
-              production: true,
-              analyze: cliArgs.analyze,
+              isDebug: false,
+              isAnalyze: cliArgs.analyze,
             },
           },
           { title: 'webpack-production' },
@@ -110,7 +109,7 @@ module.exports = runner.command(
           {
             ...defaultOptions,
             callbackPath: debugCallbackPath,
-            configParams: { min: false, production: true },
+            configParams: { isDebug: true },
           },
           { title: 'webpack-debug' },
         );
