@@ -15,6 +15,7 @@
     "build": "eslint .",
     "changelog": "lerna-changelog",
     "create-yoshi-app:dev": "npm run dev --prefix ./packages/create-yoshi-app",
+    "website:dev": "npm start --prefix './website'",
     "customPublish": "node scripts/customPublish",
     "createVersion": "node scripts/createVersion"
   },

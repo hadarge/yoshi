@@ -19,6 +19,7 @@ const siteConfig = {
     { doc: 'getting-started/create-app', label: 'Getting Started' },
     { doc: 'api/configuration', label: 'API' },
     { blog: true, label: 'Blog' },
+    { search: true },
   ],
 
   /* path to images for header/footer */
@@ -41,6 +42,11 @@ const siteConfig = {
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
     theme: 'default',
+  },
+
+  algolia: {
+    apiKey: '5807169f7e8a322a659ac4145a3e5d8a',
+    indexName: 'wix_yoshi',
   },
 
   // Add custom scripts here that would be placed in <script> tags.
