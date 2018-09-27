@@ -126,7 +126,7 @@ module.exports = runner.command(
           port: servers.cdn.port,
           host: '0.0.0.0',
           ssl,
-          publicPath: servers.cdn.url(ssl),
+          publicPath: servers.cdn.url,
           statics: clientFilesPath,
           webpackConfigPath: require.resolve(
             '../../config/webpack.config.client',

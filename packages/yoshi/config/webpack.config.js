@@ -44,23 +44,23 @@ const computedSeparateCss =
 
 const artifactVersion = process.env.ARTIFACT_VERSION;
 
+// Set the local dev-server url as a default public path
+let publicPath = project.servers.cdn.url;
+
+// In case we are running in CI, change the public path according to the real path on the cdn
+if (inTeamCity && artifactVersion) {
+  const artifactName = getPOM().valueWithPath('artifactId');
+
+  publicPath = `${staticsDomain}/${artifactName}/${artifactVersion.replace(
+    '-SNAPSHOT',
+    '',
+  )}/`;
+}
+
+// NOTE ABOUT PUBLIC PATH USING UNPKG SERVICE
 // Projects that uses `wnpm-ci` have their package.json version field on a fixed version which is not their real version
 // These projects determine their version on the "release" step, which means they will have a wrong public path
 // We currently can't support static public path of packages that deploy to unpkg
-const getPublicPath = () => {
-  if (inTeamCity && artifactVersion) {
-    const artifactName = getPOM().valueWithPath('artifactId');
-
-    return `${staticsDomain}/${artifactName}/${artifactVersion.replace(
-      '-SNAPSHOT',
-      '',
-    )}/`;
-  }
-
-  return '/';
-};
-
-const publicPath = getPublicPath();
 
 const stylableSeparateCss = project.enhancedTpaStyle;
 

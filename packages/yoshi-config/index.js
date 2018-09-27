@@ -24,6 +24,11 @@ const loadConfig = () => {
     return _.get(config, key, defaultVal);
   };
 
+  const cdnPort = getConfig('servers.cdn.port', 3200);
+  const cdnSSL = getConfig('servers.cdn.ssl', false);
+  const defaultCdnUrl = `${cdnSSL ? 'https:' : 'http:'}//localhost:${cdnPort}/`;
+  const cdnUrl = getConfig('servers.cdn.url', defaultCdnUrl);
+
   const projectConfig = {
     name: packagejson.name,
     unpkg: packagejson.unpkg,
@@ -55,17 +60,9 @@ const loadConfig = () => {
     isEsModule: !!_.get(packagejson, 'module', false),
     servers: {
       cdn: {
-        port: getConfig('servers.cdn.port', 3200),
-        url: (
-          ssl, // TODO REMOVE FUNCTION
-        ) =>
-          getConfig(
-            'servers.cdn.url',
-            `${ssl ? 'https:' : 'http:'}//localhost:${
-              projectConfig.servers.cdn.port
-            }/`,
-          ),
-        ssl: getConfig('servers.cdn.ssl', false),
+        port: cdnPort,
+        url: cdnUrl,
+        ssl: cdnSSL,
       },
     },
     entry: getConfig('entry'),
