@@ -29,7 +29,8 @@
     "@types/ejs": "~2.5.0",
     "@types/express": "~4.0.0",
     "@types/chai": "~4.0.0",
-    "@types/mocha": "~2.2.0"
+    "@types/mocha": "~2.2.0",
+    "@types/node": "^8.0.0"
   },
   "dependencies": {
     "ejs": "~2.5.0",
