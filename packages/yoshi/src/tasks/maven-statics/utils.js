@@ -1,12 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const { parseString } = require('xml2js');
-
-module.exports.parseXml = pom =>
-  new Promise((resolve, reject) => {
-    parseString(pom, (err, result) => (err ? reject(err) : resolve(result)));
-  });
 
 module.exports.renderTemplate = (filename, data) => {
   const template = fs.readFileSync(filename).toString();

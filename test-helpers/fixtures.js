@@ -184,20 +184,61 @@ const fx = {
   `,
   e2eClient: () => `document.body.innerHTML = "Hello Kitty";`,
   pom: () => `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <project>
-        <build>
-            <plugins>
-                <plugin>
-                    <configuration>
-                        <descriptors>
-                            <descriptor>maven/assembly/tar.gz.xml</descriptor>
-                        </descriptors>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </project>
+  <?xml version="1.0" encoding="UTF-8"?>
+  <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>com.wixpress</groupId>
+      <artifactId>app-id</artifactId>
+      <packaging>pom</packaging>
+      <name>app-name</name>
+      <description>app-description</description>
+      <version>1.0.0-SNAPSHOT</version>
+
+      <organization>
+          <name>app-organization</name>
+      </organization>
+
+      <parent>
+          <groupId>com.wixpress.common</groupId>
+          <artifactId>wix-master-parent</artifactId>
+          <version>100.0.0-SNAPSHOT</version>
+      </parent>
+
+      <developers>
+          <developer>
+              <name>me</name>
+              <email>myEmail@wix.com</email>
+              <roles>
+                  <role>owner</role>
+              </roles>
+          </developer>
+      </developers>
+
+      <build>
+          <plugins>
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-assembly-plugin</artifactId>
+                  <version>2.2.1</version>
+                  <configuration>
+                      <descriptors>
+                          <descriptor>maven/assembly/tar.gz.xml</descriptor>
+                      </descriptors>
+                      <appendAssemblyId>false</appendAssemblyId>
+                      <finalName>\${project.artifactId}-\${project.version}</finalName>
+                  </configuration>
+                  <executions>
+                      <execution>
+                          <phase>prepare-package</phase>
+                          <goals>
+                              <goal>single</goal>
+                          </goals>
+                      </execution>
+                  </executions>
+              </plugin>
+          </plugins>
+      </build>
+  </project>
   `,
   defaultServerPort: () => 3002,
   httpServer: (message, port) => `

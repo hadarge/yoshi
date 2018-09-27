@@ -19,10 +19,8 @@ const {
   isSingleEntry,
   isProduction: checkIsProduction,
   inTeamCity: checkInTeamCity,
+  getPOM,
 } = require('yoshi-helpers');
-
-const artifactName = process.env.ARTIFACT_ID;
-const artifactVersion = process.env.ARTIFACT_VERSION;
 
 const reScript = /\.js?$/;
 const reStyle = /\.(css|less|scss|sass)$/;
@@ -44,16 +42,25 @@ const computedSeparateCss =
     ? inTeamCity || isProduction
     : project.separateCss;
 
+const artifactVersion = process.env.ARTIFACT_VERSION;
+
 // Projects that uses `wnpm-ci` have their package.json version field on a fixed version which is not their real version
 // These projects determine their version on the "release" step, which means they will have a wrong public path
 // We currently can't support static public path of packages that deploy to unpkg
-const publicPath =
-  artifactName && artifactVersion
-    ? `${staticsDomain}/${artifactName}/${artifactVersion.replace(
-        '-SNAPSHOT',
-        '',
-      )}/`
-    : '/';
+const getPublicPath = () => {
+  if (inTeamCity && artifactVersion) {
+    const artifactName = getPOM().valueWithPath('artifactId');
+
+    return `${staticsDomain}/${artifactName}/${artifactVersion.replace(
+      '-SNAPSHOT',
+      '',
+    )}/`;
+  }
+
+  return '/';
+};
+
+const publicPath = getPublicPath();
 
 const stylableSeparateCss = project.enhancedTpaStyle;
 

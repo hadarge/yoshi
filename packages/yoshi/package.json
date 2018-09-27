@@ -104,7 +104,7 @@
     "webpack-hot-client": "^4.1.1",
     "wix-tpa-style-loader": "~1.0.8",
     "wnpm-ci": "^7.0.1",
-    "xml2js": "~0.4.19",
+    "xmldoc": "^1.1.2",
     "yoshi-config": "^3.10.0",
     "yoshi-helpers": "^3.11.0",
     "yoshi-runtime": "^1.0.38"

@@ -1,5 +1,6 @@
 const path = require('path');
-const { parseXml, renderTemplate, writeFile, readFile } = require('./utils');
+const xmldoc = require('xmldoc');
+const { renderTemplate, writeFile, readFile } = require('./utils');
 
 module.exports = async ({
   clientProjectName,
@@ -20,11 +21,11 @@ module.exports = async ({
   const template = renderTemplate(templateFilename, templateData);
 
   try {
-    const pomFilename = await readFile(path.join(base, 'pom.xml'));
-    const pom = await parseXml(pomFilename);
-    const tarGZLocation =
-      pom.project.build[0].plugins[0].plugin[0].configuration[0].descriptors[0]
-        .descriptor[0];
+    const pom = await readFile(path.join(base, 'pom.xml'));
+
+    const tarGZLocation = new xmldoc.XmlDocument(pom).valueWithPath(
+      'build.plugins.plugin.configuration.descriptors.descriptor',
+    );
 
     await writeFile(path.join(base, tarGZLocation), template);
   } catch (error) {}

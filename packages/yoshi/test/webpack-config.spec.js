@@ -123,16 +123,16 @@ describe('Webpack basic configs', () => {
     });
 
     describe('public path', () => {
-      const ARTIFACT_ID = 'app-id';
       const ARTIFACT_VERSION = '1.2.3-SNAPSHOT';
 
-      it('should construct the public path according to ARTIFACT_ID and ARTIFACT_VERSION environment variable', () => {
+      it('should construct the public path according to pom.xml "artifactId" and ARTIFACT_VERSION environment variable', () => {
         test
           .setup({
             'src/client.js': `console.log('test');`,
+            'pom.xml': fx.pom(),
           })
           .execute('build', [], {
-            ARTIFACT_ID,
+            ...insideTeamCity,
             ARTIFACT_VERSION,
           });
 
@@ -141,13 +141,12 @@ describe('Webpack basic configs', () => {
         );
       });
 
-      it('should use "/" for public case when one of the envrinoment variables is missing (local dev environment)', () => {
+      it('should use "/" for public case when ARTIFACT_VERSION envrinoment variable is missing (local dev environment)', () => {
         test
           .setup({
             'src/client.js': `console.log('test');`,
           })
           .execute('build', [], {
-            ARTIFACT_ID: '',
             ARTIFACT_VERSION: '',
           });
 
@@ -169,7 +168,7 @@ describe('Webpack basic configs', () => {
             }),
           })
           .execute('build', [], {
-            ARTIFACT_ID,
+            ...insideTeamCity,
             ARTIFACT_VERSION,
           });
 
