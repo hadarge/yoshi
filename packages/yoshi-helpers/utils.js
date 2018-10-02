@@ -7,8 +7,6 @@ const childProcess = require('child_process');
 const detect = require('detect-port');
 const project = require('yoshi-config');
 const queries = require('./queries');
-const xmldoc = require('xmldoc');
-const { POM_FILE } = require('yoshi-config/paths');
 
 module.exports.copyFile = (source, target) =>
   new Promise((resolve, reject) => {
@@ -156,10 +154,4 @@ module.exports.tryRequire = name => {
     }
     throw ex;
   }
-};
-
-module.exports.getPOM = () => {
-  const pom = fs.readFileSync(POM_FILE, 'utf-8');
-
-  return new xmldoc.XmlDocument(pom);
 };

@@ -141,7 +141,7 @@ describe('Webpack basic configs', () => {
         );
       });
 
-      it('should use local dev-server url for public case on local dev environment', () => {
+      it('should use "/" for default public path', () => {
         test
           .setup({
             'src/client.js': `console.log('test');`,
@@ -151,13 +151,24 @@ describe('Webpack basic configs', () => {
           });
 
         expect(test.content('dist/statics/app.bundle.js')).to.contain(
-          `__webpack_require__.p = "http://localhost:3200/"`,
+          `__webpack_require__.p = "/"`,
+        );
+      });
+
+      it('should use local dev-server url for public path on local dev environment', () => {
+        test.spawn('start');
+
+        return fetchClientBundle({ port: 3200, file: 'app.bundle.js' }).then(
+          bundle =>
+            expect(bundle).to.contain(
+              '__webpack_require__.p = "http://localhost:3200/"',
+            ),
         );
       });
 
       // we'll need to uncomment the strategy from `webpack.config.client.js` before we can unskip this test
       // eslint-disable-next-line
-      it.skip('should construct the publich path according to the package name and version when "unpkg" set to true on package.json', () => {
+      it.skip('should construct the public path according to the package name and version when "unpkg" set to true on package.json', () => {
         test
           .setup({
             'src/client.js': `console.log('test');`,
@@ -331,17 +342,6 @@ describe('Webpack basic configs', () => {
         bundle => expect(bundle).to.not.contain('CONCATENATED MODULE'),
       );
     });
-
-    function fetchClientBundle({
-      backoff = 100,
-      max = 10,
-      port = fx.defaultServerPort(),
-      file = '',
-    } = {}) {
-      return retryPromise({ backoff, max }, () =>
-        fetch(`http://localhost:${port}/${file}`).then(res => res.text()),
-      );
-    }
   });
 
   describe('Performance budget', () => {
@@ -429,3 +429,14 @@ describe('Webpack basic configs', () => {
     });
   });
 });
+
+function fetchClientBundle({
+  backoff = 100,
+  max = 10,
+  port = fx.defaultServerPort(),
+  file = '',
+} = {}) {
+  return retryPromise({ backoff, max }, () =>
+    fetch(`http://localhost:${port}/${file}`).then(res => res.text()),
+  );
+}

@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const { isObject } = require('lodash');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -8,17 +9,23 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const StylableWebpackPlugin = require('stylable-webpack-plugin');
 const TpaStyleWebpackPlugin = require('tpa-style-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
+const xmldoc = require('xmldoc');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
-const { SRC_DIR, BUILD_DIR, STATS_FILE } = require('yoshi-config/paths');
+const {
+  SRC_DIR,
+  BUILD_DIR,
+  STATS_FILE,
+  POM_FILE,
+} = require('yoshi-config/paths');
+
 const project = require('yoshi-config');
 const {
   toIdentifier,
   isSingleEntry,
   isProduction: checkIsProduction,
   inTeamCity: checkInTeamCity,
-  getPOM,
 } = require('yoshi-helpers');
 
 const reScript = /\.js?$/;
@@ -43,12 +50,20 @@ const computedSeparateCss =
 
 const artifactVersion = process.env.ARTIFACT_VERSION;
 
-// Set the local dev-server url as a default public path
-let publicPath = project.servers.cdn.url;
+// default public path
+let publicPath = '/';
 
-// In case we are running in CI, change the public path according to the real path on the cdn
-if (inTeamCity && artifactVersion) {
-  const artifactName = getPOM().valueWithPath('artifactId');
+if (isDevelopment) {
+  // Set the local dev-server url as a path
+  publicPath = project.servers.cdn.url;
+}
+
+// In case we are running in CI and there is a pom.xml file, change the public path according to the path on the cdn
+// The path is created using artifactName from pom.xml and artifact version from an environment param.
+if (inTeamCity && artifactVersion && fs.existsSync(POM_FILE)) {
+  const artifactName = new xmldoc.XmlDocument(
+    fs.readFileSync(POM_FILE),
+  ).valueWithPath('artifactId');
 
   publicPath = `${staticsDomain}/${artifactName}/${artifactVersion.replace(
     '-SNAPSHOT',
