@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.13.0 (2018-10-02)
+
+#### :rocket: New Feature
+* `yoshi`
+  * [#582](https://github.com/wix/yoshi/pull/582) Process `unprocessedModules` with graphql loader ([@eddierl](https://github.com/eddierl))
+* `yoshi-config`, `yoshi`
+  * [#591](https://github.com/wix/yoshi/pull/591) Add `--stats` flag to generate `dist/webpack-stats.json` ([@ronenst](https://github.com/ronenst))
+
+#### :bug: Bug Fix
+* `create-yoshi-app`
+  * [#597](https://github.com/wix/yoshi/pull/597) Add dynamic `%organization%`  into some of `pom.xml` templates ([@sidoruk-sv](https://github.com/sidoruk-sv))
+
 ## 3.12.0 (2018-10-02)
 
 #### :rocket: New Feature
