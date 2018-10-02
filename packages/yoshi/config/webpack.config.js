@@ -12,8 +12,6 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
 const { SRC_DIR, BUILD_DIR, STATS_FILE } = require('yoshi-config/paths');
-const { unprocessedModules } = require('yoshi-config');
-
 const project = require('yoshi-config');
 const {
   toIdentifier,
@@ -379,7 +377,7 @@ function createCommonWebpackConfig({ isDebug = true } = {}) {
         // Rules for GraphQL
         {
           test: /\.(graphql|gql)$/,
-          include: unprocessedModules,
+          include: project.unprocessedModules,
           loader: 'graphql-tag/loader',
         },
       ],
