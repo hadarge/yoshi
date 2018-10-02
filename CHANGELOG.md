@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.13.1 (2018-10-02)
+
+#### :bug: Bug Fix
+* `yoshi-helpers`, `yoshi`
+  * [#602](https://github.com/wix/yoshi/pull/602) Create webpack's public path only in case there is a `pom.xml` file ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+* [#601](https://github.com/wix/yoshi/pull/601) Fix broken link to bundle analysis guide ([@ronenst](https://github.com/ronenst))
+* [#603](https://github.com/wix/yoshi/pull/603) Fix broken link to images on `debugging.md` ([@sidoruk-sv](https://github.com/sidoruk-sv))
+
 ## 3.13.0 (2018-10-02)
 
 #### :rocket: New Feature
