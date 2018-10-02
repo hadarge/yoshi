@@ -41,7 +41,7 @@ Flag | Short Flag | Description | Default Value
 ---- | ---------- | ----------- | ------------
 --output <dir> | | The output directory for static assets. | `statics`
 --analyze | | run webpack-bundle-analyzer plugin. |
---stats | | output webpack stats file to `dist/webpack-stats.json` (see also [bundle analysis](docs/faq/WEBPACK-ANALYZE.md))|
+--stats | | output webpack stats file to `dist/webpack-stats.json` (see also [bundle analysis](../guides/bundle-analyze.md))|
 
 This task will perform the following:
 
