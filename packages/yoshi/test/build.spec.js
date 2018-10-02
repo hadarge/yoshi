@@ -806,6 +806,22 @@ describe('Aggregator: Build', () => {
     });
   });
 
+  describe('build project with --stats flag', () => {
+    before(() => {
+      test = tp.create();
+      test
+        .setup({
+          'src/client.js': '',
+          'package.json': fx.packageJson(),
+        })
+        .execute('build', ['--stats']);
+    });
+
+    it('should generate stats files', () => {
+      expect(test.list('dist')).to.contain('webpack-stats.json');
+    });
+  });
+
   describe('build project with --analyze flag', () => {
     const analyzerServerPort = '8888';
     const analyzerContentPart =
@@ -818,8 +834,32 @@ describe('Aggregator: Build', () => {
           'src/client.js': '',
           'package.json': fx.packageJson(),
         })
-        .verbose()
         .spawn('build', ['--analyze']);
+    });
+
+    it('should serve webpack-bundle-analyzer server', () => {
+      return checkServerIsServing({ port: analyzerServerPort }).then(content =>
+        expect(content).to.contain(analyzerContentPart),
+      );
+    });
+  });
+
+  // Currently skipping due to https://github.com/wix/yoshi/issues/595
+  // Previous `--analyze` test is opening a process with 8888 which is not
+  // killed, making `checkServerIsServing()` resolve too early
+  describe.skip('build project with --analyze and --stats flags', () => {
+    const analyzerServerPort = '8888';
+    const analyzerContentPart =
+      'window.chartData = [{"label":"app.bundle.min.js"';
+
+    before(() => {
+      test = tp.create();
+      test
+        .setup({
+          'src/client.js': '',
+          'package.json': fx.packageJson(),
+        })
+        .spawn('build', ['--analyze', '--stats']);
     });
 
     it('should serve webpack-bundle-analyzer server', () => {
@@ -829,8 +869,8 @@ describe('Aggregator: Build', () => {
     });
 
     it('should generate stats files', () => {
-      return checkServerIsServing({ port: analyzerServerPort }).then(
-        expect(test.list('target')).to.contain('webpack-stats.min.json'),
+      return checkServerIsServing({ port: analyzerServerPort }).then(() =>
+        expect(test.list('dist')).to.contain('webpack-stats.json'),
       );
     });
   });

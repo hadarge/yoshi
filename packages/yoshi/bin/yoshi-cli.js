@@ -42,6 +42,7 @@ prog
   .description('Build the app for production')
   .option('--output', 'The output directory for static assets')
   .option('--analyze', 'Run webpack-bundle-analyzer plugin')
+  .option('--stats', 'Generate dist/webpack-stats.json file')
   .option('--no-min', 'Do not output minified bundle')
   .action(() => runCLI('build'));
 

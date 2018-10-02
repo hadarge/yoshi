@@ -98,6 +98,7 @@ module.exports = runner.command(
             configParams: {
               isDebug: false,
               isAnalyze: cliArgs.analyze,
+              isStats: cliArgs.stats,
             },
           },
           { title: 'webpack-production' },

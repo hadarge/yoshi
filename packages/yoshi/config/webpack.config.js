@@ -11,7 +11,7 @@ const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
-const { SRC_DIR, BUILD_DIR } = require('yoshi-config/paths');
+const { SRC_DIR, BUILD_DIR, STATS_FILE } = require('yoshi-config/paths');
 
 const project = require('yoshi-config');
 const {
@@ -397,7 +397,11 @@ function createCommonWebpackConfig({ isDebug = true } = {}) {
 //
 // Configuration for the client-side bundle (client.js)
 // -----------------------------------------------------------------------------
-function createClientWebpackConfig({ isAnalyze = false, isDebug = true } = {}) {
+function createClientWebpackConfig({
+  isAnalyze = false,
+  isDebug = true,
+  isStats = false,
+} = {}) {
   const config = createCommonWebpackConfig({ isDebug });
 
   const styleLoaders = getStyleLoaders({ embedCss: true, isDebug });
@@ -502,12 +506,13 @@ function createClientWebpackConfig({ isAnalyze = false, isDebug = true } = {}) {
       }),
 
       // https://github.com/th0r/webpack-bundle-analyzer
-      ...(isAnalyze
+      ...(isAnalyze || isStats
         ? [
             new BundleAnalyzerPlugin({
-              generateStatsFile: true,
-              // Path is relative to the output dir
-              statsFilename: '../../target/webpack-stats.min.json',
+              analyzerMode: isAnalyze ? 'server' : 'disabled',
+              generateStatsFile: isStats,
+              statsFilename: STATS_FILE,
+              statsOptions: { colors: false },
             }),
           ]
         : []),
