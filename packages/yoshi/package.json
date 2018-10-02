@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.13.0",
+  "version": "3.13.1",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -107,7 +107,7 @@
     "wnpm-ci": "^7.0.1",
     "xmldoc": "^1.1.2",
     "yoshi-config": "^3.13.0",
-    "yoshi-helpers": "^3.13.0",
+    "yoshi-helpers": "^3.13.1",
     "yoshi-runtime": "^1.0.38"
   },
   "publishConfig": {
