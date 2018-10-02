@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.12.0 (2018-10-02)
+
+#### :rocket: New Feature
+* [#594](https://github.com/wix/yoshi/pull/594) Integrate algolia search ([@ranyitz](https://github.com/ranyitz))
+* [#590](https://github.com/wix/yoshi/pull/590) Initial documentation site ([@ranyitz](https://github.com/ranyitz))
+
+#### :bug: Bug Fix
+* `yoshi-config`, `yoshi`
+  * [#593](https://github.com/wix/yoshi/pull/593) Fix webpack's public path for local development ([@ranyitz](https://github.com/ranyitz))
+* `create-yoshi-app`
+  * [#596](https://github.com/wix/yoshi/pull/596) Add @types/node version 8 as version 10 clashes with typescript ([@ranyitz](https://github.com/ranyitz))
+* `yoshi-config`, `yoshi-helpers`, `yoshi`
+  * [#592](https://github.com/wix/yoshi/pull/592) Change `xml2js` with `xmldoc` and compute artifact id from `pom.xml` ([@ranyitz](https://github.com/ranyitz))
+* `babel-preset-yoshi`
+  * [#585](https://github.com/wix/yoshi/pull/585) Do not transpile dynamic imports only when used in webpack ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+* `yoshi`
+  * [#588](https://github.com/wix/yoshi/pull/588) Prefer local yoshi installation when using CLI ([@yanivefraim](https://github.com/yanivefraim))
+* `yoshi-helpers`, `yoshi`
+  * [#584](https://github.com/wix/yoshi/pull/584) Show a warning when the user tries to run e2e tests but there is no bundle built ([@ranyitz](https://github.com/ranyitz))
+* `yoshi-helpers`
+  * [#579](https://github.com/wix/yoshi/pull/579) Upgrade "typescript" peer dependency version to also accept 3^ ([@nktssh](https://github.com/nktssh))
+
+#### :house: Internal
+* `yoshi-config`, `yoshi-helpers`, `yoshi`
+  * [#589](https://github.com/wix/yoshi/pull/589) Refactor webpack config to a single file ([@ronami](https://github.com/ronami))
+
 ## 3.11.0 (2018-09-16)
 
 #### :rocket: New Feature
