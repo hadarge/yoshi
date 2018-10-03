@@ -31,7 +31,9 @@ prompts({
     console.log(chalk.red('Release aborted'));
   } else {
     try {
-      cp.execSync(`${lernaPath} publish --skip-npm`, { stdio: 'inherit' });
+      cp.execSync(`${lernaPath} publish --exact --skip-npm`, {
+        stdio: 'inherit',
+      });
 
       console.log();
       console.log(chalk.green('Release was created locally'));

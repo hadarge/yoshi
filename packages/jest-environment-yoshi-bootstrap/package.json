@@ -14,8 +14,8 @@
     "jest": "^23.0.0"
   },
   "dependencies": {
-    "yoshi-config": "^3.13.0",
-    "yoshi-helpers": "^3.13.1"
+    "yoshi-config": "3.13.0",
+    "yoshi-helpers": "3.13.1"
   },
   "devDependencies": {
     "jest-environment-node": "^23.0.0"

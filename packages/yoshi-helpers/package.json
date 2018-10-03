@@ -22,7 +22,7 @@
     "detect-port": "^1.2.3",
     "lodash": "~4.17.5",
     "ts-node": "^3.3.0",
-    "yoshi-config": "^3.13.0"
+    "yoshi-config": "3.13.0"
   },
   "peerDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.0.0",
