@@ -99,6 +99,7 @@ module.exports = runner.command(
               isDebug: false,
               isAnalyze: cliArgs.analyze,
               isStats: cliArgs.stats,
+              withLocalSourceMaps: cliArgs['source-map'],
             },
           },
           { title: 'webpack-production' },
@@ -110,7 +111,10 @@ module.exports = runner.command(
           {
             ...defaultOptions,
             callbackPath: debugCallbackPath,
-            configParams: { isDebug: true },
+            configParams: {
+              isDebug: true,
+              withLocalSourceMaps: cliArgs['source-map'],
+            },
           },
           { title: 'webpack-debug' },
         );

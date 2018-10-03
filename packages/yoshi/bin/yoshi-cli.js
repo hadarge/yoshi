@@ -44,6 +44,7 @@ prog
   .option('--analyze', 'Run webpack-bundle-analyzer plugin')
   .option('--stats', 'Generate dist/webpack-stats.json file')
   .option('--no-min', 'Do not output minified bundle')
+  .option('--source-map', 'Explictly emit bundle source maps')
   .action(() => runCLI('build'));
 
 prog

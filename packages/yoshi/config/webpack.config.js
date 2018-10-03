@@ -220,7 +220,10 @@ const getStyleLoaders = ({
 // Common configuration chunk to be used for both
 // client-side (client.js) and server-side (server.js) bundles
 // -----------------------------------------------------------------------------
-function createCommonWebpackConfig({ isDebug = true } = {}) {
+function createCommonWebpackConfig({
+  isDebug = true,
+  withLocalSourceMaps,
+} = {}) {
   const config = {
     context: SRC_DIR,
 
@@ -402,7 +405,15 @@ function createCommonWebpackConfig({ isDebug = true } = {}) {
     stats: 'none',
 
     // https://webpack.js.org/configuration/devtool
-    devtool: inTeamCity ? 'source-map' : 'cheap-module-source-map',
+    // If we are in CI or requested explictly we create full source maps
+    // Once we are in a local build, we create cheap eval source map only
+    // for a development build (hence the !isProduction)
+    devtool:
+      inTeamCity || withLocalSourceMaps
+        ? 'source-map'
+        : !isProduction
+          ? 'cheap-module-eval-source-map'
+          : false,
   };
 
   return config;
@@ -415,8 +426,9 @@ function createClientWebpackConfig({
   isAnalyze = false,
   isDebug = true,
   isStats = false,
+  withLocalSourceMaps,
 } = {}) {
-  const config = createCommonWebpackConfig({ isDebug });
+  const config = createCommonWebpackConfig({ isDebug, withLocalSourceMaps });
 
   const styleLoaders = getStyleLoaders({ embedCss: true, isDebug });
 

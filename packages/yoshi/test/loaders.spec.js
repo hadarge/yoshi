@@ -181,10 +181,6 @@ describe('Loaders', () => {
               '-webkit-appearance',
             );
           });
-
-          it('should support source maps', () => {
-            expect(test.list('dist/statics')).to.contain('app.css.map');
-          });
         });
 
         it('should allow import sass from node_modules', () => {
