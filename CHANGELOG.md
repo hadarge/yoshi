@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.14.1 (2018-10-03)
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#609](https://github.com/wix/yoshi/pull/609) Fix Karma bundle failing if it tries to access native Node modules ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.14.0 (2018-10-03)
 
 #### :bug: Bug Fix
