@@ -1,6 +1,6 @@
 # Yoshi
 
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/) [![npm version](https://badge.fury.io/js/yoshi.svg)](https://badge.fury.io/js/yoshi)
 
 Wix's toolkit to support building applications of different types.
 
