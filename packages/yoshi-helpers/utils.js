@@ -155,3 +155,14 @@ module.exports.tryRequire = name => {
     throw ex;
   }
 };
+
+// NOTE: We don't use "mergeByConcat" function in our codebase anymore,
+// it's here only for legacy reasons.
+// Versions 3.10.0 -> 3.13.1 would not work after the deletion of this function
+function concatCustomizer(objValue, srcValue) {
+  if (Array.isArray(objValue)) {
+    return objValue.concat(srcValue);
+  }
+}
+
+module.exports.mergeByConcat = require('lodash/fp').mergeWith(concatCustomizer);
