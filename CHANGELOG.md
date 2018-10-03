@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.14.0 (2018-10-03)
+
+#### :bug: Bug Fix
+* `yoshi-helpers`
+  * [#607](https://github.com/wix/yoshi/pull/607) Bring back `mergeByConcat` function ([@ranyitz](https://github.com/ranyitz))
+* `yoshi`
+  * [#573](https://github.com/wix/yoshi/pull/573) Enable opt-in to build with `devtool: source-map` ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :nail_care: Polish
+* [#606](https://github.com/wix/yoshi/pull/606) add npm version badge ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :house: Internal
+* `jest-environment-yoshi-bootstrap`, `jest-environment-yoshi-puppeteer`, `jest-yoshi-preset`, `yoshi-helpers`, `yoshi`
+  * [#608](https://github.com/wix/yoshi/pull/608) Use exact versions for inner cross dependencies ([@ranyitz](https://github.com/ranyitz))
+
 ## 3.13.1 (2018-10-02)
 
 #### :bug: Bug Fix
