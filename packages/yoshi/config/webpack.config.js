@@ -404,6 +404,14 @@ function createCommonWebpackConfig({
     // https://webpack.js.org/configuration/stats/
     stats: 'none',
 
+    // https://github.com/webpack/node-libs-browser/tree/master/mock
+    node: {
+      fs: 'empty',
+      net: 'empty',
+      tls: 'empty',
+      __dirname: true,
+    },
+
     // https://webpack.js.org/configuration/devtool
     // If we are in CI or requested explictly we create full source maps
     // Once we are in a local build, we create cheap eval source map only
@@ -553,14 +561,6 @@ function createClientWebpackConfig({
         // Rules for Style Sheets
         ...styleLoaders,
       ],
-    },
-
-    // https://github.com/webpack/node-libs-browser/tree/master/mock
-    node: {
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      __dirname: true,
     },
 
     externals: project.externals,

@@ -760,7 +760,9 @@ describe('Aggregator: Test', () => {
             'module.exports = { browsers: ["PhantomJS"], frameworks: ["jasmine"], plugins: [require("karma-jasmine"), require("karma-phantomjs-launcher")], files: ["a.js", "test.spec.js"], exclude: ["excluded.spec.js"]}',
           'test/karma-setup.js': 'console.log("setup karma")',
           'a.js': '"use strict";var a = 2; var b = 3;',
+          // The file contains a require of 'fs' to make sure webpack takes care of it propertly
           'src/test.spec.js': `
+            require('fs');
             it("pass result", function () { expect(1).toBe(1); });
           `,
           'src/test2.spec.js':
