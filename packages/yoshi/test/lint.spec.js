@@ -68,23 +68,45 @@ describe('Aggregator: Lint', () => {
       expect(res.stdout).to.contain('Missing radix parameter');
     });
 
-    it('should support a list of files to run lint on (not necessarily on tsconfig)', () => {
-      const res = test
-        .setup({
-          'app/a.ts': `parseInt("1");`,
-          'other-dir/b.tsx': `parseInt("1");`,
-          'app/dontrunonme.js': `parseInt("1");`,
-          'package.json': fx.packageJson(),
-          'tsconfig.json': fx.tsconfig({ include: ['app/a.ts'] }),
-          'tslint.json': fx.tslint({ radix: true }),
-        })
-        .execute('lint', ['app/a.ts', 'other-dir/b.tsx'], insideTeamCity);
+    describe('when file paths supplied', () => {
+      it('should work as expected if all files are within the files specified in tsconfig.json', () => {
+        const res = test
+          .setup({
+            'app/a.ts': `parseInt("1");`,
+            'other-dir/b.tsx': `parseInt("1");`,
+            'app/dontrunonme.ts': `parseInt("1");`,
+            'package.json': fx.packageJson(),
+            'tsconfig.json': fx.tsconfig({
+              include: ['app/a.ts', 'other-dir/b.tsx'],
+            }),
+            'tslint.json': fx.tslint({ radix: true }),
+          })
+          .execute('lint', ['app/a.ts', 'other-dir/b.tsx'], insideTeamCity);
 
-      expect(res.code).to.equal(1);
-      expect(res.stdout).to.contain('app/a.ts:1:1');
-      expect(res.stdout).to.contain('Missing radix parameter');
-      expect(res.stdout).to.contain('other-dir/b.tsx:1:1');
-      expect(res.stderr).to.contain('tslint exited with 2 errors');
+        expect(res.code).to.equal(1);
+        expect(res.stdout).to.contain('app/a.ts:1:1');
+        expect(res.stdout).to.contain('Missing radix parameter');
+        expect(res.stdout).to.contain('other-dir/b.tsx:1:1');
+        expect(res.stderr).to.contain('tslint exited with 2 errors');
+        expect(res.stdout).to.not.contain('app/dontrunonme.ts');
+      });
+
+      it('should log a warning if there are some files which are not specified in tsconfig.json', () => {
+        const res = test
+          .setup({
+            'app/a.ts': `console.log();`,
+            'other-dir/b.tsx': `parseInt("1");`,
+            'package.json': fx.packageJson(),
+            'tsconfig.json': fx.tsconfig({ include: ['app/a.ts'] }),
+            'tslint.json': fx.tslint({ radix: true }),
+          })
+          .execute('lint', ['app/a.ts', 'other-dir/b.tsx'], insideTeamCity);
+
+        expect(res.code).to.equal(0);
+        expect(res.stderr).to.contain(
+          '● Warning: The following files were supplied to "yoshi lint" as a pattern',
+        );
+      });
     });
   });
 

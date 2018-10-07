@@ -1,7 +1,8 @@
-const fs = require('fs');
-const path = require('path');
 const globby = require('globby');
 const chalk = require('chalk');
+const intersection = require('lodash/intersection');
+const difference = require('lodash/difference');
+const isEqual = require('lodash/isEqual');
 
 function format(options, fileFailures) {
   const { findFormatter } = require('tslint');
@@ -21,31 +22,37 @@ function format(options, fileFailures) {
   return output;
 }
 
-function runLinter({ options, tslintFilePath, tsconfigFilePath, filesPaths }) {
+function runLinter({ options, tslintFilePath, tsconfigFilePath, filterPaths }) {
   // not all of our users have typescript installed.
   // tslint requires typescript to exist in node_modules when imported,
   // that should happen only when runLinter function is called in oppose to upon import
   const { Linter, Configuration } = require('tslint');
 
-  let linter;
-  let files;
+  const program = Linter.createProgram(tsconfigFilePath);
+  const linter = new Linter(options, program);
+  const linterFileNames = Linter.getFileNames(program);
 
-  if (filesPaths) {
-    // files mode
-    linter = new Linter(options);
-    files = filesPaths.map(fileName => ({
-      fileName,
-      fileContents: fs.readFileSync(path.resolve(fileName), 'utf-8'),
-    }));
-  } else {
-    // tsconfig mode
-    const program = Linter.createProgram(tsconfigFilePath);
-    linter = new Linter(options, program);
-    files = Linter.getFileNames(program).map(fileName => ({
-      fileName,
-      fileContents: program.getSourceFile(fileName).getFullText(),
-    }));
+  let filePaths = linterFileNames;
+
+  if (filterPaths) {
+    filePaths = intersection(filterPaths, linterFileNames);
+
+    if (!isEqual(filePaths, filterPaths)) {
+      const wontBeLinted = difference(filterPaths, linterFileNames);
+      console.warn(
+        chalk.yellow(
+          ' ● Warning: The following files were supplied to "yoshi lint" as a pattern\n' +
+            `   but were not specified in "${tsconfigFilePath}", therefore will not be linted:\n\n` +
+            chalk.bold(wontBeLinted.join('\n')),
+        ),
+      );
+    }
   }
+
+  const files = filePaths.map(fileName => ({
+    fileName,
+    fileContents: program.getSourceFile(fileName).getFullText(),
+  }));
 
   let failuresCount = 0;
 
@@ -81,20 +88,20 @@ module.exports = async ({
     throw new Error('a pattern or a tsconfig.json filePath must be supplied');
   }
 
-  let filesPaths;
+  let filterPaths;
 
   if (pattern) {
-    console.log(`running tslint on ${chalk.magenta(pattern)}`);
-    filesPaths = globby.sync(pattern);
+    console.log(`running tslint on ${chalk.magenta(pattern)}\n`);
+    filterPaths = globby.sync(pattern, { absolute: true });
   } else {
-    console.log(`running tslint using ${chalk.magenta(tsconfigFilePath)}`);
+    console.log(`running tslint using ${chalk.magenta(tsconfigFilePath)}\n`);
   }
 
   const { failuresCount, fixablesCount, fixesCount } = runLinter({
     options,
     tslintFilePath,
     tsconfigFilePath,
-    filesPaths,
+    filterPaths,
   });
 
   if (fixesCount > 0) {
