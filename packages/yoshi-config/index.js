@@ -50,14 +50,12 @@ const loadConfig = () => {
             globs.multipleModules.clientDist}`
         : dir || globs.singleModule.clientDist;
     })(),
-    isUniversalProject: getConfig('universalProject'),
     isAngularProject:
       !!_.get(packagejson, 'dependencies.angular', false) ||
       !!_.get(packagejson, 'peerDependencies.angular', false),
     isReactProject:
       !!_.get(packagejson, 'dependencies.react', false) ||
       !!_.get(packagejson, 'peerDependencies.react', false),
-    isEsModule: !!_.get(packagejson, 'module', false),
     servers: {
       cdn: {
         port: cdnPort,
