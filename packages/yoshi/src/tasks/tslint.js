@@ -92,7 +92,11 @@ module.exports = async ({
 
   if (pattern) {
     console.log(`running tslint on ${chalk.magenta(pattern)}\n`);
-    filterPaths = globby.sync(pattern, { absolute: true });
+    filterPaths = globby.sync(pattern, {
+      absolute: true,
+      onlyFiles: true,
+      ignore: ['**/node_modules'],
+    });
   } else {
     console.log(`running tslint using ${chalk.magenta(tsconfigFilePath)}\n`);
   }

@@ -55,7 +55,6 @@
     "haste-task-babel": "~0.3.0",
     "haste-task-clean": "~0.3.0",
     "haste-task-copy": "~0.3.0",
-    "haste-task-eslint": "~0.3.0",
     "haste-task-karma": "~0.3.0",
     "haste-task-less": "~0.3.0",
     "haste-task-sass": "~0.3.0",

@@ -110,7 +110,7 @@ describe('Aggregator: Lint', () => {
     });
   });
 
-  describe('yoshi-eslint', () => {
+  describe('eslint', () => {
     function setup(data) {
       return test.setup(
         Object.assign(
@@ -123,7 +123,7 @@ describe('Aggregator: Lint', () => {
       );
     }
 
-    it('should use yoshi-eslint', () => {
+    it('should use eslint and pass for a valid file', () => {
       const res = setup({ 'app/a.js': `parseInt("1", 10);` }).execute(
         'lint',
         [],
@@ -132,19 +132,25 @@ describe('Aggregator: Lint', () => {
       expect(res.code).to.equal(0);
     });
 
-    it('should fail with exit code 1', () => {
-      const res = setup({ 'app/a.js': `parseInt("1");` }).execute(
-        'lint',
-        [],
-        insideTeamCity,
-      );
+    it('should log warnings to the console when there are only warnings', () => {
+      const res = setup({
+        'app/a.js': `/*eslint radix: 1*/\n parseInt("1");`,
+      }).execute('lint', [], insideTeamCity);
+      expect(res.code).to.equal(0);
+      expect(res.stderr).to.contain('warning  Missing radix parameter  radix');
+    });
+
+    it('should fail with exit code 1 for an invalid file', () => {
+      const res = setup({
+        'app/a.js': `parseInt("1");`,
+      }).execute('lint', [], insideTeamCity);
       expect(res.code).to.equal(1);
       expect(res.stderr).to.contain(
         '1:1  error  Missing radix parameter  radix',
       );
     });
 
-    it('should fix linting errors and exit with exit code 0 if there are only fixable errors', () => {
+    it('should output fixes in case a "fix" option is passed', () => {
       const res = setup({
         'app/a.js':
           '/*eslint no-regex-spaces: "error"*/\nnew RegExp("foo  bar");',
@@ -182,7 +188,7 @@ describe('Aggregator: Lint', () => {
     });
   });
 
-  describe('yoshi-stylelint', () => {
+  describe('stylelint', () => {
     it('should use yoshi-stylelint', () => {
       const goodStyle = `
 p {

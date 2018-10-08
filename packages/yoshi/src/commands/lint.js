@@ -3,6 +3,7 @@ const execa = require('execa');
 const { createRunner } = require('haste-core');
 const parseArgs = require('minimist');
 const tslint = require('../tasks/tslint');
+const eslint = require('../tasks/eslint');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('yoshi-config/globs');
 
@@ -26,7 +27,7 @@ module.exports = runner.command(async tasks => {
     return;
   }
 
-  const { eslint, stylelint } = tasks;
+  const { stylelint } = tasks;
   // Variadic arguments are placed inside the "_" property array
   // https://github.com/substack/minimist#var-argv--parseargsargs-opts
   // The first argument is the command itself (lint), we retrieve all the rest
