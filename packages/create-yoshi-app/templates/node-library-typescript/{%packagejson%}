@@ -32,7 +32,10 @@
     "@types/mocha": "~2.2.0"
   },
   "lint-staged": {
-    "*.{js,ts}": "yoshi lint"
+    "linters": {
+      "*.{js,ts}": "yoshi lint"
+    },
+    "ignore": ["**/*.d.ts"]
   },
   "yoshi": {
     "hmr": "auto"

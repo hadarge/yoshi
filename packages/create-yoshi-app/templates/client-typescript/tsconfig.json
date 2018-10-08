@@ -11,7 +11,8 @@
     "lib": ["dom", "es2016"]
   },
   "include": [
-    "./test/**/*.ts"
+    "./test/**/*.ts",
+    "./src/**/*.spec.tsx"
   ],
   "files": [
     "./node_modules/jest-yoshi-preset/types.d.ts",

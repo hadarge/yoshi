@@ -60,7 +60,10 @@
     "yoshi-runtime": "latest"
   },
   "lint-staged": {
-    "*.{js,ts,tsx,scss,less}": "yoshi lint"
+    "linters": {
+      "*.{js,ts,tsx,scss,less}": "yoshi lint"
+    },
+    "ignore": ["**/*.d.ts"]
   },
   "yoshi": {
     "universalProject": true,

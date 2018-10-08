@@ -13,7 +13,8 @@
     "lib": ["dom", "es2016"]
   },
   "include": [
-    "./test/**/*.ts"
+    "./test/**/*.ts",
+    "./src/**/*.spec.tsx"
   ],
   "files": [
     "./src/external-types.d.ts",
