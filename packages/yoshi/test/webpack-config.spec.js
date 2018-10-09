@@ -267,43 +267,6 @@ describe('Webpack basic configs', () => {
     });
   });
 
-  describe('when multiple versions of the same package exist in a build', () => {
-    const warningOutput = 'WARNING in shared-dep';
-    let child;
-
-    afterEach(() => killSpawnProcessAndHisChildren(child));
-
-    beforeEach(() => {
-      test.setup({
-        'src/client.js': `require('shared-dep'); require('dep')`,
-        'node_modules/shared-dep/package.json': `{"name": "shared-dep", "version": "2"}`,
-        'node_modules/shared-dep/index.js': '',
-        'node_modules/dep/index.js': `require('shared-dep')`,
-        'node_modules/dep/package.json': `{"name": "dep"}`,
-        'node_modules/dep/node_modules/shared-dep/package.json': `{"name": "shared-dep", "version": "1"}`,
-        'node_modules/dep/node_modules/shared-dep/index.js': '',
-      });
-    });
-
-    it('should warn on build command', () => {
-      res = test.execute('build');
-      expect(res.stdout).to.contain(warningOutput);
-    });
-
-    it('should warn on start command', () => {
-      child = test.spawn('start');
-      return checkStdout(warningOutput);
-    });
-
-    function checkStdout(str) {
-      return retryPromise(
-        { backoff: 100 },
-        () =>
-          test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
-      );
-    }
-  });
-
   describe('Module concatenation plugin', () => {
     let child;
 

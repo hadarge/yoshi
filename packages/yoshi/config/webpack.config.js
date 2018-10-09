@@ -10,7 +10,6 @@ const StylableWebpackPlugin = require('stylable-webpack-plugin');
 const TpaStyleWebpackPlugin = require('tpa-style-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const xmldoc = require('xmldoc');
-const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
 const { SRC_DIR, BUILD_DIR, POM_FILE } = require('yoshi-config/paths');
@@ -508,9 +507,6 @@ function createClientWebpackConfig({
 
       // Hacky way of correcting Webpack's publicPath
       new DynamicPublicPath(),
-
-      // https://github.com/darrenscerri/duplicate-package-checker-webpack-plugin
-      new DuplicatePackageCheckerPlugin({ verbose: true }),
 
       // https://webpack.js.org/plugins/define-plugin/
       new webpack.DefinePlugin({
