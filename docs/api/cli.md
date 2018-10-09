@@ -124,6 +124,14 @@ yoshi: {
     }
   ```
 
+  Every other argument you'll pass to `yoshi test --jest` will be forwarded to jest, For example:
+
+  ```yoshi test --jest --forceExit foo.spec.js```
+
+  Will run jest on `foo.spec.js` file and will apply [`forceExit`](https://jestjs.io/docs/en/cli#forceexit).
+
+  __Note:__ `--debug & --debug-brk` won't be transfer to jest, but instead will be [used in yoshi for test debugging](https://jestjs.io/docs/en/troubleshooting#tests-are-failing-and-you-don-t-know-why)
+
 ## lint
 
 Flag | Short Flag | Description | Default Value

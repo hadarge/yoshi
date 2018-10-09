@@ -217,111 +217,113 @@ describe('Aggregator: Test', () => {
   });
 
   describe('--jest', () => {
-    let test;
-    let res;
-    before(() => {
-      test = tp.create();
-      res = test
-        .setup({
-          '__tests__/foo.js': `
-            describe('Foo', () => {
-              it('should return value', () => {
-                jest.mock('../foo');
-                const foo = require('../foo');
-                // foo is a mock function
-                foo.mockImplementation(() => 42);
-                expect(foo()).toBe(42);
-              });
+    describe('when passes', () => {
+      const testSetup = {
+        '__tests__/foo.js': `
+              describe('Foo', () => {
+                it('should return value', () => {
+                  jest.mock('../foo');
+                  const foo = require('../foo');
+                  // foo is a mock function
+                  foo.mockImplementation(() => 42);
+                  expect(foo()).toBe(42);
+                });
 
-              it('should work with css', () => {
-                jest.mock('../bar');
-                const foo = require('../bar');
-                // foo is a mock function
-                foo.mockImplementation(() => 42);
-                expect(foo()).toBe(42);
-              });
+                it('should work with css', () => {
+                  jest.mock('../bar');
+                  const foo = require('../bar');
+                  // foo is a mock function
+                  foo.mockImplementation(() => 42);
+                  expect(foo()).toBe(42);
+                });
 
-              it('should work with es modules', () => {
-                const baz = require('../baz').default;
-                expect(baz).toBe(1);
+                it('should work with es modules', () => {
+                  const baz = require('../baz').default;
+                  expect(baz).toBe(1);
+                });
               });
-            });
-          `,
-          '__tests__/styles.js': `
-            it('pass stylable', () => {
-              const style = require('./main.st.css').default;
+            `,
+        '__tests__/styles.js': `
+              it('pass stylable', () => {
+                const style = require('./main.st.css').default;
 
-              expect(style.someclass.indexOf('someclass') > -1).toBe(true);
-              expect(style('root').className.indexOf('root') > -1).toBe(true);
-            });
-          `,
-          '__tests__/separate-styles.js': `
-              it('pass styles from node_modules', () => {
-                const style = require('pkg/main.st.css').default;
                 expect(style.someclass.indexOf('someclass') > -1).toBe(true);
                 expect(style('root').className.indexOf('root') > -1).toBe(true);
-              });`,
-          '__tests__/main.st.css': `
-            .someclass {
-              color: yellow;
-          }`,
-          'foo.js': `
-            const s = require('./foo.scss');
-            module.exports = function() {
-              const a = s.a;
-            };`,
-          'bar.js': `
-            const s = require('./foo.scss');
-            module.exports = function() {
-              const a = s.a;
-            };`,
-          'baz.js': `export default 1;`,
-          'foo.scss': `.a {.b {color: red;}}`,
-          'node_modules/pkg/main.st.css': `
-            .someclass {
-              color: yellow;
+              });
+            `,
+        '__tests__/separate-styles.js': `
+                it('pass styles from node_modules', () => {
+                  const style = require('pkg/main.st.css').default;
+                  expect(style.someclass.indexOf('someclass') > -1).toBe(true);
+                  expect(style('root').className.indexOf('root') > -1).toBe(true);
+                });`,
+        '__tests__/main.st.css': `
+              .someclass {
+                color: yellow;
             }`,
-          'package.json': `{
-            "name": "a",\n
-            "jest": {
-              "testURL": "http://localhost",
-              "moduleNameMapper": {
-                ".scss$": "${require.resolve('identity-obj-proxy')}"
+        'foo.js': `
+              const s = require('./foo.scss');
+              module.exports = function() {
+                const a = s.a;
+              };`,
+        'bar.js': `
+              const s = require('./foo.scss');
+              module.exports = function() {
+                const a = s.a;
+              };`,
+        'baz.js': `export default 1;`,
+        'foo.scss': `.a {.b {color: red;}}`,
+        'node_modules/pkg/main.st.css': `
+              .someclass {
+                color: yellow;
+              }`,
+        'package.json': `{
+              "name": "a",\n
+              "jest": {
+                "testURL": "http://localhost",
+                "moduleNameMapper": {
+                  ".scss$": "${require.resolve('identity-obj-proxy')}"
+                }
               }
-            }
-          }`,
-        })
-        .execute('test', ['--jest'], insideTeamCity);
-    });
-    after(() => test.teardown());
+            }`,
+      };
 
-    it('should pass with exit code 0', () => {
-      expect(res.code).to.equal(0);
-    });
-
-    it('should pass all tests', () => {
-      expect(res.stderr).to.contain('5 passed, 5 total');
-    });
-
-    it('should work load jest configuration and work with css', () => {
-      expect(res.stderr).to.not.contain('should work with css');
-    });
-
-    it('should use the right reporter when running inside TeamCity', () => {
-      expect(res.stdout).to.contain('##teamcity[');
-    });
-
-    it('should transpile ES modules out of the box', () => {
-      expect(res.stderr).to.not.contain('should work with es modules');
-    });
-
-    describe('stylable integration', () => {
-      it('should support stylable', () => {
-        expect(res.stderr).to.not.contain('pass stylable');
+      let test, res;
+      before(() => {
+        test = tp.create();
+        res = test.setup(testSetup).execute('test', ['--jest'], insideTeamCity);
       });
 
-      it('should load stylable files also from node_modules', () => {
-        expect(res.stderr).to.not.contain('pass styles from node_modules');
+      after(() => test.teardown());
+
+      it('should pass with exit code 0', () => {
+        expect(res.code).to.equal(0);
+      });
+
+      it('should pass all tests', () => {
+        expect(res.stderr).to.contain('5 passed, 5 total');
+      });
+
+      it('should work load jest configuration and work with css', () => {
+        expect(res.stderr).to.not.contain('should work with css');
+      });
+
+      it('should use the right reporter when running inside TeamCity', () => {
+        expect(res.stdout).to.contain('##teamcity[');
+      });
+
+      it('should transpile ES modules out of the box', () => {
+        expect(res.stderr).to.not.contain('should work with es modules');
+      });
+
+      describe('stylable integration', () => {
+        it('should support stylable', () => {
+          expect(res.stderr).to.not.contain('pass stylable');
+        });
+
+        it('should load stylable files also from node_modules', () => {
+          expect(res.stderr).to.not.contain('pass styles from node_modules');
+        });
       });
     });
 
@@ -349,6 +351,27 @@ describe('Aggregator: Test', () => {
 
       expect(res.code).to.equal(1);
       expect(res.stderr).to.contain('1 failed');
+      test.teardown();
+    });
+
+    it('should forward command-line arguments after/before "--jest" to jest bin', () => {
+      const test = tp.create();
+      const res = test
+        .setup({
+          '__tests__/foo.js': `test('foo', () => {})`,
+          '__tests__/bar.js': `test('bar', () => {})`,
+          'package.json': fx.packageJson(),
+        })
+        .execute('test', [
+          '--listTests',
+          '--jest',
+          '__tests__/foo.js',
+          '__tests__/bar.js',
+        ]);
+
+      expect(res.code).to.equal(0);
+      expect(res.stdout).to.contain('/__tests__/foo.js');
+      expect(res.stdout).to.contain('/__tests__/bar.js');
       test.teardown();
     });
 

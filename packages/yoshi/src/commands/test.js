@@ -26,7 +26,9 @@ const runner = createRunner({
   logger: new LoggerPlugin(),
 });
 
-const cliArgs = minimist(process.argv.slice(2));
+const rawCliArgs = process.argv.slice(2);
+const cliArgs = minimist(rawCliArgs);
+
 const noOptions =
   !cliArgs.mocha &&
   !cliArgs.jasmine &&
@@ -178,18 +180,25 @@ module.exports = runner.command(
         require.resolve('jest/bin/jest'),
         `--config=${configPath}`,
         `--rootDir=${process.cwd()}`,
-        shouldWatch ? '--watch' : '',
-        cliArgs.coverage ? '--coverage' : '',
-        cliArgs.runInBand ? '--runInBand' : '',
-        cliArgs.forceExit ? '--forceExit' : '',
       ];
+
+      shouldWatch && jestCliOptions.push('--watch');
+
+      const jestForwardedOptions = rawCliArgs
+        .slice(rawCliArgs.indexOf('test') + 1)
+        // filter yoshi's option
+        .filter(arg => !['--jest', '--debug', '--debug-brk'].includes(arg));
+
+      jestCliOptions.push(...jestForwardedOptions);
 
       if (debugBrkPort !== undefined) {
         jestCliOptions.unshift(`--inspect-brk=${debugBrkPort}`);
-        jestCliOptions.push(`--runInBand`);
+        !jestForwardedOptions.includes('--runInBand') &&
+          jestCliOptions.push('--runInBand');
       } else if (debugPort !== undefined) {
         jestCliOptions.unshift(`--inspect=${debugPort}`);
-        jestCliOptions.push(`--runInBand`);
+        !jestForwardedOptions.includes('--runInBand') &&
+          jestCliOptions.push('--runInBand');
       }
 
       try {
