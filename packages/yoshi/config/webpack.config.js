@@ -13,12 +13,7 @@ const xmldoc = require('xmldoc');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
-const {
-  SRC_DIR,
-  BUILD_DIR,
-  STATS_FILE,
-  POM_FILE,
-} = require('yoshi-config/paths');
+const { SRC_DIR, BUILD_DIR, POM_FILE } = require('yoshi-config/paths');
 
 const project = require('yoshi-config');
 const {
