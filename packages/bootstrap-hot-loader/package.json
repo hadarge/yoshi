@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-hot-loader",
-  "version": "3.1.2",
+  "version": "3.15.0",
   "description": "update a bootsrap server without restarting the node js process",
   "main": "index.js",
   "keywords": [
