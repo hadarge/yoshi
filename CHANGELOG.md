@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.14.2 (2018-10-09)
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#617](https://github.com/wix/yoshi/pull/617) Fix a bug when using `--stats` option and stats files was not written ([@ronenst](https://github.com/ronenst))
+  * [#616](https://github.com/wix/yoshi/pull/616) [eslint] Log warnings to the console if there are only warnings ([@ranyitz](https://github.com/ranyitz))
+  * [#614](https://github.com/wix/yoshi/pull/614) [tslint] Use `yoshi lint <files>` filter on top of the files specified in `tsconfig` ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+* `create-yoshi-app`
+  * [#615](https://github.com/wix/yoshi/pull/615) Improve Lint on typescript templates ([@ranyitz](https://github.com/ranyitz))
+    * Ignore `d.ts` files on the `lint-staged` config
+    * Include `*.spec.tsx` files on the default `tsconfig.json`
+
+#### :house: Internal
+* `yoshi-config`
+  * [#613](https://github.com/wix/yoshi/pull/613) Remove unused config options (`isUniversalProject`, `isEsModule`) ([@ronami](https://github.com/ronami))
+
 ## 3.14.1 (2018-10-03)
 
 #### :bug: Bug Fix
