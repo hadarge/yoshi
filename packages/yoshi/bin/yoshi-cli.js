@@ -2,6 +2,7 @@ const prog = require('commander');
 const runCLI = require('../src/cli');
 const { version } = require('../package');
 const infoCommand = require('../src/commands/info');
+const config = require('yoshi-config');
 
 // IDEs start debugging with '--inspect' or '--inspect-brk' option. We are setting --debug instead
 require('./normalize-debugging-args')();
@@ -36,34 +37,56 @@ prog
   .allowUnknownOption()
   .action(() => runCLI('test'));
 
-prog
-  .command('build')
-  .description('Build the app for production')
-  .option('--output', 'The output directory for static assets')
-  .option('--analyze', 'Run webpack-bundle-analyzer plugin')
-  .option('--stats', 'Generate dist/webpack-stats.json file')
-  .option('--no-min', 'Do not output minified bundle')
-  .option('--source-map', 'Explictly emit bundle source maps')
-  .action(() => runCLI('build'));
+if (config.experimentalServerBundle) {
+  prog
+    .command('build')
+    .description('Experimental way of building an app to production')
+    .option('--analyze', 'Run webpack-bundle-analyzer plugin')
+    .option('--stats', 'Generate dist/webpack-stats.json file')
+    .action(() => runCLI('build-app'));
 
-prog
-  .command('start')
-  .description('Run the app in development mode (also spawns npm test)')
-  .option('-e, --entry-point', 'Entry point for the app')
-  .option(
-    '--manual-restart',
-    'Get SIGHUP on change and manage application reboot manually',
-  )
-  .option('--no-test', 'Do not spawn npm test after start')
-  .option('--no-server', 'Do not spawn the app server')
-  .option('--debug', 'Allow app-server debugging')
-  .option('--production', 'start using unminified production build')
-  .option(
-    '--debug-brk',
-    "Allow app-server debugging, process won't start until debugger will be attached",
-  )
-  .option('--ssl', 'Serve the app bundle on https')
-  .action(() => runCLI('start'));
+  prog
+    .command('start')
+    .description('Experimental local development experience')
+    .option('--server', 'The main file to start your server')
+    .option('--production', 'Start using unminified production build')
+    .option('--https', 'Serve the app bundle on https')
+    .option('--debug', 'Allow app-server debugging')
+    .option(
+      '--debug-brk',
+      "Allow app-server debugging, process won't start until debugger will be attached",
+    )
+    .action(() => runCLI('start-app'));
+} else {
+  prog
+    .command('build')
+    .description('Build the app for production')
+    .option('--output', 'The output directory for static assets')
+    .option('--analyze', 'Run webpack-bundle-analyzer plugin')
+    .option('--stats', 'Generate dist/webpack-stats.json file')
+    .option('--no-min', 'Do not output minified bundle')
+    .option('--source-map', 'Explictly emit bundle source maps')
+    .action(() => runCLI('build'));
+
+  prog
+    .command('start')
+    .description('Run the app in development mode (also spawns npm test)')
+    .option('-e, --entry-point', 'Entry point for the app')
+    .option(
+      '--manual-restart',
+      'Get SIGHUP on change and manage application reboot manually',
+    )
+    .option('--no-test', 'Do not spawn npm test after start')
+    .option('--no-server', 'Do not spawn the app server')
+    .option('--debug', 'Allow app-server debugging')
+    .option('--production', 'start using unminified production build')
+    .option(
+      '--debug-brk',
+      "Allow app-server debugging, process won't start until debugger will be attached",
+    )
+    .option('--ssl', 'Serve the app bundle on https')
+    .action(() => runCLI('start'));
+}
 
 prog
   .command('release')

@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const { isObject } = require('lodash');
+const nodeExternals = require('webpack-node-externals');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -10,16 +11,25 @@ const StylableWebpackPlugin = require('stylable-webpack-plugin');
 const TpaStyleWebpackPlugin = require('tpa-style-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const xmldoc = require('xmldoc');
+const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
-const { SRC_DIR, BUILD_DIR, POM_FILE } = require('yoshi-config/paths');
-
+const {
+  ROOT_DIR,
+  SRC_DIR,
+  BUILD_DIR,
+  STATICS_DIR,
+  POM_FILE,
+  TSCONFIG_FILE,
+} = require('yoshi-config/paths');
 const project = require('yoshi-config');
 const {
   toIdentifier,
   isSingleEntry,
   isProduction: checkIsProduction,
   inTeamCity: checkInTeamCity,
+  isTypescriptProject: checkIsTypescriptProject,
 } = require('yoshi-helpers');
 
 const reScript = /\.js?$/;
@@ -34,6 +44,8 @@ const disableModuleConcat = process.env.DISABLE_MODULE_CONCATENATION === 'true';
 const isProduction = checkIsProduction();
 
 const inTeamCity = checkInTeamCity();
+
+const isTypescriptProject = checkIsTypescriptProject();
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -85,6 +97,19 @@ const splitChunksConfig = isObject(useSplitChunks)
   : defaultSplitChunksConfig;
 
 const entry = project.entry || project.defaultEntry;
+
+function overrideRules(rules, patch) {
+  return rules.map(ruleToPatch => {
+    let rule = patch(ruleToPatch);
+    if (rule.rules) {
+      rule = { ...rule, rules: overrideRules(rule.rules, patch) };
+    }
+    if (rule.oneOf) {
+      rule = { ...rule, oneOf: overrideRules(rule.oneOf, patch) };
+    }
+    return rule;
+  });
+}
 
 // Common function to get style loaders
 const getStyleLoaders = ({
@@ -224,7 +249,7 @@ function createCommonWebpackConfig({
     mode: isProduction ? 'production' : 'development',
 
     output: {
-      path: path.join(BUILD_DIR, 'statics'),
+      path: STATICS_DIR,
       publicPath,
       pathinfo: isDebug,
       filename: isDebug ? '[name].bundle.js' : '[name].bundle.min.js',
@@ -251,8 +276,20 @@ function createCommonWebpackConfig({
     },
 
     plugins: [
+      // This gives some necessary context to module not found errors, such as
+      // the requesting resource
+      new ModuleNotFoundPlugin(ROOT_DIR),
       // https://github.com/Urthen/case-sensitive-paths-webpack-plugin
       new CaseSensitivePathsPlugin(),
+      // https://github.com/Realytics/fork-ts-checker-webpack-plugin
+      ...(isTypescriptProject && project.experimentalServerBundle
+        ? [
+            new ForkTsCheckerWebpackPlugin({
+              tsconfig: TSCONFIG_FILE,
+              async: false,
+            }),
+          ]
+        : []),
       // Way of communicating to `babel-preset-yoshi` or `babel-preset-wix` that
       // it should optimize for Webpack
       { apply: () => (process.env.IN_WEBPACK = 'true') },
@@ -559,8 +596,114 @@ function createClientWebpackConfig({
   return clientConfig;
 }
 
+//
+// Configuration for the server-side bundle (server.js)
+// -----------------------------------------------------------------------------
+function createServerWebpackConfig({ isDebug = true } = {}) {
+  const config = createCommonWebpackConfig({ isDebug });
+
+  const styleLoaders = getStyleLoaders({ embedCss: false, isDebug });
+
+  const serverConfig = {
+    ...config,
+
+    name: 'server',
+
+    target: 'node',
+
+    entry: {
+      server: './server',
+    },
+
+    output: {
+      ...config.output,
+      path: BUILD_DIR,
+      filename: '[name].js',
+      chunkFilename: 'chunks/[name].js',
+      libraryTarget: 'umd',
+      libraryExport: 'default',
+      globalObject: "(typeof self !== 'undefined' ? self : this)",
+      hotUpdateMainFilename: 'updates/[hash].hot-update.json',
+      hotUpdateChunkFilename: 'updates/[id].[hash].hot-update.js',
+      // Point sourcemap entries to original disk location (format as URL on Windows)
+      devtoolModuleFilenameTemplate: info =>
+        path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
+    },
+
+    // Webpack mutates resolve object, so clone it to avoid issues
+    // https://github.com/webpack/webpack/issues/4817
+    resolve: {
+      ...config.resolve,
+    },
+
+    module: {
+      ...config.module,
+
+      rules: [
+        ...overrideRules(config.module.rules, rule => {
+          // Override paths to static assets
+          if (rule.loader === 'file-loader' || rule.loader === 'url-loader') {
+            return {
+              ...rule,
+              options: {
+                ...rule.options,
+                emitFile: false,
+              },
+            };
+          }
+
+          return rule;
+        }),
+
+        // Rules for Style Sheets
+        ...styleLoaders,
+      ],
+    },
+
+    externals: [
+      nodeExternals({
+        whitelist: [reStyle, reAssets, /bootstrap-hot-loader/],
+      }),
+    ],
+
+    plugins: [
+      ...config.plugins,
+
+      // https://webpack.js.org/plugins/banner-plugin/
+      new webpack.BannerPlugin({
+        // https://github.com/evanw/node-source-map-support
+        banner: 'require("source-map-support").install();',
+        raw: true,
+        entryOnly: false,
+      }),
+    ],
+
+    // https://webpack.js.org/configuration/optimization
+    optimization: {
+      // Do not modify/set the value of `process.env.NODE_ENV`
+      nodeEnv: false,
+    },
+
+    // Do not replace node globals with polyfills
+    // https://webpack.js.org/configuration/node/
+    node: {
+      console: false,
+      global: false,
+      process: false,
+      Buffer: false,
+      __filename: false,
+      __dirname: false,
+    },
+
+    devtool: 'cheap-module-inline-source-map',
+  };
+
+  return serverConfig;
+}
+
 module.exports = {
   createCommonWebpackConfig,
   createClientWebpackConfig,
+  createServerWebpackConfig,
   getStyleLoaders,
 };

@@ -5,3 +5,5 @@ module.exports.localIdentName = {
 
 module.exports.staticsDomain = 'https://static.parastorage.com/services';
 // module.exports.unpkgDomain = 'https://static.parastorage.com/unpkg';
+
+module.exports.PORT = 3000;
