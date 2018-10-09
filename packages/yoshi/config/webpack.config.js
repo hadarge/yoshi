@@ -433,7 +433,6 @@ function createCommonWebpackConfig({
 function createClientWebpackConfig({
   isAnalyze = false,
   isDebug = true,
-  isStats = false,
   withLocalSourceMaps,
 } = {}) {
   const config = createCommonWebpackConfig({ isDebug, withLocalSourceMaps });
@@ -540,16 +539,7 @@ function createClientWebpackConfig({
       }),
 
       // https://github.com/th0r/webpack-bundle-analyzer
-      ...(isAnalyze || isStats
-        ? [
-            new BundleAnalyzerPlugin({
-              analyzerMode: isAnalyze ? 'server' : 'disabled',
-              generateStatsFile: isStats,
-              statsFilename: STATS_FILE,
-              statsOptions: { colors: false },
-            }),
-          ]
-        : []),
+      ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
     ],
 
     module: {

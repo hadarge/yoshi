@@ -852,37 +852,6 @@ describe('Aggregator: Build', () => {
     });
   });
 
-  // Currently skipping due to https://github.com/wix/yoshi/issues/595
-  // Previous `--analyze` test is opening a process with 8888 which is not
-  // killed, making `checkServerIsServing()` resolve too early
-  describe.skip('build project with --analyze and --stats flags', () => {
-    const analyzerServerPort = '8888';
-    const analyzerContentPart =
-      'window.chartData = [{"label":"app.bundle.min.js"';
-
-    before(() => {
-      test = tp.create();
-      test
-        .setup({
-          'src/client.js': '',
-          'package.json': fx.packageJson(),
-        })
-        .spawn('build', ['--analyze', '--stats']);
-    });
-
-    it('should serve webpack-bundle-analyzer server', () => {
-      return checkServerIsServing({ port: analyzerServerPort }).then(content =>
-        expect(content).to.contain(analyzerContentPart),
-      );
-    });
-
-    it('should generate stats files', () => {
-      return checkServerIsServing({ port: analyzerServerPort }).then(() =>
-        expect(test.list('dist')).to.contain('webpack-stats.json'),
-      );
-    });
-  });
-
   describe('build on local machine', () => {
     it('should not generate source maps if not requested', () => {
       test = tp.create();
