@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.15.0 (2018-10-09)
+
+#### :rocket: New Feature
+* `bootstrap-hot-loader`, `create-yoshi-app`, `yoshi-config`, `yoshi`
+  * [#586](https://github.com/wix/yoshi/pull/586) Server-side bundle experimental feature ([@ronami](https://github.com/ronami))
+* `yoshi`
+  * [#618](https://github.com/wix/yoshi/pull/618) Forward options after `--jest` to jest bin ([@ranyitz](https://github.com/ranyitz))
+
+#### :bug: Bug Fix
+* `create-yoshi-app`, `yoshi`
+  * [#619](https://github.com/wix/yoshi/pull/619) Fix wallaby configuration when working with `jest` ([@netanelgilad](https://github.com/netanelgilad))
+* `yoshi-config`, `yoshi`
+  * [#620](https://github.com/wix/yoshi/pull/620) Change the stats file destination to `target` instead of `dist` ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+* `yoshi`
+  * [#621](https://github.com/wix/yoshi/pull/621) Remove the duplicate package checker plugin ([@ranyitz](https://github.com/ranyitz))
+
 ## 3.14.2 (2018-10-09)
 
 #### :bug: Bug Fix
