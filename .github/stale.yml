@@ -9,7 +9,8 @@ daysUntilClose: 7
 
 # Issues or Pull Requests with these labels will never be considered stale. Set to `[]` to disable
 exemptLabels:
-  - pinned
+  - 📌 Pinned
+  - 👋 Help wanted
 
 # Label to use when marking as stale
 staleLabel: 💤 Stale
