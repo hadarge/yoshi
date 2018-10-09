@@ -61,20 +61,9 @@ module.exports = function(wallaby) {
       'src/**/*.scss',
     ],
     tests: [
-      { pattern: 'test/**/*.+(spec|it).[j|t]s' },
-      { pattern: 'test/**/*.+(spec|it).[j|t]sx' },
       { pattern: 'src/**/*.+(spec|it).[j|t]s' },
       { pattern: 'src/**/*.+(spec|it).[j|t]sx' },
     ],
-    compilers: {
-      '**/*.js{,x}': wallaby.compilers.babel({
-        babel: require('babel-core'), // Make sure wallaby is using babel 6.X
-        babelrc: true,
-        plugins: [
-          require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
-        ],
-      }),
-    },
     env: {
       type: 'node',
       runner:
