@@ -826,7 +826,7 @@ describe('Aggregator: Build', () => {
     });
 
     it('should generate stats files', () => {
-      expect(test.list('dist')).to.contain('webpack-stats.json');
+      expect(test.list('target')).to.contain('webpack-stats.json');
     });
   });
 

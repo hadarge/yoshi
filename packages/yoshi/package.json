@@ -60,7 +60,7 @@
     "haste-task-sass": "~0.3.0",
     "haste-task-stylelint": "~0.3.0",
     "haste-task-typescript": "~0.3.0",
-    "haste-task-webpack": "~0.3.0",
+    "haste-task-webpack": "^0.3.3",
     "haste-test-utils": "~0.3.0",
     "html-loader": "^0.5.5",
     "import-local": "^2.0.0",

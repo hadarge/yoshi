@@ -8,7 +8,7 @@ const SRC_DIR = resolvePath('src');
 const BUILD_DIR = resolvePath('dist');
 const TARGET_DIR = resolvePath('target');
 const POM_FILE = resolvePath('pom.xml');
-const STATS_FILE = resolvePath(BUILD_DIR, 'webpack-stats.json');
+const STATS_FILE = resolvePath(TARGET_DIR, 'webpack-stats.json');
 
 module.exports = {
   SRC_DIR,
