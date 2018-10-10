@@ -1,10 +1,9 @@
 module.exports = function(wallaby) {
   const wallabyCommon = require('./wallaby-common')(wallaby);
-  wallabyCommon.tests = [
+  wallabyCommon.tests.unshift(
     { pattern: 'test/**/*.+(spec|it).[j|t]s' },
     { pattern: 'test/**/*.+(spec|it).[j|t]sx' },
-    ...wallabyCommon.tests,
-  ];
+  );
   wallabyCommon.compilers = {
     '**/*.js{,x}': wallaby.compilers.babel({
       babel: require('babel-core'), // Make sure wallaby is using babel 6.X
