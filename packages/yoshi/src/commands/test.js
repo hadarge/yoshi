@@ -187,7 +187,7 @@ module.exports = runner.command(
       const jestForwardedOptions = rawCliArgs
         .slice(rawCliArgs.indexOf('test') + 1)
         // filter yoshi's option
-        .filter(arg => !['--jest', '--debug', '--debug-brk'].includes(arg));
+        .filter(arg => arg !== '--jest' && arg.indexOf('debug') === -1);
 
       jestCliOptions.push(...jestForwardedOptions);
 
