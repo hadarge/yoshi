@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.15.1 (2018-10-10)
+
+#### :nail_care: Polish
+* `yoshi`
+  * [#622](https://github.com/wix/yoshi/pull/622) Simplify wallabyCommon.tests update in wallaby-mocha.js ([@splintor](https://github.com/splintor))
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [2d31fdd](https://github.com/wix/yoshi/commit/2d31fdd678e5cbf87d05cfbc5ab6a762b6960c9d) Fix a bug that caused Yoshi to crash if TypeScript wasn't installed ([@ronami](https://github.com/ronami))
+
 ## 3.15.0 (2018-10-09)
 
 #### :rocket: New Feature
