@@ -1,10 +1,8 @@
 module.exports = function(wallaby) {
   const wallabyCommon = require('./wallaby-common')(wallaby);
   wallabyCommon.tests = [
-    ...[
-      { pattern: 'test/**/*.+(spec|it).[j|t]s' },
-      { pattern: 'test/**/*.+(spec|it).[j|t]sx' },
-    ],
+    { pattern: 'test/**/*.+(spec|it).[j|t]s' },
+    { pattern: 'test/**/*.+(spec|it).[j|t]sx' },
     ...wallabyCommon.tests,
   ];
   wallabyCommon.compilers = {
