@@ -1,10 +1,21 @@
 # Changelog
 
+## 3.15.2 (2018-10-10)
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#623](https://github.com/wix/yoshi/pull/623) Fix wallaby babel ([@netanelgilad](https://github.com/netanelgilad))
+  * [#626](https://github.com/wix/yoshi/pull/626) Fix debugging of jest tests ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :nail_care: Polish
+* `yoshi`
+  * [#624](https://github.com/wix/yoshi/pull/624) Further simplify `wallabyCommon.tests` by using unshift ([@splintor](https://github.com/splintor))
+
 ## 3.15.1 (2018-10-10)
 
 #### :nail_care: Polish
 * `yoshi`
-  * [#622](https://github.com/wix/yoshi/pull/622) Simplify wallabyCommon.tests update in wallaby-mocha.js ([@splintor](https://github.com/splintor))
+  * [#622](https://github.com/wix/yoshi/pull/622) Simplify `wallabyCommon.tests` update in wallaby-mocha.js ([@splintor](https://github.com/splintor))
 
 #### :bug: Bug Fix
 * `yoshi`
