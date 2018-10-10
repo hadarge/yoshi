@@ -12,7 +12,6 @@ const TpaStyleWebpackPlugin = require('tpa-style-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const xmldoc = require('xmldoc');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
 const {
@@ -284,7 +283,10 @@ function createCommonWebpackConfig({
       // https://github.com/Realytics/fork-ts-checker-webpack-plugin
       ...(isTypescriptProject && project.experimentalServerBundle
         ? [
-            new ForkTsCheckerWebpackPlugin({
+            // Since `fork-ts-checker-webpack-plugin` requires you to have
+            // TypeScript installed when its required, we only require it if
+            // this is a TypeScript project
+            new (require('fork-ts-checker-webpack-plugin'))({
               tsconfig: TSCONFIG_FILE,
               async: false,
             }),
