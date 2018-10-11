@@ -72,6 +72,11 @@ describe('Aggregator: Build', () => {
             'src/styles/my-file-less.global.less': `.q {.w {color: blue;}}`,
             'src/styles/my-file.scss': `.a {.b {color: blue;}}`,
             'src/styles/my-file.st.css': `.root {.stylableClass {color: pink;}}`,
+            'src/app3.js': `require('./styles/file-with-url.css');`,
+            'src/styles/file-with-url.css': `body {
+              background: url('../assets/image.jpg');
+            }`,
+            'src/assets/image.jpg': '(^_^)'.repeat(2500),
             'app/a/style.scss': fx.scss(),
             'app/b/style.less': fx.less(),
             'app/c/style.less': `@import (once) '../b/style.less';`,
@@ -97,6 +102,7 @@ describe('Aggregator: Build', () => {
               entry: {
                 first: './app1.js',
                 second: './app2.js',
+                third: './app3.js',
               },
               features: {
                 externalizeRelativeLodash: false,
@@ -148,6 +154,12 @@ describe('Aggregator: Build', () => {
         expect(resp.stdout).to.contain(`Finished 'sass'`);
         expect(resp.stdout).to.contain(`Finished 'less'`);
         expect(resp.stdout).to.contain(`Finished 'babel'`);
+      });
+
+      it('should output relative paths in css url statements', () => {
+        expect(test.content('./dist/statics/third.css')).to.contain(
+          'url(assets/image.jpg',
+        );
       });
     });
 

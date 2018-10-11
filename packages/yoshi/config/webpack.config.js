@@ -149,6 +149,11 @@ const getStyleLoaders = ({
                 ? [
                     {
                       loader: MiniCssExtractPlugin.loader,
+                      options: {
+                        // By default it use publicPath in webpackOptions.output
+                        // We are overriding it to restore relative paths in url() calls
+                        publicPath: '',
+                      },
                     },
                   ]
                 : [
