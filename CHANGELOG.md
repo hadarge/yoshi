@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.15.3 (2018-10-11)
+
+#### :house: Internal
+* `yoshi`
+  * [#486](https://github.com/wix/yoshi/pull/486) Upgrade stylable to new scoped package ([@tomrav](https://github.com/tomrav))
+
 ## 3.15.2 (2018-10-10)
 
 #### :bug: Bug Fix
