@@ -1,6 +1,6 @@
 {
   "name": "jest-yoshi-preset",
-  "version": "3.15.2",
+  "version": "3.15.3",
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
   "keywords": [
@@ -28,7 +28,7 @@
     "stylable": "^5.3.5",
     "stylable-integration": "^6.1.1",
     "typescript": "~2.9.0",
-    "yoshi": "3.15.2"
+    "yoshi": "3.15.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
