@@ -130,11 +130,11 @@ Set to true to keep function names when uglifying
 
 ## entry
 
-Explanation is in [cli/build](#build) section.
+Explanation is in [cli/build](./cli.md#build) section.
 
 ## servers.cdn
 
-Explanation is in [cli/start](#start) section.
+Explanation is in [cli/start](./cli.md#start) section.
 
 ## externals
 
