@@ -1,5 +1,5 @@
 const union = require('lodash/union');
-const StylableWebpackPlugin = require('stylable-webpack-plugin');
+const StylableWebpackPlugin = require('@stylable/webpack-plugin');
 const {
   createCommonWebpackConfig,
   getStyleLoaders,
