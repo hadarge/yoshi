@@ -2,7 +2,6 @@ const path = require('path');
 const execSync = require('child_process').execSync;
 const chalk = require('chalk');
 const fs = require('fs');
-const globby = require('globby');
 const semver = require('semver');
 const memoize = require('lodash/memoize');
 const get = require('lodash/get');
@@ -11,9 +10,6 @@ const DEFAULT_REGISTRY = 'https://registry.npmjs.org/';
 const LATEST_TAG = 'latest';
 const NEXT_TAG = 'next';
 const OLD_TAG = 'old';
-
-const lernaJsonPath = path.resolve('./lerna.json');
-const lernaConfig = require(lernaJsonPath);
 
 const getPackageDetails = memoize(pkg => {
   try {
@@ -99,7 +95,7 @@ function release(pkg) {
   );
 }
 
-// 1. load all pacakges using lerna.json
+// 1. Read package.json
 // 2. If the package is private, skip publish
 // 3. If the package already exist on the registry, skip publish.
 // 4. choose a dist-tag ->
@@ -108,19 +104,14 @@ function release(pkg) {
 //    * `latest` as default.
 // 5. perform npm publish using the chosen tag.
 
-globby
-  .sync(lernaConfig.packages, { onlyDirectories: true })
-  .forEach(pkgPath => {
-    const pkgJsonPath = path.resolve(pkgPath, 'package.json');
-    const pkg = JSON.parse(fs.readFileSync(pkgJsonPath));
+const pkgPath = process.cwd();
+const pkgJsonPath = path.resolve(pkgPath, 'package.json');
+const pkg = JSON.parse(fs.readFileSync(pkgJsonPath));
 
-    release({
-      private: get(pkg, 'private'),
-      name: get(pkg, 'name'),
-      version: get(pkg, 'version'),
-      registry: get(pkg, 'publishConfig.registry', DEFAULT_REGISTRY),
-      pkgPath,
-    });
-  });
-
-console.log('\nrelease process has finished succesfully');
+release({
+  private: get(pkg, 'private'),
+  name: get(pkg, 'name'),
+  version: get(pkg, 'version'),
+  registry: get(pkg, 'publishConfig.registry', DEFAULT_REGISTRY),
+  pkgPath,
+});
