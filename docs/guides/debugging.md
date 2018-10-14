@@ -40,7 +40,7 @@ Several commercial and open source tools can connect to Node's Inspector and the
  "name": "Run Tests",
  "type": "node",
  "request": "launch",
- "args" : ["test", "--debug"],
+ "args" : ["test", "--debug-brk"],
  "port": 9229,
  "program": "${workspaceFolder}/node_modules/.bin/yoshi"
  }
