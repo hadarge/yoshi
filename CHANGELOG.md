@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.15.4 (2018-10-14)
+
+#### :nail_care: Polish
+* `yoshi`
+  * [#627](https://github.com/wix/yoshi/pull/627) Use relative publish path in css `url()` calls ([@ranyitz](https://github.com/ranyitz))
+* Other
+  * [#629](https://github.com/wix/yoshi/pull/629) Fix link path in api configurations docs ([@lbelinsk](https://github.com/lbelinsk))
+
+#### :memo: Documentation
+* [#632](https://github.com/wix/yoshi/pull/632) Fix docs for configuring debugging in vscode ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :house: Internal
+* [#634](https://github.com/wix/yoshi/pull/634) Simplify publish script ([@ranyitz](https://github.com/ranyitz))
+
 ## 3.15.3 (2018-10-11)
 
 #### :house: Internal
