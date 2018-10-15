@@ -93,7 +93,7 @@ const publishMonorepo = () => {
   );
 
   execa.shellSync(
-    `lerna publish --yes --force-publish=* --skip-git --cd-version=minor --exact --npm-tag=latest --registry="${testRegistry}"`,
+    `npx lerna publish --yes --force-publish=* --skip-git --cd-version=minor --exact --npm-tag=latest --registry="${testRegistry}"`,
     {
       stdio: 'inherit',
     },
