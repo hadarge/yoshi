@@ -1,6 +1,6 @@
 {
   "name": "jest-yoshi-preset",
-  "version": "3.15.4",
+  "version": "3.15.5",
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
   "keywords": [
@@ -11,9 +11,9 @@
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
   "peerDependencies": {
-    "jest": "^23.0.0",
     "@stylable/core": "^0.1.7",
     "@stylable/jest": "^0.1.11",
+    "jest": "^23.0.0",
     "yoshi": "^3.6.0"
   },
   "dependencies": {
