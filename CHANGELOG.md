@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.15.5 (2018-10-15)
+
+#### :bug: Bug Fix
+* `jest-yoshi-preset`
+  * [#637](https://github.com/wix/yoshi/pull/637) Use the new `@stylable` dependencies ([@shlomitc](https://github.com/shlomitc))
+
 ## 3.15.4 (2018-10-14)
 
 #### :nail_care: Polish
