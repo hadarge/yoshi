@@ -21,8 +21,5 @@
   "peerDependencies": {
     "tslint": ">=5.10.0",
     "tslint-plugin-wix-style-react": "^1.0.0"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -20,9 +20,6 @@
     "eslint-plugin-prettier": "^2.6.0",
     "prettier": "^1.11.1"
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "dependencies": {
     "eslint-plugin-jest": "^21.17.0"
   },

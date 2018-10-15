@@ -1,8 +1,11 @@
 const fs = require('fs');
 
+const hiddenFilesRegex = /(^|\/)\.[^/.]/;
+
 module.exports = function verifyWorkingDirectory(workingDir) {
   const emptyDirectory =
-    fs.readdirSync(workingDir).filter(entry => entry !== '.git').length === 0;
+    fs.readdirSync(workingDir).filter(entry => !hiddenFilesRegex.test(entry))
+      .length === 0;
 
   if (!emptyDirectory) {
     console.log(`The directory "${workingDir}" is not an empty directory\n`);

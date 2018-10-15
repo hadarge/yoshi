@@ -12,9 +12,6 @@
     "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js'"
   },
   "license": "ISC",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "dependencies": {
     "babel-register": "^6.26.0",
     "chokidar": "^2.0.4",

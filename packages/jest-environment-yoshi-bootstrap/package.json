@@ -19,8 +19,5 @@
   },
   "devDependencies": {
     "jest-environment-node": "^23.0.0"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -1,13 +1,12 @@
 const path = require('path');
-const fs = require('fs-extra');
 const tempy = require('tempy');
 const execa = require('execa');
 const chalk = require('chalk');
-const globby = require('globby');
 const Answers = require('../src/Answers');
 const { createApp, verifyRegistry, getProjectTypes } = require('../src/index');
 const prompts = require('prompts');
 const expect = require('expect');
+const { testRegistry } = require('../src/constants');
 
 // verbose logs and output
 const verbose = process.env.VERBOSE_TESTS;
@@ -35,27 +34,6 @@ focusProjectPattern &&
 console.log('Running e2e tests for the following projects:\n');
 projectTypes.forEach(type => console.log(`> ${chalk.cyan(type)}`));
 
-const copyLocalModules = async tempDir => {
-  const directories = await globby(path.join(__dirname, '../../**'), {
-    onlyDirectories: true,
-    deep: false,
-  });
-
-  directories.forEach(directory => {
-    const directoryName = path.basename(directory);
-    const destPath = path.join(tempDir, 'node_modules', directoryName);
-
-    if (fs.existsSync(destPath)) {
-      console.log(
-        `linking ${chalk.cyan(directory)} -> ${chalk.cyan(destPath)}`,
-      );
-
-      fs.removeSync(destPath);
-      fs.copySync(directory, destPath);
-    }
-  });
-};
-
 const testTemplate = mockedAnswers => {
   describe(mockedAnswers.fullProjectType, () => {
     const tempDir = tempy.directory();
@@ -63,8 +41,14 @@ const testTemplate = mockedAnswers => {
     before(async () => {
       prompts.inject(mockedAnswers);
       verbose && console.log(chalk.cyan(tempDir));
+
+      // This adds a `.npmrc` so dependencies are installed from local registry
+      await execa.shell(
+        `npx npm-auth-to-token -u user -p password -e user@example.com -r "${testRegistry}"`,
+        { cwd: tempDir },
+      );
+
       await createApp(tempDir);
-      await copyLocalModules(tempDir);
     });
 
     if (mockedAnswers.transpiler === 'typescript') {
@@ -89,7 +73,47 @@ const testTemplate = mockedAnswers => {
   });
 };
 
+const publishMonorepo = () => {
+  // Start in root directory even if run from another directory
+  process.chdir(path.join(__dirname, '../../..'));
+
+  const verdaccio = execa.shell('npx verdaccio --config verdaccio.yaml', {
+    stdio,
+  });
+
+  execa.shellSync('npx wait-port 4873 -o silent', {
+    stdio,
+  });
+
+  execa.shellSync(
+    `npx lerna exec 'npx npm-auth-to-token -u user -p password -e user@example.com -r "${testRegistry}"'`,
+    {
+      stdio,
+    },
+  );
+
+  execa.shellSync(
+    `lerna publish --yes --force-publish=* --skip-git --cd-version=minor --exact --npm-tag=latest --registry="${testRegistry}"`,
+    {
+      stdio: 'inherit',
+    },
+  );
+
+  // Return a cleanup function
+  return () => {
+    execa.shellSync(`kill -9 ${verdaccio.pid}`);
+  };
+};
+
 describe('create-yoshi-app + yoshi e2e tests', () => {
+  let cleanup;
+
+  before(() => {
+    cleanup = publishMonorepo();
+  });
+
+  after(() => cleanup());
+
   projectTypes
     .map(
       projectType =>

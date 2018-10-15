@@ -25,8 +25,5 @@
     "jest-environment-node": "^23.0.0",
     "jest-environment-yoshi-bootstrap": "3.15.0",
     "puppeteer": "^1.0.0"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
   }
 }

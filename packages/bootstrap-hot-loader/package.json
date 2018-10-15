@@ -10,9 +10,6 @@
   ],
   "author": "Ronen Amiel <ronena@wix.com>",
   "license": "ISC",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "peerDependencies": {
     "express": "^4.0.0"
   },
