@@ -12,8 +12,8 @@
   "license": "ISC",
   "peerDependencies": {
     "jest": "^23.0.0",
-    "stylable": "^5.3.5",
-    "stylable-integration": "^6.1.1",
+    "@stylable/core": "^0.1.7",
+    "@stylable/jest": "^0.1.11",
     "yoshi": "^3.6.0"
   },
   "dependencies": {
@@ -25,8 +25,8 @@
     "ts-jest": "^23.0.1"
   },
   "devDependencies": {
-    "stylable": "^5.3.5",
-    "stylable-integration": "^6.1.1",
+    "@stylable/core": "^0.1.7",
+    "@stylable/jest": "^0.1.11",
     "typescript": "~2.9.0",
     "yoshi": "3.15.4"
   },

@@ -51,7 +51,7 @@ module.exports = {
           transform: {
             '^.+\\.jsx?$': require.resolve('babel-jest'),
             '^.+\\.tsx?$': require.resolve('ts-jest'),
-            '\\.st.css?$': require.resolve('./transforms/stylable'),
+            '\\.st.css?$': require.resolve('@stylable/jest'),
           },
 
           moduleNameMapper: {
