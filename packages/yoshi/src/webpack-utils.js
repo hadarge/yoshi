@@ -8,6 +8,7 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const project = require('yoshi-config');
 const { PUBLIC_DIR } = require('yoshi-config/paths');
 const { PORT } = require('./constants');
+const { redirectMiddleware } = require('../src/tasks/cdn/server-api');
 
 const isInteractive = process.stdout.isTTY;
 
@@ -136,6 +137,8 @@ function createDevServerConfig({ publicPath, https }) {
     before(app) {
       // Send cross origin headers
       app.use(cors());
+      // Redirect `.min.(js|css)` to `.(js|css)`
+      app.use(redirectMiddleware('0.0.0.0', project.servers.cdn.port));
     },
   };
 }

@@ -92,4 +92,4 @@ const start = ({ middlewares, host, ssl, port, statics }) => {
   });
 };
 
-module.exports = { start, decorate };
+module.exports = { start, decorate, redirectMiddleware };
