@@ -8,7 +8,7 @@
     "bootstrap": "lerna bootstrap",
     "postinstall": "npm run bootstrap",
     "test-yoshi": "npm test --prefix ./packages/yoshi",
-    "test": "lerna run test --concurrency 1",
+    "test": ":",
     "e2e": "npm run e2e --prefix ./packages/create-yoshi-app",
     "test-configs": "lerna run test --concurrency 1 --ignore '+(yoshi|create-yoshi-app)'",
     "test-create-yoshi-app": "npm test --prefix ./packages/create-yoshi-app",
