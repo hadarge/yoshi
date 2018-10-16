@@ -93,6 +93,13 @@ const publishMonorepo = () => {
   );
 
   execa.shellSync(
+    `npx lerna exec 'node ../../packages/create-yoshi-app/scripts/verifyPublishConfig.js'`,
+    {
+      stdio,
+    },
+  );
+
+  execa.shellSync(
     `npx lerna publish --yes --force-publish=* --skip-git --cd-version=minor --exact --npm-tag=latest --registry="${testRegistry}"`,
     {
       stdio: 'inherit',
