@@ -5,8 +5,10 @@ const parseArgs = require('minimist');
 
 const cliArgs = parseArgs(process.argv.slice(2));
 
+const path = require('path');
 const fs = require('fs-extra');
 const chalk = require('chalk');
+const globby = require('globby');
 const webpack = require('webpack');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const {
@@ -15,6 +17,7 @@ const {
 } = require('../../config/webpack.config');
 const { inTeamCity: checkInTeamCity } = require('yoshi-helpers');
 const {
+  SRC_DIR,
   BUILD_DIR,
   TARGET_DIR,
   PUBLIC_DIR,
@@ -31,6 +34,16 @@ const wixDepCheck = require('../tasks/dep-check');
 
 const inTeamCity = checkInTeamCity();
 
+const copyTemplates = async () => {
+  const files = await globby('**/*.{ejs,vm}', { cwd: SRC_DIR });
+
+  await Promise.all(
+    files.map(file => {
+      return fs.copy(path.join(SRC_DIR, file), path.join(STATICS_DIR, file));
+    }),
+  );
+};
+
 module.exports = async () => {
   // Clean tmp folders
   await Promise.all([fs.emptyDir(BUILD_DIR), fs.emptyDir(TARGET_DIR)]);
@@ -40,7 +53,7 @@ module.exports = async () => {
     await fs.copy(PUBLIC_DIR, STATICS_DIR);
   }
 
-  await Promise.all([updateNodeVersion(), wixDepCheck()]);
+  await Promise.all([updateNodeVersion(), wixDepCheck(), copyTemplates()]);
 
   // Run CI related updates
   if (inTeamCity) {
