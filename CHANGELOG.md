@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.16.0 (2018-10-17)
+
+#### :rocket: New Feature
+* `create-yoshi-app`
+  * [#644](https://github.com/wix/yoshi/pull/644) Add `.editorconfig` to all templates ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#648](https://github.com/wix/yoshi/pull/648) Copy `.ejs`/`.vm` files to `dist/statics` in experimental server bundle ([@ronami](https://github.com/ronami))
+  * [#635](https://github.com/wix/yoshi/pull/635) Redirect `.min` assets to non min assets in start-app ([@ronami](https://github.com/ronami))
+* `create-yoshi-app`
+  * [#633](https://github.com/wix/yoshi/pull/633) Fix generated `launch.json` for VSCode across templates ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :nail_care: Polish
+* `yoshi`
+  * [#647](https://github.com/wix/yoshi/pull/647) Update `rtlcss-webpack-plugin` version ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :memo: Documentation
+* [#643](https://github.com/wix/yoshi/pull/643) Change readme to latest changes, make it more informative ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+* Other
+  * [#640](https://github.com/wix/yoshi/pull/640) Run only publish ([@ranyitz](https://github.com/ranyitz))
+* `create-yoshi-app`
+  * [#638](https://github.com/wix/yoshi/pull/638) Improve e2e tests by emulating production installations ([@ronami](https://github.com/ronami))
+  * [#639](https://github.com/wix/yoshi/pull/639) Verify each package's publishConfig to prevent redundant publishes to public npm ([@ronami](https://github.com/ronami))
+
 ## 3.15.5 (2018-10-15)
 
 #### :bug: Bug Fix
