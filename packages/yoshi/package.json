@@ -91,7 +91,7 @@
     "raw-loader": "~0.5.1",
     "react-dev-utils": "^6.0.3",
     "react-hot-loader": "^4.3.3",
-    "rtlcss-webpack-plugin": "^1.0.7",
+    "rtlcss-webpack-plugin": "^4.0.0",
     "ruby-haml-loader": "~1.0.0",
     "svg-inline-loader": "~0.8.0",
     "thread-loader": "^1.1.4",
