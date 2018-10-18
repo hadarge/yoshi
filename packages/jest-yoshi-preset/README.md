@@ -130,18 +130,14 @@ module.exports = {
 };
 ```
 
-## Setup Files
+### Setup Files
 
-You can add code to run before tests using the setup files.
+If you want to run some code before your tests you can use one of the 3  following setup files (1 for each environment):
 
-There are 3 available files:
+* `<rootDir>/test/setup.component.(j|t)s`: JSDOM (component)
+* `<rootDir>/test/setup.server.(j|t)s`: Bootstrap (server)
+* `<rootDir>/test/setup.e2e.(j|t)s`: Puppeteer (e2e)
 
-* `setup.component.(j|t)s`: Setup for your JSDOM tests
-* `setup.server.(j|t)s`: Setup for your server tests
-* `setup.e2e.(j|t)s`: Setup for your e2e tests
+These setup files are actually [Jests's `setupTestFrameworkScriptFile`](https://jestjs.io/docs/en/configuration#setuptestframeworkscriptfile-string)
 
-They should be located under `test` folder.
-
-Those setup files are called `setupTestFrameworkScriptFile` and useful for any functionality you wish to run before starting the tests (e.g: Setting up enzyme react adapter)
-
-For further reading, please refer to [jest docs](https://jestjs.io/docs/en/configuration#setuptestframeworkscriptfile-string).
+> A path to a module that runs some code to configure or set up the testing framework before each test.
