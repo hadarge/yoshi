@@ -37,7 +37,7 @@
 
 #### :nail_care: Polish
 * `yoshi`
-  * [#627](https://github.com/wix/yoshi/pull/627) Use relative publish path in css `url()` calls ([@ranyitz](https://github.com/ranyitz))
+  * [#627](https://github.com/wix/yoshi/pull/627) Use relative public path in css `url()` calls ([@ranyitz](https://github.com/ranyitz))
 * Other
   * [#629](https://github.com/wix/yoshi/pull/629) Fix link path in api configurations docs ([@lbelinsk](https://github.com/lbelinsk))
 
