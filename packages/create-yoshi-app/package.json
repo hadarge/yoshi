@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "jest",
-    "e2e": "node scripts/runE2E.js",
+    "e2e": "DISABLE_SENTRY=1 node scripts/runE2E.js",
     "dev": "node scripts/dev.js"
   },
   "jest": {

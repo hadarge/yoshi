@@ -12,6 +12,7 @@ const {
   shouldRunStylelint,
   watchMode,
 } = require('yoshi-helpers');
+const { printAndExitOnErrors } = require('../error-handler');
 
 const { hooks } = require('yoshi-config');
 
@@ -70,40 +71,46 @@ module.exports = runner.command(async tasks => {
   function runStyleLint(pattern) {
     console.log(`running style lint on ${pattern}`);
 
-    return stylelint({ pattern, options: { formatter: 'string' } });
+    return printAndExitOnErrors(() =>
+      stylelint({ pattern, options: { formatter: 'string' } }),
+    );
   }
 
   async function runTsLint(pattern) {
     const tsconfigFilePath = path.resolve('tsconfig.json');
     const tslintFilePath = path.resolve('tslint.json');
 
-    if (prelint) {
-      await execa.shell(prelint, { stdio: 'inherit' });
-    }
+    return printAndExitOnErrors(async () => {
+      if (prelint) {
+        await execa.shell(prelint, { stdio: 'inherit' });
+      }
 
-    return tslint({
-      tsconfigFilePath,
-      tslintFilePath,
-      pattern,
-      options: { fix: cliArgs.fix, formatter: cliArgs.format || 'stylish' },
+      return tslint({
+        tsconfigFilePath,
+        tslintFilePath,
+        pattern,
+        options: { fix: cliArgs.fix, formatter: cliArgs.format || 'stylish' },
+      });
     });
   }
 
   async function runEsLint(pattern) {
-    if (prelint) {
-      await execa.shell(prelint, { stdio: 'inherit' });
-    }
+    return printAndExitOnErrors(async () => {
+      if (prelint) {
+        await execa.shell(prelint, { stdio: 'inherit' });
+      }
 
-    console.log(`running es lint on ${pattern}`);
+      console.log(`running es lint on ${pattern}`);
 
-    return eslint({
-      pattern,
-      options: {
-        cache: true,
-        cacheLocation: 'target/.eslintcache',
-        fix: cliArgs.fix,
-        formatter: cliArgs.format,
-      },
+      return eslint({
+        pattern,
+        options: {
+          cache: true,
+          cacheLocation: 'target/.eslintcache',
+          fix: cliArgs.fix,
+          formatter: cliArgs.format,
+        },
+      });
     });
   }
 });

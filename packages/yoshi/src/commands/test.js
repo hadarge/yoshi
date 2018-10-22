@@ -21,6 +21,7 @@ const {
   hasBundleInStaticsDir,
 } = require('yoshi-helpers');
 const protractor = require('../../src/tasks/protractor');
+const { printAndExitOnErrors } = require('../error-handler');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -71,14 +72,16 @@ module.exports = runner.command(
         console.error();
       }
 
-      return wixCdn(
-        {
-          port: projectConfig.servers.cdn.port,
-          ssl: projectConfig.servers.cdn.ssl,
-          publicPath: projectConfig.servers.cdn.url,
-          statics: projectConfig.clientFilesPath,
-        },
-        { title: 'cdn' },
+      return printAndExitOnErrors(() =>
+        wixCdn(
+          {
+            port: projectConfig.servers.cdn.port,
+            ssl: projectConfig.servers.cdn.ssl,
+            publicPath: projectConfig.servers.cdn.url,
+            statics: projectConfig.clientFilesPath,
+          },
+          { title: 'cdn' },
+        ),
       );
     }
 
@@ -124,7 +127,8 @@ module.exports = runner.command(
         await runMocha(); // fail silently
       } else {
         await runMocha(error => {
-          throw `mocha failed with status code "${error.code}"`;
+          console.error(`mocha failed with status code "${error.code}"`);
+          process.exit(1);
         });
       }
     }
@@ -149,7 +153,8 @@ module.exports = runner.command(
         await execa('node', jasmineArgs, { stdio: 'inherit' });
       } catch (error) {
         if (!shouldWatch) {
-          throw `jasmine failed with status code "${error.code}"`;
+          console.error(`jasmine failed with status code "${error.code}"`);
+          process.exit(1);
         }
       }
 
@@ -204,20 +209,23 @@ module.exports = runner.command(
       try {
         await execa('node', jestCliOptions, { stdio: 'inherit' });
       } catch (error) {
-        throw `jest failed with status code "${error.code}"`;
+        console.error(`jest failed with status code "${error.code}"`);
+        process.exit(1);
       }
     }
 
     if (cliArgs.karma) {
-      await webpack({
-        configPath: require.resolve('../../config/webpack.config.specs'),
-        watch: shouldWatch,
-      });
+      await printAndExitOnErrors(async () => {
+        await webpack({
+          configPath: require.resolve('../../config/webpack.config.specs'),
+          watch: shouldWatch,
+        });
 
-      await karma({
-        configFile: path.join(__dirname, '../../config/karma.conf'),
-        singleRun: !shouldWatch,
-        autoWatch: shouldWatch,
+        await karma({
+          configFile: path.join(__dirname, '../../config/karma.conf'),
+          singleRun: !shouldWatch,
+          autoWatch: shouldWatch,
+        });
       });
     }
 

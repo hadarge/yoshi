@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Sentry = require('@sentry/node');
 
 const presetPath = require.resolve('../src/index.js');
 
@@ -9,20 +10,16 @@ module.exports = async command => {
   const appDirectory = fs.realpathSync(process.cwd());
   const action = require(`./commands/${command}`);
 
-  try {
-    const { persistent = false } = await action({
-      context: presetPath,
-      workerOptions: { cwd: appDirectory },
-    });
+  Sentry.configureScope(scope => {
+    scope.setTag('command', command);
+  });
 
-    if (!persistent) {
-      process.exit(0);
-    }
-  } catch (error) {
-    if (error.name !== 'WorkerError') {
-      console.error(error);
-    }
+  const { persistent = false } = await action({
+    context: presetPath,
+    workerOptions: { cwd: appDirectory },
+  });
 
-    process.exit(1);
+  if (!persistent) {
+    process.exit(0);
   }
 };

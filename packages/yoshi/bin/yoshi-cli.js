@@ -3,6 +3,7 @@ const runCLI = require('../src/cli');
 const { version } = require('../package');
 const infoCommand = require('../src/commands/info');
 const config = require('yoshi-config');
+const { configureSentry, handleError } = require('../src/sentry');
 
 // IDEs start debugging with '--inspect' or '--inspect-brk' option. We are setting --debug instead
 require('./normalize-debugging-args')();
@@ -101,8 +102,26 @@ prog
   .description('Get your local environment information')
   .action(infoCommand);
 
-prog.parse(process.argv);
+try {
+  if (!process.env.DISABLE_SENTRY) {
+    configureSentry();
+  }
+} catch (_) {} // ignore errors of configuring sentry
 
 process.on('unhandledRejection', error => {
-  throw error;
+  if (!process.env.DISABLE_SENTRY) {
+    handleError(error);
+  } else {
+    throw error;
+  }
 });
+
+process.on('uncaughtException', error => {
+  if (!process.env.DISABLE_SENTRY) {
+    handleError(error);
+  } else {
+    throw error;
+  }
+});
+
+prog.parse(process.argv);

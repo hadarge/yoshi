@@ -143,8 +143,7 @@ module.exports = async () => {
     },
     error => {
       console.log(chalk.red('Failed to compile.\n'));
-      console.log(error.message || error);
-
+      console.error(error.message || error);
       process.exit(1);
     },
   );

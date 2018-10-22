@@ -1,0 +1,39 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script src="https://browser.sentry-cdn.com/4.0.6/bundle.min.js" crossorigin="anonymous"></script>
+
+    <script>
+      var urlParams = new URLSearchParams(window.location.search);
+      var eventId = urlParams.get('eventId');
+
+      Sentry.init({
+        dsn: 'https://9325f661ff804c4a94c48e8c2eff9149@sentry.io/1292532',
+      });
+
+      Sentry.showReportDialog({
+        eventId,
+        title: "🤕 It seems like Yoshi isn't feeling so good..."
+      });
+
+      // Workaround: prevent the dialog from disappearing when clicking outside it
+      var observer = new MutationObserver(function(mutationList, observer) {
+        var wrapperElement = document.querySelectorAll('.sentry-error-embed-wrapper')[0];
+        document.body.addEventListener('click', function (e) {
+          e.target === wrapperElement && e.stopPropagation();
+        }, true);
+
+        document.getElementsByClassName('close')[0].addEventListener('click', () => {
+          window.close();
+        })
+
+        observer.disconnect();
+      });
+
+      observer.observe(document.body, {childList: true});
+
+    </script>
+  </body>
+</html>
+

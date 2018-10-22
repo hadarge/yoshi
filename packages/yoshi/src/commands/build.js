@@ -24,6 +24,7 @@ const {
   shouldRunLess,
   shouldRunSass,
 } = require('yoshi-helpers');
+const { printAndExitOnErrors } = require('../error-handler');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -62,13 +63,17 @@ module.exports = runner.command(
     const esTarget = shouldExportModule();
 
     await Promise.all([
-      transpileJavascript({ esTarget }).then(() => transpileNgAnnotate()),
+      printAndExitOnErrors(() =>
+        transpileJavascript({ esTarget }).then(() => transpileNgAnnotate()),
+      ),
       ...transpileCss({ esTarget }),
       ...copyAssets({ esTarget }),
       bundle(),
-      wixPetriSpecs(
-        { config: petriSpecsConfig },
-        { title: 'petri-specs', log: false },
+      printAndExitOnErrors(() =>
+        wixPetriSpecs(
+          { config: petriSpecsConfig },
+          { title: 'petri-specs', log: false },
+        ),
       ),
       wixMavenStatics(
         {
@@ -92,32 +97,36 @@ module.exports = runner.command(
       };
 
       const webpackProduction = () => {
-        return webpack(
-          {
-            ...defaultOptions,
-            callbackPath: productionCallbackPath,
-            statsFilename: cliArgs.stats ? STATS_FILE : false,
-            configParams: {
-              isDebug: false,
-              isAnalyze: cliArgs.analyze,
-              withLocalSourceMaps: cliArgs['source-map'],
+        return printAndExitOnErrors(() =>
+          webpack(
+            {
+              ...defaultOptions,
+              callbackPath: productionCallbackPath,
+              statsFilename: cliArgs.stats ? STATS_FILE : false,
+              configParams: {
+                isDebug: false,
+                isAnalyze: cliArgs.analyze,
+                withLocalSourceMaps: cliArgs['source-map'],
+              },
             },
-          },
-          { title: 'webpack-production' },
+            { title: 'webpack-production' },
+          ),
         );
       };
 
       const webpackDebug = () => {
-        return webpack(
-          {
-            ...defaultOptions,
-            callbackPath: debugCallbackPath,
-            configParams: {
-              isDebug: true,
-              withLocalSourceMaps: cliArgs['source-map'],
+        return printAndExitOnErrors(() =>
+          webpack(
+            {
+              ...defaultOptions,
+              callbackPath: debugCallbackPath,
+              configParams: {
+                isDebug: true,
+                withLocalSourceMaps: cliArgs['source-map'],
+              },
             },
-          },
-          { title: 'webpack-debug' },
+            { title: 'webpack-debug' },
+          ),
         );
       };
 
@@ -180,21 +189,25 @@ module.exports = runner.command(
     }
 
     function transpileSass({ esTarget } = {}) {
-      return sass({
-        pattern: globs.scss,
-        target: globs.dist({ esTarget }),
-        options: {
-          includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
-        },
-      });
+      return printAndExitOnErrors(() =>
+        sass({
+          pattern: globs.scss,
+          target: globs.dist({ esTarget }),
+          options: {
+            includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
+          },
+        }),
+      );
     }
 
     function transpileLess({ esTarget } = {}) {
-      return less({
-        pattern: globs.less,
-        target: globs.dist({ esTarget }),
-        options: { paths: ['.', 'node_modules'] },
-      });
+      return printAndExitOnErrors(() =>
+        less({
+          pattern: globs.less,
+          target: globs.dist({ esTarget }),
+          options: { paths: ['.', 'node_modules'] },
+        }),
+      );
     }
 
     function transpileCss({ esTarget } = {}) {

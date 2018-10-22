@@ -1,18 +1,11 @@
 const path = require('path');
-const envinfo = require('envinfo');
 const chalk = require('chalk');
+const { getEnvInfo } = require('../env-info');
 
 const pkg = require(path.resolve(process.cwd(), 'package.json'));
 
 module.exports = async () => {
-  console.log(
-    await envinfo.run({
-      System: ['OS', 'CPU'],
-      Binaries: ['Node', 'Yarn', 'npm', 'Watchman'],
-      Browsers: ['Chrome', 'Firefox', 'Safari'],
-      npmPackages: ['yoshi', 'webpack', 'storybook'],
-    }),
-  );
+  console.log(await getEnvInfo());
 
   if (pkg.yoshi) {
     console.log(' ' + chalk.underline('Yoshi config'));
