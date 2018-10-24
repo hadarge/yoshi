@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.16.1 (2018-10-24)
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#656](https://github.com/wix/yoshi/pull/656) Show long class names in Storybook ([@muteor](https://github.com/muteor))
+  * [#667](https://github.com/wix/yoshi/pull/667) Enable using a different test runner in Karma configuration ([@ranyitz](https://github.com/ranyitz))
+  * [#665](https://github.com/wix/yoshi/pull/665) Support `externals` configuration when using Karma (`specs.bundle`) ([@eddierl](https://github.com/eddierl))
+  * [#666](https://github.com/wix/yoshi/pull/666) Enable using different browsers in Karma configuration ([@eddierl](https://github.com/eddierl))
+
+#### :memo: Documentation
+* Other
+  * [#664](https://github.com/wix/yoshi/pull/664) Update contributing "Local Testing" section + arrange scripts alphabetically ([@ranyitz](https://github.com/ranyitz))
+  * [#655](https://github.com/wix/yoshi/pull/655) Add `svg2react-icon` tool to svg docs ([@bildja](https://github.com/bildja))
+* `jest-yoshi-preset`
+  * [#649](https://github.com/wix/yoshi/pull/649) Add `jest-yoshi` setup files documentation ([@saarkuriel](https://github.com/saarkuriel))
+
+#### :house: Internal
+* `create-yoshi-app`, `yoshi`
+  * [#612](https://github.com/wix/yoshi/pull/612) Sentry error reporting ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.16.0 (2018-10-17)
 
 #### :rocket: New Feature
