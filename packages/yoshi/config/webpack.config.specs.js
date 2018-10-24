@@ -55,7 +55,7 @@ module.exports = {
   ],
 
   externals: {
-    ...config.externals,
+    ...projectConfig.externals,
 
     cheerio: 'window',
     'react/addons': true,
