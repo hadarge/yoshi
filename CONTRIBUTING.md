@@ -17,8 +17,11 @@ Please **ask first** if somebody else is already working on this or the core dev
 
 That's it, you're good to go.
 
-* `npm test` - Run yoshi's tests.
-* `npm run E2E` - create all yoshi projects and install, build and test each one of them.
+* `npm run test-all` - Run all monorepo tests.
+* `npm run test-yoshi` - Run `yoshi` package tests.
+* `npm run test-create-yoshi-app` - Run `create-yoshi-app` package tests.
+* `npm run test-configs` - Run all packages tests besides `yoshi` & `create-yoshi-app`.
+* `npm run e2e` - create all yoshi projects and install, build and test each one of them.
 * `npm run build` - Run [eslint](https://eslint.org/) on all packages with the following [rules](https://github.com/wix/yoshi/blob/master/.eslintrc).
 * `npm run test:watch` Run the tests using watch mode.
 

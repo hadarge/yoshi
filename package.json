@@ -6,18 +6,19 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "postinstall": "npm run bootstrap",
-    "test-yoshi": "npm test --prefix ./packages/yoshi",
-    "test": ":",
+    "build": "eslint .",
+    "createVersion": "node scripts/createVersion",
+    "create-yoshi-app:dev": "npm run dev --prefix ./packages/create-yoshi-app",
+    "customPublish": "lerna exec 'node ../../scripts/customPublish.js'",
+    "changelog": "lerna-changelog",
     "e2e": "npm run e2e --prefix ./packages/create-yoshi-app",
+    "postinstall": "npm run bootstrap",
+    "test": ":",
+    "test-all": "lerna run test --concurrency 1",
+    "test-yoshi": "npm test --prefix ./packages/yoshi",
     "test-configs": "lerna run test --concurrency 1 --ignore '+(yoshi|create-yoshi-app)'",
     "test-create-yoshi-app": "npm test --prefix ./packages/create-yoshi-app",
-    "build": "eslint .",
-    "changelog": "lerna-changelog",
-    "create-yoshi-app:dev": "npm run dev --prefix ./packages/create-yoshi-app",
-    "website:dev": "npm start --prefix './website'",
-    "customPublish": "lerna exec 'node ../../scripts/customPublish.js'",
-    "createVersion": "node scripts/createVersion"
+    "website:dev": "npm start --prefix './website'"
   },
   "husky": {
     "hooks": {
