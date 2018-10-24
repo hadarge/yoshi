@@ -876,6 +876,9 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--karma']);
 
         expect(res.code).to.equal(0);
+        expect(res.cat().match(/Starting browser PhantomJS/g)).to.have.length(
+          1,
+        );
         expect(test.content('dist/specs.bundle.js')).to.contain(
           'expect(1).toBe(1)',
         );
