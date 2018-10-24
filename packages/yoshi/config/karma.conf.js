@@ -9,7 +9,7 @@ const projectConfig = tryRequire(path.resolve('karma.conf.js')) || {
 const baseConfig = {
   basePath: process.cwd(),
   browsers: projectConfig.browsers ? [] : ['Chrome'],
-  frameworks: ['mocha'],
+  frameworks: projectConfig.frameworks ? [] : ['mocha'],
   files: ['dist/specs.bundle.js'],
   exclude: [],
   plugins: [require('karma-mocha'), require('karma-chrome-launcher')],
