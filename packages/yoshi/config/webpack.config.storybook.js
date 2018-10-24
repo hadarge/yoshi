@@ -7,7 +7,7 @@ const {
 
 const styleLoaders = getStyleLoaders({
   embedCss: true,
-  isDebug: false,
+  isDebug: true,
   separateCss: false,
   hmr: false,
   tpaStyle: false,
