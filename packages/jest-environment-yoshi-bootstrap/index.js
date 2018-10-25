@@ -1,13 +1,6 @@
 const NodeEnvironment = require('jest-environment-node');
 const { getPort, appConfDir } = require('./constants');
 const projectConfig = require('yoshi-config');
-const { setupRequireHooks } = require('yoshi-helpers');
-
-// the user's config is loaded outside of a jest runtime and should be transpiled
-// with babel/typescript, this may be run separately for every worker
-setupRequireHooks();
-
-const jestYoshiConfig = require('yoshi-config/jest');
 
 module.exports = class BootstrapEnvironment extends NodeEnvironment {
   async setup() {
@@ -15,14 +8,16 @@ module.exports = class BootstrapEnvironment extends NodeEnvironment {
 
     // errors from environment setup/teardown are catched silently
     try {
-      await jestYoshiConfig.bootstrap.setup({
-        globalObject: this.global,
-        getPort,
-        staticsUrl: projectConfig.servers.cdn.url,
-        appConfDir,
-      });
+      if (this.global.__setup__) {
+        await this.global.__setup__({
+          globalObject: this.global,
+          getPort,
+          staticsUrl: projectConfig.servers.cdn.url,
+          appConfDir,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw error;
     }
   }
@@ -31,11 +26,13 @@ module.exports = class BootstrapEnvironment extends NodeEnvironment {
     await super.teardown();
 
     try {
-      await jestYoshiConfig.bootstrap.teardown({
-        globalObject: this.global,
-      });
+      if (this.global.__teardown__) {
+        await this.global.__teardown__({
+          globalObject: this.global,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw error;
     }
   }

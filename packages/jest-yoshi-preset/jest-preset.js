@@ -19,11 +19,21 @@ module.exports = {
         displayName: 'server',
         testEnvironment: require.resolve('jest-environment-yoshi-bootstrap'),
         testMatch: ['<rootDir>/test/server/**/*.spec.(ts|js){,x}'],
+        setupFiles: [
+          require.resolve(
+            'jest-environment-yoshi-bootstrap/setup-environment.js',
+          ),
+        ],
       },
       {
         displayName: 'e2e',
         testEnvironment: require.resolve('jest-environment-yoshi-puppeteer'),
         testMatch: ['<rootDir>/test/e2e/**/*.spec.(ts|js){,x}'],
+        setupFiles: [
+          require.resolve(
+            'jest-environment-yoshi-bootstrap/setup-environment.js',
+          ),
+        ],
       },
     ]
       .filter(({ displayName }) => {
