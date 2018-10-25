@@ -21,7 +21,7 @@ module.exports = {
         testMatch: ['<rootDir>/test/server/**/*.spec.(ts|js){,x}'],
         setupFiles: [
           require.resolve(
-            'jest-environment-yoshi-bootstrap/setup-environment.js',
+            'jest-environment-yoshi-bootstrap/environment-setup.js',
           ),
         ],
       },
@@ -31,7 +31,7 @@ module.exports = {
         testMatch: ['<rootDir>/test/e2e/**/*.spec.(ts|js){,x}'],
         setupFiles: [
           require.resolve(
-            'jest-environment-yoshi-bootstrap/setup-environment.js',
+            'jest-environment-yoshi-bootstrap/environment-setup.js',
           ),
         ],
       },
