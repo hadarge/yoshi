@@ -1,6 +1,6 @@
 {
   "name": "jest-environment-yoshi-bootstrap",
-  "version": "3.16.0",
+  "version": "3.16.2",
   "description": "bootstrap environment for jest",
   "main": "index.js",
   "keywords": [

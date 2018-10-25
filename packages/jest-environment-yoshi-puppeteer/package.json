@@ -1,6 +1,6 @@
 {
   "name": "jest-environment-yoshi-puppeteer",
-  "version": "3.16.0",
+  "version": "3.16.2",
   "description": "puppeteer environment for jest",
   "main": "index.js",
   "keywords": [
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "jest-environment-node": "^23.0.0",
-    "jest-environment-yoshi-bootstrap": "3.16.0",
+    "jest-environment-yoshi-bootstrap": "3.16.2",
     "puppeteer": "^1.0.0"
   }
 }
