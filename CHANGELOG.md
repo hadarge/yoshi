@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.16.2 (2018-10-25)
+
+#### :bug: Bug Fix
+* `jest-environment-yoshi-bootstrap`, `jest-yoshi-preset`
+  * [#669](https://github.com/wix/yoshi/pull/669) Run jest yoshi config inside Jest's vm so transforms/console are used correctly ([@ronami](https://github.com/ronami))
+
 ## 3.16.1 (2018-10-24)
 
 #### :bug: Bug Fix
