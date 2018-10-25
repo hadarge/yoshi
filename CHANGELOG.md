@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.16.2 (2018-10-25)
+## 3.16.3 (2018-10-25)
 
 #### :bug: Bug Fix
 * `jest-environment-yoshi-bootstrap`, `jest-yoshi-preset`
