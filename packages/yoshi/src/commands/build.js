@@ -57,7 +57,9 @@ module.exports = runner.command(
         {},
         { title: 'scope-packages-migration', log: false },
       ),
-      wixDepCheck({}, { title: 'dep-check', log: false }),
+      printAndExitOnErrors(() =>
+        wixDepCheck({}, { title: 'dep-check', log: false }),
+      ),
     ]);
 
     const esTarget = shouldExportModule();
