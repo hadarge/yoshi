@@ -4,11 +4,19 @@ const { version } = require('../package');
 const infoCommand = require('../src/commands/info');
 const config = require('yoshi-config');
 const { configureSentry, handleError } = require('../src/sentry');
+const chalk = require('chalk');
+const { inTeamCity } = require('yoshi-helpers');
 
 // IDEs start debugging with '--inspect' or '--inspect-brk' option. We are setting --debug instead
 require('./normalize-debugging-args')();
 
 prog.version(version).description('A toolkit for building applications in Wix');
+
+prog.option(
+  '--verbose',
+  'Yoshi will print verbose logs and error messages.',
+  inTeamCity(),
+);
 
 prog
   .command('lint [files...]')
@@ -108,20 +116,33 @@ try {
   }
 } catch (_) {} // ignore errors of configuring sentry
 
-process.on('unhandledRejection', error => {
-  if (!process.env.DISABLE_SENTRY) {
-    handleError(error);
+function handleUncaughtError(error) {
+  if (prog.verbose) {
+    console.error(
+      chalk.red(
+        `  Yoshi has encountered the following fatal error. Here is the full stacktrace:`,
+      ),
+    );
+    console.error();
+    console.error(chalk.red(error.stack || error));
   } else {
-    throw error;
+    console.error(
+      chalk.red(
+        `  Yoshi has encountered the following fatal error. You can add the --verbose flag to view the full stacktrace.`,
+      ),
+    );
+    console.error();
+    console.error(chalk.red(`  ${error.message ? error.message : error}`));
   }
-});
 
-process.on('uncaughtException', error => {
   if (!process.env.DISABLE_SENTRY) {
     handleError(error);
   } else {
-    throw error;
+    process.exit(1);
   }
-});
+}
+
+process.on('unhandledRejection', handleUncaughtError);
+process.on('uncaughtException', handleUncaughtError);
 
 prog.parse(process.argv);

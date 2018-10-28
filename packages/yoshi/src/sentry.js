@@ -81,7 +81,7 @@ function printCrashInfo(eventId) {
 
       * Help us figure out what caused the crash by submitting feedback on the error. You can do that by going to:
         ${outputURL(
-          `https://wix.github.io/yoshi/error-feedback/?eventId=${eventId}`,
+          `https://wix.github.io/yoshi/error-feedback?eventId=${eventId}`,
         )}
 
       * Find us on slack on the #yoshi channel:
