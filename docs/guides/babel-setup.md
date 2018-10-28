@@ -1,4 +1,10 @@
-# babel-preset-yoshi
+---
+id: babel-setup
+title: Babel Setup
+sidebar_label: Babel Setup
+---
+
+## Introduction
 
 Yoshi provides its own preset for full-stack, client or Node.js projects. It is pre-configured, maintained and tuned for the current state of Yoshi.
 

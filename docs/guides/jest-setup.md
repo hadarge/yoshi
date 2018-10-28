@@ -1,8 +1,12 @@
-# 🤹 Jest yoshi preset
-
-> Jest setup for Yoshi based projects
+---
+id: jest-setup
+title: Jest Setup
+sidebar_label: Jest Setup
+---
 
 ## Introduction
+
+Yoshi defines a custom [Jest preset](https://jestjs.io/docs/en/configuration#preset-string) to enable zero-configuration testing for most apps.
 
 This preset configures Jest with 3 different project types ([learn more](https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig)), each project uses a unique environment ([learn more](https://jestjs.io/docs/en/configuration#testenvironment-string)). Each environment sets up its own globals and is configured to run for every file that matches a certain glob pattern ([learn more](https://github.com/isaacs/node-glob)).
 
@@ -141,3 +145,4 @@ If you want to run some code before your tests you can use one of the 3  followi
 These setup files are actually [Jests's `setupTestFrameworkScriptFile`](https://jestjs.io/docs/en/configuration#setuptestframeworkscriptfile-string)
 
 > A path to a module that runs some code to configure or set up the testing framework before each test.
+

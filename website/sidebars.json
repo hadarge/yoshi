@@ -16,6 +16,8 @@
       "guides/debugging",
       "guides/disable-css-modules",
       "guides/enzyme-support",
+      "guides/jest-setup",
+      "guides/babel-setup",
       "guides/export-es-modules",
       "guides/hmr",
       "guides/momentjs-optimization",
