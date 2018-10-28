@@ -38,7 +38,6 @@ module.exports = async () => {
 
     global.BROWSER = await puppeteer.launch({
       // defaults
-      headless: true,
       args: ['--no-sandbox'],
 
       // user defined options
