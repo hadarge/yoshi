@@ -1,5 +1,6 @@
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
+const globby = require('globby');
 const webpack = require('webpack');
 const { isObject } = require('lodash');
 const nodeExternals = require('webpack-node-externals');
@@ -34,6 +35,8 @@ const {
 const reScript = /\.js?$/;
 const reStyle = /\.(css|less|scss|sass)$/;
 const reAssets = /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3)$/;
+
+const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
 
 const disableTsThreadOptimization =
   process.env.DISABLE_TS_THREAD_OPTIMIZATION === 'true';
@@ -74,6 +77,14 @@ if (inTeamCity && artifactVersion && fs.existsSync(POM_FILE)) {
     '-SNAPSHOT',
     '',
   )}/`;
+}
+
+function exists(entry) {
+  return (
+    globby.sync(`${entry}(${extensions.join('|')})`, {
+      cwd: SRC_DIR,
+    }).length > 0
+  );
 }
 
 // NOTE ABOUT PUBLIC PATH USING UNPKG SERVICE
@@ -263,7 +274,7 @@ function createCommonWebpackConfig({
     resolve: {
       modules: ['node_modules', SRC_DIR],
 
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      extensions,
 
       alias: project.resolveAlias,
 
@@ -619,7 +630,7 @@ function createServerWebpackConfig({ isDebug = true } = {}) {
     target: 'node',
 
     entry: {
-      server: './server',
+      server: ['./server', '../test/dev-server'].find(exists),
     },
 
     output: {
