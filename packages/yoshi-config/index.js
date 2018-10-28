@@ -6,12 +6,13 @@ const packagejson = require('./utils/get-project-pkg');
 const lookupConfig = require('./utils/lookup-config');
 const validateConfig = require('./utils/validate-config');
 const YoshiOptionsValidationError = require('./utils/YoshiOptionsValidationError');
+const schema = require('./schema/yoshi-config-schema.json');
 
 const loadConfig = () => {
   const config = lookupConfig();
 
   try {
-    validateConfig(config);
+    validateConfig(config, schema);
   } catch (err) {
     if (err instanceof YoshiOptionsValidationError) {
       console.warn(chalk.yellow('Warning: ' + err.message));

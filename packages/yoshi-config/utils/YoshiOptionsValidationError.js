@@ -1,4 +1,4 @@
-const yoshiSchema = require('./yoshi-config-schema.json');
+const yoshiSchema = require('../schema/yoshi-config-schema.json');
 
 const getSchemaPart = (path, parents, additionalPath) => {
   parents = parents || 0;

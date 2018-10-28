@@ -1,0 +1,41 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "puppeteer": {
+      "description": "Pass options directly to puppeteer.launch()",
+      "type": "object",
+      "additionalProperties": true
+    },
+    "bootstrap": {
+      "description": "Options for setting up your wix-bootstrap-ng server",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "setup": {
+          "description": "Environment setup function which called before each test file",
+          "instanceof": "Function"
+        },
+        "teardown": {
+          "description": "Environment teardown function which called after each test file",
+          "instanceof": "Function"
+        }
+      }
+    },
+    "server": {
+      "description": "Options for starting a simple local server",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "description": "Run a bash command to start the server",
+          "type": "string"
+        },
+        "port": {
+          "description": "Wait for a server to start listening on this port before running the tests",
+          "type": "number"
+        }
+      }
+    }
+  }
+}

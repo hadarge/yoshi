@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const { validate } = require('jest-validate');
+const validateConfig = require('./utils/validate-config');
+const schema = require('./schema/jest-yoshi-config-schema.json');
+const YoshiOptionsValidationError = require('./utils/YoshiOptionsValidationError');
 
 const loadConfig = () => {
   const configPath = path.join(process.cwd(), 'jest-yoshi.config.js');
@@ -21,21 +23,17 @@ const loadConfig = () => {
     );
   }
 
-  validate(config, {
-    recursiveBlacklist: ['puppeteer'],
-    exampleConfig: {
-      bootstrap: {
-        setup: async () => {},
-        teardown: async () => {},
-      },
-      server: {
-        command: 'node index.js',
-        port: 1234,
-      },
-    },
-    comment:
-      'Please refer to https://github.com/wix/yoshi for more information...',
-  });
+  try {
+    validateConfig(config, schema);
+  } catch (err) {
+    if (err instanceof YoshiOptionsValidationError) {
+      console.log();
+      console.warn(chalk.yellow('Warning: ' + err.message));
+      console.log();
+    } else {
+      throw err;
+    }
+  }
 
   return config;
 };
