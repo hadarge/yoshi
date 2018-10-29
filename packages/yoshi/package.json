@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.16.1",
+  "version": "3.17.0",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -27,7 +27,7 @@
     "babel-eslint": "^8.2.3",
     "babel-loader": "~7.1.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-preset-yoshi": "3.16.0",
+    "babel-preset-yoshi": "3.17.0",
     "babel-register": "^6.26.0",
     "bfj": "^6.1.1",
     "case-sensitive-paths-webpack-plugin": "~2.1.1",
@@ -117,8 +117,8 @@
     "wix-tpa-style-loader": "~1.0.8",
     "wnpm-ci": "^7.0.1",
     "xmldoc": "^1.1.2",
-    "yoshi-config": "3.16.0",
-    "yoshi-helpers": "3.16.0",
+    "yoshi-config": "3.17.0",
+    "yoshi-helpers": "3.17.0",
     "yoshi-runtime": "^1.0.38"
   },
   "devDependencies": {
