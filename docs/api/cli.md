@@ -4,6 +4,15 @@ title: CLI Options
 sidebar_label: CLI Options
 ---
 
+# Top level flags
+
+Flag | Short Flag | Description | Default Value
+---- | ---------- | ----------- | --------------
+--help | -h | Output usage information |
+--verbose | | Yoshi will print verbose logs and error messages. | true in CI
+
+# Commands
+
 The following sections describe the available tasks in `yoshi`. You can always use the `--help` flag for every task to see its usage.
 
 ## start
