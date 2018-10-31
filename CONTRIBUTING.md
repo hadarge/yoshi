@@ -89,7 +89,17 @@ npm link
 ```
 
 ### Adding a Template
-Create a directory in `packages/create-yoshi-app/templates/<template-name>` and another one for typescript `packages/create-yoshi-app/templates/<template-name>-typescript`. It will be tested automatically in the `E2E` suite.
+Create two directories:
+
+* `packages/create-yoshi-app/templates/<template-name>`
+
+* `packages/create-yoshi-app/templates/<template-name>-typescript`
+
+Specify them in the following file:
+
+* `packages/create-yoshi-app/src/projects.js`
+
+It will be added to the templates you can choose when running `create-yoshi-app` and will be tested automatically in the `e2e` suite.
 
 For details about the templating and more see [create-yoshi-app](./packages/create-yoshi-app/README.md)
 

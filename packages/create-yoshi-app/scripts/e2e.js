@@ -3,7 +3,7 @@ const tempy = require('tempy');
 const execa = require('execa');
 const chalk = require('chalk');
 const Answers = require('../src/Answers');
-const { createApp, verifyRegistry, getProjectTypes } = require('../src/index');
+const { createApp, verifyRegistry, projects } = require('../src/index');
 const prompts = require('prompts');
 const expect = require('expect');
 const { testRegistry } = require('../src/constants');
@@ -19,7 +19,7 @@ const stdio = verbose ? 'inherit' : 'pipe';
 
 verifyRegistry();
 
-const projectTypes = getProjectTypes().filter(
+const filteredProjects = projects.filter(
   projectType =>
     !focusProjectPattern ? true : projectType.match(focusProjectPattern),
 );
@@ -32,7 +32,7 @@ focusProjectPattern &&
   );
 
 console.log('Running e2e tests for the following projects:\n');
-projectTypes.forEach(type => console.log(`> ${chalk.cyan(type)}`));
+filteredProjects.forEach(type => console.log(`> ${chalk.cyan(type)}`));
 
 const testTemplate = mockedAnswers => {
   describe(mockedAnswers.fullProjectType, () => {
@@ -121,7 +121,7 @@ describe('create-yoshi-app + yoshi e2e tests', () => {
 
   after(() => cleanup());
 
-  projectTypes
+  filteredProjects
     .map(
       projectType =>
         new Answers({

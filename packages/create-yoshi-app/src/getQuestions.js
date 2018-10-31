@@ -1,11 +1,7 @@
 const getGitConfig = require('parse-git-config');
-const getProjectTypes = require('./getProjectTypes');
+const projects = require('./projects');
 
 module.exports = async () => {
-  const projectTypes = getProjectTypes().filter(
-    type => !type.endsWith('-typescript'),
-  );
-
   const gitConfig = getGitConfig.sync({ include: true, type: 'global' });
 
   const gitUser = gitConfig.user || {};
@@ -34,10 +30,12 @@ module.exports = async () => {
       type: 'select',
       name: 'projectType',
       message: 'Choose project type',
-      choices: projectTypes.map(projectType => ({
-        title: projectType,
-        value: projectType,
-      })),
+      choices: projects
+        .filter(type => !type.endsWith('-typescript'))
+        .map(projectType => ({
+          title: projectType,
+          value: projectType,
+        })),
     },
     {
       type: 'select',

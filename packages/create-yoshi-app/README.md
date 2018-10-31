@@ -4,9 +4,9 @@ This package is used to create [yoshi](https://github.com/wix/yoshi) powered pro
 
 # contributing
 
-Every directory in `templates` directory represents a generated project type. It will be tested automatically in the E2E suite.
+Every directory in `templates` directory represents a generated project type. Every project specified in `packages/create-yoshi-app/src/projects.js` will be tested automatically in the E2E suite.
 
-* When creating a template, please verify to create a TypeScript and a Babel version.
+* When creating a template, please verify to create both TypeScript and Babel versions.
 
 In order to use dynamic values in the template, you can choose one of the following:
 
@@ -40,3 +40,10 @@ You can also use these on file names.
 ```bash
 npm run dev
 ```
+
+When running the development script, you will be presented with the regular `create-yoshi-app` experience.
+
+When you'll finished answering the questions, this project will be automatically created in a temporary directory. Now every change you'll do in the original templates will be viewed in the temporary project.
+
+* It will not run `npm install` for you, so make sure to run it yourself.
+* You'll be able to return to the last project you've worked on. (It will ask you the next time you'll try to run `npm run dev`)
