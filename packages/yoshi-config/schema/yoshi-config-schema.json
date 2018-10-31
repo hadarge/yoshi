@@ -117,7 +117,7 @@
       "description": "Optimize duplication and caching by splitting chunks by shared modules and cache group",
       "oneOf": [
         {
-          "enum": [false]
+          "type": "boolean"
         },
         {
           "type": "object",
