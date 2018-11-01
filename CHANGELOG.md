@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.18.0 (2018-11-01)
+
+#### :rocket: New Feature
+* `create-yoshi-app`
+  * [#688](https://github.com/wix/yoshi/pull/688) Validate @wix email on project generation ([@netanelgilad](https://github.com/netanelgilad))
+  * [#610](https://github.com/wix/yoshi/pull/610) Sort projects by priority ([@yanivefraim](https://github.com/yanivefraim))
+* `yoshi`
+  * [#692](https://github.com/wix/yoshi/pull/692) Write client files to the file system and show them nicely via `serve-handler` ([@ronami](https://github.com/ronami))
+
+#### :bug: Bug Fix
+* `jest-environment-yoshi-puppeteer`
+  * [#706](https://github.com/wix/yoshi/pull/706) Add `globby` as dependency ([@yakirn](https://github.com/yakirn))
+* Other
+  * [#698](https://github.com/wix/yoshi/pull/698) Support `splitChunks: true` in Yoshi config schema ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :nail_care: Polish
+* `yoshi`
+  * [#691](https://github.com/wix/yoshi/pull/691) Transpile server bundle to Node version 8 ([@ronami](https://github.com/ronami))
+  * [#693](https://github.com/wix/yoshi/pull/693) Run `fork-ts-checker-webpack-plugin` only once ([@ronami](https://github.com/ronami))
+  * [#695](https://github.com/wix/yoshi/pull/695) Format TypeScript errors with `react-dev-utils` ([@ronami](https://github.com/ronami))
+
 ## 3.17.0 (2018-10-29)
 
 #### :rocket: New Feature
