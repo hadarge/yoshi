@@ -298,27 +298,6 @@ function createCommonWebpackConfig({
       new ModuleNotFoundPlugin(ROOT_DIR),
       // https://github.com/Urthen/case-sensitive-paths-webpack-plugin
       new CaseSensitivePathsPlugin(),
-      // https://github.com/Realytics/fork-ts-checker-webpack-plugin
-      ...(isTypescriptProject && project.experimentalServerBundle
-        ? [
-            // Since `fork-ts-checker-webpack-plugin` requires you to have
-            // TypeScript installed when its required, we only require it if
-            // this is a TypeScript project
-            new (require('fork-ts-checker-webpack-plugin'))({
-              tsconfig: TSCONFIG_FILE,
-              // https://github.com/facebook/create-react-app/pull/5607
-              compilerOptions: {
-                module: 'esnext',
-                moduleResolution: 'node',
-                resolveJsonModule: true,
-                noEmit: true,
-              },
-              async: false,
-              silent: true,
-              formatter: typescriptFormatter,
-            }),
-          ]
-        : []),
       // Way of communicating to `babel-preset-yoshi` or `babel-preset-wix` that
       // it should optimize for Webpack
       { apply: () => (process.env.IN_WEBPACK = 'true') },
@@ -559,6 +538,29 @@ function createClientWebpackConfig({
         log: false,
         useHashIndex: false,
       }),
+
+      // https://github.com/Realytics/fork-ts-checker-webpack-plugin
+      ...(isTypescriptProject && project.experimentalServerBundle && isDebug
+        ? [
+            // Since `fork-ts-checker-webpack-plugin` requires you to have
+            // TypeScript installed when its required, we only require it if
+            // this is a TypeScript project
+            new (require('fork-ts-checker-webpack-plugin'))({
+              tsconfig: TSCONFIG_FILE,
+              // https://github.com/facebook/create-react-app/pull/5607
+              compilerOptions: {
+                module: 'esnext',
+                moduleResolution: 'node',
+                resolveJsonModule: true,
+                noEmit: true,
+              },
+              async: false,
+              silent: true,
+              checkSyntacticErrors: true,
+              formatter: typescriptFormatter,
+            }),
+          ]
+        : []),
 
       // https://webpack.js.org/plugins/loader-options-plugin
       new webpack.LoaderOptionsPlugin({
