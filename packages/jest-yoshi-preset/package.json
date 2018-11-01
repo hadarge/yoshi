@@ -1,6 +1,6 @@
 {
   "name": "jest-yoshi-preset",
-  "version": "3.17.0",
+  "version": "3.18.0",
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
   "keywords": [
@@ -20,14 +20,14 @@
     "babel-jest": "^23.2.0",
     "globby": "^8.0.1",
     "identity-obj-proxy": "^3.0.0",
-    "jest-environment-yoshi-bootstrap": "3.17.0",
-    "jest-environment-yoshi-puppeteer": "3.17.0",
+    "jest-environment-yoshi-bootstrap": "3.18.0",
+    "jest-environment-yoshi-puppeteer": "3.18.0",
     "ts-jest": "^23.0.1"
   },
   "devDependencies": {
     "@stylable/core": "^0.1.7",
     "@stylable/jest": "^0.1.11",
     "typescript": "~2.9.0",
-    "yoshi": "3.17.0"
+    "yoshi": "3.18.0"
   }
 }

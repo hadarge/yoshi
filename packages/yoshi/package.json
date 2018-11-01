@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.17.0",
+  "version": "3.18.0",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -119,8 +119,8 @@
     "wnpm-ci": "^7.0.1",
     "write-file-webpack-plugin": "^4.4.1",
     "xmldoc": "^1.1.2",
-    "yoshi-config": "3.17.0",
-    "yoshi-helpers": "3.17.0",
+    "yoshi-config": "3.18.0",
+    "yoshi-helpers": "3.18.0",
     "yoshi-runtime": "^1.0.38"
   },
   "devDependencies": {
