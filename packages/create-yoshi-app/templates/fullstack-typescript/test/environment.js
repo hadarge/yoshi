@@ -1,7 +1,7 @@
-import * as testkit from 'wix-bootstrap-testkit';
-import * as configEmitter from 'wix-config-emitter';
+const testkit = require('wix-bootstrap-testkit');
+const configEmitter = require('wix-config-emitter');
 
-export const emitConfigs = ({ targetFolder }) => {
+module.exports.emitConfigs = ({ targetFolder }) => {
   const emitter = configEmitter({
     sourceFolders: ['./templates'],
     targetFolder,
@@ -10,7 +10,7 @@ export const emitConfigs = ({ targetFolder }) => {
   return emitter.fn('scripts_domain', 'static.parastorage.com').emit();
 };
 
-export const bootstrapServer = ({ port, managementPort, appConfDir }) => {
+module.exports.bootstrapServer = ({ port, managementPort, appConfDir }) => {
   return testkit.app('./index', {
     env: {
       PORT: port,
