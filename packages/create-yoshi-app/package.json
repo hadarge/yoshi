@@ -37,7 +37,7 @@
     "fs-extra": "^7.0.0",
     "globby": "^8.0.1",
     "parse-git-config": "^2.0.2",
-    "prompts": "^0.1.10",
+    "prompts": "^1.1.1",
     "semver": "^5.5.1"
   },
   "devDependencies": {

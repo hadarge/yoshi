@@ -4,7 +4,7 @@ const Answers = require('./Answers');
 const getQuestions = require('./getQuestions');
 
 module.exports = async (workingDir = process.cwd()) => {
-  const questions = await getQuestions(workingDir);
+  const questions = getQuestions();
 
   let promptAborted = false;
   const answers = await prompts(questions, {
