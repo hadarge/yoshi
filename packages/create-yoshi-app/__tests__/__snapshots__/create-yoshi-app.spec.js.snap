@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it should throw if the name inserted as an argument is not validated by npm 1`] = `
+"Could not create a project called \\"CamelCase\\" because of restrictions:
+  *  name can no longer contain capital letters
+"
+`;
+
+exports[`it should throw if the repository name is not validated by npm 1`] = `
+"Could not create a project called \\"CamelCase\\" because of restrictions:
+  *  name can no longer contain capital letters
+"
+`;
