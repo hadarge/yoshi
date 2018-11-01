@@ -13,6 +13,7 @@ const TpaStyleWebpackPlugin = require('tpa-style-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const xmldoc = require('xmldoc');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
@@ -551,6 +552,13 @@ function createClientWebpackConfig({
 
     plugins: [
       ...config.plugins,
+
+      // https://github.com/gajus/write-file-webpack-plugin
+      new WriteFilePlugin({
+        exitOnErrors: false,
+        log: false,
+        useHashIndex: false,
+      }),
 
       // https://webpack.js.org/plugins/loader-options-plugin
       new webpack.LoaderOptionsPlugin({
