@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.18.1 (2018-11-01)
+
+#### :bug: Bug Fix
+* `create-yoshi-app`
+  * [#710](https://github.com/wix/yoshi/pull/710) Fix generation of projects into custom dirs ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.18.0 (2018-11-01)
 
 #### :rocket: New Feature
