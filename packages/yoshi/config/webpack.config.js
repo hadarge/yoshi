@@ -12,6 +12,7 @@ const StylableWebpackPlugin = require('@stylable/webpack-plugin');
 const TpaStyleWebpackPlugin = require('tpa-style-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const xmldoc = require('xmldoc');
+const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
 const { localIdentName, staticsDomain } = require('../src/constants');
@@ -304,7 +305,16 @@ function createCommonWebpackConfig({
             // this is a TypeScript project
             new (require('fork-ts-checker-webpack-plugin'))({
               tsconfig: TSCONFIG_FILE,
+              // https://github.com/facebook/create-react-app/pull/5607
+              compilerOptions: {
+                module: 'esnext',
+                moduleResolution: 'node',
+                resolveJsonModule: true,
+                noEmit: true,
+              },
               async: false,
+              silent: true,
+              formatter: typescriptFormatter,
             }),
           ]
         : []),
