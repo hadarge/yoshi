@@ -690,6 +690,24 @@ function createServerWebpackConfig({ isDebug = true } = {}) {
             };
           }
 
+          if (rule.loader === 'ts-loader') {
+            return {
+              ...rule,
+              options: {
+                ...rule.options,
+
+                compilerOptions: {
+                  ...rule.options.compilerOptions,
+
+                  // allow using Promises, Array.prototype.includes, String.prototype.padStart, etc.
+                  lib: ['es2017'],
+                  // use async/await instead of embedding polyfills
+                  target: 'es2017',
+                },
+              },
+            };
+          }
+
           return rule;
         }),
 
