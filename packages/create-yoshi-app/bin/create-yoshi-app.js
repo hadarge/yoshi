@@ -19,13 +19,12 @@ program
   .parse(process.argv);
 
 const customProjectDir = program.args[0];
-const workingDir = process.cwd();
 
-verifyDirectoryName(customProjectDir || workingDir);
+verifyDirectoryName(customProjectDir || process.cwd());
 
 if (customProjectDir) {
   fs.ensureDirSync(customProjectDir);
   process.chdir(path.resolve(customProjectDir));
 }
 
-createApp(workingDir, customProjectDir);
+createApp(process.cwd(), customProjectDir);
