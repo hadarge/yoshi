@@ -92,7 +92,7 @@
     "petri-specs": "~1.2.0",
     "prettier": "^1.12.1",
     "raw-loader": "~0.5.1",
-    "react-dev-utils": "^6.0.3",
+    "react-dev-utils": "^6.1.1",
     "react-hot-loader": "^4.3.3",
     "rtlcss-webpack-plugin": "^4.0.0",
     "ruby-haml-loader": "~1.0.0",
