@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.18.2 (2018-11-04)
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#713](https://github.com/wix/yoshi/pull/713) Upgrade `react-dev-utils` minimum version to provide `typescriptFormatter` ([@ranyitz](https://github.com/ranyitz))
+
 ## 3.18.1 (2018-11-01)
 
 #### :bug: Bug Fix
