@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.18.3 (2018-11-05)
+
+#### :bug: Bug Fix
+* `jest-environment-yoshi-bootstrap`
+  * [#731](https://github.com/wix/yoshi/pull/731) When generating a port, kill the process that runs a server on that port to  make sure the port is available ([@ranyitz](https://github.com/ranyitz))
+
 ## 3.18.2 (2018-11-04)
 
 #### :bug: Bug Fix
