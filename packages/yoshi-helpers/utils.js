@@ -100,12 +100,12 @@ module.exports.shouldTransformHMRRuntime = () => {
   return project.hmr === 'auto' && project.isReactProject;
 };
 
-function getProcessIdOnPort(port) {
+module.exports.getProcessIdOnPort = port => {
   return childProcess
     .execSync(`lsof -i:${port} -P -t -sTCP:LISTEN`, { encoding: 'utf-8' })
     .split('\n')[0]
     .trim();
-}
+};
 
 function getDirectoryOfProcessById(processId) {
   return childProcess
@@ -123,7 +123,7 @@ module.exports.getProcessOnPort = async port => {
   }
 
   try {
-    const pid = getProcessIdOnPort(port);
+    const pid = module.exports.getProcessIdOnPort(port);
     const cwd = getDirectoryOfProcessById(pid);
 
     return {
