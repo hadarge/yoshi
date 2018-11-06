@@ -34,6 +34,7 @@ const fx = {
   less: () => '.a .b {\n  color: red;\n}',
   scssInvalid: () => '.a {\n.b\ncolor: red;\n}\n}\n',
   tsconfig: (options = {}) =>
+    '// tsconfig.json\n' +
     JSON.stringify(
       _.merge(
         {

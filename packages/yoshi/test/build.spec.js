@@ -982,6 +982,19 @@ describe('Aggregator: Build', () => {
           expect(resp.code).to.equal(1);
           expect(resp.stderr).to.contain('error TS1003: Identifier expected');
         });
+
+        it('should exit with code 1 when tsconfig is malformed', () => {
+          const resp = test
+            .setup({
+              'src/a.ts': 'console.log("hello");',
+              'tsconfig.json': '(^_^)',
+              'package.json': fx.packageJson(),
+              'pom.xml': fx.pom(),
+            })
+            .execute('build');
+
+          expect(resp.code).to.equal(1);
+        });
       });
 
       it('should exit with code 1 with a custom entry that does not exist', () => {

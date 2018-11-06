@@ -4,6 +4,7 @@ const cosmiconfig = require('cosmiconfig');
 const project = require('yoshi-config');
 const globs = require('yoshi-config/globs');
 const { tryRequire } = require('./utils');
+const fs = require('fs');
 
 const readDir = patterns =>
   []
@@ -54,7 +55,7 @@ module.exports.shouldRunSass = () => {
 };
 
 module.exports.isTypescriptProject = () =>
-  !!tryRequire(path.resolve('tsconfig.json'));
+  fs.existsSync(path.resolve('tsconfig.json'));
 
 module.exports.isBabelProject = () => {
   return !!glob.sync(path.resolve('.babelrc')).length || !!project.babel;
