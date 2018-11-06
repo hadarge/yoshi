@@ -38,6 +38,8 @@ const {
   isProduction,
 } = require('yoshi-helpers');
 const { debounce } = require('lodash');
+const wixAppServer = require('../tasks/app-server');
+const openBrowser = require('react-dev-utils/openBrowser');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -53,7 +55,6 @@ module.exports = runner.command(
   async tasks => {
     const { sass, less, copy, clean, babel, typescript } = tasks;
 
-    const wixAppServer = tasks[require.resolve('../tasks/app-server')];
     const wixCdn = tasks[require.resolve('../tasks/cdn')];
     const migrateScopePackages =
       tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
@@ -86,7 +87,7 @@ module.exports = runner.command(
 
     const ssl = cliArgs.ssl || servers.cdn.ssl;
 
-    await Promise.all([
+    const [localUrlForBrowser] = await Promise.all([
       transpileJavascriptAndRunServer(),
       ...transpileCss(),
       copy(
@@ -148,6 +149,8 @@ module.exports = runner.command(
         { title: 'maven-statics', log: false },
       ),
     ]);
+
+    openBrowser(localUrlForBrowser);
 
     if (shouldRunTests && !isProduction()) {
       crossSpawn('npm', ['test', '--silent'], {
@@ -247,12 +250,13 @@ module.exports = runner.command(
           rootDir: '.',
           outDir: './dist/',
         });
-        await appServer();
 
-        return watch(
+        await watch(
           { pattern: [path.join('dist', '**', '*.js'), 'index.js'] },
           debounce(appServer, 500, { maxWait: 1000 }),
         );
+
+        return appServer();
       }
 
       if (isBabelProject()) {
