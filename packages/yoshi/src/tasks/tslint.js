@@ -73,9 +73,22 @@ function runLinter({ options, tslintFilePath, tsconfigFilePath, filterPaths }) {
     }
   });
 
-  const fixablesCount = linter.failures.filter(failure => failure.fix).length;
+  const { length: fixablesCount } = linter.failures.filter(
+    failure => failure.fix,
+  );
+  const { length: errorsCount } = linter.failures.filter(
+    failure => failure.ruleSeverity === 'error',
+  );
+  const { length: warningsCount } = linter.failures.filter(
+    failure => failure.ruleSeverity === 'warning',
+  );
 
-  return { failuresCount, fixablesCount, fixesCount: linter.fixes.length };
+  return {
+    errorsCount,
+    warningsCount,
+    fixablesCount,
+    fixesCount: linter.fixes.length,
+  };
 }
 
 module.exports = async ({
@@ -101,7 +114,7 @@ module.exports = async ({
     console.log(`running tslint using ${chalk.magenta(tsconfigFilePath)}\n`);
   }
 
-  const { failuresCount, fixablesCount, fixesCount } = runLinter({
+  const { errorsCount, warningsCount, fixablesCount, fixesCount } = runLinter({
     options,
     tslintFilePath,
     tsconfigFilePath,
@@ -116,10 +129,16 @@ module.exports = async ({
     );
   }
 
-  if (failuresCount > 0) {
-    let exitMessage = `tslint exited with ${chalk.red(failuresCount)} error${
-      failuresCount === 1 ? '' : 's'
+  if (errorsCount > 0) {
+    let exitMessage = `tslint exited with ${chalk.red(errorsCount)} error${
+      errorsCount === 1 ? '' : 's'
     }`;
+
+    if (warningsCount > 0) {
+      exitMessage += ` and ${chalk.yellow(warningsCount)} warning${
+        warningsCount === 1 ? '' : 's'
+      }`;
+    }
 
     if (fixesCount === 0 && fixablesCount > 0) {
       exitMessage = exitMessage + ` (${chalk.green(fixablesCount)} fixable)`;

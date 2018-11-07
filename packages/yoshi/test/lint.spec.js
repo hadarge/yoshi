@@ -38,6 +38,22 @@ describe('Aggregator: Lint', () => {
       expect(res.code).to.equal(0);
     });
 
+    it('should pass with warnings', () => {
+      const res = test
+        .setup({
+          'app/a.ts': `async function foo() { await 5 }`,
+          'package.json': fx.packageJson(),
+          'tsconfig.json': fx.tsconfig({ files: ['app/a.ts'] }),
+          'tslint.json': fx.tslint({
+            'await-promise': { severity: 'warning' },
+          }),
+        })
+        .execute('lint');
+
+      expect(res.code).to.equal(0);
+      expect(res.stdout).to.contain('WARNING');
+    });
+
     it('should fix linting errors and exit with exit code 0 if executed with --fix flag & there are only fixable errors', () => {
       const res = test
         .setup({

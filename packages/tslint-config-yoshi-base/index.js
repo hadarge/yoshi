@@ -112,12 +112,12 @@ module.exports = addJsRules({
     ],
 
     // https://github.com/ikatyang/tslint-plugin-prettier
-    prettier: [
-      true,
-      {
+    prettier: {
+      severity: 'warning',
+      options: {
         singleQuote: true,
         trailingComma: 'all',
       },
-    ],
+    },
   },
 });
