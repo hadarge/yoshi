@@ -130,7 +130,7 @@ module.exports = {
 
     // https://github.com/prettier/eslint-plugin-prettier
     'prettier/prettier': [
-      'error',
+      'warn',
       {
         singleQuote: true,
         trailingComma: 'all',
