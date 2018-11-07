@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.19.0 (2018-11-07)
+
+#### :rocket: New Feature
+* `eslint-config-yoshi-base`
+  * [#745](https://github.com/wix/yoshi/pull/745) Change prettier errors to warnings instead of errors ([@netanelgilad](https://github.com/netanelgilad))
+* `tslint-config-yoshi-base`, `yoshi`
+  * [#746](https://github.com/wix/yoshi/pull/746) Yoshi lint will exit cleanly on tslint warnings and will warn on prettier errors ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :bug: Bug Fix
+* `yoshi-helpers`, `yoshi`
+  * [#736](https://github.com/wix/yoshi/pull/736) Check existence of `tsconfig.json` for TypeScript project detection ([@Schniz](https://github.com/Schniz))
+
+#### :nail_care: Polish
+* `create-yoshi-app`
+  * [#732](https://github.com/wix/yoshi/pull/732) Ddd links for bootstrap middlewares documentation ([@ranyitz](https://github.com/ranyitz))
+
 ## 3.18.3 (2018-11-05)
 
 #### :bug: Bug Fix
