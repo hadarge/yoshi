@@ -151,7 +151,7 @@ describe('Aggregator: Start', () => {
       });
 
       it('should pass --inspect flag when parameter is passed with the correct port', () => {
-        const port = 9230;
+        const port = 8230;
         const checkIfInspectIsPassedInArgs = function(port) {
           return !!process.execArgv.find(
             arg => arg.indexOf(`--inspect=127.0.0.1:${port}`) === 0,
@@ -432,7 +432,7 @@ describe('Aggregator: Start', () => {
             'src/assets/test.json': '{a: 1}',
             'src/index.js': 'var a = 1;',
             'package.json': fx.packageJson({
-              servers: { cdn: { port: 3005 } },
+              servers: { cdn: { port: 5005 } },
             }),
           })
           .spawn('start');
@@ -446,7 +446,7 @@ describe('Aggregator: Start', () => {
             'src/assets/test.json': '{a: 1}',
             'src/index.js': 'var a = 1;',
             'package.json': fx.packageJson({
-              servers: { cdn: { port: 3005, dir: 'dist/statics' } },
+              servers: { cdn: { port: 5005, dir: 'dist/statics' } },
             }),
           })
           .spawn('start');
@@ -461,7 +461,7 @@ describe('Aggregator: Start', () => {
             'src/index.js': 'var a = 1;',
             'package.json': fx.packageJson({
               clientProjectName: 'my-client-project',
-              servers: { cdn: { port: 3005 } },
+              servers: { cdn: { port: 5005 } },
             }),
           })
           .spawn('start');
@@ -476,7 +476,7 @@ describe('Aggregator: Start', () => {
             'src/index.js': 'var a = 1;',
             'package.json': fx.packageJson({
               clientProjectName: 'my-client-project',
-              servers: { cdn: { port: 3005, dir: 'dist/statics' } },
+              servers: { cdn: { port: 5005, dir: 'dist/statics' } },
             }),
           })
           .spawn('start');
@@ -524,13 +524,13 @@ describe('Aggregator: Start', () => {
               'src/index.js': 'var a = 1;',
               'package.json': fx.packageJson({
                 servers: {
-                  cdn: { port: 3005, dir: 'dist/statics', ssl: true },
+                  cdn: { port: 5005, dir: 'dist/statics', ssl: true },
                 },
               }),
             })
             .spawn('start');
 
-          return cdnIsServing('assets/test.json', 3005, 'https', { agent });
+          return cdnIsServing('assets/test.json', 5005, 'https', { agent });
         });
 
         it('should enable ssl when ran --ssl', () => {
@@ -539,12 +539,12 @@ describe('Aggregator: Start', () => {
               'src/assets/test.json': '{a: 1}',
               'src/index.js': 'var a = 1;',
               'package.json': fx.packageJson({
-                servers: { cdn: { port: 3005, dir: 'dist/statics' } },
+                servers: { cdn: { port: 5005, dir: 'dist/statics' } },
               }),
             })
             .spawn('start', '--ssl');
 
-          return cdnIsServing('assets/test.json', 3005, 'https', { agent });
+          return cdnIsServing('assets/test.json', 5005, 'https', { agent });
         });
       });
     });
@@ -752,13 +752,13 @@ describe('Aggregator: Start', () => {
   });
 
   function checkServerLogCreated({ backoff = 100 } = {}) {
-    return retryPromise(
-      { backoff },
-      () =>
-        test.contains('target/server.log')
-          ? Promise.resolve()
-          : Promise.reject(new Error('No server.log found')),
-    );
+    return retryPromise({ backoff }, () => {
+      const created = test.contains('target/server.log');
+
+      return created
+        ? Promise.resolve()
+        : Promise.reject(new Error('No server.log found'));
+    });
   }
 
   function serverLogContent() {
@@ -811,13 +811,19 @@ describe('Aggregator: Start', () => {
     );
   }
 
-  function cdnIsServing(name, port = 3005, protocol = 'http', options = {}) {
-    return retryPromise({ backoff: 100 }, () =>
-      fetch(`${protocol}://localhost:${port}/${name}`, options).then(res => {
-        expect(res.status).to.equal(200);
-        return res.text();
-      }),
-    );
+  function cdnIsServing(name, port = 5005, protocol = 'http', options = {}) {
+    return retryPromise({ backoff: 500 }, async () => {
+      const res = await fetch(
+        `${protocol}://localhost:${port}/${name}`,
+        options,
+      );
+
+      const text = await res.text();
+
+      expect(res.status).to.equal(200, text);
+
+      return text;
+    });
   }
 
   function checkServerIsRespondingWith(expected) {
