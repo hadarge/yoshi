@@ -100,6 +100,8 @@ module.exports = async () => {
     }
   });
 
+  console.log(chalk.cyan('Starting development environment...\n'));
+
   // Start up webpack dev server
   await new Promise((resolve, reject) => {
     devServer.listen(
