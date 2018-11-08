@@ -1,5 +1,7 @@
-import testkit from 'wix-bootstrap-testkit';
-import configEmitter from 'wix-config-emitter';
+// https://github.com/wix-platform/wix-node-platform/tree/master/bootstrap/wix-bootstrap-testkit
+const testkit = require('wix-bootstrap-testkit');
+// https://github.com/wix-platform/wix-node-platform/tree/master/config/wix-config-emitter
+const configEmitter = require('wix-config-emitter');
 
 export const app = bootstrapServer();
 
@@ -8,6 +10,8 @@ export function beforeAndAfter() {
   app.beforeAndAfter();
 }
 
+// take erb configurations from source folder, replace values/functions,
+// remove the ".erb" extension and emit files inside the target folder
 function emitConfigs() {
   return configEmitter({
     sourceFolders: ['./templates'],
@@ -15,6 +19,7 @@ function emitConfigs() {
   }).emit();
 }
 
+// start the server as an embedded app
 function bootstrapServer() {
   return testkit.app('./index', {
     env: {

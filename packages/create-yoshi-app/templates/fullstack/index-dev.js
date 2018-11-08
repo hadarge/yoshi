@@ -1,13 +1,15 @@
 const { bootstrapServer, emitConfigs } = require('./test/environment');
 
-const targetFolder = './target/dev/configs';
+const port = parseInt(process.env.PORT);
+const appConfDir = './target/dev/configs';
+
 (async () => {
   const app = bootstrapServer({
-    port: process.env.PORT,
-    managementPort: 3001,
-    appConfDir: targetFolder,
+    port,
+    managementPort: port + 1,
+    appConfDir,
   });
 
-  await emitConfigs({targetFolder});
+  await emitConfigs({ targetFolder: appConfDir });
   await app.start();
-})()
+})();

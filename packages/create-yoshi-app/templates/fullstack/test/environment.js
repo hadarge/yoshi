@@ -1,15 +1,20 @@
+// https://github.com/wix-platform/wix-node-platform/tree/master/bootstrap/wix-bootstrap-testkit
 const testkit = require('wix-bootstrap-testkit');
+// https://github.com/wix-platform/wix-node-platform/tree/master/config/wix-config-emitter
 const configEmitter = require('wix-config-emitter');
 
+// take erb configurations from source folder, replace values/functions,
+// remove the ".erb" extension and emit files inside the target folder
 module.exports.emitConfigs = ({ targetFolder }) => {
   const emitter = configEmitter({
     sourceFolders: ['./templates'],
     targetFolder,
   });
 
-  return emitter.fn('scripts_domain', 'static.parastorage.com').emit();
+  return emitter.val('scripts_domain', 'static.parastorage.com').emit();
 };
 
+// start the server as an embedded app
 module.exports.bootstrapServer = ({ port, managementPort, appConfDir }) => {
   return testkit.app('./index', {
     env: {
