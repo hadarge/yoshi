@@ -6,6 +6,14 @@
 * `yoshi`
   * [#699](https://github.com/wix/yoshi/pull/699) Serve JS files on CDN with proper content type ([@yurynix](https://github.com/yurynix))
 
+#### :nail_care: Polish
+* `yoshi`
+  * [#716](https://github.com/wix/yoshi/pull/716) Show a loading indication when starting a local development setup ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+* `yoshi`
+  * [#747](https://github.com/wix/yoshi/pull/747) Fix flaky tests related to `yoshi start` ([@ronami](https://github.com/ronami))
+
 ## 3.19.0 (2018-11-07)
 
 #### :rocket: New Feature
