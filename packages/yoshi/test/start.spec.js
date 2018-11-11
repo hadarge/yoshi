@@ -511,6 +511,24 @@ describe('Aggregator: Start', () => {
         });
       });
 
+      it('should serve correct content-type headers for js files', () => {
+        child = test
+          .setup({
+            'src/client.ts': `async function hello() {}`,
+            'package.json': fx.packageJson(),
+          })
+          .spawn('start');
+
+        return fetchCDN(3200, {
+          path: 'app.bundle.min.js',
+          backoff: 500,
+        }).then(res => {
+          expect(res.headers.get('Content-Type')).to.equal(
+            'application/javascript; charset=UTF-8',
+          );
+        });
+      });
+
       describe('HTTPS', () => {
         // This is because we're using self signed certificate - otherwise the request will fail
         const agent = new https.Agent({
@@ -804,10 +822,13 @@ describe('Aggregator: Start', () => {
     );
   }
 
-  function fetchCDN(port) {
+  function fetchCDN(port, { path = '/', backoff = 100, max = 10 } = {}) {
+    if (path[0] !== '/') {
+      path = `/${path}`;
+    }
     port = port || 3200;
-    return retryPromise({ backoff: 100 }, () =>
-      fetch(`http://localhost:${port}/`),
+    return retryPromise({ backoff, max }, () =>
+      fetch(`http://localhost:${port}${path}`),
     );
   }
 

@@ -57,7 +57,12 @@ function redirectMiddleware(hostname, port) {
       rejectUnauthorized: false,
     };
 
-    const request = httpModule.request(options, proxy => proxy.pipe(res));
+    const request = httpModule.request(options, proxiedResponse => {
+      for (const header in proxiedResponse.headers) {
+        res.setHeader(header, proxiedResponse.headers[header]);
+      }
+      proxiedResponse.pipe(res);
+    });
 
     request.on('error', () => next()).end();
   };
