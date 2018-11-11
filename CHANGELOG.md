@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.19.1 (2018-11-11)
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#699](https://github.com/wix/yoshi/pull/699) Serve JS files on CDN with proper content type ([@yurynix](https://github.com/yurynix))
+
 ## 3.19.0 (2018-11-07)
 
 #### :rocket: New Feature
