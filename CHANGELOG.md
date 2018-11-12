@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.19.2 (2018-11-12)
+
+#### :bug: Bug Fix
+* `yoshi`
+  * [#754](https://github.com/wix/yoshi/pull/754) Run two different typescript typechecks ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+* `yoshi`
+  * [#758](https://github.com/wix/yoshi/pull/758) A small refactor - remove of a redundant helper function ([@yanivefraim](https://github.com/yanivefraim))
+
 ## 3.19.1 (2018-11-11)
 
 #### :bug: Bug Fix
