@@ -8,6 +8,9 @@ const {
   insideTeamCity,
   insideWatchMode,
 } = require('../../../test-helpers/env-variables');
+const {
+  killSpawnProcessAndHisChildren,
+} = require('../../../test-helpers/process');
 
 describe('test --jasmine', () => {
   let test, child;
@@ -20,7 +23,7 @@ describe('test --jasmine', () => {
     const pid = child && child.pid;
     child = null;
     test.teardown();
-    return killSpawnProcessAndHidChildren(pid);
+    return killSpawnProcessAndHisChildren(pid);
   });
 
   it('should pass with exit code 0', () => {
@@ -185,21 +188,4 @@ function checkStdoutContains(test, str) {
     () =>
       test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
   );
-}
-
-function killSpawnProcessAndHidChildren(pid) {
-  if (!pid) {
-    return Promise.resolve();
-  }
-
-  return new Promise(resolve => {
-    psTree(pid, (err /*eslint handle-callback-err: 0*/, children) => {
-      [pid].concat(children.map(p => p.PID)).forEach(tpid => {
-        try {
-          process.kill(tpid, 'SIGKILL');
-        } catch (e) {}
-      });
-      resolve();
-    });
-  });
 }
