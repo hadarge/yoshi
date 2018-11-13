@@ -304,6 +304,11 @@ describe('Aggregator: Test', () => {
         expect(res.stderr).to.contain('5 passed, 5 total');
       });
 
+      it('should not try to start cdn', () => {
+        expect(res.stderr).to.not.contain('you are running e2e tests');
+        expect(res.stderr).to.not.contain('cdn');
+      });
+
       it('should work load jest configuration and work with css', () => {
         expect(res.stderr).to.not.contain('should work with css');
       });

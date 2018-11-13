@@ -25,7 +25,7 @@ const onPrepare = (userConf && userConf.onPrepare) || ld.noop;
 const merged = ld.mergeWith(
   {
     framework: 'jasmine',
-    specs: [globs.e2e],
+    specs: [globs.protractor],
     exclude: [],
     directConnect: true,
 

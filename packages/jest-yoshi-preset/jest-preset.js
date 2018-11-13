@@ -1,6 +1,7 @@
 const fs = require('fs');
 const globby = require('globby');
 const { envs } = require('./constants');
+const globs = require('../yoshi-config/globs');
 
 module.exports = {
   globalSetup: require.resolve('jest-environment-yoshi-puppeteer/globalSetup'),
@@ -28,7 +29,7 @@ module.exports = {
       {
         displayName: 'e2e',
         testEnvironment: require.resolve('jest-environment-yoshi-puppeteer'),
-        testMatch: ['<rootDir>/test/e2e/**/*.spec.(ts|js){,x}'],
+        testMatch: [`<rootDir>/${globs.puppeteer}`],
         setupFiles: [
           require.resolve(
             'jest-environment-yoshi-bootstrap/environment-setup.js',
