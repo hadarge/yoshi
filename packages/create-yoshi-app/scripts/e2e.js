@@ -38,7 +38,12 @@ const testTemplate = mockedAnswers => {
   describe(mockedAnswers.fullProjectType, () => {
     const tempDir = tempy.directory();
 
-    before(async () => {
+    // Important Notice: this test case sets up the environment
+    // for the following test cases. So test case execution order is important!
+    // If you nest a describe here (and the tests are run by mocha) the test cases
+    // in the desctivbe block will run first!
+
+    it('should generate project successfully', async () => {
       prompts.inject(mockedAnswers);
       verbose && console.log(chalk.cyan(tempDir));
 
