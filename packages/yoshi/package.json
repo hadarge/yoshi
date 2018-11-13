@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.19.2",
+  "version": "3.19.3",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"

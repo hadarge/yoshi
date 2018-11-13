@@ -1,6 +1,6 @@
 {
   "name": "jest-yoshi-preset",
-  "version": "3.19.2",
+  "version": "3.19.3",
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
   "keywords": [
@@ -28,6 +28,6 @@
     "@stylable/core": "^0.1.7",
     "@stylable/jest": "^0.1.11",
     "typescript": "~2.9.0",
-    "yoshi": "3.19.2"
+    "yoshi": "3.19.3"
   }
 }
