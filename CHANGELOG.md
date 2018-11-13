@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.19.3 (2018-11-13)
+
+#### :bug: Bug Fix
+* `create-yoshi-app`
+  * [#761](https://github.com/wix/yoshi/pull/761) Pin component libraries templates `storybook` version to `alpha.14` for usage with `react@15` ([@Schniz](https://github.com/Schniz))
+* `yoshi`
+  * [#770](https://github.com/wix/yoshi/pull/770) Fix yoshi not outputing verbose errors on CI ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :nail_care: Polish
+* `bootstrap-hot-loader`
+  * [#773](https://github.com/wix/yoshi/pull/773) Add basic types to bootstrap-hot-loader ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+* `create-yoshi-app`
+  * [#769](https://github.com/wix/yoshi/pull/769) Improve e2e errors by using `it` instead of `before` ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.19.2 (2018-11-12)
 
 #### :bug: Bug Fix
