@@ -48,6 +48,8 @@ function serverLogPrefixer() {
   });
 }
 
+const https = cliArgs.https || project.servers.cdn.ssl;
+
 module.exports = async () => {
   // Clean tmp folders
   await Promise.all([fs.emptyDir(BUILD_DIR), fs.emptyDir(TARGET_DIR)]);
@@ -77,7 +79,7 @@ module.exports = async () => {
   serverConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 
   // Configure compilation
-  const multiCompiler = createCompiler([clientConfig, serverConfig]);
+  const multiCompiler = createCompiler([clientConfig, serverConfig], { https });
   const compilationPromise = waitForCompilation(multiCompiler);
 
   const [clientCompiler, serverCompiler] = multiCompiler.compilers;
@@ -85,7 +87,7 @@ module.exports = async () => {
   // Setup dev server (CDN)
   const devServerConfig = createDevServerConfig({
     publicPath: clientConfig.output.publicPath,
-    https: cliArgs.https,
+    https,
   });
 
   const devServer = new WebpackDevServer(clientCompiler, devServerConfig);

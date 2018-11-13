@@ -13,7 +13,7 @@ const { redirectMiddleware } = require('../src/tasks/cdn/server-api');
 
 const isInteractive = process.stdout.isTTY;
 
-function createCompiler(config) {
+function createCompiler(config, { https }) {
   let compiler;
 
   try {
@@ -47,7 +47,7 @@ function createCompiler(config) {
       if (isInteractive) {
         const serverUrls = prepareUrls('http', '0.0.0.0', PORT);
         const devServerUrls = prepareUrls(
-          project.servers.cdn.ssl ? 'https' : 'http',
+          https ? 'https' : 'http',
           '0.0.0.0',
           project.servers.cdn.port,
         );
