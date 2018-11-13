@@ -7,7 +7,7 @@ const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const serverHandler = require('serve-handler');
 const project = require('yoshi-config');
-const { PUBLIC_DIR, STATICS_DIR } = require('yoshi-config/paths');
+const { STATICS_DIR } = require('yoshi-config/paths');
 const { PORT } = require('./constants');
 const { redirectMiddleware } = require('../src/tasks/cdn/server-api');
 
@@ -125,7 +125,6 @@ function createDevServerConfig({ publicPath, https }) {
     // Enable gzip compression for everything served
     compress: true,
     clientLogLevel: 'error',
-    contentBase: PUBLIC_DIR,
     watchContentBase: true,
     hot: true,
     publicPath,
