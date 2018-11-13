@@ -12,11 +12,7 @@ require('./normalize-debugging-args')();
 
 prog.version(version).description('A toolkit for building applications in Wix');
 
-prog.option(
-  '--verbose',
-  'Yoshi will print verbose logs and error messages.',
-  inTeamCity(),
-);
+prog.option('--verbose', 'Yoshi will print verbose logs and error messages.');
 
 prog
   .command('lint [files...]')
@@ -117,7 +113,7 @@ try {
 } catch (_) {} // ignore errors of configuring sentry
 
 function handleUncaughtError(error) {
-  if (prog.verbose) {
+  if (prog.verbose || inTeamCity()) {
     console.error(
       chalk.red(
         `  Yoshi has encountered the following fatal error. Here is the full stacktrace:`,
