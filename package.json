@@ -28,6 +28,10 @@
   "lint-staged": {
     "*.js": [
       "eslint"
+    ],
+    "*.md": [
+      "prettier --write",
+      "git add"
     ]
   },
   "devDependencies": {
