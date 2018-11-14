@@ -9,11 +9,11 @@ There are situations when you are using css modules inside you project, but you 
 In those cases you can wrap your css with `:global`:
 
 ```css
-  :global {
-    .global-class-name {
-      color: green;
-    }
+:global {
+  .global-class-name {
+    color: green;
   }
+}
 ```
 
 Please find more details [here](https://github.com/css-modules/css-modules#exceptions).
@@ -25,11 +25,11 @@ In case you want to import a css from your node modules, just `@import` it insid
 Importing style.scss from '3rd-party-module/x/style.scss':
 
 ```scss
-  @import '3rd-party-module/x/style.scss'
+@import "3rd-party-module/x/style.scss";
 ```
 
 In case you are importing a regular 'css' file, just omit file extension:
 
 ```scss
-  @import '3rd-party-module/x/style'
+@import "3rd-party-module/x/style";
 ```

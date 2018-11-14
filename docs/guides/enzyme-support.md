@@ -13,6 +13,7 @@ This guide explains how to add jsdom to an existing project in order to enable t
 ## Setup
 
 If you try to use enzyme in a tests without setting up jsdom properly you will probably see this error:
+
 ```
 Cannot render markup in a worker thread. Make sure `window` and `document` are available globally before requiring React when unit testing or use ReactDOMServer.renderToString() for server rendering.
 ```
@@ -24,11 +25,12 @@ $ npm install --save-dev jsdom-global
 ```
 
 And then import it in your test file:
+
 ```js
-import 'jsdom-global/register';
+import "jsdom-global/register";
 ```
 
-Notice that you must do the __import BEFORE you import enzyme__, otherwise you will still see the error above.
+Notice that you must do the **import BEFORE you import enzyme**, otherwise you will still see the error above.
 
 ## Cleanup
 
@@ -38,6 +40,6 @@ In order to make sure that the `window` and `document` global variables only exi
 
 ```js
 let cleanup;
-beforeEach(() => cleanup = require('jsdom-global')());
+beforeEach(() => (cleanup = require("jsdom-global")()));
 afterEach(() => cleanup());
 ```

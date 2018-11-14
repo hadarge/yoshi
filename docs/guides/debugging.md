@@ -13,10 +13,12 @@ This guide will help you get started with debugging. There are multiple things y
 When debugging your server/tests you'll need to configure the debugger, depend on your prefered way to debug.
 
 ## Enable Inspector
+
 When started with the `--debug` option, Yoshi will allow to attach NodeJS debugger to the relevant child process with the default host and port.
 You can configure the default port by: `--debug=XXXX`
 
 ### Break before the code starts
+
 When started with the `--debug-brk` option, Yoshi will allow to attach NodeJS debugger and the relevant child process won't start until debugger will be attached.
 You can configure the default port by: `--debug-brk=XXXX`.
 
@@ -24,31 +26,32 @@ You can configure the default port by: `--debug-brk=XXXX`.
 
 Several commercial and open source tools can connect to Node's Inspector and there for can debug Yoshi tasks. Basic info on these follows:
 
-#### [Chrome DevTools](https://github.com/ChromeDevTools/devtools-frontend)  [55+](https://nodejs.org/en/docs/guides/debugging-getting-started/#chrome-devtools-55)
+#### [Chrome DevTools](https://github.com/ChromeDevTools/devtools-frontend) [55+](https://nodejs.org/en/docs/guides/debugging-getting-started/#chrome-devtools-55)
 
--   **Option 1**: Open  `chrome://inspect` in a Chromium-based browser. Click the Configure button and ensure your target host and port are listed.
--   **Option 2 - ✅ Recommended**: Install the Chrome Extension NIM (Node Inspector Manager):[https://chrome.google.com/webstore/detail/nim-node-inspector-manage/gnhhdgbaldcilmgcpfddgdbkhjohddkj](https://chrome.google.com/webstore/detail/nim-node-inspector-manage/gnhhdgbaldcilmgcpfddgdbkhjohddkj)
+- **Option 1**: Open `chrome://inspect` in a Chromium-based browser. Click the Configure button and ensure your target host and port are listed.
+- **Option 2 - ✅ Recommended**: Install the Chrome Extension NIM (Node Inspector Manager):[https://chrome.google.com/webstore/detail/nim-node-inspector-manage/gnhhdgbaldcilmgcpfddgdbkhjohddkj](https://chrome.google.com/webstore/detail/nim-node-inspector-manage/gnhhdgbaldcilmgcpfddgdbkhjohddkj)
 
-#### [Visual Studio Code](https://github.com/microsoft/vscode)  [1.10+](https://nodejs.org/en/docs/guides/debugging-getting-started/#visual-studio-code-1-10)
+#### [Visual Studio Code](https://github.com/microsoft/vscode) [1.10+](https://nodejs.org/en/docs/guides/debugging-getting-started/#visual-studio-code-1-10)
 
-- In the Debug panel, click the settings icon to open  `.vscode/launch.json`. Select "Node.js" for initial setup.
+- In the Debug panel, click the settings icon to open `.vscode/launch.json`. Select "Node.js" for initial setup.
 - 📌 You must tell vscode the target debugging port, otherwise vscode will try to debug Yoshi's main process in random generated port, so add `"port" : 9229` (or the port you choose)
- - Example launch.json -
+- Example launch.json -
 
 ```json
- {
- "name": "Run Tests",
- "type": "node",
- "request": "launch",
- "args" : ["test", "--debug-brk"],
- "port": 9229,
- "program": "${workspaceFolder}/node_modules/.bin/yoshi"
- }
+{
+  "name": "Run Tests",
+  "type": "node",
+  "request": "launch",
+  "args": ["test", "--debug-brk"],
+  "port": 9229,
+  "program": "${workspaceFolder}/node_modules/.bin/yoshi"
+}
 ```
 
-#### [JetBrains WebStorm](https://www.jetbrains.com/webstorm/)  [2017.1+ and other JetBrains IDEs](https://nodejs.org/en/docs/guides/debugging-getting-started/#jetbrains-webstorm-2017-1-and-other-jetbrains-ides)
+#### [JetBrains WebStorm](https://www.jetbrains.com/webstorm/) [2017.1+ and other JetBrains IDEs](https://nodejs.org/en/docs/guides/debugging-getting-started/#jetbrains-webstorm-2017-1-and-other-jetbrains-ides)
+
 - Create a new Node.js debug configuration
-![Webstorm > new "Run/Debug configuration" popup](../assets/debug.png)
+  ![Webstorm > new "Run/Debug configuration" popup](../assets/debug.png)
 - In order to manually tell WebStorm the debugging port, create another configuration, use type 'Attach to Node.js/Chrome'
-![Webstorm > Attach to Node.js/Chrome](../assets/remotedebug.png)
+  ![Webstorm > Attach to Node.js/Chrome](../assets/remotedebug.png)
 - Press debug in order to start the remote debugger configuration then start (without debugging) the 'Node.js' configuration

@@ -20,7 +20,7 @@ Add the following to your Jest config:
 
 ```json
 {
-    "preset": "jest-yoshi-preset"
+  "preset": "jest-yoshi-preset"
 }
 ```
 
@@ -28,11 +28,10 @@ Add the following to your Jest config:
 
 ```json
 {
-  "files": [
-    "./node_modules/jest-yoshi-preset/types.d.ts"
-  ]
+  "files": ["./node_modules/jest-yoshi-preset/types.d.ts"]
 }
 ```
+
 ## Usage
 
 ### Dev mode
@@ -93,7 +92,6 @@ An environment for testing your server (API) code. It starts up a different inst
 
 You sohuld define setup and teardown functions to start/stop your server and relevant mocks (learn more: [wix-bootstrap-testkit](https://github.com/wix-platform/wix-node-platform/tree/master/bootstrap/wix-bootstrap-testkit), [wix-rpc-testkit](https://github.com/wix-platform/wix-node-platform/tree/master/rpc/wix-rpc-testkit)).
 
-
 Runs for every test file matching `<rootDir>/test/server/**/*.spec.js`.
 
 ### Puppeteer (e2e)
@@ -109,8 +107,9 @@ Runs for every file that matches `<rootDir>/test/e2e/**/*.spec.js`.
 This preset looks for a `jest-yoshi.config.js` file at the root of your project. The exported object is used to configure different parts of the preset.
 
 example configurations:
-* [fullstack project](https://github.com/wix/yoshi/blob/master/packages/create-yoshi-app/templates/fullstack/jest-yoshi.config.js)
-* [client project](https://github.com/wix/yoshi/blob/master/packages/create-yoshi-app/templates/client/jest-yoshi.config.js)
+
+- [fullstack project](https://github.com/wix/yoshi/blob/master/packages/create-yoshi-app/templates/fullstack/jest-yoshi.config.js)
+- [client project](https://github.com/wix/yoshi/blob/master/packages/create-yoshi-app/templates/client/jest-yoshi.config.js)
 
 ```js
 module.exports = {
@@ -118,31 +117,30 @@ module.exports = {
     // environment setup function which called before each test file
     setup: async ({ globalObject }) => {},
     // environment teardown function which called after each test file
-    teardown: async ({ globalObject }) => {},
+    teardown: async ({ globalObject }) => {}
   },
   server: {
     // runs a command which bootstrap the server
-    command: 'node server.js',
+    command: "node server.js",
     // wait for a server to start listening on this port before running the tests
     // this port will be available in you server script as an environment variable (PORT)
-    port: 3000,
+    port: 3000
   },
   puppeteer: {
     // toggle headless chrome mode
-    headless: true,
-  },
+    headless: true
+  }
 };
 ```
 
 ### Setup Files
 
-If you want to run some code before your tests you can use one of the 3  following setup files (1 for each environment):
+If you want to run some code before your tests you can use one of the 3 following setup files (1 for each environment):
 
-* `<rootDir>/test/setup.component.(j|t)s`: JSDOM (component)
-* `<rootDir>/test/setup.server.(j|t)s`: Bootstrap (server)
-* `<rootDir>/test/setup.e2e.(j|t)s`: Puppeteer (e2e)
+- `<rootDir>/test/setup.component.(j|t)s`: JSDOM (component)
+- `<rootDir>/test/setup.server.(j|t)s`: Bootstrap (server)
+- `<rootDir>/test/setup.e2e.(j|t)s`: Puppeteer (e2e)
 
 These setup files are actually [Jests's `setupTestFrameworkScriptFile`](https://jestjs.io/docs/en/configuration#setuptestframeworkscriptfile-string)
 
 > A path to a module that runs some code to configure or set up the testing framework before each test.
-

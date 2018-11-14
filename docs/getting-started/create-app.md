@@ -8,9 +8,9 @@ sidebar_label: Create App
 npx create-yoshi-app my-app
 ```
 
-* Answer a few questions
-* Choose [Project Type](./project-types)
-* Choose [Babel](https://babeljs.io/)/[TypeScript](https://www.typescriptlang.org/)
+- Answer a few questions
+- Choose [Project Type](./project-types)
+- Choose [Babel](https://babeljs.io/)/[TypeScript](https://www.typescriptlang.org/)
 
 ```sh
 cd my-app

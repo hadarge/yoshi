@@ -23,8 +23,8 @@ Alternatively, you can create a file named `yoshi.config.js` in your project's r
 ```js
 module.exports = {
   entry: {
-    app: './app2.js',
-  },
+    app: "./app2.js"
+  }
 };
 ```
 
@@ -41,11 +41,11 @@ Here's an example of how a simple `extends` file looks like:
 ```js
 module.exports = {
   defaultConfig: {
-    exports: '[name]',
+    exports: "[name]",
     externals: {
-      lodash: 'lodash',
-    },
-  },
+      lodash: "lodash"
+    }
+  }
 };
 ```
 
@@ -53,62 +53,62 @@ module.exports = {
 
 By default, your `require`d css will bundled to a separate `app.css` bundle. You can leave your css in main js bundle by adding the following to your `package.json`:
 
-  ```json
-  "yoshi": {
-    "separateCss": false
-  }
-  ```
+```json
+"yoshi": {
+  "separateCss": false
+}
+```
 
 ## splitChunks
 
 Configure webpack's `optimization.splitChunks` option. It's an opt-in feature that creates a separate file (known as a chunk), consisting of common modules shared between multiple entry points.
 
-Supports both `false` value *(default)*, `true` and a [configuration object](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693#configuration):
+Supports both `false` value _(default)_, `true` and a [configuration object](https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693#configuration):
 
-  ```json
-  "yoshi": {
-    "splitChunks": true
-    }
-  ```
+```json
+"yoshi": {
+  "splitChunks": true
+  }
+```
 
 ## cssModules
 
 We use [css modules](https://github.com/css-modules/css-modules) as default. You can disable this option any time by adding the following to wix section inside your `package.json`:
 
-  ```json
-  "yoshi": {
-    "cssModules": false
-  }
-  ```
+```json
+"yoshi": {
+  "cssModules": false
+}
+```
 
 You also use the `prod` keyword to only separate css on CI and production, this is useful for speeding up HMR on local dev environments.
 
-  ```json
-  "yoshi": {
-    "separateCss": "prod"
-  }
-  ```
+```json
+"yoshi": {
+  "separateCss": "prod"
+}
+```
 
-  Disabling cssModules on a specific css file is possible by adding `.global` before file extention.
-  For example:
+Disabling cssModules on a specific css file is possible by adding `.global` before file extention.
+For example:
 
-  `./Counter.global.scss` //no css modules for this file
+`./Counter.global.scss` //no css modules for this file
 
-  Using css modules inside your component is easy:
+Using css modules inside your component is easy:
 
-  ```js
-  import s from './Counter.scss'; // import css/scss
+```js
+import s from "./Counter.scss"; // import css/scss
 
-  <p className={s.mainColor}>{counterValue}</p>
-  ```
+<p className={s.mainColor}>{counterValue}</p>;
+```
 
-  Using css when css modules are turned off:
+Using css when css modules are turned off:
 
-  ```js
-  import './Counter.scss'; // import css/scss
+```js
+import "./Counter.scss"; // import css/scss
 
-  <p className="mainColor">{counterValue}</p>
-  ```
+<p className="mainColor">{counterValue}</p>;
+```
 
 ## tpaStyle
 
@@ -118,7 +118,7 @@ Set to true to build with TPA style.
 
 Set to true to build with enhanced TPA style.
 
-* ![status experimental](https://img.shields.io/badge/status-experimental-ff69b4.svg)
+- ![status experimental](https://img.shields.io/badge/status-experimental-ff69b4.svg)
 
 ## clientProjectName
 
@@ -190,9 +190,10 @@ An option to not transpile tests with Babel (via `babel-register`). Defaults to 
 
 You can explicitly ask build process to transpile some node modules in case those modules do not contain transpiled code.
 Note that this is not a recommended workflow. It can be very error prone:
- 1. It might be for example that your app babel config and the node module babel config will be conflicting.
- 2. Any babel plugin that is used by your dependencies will need to be installed by your app as well.
- 3. You'll need to also add nested dependencies that need transpiling into array, which can be confusing.
+
+1.  It might be for example that your app babel config and the node module babel config will be conflicting.
+2.  Any babel plugin that is used by your dependencies will need to be installed by your app as well.
+3.  You'll need to also add nested dependencies that need transpiling into array, which can be confusing.
 
 Anyway, if you don't have a better alternative you can pass array with module names in this property.
 
@@ -203,6 +204,7 @@ If set, export the bundle as library. `yoshi.exports` is the name.
 Use this if you are writing a library and want to publish it as single file. Library will be exported with `UMD` format.
 
 ### hmr
+
 `Boolean` | `"auto"`
 
 Set to `false` in order to disable hot module replacement. (defaults to true)
@@ -210,6 +212,7 @@ Set to `false` in order to disable hot module replacement. (defaults to true)
 `"auto"` is an experimental feature which provides zero configuration HMR for react. It will include `react-hot-loader` to the top of the entry file and will wrap React's root component in special Higher Order Component which enables hot module reload for react. Also it will call `module.hot.accept` on the project's entry file.
 
 ### liveReload
+
 `Boolean`
 
 If true, instructs the browser to physically refresh the entire page if / when webpack indicates that a hot patch cannot be applied and a full refresh is needed.
@@ -231,6 +234,7 @@ For more info, you can read the [webpack docs](https://webpack.js.org/configurat
 Run a shell script at a specific time in yoshi's execution.
 
 For exmaple:
+
 ```json
 {
   "yoshi": {
@@ -245,17 +249,19 @@ Next time you'll run `yoshi lint`, this command will execute and only then the l
 
 **supported hooks:**
 
-* `prelint` - Runs before the linter
+- `prelint` - Runs before the linter
 
 **Missing a hook?** Feel free to open issues/PRs for more hooks if needed.
 
 ## umdNamedDefine
+
 `Boolean`
 
 If option is `true` AMD modules of the UMD build will have names. Otherwise an anonymous define is used(the same as in [webpack](https://webpack.js.org/configuration/output/#output-umdnameddefine)).
 By default it is `true`.
 
 ## universalProject
+
 `Boolean`
 
 Indicates whether the current project is a universal project.

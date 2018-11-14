@@ -6,7 +6,6 @@ sidebar_label: AB Translate
 
 [AB-translate](https://github.com/wix-private/fed-infra/tree/master/ab-translate) lets product managers and content writers create AB Tests for textual content, in [Babel](https://bo.wix.com/wix-babel-webapp/babel), without the need of a developer.
 
-
 # How do I add automatic AB tests to textual content?
 
 Yoshi's `petri-specs` task uses the ab-translate library to check which translation keys are ab-tested and automatically creates specs in petri.
