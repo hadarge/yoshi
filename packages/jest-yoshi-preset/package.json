@@ -27,7 +27,7 @@
   "devDependencies": {
     "@stylable/core": "^0.1.7",
     "@stylable/jest": "^0.1.11",
-    "typescript": "~2.9.0",
-    "yoshi": "3.19.3"
+    "babel-core": "^6.26.0",
+    "typescript": "~2.9.0"
   }
 }

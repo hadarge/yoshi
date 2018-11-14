@@ -404,6 +404,59 @@ describe('Aggregator: Test', () => {
       );
       test.teardown();
     });
+
+    describe('puppeteer environment', () => {
+      it('should pass with passing e2e tests', () => {
+        const cdnPort = 3200;
+        const serverPort = 3100;
+        const e2eTestSampleText = 'Hello World!';
+
+        const test = tp.create();
+        const res = test
+          .setup({
+            'package.json': fx.packageJson(
+              {
+                servers: {
+                  cdn: {
+                    port: cdnPort,
+                  },
+                },
+              },
+              {},
+              {
+                jest: {
+                  preset: 'jest-yoshi-preset',
+                },
+              },
+            ),
+            'index.js': `
+              const http = require('http');
+                const server = http.createServer((req, res) => {
+                const response = "<html><body>${e2eTestSampleText}</body></html>";
+                res.end(response);
+              });
+              server.listen(process.env.PORT);
+            `,
+            'jest-yoshi.config.js': `
+              module.exports = {
+                server: {
+                  command: 'node index.js',
+                  port: ${serverPort},
+                },
+              };
+            `,
+            'test/e2e/some.e2e.spec.js': `
+              it('should succeed', async () => {
+                await page.goto('http://localhost:${serverPort}');
+                expect(await page.$eval('body', e => e.innerText)).toEqual('${e2eTestSampleText}');
+              });
+            `,
+          })
+          .execute('test', ['--jest']);
+
+        expect(res.code).to.equal(0);
+      });
+    });
   });
 
   describe('--mocha', () => {
