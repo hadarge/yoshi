@@ -28,7 +28,7 @@ const project = require('yoshi-config');
 const {
   BUILD_DIR,
   PUBLIC_DIR,
-  STATICS_DIR,
+  ASSETS_DIR,
   TARGET_DIR,
 } = require('yoshi-config/paths');
 const { PORT } = require('../constants');
@@ -67,12 +67,12 @@ function watchPublicFolder() {
   const copyFile = relativePath => {
     return fs.copy(
       path.join(PUBLIC_DIR, relativePath),
-      path.join(STATICS_DIR, relativePath),
+      path.join(ASSETS_DIR, relativePath),
     );
   };
 
   const removeFile = relativePath => {
-    return fs.remove(path.join(STATICS_DIR, relativePath));
+    return fs.remove(path.join(ASSETS_DIR, relativePath));
   };
 
   watcher.on('change', copyFile);

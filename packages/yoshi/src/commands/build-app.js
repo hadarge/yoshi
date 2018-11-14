@@ -22,6 +22,7 @@ const {
   TARGET_DIR,
   PUBLIC_DIR,
   STATICS_DIR,
+  ASSETS_DIR,
 } = require('yoshi-config/paths');
 const {
   petriSpecsConfig,
@@ -50,7 +51,7 @@ module.exports = async () => {
 
   // Copy public to statics dir
   if (await fs.exists(PUBLIC_DIR)) {
-    await fs.copy(PUBLIC_DIR, STATICS_DIR);
+    await fs.copy(PUBLIC_DIR, ASSETS_DIR);
   }
 
   await Promise.all([updateNodeVersion(), wixDepCheck(), copyTemplates()]);
