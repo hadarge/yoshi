@@ -2,13 +2,15 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const { Linter, Configuration } = require('tslint');
-const { expect } = require('chai');
 
-const program = Linter.createProgram('test/tsconfig.json');
+const program = Linter.createProgram(path.join(__dirname, 'tsconfig.json'));
 
 function runLint(filename) {
   const linter = new Linter({}, program);
-  const { results } = Configuration.findConfiguration('index.js', filename);
+  const { results } = Configuration.findConfiguration(
+    require.resolve('../index.js'),
+    filename,
+  );
 
   linter.lint(filename, fs.readFileSync(filename, 'utf8'), results);
 
@@ -35,7 +37,7 @@ describe('tslint-config-yoshi-base', () => {
           const result = runLint(filename);
           const failingRules = result.failures.map(({ ruleName }) => ruleName);
 
-          expect(failingRules).to.eql([]);
+          expect(failingRules).toEqual([]);
         });
       });
 
@@ -48,7 +50,7 @@ describe('tslint-config-yoshi-base', () => {
           const result = runLint(filename);
           const failingRules = result.failures.map(({ ruleName }) => ruleName);
 
-          expect(failingRules).to.eql([ruleName]);
+          expect(failingRules).toEqual([ruleName]);
         });
       });
     });

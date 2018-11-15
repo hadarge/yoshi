@@ -9,9 +9,6 @@
   ],
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
-  "scripts": {
-    "test": "mocha"
-  },
   "peerDependencies": {
     "babel-eslint": "^8.2.2",
     "eslint": "^4.13.1",
@@ -22,8 +19,5 @@
   },
   "dependencies": {
     "eslint-plugin-jest": "^21.17.0"
-  },
-  "devDependencies": {
-    "mocha-env-reporter": "^3.0.0"
   }
 }

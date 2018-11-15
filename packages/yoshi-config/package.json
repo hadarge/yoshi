@@ -7,9 +7,6 @@
     "yoshi"
   ],
   "author": "Ronen Amiel & Ran Yitzhaki",
-  "scripts": {
-    "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js'"
-  },
   "license": "ISC",
   "dependencies": {
     "ajv": "^6.5.3",
@@ -17,8 +14,5 @@
     "chalk": "^2.4.1",
     "cosmiconfig": "^4.0.0",
     "lodash": "^4.17.10"
-  },
-  "devDependencies": {
-    "mocha-env-reporter": "^3.0.0"
   }
 }

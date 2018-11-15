@@ -8,9 +8,6 @@
     "utils"
   ],
   "author": "Ronen Amiel & Ran Yitzhaki",
-  "scripts": {
-    "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js'"
-  },
   "license": "ISC",
   "dependencies": {
     "babel-register": "^6.26.0",
@@ -30,7 +27,6 @@
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "mocha-env-reporter": "^3.0.0",
     "typescript": "^2.9.2"
   }
 }

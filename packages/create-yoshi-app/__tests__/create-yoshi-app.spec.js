@@ -3,6 +3,8 @@ const tempy = require('tempy');
 const fs = require('fs');
 const path = require('path');
 
+const createYoshiAppBin = path.join(__dirname, '../bin/create-yoshi-app.js');
+
 test('it should throw if the repository name is not validated by npm', async () => {
   expect.assertions(1);
 
@@ -10,11 +12,9 @@ test('it should throw if the repository name is not validated by npm', async () 
     const tempDir = tempy.directory();
     const workingDir = path.join(tempDir, 'CamelCase');
     fs.mkdirSync(workingDir);
-    await execa(
-      'node',
-      [path.join(process.cwd(), '../create-yoshi-app/bin/create-yoshi-app.js')],
-      { cwd: workingDir },
-    );
+    await execa('node', [createYoshiAppBin], {
+      cwd: workingDir,
+    });
   } catch (error) {
     expect(error.stderr).toMatchSnapshot();
   }
@@ -24,10 +24,7 @@ test('it should throw if the name inserted as an argument is not validated by np
   expect.assertions(1);
 
   try {
-    await execa('node', [
-      '../create-yoshi-app/bin/create-yoshi-app.js',
-      'CamelCase',
-    ]);
+    await execa('node', [createYoshiAppBin, 'CamelCase']);
   } catch (error) {
     expect(error.stderr).toMatchSnapshot();
   }

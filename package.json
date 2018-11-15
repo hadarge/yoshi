@@ -16,8 +16,7 @@
     "test": ":",
     "test-all": "lerna run test --concurrency 1",
     "test-yoshi": "npm test --prefix ./packages/yoshi",
-    "test-configs": "lerna run test --concurrency 1 --ignore '+(yoshi|create-yoshi-app)'",
-    "test-create-yoshi-app": "npm test --prefix ./packages/create-yoshi-app",
+    "test-unit": "npx jest --config='./jest.unit.config.js'",
     "website:dev": "npm start --prefix './website'"
   },
   "husky": {
@@ -54,6 +53,8 @@
     "glob": "^7.1.3",
     "globby": "^8.0.1",
     "husky": "^1.0.0-rc.9",
+    "jest": "^23.6.0",
+    "jest-teamcity-reporter": "^0.9.0",
     "lerna": "^2.11.0",
     "lerna-changelog": "^0.8.0",
     "lint-staged": "^7.2.0",

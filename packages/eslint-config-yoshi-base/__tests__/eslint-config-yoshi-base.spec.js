@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const { expect } = require('chai');
 const { CLIEngine } = require('eslint');
 const eslintConfigYoshiBase = require('../index');
 const uniq = require('lodash/uniq');
@@ -17,11 +16,10 @@ const getRulesIds = results =>
     results.results
       .map(result => result.messages.map(message => message.ruleId))[0]
       // remove the "ruleDir/" prefix so rules like "import/no-umd" will become "no-umd"
-      .map(
-        ruleId =>
-          ruleId.lastIndexOf('/')
-            ? ruleId.slice(ruleId.lastIndexOf('/') + 1)
-            : ruleId,
+      .map(ruleId =>
+        ruleId.lastIndexOf('/')
+          ? ruleId.slice(ruleId.lastIndexOf('/') + 1)
+          : ruleId,
       ),
   );
 
@@ -66,7 +64,7 @@ describe('eslint-config-yoshi-base', () => {
             const rulesIds = getRulesIds(results);
 
             try {
-              expect(rulesIds).to.eql([rule]);
+              expect(rulesIds).toEqual([rule]);
             } catch (err) {
               console.error(serializeResults(results));
 
@@ -85,7 +83,7 @@ describe('eslint-config-yoshi-base', () => {
             const rulesIds = getRulesIds(results);
 
             try {
-              expect(rulesIds).to.eql([rule]);
+              expect(rulesIds).toEqual([rule]);
             } catch (err) {
               console.error(serializeResults(results));
 
