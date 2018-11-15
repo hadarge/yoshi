@@ -11,12 +11,11 @@
     "create-yoshi-app:dev": "npm run dev --prefix ./packages/create-yoshi-app",
     "customPublish": "lerna exec 'node ../../scripts/customPublish.js'",
     "changelog": "lerna-changelog",
-    "e2e": "npm run e2e --prefix ./packages/create-yoshi-app",
     "postinstall": "npm run bootstrap",
     "test": ":",
-    "test-all": "lerna run test --concurrency 1",
-    "test-yoshi": "npm test --prefix ./packages/yoshi",
-    "test-unit": "npx jest --config='./jest.unit.config.js'",
+    "test:templates": "npm run e2e --prefix ./packages/create-yoshi-app",
+    "test:integration": "npm test --prefix ./packages/yoshi",
+    "test:unit": "npx jest --config='./jest.unit.config.js'",
     "website:dev": "npm start --prefix './website'"
   },
   "husky": {

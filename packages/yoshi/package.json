@@ -10,8 +10,7 @@
     "url": "https://github.com/wix/yoshi"
   },
   "scripts": {
-    "test": "DISABLE_SENTRY=1 mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js' --retries=$([ -z \"$TEAMCITY_VERSION\" ] && echo 0 || echo 1)",
-    "test:watch": "DISABLE_SENTRY=1 mocha './test/{,!(fixtures)/**/}/*.spec.js' --watch"
+    "test": "DISABLE_SENTRY=1 mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js' --retries=$([ -z \"$TEAMCITY_VERSION\" ] && echo 0 || echo 1)"
   },
   "dependencies": {
     "@sentry/node": "^4.0.6",
