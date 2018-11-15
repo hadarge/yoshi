@@ -11,22 +11,22 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const StylableWebpackPlugin = require('@stylable/webpack-plugin');
 const TpaStyleWebpackPlugin = require('tpa-style-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
-const xmldoc = require('xmldoc');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const DynamicPublicPath = require('../src/webpack-plugins/dynamic-public-path');
-const { localIdentName, staticsDomain } = require('../src/constants');
+const { localIdentName } = require('../src/constants');
 const {
   ROOT_DIR,
   SRC_DIR,
   BUILD_DIR,
   STATICS_DIR,
-  POM_FILE,
   TSCONFIG_FILE,
 } = require('yoshi-config/paths');
 const project = require('yoshi-config');
 const {
+  shouldDeployToCDN,
+  getProjectCDNBasePath,
   toIdentifier,
   isSingleEntry,
   isProduction: checkIsProduction,
@@ -70,15 +70,8 @@ if (isDevelopment) {
 
 // In case we are running in CI and there is a pom.xml file, change the public path according to the path on the cdn
 // The path is created using artifactName from pom.xml and artifact version from an environment param.
-if (inTeamCity && artifactVersion && fs.existsSync(POM_FILE)) {
-  const artifactName = new xmldoc.XmlDocument(
-    fs.readFileSync(POM_FILE),
-  ).valueWithPath('artifactId');
-
-  publicPath = `${staticsDomain}/${artifactName}/${artifactVersion.replace(
-    '-SNAPSHOT',
-    '',
-  )}/`;
+if (shouldDeployToCDN()) {
+  publicPath = getProjectCDNBasePath();
 }
 
 function exists(entry) {

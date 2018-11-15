@@ -4,11 +4,13 @@ const fx = require('../../../test-helpers/fixtures');
 const {
   outsideTeamCity,
   insideTeamCity,
+  teamCityArtifactVersion,
 } = require('../../../test-helpers/env-variables');
 const {
   takePort,
   takePortFromAnotherProcess,
 } = require('../../../test-helpers/http-helpers');
+const { staticsDomain } = require('yoshi-helpers');
 
 describe('Aggregator: Test', () => {
   describe('CDN Port', () => {
@@ -214,6 +216,57 @@ describe('Aggregator: Test', () => {
       expect(res.code).to.equal(0);
       expect(res.stdout).to.not.contains('protractor');
     });
+
+    it('should support dynamic imports when running e2e tests in a CI build', () => {
+      const project = test.setup({
+        'package.json': fx.packageJson(
+          {},
+          {},
+          {
+            babel: {
+              presets: [require.resolve('babel-preset-yoshi')],
+            },
+          },
+        ),
+        'pom.xml': fx.pom(),
+        'protractor.conf.js': fx.protractorConf({ cdnPort: 3200 }),
+        'src/client.js': `
+            document.body.innerHTML = "Before";
+            (async function () {
+              await import("./dynamic");
+            })();
+          `,
+        'src/dynamic.js': `
+            document.body.innerHTML = "<h1>Dynamic</h1>";
+          `,
+        'test/e2e/some.e2e.js': `
+            it('should succeed', async () => {
+              browser.ignoreSynchronization = true;
+              browser.get("http://localhost:1337");
+              const until = protractor.ExpectedConditions;
+              browser.wait(until.presenceOf(\$('h1')), 8000, 'Element taking too long to appear in the DOM');
+              expect(element(by.css("body")).getText()).toEqual("Dynamic");
+            });
+          `,
+      });
+
+      const buildResponse = project.execute('build', [], {
+        ...insideTeamCity,
+        ...teamCityArtifactVersion,
+      });
+
+      expect(buildResponse.code).to.equal(0);
+      expect(test.content('./dist/statics/app.bundle.min.js')).to.contain(
+        staticsDomain,
+      );
+
+      const testResponse = project.execute('test', ['--protractor'], {
+        ...insideTeamCity,
+        ...teamCityArtifactVersion,
+      });
+
+      expect(testResponse.code).to.equal(0);
+    }).timeout(30000);
   });
 
   describe('--jest', () => {
@@ -456,6 +509,84 @@ describe('Aggregator: Test', () => {
 
         expect(res.code).to.equal(0);
       });
+
+      it('should support dynamic imports when running e2e tests in a CI build', () => {
+        const cdnPort = 3200;
+        const serverPort = 3100;
+
+        const test = tp.create();
+        const project = test.setup({
+          'package.json': fx.packageJson(
+            {
+              servers: {
+                cdn: {
+                  port: cdnPort,
+                },
+              },
+            },
+            {},
+            {
+              babel: {
+                presets: [require.resolve('babel-preset-yoshi')],
+              },
+              jest: {
+                preset: 'jest-yoshi-preset',
+              },
+            },
+          ),
+          'pom.xml': fx.pom(),
+          'src/client.js': `
+            document.body.innerHTML = "Before";
+            (async function () {
+              await import("./dynamic");
+            })();
+          `,
+          'src/dynamic.js': `
+            document.body.innerHTML = "<h1>Dynamic</h1>";
+          `,
+          'index.js': `
+            const http = require('http');
+
+            const server = http.createServer((req, res) => {
+              const response = "<html><body><script src=http://localhost:${cdnPort}/app.bundle.js></script></body></html>";
+              res.end(response);
+            });
+            server.listen(process.env.PORT);
+          `,
+          'jest-yoshi.config.js': `
+            module.exports = {
+              server: {
+                command: 'node index.js',
+                port: ${serverPort},
+              },
+            };
+          `,
+          'test/e2e/some.e2e.spec.js': `
+              it('should succeed', async () => {
+                await page.goto('http://localhost:${serverPort}');
+                await page.waitForSelector('h1');
+                expect(await page.$eval('h1', e => e.innerText)).toEqual('Dynamic');
+              });
+            `,
+        });
+
+        const buildResponse = project.execute('build', [], {
+          ...insideTeamCity,
+          ...teamCityArtifactVersion,
+        });
+
+        expect(buildResponse.code).to.equal(0);
+        expect(test.content('./dist/statics/app.bundle.min.js')).to.contain(
+          staticsDomain,
+        );
+
+        const testResponse = project.execute('test', ['--jest'], {
+          ...insideTeamCity,
+          ...teamCityArtifactVersion,
+        });
+
+        expect(testResponse.code).to.equal(0);
+      }).timeout(40000);
     });
   });
 

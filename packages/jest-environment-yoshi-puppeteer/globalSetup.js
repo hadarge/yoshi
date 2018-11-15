@@ -13,7 +13,8 @@ const waitPort = require('wait-port');
 const { servers } = require('yoshi-config');
 const { WS_ENDPOINT_PATH } = require('./constants');
 const { getProcessForPort, shouldRunE2Es } = require('./utils');
-const { setupRequireHooks } = require('yoshi-helpers');
+const { setupRequireHooks, shouldDeployToCDN } = require('yoshi-helpers');
+const cdnProxy = require('./cdnProxy');
 
 // the user's config is loaded outside of a jest runtime and should be transpiled
 // with babel/typescript, this may be run separately for every worker
@@ -36,9 +37,25 @@ module.exports = async () => {
     // start with a few new lines
     console.log('\n\n');
 
+    const forwardProxyPort = process.env.FORWARD_PROXY_PORT || 3333;
+
+    if (shouldDeployToCDN()) {
+      await cdnProxy.start(forwardProxyPort);
+    }
+
     global.BROWSER = await puppeteer.launch({
       // defaults
-      args: ['--no-sandbox'],
+      args: [
+        '--no-sandbox',
+        ...(shouldDeployToCDN()
+          ? [
+              '--ignore-certificate-errors',
+              `--proxy-server=127.0.0.1:${forwardProxyPort}`,
+              '--disable-extensions',
+              '--disable-plugins',
+            ]
+          : []),
+      ],
 
       // user defined options
       ...jestYoshiConfig.puppeteer,

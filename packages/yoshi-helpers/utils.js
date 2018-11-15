@@ -7,6 +7,9 @@ const childProcess = require('child_process');
 const detect = require('detect-port');
 const project = require('yoshi-config');
 const queries = require('./queries');
+const { POM_FILE } = require('yoshi-config/paths');
+const xmldoc = require('xmldoc');
+const { staticsDomain } = require('./constants');
 
 module.exports.copyFile = (source, target) =>
   new Promise((resolve, reject) => {
@@ -166,3 +169,17 @@ function concatCustomizer(objValue, srcValue) {
 }
 
 module.exports.mergeByConcat = require('lodash/fp').mergeWith(concatCustomizer);
+
+/**
+ * Gets the CDN base path for the project at the current working dir
+ */
+module.exports.getProjectCDNBasePath = () => {
+  const artifactName = new xmldoc.XmlDocument(
+    fs.readFileSync(POM_FILE),
+  ).valueWithPath('artifactId');
+
+  return `${staticsDomain}/${artifactName}/${process.env.ARTIFACT_VERSION.replace(
+    '-SNAPSHOT',
+    '',
+  )}/`;
+};

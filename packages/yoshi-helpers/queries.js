@@ -1,10 +1,11 @@
 const path = require('path');
+const fs = require('fs');
 const glob = require('glob');
 const cosmiconfig = require('cosmiconfig');
 const project = require('yoshi-config');
 const globs = require('yoshi-config/globs');
 const { tryRequire } = require('./utils');
-const fs = require('fs');
+const { POM_FILE } = require('yoshi-config/paths');
 
 const readDir = patterns =>
   []
@@ -83,4 +84,12 @@ module.exports.hasProtractorConfigFile = () => {
 
 module.exports.hasBundleInStaticsDir = () => {
   return glob.sync(path.resolve(globs.statics, '*.bundle.js')).length > 0;
+};
+
+module.exports.shouldDeployToCDN = () => {
+  return (
+    module.exports.inTeamCity() &&
+    process.env.ARTIFACT_VERSION &&
+    fs.existsSync(POM_FILE)
+  );
 };

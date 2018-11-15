@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const { WS_ENDPOINT_PATH } = require('./constants');
 const { shouldRunE2Es } = require('./utils');
+const cdnProxy = require('./cdnProxy');
 
 module.exports = async () => {
   if (await shouldRunE2Es()) {
@@ -11,5 +12,7 @@ module.exports = async () => {
     if (global.SERVER) {
       global.SERVER.kill();
     }
+
+    await cdnProxy.stop();
   }
 };

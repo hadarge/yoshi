@@ -8,8 +8,12 @@ const {
   exists,
   getMochaReporter,
   setupRequireHooks,
+  getProjectCDNBasePath,
 } = require('yoshi-helpers');
+const startRewriteForwardProxy = require('yoshi-helpers/rewrite-forward-proxy');
 const globs = require('yoshi-config/globs');
+const project = require('yoshi-config');
+const { shouldDeployToCDN } = require('yoshi-helpers');
 
 setupRequireHooks();
 
@@ -22,12 +26,28 @@ const shouldUseProtractorBrowserLogs =
 const beforeLaunch = (userConf && userConf.beforeLaunch) || ld.noop;
 const onPrepare = (userConf && userConf.onPrepare) || ld.noop;
 
+const forwardProxyPort = process.env.FORWARD_PROXY_PORT || 3333;
+
 const merged = ld.mergeWith(
   {
     framework: 'jasmine',
     specs: [globs.protractor],
     exclude: [],
     directConnect: true,
+
+    ...(shouldDeployToCDN() && {
+      capabilities: {
+        browserName: 'chrome',
+        chromeOptions: {
+          args: [
+            'ignore-certificate-errors',
+            `proxy-server=127.0.0.1:${forwardProxyPort}`,
+            'disable-extensions',
+            'disable-plugins',
+          ],
+        },
+      },
+    }),
 
     beforeLaunch: () => {
       const rootDir = './src';
@@ -39,6 +59,14 @@ const merged = ld.mergeWith(
             includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
           }).css,
       });
+
+      if (shouldDeployToCDN()) {
+        startRewriteForwardProxy({
+          search: getProjectCDNBasePath(),
+          rewrite: project.servers.cdn.url,
+          port: forwardProxyPort,
+        });
+      }
 
       setupRequireHooks();
 
