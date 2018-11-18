@@ -1,6 +1,12 @@
 const CONTROLLER_TYPE = '';
 
-const createAppController = ({$w, wixCodeApi, platformApi, setProps, config}) => {
+const createAppController = ({
+  $w,
+  wixCodeApi,
+  platformApi,
+  setProps,
+  config,
+}) => {
   return {
     async pageReady() {},
   };

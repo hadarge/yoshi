@@ -1,3 +1,20 @@
 {
-    "extends": "./packages/eslint-config-yoshi-base/index.js"
+  "extends": "./packages/eslint-config-yoshi/index.js",
+  "overrides": [
+    {
+      "files": ["website/**/*"],
+      "rules": {
+        "import/no-unresolved": 0
+      }
+    },
+    {
+      "files": ["packages/create-yoshi-app/templates/**/*"],
+      "rules": {
+        "import/no-unresolved": 0
+      },
+      "globals": {
+        "app": false
+      }
+    }
+  ]
 }

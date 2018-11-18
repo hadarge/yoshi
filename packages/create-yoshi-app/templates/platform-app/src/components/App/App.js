@@ -14,9 +14,7 @@ class App extends React.Component {
     return (
       <div className={s.root}>
         <div className={s.header}>
-          <h2>
-            {t('app.title')}
-          </h2>
+          <h2>{t('app.title')}</h2>
         </div>
         <p className={s.intro}>{t('app.intro')}</p>
       </div>
