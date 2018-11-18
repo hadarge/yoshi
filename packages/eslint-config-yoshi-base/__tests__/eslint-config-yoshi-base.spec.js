@@ -25,7 +25,10 @@ const getRulesIds = results =>
 
 describe('eslint-config-yoshi-base', () => {
   describe('rules', () => {
-    const eslintCli = new CLIEngine(eslintConfigYoshiBase);
+    const eslintCli = new CLIEngine({
+      ...eslintConfigYoshiBase,
+      ignore: false,
+    });
     const rulesDir = path.resolve(__dirname, './rules');
     const rules = fs.readdirSync(rulesDir);
 
