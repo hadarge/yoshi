@@ -1,0 +1,72 @@
+{
+  "name": "kitchensink",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "author": {
+    "name": "me",
+    "email": "me@wix.com"
+  },
+  "scripts": {
+    "start": "yoshi start",
+    "precommit": "lint-staged",
+    "pretest": "yoshi build",
+    "test": "yoshi test --jest",
+    "posttest": "yoshi lint",
+    "release": "yoshi release"
+  },
+  "dependencies": {
+    "axios": "~0.16.0",
+    "express": "~4.15.0",
+    "jest-puppeteer": "^3.4.0",
+    "i18next": "^11.6.0",
+    "prop-types": "~15.6.0",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "react-i18next": "^7.11.0",
+    "regenerator-runtime": "^0.11.0",
+    "wix-axios-config": "latest",
+    "wix-bootstrap-greynode": "latest",
+    "wix-bootstrap-hadron": "latest",
+    "wix-bootstrap-ng": "latest",
+    "wix-bootstrap-renderer": "latest",
+    "wix-express-csrf": "latest",
+    "wix-express-require-https": "latest"
+  },
+  "devDependencies": {
+    "react-test-renderer": "~15.6.0",
+    "enzyme": "~2.9.0",
+    "husky": "~0.14.0",
+    "lint-staged": "^7.2.2",
+    "jest-yoshi-preset": "^3.5.0",
+    "puppeteer": "^1.1.0",
+    "wix-bootstrap-testkit": "latest",
+    "wix-config-emitter": "latest",
+    "yoshi": "^3.0.0",
+    "yoshi-style-dependencies": "^3.0.0"
+  },
+  "lint-staged": {
+    "*.{js,scss,less}": "yoshi lint"
+  },
+  "jest": {
+    "preset": "jest-yoshi-preset"
+  },
+  "yoshi": {
+    "experimentalServerBundle": true,
+    "externalUnprocessedModules": ["untranspiled-dependency"],
+    "entry": {
+      "app": "client.js",
+      "other": "other.js"
+    },
+    "externals": {
+      "react": "React",
+      "react-dom": "ReactDOM"
+    },
+    "hmr": "auto"
+  },
+  "babel": {
+    "presets": [
+      "yoshi"
+    ]
+  }
+}

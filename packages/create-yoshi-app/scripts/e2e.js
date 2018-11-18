@@ -1,4 +1,3 @@
-const path = require('path');
 const tempy = require('tempy');
 const execa = require('execa');
 const chalk = require('chalk');
@@ -6,7 +5,10 @@ const Answers = require('../src/Answers');
 const { createApp, verifyRegistry, projects } = require('../src/index');
 const prompts = require('prompts');
 const expect = require('expect');
-const { testRegistry } = require('../src/constants');
+const {
+  publishMonorepo,
+  authenticateToRegistry,
+} = require('../../../scripts/utils/publishMonorepo');
 
 // verbose logs and output
 const verbose = process.env.VERBOSE_TESTS;
@@ -47,10 +49,7 @@ const testTemplate = mockedAnswers => {
       verbose && console.log(chalk.cyan(tempDir));
 
       // This adds a `.npmrc` so dependencies are installed from local registry
-      await execa.shell(
-        `npx npm-auth-to-token -u user -p password -e user@example.com -r "${testRegistry}"`,
-        { cwd: tempDir },
-      );
+      authenticateToRegistry(tempDir);
 
       await createApp(tempDir);
     });
@@ -75,45 +74,6 @@ const testTemplate = mockedAnswers => {
       expect(stderr).not.toContain('Warning: Invalid configuration object');
     });
   });
-};
-
-const publishMonorepo = () => {
-  // Start in root directory even if run from another directory
-  process.chdir(path.join(__dirname, '../../..'));
-
-  const verdaccio = execa.shell('npx verdaccio --config verdaccio.yaml', {
-    stdio,
-  });
-
-  execa.shellSync('npx wait-port 4873 -o silent', {
-    stdio,
-  });
-
-  execa.shellSync(
-    `npx lerna exec 'npx npm-auth-to-token -u user -p password -e user@example.com -r "${testRegistry}"'`,
-    {
-      stdio,
-    },
-  );
-
-  execa.shellSync(
-    `npx lerna exec 'node ../../packages/create-yoshi-app/scripts/verifyPublishConfig.js'`,
-    {
-      stdio,
-    },
-  );
-
-  execa.shellSync(
-    `npx lerna publish --yes --force-publish=* --skip-git --cd-version=minor --exact --npm-tag=latest --registry="${testRegistry}"`,
-    {
-      stdio: 'inherit',
-    },
-  );
-
-  // Return a cleanup function
-  return () => {
-    execa.shellSync(`kill -9 ${verdaccio.pid}`);
-  };
 };
 
 describe('create-yoshi-app + yoshi e2e tests', () => {

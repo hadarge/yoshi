@@ -709,8 +709,15 @@ function createServerWebpackConfig({ isDebug = true } = {}) {
     },
 
     externals: [
+      // Treat node modules as external for a small (and fast) server
+      // bundle
       nodeExternals({
         whitelist: [reStyle, reAssets, /bootstrap-hot-loader/],
+      }),
+      // Here for local integration tests as Yoshi's `node_modules`
+      // are symlinked locally
+      nodeExternals({
+        modulesDir: path.resolve(__dirname, '../node_modules'),
       }),
     ],
 

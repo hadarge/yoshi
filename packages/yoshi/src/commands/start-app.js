@@ -184,6 +184,14 @@ module.exports = async () => {
 
   startServerProcess();
 
+  ['SIGINT', 'SIGTERM'].forEach(sig => {
+    process.on(sig, () => {
+      serverProcess.kill();
+      devServer.close();
+      process.exit();
+    });
+  });
+
   await waitForServerToStart({ server: cliArgs.server });
 
   // Once it started, open up the browser

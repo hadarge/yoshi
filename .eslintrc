@@ -2,6 +2,12 @@
   "extends": "./packages/eslint-config-yoshi/index.js",
   "overrides": [
     {
+      "files": ["test/kitchensink/**/*"],
+      "rules": {
+        "import/no-unresolved": 0
+      }
+    },
+    {
       "files": ["website/**/*"],
       "rules": {
         "import/no-unresolved": 0
