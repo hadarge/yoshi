@@ -474,8 +474,8 @@ function createCommonWebpackConfig({
       inTeamCity || withLocalSourceMaps
         ? 'source-map'
         : !isProduction
-          ? 'cheap-module-eval-source-map'
-          : false,
+        ? 'cheap-module-eval-source-map'
+        : false,
   };
 
   return config;

@@ -13,10 +13,8 @@ module.exports.renderTemplate = (filename, data) => {
 
 module.exports.readFile = filename =>
   new Promise((resolve, reject) => {
-    fs.readFile(
-      filename,
-      'utf8',
-      (err, result) => (err ? reject(err) : resolve(result)),
+    fs.readFile(filename, 'utf8', (err, result) =>
+      err ? reject(err) : resolve(result),
     );
   });
 

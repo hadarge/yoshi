@@ -1,6 +1,6 @@
 fixtures
 node_modules
 dist
-packages/eslint-config-yoshi-base/test/rules
+packages/eslint-config-yoshi-base/__tests__/rules
 packages/create-yoshi-app/templates
 

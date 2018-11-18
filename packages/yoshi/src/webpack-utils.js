@@ -192,9 +192,8 @@ async function waitForServerToStart({ server }) {
 
 function waitForCompilation(compiler) {
   return new Promise((resolve, reject) => {
-    compiler.hooks.done.tap(
-      'promise',
-      stats => (stats.hasErrors() ? reject(stats) : resolve(stats)),
+    compiler.hooks.done.tap('promise', stats =>
+      stats.hasErrors() ? reject(stats) : resolve(stats),
     );
   });
 }

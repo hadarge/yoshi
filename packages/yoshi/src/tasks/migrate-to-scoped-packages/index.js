@@ -25,11 +25,10 @@ module.exports = () => {
     .then(payload => updateDependencies(payload, 'devDependencies'))
     .then(payload => updateDependencies(payload, 'peerDependencies'))
     .then(payload => updateDependencies(payload, 'optionalDependencies'))
-    .then(
-      payload =>
-        isEmpty(payload.changes)
-          ? Promise.reject('No changes detected')
-          : payload,
+    .then(payload =>
+      isEmpty(payload.changes)
+        ? Promise.reject('No changes detected')
+        : payload,
     )
     .then(payload => {
       writeFile('package.json', JSON.stringify(payload.pkg, null, 2));

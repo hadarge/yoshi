@@ -89,10 +89,8 @@ const start = ({ middlewares, host, ssl, port, statics }) => {
 
   return new Promise((resolve, reject) => {
     const serverFactory = ssl ? httpsServer(app) : app;
-    const server = serverFactory.listen(
-      port,
-      host,
-      err => (err ? reject(err) : resolve(server)),
+    const server = serverFactory.listen(port, host, err =>
+      err ? reject(err) : resolve(server),
     );
   });
 };

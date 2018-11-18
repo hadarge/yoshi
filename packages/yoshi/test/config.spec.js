@@ -133,9 +133,7 @@ describe('Lookup and read configuration', () => {
 });
 
 function checkStderr(test, str) {
-  return retryPromise(
-    { backoff: 100, max: 20 },
-    () =>
-      test.stderr.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
+  return retryPromise({ backoff: 100, max: 20 }, () =>
+    test.stderr.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
   );
 }

@@ -19,9 +19,8 @@ const stdio = verbose ? 'inherit' : 'pipe';
 
 verifyRegistry();
 
-const filteredProjects = projects.filter(
-  projectType =>
-    !focusProjectPattern ? true : projectType.match(focusProjectPattern),
+const filteredProjects = projects.filter(projectType =>
+  !focusProjectPattern ? true : projectType.match(focusProjectPattern),
 );
 
 focusProjectPattern &&
