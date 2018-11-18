@@ -21,7 +21,7 @@ const controllerByType = {
  * @returns Controller[] | Promise<Controller>[]
  */
 function createControllers(controllerConfigs) {
-  return controllerConfigs.map(controllerByType[config.type]);
+  return controllerConfigs.map(config => controllerByType[config.type]);
 }
 
 export default {
