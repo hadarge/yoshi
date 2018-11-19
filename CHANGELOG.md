@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.20.2 (2018-11-19)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - Fix version of `uglifyjs-webpack-plugin` ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.20.1 (2018-11-19)
 
 #### :bug: Bug Fix
