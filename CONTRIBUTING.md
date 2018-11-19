@@ -31,7 +31,7 @@ That's it, you're good to go.
 1.  Make sure the feature is tested.
 2.  Document it in [README.md](https://github.com/wix/yoshi/blob/master/README.md)
 
-## Running Tests Locally
+## Running test:integration Locally
 
 Yoshi's test suite, in its current state, takes a long time to complete and (unfortunately) contains flaky tests. Therefore, we advise limiting the scope of the test execution in your local environment to the tests that are most affected by your changes. Limit the scope using [mocha's `only` function](https://mochajs.org/#exclusive-tests).
 
@@ -69,7 +69,7 @@ VERBOSE_TESTS=true npm test
 
 This is the same as adding the `.verbose()` method to each and every test.
 
-## Running E2E Tests
+## Running test:templates
 
 The E2E suite will create a corresponding E2E test for each template from `projects/create-yoshi-app/templates` directory. It will generate the project in a temporary directory, it will then run `npm install` & `npm test` to verify that it's not failing.
 
@@ -78,16 +78,18 @@ The E2E suite will create a corresponding E2E test for each template from `proje
 `-v`/`--verbose` output verbose logs, good for debugging
 
 ```bash
-./scripts/runE2E.js --verbose
+node ./scripts/runE2E.js --verbose
 ```
 
-- Focus specific templates using regex:
+- Focus specific templates using command lines arguments:
 
-Example: will match `client` & `client-typescript` projects
+Example: will match `client` & `fullstack-typescript` projects
 
 ```bash
-./scripts/runE2E.js client
+node ./scripts/runE2E.js client fullstack-typescript
 ```
+
+> Note: if no arguments supplied, the templates suite will run on all possible templates
 
 ## Create Yoshi App
 

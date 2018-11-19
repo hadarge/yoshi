@@ -12,8 +12,9 @@ const {
 
 // verbose logs and output
 const verbose = process.env.VERBOSE_TESTS;
+
 // A regex pattern to run a focus test on the matched projects types
-const focusProjectPattern = process.env.FOCUS_PATTERN;
+const focusProjects = process.env.FOCUS_PROJECTS;
 
 verbose && console.log(`using ${chalk.yellow('VERBOSE')} mode`);
 
@@ -22,15 +23,22 @@ const stdio = verbose ? 'inherit' : 'pipe';
 verifyRegistry();
 
 const filteredProjects = projects.filter(projectType =>
-  !focusProjectPattern ? true : projectType.match(focusProjectPattern),
+  !focusProjects ? true : focusProjects.split(',').includes(projectType),
 );
 
-focusProjectPattern &&
+if (filteredProjects.length === 0) {
   console.log(
-    `using the pattern ${chalk.magenta(
-      focusProjectPattern,
-    )} to filter projects`,
+    chalk.red('Could not find any project for the specified projects:'),
   );
+  console.log();
+  console.log(chalk.cyan(focusProjects));
+  console.log();
+  console.log('try to use one for the following:');
+  console.log();
+  console.log(projects.map(p => `> ${chalk.magenta(p)}`).join('\n'));
+  console.log();
+  process.exit(1);
+}
 
 console.log('Running e2e tests for the following projects:\n');
 filteredProjects.forEach(type => console.log(`> ${chalk.cyan(type)}`));

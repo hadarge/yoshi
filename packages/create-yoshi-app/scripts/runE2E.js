@@ -7,17 +7,18 @@ const testFile = require.resolve('./e2e.js');
 
 // pass -v or --verbose to be in verbose mode
 const verbose = argv.verbose || argv.v;
-// pass a second argument of a regex pattern
-// to run a focus test on the matched projects types
-const focusProjectPattern = argv._[0];
+
+// Specify the specific projects that you want to run
+// as command line arguments
+const focusProjects = argv._.join(',');
 
 // pre-configured for the test file
 if (verbose) {
   process.env.VERBOSE_TESTS = verbose;
 }
 
-if (focusProjectPattern) {
-  process.env.FOCUS_PATTERN = focusProjectPattern;
+if (focusProjects) {
+  process.env.FOCUS_PROJECTS = focusProjects;
 }
 
 // Instantiate a Mocha instance.

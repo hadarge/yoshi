@@ -15,7 +15,8 @@
   },
   "scripts": {
     "test": "jest",
-    "e2e": "DISABLE_SENTRY=1 node scripts/runE2E.js",
+    "main-templates": "./scripts/runMainTemplates.sh",
+    "other-templates": "./scripts/runOtherTemplates.sh",
     "dev": "node scripts/dev.js"
   },
   "jest": {
