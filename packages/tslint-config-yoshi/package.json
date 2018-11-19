@@ -1,6 +1,6 @@
 {
   "name": "tslint-config-yoshi",
-  "version": "3.19.0",
+  "version": "3.20.0",
   "description": "tslint configuration for react projects using yoshi",
   "main": "index.js",
   "keywords": [
@@ -11,7 +11,7 @@
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
   "dependencies": {
-    "tslint-config-yoshi-base": "3.19.0",
+    "tslint-config-yoshi-base": "3.20.0",
     "tslint-react": "^3.6.0"
   },
   "devDependencies": {
