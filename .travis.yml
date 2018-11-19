@@ -11,6 +11,8 @@ install: true
 branches:
   only:
     - master
+    - version_2.x
+    - version_4.x
 cache:
   yarn: true
 jobs:
