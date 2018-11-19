@@ -16,10 +16,14 @@ jobs:
       - cd website && yarn install && GIT_USER="${GH_NAME}" yarn run publish-gh-pages
       name: "website"
     - script: npm run test:integration
+      before_script: npm install
       name: "test:integration"
     - script: npm run test:unit
+      before_script: npm install
       name: "test:unit"
     - script: npm run test:app-flow
+      before_script: npm install
       name: "test:app-flow"
     - script: npm run lint
+      before_script: npm install
       name: "lint"
