@@ -127,6 +127,7 @@ It will create a project in a temp directory. You'll have a watcher that listens
 ## Release a New Version
 
 Start by heading to the [CHANGELOG.md](https://github.com/wix/yoshi/blob/master/CHANGELOG.md) and insert the version's changes.
+For changes to appear in the changelog, the PRs should be tagged [with tags](https://github.com/wix/yoshi/blob/89b2b566bbfe961a14123f8de92cd4af9a4a952a/lerna.json#L10-L15) like `PR: New Feature :rocket:`.
 
 To autogenerate a changelog using last tagged PR's run:
 
