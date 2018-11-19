@@ -496,6 +496,9 @@ describe('Aggregator: Test', () => {
                   command: 'node index.js',
                   port: ${serverPort},
                 },
+                puppeteer: {
+                  args: ['--no-sandbox', '--disable-setuid-sandbox']
+                }
               };
             `,
             'test/e2e/some.e2e.spec.js': `
@@ -559,6 +562,9 @@ describe('Aggregator: Test', () => {
                 command: 'node index.js',
                 port: ${serverPort},
               },
+              puppeteer: {
+                args: ['--no-sandbox', '--disable-setuid-sandbox']
+              }
             };
           `,
           'test/e2e/some.e2e.spec.js': `
