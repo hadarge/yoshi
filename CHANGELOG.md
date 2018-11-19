@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.20.1 (2018-11-19)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#810](https://github.com/wix/yoshi/pull/810) Add `uglifyjs-webpack-plugin` as a dependency ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.20.0 (2018-11-19)
 
 #### :rocket: New Feature
