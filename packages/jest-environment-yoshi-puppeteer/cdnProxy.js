@@ -13,5 +13,5 @@ module.exports.start = async function start(port) {
 };
 
 module.exports.stop = async function stop() {
-  closeProxy && closeProxy();
+  closeProxy && (await closeProxy());
 };
