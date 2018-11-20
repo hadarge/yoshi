@@ -5,7 +5,7 @@
 #### :bug: Bug Fix
 
 - `yoshi`
-  - Fix version of `uglifyjs-webpack-plugin` ([@netanelgilad](https://github.com/netanelgilad))
+  - [838e013](https://github.com/wix/yoshi/commit/838e0136e203ac903512f89173d521486b58d0fe) Fix version of `uglifyjs-webpack-plugin` ([@netanelgilad](https://github.com/netanelgilad))
 
 ## 3.20.1 (2018-11-19)
 
