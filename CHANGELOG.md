@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.20.3 (2018-11-20)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#831](https://github.com/wix/yoshi/pull/831) Remove forward proxy from protractor ([@ranyitz](https://github.com/ranyitz))
+
+#### :memo: Documentation
+
+- [#812](https://github.com/wix/yoshi/pull/812) Mention tags used for changelog in contributing guide ([@yurynix](https://github.com/yurynix))
+
+#### :house: Internal
+
+- `yoshi`
+  - [#827](https://github.com/wix/yoshi/pull/827) Fix puppeteer on travis ci ([@yanivefraim](https://github.com/yanivefraim))
+- Other
+  - [#825](https://github.com/wix/yoshi/pull/825) Add version_N.x branches to travis-ci ([@yanivefraim](https://github.com/yanivefraim))
+  - [#824](https://github.com/wix/yoshi/pull/824) Fix travis to work with puppeteer ([@yanivefraim](https://github.com/yanivefraim))
+- `create-yoshi-app`
+  - [#814](https://github.com/wix/yoshi/pull/814) Mock `verifyRegistry` for unit tests ([@yanivefraim](https://github.com/yanivefraim))
+
 ## 3.20.2 (2018-11-19)
 
 #### :bug: Bug Fix
