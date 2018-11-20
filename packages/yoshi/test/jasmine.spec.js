@@ -19,7 +19,10 @@ describe('test --jasmine', () => {
     test = tp.create(outsideTeamCity);
   });
 
-  afterEach(() => {
+  afterEach(function() {
+    if (this.currentTest.state === 'failed') {
+      test.logOutput();
+    }
     const pid = child && child.pid;
     child = null;
     test.teardown();

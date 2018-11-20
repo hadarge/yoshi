@@ -19,7 +19,10 @@ describe('Aggregator: Start', () => {
       child = null;
     });
 
-    afterEach(() => {
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
       test.teardown();
       return killSpawnProcessAndHisChildren(child);
     });

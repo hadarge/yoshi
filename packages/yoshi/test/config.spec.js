@@ -9,7 +9,13 @@ describe('Lookup and read configuration', () => {
   let test;
 
   beforeEach(() => (test = tp.create()));
-  afterEach(() => test.teardown());
+
+  afterEach(function() {
+    if (this.currentTest.state === 'failed') {
+      test.logOutput();
+    }
+    test.teardown();
+  });
 
   it('should consider that package.json has higher priority than yoshi.config.js', () => {
     const res = test

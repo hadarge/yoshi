@@ -86,6 +86,17 @@ class Test {
     return this;
   }
 
+  logOutput() {
+    if (this.stdout) {
+      console.log('stdout:');
+      console.log(this.stdout);
+    }
+    if (this.stderr) {
+      console.log('stderr:');
+      console.log(this.stderr);
+    }
+  }
+
   execute(command, cliArgs = [], environment = {}, execOptions = {}) {
     const args = [command].concat(cliArgs).join(' ');
     const env = Object.assign({}, this.env, environment);
@@ -98,9 +109,12 @@ class Test {
     if (this.hasTmp()) {
       const result = sh.exec(`node '${this.script}' ${args}`, options);
 
+      this.stdout = stripAnsi(result.stdout);
+      this.stderr = stripAnsi(result.stderr);
+
       return Object.assign(result, {
-        stdout: stripAnsi(result.stdout),
-        stderr: stripAnsi(result.stderr),
+        stdout: this.stdout,
+        stderr: this.stderr,
       });
     }
   }

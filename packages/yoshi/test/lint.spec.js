@@ -5,7 +5,13 @@ const { insideTeamCity } = require('../../../test-helpers/env-variables');
 
 describe('Aggregator: Lint', () => {
   const test = tp.create();
-  afterEach(() => test.teardown());
+
+  afterEach(function() {
+    if (this.currentTest.state === 'failed') {
+      test.logOutput();
+    }
+    test.teardown();
+  });
 
   describe('tslint', () => {
     it('should run tslint on files according to tsconfig.json', () => {

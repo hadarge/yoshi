@@ -15,7 +15,12 @@ describe('Aggregator: e2e', () => {
     test = tp.create();
   });
 
-  afterEach(() => test.teardown());
+  afterEach(function() {
+    if (this.currentTest.state === 'failed') {
+      test.logOutput();
+    }
+    test.teardown();
+  });
 
   describe('should run protractor with a cdn server', function() {
     this.timeout(60000);

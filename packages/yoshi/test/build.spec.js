@@ -120,6 +120,12 @@ describe('Aggregator: Build', () => {
         .execute('build', []);
     });
 
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => {
       test.teardown();
     });
@@ -438,6 +444,12 @@ describe('Aggregator: Build', () => {
         .execute('build');
     });
 
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => {
       test.teardown();
     });
@@ -477,6 +489,12 @@ describe('Aggregator: Build', () => {
           }),
         })
         .execute('build');
+    });
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
     });
 
     after(() => {
@@ -537,6 +555,13 @@ describe('Aggregator: Build', () => {
         })
         .execute('build');
     });
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => {
       test.teardown();
     });
@@ -634,6 +659,13 @@ describe('Aggregator: Build', () => {
         })
         .execute('build', [], insideTeamCity);
     });
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => {
       test.teardown();
     });
@@ -743,6 +775,12 @@ describe('Aggregator: Build', () => {
         .execute('build', [], { NODE_ENV: 'PRODUCTION' });
     });
 
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => {
       test.teardown();
     });
@@ -801,6 +839,13 @@ describe('Aggregator: Build', () => {
         })
         .execute('build', [], { NODE_ENV: 'PRODUCTION' });
     });
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => {
       test.teardown();
     });
@@ -898,7 +943,11 @@ describe('Aggregator: Build', () => {
     beforeEach(() => {
       test = tp.create();
     });
-    afterEach(() => {
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
       test.teardown();
     });
 

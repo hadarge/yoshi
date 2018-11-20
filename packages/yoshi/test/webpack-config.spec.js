@@ -28,7 +28,12 @@ describe('Webpack basic configs', () => {
     });
   });
 
-  afterEach(() => test.teardown());
+  afterEach(function() {
+    if (this.currentTest.state === 'failed') {
+      test.logOutput();
+    }
+    test.teardown();
+  });
 
   describe('Common configurations', () => {
     describe('Basic flow', () => {

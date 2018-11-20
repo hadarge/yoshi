@@ -127,6 +127,13 @@ describe('Loaders', () => {
         })
         .execute('build', [], getMockedCI({ ci: false }));
     });
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => test.teardown());
 
     it('should build w/o errors', () => {
@@ -379,6 +386,13 @@ describe('Loaders', () => {
             process.env.GEM_PATH + path.delimiter + test.tmp + '/.bundle',
         });
     });
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => test.teardown());
 
     it('should build w/o errors', () => {
@@ -458,7 +472,12 @@ describe('Loaders', () => {
   describe('loaders exceptions', () => {
     let test;
     beforeEach(() => (test = tp.create()));
-    afterEach(() => test.teardown());
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+      test.teardown();
+    });
 
     it('should fail with error code 1 if typescript code contains errors', () => {
       const resp = test
@@ -510,7 +529,12 @@ describe('Loaders', () => {
     });
 
     describe.skip('Stylable', () => {
-      afterEach(() => test.teardown());
+      afterEach(function() {
+        if (this.currentTest.state === 'failed') {
+          test.logOutput();
+        }
+        test.teardown();
+      });
 
       describe('client', () => {
         beforeEach(() => setupAndBuild());

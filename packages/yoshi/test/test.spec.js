@@ -19,7 +19,12 @@ describe('Aggregator: Test', () => {
     let child;
 
     beforeEach(() => (test = tp.create()));
-    afterEach(() => test.teardown());
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+      test.teardown();
+    });
 
     afterEach(done => {
       if (server) {
@@ -93,7 +98,12 @@ describe('Aggregator: Test', () => {
   describe('defaults', () => {
     let test;
     beforeEach(() => (test = tp.create()));
-    afterEach(() => test.teardown());
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+      test.teardown();
+    });
 
     it('should pass with exit code 0 with mocha as default', function() {
       this.timeout(40000);
@@ -137,7 +147,12 @@ describe('Aggregator: Test', () => {
   describe('--protractor', () => {
     let test;
     beforeEach(() => (test = tp.create()));
-    afterEach(() => test.teardown());
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+      test.teardown();
+    });
     it(`should run protractor with express that serves static files from client dep
         if protractor.conf is present, according to dist/test/**/*.e2e.js glob`, () => {
       const res = test
@@ -345,6 +360,12 @@ describe('Aggregator: Test', () => {
       before(() => {
         test = tp.create();
         res = test.setup(testSetup).execute('test', ['--jest'], insideTeamCity);
+      });
+
+      afterEach(function() {
+        if (this.currentTest.state === 'failed') {
+          test.logOutput();
+        }
       });
 
       after(() => test.teardown());
@@ -676,6 +697,13 @@ describe('Aggregator: Test', () => {
         })
         .execute('test', ['--mocha']);
     });
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => test.teardown());
 
     it('should pass with exit code 0', () => {
@@ -731,7 +759,12 @@ describe('Aggregator: Test', () => {
     describe('with custom build', () => {
       let customTest;
       beforeEach(() => (customTest = tp.create()));
-      afterEach(() => customTest.teardown());
+      afterEach(function() {
+        if (this.currentTest.state === 'failed') {
+          test.logOutput();
+        }
+        test.teardown();
+      });
 
       it('should fail with exit code 1', function() {
         this.timeout(60000);
@@ -1012,6 +1045,13 @@ describe('Aggregator: Test', () => {
         })
         .execute('test', ['--karma'], outsideTeamCity);
     });
+
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+    });
+
     after(() => test.teardown());
 
     describe('with jasmine configuration', () => {
@@ -1060,7 +1100,12 @@ describe('Aggregator: Test', () => {
     describe('with custom build', () => {
       let customTest;
       beforeEach(() => (customTest = tp.create()));
-      afterEach(() => customTest.teardown());
+      afterEach(function() {
+        if (this.currentTest.state === 'failed') {
+          test.logOutput();
+        }
+        test.teardown();
+      });
 
       it('should consider custom specs.browser globs if configured', () => {
         const res = test
@@ -1209,7 +1254,12 @@ describe('Aggregator: Test', () => {
     let test;
 
     beforeEach(() => (test = tp.create()));
-    afterEach(() => test.teardown());
+    afterEach(function() {
+      if (this.currentTest.state === 'failed') {
+        test.logOutput();
+      }
+      test.teardown();
+    });
 
     it('should show a warning when there are e2e tests but no bundle was located in dist/statics', () => {
       const res = test
