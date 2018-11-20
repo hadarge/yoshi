@@ -12,7 +12,7 @@ module.exports = async function startRewriteForwardProxy({
   rewrite,
   port,
 }) {
-  const regularProxy = createProxyServer({ ignorePath: true });
+  const regularProxy = createProxyServer({ ignorePath: true, secure: false });
 
   const options = {
     key: fs.readFileSync(path.join(__dirname, './server.key')),
@@ -27,7 +27,12 @@ module.exports = async function startRewriteForwardProxy({
         target = target.replace(search, rewrite);
       }
 
-      regularProxy.web(req, res, { target });
+      regularProxy.web(req, res, { target }, err => {
+        if (err) {
+          res.statusCode = 500;
+          res.end();
+        }
+      });
     };
   }
 

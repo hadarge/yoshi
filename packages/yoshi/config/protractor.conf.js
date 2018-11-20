@@ -35,22 +35,19 @@ const merged = ld.mergeWith(
     exclude: [],
     directConnect: true,
 
-    // Commented due to a bug when protractor does not except self signed certificate
-    // Need to uncomment in order to enable dynamic imports (due to modified public path on bundle)
-
-    // ...(shouldDeployToCDN() && {
-    //   capabilities: {
-    //     browserName: 'chrome',
-    //     chromeOptions: {
-    //       args: [
-    //         'ignore-certificate-errors',
-    //         `proxy-server=127.0.0.1:${forwardProxyPort}`,
-    //         'disable-extensions',
-    //         'disable-plugins',
-    //       ],
-    //     },
-    //   },
-    // }),
+    ...(shouldDeployToCDN() && {
+      capabilities: {
+        browserName: 'chrome',
+        chromeOptions: {
+          args: [
+            'ignore-certificate-errors',
+            `proxy-server=127.0.0.1:${forwardProxyPort}`,
+            'disable-extensions',
+            'disable-plugins',
+          ],
+        },
+      },
+    }),
 
     beforeLaunch: () => {
       const rootDir = './src';

@@ -114,15 +114,16 @@ const fx = {
       },
     };
   `,
-  protractorConf: ({ framework, cdnPort } = {}) => `
+  protractorConf: ({ framework, cdnPort, protocol } = {}) => `
     const http = require("http");
     exports.config = {
       specs: ["dist/test/**/*.e2e.js"],
       framework: "${framework || 'jasmine'}",
       onPrepare: () => {
         const server = http.createServer((req, res) => {
-          const response = "<html><body><script src=http://localhost:${cdnPort ||
-            6452}/app.bundle.js></script></body></html>";
+          const response = "<html><body><script src=${protocol ||
+            'http'}://localhost:${cdnPort ||
+    6452}/app.bundle.js></script></body></html>";
           res.end(response);
         });
         return server.listen(1337);

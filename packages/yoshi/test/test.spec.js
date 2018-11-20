@@ -235,7 +235,13 @@ describe('Aggregator: Test', () => {
     it('should support dynamic imports when running e2e tests in a CI build', () => {
       const project = test.setup({
         'package.json': fx.packageJson(
-          {},
+          {
+            servers: {
+              cdn: {
+                ssl: true,
+              },
+            },
+          },
           {},
           {
             babel: {
@@ -244,7 +250,10 @@ describe('Aggregator: Test', () => {
           },
         ),
         'pom.xml': fx.pom(),
-        'protractor.conf.js': fx.protractorConf({ cdnPort: 3200 }),
+        'protractor.conf.js': fx.protractorConf({
+          cdnPort: 3200,
+          protocol: 'https',
+        }),
         'src/client.js': `
             document.body.innerHTML = "Before";
             (async function () {
@@ -259,7 +268,7 @@ describe('Aggregator: Test', () => {
               browser.ignoreSynchronization = true;
               browser.get("http://localhost:1337");
               const until = protractor.ExpectedConditions;
-              browser.wait(until.presenceOf(\$('h1')), 8000, 'Element taking too long to appear in the DOM');
+              browser.wait(until.presenceOf(\$('h1')), 4000, 'Element taking too long to appear in the DOM');
               expect(element(by.css("body")).getText()).toEqual("Dynamic");
             });
           `,
