@@ -44,21 +44,26 @@ module.exports = async () => {
     }
 
     global.BROWSER = await puppeteer.launch({
+      // user defined options
+      ...jestYoshiConfig.puppeteer,
+
       // defaults
       args: [
         '--no-sandbox',
         ...(shouldDeployToCDN()
           ? [
+              '--no-sandbox',
+              '--disable-setuid-sandbox',
               '--ignore-certificate-errors',
               `--proxy-server=127.0.0.1:${forwardProxyPort}`,
               '--disable-extensions',
               '--disable-plugins',
             ]
           : []),
+        ...(jestYoshiConfig.puppeteer
+          ? jestYoshiConfig.puppeteer.args || []
+          : []),
       ],
-
-      // user defined options
-      ...jestYoshiConfig.puppeteer,
     });
 
     await fs.outputFile(WS_ENDPOINT_PATH, global.BROWSER.wsEndpoint());
