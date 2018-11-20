@@ -67,10 +67,5 @@
       "externals": "externals"
     },
     "hmr": "auto"
-  },
-  "babel": {
-    "presets": [
-      "yoshi"
-    ]
   }
 }

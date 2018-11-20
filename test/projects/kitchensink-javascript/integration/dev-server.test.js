@@ -7,7 +7,7 @@ describe('dev-server', () => {
     });
 
     expect(list).toEqual(
-      expect.arrayContaining(['components/', 'app.bundle.js', 'assets/']),
+      expect.arrayContaining(['app.bundle.js', 'media/', 'assets/']),
     );
   });
 

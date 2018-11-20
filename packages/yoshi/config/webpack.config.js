@@ -432,7 +432,7 @@ function createCommonWebpackConfig({
               test: reAssets,
               loader: 'url-loader',
               options: {
-                name: 'assets/[name].[ext]?[hash]',
+                name: 'media/[name].[ext]?[hash]',
                 limit: 10000,
               },
             },
