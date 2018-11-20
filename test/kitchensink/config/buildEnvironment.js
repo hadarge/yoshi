@@ -1,5 +1,5 @@
 const PuppeteerEnvironment = require('jest-environment-puppeteer');
-const { parastorageCdnUrl, localCdnUrl } = require('../constants');
+const { parastorageCdnUrl, localCdnUrl } = require('../../constants');
 
 module.exports = class BuildEnvironment extends PuppeteerEnvironment {
   async setup() {

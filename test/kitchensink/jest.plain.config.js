@@ -1,8 +1,8 @@
 module.exports = {
   preset: 'jest-puppeteer',
   testMatch: ['**/output.test.js'],
-  testEnvironment: require.resolve('./plainEnvironment'),
+  testEnvironment: require.resolve('./config/plainEnvironment'),
   transformIgnorePatterns: ['/node_modules/', '/test/'],
-  globalSetup: require.resolve('./plainGlobalSetup'),
-  globalTeardown: require.resolve('./plainGlobalTeardown'),
+  globalSetup: require.resolve('./config/plainGlobalSetup'),
+  globalTeardown: require.resolve('./config/plainGlobalTeardown'),
 };

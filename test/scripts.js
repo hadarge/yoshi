@@ -47,7 +47,6 @@ module.exports = class Scripts {
       cwd: this.testDirectory,
       // stdio: 'inherit',
       env: {
-        CI: 'false',
         FORCE_COLOR: '0',
         BROWSER: 'none',
         PORT: port,
@@ -70,7 +69,7 @@ module.exports = class Scripts {
   async build(env = {}) {
     return execaSafe('npx', ['yoshi', 'build'], {
       cwd: this.testDirectory,
-      env: { CI: 'false', FORCE_COLOR: '0', ...env },
+      env: { FORCE_COLOR: '0', ...env },
       // stdio: 'inherit',
     });
   }

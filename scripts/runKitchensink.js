@@ -10,6 +10,10 @@ const {
 
 const isCI = !!process.env.TEAMCITY_VERSION;
 
+const filterProject = process.env.FILTER_PROJECT;
+
+const filterConfig = process.env.FILTER_CONFIG;
+
 // Publish the entire monorepo and install everything from CI to get
 // the maximum reliability
 //
@@ -17,10 +21,16 @@ const isCI = !!process.env.TEAMCITY_VERSION;
 const cleanup = isCI ? publishMonorepo() : () => {};
 
 // Find all projects to run tests on
-const projects = globby.sync('test/*', {
+let projects = globby.sync('test/*', {
   onlyDirectories: true,
   absolute: true,
 });
+
+if (filterProject) {
+  projects = projects.filter(templateDirectory => {
+    return templateDirectory.includes(filterProject);
+  });
+}
 
 try {
   projects.forEach(templateDirectory => {
@@ -64,12 +74,17 @@ try {
     const options = {
       stdio: 'inherit',
       env: { ...process.env, TEST_DIRECTORY: testDirectory },
+      cwd: templateDirectory,
     };
 
     // Find all Jest configs
-    const configs = globby.sync(
-      path.join(templateDirectory, 'jest.*.config.js'),
-    );
+    let configs = globby.sync(path.join(templateDirectory, 'jest.*.config.js'));
+
+    if (filterConfig) {
+      configs = configs.filter(configPath => {
+        return configPath.includes(filterConfig);
+      });
+    }
 
     // Run them one by one
     try {
