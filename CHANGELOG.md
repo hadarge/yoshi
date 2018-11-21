@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.21.0 (2018-11-21)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#837](https://github.com/wix/yoshi/pull/837) Migrate templates to scoped packages ([@Schniz](https://github.com/Schniz))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#836](https://github.com/wix/yoshi/pull/836) Remove update-node-version task #645 ([@andriuss](https://github.com/andriuss))
+- `yoshi-helpers`, `yoshi`
+  - [#835](https://github.com/wix/yoshi/pull/835) Ignore ssl errors when proxying requests to the local cdn ([@netanelgilad](https://github.com/netanelgilad))
+- `jest-environment-yoshi-puppeteer`, `yoshi`
+  - [#834](https://github.com/wix/yoshi/pull/834) Merge user defined puppeteer args with default args ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :house: Internal
+
+- `create-yoshi-app`, `eslint-config-yoshi-base`, `tslint-config-yoshi-base`, `yoshi-helpers`, `yoshi`
+  - [#816](https://github.com/wix/yoshi/pull/816) Add no-extraneous-dependencies to eslintrc ([@netanelgilad](https://github.com/netanelgilad))
+- Other
+  - [#826](https://github.com/wix/yoshi/pull/826) Improve test:app-flow infra ([@ronami](https://github.com/ronami))
+  - [#838](https://github.com/wix/yoshi/pull/838) Install chrome on travis ([@ranyitz](https://github.com/ranyitz))
+- `jest-environment-yoshi-puppeteer`
+  - [#832](https://github.com/wix/yoshi/pull/832) fix `cdnProxy.stop` method - wait for `closeProxy` to be resolved ([@yanivefraim](https://github.com/yanivefraim))
+- `yoshi`
+  - [#801](https://github.com/wix/yoshi/pull/801) Log test execution output if the test failed ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.20.3 (2018-11-20)
 
 #### :bug: Bug Fix
