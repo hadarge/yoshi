@@ -44,8 +44,6 @@ const {
   addEntry,
 } = require('../webpack-utils');
 
-const updateNodeVersion = require('../tasks/update-node-version');
-
 function serverLogPrefixer() {
   return new stream.Transform({
     transform(chunk, encoding, callback) {
@@ -90,8 +88,6 @@ module.exports = async () => {
     // option is set to false
     watchPublicFolder();
   }
-
-  await updateNodeVersion();
 
   const clientConfig = createClientWebpackConfig({
     isDebug: true,

@@ -57,8 +57,6 @@ module.exports = runner.command(
     const wixCdn = tasks[require.resolve('../tasks/cdn')];
     const migrateScopePackages =
       tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
-    const wixUpdateNodeVersion =
-      tasks[require.resolve('../tasks/update-node-version')];
     const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
     const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
 
@@ -80,7 +78,6 @@ module.exports = runner.command(
 
     await Promise.all([
       clean({ pattern: `{dist,target}/*` }),
-      wixUpdateNodeVersion({}, { title: 'update-node-version', log: false }),
       migrateScopePackages(
         {},
         { title: 'scope-packages-migration', log: false },

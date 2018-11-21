@@ -30,7 +30,6 @@ const {
   clientFilesPath,
 } = require('yoshi-config');
 
-const updateNodeVersion = require('../tasks/update-node-version');
 const wixDepCheck = require('../tasks/dep-check');
 
 const inTeamCity = checkInTeamCity();
@@ -54,7 +53,7 @@ module.exports = async () => {
     await fs.copy(PUBLIC_DIR, ASSETS_DIR);
   }
 
-  await Promise.all([updateNodeVersion(), wixDepCheck(), copyTemplates()]);
+  await Promise.all([wixDepCheck(), copyTemplates()]);
 
   // Run CI related updates
   if (inTeamCity) {

@@ -592,12 +592,6 @@ describe('Aggregator: Build', () => {
       expect(test.content('dist/statics/app.bundle.js')).to.contain(').map');
     });
 
-    describe('yoshi-update-node-version', () => {
-      it('should use yoshi-update-node-version', () => {
-        expect(test.contains('.nvmrc')).to.be.true;
-      });
-    });
-
     it('should generate css attributes prefixes', () => {
       expect(test.content(`dist/statics/app.bundle.js`)).to.match(
         /display: -webkit-box;/g,

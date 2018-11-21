@@ -718,22 +718,6 @@ describe('Aggregator: Start', () => {
       });
     });
 
-    it('should use yoshi-update-node-version', () => {
-      child = test
-        .setup({
-          'src/test.spec.js': '',
-          'src/client.js': '',
-          'entry.js': '',
-          'package.json': fx.packageJson(),
-          'pom.xml': fx.pom(),
-        })
-        .spawn('start', [], outsideTeamCity);
-
-      return checkServerLogCreated().then(
-        () => expect(test.contains('.nvmrc')).to.be.true,
-      );
-    });
-
     it(`should use yoshi-clean before building`, () => {
       child = test
         .setup({
