@@ -3,6 +3,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const chokidar = require('chokidar');
 const chalk = require('chalk');
+const psTree = require('ps-tree');
 const childProcess = require('child_process');
 const detect = require('detect-port');
 const project = require('yoshi-config');
@@ -182,4 +183,25 @@ module.exports.getProjectCDNBasePath = () => {
     '-SNAPSHOT',
     '',
   )}/`;
+};
+
+module.exports.killSpawnProcessAndHisChildren = child => {
+  return new Promise(resolve => {
+    if (!child) {
+      return resolve();
+    }
+
+    const pid = child.pid;
+
+    psTree(pid, (err /*eslint handle-callback-err: 0*/, children) => {
+      [pid].concat(children.map(p => p.PID)).forEach(tpid => {
+        try {
+          process.kill(tpid, 'SIGKILL');
+        } catch (e) {}
+      });
+
+      child = null;
+      resolve();
+    });
+  });
 };

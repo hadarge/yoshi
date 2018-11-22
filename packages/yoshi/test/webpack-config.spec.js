@@ -1,9 +1,7 @@
 const { expect } = require('chai');
 const retryPromise = require('retry-promise').default;
 const fetch = require('node-fetch');
-const {
-  killSpawnProcessAndHisChildren,
-} = require('../../../test-helpers/process');
+const { killSpawnProcessAndHisChildren } = require('yoshi-helpers');
 const tp = require('../../../test-helpers/test-phases');
 const fx = require('../../../test-helpers/fixtures');
 const {

@@ -1,6 +1,5 @@
 const expect = require('chai').expect;
 const retryPromise = require('retry-promise').default;
-const psTree = require('ps-tree');
 const tp = require('../../../test-helpers/test-phases');
 const fx = require('../../../test-helpers/fixtures');
 const {
@@ -8,9 +7,7 @@ const {
   insideTeamCity,
   insideWatchMode,
 } = require('../../../test-helpers/env-variables');
-const {
-  killSpawnProcessAndHisChildren,
-} = require('../../../test-helpers/process');
+const { killSpawnProcessAndHisChildren } = require('yoshi-helpers');
 
 describe('test --jasmine', () => {
   let test, child;
@@ -186,7 +183,9 @@ function jasmineSetup() {
 }
 
 function checkStdoutContains(test, str) {
-  return retryPromise({ backoff: 100 }, () =>
-    test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
+  return retryPromise(
+    { backoff: 100 },
+    () =>
+      test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
   );
 }
