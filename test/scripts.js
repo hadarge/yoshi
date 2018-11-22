@@ -3,6 +3,9 @@ const execa = require('execa');
 const stripAnsi = require('strip-ansi');
 const waitPort = require('wait-port');
 const terminate = require('terminate');
+const {promisify} = require('util');
+
+const terminateAsync = promisify(terminate);
 
 async function waitForPort(port, { timeout = 10000 } = {}) {
   const portFound = await waitPort({ port, timeout, output: 'silent' });
@@ -103,8 +106,8 @@ module.exports = class Scripts {
       appServerProcessPort,
       done() {
         return Promise.all([
-          terminate(staticsServerProcess.pid),
-          terminate(appServerProcess.pid),
+          terminateAsync(staticsServerProcess.pid),
+          terminateAsync(appServerProcess.pid),
         ]);
       },
     };
