@@ -27,14 +27,18 @@ describe('test --jasmine', () => {
   });
 
   it('should pass with exit code 0', () => {
-    const res = test.setup(passingProject()).execute('test', ['--jasmine']);
+    const res = test
+      .setup(passingProject())
+      .execute('test', ['--jasmine'], outsideTeamCity);
 
     expect(res.code).to.equal(0);
     expect(res.stdout).to.contain('1 spec, 0 failures');
   });
 
   it('should pass with exit code 1', () => {
-    const res = test.setup(failingProject()).execute('test', ['--jasmine']);
+    const res = test
+      .setup(failingProject())
+      .execute('test', ['--jasmine'], outsideTeamCity);
 
     expect(res.code).to.equal(1);
     expect(res.stdout).to.contain('1 spec, 1 failure');
@@ -76,7 +80,7 @@ describe('test --jasmine', () => {
           },
         }),
       })
-      .execute('test', ['--jasmine']);
+      .execute('test', ['--jasmine'], outsideTeamCity);
 
     expect(res.code).to.equal(0);
     expect(res.stdout).to.contain('1 spec, 0 failures');
@@ -118,7 +122,7 @@ describe('test --jasmine', () => {
   it('should load helpers', () => {
     const res = test
       .setup(passingProjectWithHelper())
-      .execute('test', ['--jasmine']);
+      .execute('test', ['--jasmine'], outsideTeamCity);
 
     expect(res.code).to.equal(0);
     expect(res.stdout).to.contain('1 spec, 0 failures');

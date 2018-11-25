@@ -606,7 +606,7 @@ describe('Aggregator: Start', () => {
             })
             .spawn('start');
 
-          return checkServerIsServing({ max: 100 })
+          return checkServerIsServing({ max: 50 })
             .then(() => checkServerIsRespondingWith('hello'))
             .then(() =>
               test.modify(
@@ -754,8 +754,8 @@ describe('Aggregator: Start', () => {
     });
   });
 
-  function checkServerLogCreated({ backoff = 100 } = {}) {
-    return retryPromise({ backoff }, () => {
+  function checkServerLogCreated({ backoff = 100, max = 50 } = {}) {
+    return retryPromise({ backoff, max }, () => {
       const created = test.contains('target/server.log');
 
       return created
@@ -772,8 +772,8 @@ describe('Aggregator: Start', () => {
     test.write('target/server.log', '');
   }
 
-  function checkServerLogContains(str, { backoff = 100 } = {}) {
-    return checkServerLogCreated({ backoff }).then(() =>
+  function checkServerLogContains(str, { backoff = 100, max = 50 } = {}) {
+    return checkServerLogCreated({ backoff, max }).then(() =>
       retryPromise({ backoff }, () => {
         const content = serverLogContent();
 
@@ -788,9 +788,12 @@ describe('Aggregator: Start', () => {
     );
   }
 
-  function checkServerLogContainsJson(expected, { backoff = 100 } = {}) {
+  function checkServerLogContainsJson(
+    expected,
+    { backoff = 100, max = 50 } = {},
+  ) {
     return checkServerLogCreated({ backoff }).then(() =>
-      retryPromise({ backoff }, async () => {
+      retryPromise({ backoff, max }, async () => {
         const content = serverLogContent();
         const json = JSON.parse(content);
 
@@ -801,13 +804,13 @@ describe('Aggregator: Start', () => {
 
   function checkStdout(str) {
     return retryPromise(
-      { backoff: 100 },
+      { backoff: 100, max: 50 },
       () =>
         test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
     );
   }
 
-  function fetchCDN(port, { path = '/', backoff = 100, max = 10 } = {}) {
+  function fetchCDN(port, { path = '/', backoff = 100, max = 50 } = {}) {
     if (path[0] !== '/') {
       path = `/${path}`;
     }
@@ -818,7 +821,7 @@ describe('Aggregator: Start', () => {
   }
 
   function cdnIsServing(name, port = 5005, protocol = 'http', options = {}) {
-    return retryPromise({ backoff: 500 }, async () => {
+    return retryPromise({ backoff: 500, max: 50 }, async () => {
       const res = await fetch(
         `${protocol}://localhost:${port}/${name}`,
         options,
@@ -833,7 +836,7 @@ describe('Aggregator: Start', () => {
   }
 
   function checkServerIsRespondingWith(expected) {
-    return retryPromise({ backoff: 1000 }, () =>
+    return retryPromise({ backoff: 1000, max: 30 }, () =>
       fetch(`http://localhost:${fx.defaultServerPort()}/`)
         .then(res => res.text())
         .then(
@@ -848,7 +851,7 @@ describe('Aggregator: Start', () => {
 
   function checkServerIsServing({
     backoff = 100,
-    max = 10,
+    max = 50,
     port = fx.defaultServerPort(),
     file = '',
     protocol = 'http',
@@ -863,7 +866,7 @@ describe('Aggregator: Start', () => {
 
   function checkServerReturnsDifferentContent({
     backoff = 100,
-    max = 10,
+    max = 50,
     port = fx.defaultServerPort(),
     file = '',
   } = {}) {
