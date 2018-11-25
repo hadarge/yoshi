@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "license": "UNLICENSED",
   "private": true,
+  "sideEffects": [
+    "*.global.(css|scss|less|sass)"
+  ],
   "author": {
     "name": "me",
     "email": "me@wix.com"
@@ -60,7 +63,8 @@
     },
     "externals": {
       "react": "React",
-      "react-dom": "ReactDOM"
+      "react-dom": "ReactDOM",
+      "externals": "externals"
     },
     "hmr": "auto"
   },

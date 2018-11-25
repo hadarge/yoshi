@@ -1,42 +1,14 @@
-const os = require('os');
 const execa = require('execa');
-const stripAnsi = require('strip-ansi');
-const waitPort = require('wait-port');
 const terminate = require('terminate');
-const {promisify} = require('util');
+const { promisify } = require('util');
+const { waitForPort, execaSafe } = require('./utils');
 
 const terminateAsync = promisify(terminate);
 
-async function waitForPort(port, { timeout = 10000 } = {}) {
-  const portFound = await waitPort({ port, timeout, output: 'silent' });
-
-  if (!portFound) {
-    throw new Error(`Timed out waiting for "${port}".`);
-  }
-}
-
-function execaSafe(...args) {
-  return execa(...args)
-    .then(({ stdout, stderr, ...rest }) => ({
-      fulfilled: true,
-      rejected: false,
-      stdout: stripAnsi(stdout),
-      stderr: stripAnsi(stderr),
-      ...rest,
-    }))
-    .catch(err => ({
-      fulfilled: false,
-      rejected: true,
-      reason: err,
-      stdout: '',
-      stderr: stripAnsi(
-        err.message
-          .split(os.EOL)
-          .slice(2)
-          .join(os.EOL),
-      ),
-    }));
-}
+const defaultOptions = {
+  FORCE_COLOR: '0',
+  BROWSER: 'none',
+};
 
 module.exports = class Scripts {
   constructor(testDirectory) {
@@ -50,9 +22,8 @@ module.exports = class Scripts {
       cwd: this.testDirectory,
       // stdio: 'inherit',
       env: {
-        FORCE_COLOR: '0',
-        BROWSER: 'none',
         PORT: port,
+        ...defaultOptions,
         ...env,
       },
     });
@@ -69,10 +40,30 @@ module.exports = class Scripts {
     };
   }
 
+  analyze(env = {}) {
+    const buildProcess = execa('npx', ['yoshi', 'build', '--analyze'], {
+      cwd: this.testDirectory,
+      env: {
+        ...defaultOptions,
+        ...env,
+      },
+      // stdio: 'inherit',
+    });
+
+    return {
+      done() {
+        return terminate(buildProcess.pid);
+      },
+    };
+  }
+
   async build(env = {}) {
     return execaSafe('npx', ['yoshi', 'build'], {
       cwd: this.testDirectory,
-      env: { FORCE_COLOR: '0', ...env },
+      env: {
+        ...defaultOptions,
+        ...env,
+      },
       // stdio: 'inherit',
     });
   }

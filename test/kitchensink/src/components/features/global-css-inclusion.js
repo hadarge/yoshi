@@ -2,5 +2,5 @@ import React from 'react';
 import './assets/style.global.css';
 
 export default () => (
-  <p className="globalCssModulesInclusion">We love useless text.</p>
+  <p className="global-css-modules-inclusion">We love useless text.</p>
 );

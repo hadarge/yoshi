@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { matchCSS, matchJS, initTest, request } = require('../../utils');
+const { initTest } = require('../../utils');
 
 jest.setTimeout(10 * 1000);
 

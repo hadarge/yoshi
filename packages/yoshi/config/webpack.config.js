@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 const globby = require('globby');
 const webpack = require('webpack');
@@ -474,8 +473,8 @@ function createCommonWebpackConfig({
       inTeamCity || withLocalSourceMaps
         ? 'source-map'
         : !isProduction
-        ? 'cheap-module-eval-source-map'
-        : false,
+          ? 'cheap-module-eval-source-map'
+          : false,
   };
 
   return config;
@@ -597,7 +596,13 @@ function createClientWebpackConfig({
       }),
 
       // https://github.com/th0r/webpack-bundle-analyzer
-      ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
+      ...(isAnalyze
+        ? [
+            new BundleAnalyzerPlugin({
+              openAnalyzer: process.env.BROWSER !== 'none',
+            }),
+          ]
+        : []),
     ],
 
     module: {

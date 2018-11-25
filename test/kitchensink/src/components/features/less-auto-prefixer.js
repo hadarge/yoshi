@@ -1,6 +1,8 @@
 import React from 'react';
-import './assets/auto-prefixer.less';
+import styles from './assets/auto-prefixer.less';
 
 export default () => (
-  <div id="less-auto-prefixer">Auto Prefixer is working!</div>
+  <div id="less-auto-prefixer" className={styles['css-auto-prefixer']}>
+    Auto Prefixer is working!
+  </div>
 );

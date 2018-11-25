@@ -10,9 +10,15 @@ export default class App extends Component {
   async componentDidMount() {
     const featureName = window.location.pathname.slice(1);
 
+    /* eslint-disable prettier/prettier */
     const {
       default: feature,
-    } = await import(/* webpackChunkName: "[request]" */ `./features/${featureName}`);
+    } = await import(
+      /* webpackChunkName: "[request]" */
+      /* webpackExclude: /assets/ */
+      `./features/${featureName}`,
+    );
+    /* eslint-enable prettier/prettier */
 
     this.setState({ feature });
   }

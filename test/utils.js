@@ -1,5 +1,32 @@
+const os = require('os');
 const http = require('http');
+const execa = require('execa');
+const waitPort = require('wait-port');
+const stripAnsi = require('strip-ansi');
 const { parastorageCdnUrl, localCdnUrl } = require('./constants');
+
+const execaSafe = (...args) => {
+  return execa(...args)
+    .then(({ stdout, stderr, ...rest }) => ({
+      fulfilled: true,
+      rejected: false,
+      stdout: stripAnsi(stdout),
+      stderr: stripAnsi(stderr),
+      ...rest,
+    }))
+    .catch(err => ({
+      fulfilled: false,
+      rejected: true,
+      reason: err,
+      stdout: '',
+      stderr: stripAnsi(
+        err.message
+          .split(os.EOL)
+          .slice(2)
+          .join(os.EOL),
+      ),
+    }));
+};
 
 const makeRequest = url => {
   return new Promise(resolve => {
@@ -31,6 +58,10 @@ const matchCSS = async (chunkName, page, regexes) => {
     chunkName,
   );
 
+  if (!url) {
+    throw new Error(`Couldn't find stylesheet with the name "${chunkName}"`);
+  }
+
   const content = (await request(url)).replace(/\s/g, '');
 
   for (const regex of regexes) {
@@ -47,6 +78,10 @@ const matchJS = async (chunkName, page, regexes) => {
     chunkName,
   );
 
+  if (!url) {
+    throw new Error(`Couldn't find script with the name "${chunkName}"`);
+  }
+
   const content = (await request(url)).replace(/\s/g, '');
 
   for (const regex of regexes) {
@@ -54,8 +89,23 @@ const matchJS = async (chunkName, page, regexes) => {
   }
 };
 
+async function waitForPort(port, { timeout = 10000 } = {}) {
+  const portFound = await waitPort({ port, timeout, output: 'silent' });
+
+  if (!portFound) {
+    throw new Error(`Timed out waiting for "${port}".`);
+  }
+}
+
 const initTest = async feature => {
   await page.goto(`http://localhost:3000/${feature}`);
 };
 
-module.exports = { request, matchJS, matchCSS, initTest };
+module.exports = {
+  request,
+  matchJS,
+  matchCSS,
+  initTest,
+  waitForPort,
+  execaSafe,
+};

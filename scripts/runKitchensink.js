@@ -89,10 +89,15 @@ try {
     // Run them one by one
     try {
       configs.forEach(configPath => {
+        console.log(`Running tests for ${configPath}`);
+        console.log();
+
         execa.shellSync(
           `npx jest --config='${configPath}' --no-cache --runInBand`,
           options,
         );
+
+        console.log();
       });
     } finally {
       // If any fails, or when all are done, clean this project
