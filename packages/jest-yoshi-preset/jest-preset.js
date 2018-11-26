@@ -66,7 +66,7 @@ module.exports = {
           },
 
           moduleNameMapper: {
-            '^.+\\.(sass|scss)$': require.resolve('identity-obj-proxy'),
+            '^.+\\.(css|sass|scss)$': require.resolve('identity-obj-proxy'),
             '\\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3)$': require.resolve(
               './transforms/file',
             ),
