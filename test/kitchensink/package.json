@@ -58,8 +58,8 @@
     "experimentalServerBundle": true,
     "externalUnprocessedModules": ["untranspiled-dependency"],
     "entry": {
-      "app": "client.js",
-      "other": "other.js"
+      "app": "./client",
+      "other": "./other"
     },
     "externals": {
       "react": "React",

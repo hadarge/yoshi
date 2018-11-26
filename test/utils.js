@@ -19,12 +19,7 @@ const execaSafe = (...args) => {
       rejected: true,
       reason: err,
       stdout: '',
-      stderr: stripAnsi(
-        err.message
-          .split(os.EOL)
-          .slice(2)
-          .join(os.EOL),
-      ),
+      stderr: stripAnsi(err.message),
     }));
 };
 

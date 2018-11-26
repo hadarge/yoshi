@@ -103,6 +103,8 @@ const splitChunksConfig = isObject(useSplitChunks)
 
 const entry = project.entry || project.defaultEntry;
 
+const possibleServerEntries = ['./server', '../test/dev-server'];
+
 function overrideRules(rules, patch) {
   return rules.map(ruleToPatch => {
     let rule = patch(ruleToPatch);
@@ -662,7 +664,7 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
     target: 'node',
 
     entry: {
-      server: ['./server', '../test/dev-server'].find(exists),
+      server: possibleServerEntries.find(exists) || possibleServerEntries[0],
     },
 
     output: {
