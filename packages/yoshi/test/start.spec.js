@@ -590,11 +590,14 @@ describe('Aggregator: Start', () => {
       this.timeout(30000);
 
       describe('when using typescript', () => {
-        // currently is not passing in the CI, needs debugging
-        it.skip(`should rebuild and restart server after a file has been changed with typescript files`, () => {
+        it(`should rebuild and restart server after a file has been changed with typescript files`, () => {
           child = test
             .setup({
-              'tsconfig.json': fx.tsconfig(),
+              'tsconfig.json': fx.tsconfig({
+                compilerOptions: {
+                  types: [],
+                }
+              }),
               'src/server.ts': `declare var require: any; ${fx.httpServer(
                 'hello',
               )}`,
@@ -621,8 +624,7 @@ describe('Aggregator: Start', () => {
       });
 
       describe('when using es6', () => {
-        // currently is not passing in the CI, needs debugging
-        it.skip(`should rebuild and restart server after a file has been changed`, () => {
+        it(`should rebuild and restart server after a file has been changed`, () => {
           child = test
             .setup({
               'src/server.js': fx.httpServer('hello'),
@@ -643,8 +645,7 @@ describe('Aggregator: Start', () => {
       });
 
       describe('when using no transpile', () => {
-        // currently is not passing in the CI, needs debugging
-        it.skip(`should restart server after a file has been changed`, () => {
+        it(`should restart server after a file has been changed`, () => {
           child = test
             .setup({
               'src/server.js': fx.httpServer('hello'),

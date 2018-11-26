@@ -48,7 +48,7 @@ const fx = {
             declaration: true,
             noImplicitAny: false,
           },
-          exclude: ['node_modules', 'dist'],
+          exclude: ['node_modules', 'maven', 'dist'],
         },
         options,
       ),
