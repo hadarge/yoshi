@@ -89,7 +89,7 @@ const matchJS = async (chunkName, page, regexes) => {
   }
 };
 
-async function waitForPort(port, { timeout = 10000 } = {}) {
+async function waitForPort(port, { timeout = 20000 } = {}) {
   const portFound = await waitPort({ port, timeout, output: 'silent' });
 
   if (!portFound) {

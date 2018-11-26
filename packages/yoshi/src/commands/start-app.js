@@ -21,7 +21,6 @@ const stream = require('stream');
 const child_process = require('child_process');
 const chalk = require('chalk');
 const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
 const openBrowser = require('react-dev-utils/openBrowser');
 const chokidar = require('chokidar');
 const project = require('yoshi-config');
@@ -38,10 +37,9 @@ const {
 } = require('../../config/webpack.config');
 const {
   createCompiler,
-  createDevServerConfig,
+  createDevServer,
   waitForServerToStart,
   waitForCompilation,
-  addEntry,
 } = require('../webpack-utils');
 
 function serverLogPrefixer() {
@@ -92,38 +90,19 @@ module.exports = async () => {
   const clientConfig = createClientWebpackConfig({
     isDebug: true,
     isAnalyze: false,
+    isHmr: true,
   });
 
   const serverConfig = createServerWebpackConfig({
     isDebug: true,
+    isHmr: true,
   });
-
-  // Configure client hot module replacement
-  addEntry(clientConfig, [
-    require.resolve('webpack/hot/dev-server'),
-    require.resolve('webpack-dev-server/client'),
-  ]);
-
-  clientConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
-
-  // Configure server hot module replacement
-  addEntry(serverConfig, [require.resolve('../../config/hot')]);
-
-  serverConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 
   // Configure compilation
   const multiCompiler = createCompiler([clientConfig, serverConfig], { https });
   const compilationPromise = waitForCompilation(multiCompiler);
 
   const [clientCompiler, serverCompiler] = multiCompiler.compilers;
-
-  // Setup dev server (CDN)
-  const devServerConfig = createDevServerConfig({
-    publicPath: clientConfig.output.publicPath,
-    https,
-  });
-
-  const devServer = new WebpackDevServer(clientCompiler, devServerConfig);
 
   // Start up server compilation
   let serverProcess;
@@ -137,10 +116,21 @@ module.exports = async () => {
 
   console.log(chalk.cyan('Starting development environment...\n'));
 
+  const host = '0.0.0.0';
+
+  // Start up webpack dev server
+  const devServer = await createDevServer(clientCompiler, {
+    publicPath: clientConfig.output.publicPath,
+    port: project.servers.cdn.port,
+    host,
+  });
+
   // Start up webpack dev server
   await new Promise((resolve, reject) => {
-    devServer.listen(project.servers.cdn.port, '0.0.0.0', err =>
-      err ? reject(err) : resolve(),
+    devServer.listen(
+      project.servers.cdn.port,
+      host,
+      err => (err ? reject(err) : resolve(devServer)),
     );
   });
 

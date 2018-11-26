@@ -398,7 +398,7 @@ describe('Webpack basic configs', () => {
 
 function fetchClientBundle({
   backoff = 100,
-  max = 10,
+  max = 50,
   port = fx.defaultServerPort(),
   file = '',
 } = {}) {

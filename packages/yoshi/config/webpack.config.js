@@ -32,6 +32,7 @@ const {
   inTeamCity: checkInTeamCity,
   isTypescriptProject: checkIsTypescriptProject,
 } = require('yoshi-helpers');
+const { addEntry } = require('../src/webpack-utils');
 
 const reScript = /\.js?$/;
 const reStyle = /\.(css|less|scss|sass)$/;
@@ -250,6 +251,7 @@ const getStyleLoaders = ({
 // -----------------------------------------------------------------------------
 function createCommonWebpackConfig({
   isDebug = true,
+  isHmr = false,
   withLocalSourceMaps,
 } = {}) {
   const config = {
@@ -315,6 +317,7 @@ function createCommonWebpackConfig({
             }),
           ]
         : []),
+      ...(isHmr ? [new webpack.HotModuleReplacementPlugin()] : []),
     ],
 
     module: {
@@ -486,9 +489,14 @@ function createCommonWebpackConfig({
 function createClientWebpackConfig({
   isAnalyze = false,
   isDebug = true,
+  isHmr = false,
   withLocalSourceMaps,
 } = {}) {
-  const config = createCommonWebpackConfig({ isDebug, withLocalSourceMaps });
+  const config = createCommonWebpackConfig({
+    isDebug,
+    isHmr,
+    withLocalSourceMaps,
+  });
 
   const styleLoaders = getStyleLoaders({ embedCss: true, isDebug });
 
@@ -628,14 +636,21 @@ function createClientWebpackConfig({
     },
   };
 
+  if (isHmr) {
+    addEntry(clientConfig, [
+      require.resolve('webpack/hot/dev-server'),
+      require.resolve('webpack-dev-server/client'),
+    ]);
+  }
+
   return clientConfig;
 }
 
 //
 // Configuration for the server-side bundle (server.js)
 // -----------------------------------------------------------------------------
-function createServerWebpackConfig({ isDebug = true } = {}) {
-  const config = createCommonWebpackConfig({ isDebug });
+function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
+  const config = createCommonWebpackConfig({ isDebug, isHmr });
 
   const styleLoaders = getStyleLoaders({ embedCss: false, isDebug });
 
@@ -757,6 +772,10 @@ function createServerWebpackConfig({ isDebug = true } = {}) {
 
     devtool: 'cheap-module-inline-source-map',
   };
+
+  if (isHmr) {
+    addEntry(serverConfig, [require.resolve('./hot')]);
+  }
 
   return serverConfig;
 }

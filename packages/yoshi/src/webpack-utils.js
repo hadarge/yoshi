@@ -10,6 +10,7 @@ const project = require('yoshi-config');
 const { STATICS_DIR } = require('yoshi-config/paths');
 const { PORT } = require('./constants');
 const { redirectMiddleware } = require('../src/tasks/cdn/server-api');
+const WebpackDevServer = require('webpack-dev-server');
 
 const isInteractive = process.stdout.isTTY;
 
@@ -120,35 +121,6 @@ function createCompiler(config, { https }) {
   return compiler;
 }
 
-function createDevServerConfig({ publicPath, https }) {
-  return {
-    // Enable gzip compression for everything served
-    compress: true,
-    clientLogLevel: 'error',
-    watchContentBase: true,
-    hot: true,
-    publicPath,
-    // We write our own errors/warnings to the console
-    quiet: true,
-    https,
-    // The server should be accessible externally
-    host: '0.0.0.0',
-    overlay: true,
-    before(app) {
-      // Send cross origin headers
-      app.use(cors());
-      // Redirect `.min.(js|css)` to `.(js|css)`
-      app.use(redirectMiddleware('0.0.0.0', project.servers.cdn.port));
-      // https://github.com/zeit/serve-handler
-      app.use(async (req, res) => {
-        await serverHandler(req, res, {
-          public: STATICS_DIR,
-        });
-      });
-    },
-  };
-}
-
 function addEntry(config, hotEntries) {
   let newEntry = {};
 
@@ -163,6 +135,42 @@ function addEntry(config, hotEntries) {
   }
 
   config.entry = newEntry;
+}
+
+function createDevServerConfig({ publicPath, https, host }) {
+  return {
+    // Enable gzip compression for everything served
+    compress: true,
+    clientLogLevel: 'error',
+    watchContentBase: true,
+    hot: true,
+    publicPath,
+    // We write our own errors/warnings to the console
+    quiet: true,
+    https,
+    // The server should be accessible externally
+    host,
+    overlay: true,
+    before(app) {
+      // Send cross origin headers
+      app.use(cors());
+      // Redirect `.min.(js|css)` to `.(js|css)`
+      app.use(redirectMiddleware(host, project.servers.cdn.port));
+      // https://github.com/zeit/serve-handler
+      app.use(async (req, res) => {
+        await serverHandler(req, res, {
+          public: STATICS_DIR,
+        });
+      });
+    },
+  };
+}
+
+function createDevServer(clientCompiler, devServerOptions) {
+  // Setup dev server (CDN)
+  const devServerConfig = createDevServerConfig(devServerOptions);
+
+  return new WebpackDevServer(clientCompiler, devServerConfig);
 }
 
 async function waitForServerToStart({ server }) {
@@ -192,13 +200,15 @@ async function waitForServerToStart({ server }) {
 
 function waitForCompilation(compiler) {
   return new Promise((resolve, reject) => {
-    compiler.hooks.done.tap('promise', stats =>
-      stats.hasErrors() ? reject(stats) : resolve(stats),
+    compiler.hooks.done.tap(
+      'promise',
+      stats => (stats.hasErrors() ? reject(stats) : resolve(stats)),
     );
   });
 }
 
 module.exports = {
+  createDevServer,
   createCompiler,
   createDevServerConfig,
   waitForServerToStart,
