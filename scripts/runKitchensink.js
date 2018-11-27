@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
+const chalk = require('chalk');
 const tempy = require('tempy');
 const execa = require('execa');
 const globby = require('globby');
@@ -86,19 +87,40 @@ try {
       });
     }
 
+    const failures = [];
+
     // Run them one by one
     try {
       configs.forEach(configPath => {
         console.log(`Running tests for ${configPath}`);
         console.log();
 
-        execa.shellSync(
-          `npx jest --config='${configPath}' --no-cache --runInBand`,
-          options,
-        );
+        try {
+          execa.shellSync(
+            `npx jest --config='${configPath}' --no-cache --runInBand`,
+            options,
+          );
+        } catch (error) {
+          failures.push(configPath);
+        }
 
         console.log();
       });
+
+      if (failures.length > 0) {
+        console.log(chalk.red('Test failed!'));
+        console.log();
+        console.log('Check the following failed test runs:');
+        console.log();
+
+        failures.forEach(configPath => {
+          console.log(`  - ${configPath}`);
+        });
+
+        console.log();
+
+        process.exitCode = 1;
+      }
     } finally {
       // If any fails, or when all are done, clean this project
       fs.removeSync(rootDirectory);
