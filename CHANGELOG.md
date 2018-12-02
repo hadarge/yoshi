@@ -1,5 +1,31 @@
 # Changelog
 
+## 3.22.0 (2018-12-02)
+
+#### :rocket: New Feature
+
+- `jest-yoshi-preset`
+  - [#857](https://github.com/wix/yoshi/pull/857) Add support for css ([@jonathanadler](https://github.com/jonathanadler))
+
+#### :bug: Bug Fix
+
+- `jest-environment-yoshi-puppeteer`
+  - [#843](https://github.com/wix/yoshi/pull/843) Puppeteer: tearing down Parent Environment and no throw on `pageerror` ([@liorMar](https://github.com/liorMar))
+
+#### :house: Internal
+
+- Other
+  - [#859](https://github.com/wix/yoshi/pull/859) Keep running all app flow tests even if one fails ([@ronami](https://github.com/ronami))
+  - [#845](https://github.com/wix/yoshi/pull/845) Wait for `terminate` to resolve ([@yanivefraim](https://github.com/yanivefraim))
+- `yoshi`
+  - [#856](https://github.com/wix/yoshi/pull/856) Add missing app-flow tests for build output ([@ronami](https://github.com/ronami))
+  - [#844](https://github.com/wix/yoshi/pull/844) Move HMR to `webpack` config ([@yurynix](https://github.com/yurynix))
+  - [#855](https://github.com/wix/yoshi/pull/855) Enable watch tests ([@yurynix](https://github.com/yurynix))
+  - [#851](https://github.com/wix/yoshi/pull/851) Improve app-flow tests and add missing tests ([@ronami](https://github.com/ronami))
+  - [#752](https://github.com/wix/yoshi/pull/752) Increase max retries for tests, so they pass locally ([@yurynix](https://github.com/yurynix))
+- `jest-environment-yoshi-puppeteer`, `yoshi-helpers`, `yoshi`
+  - [#840](https://github.com/wix/yoshi/pull/840) Fix killing of server process and its children, for travis-ci ([@yanivefraim](https://github.com/yanivefraim))
+
 ## 3.21.0 (2018-11-21)
 
 #### :rocket: New Feature
@@ -1195,15 +1221,15 @@
 
 - [#181](https://github.com/wix/yoshi/pull/181) Exclude the following tasks logs:
 
-  1. `wixUpdateNodeVersion`
-  2. `migrateScopePackages`
-  3. `migrateBowerArtifactory`
-  4. `wixDepCheck`
-  5. `copy-server-assets`
-  6. `copy-static-assets-legacy`
-  7. `copy-static-assets`
-  8. `maven-statics`
-  9. `petri-specs`
+  1.  `wixUpdateNodeVersion`
+  2.  `migrateScopePackages`
+  3.  `migrateBowerArtifactory`
+  4.  `wixDepCheck`
+  5.  `copy-server-assets`
+  6.  `copy-static-assets-legacy`
+  7.  `copy-static-assets`
+  8.  `maven-statics`
+  9.  `petri-specs`
 
 - [#182](https://github.com/wix/yoshi/pull/182) Remove `yoshi-utils` as a dev dependency and replace with a local function
 - [#183](https://github.com/wix/yoshi/pull/183) Copy `yoshi-runtime` package from original yoshi repository
