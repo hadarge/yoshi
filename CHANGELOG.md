@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.22.2 (2018-12-02)
+
+#### :bug: Bug Fix
+
+- `jest-yoshi-preset`
+  - [#868](https://github.com/wix/yoshi/pull/868) Re-Fix Jest css transform overriding Stylable transform ([@yairhaimo](https://github.com/yairhaimo))
+
 ## 3.22.1 (2018-12-02)
 
 #### :bug: Bug Fix
