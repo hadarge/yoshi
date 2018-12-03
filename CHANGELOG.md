@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.22.3 (2018-12-03)
+
+#### :bug: Bug Fix
+
+- `jest-yoshi-preset`
+  - [#869](https://github.com/wix/yoshi/pull/869) Change Jest css transform regex to support node 8 ([@yairhaimo](https://github.com/yairhaimo))
+
 ## 3.22.2 (2018-12-02)
 
 #### :bug: Bug Fix
