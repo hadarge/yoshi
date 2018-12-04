@@ -10,4 +10,14 @@ describe('dev-server', () => {
       expect.arrayContaining(['components/', 'app.bundle.js', 'assets/']),
     );
   });
+
+  it('shows the contents of assets dir', async () => {
+    await page.goto('http://localhost:3200/assets');
+
+    const list = await page.$$eval('a', aElements => {
+      return aElements.map(element => element.textContent);
+    });
+
+    expect(list).toContain('hello.txt');
+  });
 });
