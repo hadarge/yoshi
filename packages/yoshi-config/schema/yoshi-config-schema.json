@@ -420,6 +420,24 @@
       "description": "In case you don't want to transpile your server (node) code, and you still need .babelrc/tsconfig, you can add runIndividualTranspiler flag to skip server transpiling.",
       "type": "boolean"
     },
+    "petriSpecs": {
+      "description": "Configure options for the petriSpecs command",
+      "type": "object",
+      "properties": {
+        "onlyForLoggedInUsers": {
+          "description": "Create specs only for logged in users",
+          "type": "boolean"
+        },
+        "scopes": {
+          "description": "Create specs under specific scopes. Defaults to <artifactId>",
+          "type": "array",
+          "items": {
+            "description": "Scope name",
+            "type": "string"
+          }
+        }
+      }
+    },
     "transpileTests": {
       "description": "An option to not transpile tests with Babel (via babel-register). Defaults to true.",
       "type": "boolean"
