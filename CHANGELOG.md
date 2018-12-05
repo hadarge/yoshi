@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.22.4 (2018-12-05)
+
+#### :bug: Bug Fix
+
+- [#875](https://github.com/wix/yoshi/pull/875) Add `petriSpecs` to config schema ([@yairhaimo](https://github.com/yairhaimo))
+
+#### :house: Internal
+
+- [#874](https://github.com/wix/yoshi/pull/874) Make directory listing test consistent ([@Schniz](https://github.com/Schniz))
+- [#871](https://github.com/wix/yoshi/pull/871) Add a test that verifies directory listing in assets directory ([@yurynix](https://github.com/yurynix))
+
 ## 3.22.3 (2018-12-03)
 
 #### :bug: Bug Fix
