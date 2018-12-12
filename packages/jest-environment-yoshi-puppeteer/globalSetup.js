@@ -12,8 +12,12 @@ const child_process = require('child_process');
 const waitPort = require('wait-port');
 const { servers } = require('yoshi-config');
 const { WS_ENDPOINT_PATH } = require('./constants');
-const { getProcessForPort, shouldRunE2Es } = require('./utils');
-const { setupRequireHooks, shouldDeployToCDN } = require('yoshi-helpers');
+const { shouldRunE2Es } = require('./utils');
+const {
+  setupRequireHooks,
+  shouldDeployToCDN,
+  getProcessOnPort,
+} = require('yoshi-helpers');
 const cdnProxy = require('./cdnProxy');
 
 // the user's config is loaded outside of a jest runtime and should be transpiled
@@ -68,9 +72,12 @@ module.exports = async () => {
 
     await fs.outputFile(WS_ENDPOINT_PATH, global.BROWSER.wsEndpoint());
 
-    const webpackDevServerProcessCwd = getProcessForPort(servers.cdn.port);
+    const webpackDevServerProcess = await getProcessOnPort(
+      servers.cdn.port,
+      false,
+    );
 
-    if (!webpackDevServerProcessCwd) {
+    if (!webpackDevServerProcess) {
       throw new Error(
         `Running E2E tests requires a server to serve static files. Could not find any dev server on port ${chalk.cyan(
           servers.cdn.port,
@@ -78,10 +85,10 @@ module.exports = async () => {
       );
     }
 
-    if (webpackDevServerProcessCwd.directory !== process.cwd()) {
+    if (webpackDevServerProcess.cwd !== process.cwd()) {
       throw new Error(
         `A different process (${chalk.cyan(
-          webpackDevServerProcessCwd.directory,
+          webpackDevServerProcess.cwd,
         )}) is already running on port '${chalk.cyan(
           servers.cdn.port,
         )}', aborting.`,
@@ -89,12 +96,15 @@ module.exports = async () => {
     }
 
     if (jestYoshiConfig.server) {
-      const serverProcessCwd = getProcessForPort(jestYoshiConfig.server.port);
+      const serverProcess = await getProcessOnPort(
+        jestYoshiConfig.server.port,
+        false,
+      );
 
-      if (serverProcessCwd) {
+      if (serverProcess) {
         throw new Error(
           `A different process (${chalk.cyan(
-            serverProcessCwd.directory,
+            serverProcess.cwd,
           )}) is already running on port ${chalk.cyan(
             jestYoshiConfig.server.port,
           )}, aborting.`,
