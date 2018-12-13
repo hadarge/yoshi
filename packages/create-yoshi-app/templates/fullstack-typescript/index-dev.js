@@ -1,6 +1,6 @@
 const { bootstrapServer, emitConfigs } = require('./test/environment');
 
-const port = parseInt(process.env.PORT);
+const port = parseInt(process.env.PORT, 10);
 const appConfDir = './target/dev/configs';
 
 (async () => {
