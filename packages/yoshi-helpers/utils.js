@@ -193,10 +193,11 @@ module.exports.getProjectCDNBasePath = () => {
     fs.readFileSync(POM_FILE),
   ).valueWithPath('artifactId');
 
-  return `${staticsDomain}/${artifactName}/${process.env.ARTIFACT_VERSION.replace(
-    '-SNAPSHOT',
-    '',
-  )}/`;
+  const artifactVersion = process.env.ARTIFACT_VERSION
+    ? process.env.ARTIFACT_VERSION.replace('-SNAPSHOT', '') // Dev CI
+    : process.env.BUILD_VCS_NUMBER; // PR CI won't have a version, only BUILD_NUMBER and BUILD_VCS_NUMBER
+
+  return `${staticsDomain}/${artifactName}/${artifactVersion}/`;
 };
 
 module.exports.killSpawnProcessAndHisChildren = child => {

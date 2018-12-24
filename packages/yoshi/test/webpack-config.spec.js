@@ -6,6 +6,7 @@ const tp = require('../../../test-helpers/test-phases');
 const fx = require('../../../test-helpers/fixtures');
 const {
   insideTeamCity,
+  outsideTeamCity,
   teamCityArtifactVersion,
   noArtifactVersion,
 } = require('../../../test-helpers/env-variables');
@@ -144,12 +145,29 @@ describe('Webpack basic configs', () => {
         );
       });
 
+      it('should construct the public path according to pom.xml "artifactId" and BUILD_VCS_NUMBER environment variable', () => {
+        test
+          .setup({
+            'src/client.js': `console.log('test');`,
+            'pom.xml': fx.pom(),
+          })
+          .execute('build', [], {
+            ...insideTeamCity,
+            BUILD_VCS_NUMBER: 'this_is_hash',
+          });
+
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          `__webpack_require__.p = "https://static.parastorage.com/services/app-id/this_is_hash/"`,
+        );
+      });
+
       it('should use "/" for default public path', () => {
         test
           .setup({
             'src/client.js': `console.log('test');`,
           })
           .execute('build', [], {
+            ...outsideTeamCity,
             ARTIFACT_VERSION: '',
           });
 

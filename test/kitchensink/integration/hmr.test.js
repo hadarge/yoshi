@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { initTest } = require('../../utils');
 
-jest.setTimeout(10 * 1000);
+jest.setTimeout(20 * 1000);
 
 describe('hmr', () => {
   describe('client side', () => {
