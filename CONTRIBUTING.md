@@ -145,6 +145,8 @@ npm run changelog
 
 To create a new version use the following command:
 
+Note: Make sure you fetched up-to date tags from remote: `git fetch --tags`, lerna relies on tags for version information
+
 ```bash
 npm run createVersion
 ```
