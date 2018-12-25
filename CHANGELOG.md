@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.5 (2018-12-25)
+
+#### :bug: Bug fix
+
+- [#890](https://github.com/wix/yoshi/pull/890) Fix build on TeamCity PR CI, make it contain the correct webpack_require prefix (static url) [@yurynix](https://github.com/yurynix)
+
 ## 3.22.4 (2018-12-05)
 
 #### :bug: Bug Fix
