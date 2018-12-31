@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.23.0 (2018-12-31) :champagne: :fireworks:
+
+#### :rocket: New Feature
+
+- `yoshi-config`, `yoshi`
+  - [#896](https://github.com/wix/yoshi/pull/896) Add opt-in Typescript transpliation target for ES modules ([@yairhaimo](https://github.com/yairhaimo))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#897](https://github.com/wix/yoshi/pull/897) Server bundle experiment should respect `hmr` config ([@yairhaimo](https://github.com/yairhaimo))
+
+#### :memo: Documentation
+
+- [#894](https://github.com/wix/yoshi/pull/894) Update export-es-module guide location ([@yakirn](https://github.com/yakirn))
+- [#893](https://github.com/wix/yoshi/pull/893) Add a note about Lerna and tags for a new version release ([@yurynix](https://github.com/yurynix))
+
 ## 3.22.5 (2018-12-25)
 
 #### :bug: Bug fix
