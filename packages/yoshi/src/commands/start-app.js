@@ -90,7 +90,7 @@ module.exports = async () => {
   const clientConfig = createClientWebpackConfig({
     isDebug: true,
     isAnalyze: false,
-    isHmr: true,
+    isHmr: project.hmr,
   });
 
   const serverConfig = createServerWebpackConfig({
