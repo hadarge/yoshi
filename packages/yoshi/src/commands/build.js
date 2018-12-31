@@ -14,6 +14,7 @@ const {
   clientProjectName,
   isAngularProject,
   clientFilesPath,
+  experimentalTSTarget,
 } = require('yoshi-config');
 const {
   watchMode,
@@ -245,7 +246,7 @@ module.exports = runner.command(
             project: 'tsconfig.json',
             rootDir: '.',
             outDir: globs.dist({ esTarget }),
-            ...(esTarget ? { module: 'es2015' } : {}),
+            ...(esTarget ? { module: experimentalTSTarget ? 'esNext' : 'es2015' } : {}),
           }),
         );
         if (esTarget) {
