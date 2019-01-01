@@ -15,6 +15,9 @@ describe('Webpack config storybook', () => {
         extensions: ['.js', '.jsx', '.abc'],
       },
       module: {},
+      node: {
+        net: true,
+      },
     };
   });
 
@@ -39,6 +42,15 @@ describe('Webpack config storybook', () => {
 
     it('should keep the original extensions', () => {
       expect(resultConfig.resolve.extensions).to.include('.abc');
+    });
+  });
+
+  describe('Node lib mocks', () => {
+    it('should add all the node lib mock definitions from common config', () => {
+      expect(resultConfig.node).to.eql({
+        ...commonConfig.node,
+        net: true,
+      });
     });
   });
 });

@@ -30,5 +30,7 @@ module.exports = config => {
 
   config.plugins = [...(config.plugins || []), new StylableWebpackPlugin()];
 
+  config.node = { ...webpackCommonConfig.node, ...config.node };
+
   return config;
 };
