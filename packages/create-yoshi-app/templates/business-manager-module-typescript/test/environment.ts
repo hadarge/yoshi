@@ -4,7 +4,13 @@ import {
   ModuleConfigFileEmitter,
 } from '@wix/business-manager/dist/testkit';
 
-const getTestkitConfig = async () => {
+interface TestKitConfigOptions {
+  withRandomPorts: boolean;
+}
+
+const getTestKitConfig = async (
+  { withRandomPorts }: TestKitConfigOptions = { withRandomPorts: false },
+) => {
   const serverUrl = 'http://localhost:3200/';
   const path = './templates/module_{%PROJECT_NAME%}.json.erb';
   const serviceId = 'com.wixpress.{%projectName%}-app';
@@ -13,17 +19,16 @@ const getTestkitConfig = async () => {
     .registerStaticService({ serviceId, serverUrl })
     .emit();
 
-  return testkitConfigBuilder()
+  let builder = testkitConfigBuilder()
     .withModulesConfig(moduleConfig)
-    .autoLogin()
-    .build();
+    .autoLogin();
+
+  if (withRandomPorts) {
+    builder = builder.withRandomPorts();
+  }
+
+  return builder.build();
 };
 
-export const environment = async () => {
-  const testkit = createTestkit(await getTestkitConfig());
-  return {
-    start: () => testkit.start(),
-    stop: () => testkit.stop(),
-    businessManager: testkit,
-  };
-};
+export const environment = async envConfig =>
+  createTestkit(await getTestKitConfig(envConfig));

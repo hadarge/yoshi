@@ -1,20 +1,22 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
-    "noUnusedLocals": true,
     "importHelpers": true,
+    "target": "es5",
     "jsx": "react",
     "lib": ["dom", "es2016"]
   },
   "include": [
-    "src/**/*.*",
-    "test/**/*.*"
+    "./test/**/*.ts",
+    "./src/**/*.spec.tsx"
   ],
   "files": [
+    "./node_modules/jest-yoshi-preset/types.d.ts",
     "./src/external-types.d.ts"
   ]
 }

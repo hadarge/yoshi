@@ -1,27 +1,22 @@
-import { browser, ElementFinder, ExpectedConditions, $ } from 'protractor';
 const chance = require('chance');
 
-export const appDriver = env => {
-  const waitForVisibilityOf = async (
-    element: ElementFinder,
-    timeout: number = 4000,
-  ) => {
-    await browser.wait(ExpectedConditions.visibilityOf(element), timeout);
-    return element;
+export const appDriver = () => {
+  const waitForVisibilityOf = async (selector: string) => {
+    return page.waitForSelector(selector);
   };
 
   return {
     navigateToApp: async () => {
       const changeInstance = new chance.Chance();
       const metaSiteId = changeInstance.guid();
-      await browser.get(
-        await env.businessManager.getUrl(`${metaSiteId}/{%projectName%}`),
+      await page.goto(
+        await testKitEnv.getUrl(`${metaSiteId}/{%projectName%}`),
       );
     },
     getAppTitleText: async () => {
-      return waitForVisibilityOf($('[data-hook="app-title"]')).then(e =>
-        e.getText(),
-      );
+      await waitForVisibilityOf('h2');
+      return page.$eval('h2', e => e.innerText);
     },
+    waitForSelector: waitForVisibilityOf,
   };
 };

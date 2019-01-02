@@ -23,7 +23,7 @@ if (focusProjects) {
 
 // Instantiate a Mocha instance.
 const mocha = new Mocha({
-  timeout: 180000,
+  timeout: 200000,
   reporter: process.env.TEAMCITY_VERSION ? 'mocha-teamcity-reporter' : 'spec',
 });
 

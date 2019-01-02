@@ -8,69 +8,71 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start --entry-point ./dist/test/dev/server.js",
-    "precommit": "lint-staged",
-    "pretest": "yoshi build",
-    "test": "yoshi test",
-    "posttest": "yoshi lint",
-    "release": "yoshi release"
-  },
-  "devDependencies": {
-    "@types/chai": "~4.0.0",
-    "@types/i18next": "~8.4.0",
-    "@types/mocha": "~2.2.0",
-    "@types/node": "^8.0.0",
-    "@types/prop-types": "~15.5.0",
-    "@types/react": "~15.6.0",
-    "@types/react-dom": "~15.5.0",
-    "@types/react-i18next": "~4.6.0",
-    "@wix/business-manager": "latest",
-    "@wix/business-manager-api": "latest",
-    "chai": "~4.1.0",
-    "enzyme": "~2.9.0",
-    "husky": "~0.14.0",
-    "jsdom": "~11.2.0",
-    "jsdom-global": "~3.0.0",
-    "lint-staged": "^7.2.2",
-    "prop-types": "~15.5.0",
-    "protractor": "^5.3.2",
-    "react": "15.5.4",
-    "react-dom": "15.5.4",
-    "react-module-container": "~1.0.0",
-    "react-test-renderer": "15.5.4",
-    "typescript": "~3.0.1",
-    "yoshi": "^3.0.0",
-    "yoshi-style-dependencies": "^3.0.0"
-  },
-  "dependencies": {
-    "axios": "^0.16.2",
-    "i18next": "~8.4.0",
-    "i18next-xhr-backend": "~1.4.0",
-    "react-i18next": "~4.8.0",
-    "@wix/fedops-logger": "^3.0.5",
-    "@wix/wix-axios-config": "latest"
-  },
-  "lint-staged": {
-    "linters": {
-      "*.{js,ts,tsx,scss,less}": "yoshi lint"
+      "start": "yoshi start --entry-point ./dist/test/dev/server.js",
+      "precommit": "lint-staged",
+      "pretest": "yoshi build",
+      "test": "yoshi test --jest",
+      "posttest": "yoshi lint",
+      "release": "yoshi release"
     },
-    "ignore": [
-      "**/*.d.ts"
-    ]
-  },
-  "yoshi": {
-    "entry": {
-      "{%projectName%}-module": "./module",
-      "{%projectName%}-app": "./client"
+    "devDependencies": {
+      "@types/i18next": "~8.4.0",
+          "@types/jest": "^23.3.9",
+          "@types/node": "^8.0.0",
+          "@types/prop-types": "~15.5.0",
+          "@types/react": "~16.4.7",
+          "@types/react-dom": "~16.0.10",
+          "@types/react-i18next": "~4.6.0",
+          "@wix/business-manager": "latest",
+          "@wix/business-manager-api": "latest",
+          "enzyme": "^3.7.0",
+          "enzyme-adapter-react-16": "^1.5.0",
+          "get-port": "^4.0.0",
+          "husky": "~0.14.0",
+          "jest-yoshi-preset": "^3.20.0",
+          "lint-staged": "^7.2.2",
+          "prop-types": "~15.5.0",
+          "puppeteer": "^1.10.0",
+          "react": "^16.6.3",
+          "react-dom": "^16.6.3",
+          "react-module-container": "~1.0.0",
+          "react-test-renderer": "16.6.3",
+          "typescript": "~3.0.1",
+          "yoshi": "^3.0.0",
+          "yoshi-style-dependencies": "^3.0.0"
     },
-    "externals": {
-      "react": "React",
-      "react-dom": "ReactDOM",
-      "react-addons-css-transition-group": "React.addons.CSSTransitionGroup",
-      "lodash": "_",
-      "urijs": "URI",
-      "@wix/business-manager-api": "BusinessManagerAPI",
-      "react-module-container": "reactModuleContainer"
+    "dependencies": {
+      "axios": "^0.16.2",
+      "@wix/fedops-logger": "^3.0.5",
+      "i18next": "~8.4.0",
+      "i18next-xhr-backend": "~1.4.0",
+      "react-i18next": "~4.8.0",
+      "@wix/wix-axios-config": "latest"
+    },
+    "lint-staged": {
+      "linters": {
+        "*.{js,ts,tsx,scss,less}": "yoshi lint"
+      },
+      "ignore": [
+        "**/*.d.ts"
+      ]
+    },
+    "jest": {
+      "preset": "jest-yoshi-preset"
+    },
+    "yoshi": {
+      "entry": {
+        "{%projectName%}-module": "./module",
+        "{%projectName%}-app": "./client"
+      },
+      "externals": {
+        "react": "React",
+        "react-dom": "ReactDOM",
+        "react-addons-css-transition-group": "React.addons.CSSTransitionGroup",
+        "lodash": "_",
+        "urijs": "URI",
+        "@wix/business-manager-api": "BusinessManagerAPI",
+        "react-module-container": "reactModuleContainer"
+      }
     }
-  }
 }
