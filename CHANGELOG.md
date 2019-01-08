@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.24.0 (2019-01-08)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#850](https://github.com/wix/yoshi/pull/850) Migrate Business Manager Typescript template to jest/puppeteer ([@liorMar](https://github.com/liorMar))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#865](https://github.com/wix/yoshi/pull/865) Use webpack node lib mock config in storybook config ([@yairhaimo](https://github.com/yairhaimo))
+
 ## 3.23.0 (2018-12-31) :champagne: :fireworks:
 
 #### :rocket: New Feature
