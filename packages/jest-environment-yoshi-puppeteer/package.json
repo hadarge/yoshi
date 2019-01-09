@@ -1,6 +1,6 @@
 {
   "name": "jest-environment-yoshi-puppeteer",
-  "version": "3.23.0",
+  "version": "3.24.1",
   "description": "puppeteer environment for jest",
   "main": "index.js",
   "keywords": [
