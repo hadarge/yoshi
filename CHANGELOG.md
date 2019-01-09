@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.24.1 (2019-01-09)
+
+#### :bug: Bug Fix
+
+- `yoshi`, `create-yoshi-app`, `jest-environment-yoshi-puppeteer`, `jest-yoshi-preset`
+  - [#906](https://github.com/wix/yoshi/pull/906) Bump `globby` version to 8.0.2, because 8.0.1 had an issue ([@yurynix](https://github.com/yurynix))
+
 ## 3.24.0 (2019-01-08)
 
 #### :rocket: New Feature
