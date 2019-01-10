@@ -11,7 +11,7 @@
     "start": "yoshi start --entry-point ./dist/test/dev/server.js",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
-    "test": "yoshi test",
+    "test": "yoshi test --jest",
     "posttest": "yoshi lint",
     "release": "yoshi release"
   },
@@ -19,17 +19,17 @@
     "@wix/business-manager": "latest",
     "@wix/business-manager-api": "latest",
     "chai": "~4.1.0",
-    "enzyme": "~2.9.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.5.0",
     "husky": "~0.14.0",
-    "jsdom": "~11.2.0",
-    "jsdom-global": "~3.0.0",
+    "jest-yoshi-preset": "^3.20.0",
     "lint-staged": "^7.2.2",
     "prop-types": "~15.5.0",
-    "protractor": "^5.3.2",
-    "react": "15.5.4",
-    "react-dom": "15.5.4",
+    "puppeteer": "^1.10.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-module-container": "~1.0.0",
-    "react-test-renderer": "15.5.4",
+    "react-test-renderer": "16.6.3",
     "yoshi": "^3.0.0",
     "yoshi-style-dependencies": "^3.0.0"
   },
@@ -44,6 +44,9 @@
   },
   "lint-staged": {
     "*.{js,scss,less}": "yoshi lint"
+  },
+  "jest": {
+    "preset": "jest-yoshi-preset"
   },
   "yoshi": {
     "entry": {
@@ -66,6 +69,9 @@
     ]
   },
   "eslintConfig": {
-    "extends": "yoshi"
+    "extends": "yoshi",
+    "globals": {
+      "testKitEnv": true
+    }
   }
 }

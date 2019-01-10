@@ -3,3 +3,4 @@ node_modules
 dist
 packages/eslint-config-yoshi-base/__tests__/rules
 test/kitchensink/src/errors
+packages/create-yoshi-app/templates/business-manager-module/test/e2e/drivers/app.driver.js
