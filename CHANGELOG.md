@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.25.0 (2019-01-13)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#904](https://github.com/wix/yoshi/pull/904) Update Biz Mgr Babel generator template ([@yurynix](https://github.com/yurynix))
+
+#### :house: Internal
+
+- [#891](https://github.com/wix/yoshi/pull/891) Increase stalebot's counter params ([@yairhaimo](https://github.com/yairhaimo))
+
 ## 3.24.1 (2019-01-09)
 
 #### :bug: Bug Fix
