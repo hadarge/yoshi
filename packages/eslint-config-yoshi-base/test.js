@@ -17,7 +17,6 @@ module.exports = {
         'jest/no-disabled-tests': 'warn',
         'jest/no-focused-tests': 'error',
         'jest/no-identical-title': 'error',
-        'jest/prefer-to-have-length': 'warn',
         // for chai expressions like "expect(...).to.be.undefined"
         // https://github.com/eslint/eslint/issues/2102
         'no-unused-expressions': 0,
