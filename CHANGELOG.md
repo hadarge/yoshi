@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.25.1 (2019-01-14)
+
+#### :bug: Bug Fix
+
+- `eslint-config-yoshi-base`
+  - [#910](https://github.com/wix/yoshi/pull/910) Remove `jest/prefer-to-have-length` eslint rule ([@yairhaimo](https://github.com/yairhaimo))
+
 ## 3.25.0 (2019-01-13)
 
 #### :rocket: New Feature
