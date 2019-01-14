@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.24.1",
+  "version": "3.25.1",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -43,8 +43,8 @@
     "envinfo": "^5.1.2",
     "eslint": "^4.13.1",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-config-yoshi": "3.21.0",
-    "eslint-config-yoshi-base": "3.21.0",
+    "eslint-config-yoshi": "3.25.1",
+    "eslint-config-yoshi-base": "3.25.1",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
