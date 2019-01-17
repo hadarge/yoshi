@@ -166,6 +166,6 @@
     "strip-ansi": "^4.0.0",
     "style-loader": "^0.18.2",
     "tempy": "~0.2.1",
-    "typescript": "^2.6.1"
+    "typescript": "^3.0.1"
   }
 }
