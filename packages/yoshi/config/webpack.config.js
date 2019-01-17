@@ -31,6 +31,7 @@ const {
   isProduction: checkIsProduction,
   inTeamCity: checkInTeamCity,
   isTypescriptProject: checkIsTypescriptProject,
+  getProjectArtifactId,
 } = require('yoshi-helpers');
 const { addEntry } = require('../src/webpack-utils');
 
@@ -592,6 +593,7 @@ function createClientWebpackConfig({
         'window.__CI_APP_VERSION__': JSON.stringify(
           artifactVersion ? artifactVersion : '0.0.0',
         ),
+        'process.env.ARTIFACT_ID': JSON.stringify(getProjectArtifactId()),
       }),
 
       // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
