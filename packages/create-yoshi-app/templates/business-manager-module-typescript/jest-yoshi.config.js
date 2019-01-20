@@ -24,7 +24,8 @@ module.exports = {
     },
   },
   puppeteer: {
-    // toggle headless chrome mode
-    headless: true,
+    // launch options: https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions
+    // debugging tips: https://github.com/GoogleChrome/puppeteer#debugging-tips
+    devtools: false,
   },
 };

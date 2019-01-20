@@ -25,4 +25,9 @@ module.exports = {
       await globalObject.app.stop();
     },
   },
+  puppeteer: {
+    // launch options: https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions
+    // debugging tips: https://github.com/GoogleChrome/puppeteer#debugging-tips
+    devtools: false,
+  },
 };
