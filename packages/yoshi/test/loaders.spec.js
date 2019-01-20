@@ -57,11 +57,7 @@ describe('Loaders', () => {
             require('./font.woff2');
             require('./font.eot');
             require('./beep.wav');
-            require('./beep.mp3');
-            require('./image.svg?version=1.0.2&some-other-param=value');
-            require('./icon.svg');
-            require('./icon.inline.svg');
-            require('./icon.inlineW.svg');`,
+            require('./beep.mp3');`,
           'src/server.js': `
             require('./some-css.scss');
             require('./foo.css');`,
@@ -108,10 +104,6 @@ describe('Loaders', () => {
           'src/font.eot': createAboveTheLimitFile(),
           'src/beep.wav': createAboveTheLimitFile(),
           'src/beep.mp3': createAboveTheLimitFile(),
-          'src/image.svg': createAboveTheLimitFile(),
-          'src/icon.svg': createAboveTheLimitFile(),
-          'src/icon.inline.svg': createAboveTheLimitFile(),
-          'src/icon.inlineW.svg': createAboveTheLimitFile(),
           'babel.config.js': `
             module.exports = {
               "plugins": ["@babel/plugin-transform-block-scoping"]
@@ -145,27 +137,15 @@ describe('Loaders', () => {
     });
 
     describe('babel-loader', () => {
-      it('should transpile according .babelrc file', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain(
-          'var aServerFunction = 1;',
-        );
-      });
-
       it('should apply ng-annotate loader on angular project', () => {
         expect(test.content('dist/statics/app.bundle.js')).to.contain(
           `.config(["$javascript", function ($javascript)`,
         );
       });
-
-      it('should run over specified 3rd party modules', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain(
-          'var tpl = 1',
-        );
-      });
     });
 
-    describe('SVG-loader', () => {
-      it('should run svg loader', () => {
+    describe('SVG-inline-loader', () => {
+      it('should run svg inline loader', () => {
         expect(test.content('dist/statics/app.bundle.js')).to.contain(
           svgModule,
         );
@@ -307,26 +287,6 @@ describe('Loaders', () => {
         const content = test.content('dist/statics/app.bundle.js');
         expect(content).to.contain(fileAboveTheLimit('beep.wav'));
         expect(content).to.contain(fileAboveTheLimit('beep.mp3'));
-      });
-
-      it('should load files that have a path with query string', () => {
-        const content = test.content('dist/statics/app.bundle.js');
-        expect(content).to.contain(fileAboveTheLimit('image.svg'));
-      });
-
-      it('should load svg files', () => {
-        const content = test.content('dist/statics/app.bundle.js');
-        expect(content).to.contain(fileAboveTheLimit('icon.svg'));
-      });
-
-      it('should not load "inline.svg" suffixed files', () => {
-        const content = test.content('dist/statics/app.bundle.js');
-        expect(content).not.to.contain(fileAboveTheLimit('icon.inline.svg'));
-      });
-
-      it('should load badly "inline.svg" suffixed files', () => {
-        const content = test.content('dist/statics/app.bundle.js');
-        expect(content).to.contain(fileAboveTheLimit('icon.inlineW.svg'));
       });
     });
   });
@@ -565,6 +525,51 @@ describe('Loaders', () => {
           )
           .execute('build');
       }
+    });
+  });
+
+  describe('svg', () => {
+    let test;
+    beforeEach(() => (test = tp.create()));
+    afterEach(() => test.teardown());
+    describe('javascript', () => {
+      it('load svg as a react component', () => {
+        const res = test
+          .setup({
+            'src/client.js': `import React from 'react'; \nimport imageUrl, { ReactComponent as Image } from './image.svg';`,
+            'src/image.svg': '<svg><g><path fill="#EEEEEE"></path></g></svg>',
+            'package.json': fx.packageJson(),
+          })
+          .execute('build');
+
+        expect(res.code).to.equal(0);
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          'createElement("svg"',
+        );
+      });
+    });
+
+    describe('typescript', () => {
+      it('load svg as a react component', () => {
+        const res = test
+          .setup({
+            'src/client.ts': `import * as React from 'react'; \nimport { ReactComponent as Image } from './image.svg';\n console.log(Image);`,
+            'tsconfig.json': fx.tsconfig({
+              include: ['external-types.d.ts'],
+            }),
+            'external-types.d.ts': `
+            declare module '*.svg';
+            `,
+            'src/image.svg': '<svg><g><path fill="#EEEEEE"></path></g></svg>',
+            'package.json': fx.packageJson(),
+          })
+          .execute('build');
+
+        expect(res.code).to.equal(0);
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          'createElement("svg"',
+        );
+      });
     });
   });
 });

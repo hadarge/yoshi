@@ -39,7 +39,7 @@ const { addEntry } = require('../src/webpack-utils');
 
 const reScript = /\.js?$/;
 const reStyle = /\.(css|less|scss|sass)$/;
-const reAssets = /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3)$/;
+const reAssets = /\.(png|jpg|jpeg|gif|woff|woff2|ttf|otf|eot|wav|mp3)$/;
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
 
@@ -62,6 +62,8 @@ const computedSeparateCss =
     : project.separateCss;
 
 const artifactVersion = process.env.ARTIFACT_VERSION;
+
+const staticAssetName = 'media/[name].[ext]?[hash]';
 
 // default public path
 let publicPath = '/';
@@ -426,41 +428,59 @@ function createCommonWebpackConfig({
               loader: 'svg-inline-loader',
             },
 
+            // Allows you to use two kinds of imports for SVG:
+            // import logoUrl from './logo.svg'; gives you the URL.
+            // import { ReactComponent as Logo } from './logo.svg'; gives you a component.
+            {
+              test: /\.svg$/,
+              issuer: {
+                test: /\.(j|t)sx?$/,
+              },
+              use: [
+                require.resolve('@svgr/webpack'),
+                {
+                  loader: 'url-loader',
+                  options: {
+                    name: staticAssetName,
+                    limit: 10000,
+                  },
+                },
+              ],
+            },
+            // Rules for Markdown
+            {
+              test: /\.md$/,
+              loader: 'raw-loader',
+            },
+
+            // Rules for HAML
+            {
+              test: /\.haml$/,
+              loader: 'ruby-haml-loader',
+            },
+
+            // Rules for HTML
+            {
+              test: /\.html$/,
+              loader: 'html-loader',
+            },
+
+            // Rules for GraphQL
+            {
+              test: /\.(graphql|gql)$/,
+              loader: 'graphql-tag/loader',
+            },
             // Try to inline assets as base64 or return a public URL to it if it passes
             // the 10kb limit
             {
               test: reAssets,
               loader: 'url-loader',
               options: {
-                name: 'media/[name].[ext]?[hash]',
+                name: staticAssetName,
                 limit: 10000,
               },
             },
           ],
-        },
-
-        // Rules for Markdown
-        {
-          test: /\.md$/,
-          loader: 'raw-loader',
-        },
-
-        // Rules for HAML
-        {
-          test: /\.haml$/,
-          loader: 'ruby-haml-loader',
-        },
-
-        // Rules for HTML
-        {
-          test: /\.html$/,
-          loader: 'html-loader',
-        },
-
-        // Rules for GraphQL
-        {
-          test: /\.(graphql|gql)$/,
-          loader: 'graphql-tag/loader',
         },
       ],
     },
@@ -484,8 +504,8 @@ function createCommonWebpackConfig({
       inTeamCity || withLocalSourceMaps
         ? 'source-map'
         : !isProduction
-          ? 'cheap-module-eval-source-map'
-          : false,
+        ? 'cheap-module-eval-source-map'
+        : false,
   };
 
   return config;
