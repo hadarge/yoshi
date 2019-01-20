@@ -12,7 +12,7 @@ function createAboveTheLimitFile() {
 }
 
 function fileAboveTheLimit(name) {
-  return `__webpack_require__.p + "assets/${name}`;
+  return `__webpack_require__.p + "media/${name}`;
 }
 
 function installHaml(cwd) {
