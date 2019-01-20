@@ -49,7 +49,7 @@ module.exports = function(api, opts = {}) {
     plugins: [
       // Enable stage 2 decorators.
       [
-        require('@babel/plugin-proposal-decorators'),
+        require('@babel/plugin-proposal-decorators').default,
         {
           // Enable export after decorator syntax. It's also a part of the spec and tc39 is not made a decision about it.
           // Read more https://github.com/tc39/proposal-decorators/issues/69
