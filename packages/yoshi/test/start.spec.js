@@ -900,11 +900,9 @@ describe('Aggregator: Start', () => {
     );
   }
 
-  function checkStdout(str, { backoff = 100, max = 10 } = {}) {
-    return retryPromise(
-      { backoff, max },
-      () =>
-        test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
+  function checkStdout(str, { backoff = 100, max = 100 } = {}) {
+    return retryPromise({ backoff, max }, () =>
+      test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
     );
   }
 
@@ -937,8 +935,8 @@ describe('Aggregator: Start', () => {
     return retryPromise({ backoff: 1000, max: 30 }, () =>
       fetch(`http://localhost:${fx.defaultServerPort()}/`)
         .then(res => res.text())
-        .then(
-          body => (body === expected ? Promise.resolve() : Promise.reject()),
+        .then(body =>
+          body === expected ? Promise.resolve() : Promise.reject(),
         ),
     );
   }

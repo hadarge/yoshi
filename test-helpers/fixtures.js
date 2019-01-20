@@ -243,7 +243,7 @@ const fx = {
   </project>
   `,
   defaultServerPort: () => 3002,
-  httpServer: (message, port) => `
+  httpServer: (message, port = fx.defaultServerPort()) => `
     'use strict';
 
     const http = require('http');
