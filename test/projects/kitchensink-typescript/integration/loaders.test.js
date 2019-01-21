@@ -272,6 +272,17 @@ describe('webpack', () => {
 
       expect(imageSource).toMatch(/svg/);
     });
+
+    it('component svg inclusion', async () => {
+      await initTest('component-svg-inclusion');
+
+      const result = await page.$eval(
+        '#component-svg-inclusion',
+        elm => elm.innerHTML,
+      );
+
+      expect(result).toMatch(/(<svg)([^<]*|[^>]*)/);
+    });
   });
 
   describe('json', () => {
