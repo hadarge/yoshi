@@ -1,5 +1,30 @@
 # Changelog
 
+## 3.26.0 (2019-01-21)
+
+#### :rocket: New Feature
+
+- `yoshi-helpers`, `yoshi`
+  - [#915](https://github.com/wix/yoshi/pull/915) Adds `ARTIFACT_ID` env var to bundle ([@aaronvine](https://github.com/aaronvine))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#913](https://github.com/wix/yoshi/pull/913) Fix Business Manager artifact name in erb template ([@ronenst](https://github.com/ronenst))
+- `yoshi`
+  - [3b5fb8](https://github.com/wix/yoshi/commit/3b5fb86d3695b876d26944f2bee0667d2dee6052) Fix webpack version until webpack issue `#8656` is solved
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#919](https://github.com/wix/yoshi/pull/919) Add a "read more" link to `*.json.erb` template files ([@sidoruk-sv](https://github.com/sidoruk-sv))
+  - [#911](https://github.com/wix/yoshi/pull/911) Replace deprecated `${workspaceRoot}` variable with `${workspaceFolder}` ([@sidoruk-sv](https://github.com/sidoruk-sv))
+
+#### :house: Internal
+
+- `jest-yoshi-preset`, `tslint-config-yoshi-base`, `tslint-config-yoshi`, `yoshi-helpers`, `yoshi`
+  - [#920](https://github.com/wix/yoshi/pull/920) Bump dev dependency to Typescript 3 ([@ronami](https://github.com/ronami))
+
 ## 3.25.1 (2019-01-14)
 
 #### :bug: Bug Fix
