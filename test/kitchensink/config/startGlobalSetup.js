@@ -3,8 +3,8 @@ const Scripts = require('../../scripts');
 
 global.scripts = new Scripts(process.env.TEST_DIRECTORY);
 
-module.exports = async () => {
-  await setupPuppeteer();
+module.exports = async globalConfig => {
+  await setupPuppeteer(globalConfig);
 
   global.result = await global.scripts.start({
     // disable CI env vars
