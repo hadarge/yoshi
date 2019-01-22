@@ -590,6 +590,7 @@ function createClientWebpackConfig({
         'process.env.NODE_ENV': JSON.stringify(
           isProduction ? 'production' : 'development',
         ),
+        'process.env.IS_MINIFIED': isDebug ? 'false' : 'true',
         'window.__CI_APP_VERSION__': JSON.stringify(
           artifactVersion ? artifactVersion : '0.0.0',
         ),

@@ -231,6 +231,21 @@ describe('Webpack basic configs', () => {
           'module.exports = __webpack_require__.p + "image.jpg?',
         );
       });
+
+      it('should expose IS_MINIFIED env variable', () => {
+        test
+          .setup({
+            'src/client.js': `console.log({cssPath: 'filename' + (process.env.IS_MINIFIED ? '.min' : '') + '.css'})`,
+          })
+          .execute('build', [], { NODE_ENV: 'PRODUCTION' });
+
+        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+          `cssPath: 'filename' + ( false ? undefined : '') + '.css'`,
+        );
+        expect(test.content('dist/statics/app.bundle.min.js')).to.contain(
+          `cssPath:"filename.min.css"`,
+        );
+      });
     });
   });
 
