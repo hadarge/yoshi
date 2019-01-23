@@ -30,7 +30,10 @@ module.exports = class Scripts {
 
     // `startProcess` will never resolve but if it fails this
     // promise will reject immediately
-    await Promise.race([waitForPort(port), startProcess]);
+    await Promise.race([
+      waitForPort(port, { timeout: 60 * 1000 }),
+      startProcess,
+    ]);
 
     return {
       port,
