@@ -1,7 +1,7 @@
 const execa = require('execa');
 const terminate = require('terminate');
 const { promisify } = require('util');
-const { waitForPort, execaSafe } = require('./utils');
+const { waitForPort } = require('./utils');
 
 const terminateAsync = promisify(terminate);
 
@@ -58,7 +58,7 @@ module.exports = class Scripts {
   }
 
   async build(env = {}) {
-    return execaSafe('npx', ['yoshi', 'build'], {
+    return execa('npx', ['yoshi', 'build'], {
       cwd: this.testDirectory,
       env: {
         ...defaultOptions,

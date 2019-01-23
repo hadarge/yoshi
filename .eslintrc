@@ -5,7 +5,7 @@
   },
   "overrides": [
     {
-      "files": ["test/kitchensink/**/*"],
+      "files": ["test/projects/**/*"],
       "rules": {
         "import/no-unresolved": 0,
         "import/no-extraneous-dependencies": 0

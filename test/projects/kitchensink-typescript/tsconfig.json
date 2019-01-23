@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "allowSyntheticDefaultImports": true,
+    "strict": true
+  },
+  "exclude": [
+    "src/errors"
+  ],
+  "include": [
+    "src"
+  ]
+}

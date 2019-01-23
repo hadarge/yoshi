@@ -1,27 +1,6 @@
-const os = require('os');
 const http = require('http');
-const execa = require('execa');
 const waitPort = require('wait-port');
-const stripAnsi = require('strip-ansi');
 const { parastorageCdnUrl, localCdnUrl } = require('./constants');
-
-const execaSafe = (...args) => {
-  return execa(...args)
-    .then(({ stdout, stderr, ...rest }) => ({
-      fulfilled: true,
-      rejected: false,
-      stdout: stripAnsi(stdout),
-      stderr: stripAnsi(stderr),
-      ...rest,
-    }))
-    .catch(err => ({
-      fulfilled: false,
-      rejected: true,
-      reason: err,
-      stdout: '',
-      stderr: stripAnsi(err.message),
-    }));
-};
 
 const makeRequest = url => {
   return new Promise(resolve => {
@@ -102,5 +81,4 @@ module.exports = {
   matchCSS,
   initTest,
   waitForPort,
-  execaSafe,
 };

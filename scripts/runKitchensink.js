@@ -22,7 +22,7 @@ const filterConfig = process.env.FILTER_CONFIG;
 const cleanup = isCI ? publishMonorepo() : () => {};
 
 // Find all projects to run tests on
-let projects = globby.sync('test/*', {
+let projects = globby.sync('test/projects/*', {
   onlyDirectories: true,
   absolute: true,
 });
@@ -35,6 +35,9 @@ if (filterProject) {
 
 try {
   projects.forEach(templateDirectory => {
+    console.log(`Testing ${templateDirectory}`);
+    console.log();
+
     const rootDirectory = tempy.directory();
 
     const testDirectory = path.join(rootDirectory, 'project');
@@ -92,7 +95,7 @@ try {
     // Run them one by one
     try {
       configs.forEach(configPath => {
-        console.log(`Running tests for ${configPath}`);
+        console.log(`  > Running tests for ${configPath}`);
         console.log();
 
         try {
