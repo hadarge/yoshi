@@ -1,6 +1,6 @@
 const { request, waitForPort } = require('../../../utils');
 
-jest.setTimeout(30 * 1000);
+jest.setTimeout(60 * 1000);
 
 describe('analyze', () => {
   it('opens bundle analyze', async () => {

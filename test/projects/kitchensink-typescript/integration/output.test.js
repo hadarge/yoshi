@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 
-jest.setTimeout(20 * 1000);
+jest.setTimeout(60 * 1000);
 
 const originalFilePath = path.join(
   global.scripts.testDirectory,
