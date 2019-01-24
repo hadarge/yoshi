@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.27.0 (2019-01-24)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#930](https://github.com/wix/yoshi/pull/930) Add process.env.IS_MINIFIED. ([@felixmosh](https://github.com/felixmosh))
+
+#### :house: Internal
+
+- `yoshi`
+  - [#933](https://github.com/wix/yoshi/pull/933) App flow Typescript tests ([@ronami](https://github.com/ronami))
+- Other
+  - [#932](https://github.com/wix/yoshi/pull/932) Pass Jest's globalConfig to `jest-puppeteer` global setup/teardown functions ([@ronami](https://github.com/ronami))
+
 ## 3.26.0 (2019-01-21)
 
 #### :rocket: New Feature
