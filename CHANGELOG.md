@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.28.0 (2019-01-27)
+
+#### :rocket: New Feature
+* `jest-yoshi-preset`, `yoshi`
+ * [#909](https://github.com/wix/yoshi/pull/909) Upgrade stylable packages to version `^1.0.0` ([@AviVahl](https://github.com/AviVahl))
+
 ## 3.27.0 (2019-01-24)
 
 #### :rocket: New Feature
