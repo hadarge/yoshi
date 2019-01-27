@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.27.0",
+  "version": "3.28.0",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -140,7 +140,7 @@
     "fs-extra": "~5.0.0",
     "generic-names": "~1.0.3",
     "identity-obj-proxy": "~3.0.0",
-    "jest-yoshi-preset": "3.26.0",
+    "jest-yoshi-preset": "3.28.0",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-jasmine": "~1.1.0",
