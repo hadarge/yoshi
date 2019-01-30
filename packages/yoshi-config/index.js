@@ -6,7 +6,7 @@ const packagejson = require('./utils/get-project-pkg');
 const lookupConfig = require('./utils/lookup-config');
 const validateConfig = require('./utils/validate-config');
 const YoshiOptionsValidationError = require('./utils/YoshiOptionsValidationError');
-const schema = require('./schema/yoshi-config-schema.json');
+const schema = require('./schema/yoshi-config-schema');
 
 const loadConfig = () => {
   const config = lookupConfig();
