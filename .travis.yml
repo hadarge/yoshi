@@ -18,27 +18,32 @@ cache:
   yarn: true
 jobs:
   include:
-    - script:
+    - name: "website"
+      if: type != pull_request
+      script:
       - git config --global user.name "${GH_NAME}"
       - git config --global user.email "${GH_EMAIL}"
       - echo "machine github.com login ${GH_NAME} password ${GH_TOKEN}" > ~/.netrc
-      - cd website && yarn install && GIT_USER="${GH_NAME}" yarn run publish-gh-pages
-      name: "website"
-    - script: npm run test:integration
+      - cd website && yarn install && GIT_USER="${GH_NAME}" yarn run publish-gh-pages 
+    - name: "test:integration"
+      if: type != pull_request
       before_script: 
         # Puppeteer setup
         - "sysctl kernel.unprivileged_userns_clone=1"
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
         # Install
-        - npm install
-      name: "test:integration"
-    - script: npm run test:unit
+        - npm install 
+      script: npm run test:integration
+    - name: "test:unit"
+      if: type != pull_request
       before_script: npm install
-      name: "test:unit"
-    - script: npm run test:app-flow
+      script: npm run test:unit
+    - name: "test:app-flow"
+      if: type != pull_request
       before_script: npm install
-      name: "test:app-flow"
-    - script: npm run lint
+      script: npm run test:app-flow
+    - name: "lint"
+      if: type != pull_request
       before_script: npm install
-      name: "lint"
+      script: npm run lint 
