@@ -454,7 +454,6 @@ function createCommonWebpackConfig({
         // Rules for GraphQL
         {
           test: /\.(graphql|gql)$/,
-          include: project.unprocessedModules,
           loader: 'graphql-tag/loader',
         },
       ],
