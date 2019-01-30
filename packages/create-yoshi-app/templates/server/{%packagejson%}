@@ -40,11 +40,6 @@
   "yoshi": {
     "hmr": "auto"
   },
-  "babel": {
-    "presets": [
-      "yoshi"
-    ]
-  },
   "eslintConfig": {
     "extends": "yoshi"
   },

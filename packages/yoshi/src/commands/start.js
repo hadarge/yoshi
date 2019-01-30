@@ -31,13 +31,13 @@ const {
 const globs = require('yoshi-config/globs');
 const {
   isTypescriptProject,
-  isBabelProject,
   shouldRunLess,
   shouldRunSass,
   shouldTransformHMRRuntime,
   suffix,
   watch,
   isProduction,
+  createBabelConfig,
 } = require('yoshi-helpers');
 const { debounce } = require('lodash');
 const wixAppServer = require('../tasks/app-server');
@@ -262,24 +262,29 @@ module.exports = runner.command(
         return appServer();
       }
 
-      if (isBabelProject()) {
-        watch(
-          { pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'] },
-          async changed => {
-            await babel({ pattern: changed, target: 'dist', sourceMaps: true });
-            await appServer();
-          },
-        );
+      const baseBabelConfig = createBabelConfig();
 
-        await babel({
-          pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'],
-          target: 'dist',
-          sourceMaps: true,
-        });
-        return appServer();
-      }
+      const babelConfig = {
+        ...baseBabelConfig,
+        sourceMaps: true,
+        target: 'dist',
+      };
 
-      watch({ pattern: globs.babel }, appServer);
+      watch(
+        { pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'] },
+        async changed => {
+          await babel({
+            pattern: changed,
+            ...babelConfig,
+          });
+          return appServer();
+        },
+      );
+
+      await babel({
+        pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'],
+        ...babelConfig,
+      });
 
       return appServer();
     }

@@ -15,14 +15,14 @@ describe('Aggregator: e2e', () => {
     test = tp.create();
   });
 
-  afterEach(function () {
+  afterEach(function() {
     if (this.currentTest.state === 'failed') {
       test.logOutput();
     }
     test.teardown();
   });
 
-  describe('should run protractor with a cdn server', function () {
+  describe('should run protractor with a cdn server', function() {
     this.timeout(60000);
 
     it('should download chromedriver 2.29 and use it (when there is environement param IS_BUILD_AGENT and no CHROMEDRIVER_VERSION supplied)', () => {
@@ -130,11 +130,20 @@ describe('Aggregator: e2e', () => {
       expect(res.stdout).to.contain('##teamcity[');
     });
 
-    it('should use @babel/register', function () {
+    it('should use @babel/register', function() {
       this.timeout(60000);
 
       const res = test
-        .setup(singleModuleWithJasmineAndES6Imports(true))
+        .setup(
+          Object.assign(singleModuleWithJasmine(), {
+            'dist/test/subFolder/some.e2e.js': fx.e2eTestJasmineES6Imports(),
+            'package.json': `{
+              "name": "a",\n
+              "version": "1.0.4",\n
+              "yoshi": ${JSON.stringify(Object.assign(cdnConfigurations()))}
+            }`,
+          }),
+        )
         .execute('test', ['--protractor'], outsideTeamCity);
 
       expect(res.code).to.equal(0);
@@ -144,17 +153,6 @@ describe('Aggregator: e2e', () => {
       expect(fx.e2eTestJasmineES6Imports()).to.contain(
         `import path from 'path'`,
       );
-    });
-
-    it('should not use @babel/register', function () {
-      this.timeout(60000);
-
-      const res = test
-        .setup(singleModuleWithJasmineAndES6Imports(false))
-        .execute('test', ['--protractor'], outsideTeamCity);
-
-      expect(res.code).to.equal(1);
-      expect(res.stdout).to.match(/Unexpected (identifier|token)/);
     });
   });
 
@@ -169,7 +167,7 @@ describe('Aggregator: e2e', () => {
     expect(res.stdout).to.not.contain('protractor');
   });
 
-  it('should support css class selectors with cssModules on', function () {
+  it('should support css class selectors with cssModules on', function() {
     this.timeout(60000);
 
     test
@@ -185,7 +183,7 @@ describe('Aggregator: e2e', () => {
     expect(res.code).to.equal(0);
   });
 
-  it('should pre-process sass with cssModules on', function () {
+  it('should pre-process sass with cssModules on', function() {
     this.timeout(60000);
 
     test
@@ -201,7 +199,7 @@ describe('Aggregator: e2e', () => {
     expect(res.code).to.equal(0);
   });
 
-  it("should extend project's beforeLaunch", function () {
+  it("should extend project's beforeLaunch", function() {
     this.timeout(60000);
     const res = test
       .setup(singleModuleWithBeforeLaunch())
@@ -212,7 +210,7 @@ describe('Aggregator: e2e', () => {
     expect(res.stdout).to.contain('1 spec, 0 failures');
   });
 
-  it("should extend project's afterLaunch", function () {
+  it("should extend project's afterLaunch", function() {
     this.timeout(60000);
     const res = test
       .setup({
@@ -234,22 +232,6 @@ describe('Aggregator: e2e', () => {
         },
       },
     };
-  }
-
-  function singleModuleWithJasmineAndES6Imports(runIndividualTranspiler) {
-    return Object.assign(singleModuleWithJasmine(), {
-      'dist/test/subFolder/some.e2e.js': fx.e2eTestJasmineES6Imports(),
-      'package.json': `{
-          "name": "a",\n
-          "version": "1.0.4",\n
-          "yoshi": ${JSON.stringify(
-        Object.assign(cdnConfigurations(), { runIndividualTranspiler }),
-      )},
-          "babel": { "plugins": ["${require.resolve(
-        '@babel/plugin-transform-modules-commonjs',
-      )}"]}
-        }`,
-    });
   }
 
   function singleModuleWithJasmine() {

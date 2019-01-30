@@ -46,7 +46,7 @@ describe('Webpack basic configs', () => {
       it('should have a context ./src and output to ./dist', () =>
         // client.js
         expect(test.content('dist/statics/app.bundle.js')).to.contain(
-          'const aClientFunction',
+          'var aClientFunction',
         ));
 
       it('should resolve modules relatively to current context', () =>
@@ -110,9 +110,7 @@ describe('Webpack basic configs', () => {
         })
         .execute('build');
 
-      expect(test.content('dist/statics/app.bundle.js')).to.contain(
-        'const some',
-      );
+      expect(test.content('dist/statics/app.bundle.js')).to.contain('var some');
     });
 
     it('should set chunk filename', () => {
@@ -367,7 +365,7 @@ describe('Webpack basic configs', () => {
       test.execute('build', [], insideTeamCity);
 
       expect(test.content('dist/statics/app.bundle.min.js')).to.contain(
-        'class LongClassName',
+        'function LongClassName',
       );
       test.teardown();
     });

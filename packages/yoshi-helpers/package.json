@@ -27,13 +27,14 @@
     "yoshi-config": "3.30.5"
   },
   "peerDependencies": {
-    "@babel/core": "7.1.2",
+    "@babel/core": "^7.1.2",
     "@babel/plugin-transform-modules-commonjs": "7.1.0",
     "typescript": "^2.0.0 || ^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.1.2",
+    "@babel/core": "^7.1.2",
     "@babel/plugin-transform-modules-commonjs": "7.1.0",
+    "babel-preset-yoshi": "4.0.0",
     "typescript": "^3.0.1"
   }
 }

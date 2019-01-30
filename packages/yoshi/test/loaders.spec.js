@@ -104,11 +104,6 @@ describe('Loaders', () => {
           'src/font.eot': createAboveTheLimitFile(),
           'src/beep.wav': createAboveTheLimitFile(),
           'src/beep.mp3': createAboveTheLimitFile(),
-          'babel.config.js': `
-            module.exports = {
-              "plugins": ["@babel/plugin-transform-block-scoping"]
-            };
-          `,
           'package.json': `{\n
             "name": "a",
             "dependencies": {\n

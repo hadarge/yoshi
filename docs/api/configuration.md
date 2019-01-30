@@ -178,10 +178,6 @@ For example:
 }
 ```
 
-## runIndividualTranspiler
-
-In case you don't want to transpile your server (node) code, and you still need `.babelrc`/`tsconfig`, you can add `runIndividualTranspiler` flag to skip server transpiling.
-
 ## transpileTests
 
 An option to not transpile tests with Babel (via `@babel/register`). Defaults to `true`.

@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "@babel/code-frame": "^7.0.0",
+    "@babel/core": "^7.1.2",
     "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "@babel/register": "^7.0.0",
     "@sentry/node": "^4.0.6",
@@ -140,7 +141,6 @@
     "yoshi-runtime": "^1.0.38"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
     "@babel/plugin-syntax-jsx": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/runtime": "^7.1.5",

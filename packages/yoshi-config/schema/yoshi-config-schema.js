@@ -95,11 +95,6 @@ const schema = {
         },
       },
     },
-    runIndividualTranspiler: {
-      description:
-        "In case you don't want to transpile your server (node) code, and you still need .babelrc/tsconfig, you can add runIndividualTranspiler flag to skip server transpiling.",
-      type: 'boolean',
-    },
     petriSpecs: {
       description: 'Configure options for the petriSpecs command',
       type: 'object',

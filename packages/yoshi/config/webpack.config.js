@@ -34,6 +34,7 @@ const {
   inTeamCity: checkInTeamCity,
   isTypescriptProject: checkIsTypescriptProject,
   getProjectArtifactId,
+  createBabelConfig,
 } = require('yoshi-helpers');
 const { addEntry } = require('../src/webpack-utils');
 
@@ -42,6 +43,8 @@ const reStyle = /\.(css|less|scss|sass)$/;
 const reAssets = /\.(png|jpg|jpeg|gif|woff|woff2|ttf|otf|eot|wav|mp3)$/;
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
+
+const babelConfig = createBabelConfig({ modules: false });
 
 const disableTsThreadOptimization =
   process.env.DISABLE_TS_THREAD_OPTIMIZATION === 'true';
@@ -118,6 +121,9 @@ function overrideRules(rules, patch) {
     }
     if (rule.oneOf) {
       rule = { ...rule, oneOf: overrideRules(rule.oneOf, patch) };
+    }
+    if (rule.use) {
+      rule = { ...rule, use: overrideRules(rule.use, patch) };
     }
     return rule;
   });
@@ -415,6 +421,9 @@ function createCommonWebpackConfig({
             },
             {
               loader: 'babel-loader',
+              options: {
+                ...babelConfig,
+              },
             },
           ],
         },
@@ -746,6 +755,20 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
               options: {
                 ...rule.options,
                 emitFile: false,
+              },
+            };
+          }
+
+          if (rule.loader === 'babel-loader') {
+            const serverBabelConfig = createBabelConfig({
+              modules: false,
+              targets: 'current node',
+            });
+
+            return {
+              ...rule,
+              options: {
+                ...serverBabelConfig,
               },
             };
           }

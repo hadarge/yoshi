@@ -50,11 +50,6 @@
   "jest": {
     "preset": "jest-yoshi-preset"
   },
-  "babel": {
-    "presets": [
-      "yoshi"
-    ]
-  },
   "eslintConfig": {
     "extends": "yoshi"
   },

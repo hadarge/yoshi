@@ -1,12 +1,10 @@
-const { runIndividualTranspiler, transpileTests } = require('yoshi-config');
-const { isTypescriptProject, isBabelProject } = require('../queries');
+const { transpileTests } = require('yoshi-config');
+const { isTypescriptProject } = require('../queries');
 
 module.exports.setupRequireHooks = () => {
-  if (runIndividualTranspiler) {
-    if (isTypescriptProject()) {
-      require('./ts-node-register');
-    } else if (isBabelProject() && transpileTests) {
-      require('./babel-register');
-    }
+  if (isTypescriptProject()) {
+    require('./ts-node-register');
+  } else if (transpileTests) {
+    require('./babel-register');
   }
 };

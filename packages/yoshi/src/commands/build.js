@@ -9,7 +9,6 @@ const globs = require('yoshi-config/globs');
 const path = require('path');
 const { STATS_FILE } = require('yoshi-config/paths');
 const {
-  runIndividualTranspiler,
   petriSpecsConfig,
   clientProjectName,
   isAngularProject,
@@ -18,11 +17,11 @@ const {
 const {
   watchMode,
   isTypescriptProject,
-  isBabelProject,
   shouldExportModule,
   shouldRunWebpack,
   shouldRunLess,
   shouldRunSass,
+  createBabelConfig,
 } = require('yoshi-helpers');
 const { printAndExitOnErrors } = require('../error-handler');
 
@@ -242,7 +241,7 @@ module.exports = runner.command(
     function transpileJavascript({ esTarget } = {}) {
       const transpilations = [];
 
-      if (isTypescriptProject() && runIndividualTranspiler) {
+      if (isTypescriptProject()) {
         transpilations.push(
           typescript({
             project: 'tsconfig.json',
@@ -261,12 +260,15 @@ module.exports = runner.command(
             }),
           );
         }
-      } else if (isBabelProject() && runIndividualTranspiler) {
+      } else {
+        const babelConfig = createBabelConfig();
+
         transpilations.push(
           babel(
             {
               pattern: globs.babel,
-              target: globs.dist({ esTarget }),
+              target: globs.dist({ esTarget: false }),
+              ...babelConfig,
             },
             {
               title: 'babel',
@@ -274,13 +276,13 @@ module.exports = runner.command(
           ),
         );
         if (esTarget) {
+          const esBabelConfig = createBabelConfig({ modules: false });
+
           transpilations.push(
             babel({
               pattern: globs.babel,
-              target: globs.dist({ esTarget: false }),
-              plugins: [
-                require.resolve('@babel/plugin-transform-modules-commonjs'),
-              ],
+              target: globs.dist({ esTarget: true }),
+              ...esBabelConfig,
             }),
           );
         }

@@ -8,7 +8,7 @@ sidebar_label: Export ES Modules
 
 ### TL;DR
 
-Add `module: 'path/to/entry.js'` in your `package.json` and make sure you are **not** using[`babel-plugin-transform-es2015-modules-commonjs`](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-modules-commonjs) in `.babelrc`. Similarly, for typescript project, make sure you have `{"module": "es6"}` in `tsconfig.json`.
+Add `module: 'path/to/entry.js'` in your `package.json`. For typescript project, make sure you have `{"module": "es6"}` in `tsconfig.json`.
 
 ### Why
 
@@ -21,20 +21,12 @@ Add `module: 'path/to/entry.js'` in your `package.json` and make sure you are **
 
 ### How
 
-1. Don't include `babel-plugin-transform-es2015-modules-commonjs` to your `.babelrc`.
-   - If you are using `babel-preset-env`, `babel-preset-es2015` or other preset which includes this plugin under the hood, use `{ modules: false }` to configure it.
-   - If you are using `babel-preset-yoshi` there is nothing special you need to do in babel config.
-2. For typescript project, no special `tsconfig.json` change is needed.
-3. Specify path to your entry file with `module: 'dist/es/src/entry.js'`. Please note that Yoshi will create `es` directory with untranspiled modules near your usual transformation output (`dist/src` and `dist/es/src`).
+1. Specify path to your entry file with `module: 'dist/es/src/entry.js'`. Please note that Yoshi will create `es` directory with untranspiled modules near your usual transformation output (`dist/src` and `dist/es/src`).
 
 _package.json_
 
 ```json
-"module": "dist/es/src/entry.js",
-"babel": {
-  "presets": [
-    "yoshi"
-  ]
+"module": "dist/es/src/entry.js"
 },
 "yoshi": {
   "entry": "./entry.js"

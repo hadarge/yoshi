@@ -6,27 +6,9 @@ sidebar_label: Babel Setup
 
 ## Introduction
 
-Yoshi provides its own preset for full-stack, client or Node.js projects. It is pre-configured, maintained and tuned for the current state of Yoshi.
+Yoshi comes with its own preset for full-stack, client or Node.js projects. It is pre-configured, maintained and tuned for the current state of Yoshi.
 
-## Usages in Yoshi projects
-
-Configure `yoshi` to use its built-in preset by adding the following to your `package.json` or with separate `babelrc`/`babel.config.js` config:
-
-```json
-{
-  "babel": {
-    "presets": ["yoshi"]
-  }
-}
-```
-
-## Configuration options
-
-- `targets`: Avoid redundant transformations if specified targets already support some of ESNext features. [Read more](https://babeljs.io/docs/plugins/preset-env/#targets).
-  By default, if no `targets` provided, it will compile for **all** targets (`node` on test environment).
-- `modules` (defaults to `"commonjs"` in `test` environment and to false in `production` and `development` ): Enable transformation of ES6 module syntax to another module type. [Read more](https://babeljs.io/docs/plugins/preset-env/#modules). Set `false` to ignore module transforms.
-- `ignoreReact` (default: `false`): Ignores plugins and presets related to React.
-- `debug` (default: `false`): Outputs the targets/plugins used according to specified targets. [Read more](https://babeljs.io/docs/plugins/preset-env/#debug).
+**Note:** There is no need to configure Babel with `.babelrc` or `babel.config.js`.
 
 ## Modes
 
@@ -49,14 +31,17 @@ The preset behaves differently according to the environment. The environment is 
 ### Environment specific plugins:
 
 #### `test`
-  - [dynamic-import-node](https://github.com/airbnb/babel-plugin-dynamic-import-node) - Babel plugin to transpile import() to a deferred require(), for node.
-  - [syntax-object-rest-spread](https://babeljs.io/docs/plugins/syntax-object-rest-spread) Allow the syntax of Object `{ ...rest, ...spread }`
+
+- [dynamic-import-node](https://github.com/airbnb/babel-plugin-dynamic-import-node) - Babel plugin to transpile import() to a deferred require(), for node.
+- [syntax-object-rest-spread](https://babeljs.io/docs/plugins/syntax-object-rest-spread) Allow the syntax of Object `{ ...rest, ...spread }`
 
 #### `development`
-  - [syntax-dynamic-import](https://babeljs.io/docs/plugins/syntax-dynamic-import) - Allow the syntax of dynamic imports since all transformations done by webpack.
-  - [syntax-object-rest-spread](https://babeljs.io/docs/plugins/syntax-object-rest-spread) Allow the syntax of Object `{ ...rest, ...spread }`
+
+- [syntax-dynamic-import](https://babeljs.io/docs/plugins/syntax-dynamic-import) - Allow the syntax of dynamic imports since all transformations done by webpack.
+- [syntax-object-rest-spread](https://babeljs.io/docs/plugins/syntax-object-rest-spread) Allow the syntax of Object `{ ...rest, ...spread }`
 
 #### `production`
-  - [syntax-dynamic-import](https://babeljs.io/docs/plugins/syntax-dynamic-import) - Allow the syntax of dynamic imports since all transformations done by webpack.
-  - [remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) only for production builds.
-  - [proposal-object-rest-spread](https://babeljs.io/docs/plugins/transform-object-rest-spread) - Transform Object `{ ...rest, ...spread }`
+
+- [syntax-dynamic-import](https://babeljs.io/docs/plugins/syntax-dynamic-import) - Allow the syntax of dynamic imports since all transformations done by webpack.
+- [remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) only for production builds.
+- [proposal-object-rest-spread](https://babeljs.io/docs/plugins/transform-object-rest-spread) - Transform Object `{ ...rest, ...spread }`

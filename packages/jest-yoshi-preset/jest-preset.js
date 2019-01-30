@@ -63,7 +63,7 @@ module.exports = {
           transformIgnorePatterns: ['/node_modules/(?!(.*?\\.st\\.css$))'],
 
           transform: {
-            '^.+\\.jsx?$': require.resolve('babel-jest'),
+            '^.+\\.jsx?$': require.resolve('./transforms/babel'),
             '^.+\\.tsx?$': require.resolve('ts-jest'),
             '\\.st.css?$': require.resolve('@stylable/jest'),
             '\\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3)$': require.resolve(

@@ -50,7 +50,6 @@ describe('test --jasmine', () => {
         'test/bar.js': 'export default 5;',
         'test/some.spec.js': `import foo from './bar';`,
         'package.json': fx.packageJson({ transpileTests: false }),
-        '.babelrc': JSON.stringify({ presets: ['yoshi'] }),
       })
       .execute('test', ['--jasmine']);
     expect(res.code).to.equal(1);
@@ -186,7 +185,7 @@ function jasmineSetup() {
 }
 
 function checkStdoutContains(test, str) {
-  return retryPromise({ backoff: 100 }, () =>
-    test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
-  );
+  return retryPromise({ backoff: 100 }, async () => {
+    expect(test.stdout).to.contain(str);
+  });
 }

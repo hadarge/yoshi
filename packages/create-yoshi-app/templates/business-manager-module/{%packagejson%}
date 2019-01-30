@@ -63,11 +63,6 @@
       "react-module-container": "reactModuleContainer"
     }
   },
-  "babel": {
-    "presets": [
-      "yoshi"
-    ]
-  },
   "eslintConfig": {
     "extends": "yoshi",
     "globals": {
