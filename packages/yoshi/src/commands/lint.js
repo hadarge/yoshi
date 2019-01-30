@@ -49,8 +49,8 @@ module.exports = runner.command(async tasks => {
       await runStyleLint(styleFiles);
     }
 
-    if (isTypescriptProject() && tsFiles.length) {
-      await runTsLint(tsFiles);
+    if (isTypescriptProject() && (tsFiles.length || jsFiles.length)) {
+      await runTsLint([...tsFiles, ...jsFiles]);
     } else if (jsFiles.length) {
       await runEsLint(jsFiles);
     }
