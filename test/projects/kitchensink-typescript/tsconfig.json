@@ -3,10 +3,14 @@
     "jsx": "react",
     "lib": ["dom", "esnext"],
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true
   },
   "exclude": [
     "src/errors"
+  ],
+  "files": [
+    "./node_modules/yoshi/types.d.ts"
   ],
   "include": [
     "src"

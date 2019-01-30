@@ -9,13 +9,15 @@
     "importHelpers": true,
     "target": "es5",
     "jsx": "react",
-    "lib": ["dom", "es2016"]
+    "lib": ["dom", "esnext"],
+    "resolveJsonModule": true
   },
   "include": [
     "./test/**/*.ts",
     "./src/**/*.spec.tsx"
   ],
   "files": [
+    "./node_modules/yoshi/types.d.ts",
     "./node_modules/jest-yoshi-preset/types.d.ts",
     "./src/external-types.d.ts"
   ]

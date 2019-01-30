@@ -15,7 +15,8 @@
   "files": [
     "src",
     "bin",
-    "config"
+    "config",
+    "types.d.ts"
   ],
   "dependencies": {
     "@babel/code-frame": "^7.0.0",
@@ -28,11 +29,12 @@
     "@stylable/node": "^1.0.0",
     "@stylable/webpack-plugin": "^1.1.0",
     "@svgr/webpack": "^4.0.2",
+    "@types/graphql": "^14.0.5",
     "@wix/depkeeper-preset-yoshi": "^1.0.0",
     "autoprefixer": "~7.1.2",
-    "babel-jest": "^23.2.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.2.0",
     "babel-loader": "~8.0.4",
     "babel-plugin-transform-hmr-runtime": "^4.0.0",
     "babel-preset-yoshi": "^4.0.0",

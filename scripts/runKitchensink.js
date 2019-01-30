@@ -55,6 +55,11 @@ try {
         path.join(__dirname, '../packages/yoshi/bin/yoshi.js'),
         path.join(rootDirectory, 'node_modules/.bin/yoshi'),
       );
+
+      fs.ensureSymlinkSync(
+        path.join(__dirname, '../packages/yoshi'),
+        path.join(testDirectory, 'node_modules/yoshi'),
+      );
     } else {
       // Authenticate and install from our fake registry on CI
       authenticateToRegistry(testDirectory);

@@ -478,7 +478,7 @@ describe('Aggregator: Build', () => {
         .setup({
           'tsconfig.json': fx.tsconfig({
             compilerOptions: {
-              lib: ['es2015'],
+              lib: ['esnext'],
             },
           }),
           'src/a.ts': `import {xxx} from './b'; import('./c').then(() => console.log(xxx));`,
