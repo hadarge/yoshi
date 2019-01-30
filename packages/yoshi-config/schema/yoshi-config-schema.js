@@ -184,10 +184,6 @@ const schema = {
         'An experimental way of running an app by creating a bundle specifically for the server.',
       type: 'boolean',
     },
-    experimentalTSTarget: {
-      description: 'An experimental TypeScript compilation target.',
-      type: 'boolean',
-    },
   },
 };
 

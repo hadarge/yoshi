@@ -83,7 +83,6 @@ const loadConfig = () => {
     keepFunctionNames: getConfig('keepFunctionNames', false),
     umdNamedDefine: getConfig('umdNamedDefine', true),
     experimentalServerBundle: getConfig('experimentalServerBundle', false),
-    experimentalTSTarget: getConfig('experimentalTSTarget', false),
     unprocessedModules: p => {
       const allSourcesButExternalModules = function(filePath) {
         filePath = path.normalize(filePath);
