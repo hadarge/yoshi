@@ -439,9 +439,22 @@ function createCommonWebpackConfig({
               use: [
                 require.resolve('@svgr/webpack'),
                 {
-                  loader: 'url-loader',
+                  loader: 'svg-url-loader',
                   options: {
-                    name: staticAssetName,
+                    iesafe: true,
+                    noquotes: true,
+                    limit: 10000,
+                  },
+                },
+              ],
+            },
+            {
+              test: /\.svg$/,
+              use: [
+                {
+                  loader: 'svg-url-loader',
+                  options: {
+                    iesafe: true,
                     limit: 10000,
                   },
                 },
