@@ -5,7 +5,6 @@ coverage
 typings
 maven
 test/e2e/screenshots
-package-lock.json
 *npm-debug.log
 .history
 .idea

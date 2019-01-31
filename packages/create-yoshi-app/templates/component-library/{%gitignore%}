@@ -6,7 +6,6 @@ typings
 maven
 .history
 test/e2e/screenshots
-package-lock.json
 .idea
 *.iml
 storybook-static
