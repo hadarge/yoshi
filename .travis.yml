@@ -25,6 +25,12 @@ jobs:
       - git config --global user.email "${GH_EMAIL}"
       - echo "machine github.com login ${GH_NAME} password ${GH_TOKEN}" > ~/.netrc
       - cd website && yarn install && GIT_USER="${GH_NAME}" yarn run publish-gh-pages 
+    - name: "website - release to surge"
+      if: type = pull_request
+      script:
+      - cd website
+      - yarn install 
+      - yarn build
     - name: "test:integration"
       if: type != pull_request
       before_script: 
@@ -47,3 +53,5 @@ jobs:
       if: type != pull_request
       before_script: npm install
       script: npm run lint 
+after_success: 
+  - npx surge --project ./build --domain wix-yoshi-${TRAVIS_PULL_REQUEST}.surge.sh
