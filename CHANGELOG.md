@@ -1,5 +1,53 @@
 # Changelog
 
+## 4.0.0-alpha.0 (2019-02-04)
+
+#### :boom: Breaking Change
+
+- `babel-preset-yoshi`, `create-yoshi-app`, `jest-yoshi-preset`, `yoshi-config`, `yoshi-helpers`, `yoshi`
+  - [#917](https://github.com/wix/yoshi/pull/917) Configure Babel to ignore `babelrc` and use `babel-preset-yoshi` ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`, `yoshi`
+  - [#940](https://github.com/wix/yoshi/pull/940) Predefined Typescript definitions for Yoshi. **Requires a minimum version of Typescript 2.9** ([@saarkuriel](https://github.com/saarkuriel))
+  - [#738](https://github.com/wix/yoshi/pull/738) Don't run tests in `start` by default ([@Schniz](https://github.com/Schniz))
+- `create-yoshi-app`, `jest-yoshi-preset`, `yoshi`
+  - [#781](https://github.com/wix/yoshi/pull/781) Allow using SVGs as React components ([@ranyitz](https://github.com/ranyitz))
+- `yoshi`
+  - [#765](https://github.com/wix/yoshi/pull/765) Remove `DynamicPublicPath` plugin from `webpack.config.js` ([@netanelgilad](https://github.com/netanelgilad))
+- `eslint-config-yoshi-base`, `eslint-config-yoshi`, `yoshi`
+  - [#712](https://github.com/wix/yoshi/pull/712) Migrate to `eslint` version 5 ([@ronami](https://github.com/ronami))
+- `babel-plugin-transform-hmr-runtime`, `babel-preset-yoshi`, `jest-yoshi-preset`, `yoshi-helpers`, `yoshi`
+  - [#646](https://github.com/wix/yoshi/pull/646) Transpile JavaScript using Babel 7 ([@yavorsky](https://github.com/yavorsky))
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`, `stylelint-config-yoshi`, `yoshi`
+  - [#750](https://github.com/wix/yoshi/pull/750) Lint Stylesheets by default ([@Schniz](https://github.com/Schniz))
+- `yoshi`
+  - [#711](https://github.com/wix/yoshi/pull/711) Use `cssnano` as a CSS minifier ([@ronami](https://github.com/ronami))
+  - [#538](https://github.com/wix/yoshi/pull/538) Wait for app-server port before finishing app-server task ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :nail_care: Polish
+
+- `yoshi-config`, `yoshi`
+  - [#948](https://github.com/wix/yoshi/pull/948) Remove `experimentalTSTarget` configuration option ([@saarkuriel](https://github.com/saarkuriel))
+- `yoshi`
+  - [#937](https://github.com/wix/yoshi/pull/937) Use `svg-url-loader` instead of `url-loader` to optimize bundle size ([@saarkuriel](https://github.com/saarkuriel))
+  - [#739](https://github.com/wix/yoshi/pull/739) Generate separate assets into `dist/statics/assets` ([@ronami](https://github.com/ronami))
+  - [#714](https://github.com/wix/yoshi/pull/714) Move from `uglifyjs` to `terser` ([@ronami](https://github.com/ronami))
+  - [#715](https://github.com/wix/yoshi/pull/715) Small `webpack` improvements ([@ronami](https://github.com/ronami))
+
+#### :memo: Documentation
+
+- `stylelint-config-yoshi`
+  - [#807](https://github.com/wix/yoshi/pull/807) Add documentation for stylesheet linting ([@Schniz](https://github.com/Schniz))
+
+#### :house: Internal
+
+- `babel-preset-yoshi`, `yoshi`
+  - [#815](https://github.com/wix/yoshi/pull/815) Fix app flow tests on version 4.x ([@ronami](https://github.com/ronami))
+- `yoshi`
+  - [#734](https://github.com/wix/yoshi/pull/734) Open browser on `yoshi start` ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 3.30.5 (2019-02-21)
 
 #### :bug: Bug Fix
