@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.29.0",
+  "version": "3.30.0",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -120,8 +120,8 @@
     "wnpm-ci": "^7.0.1",
     "write-file-webpack-plugin": "^4.4.1",
     "xmldoc": "^1.1.2",
-    "yoshi-config": "3.29.0",
-    "yoshi-helpers": "3.29.0",
+    "yoshi-config": "3.30.0",
+    "yoshi-helpers": "3.30.0",
     "yoshi-runtime": "^1.0.38"
   },
   "devDependencies": {
@@ -140,7 +140,7 @@
     "fs-extra": "~5.0.0",
     "generic-names": "~1.0.3",
     "identity-obj-proxy": "~3.0.0",
-    "jest-yoshi-preset": "3.29.0",
+    "jest-yoshi-preset": "3.30.0",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-jasmine": "~1.1.0",
