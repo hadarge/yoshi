@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.30.0 (2019-02-04)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#958](https://github.com/wix/yoshi/pull/958) Update `stylable` runtime config ([@tomrav](https://github.com/tomrav))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#966](https://github.com/wix/yoshi/pull/966) Unfix `terser` version ([@yairhaimo](https://github.com/yairhaimo))
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#961](https://github.com/wix/yoshi/pull/961) Don't minimize server bundle ([@ronami](https://github.com/ronami))
+- `yoshi-config`
+  - [#963](https://github.com/wix/yoshi/pull/963) Change Yoshi's config schema to support setting `separateCss: true` ([@cowchimp](https://github.com/cowchimp))
+
 ## 3.29.0 (2019-02-04)
 
 #### :rocket: New Feature
