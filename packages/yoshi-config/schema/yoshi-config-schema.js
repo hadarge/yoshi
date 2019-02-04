@@ -13,7 +13,7 @@ const schema = {
     separateCss: {
       description:
         'Whether to separate the bundle for css files from the main js bundle.',
-      enum: ['prod', false],
+      enum: ['prod', false, true],
     },
     splitChunks:
       webpackOptions.definitions.OptimizationOptions.properties.splitChunks,
