@@ -761,6 +761,9 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
     optimization: {
       // Do not modify/set the value of `process.env.NODE_ENV`
       nodeEnv: false,
+      // Don't minimize server code at all
+      // Faster build time and possibly easier debugging
+      minimize: false,
     },
 
     // Do not replace node globals with polyfills
