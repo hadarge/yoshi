@@ -22,7 +22,8 @@
       "guides/hmr",
       "guides/momentjs-optimization",
       "guides/split-chunks",
-      "guides/svg"
+      "guides/svg",
+      "guides/managing-dependencies"
     ]
   }
 }
