@@ -1,10 +1,45 @@
 # Changelog
 
+## 3.29.0 (2019-02-04)
+
+#### :rocket: New Feature
+
+- `jest-yoshi-preset`, `yoshi`
+  - [#909](https://github.com/wix/yoshi/pull/909) Upgrade stylable packages to 1.0.0+ ([@AviVahl](https://github.com/AviVahl))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#936](https://github.com/wix/yoshi/pull/936) Use TSLINT on JS files if project is Typescript (Closes [#929](https://github.com/wix/yoshi/issues/929)) ([@saarkuriel](https://github.com/saarkuriel))
+- `yoshi-config`
+  - [#941](https://github.com/wix/yoshi/pull/941) Update `yoshi-config-schema` to use webpack schema defaults ([@matveyok](https://github.com/matveyok))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#953](https://github.com/wix/yoshi/pull/953) set `.npmrc` to `package-lock=false` in templates (#625) ([@cowchimp](https://github.com/cowchimp))
+- `yoshi`
+  - [#947](https://github.com/wix/yoshi/pull/947) Remove redundant include for GraphQL files ([@ronami](https://github.com/ronami))
+
+#### :memo: Documentation
+
+- [#957](https://github.com/wix/yoshi/pull/957) Add documentation for the why & how of using a lockfile ([@cowchimp](https://github.com/cowchimp))
+
+#### :house: Internal
+
+- Other
+  - [#950](https://github.com/wix/yoshi/pull/950) Release website to Surge.sh on PR ([@saarkuriel](https://github.com/saarkuriel))
+  - [#952](https://github.com/wix/yoshi/pull/952) Run website job on master only ([@saarkuriel](https://github.com/saarkuriel))
+  - [#946](https://github.com/wix/yoshi/pull/946) Reorder `travis.yaml` ([@saarkuriel](https://github.com/saarkuriel))
+- `yoshi-config`
+  - [#941](https://github.com/wix/yoshi/pull/941) Update `yoshi-config-schema` to use webpack schema defaults ([@matveyok](https://github.com/matveyok))
+
 ## 3.28.0 (2019-01-27)
 
 #### :rocket: New Feature
-* `jest-yoshi-preset`, `yoshi`
- * [#909](https://github.com/wix/yoshi/pull/909) Upgrade stylable packages to version `^1.0.0` ([@AviVahl](https://github.com/AviVahl))
+
+- `jest-yoshi-preset`, `yoshi`
+- [#909](https://github.com/wix/yoshi/pull/909) Upgrade stylable packages to version `^1.0.0` ([@AviVahl](https://github.com/AviVahl))
 
 ## 3.27.0 (2019-01-24)
 
