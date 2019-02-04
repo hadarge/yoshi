@@ -605,6 +605,11 @@ function createClientWebpackConfig({
         filename: '[name].stylable.bundle.css',
         includeCSSInJS: !stylableSeparateCss,
         optimize: { classNameOptimizations: false, shortNamespaces: false },
+        runtimeMode: 'shared',
+        globalRuntimeId: '__stylable_yoshi__',
+        generate: {
+          runtimeStylesheetId: 'namespace'
+        }
       }),
 
       // https://github.com/th0r/webpack-bundle-analyzer
