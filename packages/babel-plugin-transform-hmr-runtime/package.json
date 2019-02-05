@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-hmr-runtime",
-  "version": "4.0.0-alpha.0",
+  "version": "4.1.0-alpha.0",
   "description": "Babel plugin to make React Hot Loader work with 0 configuration",
   "main": "index.js",
   "keywords": [
