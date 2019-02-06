@@ -20,6 +20,7 @@
     "lodash": "~4.17.5",
     "mkdirp": "~0.5.1",
     "ps-tree": "^1.1.0",
+    "semver": "^5.5.1",
     "server-destroy": "^1.0.1",
     "ts-node": "^3.3.0",
     "xmldoc": "^1.1.2",

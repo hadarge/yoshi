@@ -1,4 +1,4 @@
-const verifyMinimumNodeVersion = require('../src/verifyMinimumNodeVersion');
+const verifyMinimumNodeVersion = require('../verifyMinimumNodeVersion');
 
 function setNodeVersion(version) {
   Object.defineProperty(process, 'version', {

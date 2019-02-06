@@ -39,8 +39,8 @@
     "globby": "^8.0.2",
     "parse-git-config": "^2.0.2",
     "prompts": "^1.1.1",
-    "semver": "^5.5.1",
-    "validate-npm-package-name": "^3.0.0"
+    "validate-npm-package-name": "^3.0.0",
+    "yoshi-helpers": "^3.29.0"
   },
   "devDependencies": {
     "chokidar": "^2.0.4",
