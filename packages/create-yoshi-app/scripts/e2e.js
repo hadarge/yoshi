@@ -5,10 +5,8 @@ const Answers = require('../src/Answers');
 const { createApp, verifyRegistry, projects } = require('../src/index');
 const prompts = require('prompts');
 const expect = require('expect');
-const {
-  publishMonorepo,
-  authenticateToRegistry,
-} = require('../../../scripts/utils/publishMonorepo');
+const { publishMonorepo } = require('../../../scripts/utils/publishMonorepo');
+const { testRegistry } = require('../../../scripts/utils/constants');
 
 // verbose logs and output
 const verbose = process.env.VERBOSE_TESTS;
@@ -56,8 +54,8 @@ const testTemplate = mockedAnswers => {
       prompts.inject(mockedAnswers);
       verbose && console.log(chalk.cyan(tempDir));
 
-      // This adds a `.npmrc` so dependencies are installed from local registry
-      authenticateToRegistry(tempDir);
+      // This sets the local registry as the NPM registry to use, so templates are installed from local registry
+      process.env['npm_config_registry'] = testRegistry;
 
       await createApp(tempDir);
     });

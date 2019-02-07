@@ -16,6 +16,7 @@ module.exports.install = dir => {
     extendEnv: false,
     env: {
       PATH: process.env.PATH,
+      npm_config_registry: process.env['npm_config_registry'],
     },
   });
 };
