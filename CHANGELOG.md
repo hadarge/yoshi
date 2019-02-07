@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.1.0-alpha.1 (2019-02-07)
+
+#### :boom: Breaking Change
+
+- `create-yoshi-app`, `eslint-config-yoshi-base`, `eslint-config-yoshi`, `jest-environment-yoshi-puppeteer`, `jest-yoshi-preset`, `tslint-config-yoshi`, `yoshi-angular-dependencies`, `yoshi-helpers`, `yoshi-style-dependencies`, `yoshi`
+  - [#955](https://github.com/wix/yoshi/pull/955) Bump old dependencies and target only relevant latest browsers with `autoprefixer` ([@ronami](https://github.com/ronami))
+
 ## 4.1.0-alpha.0 (2019-02-05)
 
 #### :boom: Breaking Change
