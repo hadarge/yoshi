@@ -1,7 +1,7 @@
 module.exports = {
   extends: require.resolve('eslint-config-yoshi-base'),
 
-  plugins: ['jsx-a11y', 'react', 'eslint-plugin-wix-style-react'],
+  plugins: ['jsx-a11y', 'react', 'wix-style-react'],
 
   env: {
     browser: true,

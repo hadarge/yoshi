@@ -210,7 +210,19 @@ const getStyleLoaders = ({
                 options: {
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
-                  plugins: [require('autoprefixer')],
+                  plugins: [
+                    require('autoprefixer')({
+                      // https://github.com/browserslist/browserslist
+                      browsers: [
+                        '> 0.5%',
+                        'last 2 versions',
+                        'Firefox ESR',
+                        'not dead',
+                        'ie >= 11',
+                      ].join(','),
+                      flexbox: 'no-2009',
+                    }),
+                  ],
                   sourceMap: isDebug,
                 },
               },
@@ -223,10 +235,11 @@ const getStyleLoaders = ({
             ]
           : [
               {
-                loader: 'css-loader/locals',
+                loader: 'css-loader',
                 options: {
                   ...cssLoaderOptions,
                   importLoaders: 2 + Number(tpaStyle),
+                  exportOnlyLocals: true,
                   sourceMap: false,
                 },
               },
@@ -656,8 +669,8 @@ function createClientWebpackConfig({
         runtimeMode: 'shared',
         globalRuntimeId: '__stylable_yoshi__',
         generate: {
-          runtimeStylesheetId: 'namespace'
-        }
+          runtimeStylesheetId: 'namespace',
+        },
       }),
 
       // https://github.com/th0r/webpack-bundle-analyzer

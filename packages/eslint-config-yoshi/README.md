@@ -3,9 +3,8 @@
 Install all peer dependencies:
 
 ```
-  "babel-eslint": "^8.2.2",
-  "eslint": "^4.13.1",
-  "eslint-config-prettier": "^2.9.0",
+  "babel-eslint": "^10.0.0",
+  "eslint": "^5.0.0",
   "eslint-plugin-import": "^2.11.0",
   "eslint-plugin-jsx-a11y": "^6.0.2",
   "eslint-plugin-prettier": "^2.6.0",

@@ -374,7 +374,7 @@ describe('Loaders', () => {
     describe('`separateCss: false`', () => {
       it('should merge all style tags into one', () => {
         expect(test.content('dist/statics/app.bundle.js')).to.contain(
-          '{"singleton":true}',
+          '{"singleton":true,"hmr":true}',
         );
       });
 

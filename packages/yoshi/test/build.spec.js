@@ -79,7 +79,7 @@ describe('Aggregator: Build', () => {
             'app/c/style.less': `@import (once) '../b/style.less';`,
             'app/d/style.less': `@import (once) 'some-module/style.less';`,
             'app/e/style.scss':
-              '.a {\n.b {\ncolor: black;\n}\n}\n .c {\ndisplay: flex;\n}',
+              '.a {\n.b {\ncolor: black;\n}\n}\n .c {\nuser-select: none;\n}',
             'app/e/style.less': '.a .b {\n  color: black;\n}',
             'node_modules/some-module/style.less': fx.less(),
             'app/assets/some-file': 'a',
@@ -202,13 +202,13 @@ describe('Aggregator: Build', () => {
 
       it('should generate css attributes prefixes for on separate css file', () => {
         expect(test.content(`dist/statics/first.css`)).to.match(
-          /display: -webkit-box/g,
+          /-webkit-user-select: none;/g,
         );
         expect(test.content(`dist/statics/first.css`)).to.match(
-          /display: -ms-flexbox/g,
+          /-ms-user-select:/g,
         );
         expect(test.content(`dist/statics/first.css`)).to.match(
-          /display: flex/g,
+          /user-select: none;/g,
         );
       });
 
@@ -522,7 +522,7 @@ describe('Aggregator: Build', () => {
       resp = test
         .setup({
           'src/a.js': `export default "I'm a module!"; import './a.scss'; import './a.st.css'; require('lodash/map')`,
-          'src/a.scss': `.x {.y {display: flex;}}`,
+          'src/a.scss': `.x {.y {user-select: none;}}`,
           'src/a.st.css': `.root {.stylableClass {color: pink;}}`,
           'src/assets/file': '1',
           'src/something.js': fx.angularJs(),
@@ -585,13 +585,13 @@ describe('Aggregator: Build', () => {
 
     it('should generate css attributes prefixes', () => {
       expect(test.content(`dist/statics/app.bundle.js`)).to.match(
-        /display: -webkit-box;/g,
+        /-webkit-user-select: none;/g,
       );
       expect(test.content(`dist/statics/app.bundle.js`)).to.match(
-        /display: -ms-flexbox;/g,
+        /-ms-user-select:/g,
       );
       expect(test.content(`dist/statics/app.bundle.js`)).to.match(
-        /display: flex;/g,
+        /user-select: none;/g,
       );
     });
 

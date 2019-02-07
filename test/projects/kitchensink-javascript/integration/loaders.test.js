@@ -38,7 +38,7 @@ describe('webpack', () => {
       await initTest('css-auto-prefixer');
 
       await matchCSS('css-auto-prefixer', page, [
-        /-webkit-appearance:.+;-moz-appearance:.+;appearance:.+/,
+        /-webkit-user-select:.+;-moz-user-select:.+;-ms-user-select:.+;user-select:.+/,
       ]);
     });
 
@@ -88,7 +88,7 @@ describe('webpack', () => {
       await initTest('scss-auto-prefixer');
 
       await matchCSS('scss-auto-prefixer', page, [
-        /-webkit-appearance:.+;-moz-appearance:.+;appearance:.+/,
+        /-webkit-user-select:.+;-moz-user-select:.+;-ms-user-select:.+;user-select:.+/,
       ]);
     });
 
@@ -154,7 +154,7 @@ describe('webpack', () => {
       await initTest('sass-auto-prefixer');
 
       await matchCSS('sass-auto-prefixer', page, [
-        /-webkit-appearance:.+;-moz-appearance:.+;appearance:.+/,
+        /-webkit-user-select:.+;-moz-user-select:.+;-ms-user-select:.+;user-select:.+/,
       ]);
     });
   });
@@ -196,7 +196,7 @@ describe('webpack', () => {
       await initTest('less-auto-prefixer');
 
       await matchCSS('less-auto-prefixer', page, [
-        /-webkit-appearance:.+;-moz-appearance:.+;appearance:.+/,
+        /-webkit-user-select:.+;-moz-user-select:.+;-ms-user-select:.+;user-select:.+/,
       ]);
     });
 
