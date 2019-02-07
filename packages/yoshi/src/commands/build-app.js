@@ -49,7 +49,7 @@ module.exports = async () => {
   await Promise.all([fs.emptyDir(BUILD_DIR), fs.emptyDir(TARGET_DIR)]);
 
   // Copy public to statics dir
-  if (await fs.exists(PUBLIC_DIR)) {
+  if (await fs.pathExists(PUBLIC_DIR)) {
     await fs.copy(PUBLIC_DIR, ASSETS_DIR);
   }
 
