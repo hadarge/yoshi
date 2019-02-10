@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.30.3 (2019-02-10)
+
+#### :bug: Bug Fix
+
+- `yoshi-config`
+  - [#976](https://github.com/wix/yoshi/pull/976) Lock AJV version due to a bug ([@yurynix](https://github.com/yurynix))
+
 ## 3.30.2 (2019-02-10)
 
 - `yoshi`
