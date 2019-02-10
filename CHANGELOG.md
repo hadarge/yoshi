@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.30.2 (2019-02-10)
+
+- `yoshi`
+- [#975](https://github.com/wix/yoshi/pull/975) lock ajv version [yurynix](https://github.com/yurynix)
+
 ## 3.30.1 (2019-02-07)
 
 #### :house: Internal
