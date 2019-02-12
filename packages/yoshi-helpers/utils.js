@@ -164,14 +164,14 @@ module.exports.toIdentifier = str => {
 };
 
 module.exports.tryRequire = name => {
+  let absolutePath;
   try {
-    return require(name);
-  } catch (ex) {
-    if (ex.code === 'MODULE_NOT_FOUND') {
-      return null;
-    }
-    throw ex;
+    absolutePath = require.resolve(name);
+  } catch (e) { // The module has not found
+    return null;
   }
+
+  return require(absolutePath);
 };
 
 // NOTE: We don't use "mergeByConcat" function in our codebase anymore,
