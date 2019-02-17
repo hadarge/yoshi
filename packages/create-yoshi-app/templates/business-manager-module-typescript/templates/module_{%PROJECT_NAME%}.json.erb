@@ -16,5 +16,11 @@
     "topology": {
       "staticsUrl": "<%= static_url('com.wixpress.{%projectName%}') %>"
     }
-  }
+  },
+  "bundles": [
+    {
+      "file": "<%= static_url('com.wixpress.{%projectName%}') %>{%projectName%}-module.bundle.min.js",
+      "debugFile": "<%= static_url('com.wixpress.{%projectName%}') %>{%projectName%}-module.bundle.js"
+    }
+  ]
 }

@@ -13,7 +13,7 @@ const getTestKitConfig = async (
 ) => {
   const serverUrl = 'http://localhost:3200/';
   const path = './templates/module_{%PROJECT_NAME%}.json.erb';
-  const serviceId = 'com.wixpress.{%projectName%}-app';
+  const serviceId = 'com.wixpress.{%projectName%}';
 
   const moduleConfig = await new ModuleConfigFileEmitter(path)
     .registerStaticService({ serviceId, serverUrl })
