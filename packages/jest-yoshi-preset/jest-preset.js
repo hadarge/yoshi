@@ -3,6 +3,7 @@ const globby = require('globby');
 const { envs } = require('./constants');
 const globs = require('../yoshi-config/globs');
 
+const modulePathIgnorePatterns = ['<rootDir>/dist/', '<rootDir>/target/'];
 module.exports = {
   globalSetup: require.resolve('jest-environment-yoshi-puppeteer/globalSetup'),
   globalTeardown: require.resolve(
@@ -57,6 +58,8 @@ module.exports = {
         return {
           ...project,
 
+          modulePathIgnorePatterns,
+
           transformIgnorePatterns: ['/node_modules/(?!(.*?\\.st\\.css$))'],
 
           transform: {
@@ -66,7 +69,9 @@ module.exports = {
           },
 
           moduleNameMapper: {
-            '^(?!.+\\.st\\.css$)^.+\\.(?:sass|s?css)$': require.resolve('identity-obj-proxy'),
+            '^(?!.+\\.st\\.css$)^.+\\.(?:sass|s?css)$': require.resolve(
+              'identity-obj-proxy',
+            ),
             '\\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3)$': require.resolve(
               './transforms/file',
             ),
@@ -81,6 +86,7 @@ module.exports = {
     {
       displayName: 'dummy',
       testMatch: ['dummy'],
+      modulePathIgnorePatterns,
     },
   ],
 };
