@@ -77,10 +77,6 @@ module.exports.watch = (
 };
 
 module.exports.getMochaReporter = () => {
-  if (queries.inTeamCity()) {
-    return 'mocha-teamcity-reporter';
-  }
-
   if (process.env.mocha_reporter) {
     return process.env.mocha_reporter;
   }

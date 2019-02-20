@@ -1,2 +1,1 @@
---timeout 20000
---reporter mocha-env-reporter
+--timeout 30000
