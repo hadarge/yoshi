@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.30.4 (2019-02-20)
+
+#### :bug: Bug Fix
+
+- `yoshi-helpers`, `yoshi`
+  - [#990](https://github.com/wix/yoshi/pull/990) Remove `mocha-teamcity-reporter` as a temporary fix ([@yairhaimo](https://github.com/yairhaimo))
+- `jest-yoshi-preset`
+  - [#973](https://github.com/wix/yoshi/pull/973) Fix watch Jest mode - do not watch 'dist' and 'target' folders ([@yanivefraim](https://github.com/yanivefraim))
+- `create-yoshi-app`
+  - [#984](https://github.com/wix/yoshi/pull/984) Update biz mgr template to address configuration changes ([@yurynix](https://github.com/yurynix))
+- `yoshi-helpers`
+  - [#969](https://github.com/wix/yoshi/pull/969) Fix checking if file is exist. ([@rudnitskih](https://github.com/rudnitskih))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#983](https://github.com/wix/yoshi/pull/983) Remove component library generators from list ([@yairhaimo](https://github.com/yairhaimo))
+
 ## 3.30.3 (2019-02-10)
 
 #### :bug: Bug Fix
