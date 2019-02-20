@@ -12,6 +12,11 @@
   "scripts": {
     "test": "DISABLE_SENTRY=1 mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js' --retries=$([ -z \"$TEAMCITY_VERSION\" ] && echo 0 || echo 1)"
   },
+  "files" : [
+    "src",
+    "bin",
+    "config"
+  ],
   "dependencies": {
     "@sentry/node": "^4.0.6",
     "@stylable/cli": "^1.2.3",
