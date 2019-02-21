@@ -120,6 +120,18 @@ describe('Aggregator: e2e', () => {
       expect(res.stdout).to.contain('1 passing (');
     });
 
+    it('should run protractor with mocha and use TeamCity reporter', () => {
+      const res = test
+        .setup(singleModuleWithMocha())
+        .execute('test', ['--protractor'], insideTeamCity);
+
+      expect(res.code).to.equal(0);
+      expect(res.stdout).to.contain('protractor');
+      expect(res.stdout).to.contain(
+        "##teamcity[",
+      );
+    });
+
     it('should use babel-register', function() {
       this.timeout(60000);
 

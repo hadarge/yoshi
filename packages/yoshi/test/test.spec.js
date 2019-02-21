@@ -396,6 +396,10 @@ describe('Aggregator: Test', () => {
         expect(res.stderr).to.not.contain('should work with css');
       });
 
+      it('should use the right reporter when running inside TeamCity', () => {
+        expect(res.stdout).to.contain('##teamcity[');
+      });
+
       it('should transpile ES modules out of the box', () => {
         expect(res.stderr).to.not.contain('should work with es modules');
       });
@@ -791,6 +795,16 @@ describe('Aggregator: Test', () => {
 
         expect(res.code).to.equal(0);
         expect(res.stdout).to.contain('3 passing');
+      });
+
+      it('should use the right reporter when running inside TeamCity', () => {
+        const res = customTest
+          .setup({
+            'test/some.spec.js': `it.only("pass", () => 1);`,
+            'package.json': fx.packageJson(),
+          })
+          .execute('test', ['--mocha'], insideTeamCity);
+        expect(res.stdout).to.contain('##teamcity[');
       });
 
       it('should use the right reporter when running outside TeamCity', () => {

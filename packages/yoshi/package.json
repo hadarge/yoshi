@@ -89,7 +89,7 @@
     "minimist": "^1.2.0",
     "mkdirp": "~0.5.1",
     "mocha": "^3.4.2",
-    "mocha-teamcity-reporter": "~1.1.1",
+    "mocha-teamcity-reporter": "^2",
     "mock-require": "^2.0.0",
     "nyc": "^12.0.1",
     "os-name": "^2.0.1",
