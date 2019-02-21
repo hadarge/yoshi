@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "3.30.4",
+  "version": "3.30.5",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -12,7 +12,7 @@
   "scripts": {
     "test": "DISABLE_SENTRY=1 mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js' --retries=$([ -z \"$TEAMCITY_VERSION\" ] && echo 0 || echo 1)"
   },
-  "files" : [
+  "files": [
     "src",
     "bin",
     "config"
@@ -46,8 +46,8 @@
     "envinfo": "^5.1.2",
     "eslint": "^4.13.1",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-config-yoshi": "3.25.1",
-    "eslint-config-yoshi-base": "3.25.1",
+    "eslint-config-yoshi": "3.30.5",
+    "eslint-config-yoshi-base": "3.30.5",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
@@ -107,8 +107,8 @@
     "ts-loader": "^4.1.0",
     "ts-node": "~3.3.0",
     "tslint": "^5.10.0",
-    "tslint-config-yoshi": "3.26.0",
-    "tslint-config-yoshi-base": "3.26.0",
+    "tslint-config-yoshi": "3.30.5",
+    "tslint-config-yoshi-base": "3.30.5",
     "tslint-plugin-wix-style-react": "^1.0.0",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "url-loader": "1.0.1",
@@ -124,8 +124,8 @@
     "wnpm-ci": "^7.0.1",
     "write-file-webpack-plugin": "^4.4.1",
     "xmldoc": "^1.1.2",
-    "yoshi-config": "3.30.3",
-    "yoshi-helpers": "3.30.4",
+    "yoshi-config": "3.30.5",
+    "yoshi-helpers": "3.30.5",
     "yoshi-runtime": "^1.0.38"
   },
   "devDependencies": {
@@ -143,7 +143,7 @@
     "expect": "^23.1.0",
     "generic-names": "~1.0.3",
     "identity-obj-proxy": "~3.0.0",
-    "jest-yoshi-preset": "3.30.4",
+    "jest-yoshi-preset": "3.30.5",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-jasmine": "~1.1.0",
