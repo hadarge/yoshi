@@ -1,4 +1,4 @@
-const { bootstrapServer, emitConfigs } = require('./test/environment');
+const { bootstrapServer, emitConfigs } = require('./environment');
 
 const port = parseInt(process.env.PORT, 10);
 const appConfDir = './target/dev/configs';

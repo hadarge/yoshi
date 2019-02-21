@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { I18nextProvider } from 'react-i18next';
 import App from './App';
-import i18n from '../../../test/helpers/i18n.mock';
+import i18n from '../__mocks__/i18n';
 
 describe('App', () => {
   let wrapper;

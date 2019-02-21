@@ -9,9 +9,7 @@ export const appDriver = () => {
     navigateToApp: async () => {
       const changeInstance = new chance.Chance();
       const metaSiteId = changeInstance.guid();
-      await page.goto(
-        await testKitEnv.getUrl(`${metaSiteId}/{%projectName%}`),
-      );
+      await page.goto(await testKitEnv.getUrl(`${metaSiteId}/{%projectName%}`));
     },
     getAppTitleText: async () => {
       await waitForVisibilityOf('h2');

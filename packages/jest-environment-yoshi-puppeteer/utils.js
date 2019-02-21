@@ -1,9 +1,10 @@
 const globby = require('globby');
+const globs = require('yoshi-config/globs');
 
 const { MATCH_ENV } = process.env;
 
 module.exports.shouldRunE2Es = async () => {
-  const filesPaths = await globby('test/e2e/**/*.spec.(ts|js){,x}');
+  const filesPaths = await globby(globs.e2eTests);
 
   return (
     filesPaths.length > 0 &&

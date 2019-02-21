@@ -1,4 +1,4 @@
-const testKitEnv = require('../environment')
+const testKitEnv = require('../../environment')
   .environment()
   .then(env => {
     env.start();
@@ -8,12 +8,13 @@ const testKitEnv = require('../environment')
 // We need to stop the testkit explicitly, since it's running in a different process
 const stopTestKit = () => testKitEnv.then(tk => tk.stop());
 
-const stopEvents = [
+const signals: ('SIGINT' | 'SIGUSR1' | 'SIGUSR2')[] = [
   'SIGINT',
   'SIGUSR1',
   'SIGUSR2',
-  'uncaughtException',
-  'exit',
 ];
 
-stopEvents.forEach(ev => process.on(ev, stopTestKit));
+signals.forEach(ev => process.on(ev, stopTestKit));
+
+process.on('uncaughtException', stopTestKit);
+process.on('exit', stopTestKit);

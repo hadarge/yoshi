@@ -5,27 +5,34 @@
   },
   "overrides": [
     {
-      "files": ["test/projects/**/*"],
+      "files": [
+        "test/projects/**/*"
+      ],
       "rules": {
         "import/no-unresolved": 0,
         "import/no-extraneous-dependencies": 0
       }
     },
     {
-      "files": ["website/**/*"],
+      "files": [
+        "website/**/*"
+      ],
       "rules": {
         "import/no-unresolved": 0,
         "import/no-extraneous-dependencies": 0
       }
     },
     {
-      "files": ["packages/create-yoshi-app/templates/**/*"],
+      "files": [
+        "packages/create-yoshi-app/templates/**/*"
+      ],
       "rules": {
         "import/no-unresolved": 0,
         "import/no-extraneous-dependencies": 0
       },
       "globals": {
-        "app": false
+        "app": false,
+        "testKitEnv": false
       }
     }
   ]

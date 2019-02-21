@@ -537,7 +537,7 @@ describe('Aggregator: Test', () => {
                 }
               };
             `,
-            'test/e2e/some.e2e.spec.js': `
+            'test/e2e/some.e2e.js': `
               it('should succeed', async () => {
                 await page.goto('http://localhost:${serverPort}');
                 expect(await page.$eval('body', e => e.innerText)).toEqual('${e2eTestSampleText}');
@@ -597,7 +597,7 @@ describe('Aggregator: Test', () => {
               }
             };
           `,
-          'test/e2e/some.e2e.spec.js': `
+          'test/e2e/some.e2e.js': `
               it('should succeed', async () => {
                 await page.goto('http://localhost:${serverPort}');
                 await page.waitForSelector('h1');
