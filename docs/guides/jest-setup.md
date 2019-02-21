@@ -128,6 +128,6 @@ If you want to run some code before your tests you can use one of the 2 followin
 - `<rootDir>/test/spec-setup.(j|t)s`: Setup for `.spec` tests (Component and Unit tests)
 - `<rootDir>/test/e2e-setup.(j|t)s`: Setup for `.e2e` tests (Browser an Server e2e tests)
 
-These setup files are actually [Jests's `setupTestFrameworkScriptFile`](https://jestjs.io/docs/en/configuration#setuptestframeworkscriptfile-string)
+These setup files are actually [Jests's `setupFilesAfterEnv`](https://jestjs.io/docs/en/configuration#setupfilesafterenv-array)
 
 > A path to a module that runs some code to configure or set up the testing framework before each test.

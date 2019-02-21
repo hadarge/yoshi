@@ -45,12 +45,21 @@ module.exports = {
             ? `<rootDir>/${setupTestsPath}`
             : undefined;
 
+        // Since Jest 24 setupTestFrameworkScriptFile changed to setupFilesAfterEnv and
+        // now it supports more than 1 test file, in future we can expose it here
+        const setupFilesAfterEnv = setupTestsFile ? [setupTestsFile] : [];
+
         return {
           ...project,
 
           modulePathIgnorePatterns,
 
-          transformIgnorePatterns: ['/node_modules/(?!(.*?\\.st\\.css$))'],
+          transformIgnorePatterns: [
+            '/node_modules/(?!(.*?\\.st\\.css$))',
+            // Locally `babel-preset-yoshi` is symlinked, which causes jest to try and run babel on it.
+            // See here for more details: https://github.com/facebook/jest/blob/6af2f677e5c48f71f526d4be82d29079c1cdb658/packages/jest-core/src/runGlobalHook.js#L61
+            '/babel-preset-yoshi/',
+          ],
 
           transform: {
             '^.+\\.jsx?$': require.resolve('./transforms/babel'),
@@ -67,7 +76,7 @@ module.exports = {
             ),
           },
 
-          setupTestFrameworkScriptFile: setupTestsFile,
+          setupFilesAfterEnv,
 
           moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
         };

@@ -19,11 +19,11 @@
     "yoshi-helpers": "4.1.0-alpha.1"
   },
   "peerDependencies": {
-    "jest": "^23.0.0",
+    "jest": "^24.1.0",
     "puppeteer": "^1.0.0"
   },
   "devDependencies": {
-    "jest-environment-node": "^23.0.0",
+    "jest-environment-node": "^24.0.0",
     "jest-environment-yoshi-bootstrap": "4.1.0-alpha.1",
     "puppeteer": "^1.0.0"
   }

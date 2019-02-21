@@ -11,13 +11,13 @@
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
   "peerDependencies": {
-    "jest": "^23.0.0"
+    "jest": "^24.1.0"
   },
   "dependencies": {
     "yoshi-config": "4.1.0-alpha.1",
     "yoshi-helpers": "4.1.0-alpha.1"
   },
   "devDependencies": {
-    "jest-environment-node": "^23.0.0"
+    "jest-environment-node": "^24.0.0"
   }
 }
