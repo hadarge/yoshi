@@ -15,8 +15,9 @@
   },
   "scripts": {
     "test": "jest",
-    "main-templates": "./scripts/runMainTemplates.sh",
-    "other-templates": "./scripts/runOtherTemplates.sh",
+    "templates": "DISABLE_SENTRY=1 node scripts/runE2E.js",
+    "templates:1": "npm run templates -- client client-typescript fullstack fullstack-typescript",
+    "templates:2": "npm run templates -- business-manager-module business-manager-module-typescript server server-typescript",
     "dev": "node scripts/dev.js"
   },
   "jest": {
