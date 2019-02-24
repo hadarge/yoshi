@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import { translate, InjectedTranslateProps } from 'react-i18next';
 import * as s from './App.scss';
 
-interface IAppProps extends InjectedTranslateProps {}
+interface IAppProps extends InjectedTranslateProps { }
 
 class App extends React.Component<IAppProps> {
   static propTypes = {
@@ -12,6 +12,7 @@ class App extends React.Component<IAppProps> {
 
   render() {
     const { t } = this.props;
+
     return (
       <div className={s.root}>
         <div className={s.header}>
@@ -23,4 +24,4 @@ class App extends React.Component<IAppProps> {
   }
 }
 
-export default translate(undefined, { wait: true })(App);
+export default translate()(App);

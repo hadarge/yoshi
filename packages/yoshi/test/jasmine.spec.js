@@ -55,7 +55,7 @@ describe('test --jasmine', () => {
       .execute('test', ['--jasmine']);
 
     expect(res.code).to.equal(1);
-    expect(res.stderr).to.contain('Unexpected token import');
+    expect(res.stderr).to.contain('Unexpected identifier');
   });
 
   it('should output test coverage when --coverage is passed', () => {
@@ -187,9 +187,7 @@ function jasmineSetup() {
 }
 
 function checkStdoutContains(test, str) {
-  return retryPromise(
-    { backoff: 100 },
-    () =>
-      test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
+  return retryPromise({ backoff: 100 }, () =>
+    test.stdout.indexOf(str) > -1 ? Promise.resolve() : Promise.reject(),
   );
 }

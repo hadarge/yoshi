@@ -127,9 +127,7 @@ describe('Aggregator: e2e', () => {
 
       expect(res.code).to.equal(0);
       expect(res.stdout).to.contain('protractor');
-      expect(res.stdout).to.contain(
-        "##teamcity[",
-      );
+      expect(res.stdout).to.contain('##teamcity[');
     });
 
     it('should use babel-register', function() {
@@ -156,7 +154,7 @@ describe('Aggregator: e2e', () => {
         .execute('test', ['--protractor'], outsideTeamCity);
 
       expect(res.code).to.equal(1);
-      expect(res.stdout).to.contain('Unexpected token import');
+      expect(res.stdout).to.contain('Unexpected identifier');
     });
   });
 

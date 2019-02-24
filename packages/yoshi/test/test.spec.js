@@ -851,7 +851,7 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--mocha']);
 
         expect(res.code).to.equal(1);
-        expect(res.stderr).to.contain('Unexpected token import');
+        expect(res.stderr).to.contain('Unexpected identifier');
       });
 
       it('should output test coverage when --coverage is passed', () => {
@@ -965,7 +965,7 @@ describe('Aggregator: Test', () => {
           .execute('test', ['--mocha']);
 
         expect(res.code).to.equal(1);
-        expect(res.stderr).to.contain('Unexpected token import');
+        expect(res.stderr).to.contain('Unexpected identifier');
       });
 
       describe('stylable integration', () => {

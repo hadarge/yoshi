@@ -16,13 +16,13 @@
       "release": "yoshi release"
     },
     "devDependencies": {
-      "@types/i18next": "~8.4.0",
+      "@types/i18next": "^8.4.5",
       "@types/jest": "^23.3.9",
       "@types/node": "^8.0.0",
       "@types/prop-types": "~15.5.0",
-      "@types/react": "~16.4.7",
-      "@types/react-dom": "~16.0.10",
-      "@types/react-i18next": "~4.6.0",
+      "@types/react": "~15.6.0",
+      "@types/react-dom": "~15.5.0",
+      "@types/react-i18next": "^7.8.2",
       "@wix/business-manager": "latest",
       "@wix/business-manager-api": "latest",
       "enzyme": "^3.7.0",
