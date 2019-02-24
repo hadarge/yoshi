@@ -8,7 +8,7 @@ let COUNTER = 1;
 module.exports.appConfDir = `./target/configs-${process.env.JEST_WORKER_ID}`;
 
 module.exports.getPort = () => {
-  const generatedPort = 1000 + JEST_WORKER_ID * 300 + COUNTER++;
+  const generatedPort = 1000 + (JEST_WORKER_ID + 1) * 300 + COUNTER++;
 
   try {
     const pid = getProcessIdOnPort(generatedPort);
