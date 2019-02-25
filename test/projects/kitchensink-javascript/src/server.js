@@ -1,14 +1,18 @@
-import path from 'path';
+import ejs from 'ejs';
 import express from 'express';
 
 const app = express();
 
-app.get('/other', (req, res) => {
-  res.sendFile(path.resolve('./src/other.html'));
+app.get('/other', async (req, res) => {
+  res.send(await ejs.renderFile('./src/other.ejs'));
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve('./src/index.html'));
+app.get('*', async (req, res) => {
+  res.send(
+    await ejs.renderFile('./src/index.ejs', {
+      title: 'Some title',
+    }),
+  );
 });
 
 app.listen(process.env.PORT);

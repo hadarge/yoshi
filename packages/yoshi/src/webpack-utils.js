@@ -1,7 +1,6 @@
 const cors = require('cors');
 const chalk = require('chalk');
 const webpack = require('webpack');
-const waitPort = require('wait-port');
 const clearConsole = require('react-dev-utils/clearConsole');
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -137,8 +136,24 @@ function addEntry(config, hotEntries) {
   config.entry = newEntry;
 }
 
-function createDevServerConfig({ publicPath, https, host }) {
-  return {
+function overrideRules(rules, patch) {
+  return rules.map(ruleToPatch => {
+    let rule = patch(ruleToPatch);
+    if (rule.rules) {
+      rule = { ...rule, rules: overrideRules(rule.rules, patch) };
+    }
+    if (rule.oneOf) {
+      rule = { ...rule, oneOf: overrideRules(rule.oneOf, patch) };
+    }
+    if (rule.use) {
+      rule = { ...rule, use: overrideRules(rule.use, patch) };
+    }
+    return rule;
+  });
+}
+
+function createDevServer(clientCompiler, { publicPath, https, host }) {
+  const devServer = new WebpackDevServer(clientCompiler, {
     // Enable gzip compression for everything served
     compress: true,
     clientLogLevel: 'error',
@@ -163,46 +178,21 @@ function createDevServerConfig({ publicPath, https, host }) {
         });
       });
     },
-  };
-}
-
-function createDevServer(clientCompiler, devServerOptions) {
-  // Setup dev server (CDN)
-  const devServerConfig = createDevServerConfig(devServerOptions);
-
-  return new WebpackDevServer(clientCompiler, devServerConfig);
-}
-
-async function waitForServerToStart({ server }) {
-  const portFound = await waitPort({
-    port: PORT,
-    output: 'silent',
-    timeout: 20000,
   });
 
-  if (!portFound) {
-    console.log(
-      chalk.red(
-        `\nCouldn't find a server running on port ${chalk.bold(PORT)}.`,
-      ),
-    );
-    console.log(
-      chalk.red(
-        `Please make sure "${chalk.bold(
-          server,
-        )}" sets up a server on this port.\n`,
-      ),
-    );
-    console.log(chalk.red('Aborting'));
-    process.exit(1);
-  }
+  // Update sockets with new stats, we use the sockWrite() method
+  // to update the hot client with server data
+  devServer.send = (...args) => {
+    return devServer.sockWrite(devServer.sockets, ...args);
+  };
+
+  return devServer;
 }
 
 function waitForCompilation(compiler) {
   return new Promise((resolve, reject) => {
-    compiler.hooks.done.tap(
-      'promise',
-      stats => (stats.hasErrors() ? reject(stats) : resolve(stats)),
+    compiler.hooks.done.tap('promise', stats =>
+      stats.hasErrors() ? reject(stats) : resolve(stats),
     );
   });
 }
@@ -210,8 +200,7 @@ function waitForCompilation(compiler) {
 module.exports = {
   createDevServer,
   createCompiler,
-  createDevServerConfig,
-  waitForServerToStart,
   waitForCompilation,
   addEntry,
+  overrideRules,
 };

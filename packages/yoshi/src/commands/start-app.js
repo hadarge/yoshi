@@ -17,10 +17,7 @@ if (cliArgs.production) {
 
 const path = require('path');
 const fs = require('fs-extra');
-const stream = require('stream');
-const child_process = require('child_process');
 const chalk = require('chalk');
-const webpack = require('webpack');
 const openBrowser = require('react-dev-utils/openBrowser');
 const chokidar = require('chokidar');
 const project = require('yoshi-config');
@@ -38,18 +35,11 @@ const {
 const {
   createCompiler,
   createDevServer,
-  waitForServerToStart,
   waitForCompilation,
 } = require('../webpack-utils');
+const Server = require('../server-process');
 
-function serverLogPrefixer() {
-  return new stream.Transform({
-    transform(chunk, encoding, callback) {
-      this.push(`${chalk.greenBright('[SERVER]')}: ${chunk.toString()}`);
-      callback();
-    },
-  });
-}
+const host = '0.0.0.0';
 
 const https = cliArgs.https || project.servers.cdn.ssl;
 
@@ -104,19 +94,8 @@ module.exports = async () => {
 
   const [clientCompiler, serverCompiler] = multiCompiler.compilers;
 
-  // Start up server compilation
-  let serverProcess;
-
-  serverCompiler.watch({ 'info-verbosity': 'none' }, (error, stats) => {
-    if (serverProcess && !error && !stats.hasErrors()) {
-      // If all is good, send our hot client entry a message to trigger HMR
-      serverProcess.send({});
-    }
-  });
-
-  console.log(chalk.cyan('Starting development environment...\n'));
-
-  const host = '0.0.0.0';
+  // Start up server process
+  const serverProcess = new Server({ serverFilePath: cliArgs.server });
 
   // Start up webpack dev server
   const devServer = await createDevServer(clientCompiler, {
@@ -125,12 +104,49 @@ module.exports = async () => {
     host,
   });
 
+  serverCompiler.watch({ 'info-verbosity': 'none' }, async (error, stats) => {
+    const jsonStats = stats.toJson();
+
+    // If the spawned server process has died, restart it
+    if (serverProcess.child && serverProcess.child.exitCode !== null) {
+      await serverProcess.restart();
+
+      // Send the browser an instruction to refresh
+      await devServer.send('hash', jsonStats.hash);
+      await devServer.send('ok');
+    }
+    // If it's alive, send it a message to trigger HMR
+    else {
+      // If there are no errors and the server can be refreshed
+      // then send it a signal and wait for a responsne
+      if (serverProcess.child && !error && !stats.hasErrors()) {
+        const { success } = await serverProcess.send({});
+
+        // HMR wasn't successful, restart the server process
+        if (!success) {
+          await serverProcess.restart();
+        }
+
+        // Send the browser an instruction to refresh
+        await devServer.send('hash', jsonStats.hash);
+        await devServer.send('ok');
+      } else {
+        // If there are errors, show them on the browser
+        if (jsonStats.errors.length > 0) {
+          await devServer.send('errors', jsonStats.errors);
+        } else if (jsonStats.warnings.length > 0) {
+          await devServer.send('warnings', jsonStats.warnings);
+        }
+      }
+    }
+  });
+
+  console.log(chalk.cyan('Starting development environment...\n'));
+
   // Start up webpack dev server
   await new Promise((resolve, reject) => {
-    devServer.listen(
-      project.servers.cdn.port,
-      host,
-      err => (err ? reject(err) : resolve(devServer)),
+    devServer.listen(project.servers.cdn.port, host, err =>
+      err ? reject(err) : resolve(devServer),
     );
   });
 
@@ -143,42 +159,32 @@ module.exports = async () => {
     process.exit(1);
   }
 
-  // Start up the user's server
-  const inspectArg = process.argv.find(arg => arg.includes('--debug'));
-
-  const startServerProcess = () => {
-    serverProcess = child_process.fork(cliArgs.server, {
-      stdio: 'pipe',
-      execArgv: [inspectArg]
-        .filter(Boolean)
-        .map(arg => arg.replace('debug', 'inspect')),
-      env: {
-        ...process.env,
-        NODE_ENV: 'development',
-        PORT,
-      },
-    });
-
-    serverProcess.stdout.pipe(serverLogPrefixer()).pipe(process.stdout);
-    serverProcess.stderr.pipe(serverLogPrefixer()).pipe(process.stderr);
-
-    serverProcess.on('message', () => {
-      serverProcess.kill();
-      startServerProcess();
-    });
-  };
-
-  startServerProcess();
-
   ['SIGINT', 'SIGTERM'].forEach(sig => {
     process.on(sig, () => {
-      serverProcess.kill();
+      serverProcess.end();
       devServer.close();
       process.exit();
     });
   });
 
-  await waitForServerToStart({ server: cliArgs.server });
+  try {
+    await serverProcess.initialize();
+  } catch (error) {
+    console.log();
+    console.log(
+      chalk.red(`Couldn't find a server running on port ${chalk.bold(PORT)}`),
+    );
+    console.log(
+      chalk.red(
+        `Please check that ${chalk.bold(
+          cliArgs.server,
+        )} starts up correctly and that it listens on the expected port`,
+      ),
+    );
+    console.log();
+    console.log(chalk.red('Aborting'));
+    process.exit(1);
+  }
 
   // Once it started, open up the browser
   openBrowser(`http://localhost:${PORT}`);

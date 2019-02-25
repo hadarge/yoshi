@@ -1,4 +1,6 @@
+const net = require('net');
 const http = require('http');
+const retry = require('async-retry');
 const waitPort = require('wait-port');
 const { parastorageCdnUrl, localCdnUrl } = require('./constants');
 
@@ -72,8 +74,34 @@ async function waitForPort(port, { timeout = 20000 } = {}) {
 }
 
 const initTest = async feature => {
-  await page.goto(`http://localhost:3000/${feature}`);
+  await page.goto(
+    `http://localhost:${global.scripts.serverProcessPort}/${feature}`,
+  );
 };
+
+function isPortTaken(port) {
+  return new Promise((resolve, reject) => {
+    const tester = net
+      .createServer()
+      .once('error', err => {
+        err.code !== 'EADDRINUSE' ? reject(err) : resolve(true);
+      })
+      .once('listening', () => {
+        tester
+          .once('close', () => {
+            resolve(false);
+          })
+          .close();
+      })
+      .listen(port);
+  });
+}
+
+function waitForPortToFree(port) {
+  return retry(async () => {
+    expect(await isPortTaken(port)).toEqual(false);
+  });
+}
 
 module.exports = {
   request,
@@ -81,4 +109,5 @@ module.exports = {
   matchCSS,
   initTest,
   waitForPort,
+  waitForPortToFree,
 };

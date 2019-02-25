@@ -15,6 +15,9 @@ if (module.hot) {
             updatedModules,
           );
           checkForUpdate(true);
+
+          // Inform the parent process (Yoshi) that HMR was successful
+          process.send({ success: true });
         })
         .catch(function(err) {
           const status = module.hot.status();
@@ -23,9 +26,9 @@ if (module.hot) {
             log('warning', '[HMR] ' + (err.stack || err.message));
             log('warning', '[HMR] Restarting the application!');
 
-            // Send an empty message to the parent process (Yoshi) to restart
-            // the application
-            process.send({});
+            // Inform the parent process (Yoshi) that HMR failed and the server
+            // needs to be restarted
+            process.send({ success: false });
           } else {
             log(
               'warning',

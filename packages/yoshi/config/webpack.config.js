@@ -36,7 +36,7 @@ const {
   getProjectArtifactId,
   createBabelConfig,
 } = require('yoshi-helpers');
-const { addEntry } = require('../src/webpack-utils');
+const { addEntry, overrideRules } = require('../src/webpack-utils');
 
 const reScript = /\.js?$/;
 const reStyle = /\.(css|less|scss|sass)$/;
@@ -112,22 +112,6 @@ const splitChunksConfig = isObject(useSplitChunks)
 const entry = project.entry || project.defaultEntry;
 
 const possibleServerEntries = ['./server', '../test/dev-server'];
-
-function overrideRules(rules, patch) {
-  return rules.map(ruleToPatch => {
-    let rule = patch(ruleToPatch);
-    if (rule.rules) {
-      rule = { ...rule, rules: overrideRules(rule.rules, patch) };
-    }
-    if (rule.oneOf) {
-      rule = { ...rule, oneOf: overrideRules(rule.oneOf, patch) };
-    }
-    if (rule.use) {
-      rule = { ...rule, use: overrideRules(rule.use, patch) };
-    }
-    return rule;
-  });
-}
 
 // Common function to get style loaders
 const getStyleLoaders = ({

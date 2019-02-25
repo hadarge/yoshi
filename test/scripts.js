@@ -13,16 +13,15 @@ const defaultOptions = {
 module.exports = class Scripts {
   constructor(testDirectory) {
     this.testDirectory = testDirectory;
+    this.serverProcessPort = 3000;
   }
 
   async start(env) {
-    const port = 3000;
-
     const startProcess = execa('npx', ['yoshi', 'start'], {
       cwd: this.testDirectory,
       // stdio: 'inherit',
       env: {
-        PORT: port,
+        PORT: this.serverProcessPort,
         ...defaultOptions,
         ...env,
       },
@@ -31,12 +30,12 @@ module.exports = class Scripts {
     // `startProcess` will never resolve but if it fails this
     // promise will reject immediately
     await Promise.race([
-      waitForPort(port, { timeout: 60 * 1000 }),
+      waitForPort(this.serverProcessPort, { timeout: 60 * 1000 }),
       startProcess,
     ]);
 
     return {
-      port,
+      port: this.serverProcessPort,
       done() {
         return terminate(startProcess.pid);
       },
