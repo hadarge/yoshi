@@ -60,7 +60,7 @@
     "preset": "jest-yoshi-preset"
   },
   "yoshi": {
-    "experimentalServerBundle": true,
+    "projectType": "app",
     "externalUnprocessedModules": ["untranspiled-dependency"],
     "entry": {
       "app": "./client",

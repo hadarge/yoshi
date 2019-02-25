@@ -323,7 +323,7 @@ function createCommonWebpackConfig({
       // it should optimize for Webpack
       new EnvirnmentMarkPlugin(),
       // https://github.com/Realytics/fork-ts-checker-webpack-plugin
-      ...(isTypescriptProject && project.experimentalServerBundle && isDebug
+      ...(isTypescriptProject && project.projectType === 'app' && isDebug
         ? [
             // Since `fork-ts-checker-webpack-plugin` requires you to have
             // TypeScript installed when its required, we only require it if

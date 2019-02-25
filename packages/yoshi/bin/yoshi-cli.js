@@ -42,7 +42,7 @@ prog
   .allowUnknownOption()
   .action(() => runCLI('test'));
 
-if (config.experimentalServerBundle) {
+if (config.projectType === 'app') {
   prog
     .command('build')
     .description('Experimental way of building an app to production')
