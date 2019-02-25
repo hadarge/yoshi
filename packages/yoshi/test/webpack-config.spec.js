@@ -159,7 +159,7 @@ describe('Webpack basic configs', () => {
         );
       });
 
-      it('should use "/" for default public path', () => {
+      it('should use local dev-server url for public path when not on CI', () => {
         test
           .setup({
             'src/client.js': `console.log('test');`,
@@ -170,7 +170,7 @@ describe('Webpack basic configs', () => {
           });
 
         expect(test.content('dist/statics/app.bundle.js')).to.contain(
-          `__webpack_require__.p = "/"`,
+          `__webpack_require__.p = "http://localhost:3200/"`,
         );
       });
 
