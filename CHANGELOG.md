@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0-alpha.2 (2019-02-25)
+
+> Changelog will be added later
+
 ## 4.1.0-alpha.1 (2019-02-07)
 
 #### :boom: Breaking Change
