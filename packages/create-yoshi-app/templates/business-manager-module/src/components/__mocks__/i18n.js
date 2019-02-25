@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import * as translation from '../../src/assets/locale/messages_en.json';
+import * as translation from '../../assets/locale/messages_en.json';
 
 // We initialize i18next once with configuration for component tests.
 export default i18next.init({

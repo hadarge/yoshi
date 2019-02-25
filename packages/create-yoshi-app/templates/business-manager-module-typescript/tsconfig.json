@@ -13,7 +13,7 @@
     "resolveJsonModule": true
   },
   "include": [
-    "./test/**/*.ts",
+    "./__tests__/**/*.ts",
     "./src/**/*.spec.tsx"
   ],
   "files": [

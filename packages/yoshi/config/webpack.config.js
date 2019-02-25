@@ -71,7 +71,7 @@ const staticAssetName = 'media/[name].[ext]?[hash]';
 // default public path
 let publicPath = '/';
 
-if (isDevelopment || !inTeamCity) {
+if (isDevelopment) {
   // Set the local dev-server url as a path
   publicPath = project.servers.cdn.url;
 }

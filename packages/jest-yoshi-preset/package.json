@@ -22,7 +22,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest-environment-yoshi-bootstrap": "4.1.0-alpha.1",
     "jest-environment-yoshi-puppeteer": "4.1.0-alpha.1",
-    "ts-jest": "^23.0.1",
+    "ts-jest": "^24.0.0",
     "yoshi-config": "4.1.0-alpha.1",
     "yoshi-helpers": "4.1.0-alpha.1"
   },
