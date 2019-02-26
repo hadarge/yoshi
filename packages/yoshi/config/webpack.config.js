@@ -277,6 +277,8 @@ function createCommonWebpackConfig({
       pathinfo: isDebug,
       filename: isDebug ? '[name].bundle.js' : '[name].bundle.min.js',
       chunkFilename: isDebug ? '[name].chunk.js' : '[name].chunk.min.js',
+      hotUpdateMainFilename: 'updates/[hash].hot-update.json',
+      hotUpdateChunkFilename: 'updates/[id].[hash].hot-update.js',
     },
 
     resolve: {
@@ -728,8 +730,6 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
       libraryTarget: 'umd',
       libraryExport: 'default',
       globalObject: "(typeof self !== 'undefined' ? self : this)",
-      hotUpdateMainFilename: 'updates/[hash].hot-update.json',
-      hotUpdateChunkFilename: 'updates/[id].[hash].hot-update.js',
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: info =>
         path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
