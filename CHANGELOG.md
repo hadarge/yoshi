@@ -1,8 +1,37 @@
 # Changelog
 
+## 4.1.0-alpha.3 (2019-02-26)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#992](https://github.com/wix/yoshi/pull/992) Improve app flow: Show server errors in the browser and refresh the browser on server changes ([@ronami](https://github.com/ronami))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1016](https://github.com/wix/yoshi/pull/1016) properly log port when waiting for server to start ([@netanelgilad](https://github.com/netanelgilad))
+  - [#1017](https://github.com/wix/yoshi/pull/1017) Generate correct public path on local build ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.1.0-alpha.2 (2019-02-25)
 
-> Changelog will be added later
+#### :boom: Breaking Change
+
+- `babel-plugin-transform-hmr-runtime`, `create-yoshi-app`, `jest-environment-yoshi-bootstrap`, `jest-environment-yoshi-puppeteer`, `jest-yoshi-preset`, `yoshi`
+  - [#954](https://github.com/wix/yoshi/pull/954) Migrate to Jest 24 ([@matveyok](https://github.com/matveyok))
+- `create-yoshi-app`, `jest-environment-yoshi-puppeteer`, `jest-yoshi-preset`, `yoshi-config`, `yoshi-helpers`, `yoshi`
+
+  - [#808](https://github.com/wix/yoshi/pull/808) Update test globs ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+
+- `yoshi-config`, `yoshi`
+  - [#1010](https://github.com/wix/yoshi/pull/1010) Change 'appflow' FT ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :house: Internal
+
+- `create-yoshi-app`, `jest-yoshi-preset`, `yoshi`
+  - [#1011](https://github.com/wix/yoshi/pull/1011) Fix server/business-manager generators for version 4 ([@yanivefraim](https://github.com/yanivefraim))
 
 ## 4.1.0-alpha.1 (2019-02-07)
 
