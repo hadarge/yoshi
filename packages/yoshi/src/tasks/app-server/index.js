@@ -83,9 +83,9 @@ function initializeServerStartDelegate({
     const waitingLogTimeout = setTimeout(() => {
       console.log('');
       console.log(
-        `Still waiting for app-server to start (make sure it is listening on ${chalk.magenta(
-          process.env.PORT,
-        )}...`,
+        `Still waiting for app-server to start (make sure it is listening on port ${chalk.magenta(
+          port,
+        )}...)`,
       );
     }, 3000);
 
