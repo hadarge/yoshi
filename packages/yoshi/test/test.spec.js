@@ -73,7 +73,7 @@ describe('Aggregator: Test', () => {
       const res = test
         .verbose()
         .setup(executionOptions(TEST_PORT))
-        .execute('test', undefined, outsideTeamCity);
+        .execute('test', ['--mocha'], outsideTeamCity);
 
       expect(res.code).to.equal(1);
       expect(res.stderr).to.include(
@@ -86,7 +86,7 @@ describe('Aggregator: Test', () => {
       test.setup(executionOptions(TEST_PORT));
       const testPath = test.tmp;
       child = await takePortFromAnotherProcess(testPath, TEST_PORT);
-      const res = test.execute('test', undefined, outsideTeamCity);
+      const res = test.execute('test', ['--mocha'], outsideTeamCity);
 
       expect(res.code).to.equal(0);
       expect(res.stdout).to.include(
@@ -105,42 +105,17 @@ describe('Aggregator: Test', () => {
       test.teardown();
     });
 
-    it('should pass with exit code 0 with mocha as default', function() {
+    it('should pass with exit code 0 with jest as default', function() {
       this.timeout(40000);
       const res = test
         .setup({
-          'test/component.spec.js': 'it.only("pass", () => 1);',
-          'protractor.conf.js': `
-            const http = require("http");
-
-            exports.config = {
-              framework: "jasmine",
-              specs: ["dist/test/**/*.e2e.js"],
-              onPrepare: () => {
-                const server = http.createServer((req, res) => {
-                  const response = "<html><body><script src=http://localhost:3200/app.bundle.js></script></body></html>";
-                  res.end(response);
-                });
-
-                return server.listen(1337);
-              }
-            };
-          `,
-          'dist/test/some.e2e.js': `
-            it("should write to body", () => {
-              browser.ignoreSynchronization = true;
-              browser.get("http://localhost:1337");
-              expect(element(by.css("body")).getText()).toEqual("");
-            });
-          `,
+          'test/component.spec.js': 'it.only("pass", async () => 1);',
           'package.json': fx.packageJson(),
         })
         .execute('test', undefined, outsideTeamCity);
 
       expect(res.code).to.equal(0);
-      expect(res.stdout).to.contain('1 passing');
-      expect(res.stdout).to.contains('protractor');
-      expect(res.stdout).to.contain('1 spec, 0 failures');
+      expect(res.stderr).to.contain('1 passed');
     });
   });
 

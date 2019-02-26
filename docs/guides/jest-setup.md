@@ -73,7 +73,7 @@ npx jest --watch
 In this mode, your tests will run against you local `dist/statics` directory.
 
 ```shell
-npx yoshi test --jest
+npx yoshi test
 ```
 
 Yoshi serves the files from `dist/statics`. Make sure to run `npx yoshi build` before you run the tests using this mode.

@@ -12,7 +12,7 @@
     "start": "yoshi start",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
-    "test": "yoshi test --jest",
+    "test": "yoshi test",
     "posttest": "yoshi lint",
     "release": "yoshi release"
   },

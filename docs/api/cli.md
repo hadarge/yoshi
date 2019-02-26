@@ -40,9 +40,9 @@ Get SIGHUP on change and manage application reboot manually
 
 Default: `false`
 
-#### `--no-test`
+#### `--with-tests`
 
-Do not spawn `npm test` after start
+Spawn `npm test` after start
 
 Default: `false`
 
@@ -129,11 +129,17 @@ You can specify multiple entry points in your `package.json` file. This gives th
 
 ## test
 
+Executes tests using `jest` as default.
+
 ### options
+
+#### `--jest`
+
+Run tests with Jest - this is the default
 
 #### `--mocha`
 
-Run unit tests with Mocha - this is the default
+Run unit tests with Mocha
 
 #### `--jasmine`
 
@@ -142,10 +148,6 @@ Run unit tests with Jasmine
 #### `--karma`
 
 Run tests with Karma (browser)
-
-#### `--jest`
-
-Run tests with Jest
 
 #### `--protractor`
 
@@ -167,18 +169,17 @@ Allow test debugging (works for mocha, jest & protractor), process won't start u
 
 Collect and output code coverage
 
-By default, this task executes both unit test (using `mocha` as default) and e2e test using `protractor`.
-Default unit test glob is `{test,app,src}/**/*.spec.+(js|ts)`. You can change this by adding the following to your package.json:
+### Examples
 
-```js
-yoshi: {
-  specs: {
-    node: "my-crazy-tests-glob-here";
-  }
-}
-```
+- Jest test setup:
 
-- Note that when specifying multiple flags, only the first one will be considered, so you can't compose test runners (for now).
+  Every other argument you'll pass to `yoshi test` will be forwarded to jest, For example:
+
+  `yoshi test --forceExit foo.spec.js`
+
+  Will run jest on `foo.spec.js` file and will apply [`forceExit`](https://jestjs.io/docs/en/cli#forceexit).
+
+  **Note:** `--debug & --debug-brk` won't be transfer to jest, but instead will be [used in yoshi for test debugging](https://jestjs.io/docs/en/troubleshooting#tests-are-failing-and-you-don-t-know-why)
 
 - Mocha tests setup:
 
@@ -205,24 +206,6 @@ yoshi: {
   Specifying a custom glob for test files is possible by configuring `package.json` as described in [`yoshi.specs`](#wixspecs). The default glob matches `.spec.` files in all folders.
   <br />
   If you wish to load helpers, import them all in a file placed at `'test/setup.js'`.
-
-- Jest test setup:
-
-  You may specify a jest config object in your `package.json`, for example:
-
-  ```json
-    "jest": {
-      "testRegex": "/src/.*\\.spec\\.(ts|tsx)$"
-    }
-  ```
-
-  Every other argument you'll pass to `yoshi test --jest` will be forwarded to jest, For example:
-
-  `yoshi test --jest --forceExit foo.spec.js`
-
-  Will run jest on `foo.spec.js` file and will apply [`forceExit`](https://jestjs.io/docs/en/cli#forceexit).
-
-  **Note:** `--debug & --debug-brk` won't be transfer to jest, but instead will be [used in yoshi for test debugging](https://jestjs.io/docs/en/troubleshooting#tests-are-failing-and-you-don-t-know-why)
 
 ## lint
 
