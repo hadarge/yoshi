@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "license": "UNLICENSED",
   "private": true,
-  "sideEffects": [
-    "*.global.(css|scss|less|sass)"
-  ],
+  "sideEffects": false,
   "author": {
     "name": "me",
     "email": "me@wix.com"
@@ -19,38 +17,16 @@
     "release": "yoshi release"
   },
   "dependencies": {
-    "axios": "~0.16.0",
+    "axios": "^0.16.0",
     "ejs": "^2.6.1",
-    "express": "~4.15.0",
+    "express": "^4.15.0",
     "jest-puppeteer": "^3.4.0",
-    "i18next": "^11.6.0",
-    "prop-types": "~15.6.0",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
-    "react-i18next": "^7.11.0",
-    "regenerator-runtime": "^0.11.0",
-    "wix-axios-config": "latest",
-    "wix-bootstrap-greynode": "latest",
-    "wix-bootstrap-hadron": "latest",
-    "wix-bootstrap-ng": "latest",
-    "wix-bootstrap-renderer": "latest",
-    "wix-express-csrf": "latest",
-    "wix-express-require-https": "latest"
-  },
-  "devDependencies": {
-    "react-test-renderer": "~15.6.0",
-    "enzyme": "~2.9.0",
-    "husky": "~0.14.0",
-    "lint-staged": "^7.2.2",
     "jest-yoshi-preset": "latest",
     "puppeteer": "^1.1.0",
-    "wix-bootstrap-testkit": "latest",
-    "wix-config-emitter": "latest",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
     "yoshi": "latest",
     "yoshi-style-dependencies": "latest"
-  },
-  "lint-staged": {
-    "*.{js,scss,less}": "yoshi lint"
   },
   "jest": {
     "preset": "jest-yoshi-preset"
