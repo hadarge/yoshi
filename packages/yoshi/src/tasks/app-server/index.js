@@ -84,7 +84,7 @@ function initializeServerStartDelegate({
       console.log('');
       console.log(
         `Still waiting for app-server to start (make sure it is listening on ${chalk.magenta(
-          'process.env.PORT',
+          process.env.PORT,
         )}...`,
       );
     }, 3000);
