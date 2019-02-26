@@ -1,6 +1,6 @@
 {
   "name": "tslint-config-yoshi",
-  "version": "4.1.0-alpha.2",
+  "version": "4.1.0-alpha.3",
   "description": "tslint configuration for react projects using yoshi",
   "main": "index.js",
   "keywords": [
