@@ -1,0 +1,22 @@
+{
+  "enabledManagers": [
+    "npm"
+  ],
+  "major": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "packagePatterns": [
+        "*"
+      ],
+      "enabled": false
+    },
+    {
+      "paths": [
+        "packages/yoshi/package.json"
+      ],
+      "enabled": true
+    }
+  ]
+}
