@@ -17,7 +17,7 @@
     },
     {
       "paths": [
-        "packages/yoshi/package.json"
+        "packages/yoshi*/package.json"
       ],
       "enabled": true
     }
