@@ -161,7 +161,7 @@
     "karma-teamcity-reporter": "1.1.0",
     "minimatch": "3.0.4",
     "mocha-env-reporter": "3.0.2",
-    "ng-annotate": "1.2.1",
+    "ng-annotate": "1.2.2",
     "ng-annotate-loader": "0.6.1",
     "node-fetch": "2.3.0",
     "node-sass": "4.11.0",
