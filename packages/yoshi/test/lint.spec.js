@@ -390,6 +390,42 @@ p {
       expect(res.stderr).to.not.contain('src/dontrunonme.scss');
       expect(res.code).to.equal(1);
     });
+
+    it('should not log files with no errors filenames', () => {
+      const badStyle = `
+p {
+  color: #ff0;
+}
+
+
+
+`;
+      const goodStyle = `
+p {
+  $color: #ff0;
+  color: #ff0;
+}`;
+      const res = test
+        .setup({
+          'src/a.scss': goodStyle,
+          'src/b.scss': badStyle,
+          'package.json': `{
+            "name": "a",\n
+            "version": "1.0.0",\n
+            "stylelint": {
+              "rules": {
+                "max-empty-lines": 1
+              }
+            }
+          }`,
+        })
+        .execute('lint', []);
+
+      expect(res.stdout).to.contain(`running stylelint`);
+      expect(res.stderr).not.to.contain('src/a.scss');
+      expect(res.stderr).to.contain('src/b.scss');
+      expect(res.code).to.equal(1);
+    });
   });
 
   describe('Empty state', () => {

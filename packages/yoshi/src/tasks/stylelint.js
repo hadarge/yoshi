@@ -115,7 +115,9 @@ function plural(num, word) {
 function buildStringFromResult(results) {
   const fileResults = results.map(formatFileResult);
   const errorMessage = createErrorMessage(fileResults);
-  const reports = fileResults.map(x => x.text);
+  const reports = fileResults
+    .filter(x => x.numberOfErrors || x.numberOfWarnings)
+    .map(x => x.text);
 
   return [...reports, errorMessage].join('\n\n');
 }
