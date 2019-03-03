@@ -16,7 +16,7 @@
     "ng-annotate": "1.2.1",
     "ng-annotate-loader": "0.6.1",
     "protractor": "5.4.2",
-    "protractor-browser-logs": "1.0.355",
+    "protractor-browser-logs": "1.0.359",
     "screenshot-reporter": "1.1.4",
     "yoshi-runtime": "1.0.42"
   }

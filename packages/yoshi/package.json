@@ -168,7 +168,7 @@
     "phantomjs-polyfill": "0.0.2",
     "postcss-loader": "3.0.0",
     "protractor": "5.4.2",
-    "protractor-browser-logs": "1.0.355",
+    "protractor-browser-logs": "1.0.359",
     "puppeteer": "1.12.2",
     "react": "16.8.3",
     "resolve-url-loader": "3.0.1",
