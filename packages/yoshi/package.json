@@ -30,7 +30,7 @@
     "@stylable/webpack-plugin": "1.1.1",
     "@svgr/webpack": "4.1.0",
     "@types/graphql": "14.0.7",
-    "@wix/depkeeper-preset-yoshi": "1.0.14",
+    "@wix/depkeeper-preset-yoshi": "1.0.17",
     "autoprefixer": "9.4.9",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.1",
