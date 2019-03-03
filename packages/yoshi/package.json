@@ -49,7 +49,7 @@
     "depkeeper": "1.0.48",
     "detect-port": "1.3.0",
     "envinfo": "5.12.1",
-    "eslint": "5.14.1",
+    "eslint": "5.15.0",
     "eslint-config-yoshi": "4.1.0-alpha.3",
     "eslint-config-yoshi-base": "4.1.0-alpha.3",
     "eslint-plugin-import": "2.16.0",
