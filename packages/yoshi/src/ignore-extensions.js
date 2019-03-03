@@ -67,6 +67,14 @@ function mockSvg(module) {
   module.exports = {
     __esModule: true,
     default: svgFilename,
-    ReactComponent: () => svgFilename,
+    ReactComponent: props => ({
+      $$typeof: Symbol.for('react.element'),
+      type: 'svg',
+      ref: null,
+      key: null,
+      props: Object.assign({}, props, {
+        children: svgFilename,
+      }),
+    }),
   };
 }
