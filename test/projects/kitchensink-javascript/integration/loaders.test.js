@@ -46,7 +46,7 @@ describe('webpack', () => {
       await initTest('css-image-url');
 
       await matchCSS('css-image-url', page, [
-        /background-image:url\(media\/large-bart-simpson.gif.+\)/,
+        /background-image:url\(media\/large-bart-simpson.gif\)/,
       ]);
     });
   });
@@ -259,7 +259,7 @@ describe('webpack', () => {
         elm => elm.src,
       );
 
-      expect(imageSource).toMatch(/^.+media\/large-bart-simpson.gif.+$/);
+      expect(imageSource).toMatch(/^.+media\/large-bart-simpson.gif$/);
     });
 
     it('inline svg inclusion', async () => {

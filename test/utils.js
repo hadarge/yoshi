@@ -66,17 +66,21 @@ const matchJS = async (chunkName, page, regexes) => {
 };
 
 async function waitForPort(port, { timeout = 20000 } = {}) {
-  const portFound = await waitPort({ port, timeout, output: 'silent' });
+  const portNumber = parseInt(port, 10);
+
+  const portFound = await waitPort({
+    port: portNumber,
+    timeout,
+    output: 'silent',
+  });
 
   if (!portFound) {
-    throw new Error(`Timed out waiting for "${port}".`);
+    throw new Error(`Timed out waiting for "${portNumber}".`);
   }
 }
 
 const initTest = async feature => {
-  await page.goto(
-    `http://localhost:${global.scripts.serverProcessPort}/${feature}`,
-  );
+  await page.goto(`http://localhost:${process.env.PORT}/${feature}`);
 };
 
 function isPortTaken(port) {

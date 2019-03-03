@@ -66,7 +66,7 @@ const computedSeparateCss =
 
 const artifactVersion = process.env.ARTIFACT_VERSION;
 
-const staticAssetName = 'media/[name].[ext]?[hash]';
+const staticAssetName = 'media/[name].[ext]';
 
 // default public path
 let publicPath = '/';

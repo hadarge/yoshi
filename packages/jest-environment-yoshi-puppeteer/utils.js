@@ -4,7 +4,7 @@ const globs = require('yoshi-config/globs');
 const { MATCH_ENV } = process.env;
 
 module.exports.shouldRunE2Es = async () => {
-  const filesPaths = await globby(globs.e2eTests);
+  const filesPaths = await globby(globs.e2eTests, { gitignore: true });
 
   return (
     filesPaths.length > 0 &&

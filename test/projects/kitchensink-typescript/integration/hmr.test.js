@@ -5,14 +5,11 @@ const { initTest, waitForPort, waitForPortToFree } = require('../../../utils');
 jest.setTimeout(20 * 1000);
 
 const clientFilePath = path.join(
-  global.scripts.testDirectory,
+  process.env.TEST_DIRECTORY,
   'src/components/features/css-inclusion.tsx',
 );
 
-const serverFilePath = path.join(
-  global.scripts.testDirectory,
-  'src/server.tsx',
-);
+const serverFilePath = path.join(process.env.TEST_DIRECTORY, 'src/server.tsx');
 
 const originalServerContent = fs.readFileSync(serverFilePath, 'utf-8');
 
@@ -54,7 +51,7 @@ describe('hmr', () => {
     afterEach(async () => {
       fs.writeFileSync(serverFilePath, originalServerContent);
 
-      await waitForPort(global.scripts.serverProcessPort);
+      await waitForPort(process.env.PORT);
 
       await page.waitForNavigation();
 
@@ -93,7 +90,7 @@ describe('hmr', () => {
 
       fs.writeFileSync(serverFilePath, 'process.exit(1);');
 
-      await waitForPortToFree(global.scripts.serverProcessPort);
+      await waitForPortToFree(process.env.PORT);
     });
   });
 });

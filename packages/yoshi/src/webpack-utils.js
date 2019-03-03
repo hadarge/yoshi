@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const clearConsole = require('react-dev-utils/clearConsole');
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const serverHandler = require('serve-handler');
 const project = require('yoshi-config');
 const { STATICS_DIR } = require('yoshi-config/paths');
 const { PORT } = require('./constants');
@@ -157,6 +156,7 @@ function createDevServer(clientCompiler, { publicPath, https, host }) {
     // Enable gzip compression for everything served
     compress: true,
     clientLogLevel: 'error',
+    contentBase: STATICS_DIR,
     watchContentBase: true,
     hot: true,
     publicPath,
@@ -171,12 +171,6 @@ function createDevServer(clientCompiler, { publicPath, https, host }) {
       app.use(cors());
       // Redirect `.min.(js|css)` to `.(js|css)`
       app.use(redirectMiddleware(host, project.servers.cdn.port));
-      // https://github.com/zeit/serve-handler
-      app.use(async (req, res) => {
-        await serverHandler(req, res, {
-          public: STATICS_DIR,
-        });
-      });
     },
   });
 

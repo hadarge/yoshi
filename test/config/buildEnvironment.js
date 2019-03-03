@@ -7,8 +7,6 @@ module.exports = class BuildEnvironment extends PuppeteerEnvironment {
 
     this.global.__DEV__ = false;
 
-    this.global.scripts = global.scripts;
-
     await this.global.page.setRequestInterception(true);
 
     this.global.page.on('request', request => {

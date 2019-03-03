@@ -13,6 +13,4 @@ module.exports = {
   ],
   testEnvironment: require.resolve('../../config/startEnvironment'),
   transformIgnorePatterns: ['/node_modules/', '/test/'],
-  globalSetup: require.resolve('../../config/startGlobalSetup'),
-  globalTeardown: require.resolve('../../config/startGlobalTeardown'),
 };
