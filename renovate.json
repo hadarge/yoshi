@@ -3,6 +3,7 @@
   "enabledManagers": [
     "npm"
   ],
+  "groupName": "all",
   "labels": [
     "PR: Chore :construction_worker:"
   ],
