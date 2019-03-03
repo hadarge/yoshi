@@ -10,6 +10,9 @@
   "major": {
     "enabled": false
   },
+  "schedule": [
+    "after 3:00am and before 7:00am"
+  ],
   "packageRules": [
     {
       "packagePatterns": [
