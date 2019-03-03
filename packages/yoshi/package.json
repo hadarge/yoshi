@@ -46,7 +46,7 @@
     "cors": "2.8.5",
     "cross-spawn": "6.0.5",
     "dargs": "6.0.0",
-    "depkeeper": "1.0.45",
+    "depkeeper": "1.0.48",
     "detect-port": "1.3.0",
     "envinfo": "5.12.1",
     "eslint": "5.14.1",
