@@ -75,7 +75,7 @@ module.exports = class Scripts {
   }
 
   async test(env = {}) {
-    return execa('npx', ['yoshi', 'test', '--jest'], {
+    return execa('npx', ['yoshi', 'test'], {
       cwd: this.testDirectory,
       env: {
         ...defaultOptions,
