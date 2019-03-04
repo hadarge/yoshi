@@ -13,7 +13,7 @@ const serverFilePath = path.join(process.env.TEST_DIRECTORY, 'src/server.tsx');
 
 const originalServerContent = fs.readFileSync(serverFilePath, 'utf-8');
 
-describe('hmr', () => {
+describe.skip('hmr', () => {
   describe('client side', () => {
     it('reloads the browser on javascript changes', async () => {
       await initTest('css-inclusion');

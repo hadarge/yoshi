@@ -105,6 +105,12 @@ module.exports = async () => {
   });
 
   serverCompiler.watch({ 'info-verbosity': 'none' }, async (error, stats) => {
+    // We save the result of this build to webpack-dev-server's internal state so the last
+    // server build results are sent to the browser on every refresh
+    //
+    // https://github.com/webpack/webpack-dev-server/blob/master/lib/Server.js#L144
+    devServer._stats = stats;
+
     const jsonStats = stats.toJson();
 
     // If the spawned server process has died, restart it
