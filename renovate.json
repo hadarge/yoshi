@@ -3,7 +3,7 @@
   "enabledManagers": [
     "npm"
   ],
-  "groupName": "all",
+  "groupName": "dependencies (weekly)",
   "labels": [
     "PR: Chore :construction_worker:"
   ],
