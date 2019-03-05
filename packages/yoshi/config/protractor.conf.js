@@ -31,7 +31,7 @@ const forwardProxyPort = process.env.FORWARD_PROXY_PORT || 3333;
 const merged = ld.mergeWith(
   {
     framework: 'jasmine',
-    specs: [globs.protractor],
+    specs: [globs.e2eTests],
     exclude: [],
     directConnect: true,
 
