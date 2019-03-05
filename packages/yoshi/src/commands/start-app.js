@@ -105,6 +105,7 @@ module.exports = async () => {
   const devServer = await createDevServer(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     port: project.servers.cdn.port,
+    https,
     host,
   });
 
