@@ -1,6 +1,6 @@
 {
   "name": "stylelint-config-yoshi",
-  "version": "4.1.0-alpha.4",
+  "version": "4.1.0-alpha.5",
   "description": "stylelint configuration for projects using yoshi",
   "main": "index.js",
   "keywords": [

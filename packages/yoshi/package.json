@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "4.1.0-alpha.4",
+  "version": "4.1.0-alpha.5",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -36,8 +36,8 @@
     "babel-eslint": "10.0.1",
     "babel-jest": "24.1.0",
     "babel-loader": "8.0.5",
-    "babel-plugin-transform-hmr-runtime": "4.1.0-alpha.4",
-    "babel-preset-yoshi": "4.1.0-alpha.4",
+    "babel-plugin-transform-hmr-runtime": "4.1.0-alpha.5",
+    "babel-preset-yoshi": "4.1.0-alpha.5",
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "chalk": "2.4.2",
@@ -50,8 +50,8 @@
     "detect-port": "1.3.0",
     "envinfo": "5.12.1",
     "eslint": "5.15.0",
-    "eslint-config-yoshi": "4.1.0-alpha.4",
-    "eslint-config-yoshi-base": "4.1.0-alpha.4",
+    "eslint-config-yoshi": "4.1.0-alpha.5",
+    "eslint-config-yoshi-base": "4.1.0-alpha.5",
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-jest": "22.3.0",
     "eslint-plugin-jsx-a11y": "6.2.1",
@@ -105,7 +105,7 @@
     "rtlcss-webpack-plugin": "4.0.0",
     "ruby-haml-loader": "1.0.0",
     "stylelint": "9.10.1",
-    "stylelint-config-yoshi": "4.1.0-alpha.4",
+    "stylelint-config-yoshi": "4.1.0-alpha.5",
     "stylelint-prettier": "1.0.6",
     "svg-inline-loader": "0.8.0",
     "svg-url-loader": "2.3.2",
@@ -116,7 +116,7 @@
     "ts-loader": "5.3.3",
     "ts-node": "3.3.0",
     "tslint": "5.13.1",
-    "tslint-config-yoshi": "4.1.0-alpha.4",
+    "tslint-config-yoshi": "4.1.0-alpha.5",
     "tslint-config-yoshi-base": "3.30.5",
     "tslint-plugin-wix-style-react": "1.0.6",
     "url-loader": "1.1.2",
@@ -132,8 +132,8 @@
     "wnpm-ci": "7.0.10",
     "write-file-webpack-plugin": "4.5.0",
     "xmldoc": "1.1.2",
-    "yoshi-config": "4.1.0-alpha.4",
-    "yoshi-helpers": "4.1.0-alpha.4"
+    "yoshi-config": "4.1.0-alpha.5",
+    "yoshi-helpers": "4.1.0-alpha.5"
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "7.2.0",
@@ -152,7 +152,7 @@
     "expect": "23.6.0",
     "generic-names": "1.0.3",
     "identity-obj-proxy": "3.0.0",
-    "jest-yoshi-preset": "4.1.0-alpha.4",
+    "jest-yoshi-preset": "4.1.0-alpha.5",
     "karma": "2.0.5",
     "karma-chrome-launcher": "2.2.0",
     "karma-jasmine": "1.1.2",

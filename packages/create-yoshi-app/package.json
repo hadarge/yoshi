@@ -1,6 +1,6 @@
 {
   "name": "create-yoshi-app",
-  "version": "4.1.0-alpha.4",
+  "version": "4.1.0-alpha.5",
   "description": "create yoshi powered apps",
   "keywords": [
     "create",
@@ -41,7 +41,7 @@
     "parse-git-config": "^2.0.2",
     "prompts": "^1.1.1",
     "validate-npm-package-name": "^3.0.0",
-    "yoshi-helpers": "4.1.0-alpha.4"
+    "yoshi-helpers": "4.1.0-alpha.5"
   },
   "devDependencies": {
     "chokidar": "^2.0.4",
