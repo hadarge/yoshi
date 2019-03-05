@@ -1,5 +1,55 @@
 # Changelog
 
+## 4.1.0-alpha.4 (2019-03-05)
+
+#### :boom: Breaking Change
+
+- `jest-environment-yoshi-puppeteer`
+  - [#1067](https://github.com/wix/yoshi/pull/1067) Add default Puppeteer timeouts ([@yanivefraim](https://github.com/yanivefraim))
+- `create-yoshi-app`, `yoshi`
+  - [#1006](https://github.com/wix/yoshi/pull/1006) Make Jest the default test runner when running `npx yoshi test` ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1072](https://github.com/wix/yoshi/pull/1072) Fix https flag/option not starting `webpack-dev-server` in https ([@ronami](https://github.com/ronami))
+  - [#1047](https://github.com/wix/yoshi/pull/1047) Run `eslint` even after stylelint errors ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1046](https://github.com/wix/yoshi/pull/1046) Do not show the name of files that didn't have `stylelint` errors ([@yanivefraim](https://github.com/yanivefraim))
+- `yoshi-config`, `yoshi`
+  - [#1071](https://github.com/wix/yoshi/pull/1071) Fix Webpack's version to `v4.28.4` ([@ronami](https://github.com/ronami))
+- `yoshi-config`
+  - [#1061](https://github.com/wix/yoshi/pull/1061) Use a base for globs and add `__tests__` to the new base ([@ranyitz](https://github.com/ranyitz))
+- `jest-yoshi-preset`, `yoshi`
+  - [#1059](https://github.com/wix/yoshi/pull/1059) Handle importing `svg` files in tests (mocha,jest,jest-yoshi-preset) for React 15 ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1073](https://github.com/wix/yoshi/pull/1073) Support old flow CLI options: `--ssl` and `--entry-point` ([@ronami](https://github.com/ronami))
+  - [#1066](https://github.com/wix/yoshi/pull/1066) Improve TypeScript speed in watch mode using incremental API in app flow ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1065](https://github.com/wix/yoshi/pull/1065) Fix deprecated `resolve-url-loader` config ([@ronami](https://github.com/ronami))
+  - [#1029](https://github.com/wix/yoshi/pull/1029) Configure `hot-update.json` of Webpack's HMR to be in `updates` directory ([@ranyitz](https://github.com/ranyitz))
+
+#### :house: Internal
+
+- Other
+  - [#1058](https://github.com/wix/yoshi/pull/1058) Test improvements ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1056](https://github.com/wix/yoshi/pull/1056) Update Travis Node version to v10 ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1007](https://github.com/wix/yoshi/pull/1007) Configure Renovate ([@renovate[bot]](https://github.com/apps/renovate))
+  - [#1022](https://github.com/wix/yoshi/pull/1022) Remove redundant dependencies from kitchensink projects ([@ronami](https://github.com/ronami))
+- `yoshi`
+  - [#1064](https://github.com/wix/yoshi/pull/1064) Remove redundant files ([@ronami](https://github.com/ronami))
+  - [#1035](https://github.com/wix/yoshi/pull/1035) Configure npm to not automatically add `^` to installed dependencies ([@cowchimp](https://github.com/cowchimp))
+  - [#1032](https://github.com/wix/yoshi/pull/1032) Update dependency terser to v3.16.1 ([@renovate[bot]](https://github.com/apps/renovate))
+  - [#1031](https://github.com/wix/yoshi/pull/1031) Update dependency ng-annotate to v1.2.2 ([@renovate[bot]](https://github.com/apps/renovate))
+  - [#1030](https://github.com/wix/yoshi/pull/1030) Update dependency detect-port to v1.3.0 ([@renovate[bot]](https://github.com/apps/renovate))
+  - [#1033](https://github.com/wix/yoshi/pull/1033) Update dependency terser-webpack-plugin to v1.2.3 ([@renovate[bot]](https://github.com/apps/renovate))
+  - [#1024](https://github.com/wix/yoshi/pull/1024) Freeze Yoshi's direct dependencies ([@cowchimp](https://github.com/cowchimp))
+- `jest-environment-yoshi-puppeteer`, `yoshi-helpers`, `yoshi`
+  - [#1020](https://github.com/wix/yoshi/pull/1020) Change app-flow tests to support testing Yoshi's testing infra ([@ronami](https://github.com/ronami))
+- `yoshi-angular-dependencies`, `yoshi-config`, `yoshi-helpers`, `yoshi-style-dependencies`
+  - [#1037](https://github.com/wix/yoshi/pull/1037) Freeze direct dependencies in `yoshi-*` packages ([@cowchimp](https://github.com/cowchimp))
+
 ## 4.1.0-alpha.3 (2019-02-26)
 
 #### :rocket: New Feature
