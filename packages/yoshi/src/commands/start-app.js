@@ -4,6 +4,10 @@ process.env.NODE_ENV = 'development';
 const parseArgs = require('minimist');
 
 const cliArgs = parseArgs(process.argv.slice(2), {
+  alias: {
+    server: 'entry-point',
+    https: 'ssl',
+  },
   default: {
     server: 'index.js',
     https: false,

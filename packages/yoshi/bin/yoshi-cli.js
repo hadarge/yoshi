@@ -54,7 +54,11 @@ if (config.projectType === 'app') {
     .command('start')
     .description('Experimental local development experience')
     .option('--server', 'The main file to start your server')
+    // Backward compatibility
+    .option('-e --entry-point', 'The main file to start your server')
     .option('--production', 'Start using unminified production build')
+    // Backward compatibility
+    .option('--ssl', 'Serve the app bundle on https')
     .option('--https', 'Serve the app bundle on https')
     .option('--debug', 'Allow app-server debugging')
     .option(
