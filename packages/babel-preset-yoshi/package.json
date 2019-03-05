@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-yoshi",
-  "version": "4.1.0-alpha.3",
+  "version": "4.1.0-alpha.4",
   "description": "babel 7 preset for yoshi",
   "main": "index.js",
   "keywords": [
