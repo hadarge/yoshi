@@ -63,8 +63,8 @@ module.exports = class Scripts {
     };
   }
 
-  async build(env = {}) {
-    return execa('npx', ['yoshi', 'build'], {
+  async build(env = {}, args = []) {
+    return execa('npx', ['yoshi', 'build', ...args], {
       cwd: this.testDirectory,
       env: {
         ...defaultOptions,

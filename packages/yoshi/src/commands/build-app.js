@@ -5,6 +5,7 @@ const parseArgs = require('minimist');
 
 const cliArgs = parseArgs(process.argv.slice(2));
 
+const bfj = require('bfj');
 const path = require('path');
 const fs = require('fs-extra');
 const chalk = require('chalk');
@@ -23,6 +24,7 @@ const {
   PUBLIC_DIR,
   STATICS_DIR,
   ASSETS_DIR,
+  STATS_FILE,
 } = require('yoshi-config/paths');
 const {
   petriSpecsConfig,
@@ -114,7 +116,7 @@ module.exports = async () => {
       });
     });
   }).then(
-    ({ stats, warnings }) => {
+    async ({ stats, warnings }) => {
       if (warnings.length) {
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));
@@ -136,6 +138,11 @@ module.exports = async () => {
           version: false,
         }),
       );
+
+      if (cliArgs.stats) {
+        await fs.ensureDir(path.dirname(STATS_FILE));
+        await bfj.write(STATS_FILE, stats.toJson());
+      }
 
       return {
         persistent: !!cliArgs.analyze,
