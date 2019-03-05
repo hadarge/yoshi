@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.1.0-alpha.5 (2019-03-05)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1076](https://github.com/wix/yoshi/pull/1076) Fix Protractor glob pattern to use the new `e2eTest` glob ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1075](https://github.com/wix/yoshi/pull/1075) Support writing a stats file when running app-flow build ([@ronami](https://github.com/ronami))
+
 ## 4.1.0-alpha.4 (2019-03-05)
 
 #### :boom: Breaking Change
