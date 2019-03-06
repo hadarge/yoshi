@@ -29,6 +29,11 @@ module.exports = async templateDirectory => {
       path.join(__dirname, '../../packages/yoshi'),
       path.join(testDirectory, 'node_modules/yoshi'),
     );
+
+    await fs.ensureSymlink(
+      path.join(__dirname, '../../packages/jest-yoshi-preset'),
+      path.join(testDirectory, 'node_modules/jest-yoshi-preset'),
+    );
   } else {
     // Authenticate and install from our fake registry on CI
     authenticateToRegistry(testDirectory);

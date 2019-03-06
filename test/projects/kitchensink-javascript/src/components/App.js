@@ -15,7 +15,7 @@ export default class App extends Component {
       default: feature,
     } = await import(
       /* webpackChunkName: "[request]" */
-      /* webpackExclude: /assets/ */
+      /* webpackExclude: /(assets|\.spec)/ */
       `./features/${featureName}`
     );
     /* eslint-enable prettier/prettier */
