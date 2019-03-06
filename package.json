@@ -71,7 +71,7 @@
     "mocha-teamcity-reporter": "^2.4.0",
     "prettier": "^1.12.1",
     "prompts": "^0.1.8",
-    "puppeteer": "^1.9.0",
+    "puppeteer": "^1.13.0",
     "retry-promise": "^1.0.0",
     "rimraf": "^2.6.2",
     "semver": "^5.5.0",

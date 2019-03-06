@@ -170,7 +170,7 @@
     "postcss-loader": "3.0.0",
     "protractor": "5.4.2",
     "protractor-browser-logs": "1.0.360",
-    "puppeteer": "1.12.2",
+    "puppeteer": "1.13.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "resolve-url-loader": "3.0.1",

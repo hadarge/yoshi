@@ -29,7 +29,7 @@
     "express": "^4.15.0",
     "jest-puppeteer": "^3.4.0",
     "jest-yoshi-preset": "latest",
-    "puppeteer": "^1.1.0",
+    "puppeteer": "^1.13.0",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "typescript": "^3.0.0",
