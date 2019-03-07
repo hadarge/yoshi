@@ -11,6 +11,8 @@ const fs = require('fs-extra');
 const chalk = require('chalk');
 const globby = require('globby');
 const webpack = require('webpack');
+const filesize = require('filesize');
+const { sync: gzipSize } = require('gzip-size');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const {
   createClientWebpackConfig,
@@ -18,6 +20,7 @@ const {
 } = require('../../config/webpack.config');
 const { inTeamCity: checkInTeamCity } = require('yoshi-helpers');
 const {
+  ROOT_DIR,
   SRC_DIR,
   BUILD_DIR,
   TARGET_DIR,
@@ -85,73 +88,96 @@ module.exports = async () => {
     isDebug: true,
   });
 
-  // Configure compilation
-  const compiler = webpack([
-    clientDebugConfig,
-    clientOptimizedConfig,
-    serverConfig,
-  ]);
+  let webpackStats;
+  let messages;
 
-  return new Promise((resolve, reject) => {
-    compiler.run(async (err, stats) => {
-      if (err) {
-        return reject(err);
-      }
+  try {
+    const compiler = webpack([
+      clientDebugConfig,
+      clientOptimizedConfig,
+      serverConfig,
+    ]);
 
-      const messages = formatWebpackMessages(stats.toJson({}, true));
-
-      if (messages.errors.length) {
-        // Only keep the first error. Others are often indicative
-        // of the same problem, but confuse the reader with noise.
-        if (messages.errors.length > 1) {
-          messages.errors.length = 1;
-        }
-
-        return reject(new Error(messages.errors.join('\n\n')));
-      }
-
-      return resolve({
-        stats,
-        warnings: messages.warnings,
-      });
+    webpackStats = await new Promise((resolve, reject) => {
+      compiler.run((err, stats) => (err ? reject(err) : resolve(stats)));
     });
-  }).then(
-    async ({ stats, warnings }) => {
-      if (warnings.length) {
-        console.log(chalk.yellow('Compiled with warnings.\n'));
-        console.log(warnings.join('\n\n'));
-      } else {
-        console.log(chalk.green('Compiled successfully.\n'));
+
+    messages = formatWebpackMessages(webpackStats.toJson({}, true));
+
+    if (messages.errors.length) {
+      // Only keep the first error. Others are often indicative
+      // of the same problem, but confuse the reader with noise.
+      if (messages.errors.length > 1) {
+        messages.errors.length = 1;
       }
 
-      console.log(
-        stats.toString({
-          cached: false,
-          cachedAssets: false,
-          chunks: false,
-          chunkModules: false,
-          colors: true,
-          hash: false,
-          modules: false,
-          reasons: true,
-          timings: true,
-          version: false,
-        }),
-      );
+      throw new Error(messages.errors.join('\n\n'));
+    }
+  } catch (error) {
+    console.log(chalk.red('Failed to compile.\n'));
+    console.error(error.message || error);
 
-      if (cliArgs.stats) {
-        await fs.ensureDir(path.dirname(STATS_FILE));
-        await bfj.write(STATS_FILE, stats.toJson());
-      }
+    process.exit(1);
+  }
+
+  if (messages.warnings.length) {
+    console.log(chalk.yellow('Compiled with warnings.\n'));
+    console.log(messages.warnings.join('\n\n'));
+  } else {
+    console.log(chalk.green('Compiled successfully.\n'));
+  }
+
+  const clientOptimizedStats = webpackStats.stats[1];
+
+  // Calculate assets sizes
+  const assets = clientOptimizedStats
+    .toJson({ all: false, assets: true })
+    .assets.filter(asset => !asset.name.endsWith('.map'))
+    .map(asset => {
+      const fileContents = fs.readFileSync(path.join(STATICS_DIR, asset.name));
 
       return {
-        persistent: !!cliArgs.analyze,
+        folder: path.join(
+          path.relative(ROOT_DIR, STATICS_DIR),
+          path.dirname(asset.name),
+        ),
+        name: path.basename(asset.name),
+        gzipSize: gzipSize(fileContents),
+        size: asset.size,
       };
-    },
-    error => {
-      console.log(chalk.red('Failed to compile.\n'));
-      console.error(error.message || error);
-      process.exit(1);
-    },
+    })
+    .sort((a, b) => b.gzipSize - a.gzipSize);
+
+  // Print build result nicely
+  assets.forEach(asset => {
+    console.log(
+      '  ' +
+        filesize(asset.size) +
+        '  ' +
+        `(${filesize(asset.gzipSize)} GZIP)` +
+        '  ' +
+        `${chalk.dim(asset.folder + path.sep)}${chalk.cyan(asset.name)}`,
+    );
+  });
+
+  console.log();
+  console.log(chalk.dim('    Interested in reducing your bundle size?'));
+  console.log();
+  console.log(
+    chalk.dim('      > Try https://webpack.js.org/guides/code-splitting'),
   );
+  console.log(
+    chalk.dim(
+      `      > If it's still large, analyze your bundle by running \`npx yoshi build --analyze\``,
+    ),
+  );
+
+  if (cliArgs.stats) {
+    await fs.ensureDir(path.dirname(STATS_FILE));
+    await bfj.write(STATS_FILE, webpackStats.toJson());
+  }
+
+  return {
+    persistent: !!cliArgs.analyze,
+  };
 };
