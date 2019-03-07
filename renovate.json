@@ -24,6 +24,9 @@
       "paths": [
         "packages/yoshi*/package.json"
       ],
+      "excludePackageNames": [
+        "webpack"
+      ],
       "enabled": true
     }
   ]
