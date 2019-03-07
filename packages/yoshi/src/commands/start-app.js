@@ -198,7 +198,7 @@ module.exports = async () => {
   }
 
   // Once it started, open up the browser
-  openBrowser(`http://localhost:${PORT}`);
+  openBrowser(cliArgs.url || `${https ? 'https' : 'http'}://localhost:${PORT}`);
 
   return {
     persistent: true,
