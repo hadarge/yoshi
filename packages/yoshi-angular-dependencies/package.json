@@ -2,6 +2,7 @@
   "name": "yoshi-angular-dependencies",
   "version": "4.1.0-alpha.5",
   "description": "",
+  "files": ["ng-annotate-loader.js"],
   "keywords": [
     "yoshi",
     "angular"

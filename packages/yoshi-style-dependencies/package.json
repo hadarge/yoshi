@@ -2,6 +2,14 @@
   "name": "yoshi-style-dependencies",
   "version": "4.1.0-alpha.5",
   "description": "",
+  "files": [
+    "css-hot-loader.js",
+    "css-loader.js",
+    "style-loader.js",
+    "postcss-loader.js",
+    "resolve-url-loader.js",
+    "sass-loader.js"
+  ],
   "keywords": [
     "yoshi"
   ],

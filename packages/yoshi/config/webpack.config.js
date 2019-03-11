@@ -145,7 +145,9 @@ const getStyleLoaders = ({
         ...(embedCss
           ? [
               // https://github.com/shepherdwind/css-hot-loader
-              ...(hmr ? [{ loader: 'css-hot-loader' }] : []),
+              ...(hmr
+                ? [{ loader: 'yoshi-style-dependencies/css-hot-loader' }]
+                : []),
 
               // Process every style asset with either `style-loader`
               // or `mini-css-extract-plugin`
@@ -162,7 +164,7 @@ const getStyleLoaders = ({
                   ]
                 : [
                     {
-                      loader: 'style-loader',
+                      loader: 'yoshi-style-dependencies/style-loader',
                       options: {
                         // Reuses a single `<style></style>` element
                         singleton: true,
@@ -176,7 +178,7 @@ const getStyleLoaders = ({
                   // `modules: false`
                   {
                     test: /\.global\.[A-z]*$/,
-                    loader: 'css-loader',
+                    loader: 'yoshi-style-dependencies/css-loader',
                     options: {
                       ...cssLoaderOptions,
                       modules: false,
@@ -185,13 +187,13 @@ const getStyleLoaders = ({
                   },
                   {
                     // https://github.com/webpack/css-loader
-                    loader: 'css-loader',
+                    loader: 'yoshi-style-dependencies/css-loader',
                     options: cssLoaderOptions,
                   },
                 ],
               },
               {
-                loader: 'postcss-loader',
+                loader: 'yoshi-style-dependencies/postcss-loader',
                 options: {
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
@@ -214,12 +216,12 @@ const getStyleLoaders = ({
 
               // https://github.com/bholloway/resolve-url-loader
               {
-                loader: 'resolve-url-loader',
+                loader: 'yoshi-style-dependencies/resolve-url-loader',
               },
             ]
           : [
               {
-                loader: 'css-loader',
+                loader: 'yoshi-style-dependencies/css-loader',
                 options: {
                   ...cssLoaderOptions,
                   importLoaders: 2 + Number(tpaStyle),
@@ -245,7 +247,7 @@ const getStyleLoaders = ({
         // https://github.com/webpack-contrib/sass-loader
         {
           test: /\.(scss|sass)$/,
-          loader: 'sass-loader',
+          loader: 'yoshi-style-dependencies/sass-loader',
           options: {
             sourceMap: embedCss,
             includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
@@ -346,7 +348,7 @@ function createCommonWebpackConfig({
           ? [
               {
                 test: reScript,
-                loader: 'ng-annotate-loader',
+                loader: 'yoshi-angular-dependencies/ng-annotate-loader',
                 include: project.unprocessedModules,
               },
             ]
@@ -370,7 +372,7 @@ function createCommonWebpackConfig({
 
             // https://github.com/huston007/ng-annotate-loader
             ...(project.isAngularProject
-              ? [{ loader: 'ng-annotate-loader' }]
+              ? [{ loader: 'yoshi-angular-dependencies/ng-annotate-loader' }]
               : []),
 
             {
