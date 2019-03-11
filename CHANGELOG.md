@@ -1,5 +1,35 @@
 # Changelog
 
+## 4.1.0-alpha.6 (2019-03-11)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1084](https://github.com/wix/yoshi/pull/1084) Support opening the browser with a different URL using `--url` ([@ronami](https://github.com/ronami))
+
+#### :bug: Bug Fix
+
+- `yoshi-angular-dependencies`, `yoshi-style-dependencies`, `yoshi`
+  - [#1095](https://github.com/wix/yoshi/pull/1095) Fix loader dependencies ([@yanivefraim](https://github.com/yanivefraim))
+- `yoshi`
+  - [#1094](https://github.com/wix/yoshi/pull/1094) Transpile server code with default compiler options for angular apps ([@ronami](https://github.com/ronami))
+- `jest-environment-yoshi-puppeteer`, `yoshi`
+  - [#1085](https://github.com/wix/yoshi/pull/1085) Bump puppeteer version to make sure a correct version is always installed ([@ronami](https://github.com/ronami))
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1078](https://github.com/wix/yoshi/pull/1078) Polish the output of `build-app` to show file sizes ([@ronami](https://github.com/ronami))
+
+#### :memo: Documentation
+
+- [#1081](https://github.com/wix/yoshi/pull/1081) Fix setup docs according to new globs ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :house: Internal
+
+- `jest-yoshi-preset`, `yoshi`
+  - [#1077](https://github.com/wix/yoshi/pull/1077) Add missing integration tests to Yoshi's Jest setup ([@ronami](https://github.com/ronami))
+
 ## 4.1.0-alpha.5 (2019-03-05)
 
 #### :bug: Bug Fix
