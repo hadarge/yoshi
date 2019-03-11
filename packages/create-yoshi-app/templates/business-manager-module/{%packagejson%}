@@ -29,7 +29,6 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-module-container": "~1.0.0",
-    "react-test-renderer": "16.6.3",
     "yoshi": "^4.1.0-alpha.1",
     "yoshi-style-dependencies": "^4.1.0-alpha.1"
   },

@@ -1,15 +1,10 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import { translate, InjectedTranslateProps } from 'react-i18next';
 import * as s from './App.scss';
 
 interface AppProps extends InjectedTranslateProps {}
 
 class App extends React.Component<AppProps> {
-  static propTypes = {
-    t: PropTypes.func,
-  };
-
   render() {
     const { t } = this.props;
 
