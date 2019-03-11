@@ -769,14 +769,16 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
               options: {
                 ...rule.options,
 
-                compilerOptions: {
-                  ...rule.options.compilerOptions,
+                compilerOptions: project.isAngularProject
+                  ? {}
+                  : {
+                      ...rule.options.compilerOptions,
 
-                  // allow using Promises, Array.prototype.includes, String.prototype.padStart, etc.
-                  lib: ['es2017'],
-                  // use async/await instead of embedding polyfills
-                  target: 'es2017',
-                },
+                      // allow using Promises, Array.prototype.includes, String.prototype.padStart, etc.
+                      lib: ['es2017'],
+                      // use async/await instead of embedding polyfills
+                      target: 'es2017',
+                    },
               },
             };
           }
