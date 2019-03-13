@@ -19,5 +19,6 @@ module.exports = function(wallaby) {
     }
     wallaby.testFramework.configure(jestConfig);
   };
+  wallaby.workers = {restart: false};
   return wallabyCommon;
 };
