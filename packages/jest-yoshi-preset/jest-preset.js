@@ -16,6 +16,7 @@ module.exports = {
         testEnvironment: 'jsdom',
         testURL: 'http://localhost',
         testMatch: [`<rootDir>/${globs.unitTests}`],
+        setupFiles: [require.resolve('regenerator-runtime/runtime')],
       },
       {
         displayName: 'e2e',
@@ -25,6 +26,7 @@ module.exports = {
           require.resolve(
             'jest-environment-yoshi-bootstrap/environment-setup.js',
           ),
+          require.resolve('regenerator-runtime/runtime'),
         ],
       },
     ]
