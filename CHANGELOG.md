@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.1.0-alpha.7 (2019-03-13)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`, `eslint-config-yoshi`
+  - [#1096](https://github.com/wix/yoshi/pull/1096) Update generators to use React Version 16 ([@ronami](https://github.com/ronami))
+
+#### :bug: Bug Fix
+
+- `jest-yoshi-preset`
+  - [#1106](https://github.com/wix/yoshi/pull/1106) Inject regenerator-runtime globally for backward compatability (was dropped in Jest V24) ([@yanivefraim](https://github.com/yanivefraim))
+
 ## 4.1.0-alpha.6 (2019-03-11)
 
 #### :rocket: New Feature
