@@ -16,8 +16,8 @@
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
   "dependencies": {
-    "css-hot-loader": "1.4.3",
-    "css-loader": "2.1.0",
+    "css-hot-loader": "1.4.4",
+    "css-loader": "2.1.1",
     "node-sass": "4.11.0",
     "postcss-loader": "3.0.0",
     "resolve-url-loader": "3.0.1",
