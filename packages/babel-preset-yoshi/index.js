@@ -6,6 +6,11 @@ const isDevelopment = env === 'development';
 const isProduction = env === 'production';
 const isTest = env === 'test';
 
+const requireDefault = path => {
+  const required = require(path);
+  return required.default || required;
+};
+
 const normaliseOptions = opts => {
   return {
     ...opts,
@@ -25,7 +30,7 @@ module.exports = function(api, opts = {}) {
   return {
     presets: [
       [
-        require('@babel/preset-env').default,
+        requireDefault('@babel/preset-env'),
         {
           modules,
           // Display targets to compile for.
@@ -40,7 +45,7 @@ module.exports = function(api, opts = {}) {
         },
       ],
       !options.ignoreReact && [
-        require('@babel/preset-react'),
+        requireDefault('@babel/preset-react'),
         {
           development: isDevelopment || isTest,
         },
@@ -49,7 +54,7 @@ module.exports = function(api, opts = {}) {
     plugins: [
       // Enable stage 2 decorators.
       [
-        require('@babel/plugin-proposal-decorators').default,
+        requireDefault('@babel/plugin-proposal-decorators'),
         {
           // Enable export after decorator syntax. It's also a part of the spec and tc39 is not made a decision about it.
           // Read more https://github.com/tc39/proposal-decorators/issues/69
@@ -58,7 +63,7 @@ module.exports = function(api, opts = {}) {
       ],
       [
         // Allow the usage of class properties.
-        require('@babel/plugin-proposal-class-properties'),
+        requireDefault('@babel/plugin-proposal-class-properties'),
         {
           // Bundle size and perf is prior to tiny ES spec incompatibility.
           loose: true,
@@ -66,29 +71,29 @@ module.exports = function(api, opts = {}) {
       ],
       [
         // Add helpers for generators and async/await.
-        require('@babel/plugin-transform-runtime').default,
+        requireDefault('@babel/plugin-transform-runtime'),
         {
           // 2 options blow are usualy handled by pollyfil.io.
           helpers: false,
           regenerator: true,
         },
       ],
-      require('@babel/plugin-syntax-dynamic-import'),
+      requireDefault('@babel/plugin-syntax-dynamic-import'),
       // https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27
-      !inWebpack && require('babel-plugin-dynamic-import-node').default,
+      !inWebpack && requireDefault('babel-plugin-dynamic-import-node'),
       // Current Node and new browsers (in development environment) already implement it so
       // just add the syntax of Object { ...rest, ...spread }
       (isDevelopment || isTest) &&
-        require('@babel/plugin-syntax-object-rest-spread'),
+        requireDefault('@babel/plugin-syntax-object-rest-spread'),
 
       ...(!isProduction
         ? []
         : [
             // Transform Object { ...rest, ...spread } to support old browsers
-            require('@babel/plugin-proposal-object-rest-spread'),
+            requireDefault('@babel/plugin-proposal-object-rest-spread'),
             !options.ignoreReact && [
               // Remove PropTypes on react projects.
-              require('babel-plugin-transform-react-remove-prop-types').default,
+              requireDefault('babel-plugin-transform-react-remove-prop-types'),
               {
                 removeImport: true,
               },
