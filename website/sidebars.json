@@ -14,6 +14,7 @@
       "guides/assets",
       "guides/bundle-analyze",
       "guides/debugging",
+      "guides/app-flow",
       "guides/disable-css-modules",
       "guides/enzyme-support",
       "guides/jest-setup",
@@ -25,6 +26,9 @@
       "guides/split-chunks",
       "guides/svg",
       "guides/managing-dependencies"
+    ],
+    "Migration": [
+      "migration/version-4"
     ]
   }
 }
