@@ -173,9 +173,11 @@ module.exports.toIdentifier = str => {
 
 module.exports.tryRequire = name => {
   let absolutePath;
+
   try {
     absolutePath = require.resolve(name);
-  } catch (e) { // The module has not found
+  } catch (e) {
+    // The module has not found
     return null;
   }
 

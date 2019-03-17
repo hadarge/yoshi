@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Sentry = require('@sentry/node');
+const verifyDependencies = require('./verify-dependencies');
 
 const presetPath = require.resolve('../src/index.js');
 
@@ -13,6 +14,8 @@ module.exports = async command => {
   Sentry.configureScope(scope => {
     scope.setTag('command', command);
   });
+
+  await verifyDependencies();
 
   const { persistent = false } = await action({
     context: presetPath,

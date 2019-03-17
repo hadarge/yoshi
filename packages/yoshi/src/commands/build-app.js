@@ -34,7 +34,6 @@ const {
   clientProjectName,
   clientFilesPath,
 } = require('yoshi-config');
-
 const wixDepCheck = require('../tasks/dep-check');
 
 const inTeamCity = checkInTeamCity();
