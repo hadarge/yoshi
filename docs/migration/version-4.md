@@ -124,10 +124,21 @@ We've changed the test file glob patterns to be more flexible:
   - `e2e` - An environment that will start your server and a puppeteer page.
   - `spec` - An environment for running unit and component tests which set up JSDOM.
 
-Files that end with `.e2e.(js|ts)` will use e2e environment, while files that end with `.spec.(js|ts)` will use spec environment, regardless of where in the project those files are in. To make migration easier, please start by running a helper script, which will change your project's files to the new glob patterns:
+Files that end with `.e2e.(js|ts)` will use e2e environment, while files that end with `.spec.(js|ts)` will use spec environment, regardless of where in the project those files are in. We also changed the names and setup files so they don't collide with the new test extensions:
+
+- `<rootDir>/test/setup.component.(j|t)s`: JSDOM (component)
+- `<rootDir>/test/setup.server.(j|t)s`: Bootstrap (server)
+- `<rootDir>/test/setup.e2e.(j|t)s`: Puppeteer (e2e)
+
+Have changed to:
+
+- `<rootDir>/__tests__/spec-setup.(j|t)s`: Setup for .spec tests (Component and Unit tests)
+- `<rootDir>/__tests__/e2e-setup.(j|t)s`: Setup for .e2e tests (Browser an Server e2e tests)
+
+To make migration easier, please start by running a helper script, which will change your project's files to the new glob patterns:
 
 ```
-TODO migrate scripts
+curl https://gist.githubusercontent.com/ronami/1608dc49efc166bb6e15a21f7073cb79/raw | node
 ```
 
 ### Puppeteer actions in Jest have a shorter default timeout
