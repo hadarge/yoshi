@@ -279,11 +279,14 @@ module.exports = runner.command(
           const esBabelConfig = createBabelConfig({ modules: false });
 
           transpilations.push(
-            babel({
-              pattern: globs.babel,
-              target: globs.dist({ esTarget: true }),
-              ...esBabelConfig,
-            }),
+            babel(
+              {
+                pattern: globs.babel,
+                target: globs.dist({ esTarget: true }),
+                ...esBabelConfig,
+              },
+              { title: 'babel' },
+            ),
           );
         }
       }

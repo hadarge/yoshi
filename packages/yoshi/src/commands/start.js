@@ -273,18 +273,24 @@ module.exports = runner.command(
       watch(
         { pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'] },
         async changed => {
-          await babel({
-            pattern: changed,
-            ...babelConfig,
-          });
+          await babel(
+            {
+              pattern: changed,
+              ...babelConfig,
+            },
+            { title: 'babel' },
+          );
           return appServer();
         },
       );
 
-      await babel({
-        pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'],
-        ...babelConfig,
-      });
+      await babel(
+        {
+          pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'],
+          ...babelConfig,
+        },
+        { title: 'babel' },
+      );
 
       return appServer();
     }
