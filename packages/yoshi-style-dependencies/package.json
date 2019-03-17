@@ -5,10 +5,11 @@
   "files": [
     "css-hot-loader.js",
     "css-loader.js",
-    "style-loader.js",
+    "node-sass.js",
     "postcss-loader.js",
     "resolve-url-loader.js",
-    "sass-loader.js"
+    "sass-loader.js",
+    "style-loader.js"
   ],
   "keywords": [
     "yoshi"

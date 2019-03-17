@@ -16,6 +16,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { localIdentName } = require('../src/constants');
 const EnvirnmentMarkPlugin = require('../src/webpack-plugins/environment-mark-plugin');
+const { tryRequire } = require('yoshi-helpers');
 
 const {
   ROOT_DIR,
@@ -250,6 +251,7 @@ const getStyleLoaders = ({
           loader: 'yoshi-style-dependencies/sass-loader',
           options: {
             sourceMap: embedCss,
+            implementation: tryRequire('yoshi-style-dependencies/node-sass'),
             includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
           },
         },
