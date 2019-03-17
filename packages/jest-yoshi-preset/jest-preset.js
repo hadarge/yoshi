@@ -1,4 +1,5 @@
 const fs = require('fs');
+const chalk = require('chalk');
 const globby = require('globby');
 const { envs } = require('./constants');
 const globs = require('yoshi-config/globs');
@@ -38,9 +39,32 @@ module.exports = {
         return true;
       })
       .map(project => {
-        const [setupTestsPath] = globby.sync(
-          `__tests__/${project.displayName}-setup.(ts|js){,x}`,
+        // We recommend projects use the `__tests__` directory But we support `test`
+        // too
+        const setupFilePaths = globby.sync(
+          `(__tests__|test)/${project.displayName}-setup.(ts|js){,x}`,
         );
+
+        const [setupTestsPath] = setupFilePaths;
+
+        // There should only be 1 test file, throw an error if more than exists
+        if (setupFilePaths.length > 1) {
+          console.log();
+          console.log(chalk.red('Multiple setup files were detected:'));
+          console.log();
+          setupFilePaths.forEach(setupFilePath => {
+            console.log(chalk.red(` > ${setupFilePath}`));
+          });
+          console.log();
+          console.log(
+            chalk.red(
+              `We recommend removing one of them. Currently using ${chalk.bold(
+                setupTestsPath,
+              )}.`,
+            ),
+          );
+          console.log();
+        }
 
         const setupTestsFile =
           setupTestsPath && fs.existsSync(setupTestsPath)
