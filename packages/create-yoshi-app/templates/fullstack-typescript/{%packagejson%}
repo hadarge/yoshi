@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start --entry-point=index-dev.js",
+    "start": "yoshi start --server=index-dev.js",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "axios": "~0.16.0",
+    "bootstrap-hot-loader": "^3.19.3",
     "express": "~4.15.0",
     "i18next": "^11.6.0",
     "react": "16.7.0",
@@ -62,6 +63,7 @@
     "preset": "jest-yoshi-preset"
   },
   "yoshi": {
+    "projectType": "app",
     "externals": {
       "react": "React",
       "react-dom": "ReactDOM"

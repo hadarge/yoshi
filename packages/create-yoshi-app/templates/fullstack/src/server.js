@@ -1,12 +1,13 @@
 import wixExpressCsrf from '@wix/wix-express-csrf';
 import wixExpressRequireHttps from '@wix/wix-express-require-https';
+import { hot } from 'bootstrap-hot-loader';
 
 // This function is the main entry for our server. It accepts an express Router
 // (see http://expressjs.com) and attaches routes and middlewares to it.
 //
 // `context` is an object with built-in services from `wix-bootstrap-ng`. See
 // https://github.com/wix-platform/wix-node-platform/tree/master/bootstrap/wix-bootstrap-ng).
-module.exports = (app, context) => {
+export default hot(module, (app, context) => {
   // We load the already parsed ERB configuration (located at /templates folder).
   const config = context.config.load('{%projectName%}');
 
@@ -44,4 +45,4 @@ module.exports = (app, context) => {
   }
 
   return app;
-};
+});
