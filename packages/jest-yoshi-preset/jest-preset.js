@@ -79,8 +79,6 @@ module.exports = {
           },
 
           setupFilesAfterEnv,
-
-          moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
         };
       }),
     // workaround for https://github.com/facebook/jest/issues/5866
