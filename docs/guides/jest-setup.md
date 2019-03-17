@@ -90,6 +90,8 @@ Run against all `.e2e.js` or `.e2e.ts` files. Starts up a [bootstrap server](htt
 
 It creates a global [Browser](https://github.com/GoogleChrome/puppeteer/blob/v1.5.0/docs/api.md#class-browser) instance and a global [Page](https://github.com/GoogleChrome/puppeteer/blob/v1.5.0/docs/api.md#class-page) instance for every test file. They're available as `global.browser` and `global.page` respectively.
 
+Has a default test timeout of 10 seconds.
+
 ## Configuration
 
 This preset looks for a `jest-yoshi.config.js` file at the root of your project. The exported object is used to configure different parts of the preset.

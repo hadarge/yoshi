@@ -71,9 +71,12 @@ module.exports = {
             ? `<rootDir>/${setupTestsPath}`
             : undefined;
 
-        // Since Jest 24 setupTestFrameworkScriptFile changed to setupFilesAfterEnv and
-        // now it supports more than 1 test file, in future we can expose it here
-        const setupFilesAfterEnv = setupTestsFile ? [setupTestsFile] : [];
+        const setupFilesAfterEnv = [
+          // Use longer default test timeout for e2e tests
+          project.displayName === 'e2e' && require.resolve('./setup/e2e'),
+          // Load project's setup file if it exists
+          setupTestsFile,
+        ].filter(Boolean);
 
         return {
           ...project,
