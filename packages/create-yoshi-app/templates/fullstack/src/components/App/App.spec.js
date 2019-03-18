@@ -1,21 +1,20 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, cleanup } from 'react-testing-library';
 import { I18nextProvider } from 'react-i18next';
 import App from './App';
 import i18n from '../__mocks__/i18n';
 
 describe('App', () => {
-  let wrapper;
 
-  afterEach(() => wrapper.unmount());
+  afterEach(cleanup);
 
   it('renders a title correctly', () => {
-    wrapper = mount(
+    const { queryByTestId } = render(
       <I18nextProvider i18n={i18n}>
         <App />
       </I18nextProvider>,
     );
 
-    expect(wrapper.find('h2')).toHaveLength(1);
+    expect(queryByTestId('app-title')).not.toBeNull();
   });
 });
