@@ -1,5 +1,50 @@
 # Changelog
 
+## 4.1.0-rc.0 (2019-03-18)
+
+#### :rocket: New Feature
+
+- `jest-yoshi-preset`
+  - [#1130](https://github.com/wix/yoshi/pull/1130) Support using setup file from `test` and not only from `__tests__` ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`
+  - [#1123](https://github.com/wix/yoshi/pull/1123) Migrate fullstack template to use app flow ([@ranyitz](https://github.com/ranyitz))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1115](https://github.com/wix/yoshi/pull/1115) Server side rendering: generate long/short class names in prod/dev respectively ([@ronami](https://github.com/ronami))
+  - [#1127](https://github.com/wix/yoshi/pull/1127) Add title (babel) for Babel task instead of a full path ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`, `jest-yoshi-preset`
+  - [#1131](https://github.com/wix/yoshi/pull/1131) Remove redundant setup file, change default e2e timeout to 10s ([@ronami](https://github.com/ronami))
+- `yoshi-style-dependencies`, `yoshi`
+  - [#1103](https://github.com/wix/yoshi/pull/1103) Minimize the impact of conflicting `sass` versions ([@ronami](https://github.com/ronami))
+- `yoshi-helpers`, `yoshi`
+  - [#1122](https://github.com/wix/yoshi/pull/1122) Verify that all yoshi related dependencies are in the same major version ([@ronami](https://github.com/ronami))
+- `jest-yoshi-preset`, `yoshi`
+  - [#1129](https://github.com/wix/yoshi/pull/1129) Remove `babel-core` 7-bridge ([@yairhaimo](https://github.com/yairhaimo))
+- `jest-yoshi-preset`
+  - [#1128](https://github.com/wix/yoshi/pull/1128) Use Jests's default `moduleFileExtensions` configuration ([@ranyitz](https://github.com/ranyitz))
+- `create-yoshi-app`
+  - [#1125](https://github.com/wix/yoshi/pull/1125) Change the old link to the documentation site in starting link ([@ranyitz](https://github.com/ranyitz))
+- `yoshi`
+  - [#1100](https://github.com/wix/yoshi/pull/1100) Optimize Wallaby for Jest ([@ArtemGovorov](https://github.com/ArtemGovorov))
+
+#### :memo: Documentation
+
+- [#1108](https://github.com/wix/yoshi/pull/1108) Version 4 migration guide/blog ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+
+- `yoshi`
+  - [#1120](https://github.com/wix/yoshi/pull/1120) Remove `haste-task-babel` dependency ([@yavorsky](https://github.com/yavorsky))
+- `babel-preset-yoshi`
+  - [#1111](https://github.com/wix/yoshi/pull/1111) Use `requireDefault` helper for babel plugins ([@yavorsky](https://github.com/yavorsky))
+- `yoshi-config`
+  - [#1087](https://github.com/wix/yoshi/pull/1087) Add an option to load the config without validating it ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.1.0-alpha.7 (2019-03-13)
 
 #### :rocket: New Feature
