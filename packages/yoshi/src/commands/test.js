@@ -3,6 +3,13 @@
 process.env.BABEL_ENV = 'test';
 process.env.NODE_ENV = 'test';
 
+// Force short class names specifically for Protractor
+// This means Protractor can't be run in watch mode and only with the output of
+// `yoshi build`
+//
+// https://github.com/wix/yoshi/pull/1115
+process.env.SHORT_CSS_PATTERN = 'true';
+
 const fs = require('fs');
 const path = require('path');
 const execa = require('execa');

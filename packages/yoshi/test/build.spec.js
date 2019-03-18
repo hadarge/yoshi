@@ -228,7 +228,7 @@ describe('Aggregator: Build', () => {
       });
 
       it('should generate css modules on separate css file', () => {
-        const regex = /\.styles-my-file__a__.{5}\s.styles-my-file__b__.{5}\s{/;
+        const regex = /\..{6}\s..{6}\s{/;
         expect(test.content(`dist/statics/first.bundle.js`)).not.to.match(
           regex,
         );
@@ -700,12 +700,12 @@ describe('Aggregator: Build', () => {
       const hashA = generateCssModulesPattern({
         name: 'a',
         path: 'styles/style.scss',
-        short: false,
+        short: true,
       });
       const hashB = generateCssModulesPattern({
         name: 'b',
         path: 'styles/style.scss',
-        short: false,
+        short: true,
       });
 
       const expectedCssPattern = `.${hashA} .${hashB} {`;

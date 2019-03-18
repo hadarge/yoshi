@@ -128,7 +128,7 @@ const getStyleLoaders = ({
   const cssLoaderOptions = {
     camelCase: true,
     sourceMap: !!separateCss,
-    localIdentName: isDebug ? localIdentName.long : localIdentName.short,
+    localIdentName: isProduction ? localIdentName.short : localIdentName.long,
     // Make sure every package has unique class names
     hashPrefix: project.name,
     // https://github.com/css-modules/css-modules

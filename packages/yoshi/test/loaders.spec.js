@@ -151,13 +151,13 @@ describe('Loaders', () => {
       describe('client', () => {
         it('should run sass and css loaders over imported .scss files', () => {
           expect(test.content('dist/statics/app.bundle.js')).to.match(
-            /"other-rule":"some-css__other-rule__\w{5}",([\s\S]*?)"child":"some-css__child__\w{5}"/,
+            /"other-rule":"\w{6}",([\s\S]*?)"child":"\w{6}"/,
           );
         });
 
         it('should also expose css classes as camelcase', () => {
           expect(test.content('dist/statics/app.bundle.js')).to.match(
-            /"otherRule":"some-css__other-rule__\w{5}"/,
+            /"otherRule":"\w{6}"/,
           );
         });
 
@@ -201,7 +201,7 @@ describe('Loaders', () => {
               'background: white',
             );
             expect(test.content('dist/statics/app.bundle.js')).to.match(
-              /"some-rule":"some-css__some-rule\w+ composes__foo\w+"/,
+              /"some-rule":"\w{6} \w{6}"/,
             );
           });
         });
@@ -222,7 +222,7 @@ describe('Loaders', () => {
       describe('client', () => {
         it('should run less and css loaders over imported .less files', () => {
           expect(test.content('dist/statics/app.bundle.js')).to.match(
-            /"less-rule":"some-less__less-rule__\w{5}",([\s\S]*?)"child":"some-less__child__\w{5}"/,
+            /"less-rule":"\w{6}",([\s\S]*?)"child":"\w{6}"/,
           );
         });
 
