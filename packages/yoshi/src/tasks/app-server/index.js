@@ -46,6 +46,11 @@ function initializeServerStartDelegate({
 
     const env = Object.assign(defaultEnv, process.env, {
       PORT: port,
+      MANAGEMENT_PORT: Number(port) + 1,
+      APP_CONF_DIR: './target/dev/configs',
+      APP_LOG_DIR: './target/dev/logs',
+      APP_PERSISTENT_DIR: './target/dev/persistent',
+      APP_TEMPL_DIR: './templates',
     });
 
     if (port !== defaultPort) {

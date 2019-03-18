@@ -1,10 +1,29 @@
 const NodeEnvironment = require('jest-environment-node');
-const { getPort, appConfDir } = require('./constants');
+const {
+  getPort,
+  appConfDir,
+  appLogDir,
+  appPersistentDir,
+} = require('./constants');
 const projectConfig = require('yoshi-config');
 
 module.exports = class BootstrapEnvironment extends NodeEnvironment {
   async setup() {
     await super.setup();
+
+    // create sensible defaults for bootstrap environment's process.env
+    const appPort = getPort();
+
+    Object.assign(this.global.process.env, {
+      PORT: appPort,
+      MANAGEMENT_PORT: appPort + 1,
+      APP_CONF_DIR: appConfDir,
+      APP_LOG_DIR: appLogDir,
+      APP_PERSISTENT_DIR: appPersistentDir,
+      APP_TEMPL_DIR: './templates',
+      NEW_RELIC_LOG_LEVEL: 'warn',
+      DEBUG: '',
+    });
 
     // errors from environment setup/teardown are catched silently
     try {
@@ -14,6 +33,8 @@ module.exports = class BootstrapEnvironment extends NodeEnvironment {
           getPort,
           staticsUrl: projectConfig.servers.cdn.url,
           appConfDir,
+          appLogDir,
+          appPersistentDir,
         });
       }
     } catch (error) {
