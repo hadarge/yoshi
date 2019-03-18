@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.1.0-rc.1 (2019-03-18)
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1137](https://github.com/wix/yoshi/pull/1137) Replaced `enzyme` with `react-testing-library` ([@saarkuriel](https://github.com/saarkuriel))
+- `create-yoshi-app`, `jest-environment-yoshi-bootstrap`, `yoshi`
+  - [#1132](https://github.com/wix/yoshi/pull/1132) Adds defaults for bootstrap testkit and config emitter ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.1.0-rc.0 (2019-03-18)
 
 #### :rocket: New Feature
