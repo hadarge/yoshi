@@ -30,6 +30,11 @@ module.exports = class Server {
         ...process.env,
         NODE_ENV: 'development',
         PORT,
+        MANAGEMENT_PORT: Number(PORT) + 1,
+        APP_CONF_DIR: './target/dev/configs',
+        APP_LOG_DIR: './target/dev/logs',
+        APP_PERSISTENT_DIR: './target/dev/persistent',
+        APP_TEMPL_DIR: './templates',
       },
     });
 
