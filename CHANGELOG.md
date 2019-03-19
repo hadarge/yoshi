@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.1.0-rc.2 (2019-03-19)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1141](https://github.com/wix/yoshi/pull/1141) Support bootstrap's environment parameters also in app flow ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.1.0-rc.1 (2019-03-18)
 
 #### :nail_care: Polish
