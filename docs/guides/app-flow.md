@@ -11,10 +11,10 @@ App flow is an improved developer experience that is specific to apps. Internall
 This has a few advantages:
 
 - **Clean output, clear errors:** If your build fails or your server throws you should know about it immediately and clearly. Forget of long stack traces or errors that show multiple times; See your server's output in your terminal.
-- **Faster build times:** Now that Yoshi knows it targets apps, it can only run relevant build operations which can result in significant speed boost.
-- **Faster server reload:** When you're working in watch mode and you change a file, Yoshi knows wether to reload your server, client or both. With the addition of **server-side HMR**, Yoshi will be able to reload your `wix-bootstrap-ng` server almost instantly.
+- **Faster build times:** Now that Yoshi knows it targets apps, it can only run relevant build operations which can result in a significant speed boost.
+- **Faster server reload:** When you're working in watch mode and you change a file, Yoshi knows whether to reload your server, client or both. With the addition of **server-side HMR**, Yoshi will be able to reload your `wix-bootstrap-ng` server almost instantly.
 
-In the future, we plan on providing many features specifically for apps. We want to encourge applications to use the new flow.
+In the future, we plan on providing many features specifically for apps. We want to encourage applications to use the new flow.
 
 Watch [Ronen's talk](https://drive.google.com/file/d/1u05-l27kSY1l6YaSqScXNe2_Hp0V7gkh/view?t=17m58s) to see how it is to work with it.
 
@@ -46,7 +46,7 @@ app.start({
 });
 ```
 
-We use Webpack to bundle our server code and it can't handle mixing `module.exports` and EcmaScript imports in the same file. To solve it, change your `server.js` file to use EcmaScript modules for both, importing and exporting:
+We use Webpack to bundle our server code and it can't handle mixing `module.exports` and ECMAScript imports in the same file. To solve it, change your `server.js` file to use EcmaScript modules for both, importing and exporting:
 
 ```diff
 import wixExpressCsrf from '@wix/wix-express-csrf';
@@ -139,3 +139,32 @@ import wixExpressRequireHttps from '@wix/wix-express-require-https';
 -};
 +});
 ```
+
+### Scripts
+
+These are the scripts that are available to you in a project that uses app flow:
+
+#### `npx yoshi start`
+
+Starts the application in development mode. Runs your application server and `webpack-dev-server` on port 3200. Watches for changes and reloads your app automatically. Compilation errors will show both, in the terminal and in the browser.
+
+Possible flags:
+
+- `--server`: By default, starts your application server by running `index.js`. Pass a different value to start up a different script.
+- `--https`: Start `webpack-dev-server` with HTTPS. Note that it will only affect `webpack-dev-server` and not your application server.
+- `--url`: By default, opens your browser with `http://localhost:3000`. Use this to pass a different URL.
+- `--production`: Start using un-minified production build.
+- `--debug`: Pass this flag to run your application server with a debugger.
+
+#### `npx yoshi test`
+
+Runs your test with the configured test runner (Jest by default). Pass `--watch` to start it in watch mode.
+
+#### `npx yoshi build`
+
+Builds your app for production into the `/dist` directory. Normally, this command will only run in CI. Client-side assets will be minified.
+
+Possible flags:
+
+- `--analyze`: Analyze production bundle. This is helpful to understand what is included in the bundle.
+- `--stats`: Generate Webpack stats into `dist/webpack-stats.json`.
