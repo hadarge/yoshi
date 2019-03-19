@@ -35,6 +35,7 @@ module.exports = class Server {
         APP_LOG_DIR: './target/dev/logs',
         APP_PERSISTENT_DIR: './target/dev/persistent',
         APP_TEMPL_DIR: './templates',
+        NEW_RELIC_LOG_LEVEL: 'warn',
       },
     });
 
