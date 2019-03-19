@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-yoshi",
-  "version": "4.1.0-rc.1",
+  "version": "4.1.0-rc.2",
   "description": "eslint configuration for react projects using yoshi",
   "main": "index.js",
   "keywords": [
@@ -11,7 +11,7 @@
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
   "dependencies": {
-    "eslint-config-yoshi-base": "4.1.0-rc.1"
+    "eslint-config-yoshi-base": "4.1.0-rc.2"
   },
   "peerDependencies": {
     "eslint": "^5.0.0",
