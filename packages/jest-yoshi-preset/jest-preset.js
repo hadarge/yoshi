@@ -10,6 +10,10 @@ module.exports = {
   globalTeardown: require.resolve(
     'jest-environment-yoshi-puppeteer/globalTeardown',
   ),
+  watchPlugins: [
+    require.resolve('jest-watch-typeahead/filename'),
+    require.resolve('jest-watch-typeahead/testname'),
+  ],
   projects: [
     ...[
       {
