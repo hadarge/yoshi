@@ -11,6 +11,8 @@ const PUBLIC_DIR = path.join(SRC_DIR, 'assets');
 const STATICS_DIR = path.join(BUILD_DIR, 'statics');
 const ASSETS_DIR = path.join(STATICS_DIR, 'assets');
 
+const NODE_PLATFORM_DEFAULT_CONFIGS_DIR = resolvePath('test/configs');
+
 const POM_FILE = resolvePath('pom.xml');
 const STATS_FILE = resolvePath(TARGET_DIR, 'webpack-stats.json');
 const TSCONFIG_FILE = resolvePath('tsconfig.json');
@@ -26,4 +28,6 @@ module.exports = {
   POM_FILE,
   STATS_FILE,
   TSCONFIG_FILE,
+
+  NODE_PLATFORM_DEFAULT_CONFIGS_DIR,
 };

@@ -7,6 +7,7 @@ const detect = require('detect-port');
 const debounce = require('lodash/debounce');
 const { PORT } = require('../../constants');
 const waitPort = require('wait-port');
+const { NODE_PLATFORM_DEFAULT_CONFIGS_DIR } = require('yoshi-config/paths');
 
 let server;
 let port;
@@ -46,12 +47,25 @@ function initializeServerStartDelegate({
 
     const env = Object.assign(defaultEnv, process.env, {
       PORT: port,
-      MANAGEMENT_PORT: Number(port) + 1,
-      APP_CONF_DIR: './target/dev/configs',
-      APP_LOG_DIR: './target/dev/logs',
-      APP_PERSISTENT_DIR: './target/dev/persistent',
-      APP_TEMPL_DIR: './templates',
-      NEW_RELIC_LOG_LEVEL: 'warn',
+      // Check if the project has the default directory for loading node platform
+      // configs
+      //
+      // If it exists, the project is not using the `index-dev.js` pattern and we
+      // keep the defaults
+      //
+      // Otherwise, we inject our own defaults to keep boilerplate to a minimum
+      //
+      // https://github.com/wix/yoshi/pull/1153
+      ...(fs.existsSync(NODE_PLATFORM_DEFAULT_CONFIGS_DIR)
+        ? {}
+        : {
+            MANAGEMENT_PORT: Number(port) + 1,
+            APP_CONF_DIR: './target/dev/configs',
+            APP_LOG_DIR: './target/dev/logs',
+            APP_PERSISTENT_DIR: './target/dev/persistent',
+            APP_TEMPL_DIR: './templates',
+            NEW_RELIC_LOG_LEVEL: 'warn',
+          }),
     });
 
     if (port !== defaultPort) {
