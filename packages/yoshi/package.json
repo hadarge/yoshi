@@ -26,7 +26,7 @@
     "@stylable/cli": "1.2.8",
     "@stylable/core": "1.0.5",
     "@stylable/jest": "1.0.5",
-    "@stylable/node": "1.0.5",
+    "@stylable/node": "1.0.7",
     "@stylable/webpack-plugin": "1.1.2",
     "@svgr/webpack": "4.1.0",
     "@types/graphql": "14.0.7",
