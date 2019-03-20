@@ -62,6 +62,7 @@ const fx = {
       {
         rules: {
           radix: 'error',
+          semi: 'error',
         },
       },
       null,

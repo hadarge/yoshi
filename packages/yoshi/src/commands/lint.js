@@ -22,7 +22,9 @@ const runner = createRunner({
 });
 
 const shouldWatch = watchMode();
-const cliArgs = parseArgs(process.argv.slice(2));
+const cliArgs = parseArgs(process.argv.slice(2), {
+  boolean: ['fix'],
+});
 
 module.exports = runner.command(async () => {
   if (shouldWatch) {
