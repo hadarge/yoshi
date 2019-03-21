@@ -1,5 +1,28 @@
 # Changelog
 
+## 4.1.0-rc.3 (2019-03-21)
+
+#### :rocket: New Feature
+* `jest-yoshi-preset`
+  * [#1150](https://github.com/wix/yoshi/pull/1150) Add `jest-watch-typeahead` plugin ([@ranyitz](https://github.com/ranyitz))
+
+#### :bug: Bug Fix
+* `yoshi-config`, `yoshi`
+  * [#1153](https://github.com/wix/yoshi/pull/1153) Don't use node platform defaults if a project has old config folder ([@ronami](https://github.com/ronami))
+* `yoshi`
+  * [#1152](https://github.com/wix/yoshi/pull/1152) Parse properly `lint --fix` argument ([@yurynix](https://github.com/yurynix))
+  * [#1140](https://github.com/wix/yoshi/pull/1140) Add Stylable Webpack plugin project level hashing ([@NitayRabi](https://github.com/NitayRabi))
+
+#### :nail_care: Polish
+* `create-yoshi-app`
+  * [#1148](https://github.com/wix/yoshi/pull/1148) Remove `__STATICS_BASE_URL__` from client & fullstack templates ([@ranyitz](https://github.com/ranyitz))
+* `yoshi`
+  * [#1142](https://github.com/wix/yoshi/pull/1142) Supply a better default for New Relic log level in user's app servers ([@ranyitz](https://github.com/ranyitz))
+
+#### :house: Internal
+* `create-yoshi-app`
+  * [#1138](https://github.com/wix/yoshi/pull/1138) Update business manager template to use dynamic imports ([@yurynix](https://github.com/yurynix))
+
 ## 4.1.0-rc.2 (2019-03-19)
 
 #### :bug: Bug Fix
