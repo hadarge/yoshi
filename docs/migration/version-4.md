@@ -172,4 +172,4 @@ To use the previous default, make the following change (only if you're not using
 
 ### App flow
 
-We recommend every app project (this includes client and full-stack apps, **but not libraries**) to start using this app flow. To migrate, please follow [this guide](guides/app-flow).
+We recommend every app project (this includes client and full-stack apps, **but not libraries**) to start using this app flow. To migrate, please follow [this guide](../guides/app-flow.md).
