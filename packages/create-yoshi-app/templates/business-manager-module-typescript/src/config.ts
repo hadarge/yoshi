@@ -18,7 +18,3 @@ export interface IERBConfig {
     staticsUrl: string;
   };
 }
-
-export interface IBMModuleParams extends TModuleParams {
-  config: IERBConfig;
-}

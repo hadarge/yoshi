@@ -1,12 +1,23 @@
-import React from 'react';
+import * as React from 'react';
 import {
   BusinessManagerModule,
   registerModule,
+  ModuleId,
 } from '@wix/business-manager-api';
-import { ModuleRegistry } from 'react-module-container';
-import { MODULE_ID, LAZY_COMPONENT_ID, COMPONENT_ID } from './config';
+import {
+  ModuleRegistry,
+} from 'react-module-container';
+import {
+  MODULE_ID,
+  LAZY_COMPONENT_ID,
+  COMPONENT_ID,
+} from './config';
 
-class BMLazyComponent extends React.Component {
+interface BMLazyComponentState {
+  component: any
+}
+
+class BMLazyComponent extends React.Component<any, BMLazyComponentState> {
   state = {
     component: null,
   };
@@ -32,16 +43,13 @@ class BMLazyComponent extends React.Component {
   }
 
   render() {
-    return this.state.component ? (
-      <this.state.component {...this.props} />
-    ) : (
-      <h1>Loading...</h1>
-    );
+    const Component = this.state.component;
+    return Component ? <Component {...this.props} /> : <h1>Loading...</h1>;
   }
 }
 
 class BMModule extends BusinessManagerModule {
-  constructor(moduleId) {
+  constructor(moduleId: ModuleId) {
     super(moduleId);
     ModuleRegistry.registerComponent(LAZY_COMPONENT_ID, () => BMLazyComponent);
   }

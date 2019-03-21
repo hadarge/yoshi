@@ -1,4 +1,4 @@
-const testKitEnv = require('../../environment')
+const testKitEnv = require('./environment')
   .environment()
   .then(env => {
     env.start();

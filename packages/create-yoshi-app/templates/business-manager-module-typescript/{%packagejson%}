@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-      "start": "yoshi start --entry-point ./dist/test/dev/server.js",
+      "start": "PORT=5000 yoshi start --entry-point ./dist/__tests__/dev/server.js",
       "precommit": "lint-staged",
       "pretest": "yoshi build",
       "test": "yoshi test",
@@ -60,7 +60,7 @@
     },
     "yoshi": {
       "entry": {
-        "{%projectName%}-module": "./module",
+        "{%projectName%}-module": "./module.tsx",
         "{%projectName%}-app": "./client"
       },
       "externals": {
