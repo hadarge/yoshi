@@ -14,6 +14,6 @@ describe('App', () => {
       </I18nextProvider>,
     );
 
-    expect(getByTestId('app-title')).not.toBeNull();
+    expect(getByTestId('app-title').textContent).toBe('app.title');
   });
 });

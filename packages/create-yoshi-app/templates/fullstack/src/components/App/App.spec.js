@@ -5,16 +5,15 @@ import App from './App';
 import i18n from '../__mocks__/i18n';
 
 describe('App', () => {
-
   afterEach(cleanup);
 
   it('renders a title correctly', () => {
-    const { queryByTestId } = render(
+    const { getByTestId } = render(
       <I18nextProvider i18n={i18n}>
         <App />
       </I18nextProvider>,
     );
 
-    expect(queryByTestId('app-title')).not.toBeNull();
+    expect(getByTestId('app-title').textContent).toBe('app.title');
   });
 });
