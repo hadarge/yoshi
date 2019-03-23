@@ -22,9 +22,19 @@ Watch [Ronen's talk](https://drive.google.com/file/d/1u05-l27kSY1l6YaSqScXNe2_Hp
 
 The purpose of this document is to explain how to opt-into this new feature. See https://github.com/wix/yoshi/pull/586 for more information on the changes it introduces.
 
-### Migration
+### Migration for Fullstack apps (bootstrap)
 
-Since we're no longer transpiling files separately with Babel or TypeScript, direct your `index.js` to the bundle of the server:
+Start by opting into app flow by changing your `package.json` or `yoshi.config.js` to include:
+
+```diff
+{
+  "yoshi": {
++    "projectType": "app"
+  }
+}
+```
+
+Since we now have one bundle for the server, we'll direct Bootstrap's express app to `dist/server.js` file. Edit `index.js` with:
 
 ```diff
 const bootstrap = require('@wix/wix-bootstrap-ng');
@@ -82,18 +92,10 @@ import wixExpressRequireHttps from '@wix/wix-express-require-https';
 };
 ```
 
-Finally, opt-into app flow by changing your `package.json` to include:
+We use `source-map-support` internally so stack traces show locations in your source files. To work in production (with New Relic monitoring), please install `source-map-support` under `dependencies`:
 
-```diff
-{
-  "scripts": {
--   "start": "yoshi start --entry-point=index-dev.js"
-+   "start": "yoshi start --server=index-dev.js"
-  },
-  "yoshi": {
-+    "projectType": "app"
-  }
-}
+```
+npm i --save source-map-support
 ```
 
 If you're interested, opt-into hot module replacement for your server by installing:
@@ -138,6 +140,38 @@ import wixExpressRequireHttps from '@wix/wix-express-require-https';
   return app;
 -};
 +});
+```
+
+### Migration for Client apps
+
+Start by opting into app flow by changing your `package.json` or `yoshi.config.js` to include:
+
+```diff
+{
+  "yoshi": {
++    "projectType": "app"
+  }
+}
+```
+
+In app flow, Yoshi looks for the entry file of your server at `/dev/server.(js|ts)`. Move your current local dev server to that location. For example, if your local dev server is in `index.js`:
+
+```
+mkdir dev
+mv index.js dev/server.js
+```
+
+With that, Yoshi will now bundle it into `/dist/server.js`.
+
+Finally, adjust your `package.json` to run it:
+
+```diff
+{
+  "scripts": {
++    "start": "yoshi start --entry-point=dist/server.js"
+-    "start": "yoshi start"
+  }
+}
 ```
 
 ### Scripts

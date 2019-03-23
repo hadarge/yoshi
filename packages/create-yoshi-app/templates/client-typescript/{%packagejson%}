@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start",
+    "start": "yoshi start --server=dist/server.js",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test",
@@ -56,6 +56,7 @@
     "preset": "jest-yoshi-preset"
   },
   "yoshi": {
+    "projectType": "app",
     "externals": {
       "react": "React",
       "react-dom": "ReactDOM"

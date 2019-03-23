@@ -1,3 +1,4 @@
+const fs = require('fs-extra');
 const path = require('path');
 const globby = require('globby');
 const webpack = require('webpack');
@@ -114,7 +115,7 @@ const splitChunksConfig = isObject(useSplitChunks)
 
 const entry = project.entry || project.defaultEntry;
 
-const possibleServerEntries = ['./server', '../test/dev-server'];
+const possibleServerEntries = ['./server', '../dev/server'];
 
 // Common function to get style loaders
 const getStyleLoaders = ({
@@ -816,7 +817,10 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
       // https://webpack.js.org/plugins/banner-plugin/
       new webpack.BannerPlugin({
         // https://github.com/evanw/node-source-map-support
-        banner: 'require("source-map-support").install();',
+        banner: fs.readFileSync(
+          path.join(__dirname, 'source-map-support.js'),
+          'utf-8',
+        ),
         raw: true,
         entryOnly: false,
       }),

@@ -177,6 +177,7 @@
     "serve": "10.1.2",
     "shelljs": "0.8.3",
     "shmock": "0.8.1",
+    "source-map-support": "0.5.11",
     "strip-ansi": "4.0.0",
     "tempy": "0.2.1",
     "typescript": "3.3.3333",

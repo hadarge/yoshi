@@ -1,6 +1,6 @@
 module.exports = {
   server: {
-    command: 'node index.js',
+    command: 'node dist/server.js',
     port: 3100,
   },
 };

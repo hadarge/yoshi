@@ -16,6 +16,13 @@
     "release": "yoshi release"
   },
   "dependencies": {
+    "@wix/wix-axios-config": "latest",
+    "@wix/wix-bootstrap-greynode": "latest",
+    "@wix/wix-bootstrap-hadron": "latest",
+    "@wix/wix-bootstrap-ng": "latest",
+    "@wix/wix-bootstrap-renderer": "latest",
+    "@wix/wix-express-csrf": "latest",
+    "@wix/wix-express-require-https": "latest",
     "axios": "~0.16.0",
     "babel-runtime": "^6.26.0",
     "bootstrap-hot-loader": "^3.19.3",
@@ -25,13 +32,7 @@
     "react": "16.7.0",
     "react-dom": "16.7.0",
     "react-i18next": "^7.11.0",
-    "@wix/wix-axios-config": "latest",
-    "@wix/wix-bootstrap-greynode": "latest",
-    "@wix/wix-bootstrap-hadron": "latest",
-    "@wix/wix-bootstrap-ng": "latest",
-    "@wix/wix-bootstrap-renderer": "latest",
-    "@wix/wix-express-csrf": "latest",
-    "@wix/wix-express-require-https": "latest"
+    "source-map-support": "^0.5.11"
   },
   "devDependencies": {
     "husky": "~0.14.0",
