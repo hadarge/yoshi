@@ -6,6 +6,7 @@ const {
   appPersistentDir,
 } = require('./constants');
 const projectConfig = require('yoshi-config');
+const { bootstrapUtils } = require('yoshi-helpers');
 
 module.exports = class BootstrapEnvironment extends NodeEnvironment {
   async setup() {
@@ -14,15 +15,16 @@ module.exports = class BootstrapEnvironment extends NodeEnvironment {
     // create sensible defaults for bootstrap environment's process.env
     const appPort = getPort();
 
+    const bootstrapEnvironmentParams = bootstrapUtils.getEnvironmentParams({
+      port: appPort,
+      appConfDir,
+      appLogDir,
+      appPersistentDir,
+    });
+
     Object.assign(this.global.process.env, {
       PORT: appPort,
-      MANAGEMENT_PORT: appPort + 1,
-      APP_CONF_DIR: appConfDir,
-      APP_LOG_DIR: appLogDir,
-      APP_PERSISTENT_DIR: appPersistentDir,
-      APP_TEMPL_DIR: './templates',
-      NEW_RELIC_LOG_LEVEL: 'warn',
-      DEBUG: '',
+      ...bootstrapEnvironmentParams,
     });
 
     // errors from environment setup/teardown are catched silently

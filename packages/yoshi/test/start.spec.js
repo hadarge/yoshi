@@ -100,6 +100,15 @@ describe('Aggregator: Start', () => {
           DEBUG: 'wix:*,wnp:*',
           NODE_ENV: 'development',
           PORT: '3000',
+          MANAGEMENT_PORT: '3001',
+          WNP_TEST_RPC_PORT: '3002',
+          WNP_TEST_PETRI_PORT: '3003',
+          WIX_BOOT_LABORATORY_URL: 'http://localhost:3003',
+          APP_CONF_DIR: './target/dev/configs',
+          APP_LOG_DIR: './target/dev/logs',
+          APP_PERSISTENT_DIR: './target/dev/persistent',
+          APP_TEMPL_DIR: './templates',
+          NEW_RELIC_LOG_LEVEL: 'warn',
         };
 
         child = test

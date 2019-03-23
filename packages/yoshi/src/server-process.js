@@ -1,10 +1,13 @@
-const fs = require('fs-extra');
 const chalk = require('chalk');
 const stream = require('stream');
 const waitPort = require('wait-port');
 const child_process = require('child_process');
-const { NODE_PLATFORM_DEFAULT_CONFIGS_DIR } = require('yoshi-config/paths');
 const { PORT } = require('./constants');
+const { bootstrapUtils } = require('yoshi-helpers');
+
+const bootstrapEnvironmentParams = bootstrapUtils.getEnvironmentParams({
+  port: PORT,
+});
 
 function serverLogPrefixer() {
   return new stream.Transform({
@@ -32,26 +35,7 @@ module.exports = class Server {
         ...process.env,
         NODE_ENV: 'development',
         PORT,
-
-        // Check if the project has the default directory for loading node platform
-        // configs
-        //
-        // If it exists, the project is not using the `index-dev.js` pattern and we
-        // keep the defaults
-        //
-        // Otherwise, we inject our own defaults to keep boilerplate to a minimum
-        //
-        // https://github.com/wix/yoshi/pull/1153
-        ...(fs.existsSync(NODE_PLATFORM_DEFAULT_CONFIGS_DIR)
-          ? {}
-          : {
-              MANAGEMENT_PORT: Number(PORT) + 1,
-              APP_CONF_DIR: './target/dev/configs',
-              APP_LOG_DIR: './target/dev/logs',
-              APP_PERSISTENT_DIR: './target/dev/persistent',
-              APP_TEMPL_DIR: './templates',
-              NEW_RELIC_LOG_LEVEL: 'warn',
-            }),
+        ...bootstrapEnvironmentParams,
       },
     });
 
