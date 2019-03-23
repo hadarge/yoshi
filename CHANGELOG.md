@@ -1,27 +1,58 @@
 # Changelog
 
+## 4.1.0-rc.4 (2019-03-23)
+
+#### :boom: Breaking Change
+
+- `create-yoshi-app`, `yoshi`
+  - [#1164](https://github.com/wix/yoshi/pull/1164) Change the default server entry for `app-flow` from `test/dev-server` to `dev/server`, only relevant for client projects. ([@ronami](https://github.com/ronami))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`, `yoshi`
+  - [#1164](https://github.com/wix/yoshi/pull/1164) Fail gracefully if `source-map-support` is not installed. ([@ronami](https://github.com/ronami))
+- `jest-environment-yoshi-bootstrap`, `yoshi-helpers`, `yoshi`
+  - [#1161](https://github.com/wix/yoshi/pull/1161) Defaults for rpc and petri testkits ([@ranyitz](https://github.com/ranyitz))
+- `create-yoshi-app`
+  - [#1151](https://github.com/wix/yoshi/pull/1151) Polish generators ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`, `yoshi`
+  - [#1164](https://github.com/wix/yoshi/pull/1164) Show correct source maps in e2e jest tests, by not installing `source-map-support` twice. ([@ronami](https://github.com/ronami))
+
+#### :memo: Documentation
+
+- `create-yoshi-app`, `yoshi`
+  - [#1164](https://github.com/wix/yoshi/pull/1164) Update migration guide for `app-flow` to install `source-map-support`. ([@ronami](https://github.com/ronami))
+- [#1163](https://github.com/wix/yoshi/pull/1163) Update links in docs ([@yairhaimo](https://github.com/yairhaimo))
+
 ## 4.1.0-rc.3 (2019-03-21)
 
 #### :rocket: New Feature
-* `jest-yoshi-preset`
-  * [#1150](https://github.com/wix/yoshi/pull/1150) Add `jest-watch-typeahead` plugin ([@ranyitz](https://github.com/ranyitz))
+
+- `jest-yoshi-preset`
+  - [#1150](https://github.com/wix/yoshi/pull/1150) Add `jest-watch-typeahead` plugin ([@ranyitz](https://github.com/ranyitz))
 
 #### :bug: Bug Fix
-* `yoshi-config`, `yoshi`
-  * [#1153](https://github.com/wix/yoshi/pull/1153) Don't use node platform defaults if a project has old config folder ([@ronami](https://github.com/ronami))
-* `yoshi`
-  * [#1152](https://github.com/wix/yoshi/pull/1152) Parse properly `lint --fix` argument ([@yurynix](https://github.com/yurynix))
-  * [#1140](https://github.com/wix/yoshi/pull/1140) Add Stylable Webpack plugin project level hashing ([@NitayRabi](https://github.com/NitayRabi))
+
+- `yoshi-config`, `yoshi`
+  - [#1153](https://github.com/wix/yoshi/pull/1153) Don't use node platform defaults if a project has old config folder ([@ronami](https://github.com/ronami))
+- `yoshi`
+  - [#1152](https://github.com/wix/yoshi/pull/1152) Parse properly `lint --fix` argument ([@yurynix](https://github.com/yurynix))
+  - [#1140](https://github.com/wix/yoshi/pull/1140) Add Stylable Webpack plugin project level hashing ([@NitayRabi](https://github.com/NitayRabi))
 
 #### :nail_care: Polish
-* `create-yoshi-app`
-  * [#1148](https://github.com/wix/yoshi/pull/1148) Remove `__STATICS_BASE_URL__` from client & fullstack templates ([@ranyitz](https://github.com/ranyitz))
-* `yoshi`
-  * [#1142](https://github.com/wix/yoshi/pull/1142) Supply a better default for New Relic log level in user's app servers ([@ranyitz](https://github.com/ranyitz))
+
+- `create-yoshi-app`
+  - [#1148](https://github.com/wix/yoshi/pull/1148) Remove `__STATICS_BASE_URL__` from client & fullstack templates ([@ranyitz](https://github.com/ranyitz))
+- `yoshi`
+  - [#1142](https://github.com/wix/yoshi/pull/1142) Supply a better default for New Relic log level in user's app servers ([@ranyitz](https://github.com/ranyitz))
 
 #### :house: Internal
-* `create-yoshi-app`
-  * [#1138](https://github.com/wix/yoshi/pull/1138) Update business manager template to use dynamic imports ([@yurynix](https://github.com/yurynix))
+
+- `create-yoshi-app`
+  - [#1138](https://github.com/wix/yoshi/pull/1138) Update business manager template to use dynamic imports ([@yurynix](https://github.com/yurynix))
 
 ## 4.1.0-rc.2 (2019-03-19)
 
