@@ -153,7 +153,7 @@ module.exports = runner.command(
       ),
     ]);
 
-    openBrowser(localUrlForBrowser);
+    openBrowser(cliArgs.url || localUrlForBrowser);
 
     if (shouldRunTests && !isProduction()) {
       crossSpawn('npm', ['test', '--silent'], {

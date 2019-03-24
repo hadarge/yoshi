@@ -87,6 +87,7 @@ if (config.projectType === 'app') {
       'Get SIGHUP on change and manage application reboot manually',
     )
     .option('--with-tests', 'Spawn npm test after start')
+    .option('--url', 'Opens the browser with the supplied URL')
     .option('--no-server', 'Do not spawn the app server')
     .option('--debug', 'Allow app-server debugging')
     .option('--production', 'start using unminified production build')
