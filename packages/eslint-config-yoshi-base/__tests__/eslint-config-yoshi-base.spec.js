@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const { CLIEngine } = require('eslint');
-const eslintConfigYoshiBase = require('../index');
 const uniq = require('lodash/uniq');
 
 const serializeResults = results => JSON.stringify(results, null, 2);

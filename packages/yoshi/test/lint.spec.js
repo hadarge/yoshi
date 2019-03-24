@@ -531,24 +531,26 @@ p {
 
   describe('Staged files', () => {
     it('should lint only specified files', () => {
-      const res = test.setup({
+      const res = test
+        .setup({
           'package.json': fx.packageJson(),
           '.eslintrc': fx.eslintrc(),
           'app/a.js': `parseInt("1");`,
           'app/b.js': `parseInt("1", 10);`,
-        },
-      ).execute('lint', ['app/b.js'], insideTeamCity);
+        })
+        .execute('lint', ['app/b.js'], insideTeamCity);
       expect(res.code).to.equal(0);
     });
 
     it('should lint and fix only specified files', () => {
-      const res = test.setup({
+      const res = test
+        .setup({
           'package.json': fx.packageJson(),
           '.eslintrc': fx.eslintrc(),
           'app/a.js': `parseInt("1");`,
           'app/b.js': `parseInt("1", 10)`,
-        },
-      ).execute('lint', ['--fix', 'app/b.js'], insideTeamCity);
+        })
+        .execute('lint', ['--fix', 'app/b.js'], insideTeamCity);
       expect(res.code).to.equal(0);
       expect(test.content('app/b.js')).to.equal(`parseInt("1", 10);`);
     });

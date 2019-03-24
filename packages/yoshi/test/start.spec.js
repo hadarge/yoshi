@@ -965,9 +965,3 @@ describe('Aggregator: Start', () => {
     );
   }
 });
-
-function reversePromise(promise) {
-  return new Promise((resolve, reject) => {
-    promise.then(reject).catch(resolve);
-  });
-}

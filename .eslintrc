@@ -3,7 +3,23 @@
   "rules": {
     "import/no-extraneous-dependencies": "error"
   },
+  "settings": {
+    "react": {
+      "version": "latest"
+    }
+  },
   "overrides": [
+    {
+      "files": [
+        "packages/yoshi/test/**/*"
+      ],
+      "env": {
+        "mocha": true
+      },
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    },
     {
       "files": [
         "test/projects/**/*"
