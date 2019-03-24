@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "PORT=5000 yoshi start --entry-point ./dist/__tests__/dev/server.js",
+    "start": "PORT=5000 yoshi start --entry-point ./dist/__tests__/dev/server.js --url http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91/{%projectName%}",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test",

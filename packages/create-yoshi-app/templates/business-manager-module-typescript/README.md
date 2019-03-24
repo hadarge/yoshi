@@ -5,7 +5,6 @@
 ```shell
 npm install
 npm start
-Open http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91/{%projectName%}
 ```
 - If needed update your **[json.erb file](templates/module_{%PROJECT_NAME%}.json.erb)**
 - If needed update [module, page component and lazy component ids](src/config.ts)
