@@ -21,8 +21,8 @@ const {
   shouldRunWebpack,
   shouldRunLess,
   shouldRunSass,
-  createBabelConfig,
-} = require('yoshi-helpers');
+} = require('yoshi-helpers/queries');
+const { createBabelConfig } = require('yoshi-helpers/utils');
 const { printAndExitOnErrors } = require('../error-handler');
 
 const runner = createRunner({

@@ -7,7 +7,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const hotClient = require('webpack-hot-client');
 const { decorate } = require('./server-api');
 const { shouldRunWebpack, logStats, normalizeEntries } = require('./utils');
-const { getListOfEntries, getProcessOnPort } = require('yoshi-helpers');
+const { getListOfEntries, getProcessOnPort } = require('yoshi-helpers/utils');
 
 module.exports = async ({
   port = '3000',

@@ -18,7 +18,7 @@ const {
   createClientWebpackConfig,
   createServerWebpackConfig,
 } = require('../../config/webpack.config');
-const { inTeamCity: checkInTeamCity } = require('yoshi-helpers');
+const { inTeamCity: checkInTeamCity } = require('yoshi-helpers/queries');
 const {
   ROOT_DIR,
   SRC_DIR,

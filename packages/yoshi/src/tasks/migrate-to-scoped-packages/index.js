@@ -4,9 +4,9 @@ const chalk = require('chalk');
 const { isEmpty } = require('lodash');
 const {
   inTeamCity,
-  writeFile,
   migrateToScopedPackages,
-} = require('yoshi-helpers');
+} = require('yoshi-helpers/queries');
+const { writeFile } = require('yoshi-helpers/utils');
 
 const NOTICE = `
 WARNING: package.json has been updated

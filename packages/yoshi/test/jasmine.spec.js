@@ -7,7 +7,7 @@ const {
   insideTeamCity,
   insideWatchMode,
 } = require('../../../test-helpers/env-variables');
-const { killSpawnProcessAndHisChildren } = require('yoshi-helpers');
+const { killSpawnProcessAndHisChildren } = require('yoshi-helpers/utils');
 
 describe('test --jasmine', () => {
   let test, child;

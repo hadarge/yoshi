@@ -33,12 +33,14 @@ const {
   isTypescriptProject,
   shouldRunLess,
   shouldRunSass,
+  isProduction,
+} = require('yoshi-helpers/queries');
+const {
   shouldTransformHMRRuntime,
   suffix,
   watch,
-  isProduction,
   createBabelConfig,
-} = require('yoshi-helpers');
+} = require('yoshi-helpers/utils');
 const { debounce } = require('lodash');
 const wixAppServer = require('../tasks/app-server');
 const openBrowser = require('react-dev-utils/openBrowser');

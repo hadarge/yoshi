@@ -13,11 +13,9 @@ const waitPort = require('wait-port');
 const { servers } = require('yoshi-config');
 const { WS_ENDPOINT_PATH } = require('./constants');
 const { shouldRunE2Es } = require('./utils');
-const {
-  setupRequireHooks,
-  shouldDeployToCDN,
-  getProcessOnPort,
-} = require('yoshi-helpers');
+const { shouldDeployToCDN } = require('yoshi-helpers/queries');
+const { getProcessOnPort } = require('yoshi-helpers/utils');
+const { setupRequireHooks } = require('yoshi-helpers/require-hooks');
 const cdnProxy = require('./cdnProxy');
 
 // the user's config is loaded outside of a jest runtime and should be transpiled

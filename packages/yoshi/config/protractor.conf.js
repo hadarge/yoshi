@@ -6,14 +6,16 @@ const { wixCssModulesRequireHook } = require('yoshi-runtime');
 const {
   inTeamCity,
   exists,
+  shouldDeployToCDN,
+} = require('yoshi-helpers/queries');
+const {
   getMochaReporter,
-  setupRequireHooks,
   getProjectCDNBasePath,
-} = require('yoshi-helpers');
+} = require('yoshi-helpers/utils');
+const { setupRequireHooks } = require('yoshi-helpers/require-hooks');
 const startRewriteForwardProxy = require('yoshi-helpers/rewrite-forward-proxy');
 const globs = require('yoshi-config/globs');
 const project = require('yoshi-config');
-const { shouldDeployToCDN } = require('yoshi-helpers');
 
 setupRequireHooks();
 

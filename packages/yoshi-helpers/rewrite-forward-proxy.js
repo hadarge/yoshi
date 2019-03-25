@@ -56,18 +56,14 @@ module.exports = async function startRewriteForwardProxy({
 
   server.on('connect', (_, socket) => {
     // open a TCP connection to the remote host
-    const conn = net.connect(
-      httpsReverseProxyPort,
-      '127.0.0.1',
-      function() {
-        // respond to the client that the connection was made
-        socket.write('HTTP/1.1 200 OK\r\n\r\n');
-        // create a tunnel between the two hosts
-        socket.pipe(conn);
-        socket.on('error', () => {});
-        conn.pipe(socket);
-      },
-    );
+    const conn = net.connect(httpsReverseProxyPort, '127.0.0.1', function() {
+      // respond to the client that the connection was made
+      socket.write('HTTP/1.1 200 OK\r\n\r\n');
+      // create a tunnel between the two hosts
+      socket.pipe(conn);
+      socket.on('error', () => {});
+      conn.pipe(socket);
+    });
 
     conn.on('error', () => {});
   });

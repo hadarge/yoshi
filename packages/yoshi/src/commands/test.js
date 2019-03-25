@@ -23,10 +23,9 @@ const {
   watchMode,
   hasProtractorConfigFile,
   hasE2ETests,
-  getMochaReporter,
-  watch,
   hasBundleInStaticsDir,
-} = require('yoshi-helpers');
+} = require('yoshi-helpers/queries');
+const { getMochaReporter, watch } = require('yoshi-helpers/utils');
 const protractor = require('../../src/tasks/protractor');
 const { printAndExitOnErrors } = require('../error-handler');
 

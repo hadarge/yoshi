@@ -5,7 +5,7 @@ const infoCommand = require('../src/commands/info');
 const config = require('yoshi-config');
 const { configureSentry, handleError } = require('../src/sentry');
 const chalk = require('chalk');
-const { inTeamCity } = require('yoshi-helpers');
+const { inTeamCity } = require('yoshi-helpers/queries');
 
 // IDEs start debugging with '--inspect' or '--inspect-brk' option. We are setting --debug instead
 require('./normalize-debugging-args')();

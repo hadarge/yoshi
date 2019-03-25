@@ -1,5 +1,5 @@
 const babelJest = require('babel-jest');
-const { createBabelConfig } = require('yoshi-helpers');
+const { createBabelConfig } = require('yoshi-helpers/utils');
 
 const babelConfig = createBabelConfig();
 

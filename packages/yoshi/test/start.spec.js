@@ -1,10 +1,9 @@
 const { expect } = require('chai');
-const { killSpawnProcessAndHisChildren } = require('yoshi-helpers');
+const { killSpawnProcessAndHisChildren } = require('yoshi-helpers/utils');
 const tp = require('../../../test-helpers/test-phases');
 const fx = require('../../../test-helpers/fixtures');
 const fetch = require('node-fetch');
 const retryPromise = require('retry-promise').default;
-const { outsideTeamCity } = require('../../../test-helpers/env-variables');
 const https = require('https');
 const { takePort } = require('../../../test-helpers/http-helpers');
 const detect = require('detect-port');

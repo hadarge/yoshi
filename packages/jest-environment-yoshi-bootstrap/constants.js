@@ -1,5 +1,5 @@
 const childProcess = require('child_process');
-const { processIsJest, getProcessIdOnPort } = require('yoshi-helpers');
+const { processIsJest, getProcessIdOnPort } = require('yoshi-helpers/utils');
 
 const JEST_WORKER_ID = parseInt(process.env.JEST_WORKER_ID, 10);
 

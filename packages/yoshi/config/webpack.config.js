@@ -18,8 +18,6 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { localIdentName } = require('../src/constants');
 const EnvirnmentMarkPlugin = require('../src/webpack-plugins/environment-mark-plugin');
-const { tryRequire } = require('yoshi-helpers');
-
 const {
   ROOT_DIR,
   SRC_DIR,
@@ -30,15 +28,18 @@ const {
 const project = require('yoshi-config');
 const {
   shouldDeployToCDN,
-  getProjectCDNBasePath,
-  toIdentifier,
   isSingleEntry,
   isProduction: checkIsProduction,
   inTeamCity: checkInTeamCity,
   isTypescriptProject: checkIsTypescriptProject,
+} = require('yoshi-helpers/queries');
+const {
+  tryRequire,
+  getProjectCDNBasePath,
+  toIdentifier,
   getProjectArtifactId,
   createBabelConfig,
-} = require('yoshi-helpers');
+} = require('yoshi-helpers/utils');
 const { addEntry, overrideRules } = require('../src/webpack-utils');
 
 const reScript = /\.js?$/;

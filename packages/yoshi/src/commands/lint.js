@@ -13,7 +13,7 @@ const {
   isTypescriptProject,
   shouldRunStylelint,
   watchMode,
-} = require('yoshi-helpers');
+} = require('yoshi-helpers/queries');
 
 const { hooks } = require('yoshi-config');
 

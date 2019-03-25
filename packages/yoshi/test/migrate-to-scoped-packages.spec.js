@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const retryPromise = require('retry-promise').default;
 const tp = require('../../../test-helpers/test-phases');
 const fx = require('../../../test-helpers/fixtures');
-const { killSpawnProcessAndHisChildren } = require('yoshi-helpers');
+const { killSpawnProcessAndHisChildren } = require('yoshi-helpers/utils');
 const {
   migrateToScopedPackages,
   insideTeamCity,

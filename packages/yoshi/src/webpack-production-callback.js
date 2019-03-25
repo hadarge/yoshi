@@ -1,4 +1,4 @@
-const { reportWebpackStats } = require('yoshi-helpers');
+const { reportWebpackStats } = require('yoshi-helpers/utils');
 
 module.exports = (err, stats) => {
   if (err === null) {

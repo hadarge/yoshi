@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const puppeteer = require('puppeteer');
 const { WS_ENDPOINT_PATH } = require('./constants');
-const { setupRequireHooks } = require('yoshi-helpers');
+const { setupRequireHooks } = require('yoshi-helpers/require-hooks');
 
 // the user's config is loaded outside of a jest runtime and should be transpiled
 // with babel/typescript, this may be run separately for every worker

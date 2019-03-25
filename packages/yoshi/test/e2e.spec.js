@@ -2,7 +2,7 @@ const path = require('path');
 const expect = require('chai').expect;
 const tp = require('../../../test-helpers/test-phases');
 const fx = require('../../../test-helpers/fixtures');
-const { exists } = require('yoshi-helpers');
+const { exists } = require('yoshi-helpers/queries');
 const {
   outsideTeamCity,
   insideTeamCity,

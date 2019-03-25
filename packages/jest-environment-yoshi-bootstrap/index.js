@@ -6,7 +6,7 @@ const {
   appPersistentDir,
 } = require('./constants');
 const projectConfig = require('yoshi-config');
-const { bootstrapUtils } = require('yoshi-helpers');
+const { getEnvVars } = require('yoshi-helpers/bootstrap-utils');
 
 module.exports = class BootstrapEnvironment extends NodeEnvironment {
   async setup() {
@@ -15,7 +15,7 @@ module.exports = class BootstrapEnvironment extends NodeEnvironment {
     // create sensible defaults for bootstrap environment's process.env
     const appPort = getPort();
 
-    const bootstrapEnvironmentParams = bootstrapUtils.getEnvironmentParams({
+    const bootstrapEnvironmentParams = getEnvVars({
       port: appPort,
       appConfDir,
       appLogDir,

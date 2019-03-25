@@ -3,9 +3,9 @@ const stream = require('stream');
 const waitPort = require('wait-port');
 const child_process = require('child_process');
 const { PORT } = require('./constants');
-const { bootstrapUtils } = require('yoshi-helpers');
+const { getDevelopmentEnvVars } = require('yoshi-helpers/bootstrap-utils');
 
-const bootstrapEnvironmentParams = bootstrapUtils.getEnvironmentParams({
+const bootstrapEnvironmentParams = getDevelopmentEnvVars({
   port: PORT,
 });
 

@@ -6,7 +6,7 @@ const spawn = require('cross-spawn');
 const detect = require('detect-port');
 const debounce = require('lodash/debounce');
 const waitPort = require('wait-port');
-const { bootstrapUtils } = require('yoshi-helpers');
+const { getDevelopmentEnvVars } = require('yoshi-helpers/bootstrap-utils');
 const { PORT } = require('../../constants');
 
 let server;
@@ -45,7 +45,7 @@ function initializeServerStartDelegate({
       DEBUG: 'wix:*,wnp:*',
     };
 
-    const bootstrapEnvironmentParams = bootstrapUtils.getEnvironmentParams({
+    const bootstrapEnvironmentParams = getDevelopmentEnvVars({
       port,
     });
 

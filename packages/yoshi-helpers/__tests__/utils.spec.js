@@ -1,4 +1,4 @@
-const { isProduction } = require('../index');
+const { isProduction } = require('../queries');
 
 describe('Utils', () => {
   describe('isProduction ', () => {
