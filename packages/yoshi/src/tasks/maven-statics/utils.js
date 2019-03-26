@@ -6,7 +6,7 @@ module.exports.renderTemplate = (filename, data) => {
   const template = fs.readFileSync(filename).toString();
 
   return Object.keys(data).reduce(
-    (template, key) => template.replace(`{{${key}}}`, data[key]),
+    (acc, key) => acc.replace(`{{${key}}}`, data[key]),
     template,
   );
 };

@@ -238,7 +238,7 @@ describe('Aggregator: Test', () => {
               browser.ignoreSynchronization = true;
               browser.get("http://localhost:1337");
               const until = protractor.ExpectedConditions;
-              browser.wait(until.presenceOf(\$('h1')), 4000, 'Element taking too long to appear in the DOM');
+              browser.wait(until.presenceOf($('h1')), 4000, 'Element taking too long to appear in the DOM');
               expect(element(by.css("body")).getText()).toEqual("Dynamic");
             });
           `,
@@ -764,7 +764,7 @@ describe('Aggregator: Test', () => {
       it('should fail with exit code 1', function() {
         this.timeout(60000);
 
-        const res = customTest
+        res = customTest
           .setup({
             'test/some.spec.js': `it("fail", () => { throw new Error() });`,
             'package.json': fx.packageJson(),
@@ -776,7 +776,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should run specs from test/app/src by default', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'test/bla/comp.spec.js': `it("pass", () => 1);`,
             'app/bla/comp.spec.js': `it("pass", () => 1);`,
@@ -790,7 +790,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should use the right reporter when running inside TeamCity', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'test/some.spec.js': `it.only("pass", () => 1);`,
             'package.json': fx.packageJson(),
@@ -800,7 +800,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should use the right reporter when running outside TeamCity', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'test/some.spec.js': `it.only("pass", () => 1);`,
             'package.json': fx.packageJson(),
@@ -812,7 +812,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should use a custom reporter when requested', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'test/some.spec.js': `it.only("pass", () => 1);`,
             'package.json': fx.packageJson(),
@@ -833,7 +833,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should not transpile tests if `transpileTests` is `false`', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'test/bar.js': 'export default 5;',
             'test/some.spec.js': `import foo from './bar';`,
@@ -846,7 +846,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should output test coverage when --coverage is passed', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'test/some.spec.js': `it.only("pass", () => 1);`,
             'package.json': fx.packageJson(),
@@ -861,7 +861,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should not run webpack-dev-server (cdn) when there are no e2e tests', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'test/bla/comp.spec.js': `it("pass", () => 1);`,
             'package.json': fx.packageJson(),
@@ -875,7 +875,7 @@ describe('Aggregator: Test', () => {
 
       describe('with @babel/register', () => {
         it('should transpile explicitly configured externalUnprocessedModules', function() {
-          const res = customTest
+          res = customTest
             .setup({
               'node_modules/my-unprocessed-module/index.js': 'export default 1',
               'test/some.js': `import x from 'my-unprocessed-module'; export default x => x`,
@@ -894,7 +894,7 @@ describe('Aggregator: Test', () => {
         });
 
         it('should transpile es modules w/o any configurations', () => {
-          const res = customTest
+          res = customTest
             .setup({
               'test/some.spec.js': `
               import assert from 'assert';
@@ -912,7 +912,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should run typescript tests with runtime compilation and force commonjs module system', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'tsconfig.json': fx.tsconfig(),
             'test/some.spec.ts': `import * as usageOfFS from 'fs'; it.only("pass", () => !!usageOfFS);`,
@@ -925,7 +925,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should support dynamic imports syntax for node js', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'tsconfig.json': fx.tsconfig(),
             'test/foo.ts': `console.log('hello');`,
@@ -941,7 +941,7 @@ describe('Aggregator: Test', () => {
 
       describe('stylable integration', () => {
         it('should transform stylable stylesheets', () => {
-          const res = customTest
+          res = customTest
             .setup({
               'src/main.st.css': `
                 .someclass {
@@ -1082,7 +1082,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should consider custom specs.browser globs if configured', () => {
-        const res = test
+        res = test
           .setup({
             'some/other/app.glob.js':
               'it("pass", function () { expect(1).toBe(1); });',
@@ -1111,7 +1111,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should allow import sass from node_modules', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'src/client.spec.js': `require('./foo.css'); it('pass', function () {expect(1).toBe(1);});`,
             'src/foo.css': '@import "bar/bar";',
@@ -1125,7 +1125,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should support TPA style params', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'src/client.spec.js': `require('./foo.css'); it('pass', function () {expect(1).toBe(1);});`,
             'src/foo.css':
@@ -1140,7 +1140,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should exit with code 1 in case webpack fails', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'src/client.spec.js': `require('./ballsack');`,
             'karma.conf.js': fx.karmaWithJasmine(),
@@ -1156,7 +1156,7 @@ describe('Aggregator: Test', () => {
       });
 
       it('should fail with exit code 1', () => {
-        const res = customTest
+        res = customTest
           .setup({
             'src/test.spec.js':
               'it("fail", function () { expect(1).toBe(2); });',
@@ -1173,7 +1173,7 @@ describe('Aggregator: Test', () => {
 
       describe('with browser (chrome) configurations and stylable', () => {
         it('should pass with exit code 0, not run phantom and understand "st.css" files', () => {
-          const res = customTest
+          res = customTest
             .setup({
               'src/test.spec.js':
                 'require("./style.st.css"), it("pass", function () {});',
@@ -1199,7 +1199,7 @@ describe('Aggregator: Test', () => {
 
       describe('with mocha and chrome configuration', () => {
         it('should pass with exit code 0', () => {
-          const res = customTest
+          res = customTest
             .setup(passingMochaTest())
             .execute('test', ['--karma'], outsideTeamCity);
 
@@ -1211,7 +1211,7 @@ describe('Aggregator: Test', () => {
 
         // very flaky test
         it.skip('should use appropriate reporter for TeamCity', () => {
-          const res = customTest
+          res = customTest
             .setup(passingMochaTest())
             .execute('test', ['--karma'], insideTeamCity);
 

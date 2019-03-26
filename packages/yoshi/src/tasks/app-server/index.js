@@ -39,25 +39,25 @@ function initializeServerStartDelegate({
   debugBrkPort,
   log,
 }) {
-  return async port => {
+  return async newPort => {
     const defaultEnv = {
       NODE_ENV: 'development',
       DEBUG: 'wix:*,wnp:*',
     };
 
     const bootstrapEnvironmentParams = getDevelopmentEnvVars({
-      port,
+      port: newPort,
     });
 
     const env = Object.assign(defaultEnv, process.env, {
-      PORT: port,
+      PORT: newPort,
       ...bootstrapEnvironmentParams,
     });
 
-    if (port !== defaultPort) {
+    if (newPort !== defaultPort) {
       console.log(
         chalk.green(
-          `There's something running on port ${defaultPort}, using ${port} instead.`,
+          `There's something running on port ${defaultPort}, using ${newPort} instead.`,
         ),
       );
     }
@@ -90,7 +90,7 @@ function initializeServerStartDelegate({
       console.log('');
       console.log(
         `Still waiting for app-server to start (make sure it is listening on port ${chalk.magenta(
-          port,
+          newPort,
         )}...)`,
       );
     }, 3000);

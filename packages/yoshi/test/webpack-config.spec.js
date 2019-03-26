@@ -243,7 +243,7 @@ describe('Webpack basic configs', () => {
 
   describe('Case sensitive plugin', () => {
     it('Should fail on wrong file referance casing not matching', () => {
-      const res = test
+      res = test
         .setup({
           'src/client.js': `require('./casesensivitetest')`,
           'src/caseSensiviteTest.js': `return true;`,
@@ -256,7 +256,7 @@ describe('Webpack basic configs', () => {
 
   describe('DefinePlugin configuration', () => {
     it('Should replace window.__CI_APP_VERSION__ with the current CI Artifact version', () => {
-      const res = test
+      res = test
         .setup({
           'src/client.js': `const foo = window.__CI_APP_VERSION__;`,
         })
@@ -267,7 +267,7 @@ describe('Webpack basic configs', () => {
     });
 
     it('Should default to 0.0.0 when not in CI', () => {
-      const res = test
+      res = test
         .setup({
           'src/client.js': `const foo = window.__CI_APP_VERSION__;`,
         })
@@ -278,7 +278,7 @@ describe('Webpack basic configs', () => {
     });
 
     it('should populate process.env.ARTIFACT_ID with the artifact id from pom.xml', () => {
-      const res = test
+      res = test
         .setup({
           'src/client.js': `const foo = process.env.ARTIFACT_ID;`,
           'pom.xml': fx.pom(),
@@ -355,7 +355,7 @@ describe('Webpack basic configs', () => {
 
   describe('Uglify', () => {
     it('should not mangle class names with the keepFunctionNames option', () => {
-      const test = tp.create().setup({
+      test = tp.create().setup({
         'src/client.js': `export default class LongClassName {};`,
         'pom.xml': fx.pom(),
         'package.json': fx.packageJson({
@@ -367,11 +367,10 @@ describe('Webpack basic configs', () => {
       expect(test.content('dist/statics/app.bundle.min.js')).to.contain(
         'function LongClassName',
       );
-      test.teardown();
     });
 
     it('should mangle class names by default', () => {
-      const test = tp.create().setup({
+      test = tp.create().setup({
         'src/client.js': `export default class LongClassName {};`,
         'pom.xml': fx.pom(),
         'package.json': fx.packageJson(),
@@ -381,11 +380,10 @@ describe('Webpack basic configs', () => {
       expect(test.content('dist/statics/app.bundle.min.js')).not.to.contain(
         'class LongClassName',
       );
-      test.teardown();
     });
 
     it('should not mangle function names with the keepFunctionNames option', () => {
-      const test = tp.create().setup({
+      test = tp.create().setup({
         'src/client.js': `export default function LongFunctionName() {};`,
         'pom.xml': fx.pom(),
         'package.json': fx.packageJson({
@@ -397,11 +395,10 @@ describe('Webpack basic configs', () => {
       expect(test.content('dist/statics/app.bundle.min.js')).to.contain(
         'function LongFunctionName',
       );
-      test.teardown();
     });
 
     it('should mangle function names by default', () => {
-      const test = tp.create().setup({
+      test = tp.create().setup({
         'src/client.js': `export default function LongFunctionName() {};`,
         'pom.xml': fx.pom(),
         'package.json': fx.packageJson(),
@@ -411,7 +408,6 @@ describe('Webpack basic configs', () => {
       expect(test.content('dist/statics/app.bundle.min.js')).not.to.contain(
         'function LongFunctionName',
       );
-      test.teardown();
     });
   });
 });

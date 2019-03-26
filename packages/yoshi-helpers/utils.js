@@ -79,7 +79,7 @@ module.exports.watch = (
 ) => {
   const watcher = chokidar
     .watch(pattern, { cwd, ignoreInitial, ...options })
-    .on('all', (event, path) => callback(path));
+    .on('all', (event, filePath) => callback(filePath));
 
   return watcher;
 };

@@ -12,11 +12,11 @@ const retryPromise = require('retry-promise').default;
 const fetch = require('node-fetch');
 const { localIdentName } = require('../src/constants');
 
-const generateCssModulesPattern = ({ name, path, short }) => {
+const generateCssModulesPattern = ({ name, path: filePath, short }) => {
   const pattern = short ? localIdentName.short : localIdentName.long;
   const genericNames = require('generic-names');
   const generate = genericNames(pattern, { hashPrefix: 'a' });
-  return generate(name, path);
+  return generate(name, filePath);
 };
 
 const $inject = 'something.$inject = ["$http"];';

@@ -35,7 +35,9 @@ describe('tslint-config-yoshi-base', () => {
 
         it(`should be valid for ${basename}`, () => {
           const result = runLint(filename);
-          const failingRules = result.failures.map(({ ruleName }) => ruleName);
+          const failingRules = result.failures.map(
+            ({ ruleName: failureRuleName }) => failureRuleName,
+          );
 
           expect(failingRules).toEqual([]);
         });
@@ -48,7 +50,9 @@ describe('tslint-config-yoshi-base', () => {
 
         it(`should be invalid for ${basename}`, async () => {
           const result = runLint(filename);
-          const failingRules = result.failures.map(({ ruleName }) => ruleName);
+          const failingRules = result.failures.map(
+            ({ ruleName: failureRuleName }) => failureRuleName,
+          );
 
           expect(failingRules).toEqual([ruleName]);
         });

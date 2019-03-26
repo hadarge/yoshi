@@ -161,9 +161,9 @@ describe('Aggregator: Start', () => {
 
       it('should pass --inspect flag when parameter is passed with the correct port', () => {
         const port = 8230;
-        const checkIfInspectIsPassedInArgs = function(port) {
+        const checkIfInspectIsPassedInArgs = function(expectedPort) {
           return !!process.execArgv.find(
-            arg => arg.indexOf(`--inspect=127.0.0.1:${port}`) === 0,
+            arg => arg.indexOf(`--inspect=127.0.0.1:${expectedPort}`) === 0,
           );
         };
 

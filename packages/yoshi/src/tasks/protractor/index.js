@@ -70,10 +70,10 @@ const protractor = async (debugPort, debugBrkPort) => {
         },
       );
       webDriverUpdate.on('exit', () => {
-        const protractor = crossSpawn('node', protractorArgs, {
+        const protractorProcess = crossSpawn('node', protractorArgs, {
           stdio: 'inherit',
         });
-        protractor.on('exit', code => {
+        protractorProcess.on('exit', code => {
           code === 0
             ? resolve()
             : reject(`protractor failed with status code "${code}"`);

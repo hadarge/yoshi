@@ -1,7 +1,8 @@
 {
   "extends": "./packages/eslint-config-yoshi/index.js",
   "rules": {
-    "import/no-extraneous-dependencies": "error"
+    "import/no-extraneous-dependencies": "error",
+    "array-callback-return": "off"
   },
   "settings": {
     "react": {
@@ -9,6 +10,12 @@
     }
   },
   "overrides": [
+    {
+      "files": ["**/*.spec.js", "**/*.test.js", "**/*.e2e.js", "**/*.it.js"],
+      "rules": {
+        "jest/no-disabled-tests": "off"
+      }
+    },
     {
       "files": [
         "packages/yoshi/test/**/*"
