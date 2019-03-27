@@ -245,7 +245,7 @@ describe('Aggregator: Lint', () => {
     });
   });
 
-  describe('stylelint', () => {
+  describe.skip('stylelint', () => {
     it('does nothing when no configurations are given', () => {
       const res = test
         .setup({

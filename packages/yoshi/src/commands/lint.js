@@ -5,15 +5,10 @@ const parseArgs = require('minimist');
 const chalk = require('chalk');
 const tslint = require('../tasks/tslint');
 const eslint = require('../tasks/eslint');
-const stylelint = require('../tasks/stylelint');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('yoshi-config/globs');
 
-const {
-  isTypescriptProject,
-  shouldRunStylelint,
-  watchMode,
-} = require('yoshi-helpers/queries');
+const { isTypescriptProject, watchMode } = require('yoshi-helpers/queries');
 
 const { hooks } = require('yoshi-config');
 
@@ -52,19 +47,6 @@ module.exports = runner.command(async () => {
     await execa.shell(prelint, { stdio: 'inherit' });
   }
 
-  if (await shouldRunStylelint()) {
-    const styleFilesToLint =
-      shouldRunOnSpecificFiles && styleFiles.length
-        ? styleFiles
-        : [`${globs.base}/**/*.scss`, `${globs.base}/**/*.less`];
-
-    try {
-      await runStyleLint(styleFilesToLint);
-    } catch (error) {
-      lintErrors.push(error);
-    }
-  }
-
   if (isTypescriptProject()) {
     const tsFilesToLint =
       shouldRunOnSpecificFiles && (tsFiles.length || jsFiles.length)
@@ -92,10 +74,6 @@ module.exports = runner.command(async () => {
   if (lintErrors.length) {
     console.error(chalk.red(lintErrors.join('\n\n')));
     process.exit(1);
-  }
-
-  function runStyleLint(pattern) {
-    return stylelint({ pattern, fix: cliArgs.fix });
   }
 
   async function runTsLint(pattern) {

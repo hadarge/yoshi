@@ -42,8 +42,5 @@
   },
   "eslintConfig": {
     "extends": "yoshi"
-  },
-  "stylelint": {
-    "extends": "stylelint-config-yoshi"
   }
 }

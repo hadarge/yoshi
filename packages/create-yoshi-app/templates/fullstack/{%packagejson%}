@@ -64,8 +64,5 @@
     "globals": {
       "app": false
     }
-  },
-  "stylelint": {
-    "extends": "stylelint-config-yoshi"
   }
 }

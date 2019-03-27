@@ -67,8 +67,5 @@
     "globals": {
       "testKitEnv": true
     }
-  },
-  "stylelint": {
-    "extends": "stylelint-config-yoshi"
   }
 }

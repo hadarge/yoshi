@@ -50,8 +50,5 @@
   },
   "yoshi": {
     "hmr": "auto"
-  },
-  "stylelint": {
-    "extends": "stylelint-config-yoshi"
   }
 }

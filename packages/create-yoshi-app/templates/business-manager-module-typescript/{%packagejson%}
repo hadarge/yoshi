@@ -72,8 +72,5 @@
         "@wix/business-manager-api": "BusinessManagerAPI",
         "react-module-container": "reactModuleContainer"
       }
-    },
-    "stylelint": {
-      "extends": "stylelint-config-yoshi"
     }
 }
