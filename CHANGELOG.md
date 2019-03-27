@@ -1,5 +1,28 @@
 # Changelog
 
+## 4.1.0 (2019-03-27)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1166](https://github.com/wix/yoshi/pull/1166) Support opening the browser on a different url with `--url` (for !appFlow) ([@yairhaimo](https://github.com/yairhaimo))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`, `yoshi`
+  - [#1182](https://github.com/wix/yoshi/pull/1182) Don't run Stylelint during `yoshi lint` ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`
+  - [#1167](https://github.com/wix/yoshi/pull/1167) Business Manager template opens correct url on `npm start` ([@yairhaimo](https://github.com/yairhaimo))
+
+#### :house: Internal
+
+- `tslint-config-yoshi-base`, `yoshi-helpers`, `yoshi`
+  - [#1175](https://github.com/wix/yoshi/pull/1175) Fix ESLint warnings and set maximum warnings to 0 ([@ronami](https://github.com/ronami))
+- `eslint-config-yoshi`, `jest-environment-yoshi-bootstrap`, `jest-environment-yoshi-puppeteer`, `jest-yoshi-preset`, `yoshi-helpers`, `yoshi`
+  - [#1168](https://github.com/wix/yoshi/pull/1168) Require `yoshi-helpers` files directly and simplify bootstrap env vars logic ([@ronami](https://github.com/ronami))
+- `eslint-config-yoshi-base`, `yoshi`
+  - [#1170](https://github.com/wix/yoshi/pull/1170) Remove redundant `.eslintrc` files and remove lint warnings on react version ([@ronami](https://github.com/ronami))
+
 ## 4.1.0-rc.4 (2019-03-23)
 
 #### :boom: Breaking Change
