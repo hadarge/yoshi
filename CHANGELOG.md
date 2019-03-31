@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.1.1 (2019-03-31)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1188](https://github.com/wix/yoshi/pull/1188) Support `externalUnprocessedModules` config option for transpiling TypeScript files ([@ronami](https://github.com/ronami))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1186](https://github.com/wix/yoshi/pull/1186) Update `husky` && `lint-staged` use new recommended config format ([@ronami](https://github.com/ronami))
+
+#### :memo: Documentation
+
+- [#1184](https://github.com/wix/yoshi/pull/1184) Tiny fix for app-flow guide (fix image url) ([@sidoruk-sv](https://github.com/sidoruk-sv))
+
 ## 4.1.0 (2019-03-27)
 
 #### :rocket: New Feature
