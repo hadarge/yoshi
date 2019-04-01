@@ -54,19 +54,30 @@ test('it should not create a git repo if the target directory is contained in a 
   expect(() => fs.statSync(path.join(projectDir, '.git'))).toThrow();
 });
 
+test('it uses answers from a file', async () => {
+  const answersFile = tempy.file();
+  fs.outputFileSync(answersFile, JSON.stringify(minimalTemplateAnswers()));
+
+  const tempDir = tempy.directory();
+  const projectDir = path.join(tempDir, 'project');
+
+  gitInit(tempDir);
+  fs.ensureDirSync(projectDir);
+  await createApp(projectDir, undefined, answersFile);
+
+  const packageJson = fs.readJSONSync(
+    path.join(tempDir, 'project', 'package.json'),
+  );
+  expect(packageJson.name).toBe('minimal-template');
+});
+
 function minimalTemplateAnswers() {
-  const answers = new Answers({
+  const answers = Answers.fromJSON({
     projectName: `test-project`,
     authorName: 'rany',
     authorEmail: 'rany@wix.com',
     organization: 'wix',
-  });
-
-  // override the templatePath to our fake template directory
-  Object.defineProperty(answers, 'templatePath', {
-    get: function() {
-      return path.join(__dirname, './__fixtures__/minimal-template/');
-    },
+    templatePath: path.join(__dirname, './__fixtures__/minimal-template/'),
   });
 
   return answers;

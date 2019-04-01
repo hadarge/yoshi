@@ -27,4 +27,26 @@ module.exports = class Answers {
 
     return this.projectType + typescriptSuffix;
   }
+
+  toJSON() {
+    return {
+      projectType: this.projectType,
+      projectName: this.projectName,
+      authorName: this.authorName,
+      authorEmail: this.authorEmail,
+      organization: this.organization,
+      transpiler: this.transpiler,
+      templatePath: this.templatePath,
+    };
+  }
+
+  static fromJSON({ templatePath, ...opts }) {
+    const answers = new Answers(opts);
+    Object.defineProperty(answers, 'templatePath', {
+      get: function() {
+        return templatePath;
+      },
+    });
+    return answers;
+  }
 };

@@ -12,8 +12,10 @@ const generateProject = require('./generateProject');
 const verifyRegistry = require('./verifyRegistry');
 const verifyMinimumNodeVersion = require('yoshi-helpers/verifyMinimumNodeVersion');
 const { minimumNodeVersion } = require('./constants');
+const fs = require('fs-extra');
+const Answers = require('./Answers');
 
-module.exports = async (workingDir, projectDirName) => {
+module.exports = async (workingDir, projectDirName, answersFile) => {
   verifyWorkingDirectory(workingDir);
   verifyRegistry(workingDir);
   verifyMinimumNodeVersion(minimumNodeVersion);
@@ -25,7 +27,9 @@ module.exports = async (workingDir, projectDirName) => {
     ' ' + chalk.underline('Please answer the following questions:\n'),
   );
 
-  const results = await runPrompt(workingDir);
+  const results = answersFile
+    ? readAnswersFile(answersFile)
+    : await runPrompt(workingDir);
 
   console.log(
     `\nCreating a new ${chalk.cyan(
@@ -73,3 +77,7 @@ module.exports = async (workingDir, projectDirName) => {
   console.log('For more information visit https://github.com/wix/yoshi');
   console.log('Good luck! 🍀');
 };
+
+function readAnswersFile(answersFilePath) {
+  return Answers.fromJSON(fs.readJSONSync(answersFilePath));
+}
