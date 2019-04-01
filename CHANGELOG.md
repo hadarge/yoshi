@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.1.2 (2019-04-01)
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1191](https://github.com/wix/yoshi/pull/1191) Add sensible defaults to `webpack-dev-server`'s `allowedHosts` ([@ronami](https://github.com/ronami))
+
 ## 4.1.1 (2019-03-31)
 
 #### :rocket: New Feature
