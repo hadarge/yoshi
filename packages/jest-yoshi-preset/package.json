@@ -14,7 +14,9 @@
     "@stylable/core": "^1.0.0",
     "@stylable/jest": "^1.0.0",
     "jest": "^24.1.0",
-    "yoshi": "^4.1.0"
+    "yoshi": "^4.1.0",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1"    
   },
   "dependencies": {
     "babel-jest": "^24.1.0",
@@ -24,6 +26,7 @@
     "jest-environment-yoshi-bootstrap": "4.1.1",
     "jest-environment-yoshi-puppeteer": "4.1.1",
     "jest-watch-typeahead": "^0.2.1",
+    "jest-transform-graphql": "^2.1.0",
     "regenerator-runtime": "^0.12.0",
     "ts-jest": "^24.0.0",
     "yoshi-config": "4.1.0",
@@ -34,6 +37,9 @@
     "@stylable/core": "^1.0.0",
     "@stylable/jest": "^1.0.0",
     "babel-preset-yoshi": "4.1.0",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "jest-transform-graphql": "^2.1.0",
     "typescript": "^3.0.1"
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import GraphqlInclusion from './graphql-inclusion';
+import GraphqlInclusion from './graphql-inclusion';
 
-it.skip('should pass', () => {
+it('should pass', () => {
   const div = document.createElement('div');
-  // ReactDOM.render(<GraphqlInclusion />, div);
+  ReactDOM.render(<GraphqlInclusion />, div);
 });
