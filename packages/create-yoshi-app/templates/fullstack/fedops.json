@@ -1,0 +1,11 @@
+{
+    "appName": "{%projectName%}",
+    "notifications": {
+      "slack_channels": [
+        "fedops-urgent-default"
+      ]
+    },
+    "deploy_annotations": [
+      "{%projectName%}"
+    ]
+  }
