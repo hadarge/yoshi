@@ -5,14 +5,14 @@ const replaceTemplates = require('./replaceTemplates');
 const getValuesMap = require('./getValuesMap');
 const verifyWorkingDirectory = require('./verifyWorkingDirectory');
 const verifyRegistry = require('./verifyRegistry');
-const projects = require('./projects');
+const templates = require('./templates');
 
 module.exports = {
   createApp,
   runPrompt,
   generateProject,
   replaceTemplates,
-  projects,
+  templates,
   getValuesMap,
   verifyRegistry,
   verifyWorkingDirectory,

@@ -17,15 +17,15 @@ const {
 } = require('../src/index');
 const { clearConsole } = require('../src/utils');
 const cache = require('./cache');
-const Answers = require('../src/Answers');
+const TemplateModel = require('../src/TemplateModel');
 const { appCacheKey } = require('../src/constants');
 
-async function shouldContinueOldSession(projectType) {
+async function shouldContinueOldSession(templateTitle) {
   const response = await prompts({
     type: 'confirm',
     name: 'value',
     message: `we've found an old session when you worked on a ${chalk.magenta(
-      projectType,
+      templateTitle,
     )} template.\n\n Answer ${chalk.cyan(
       'Yes',
     )} if you would like to continue working on it, or ${chalk.cyan(
@@ -39,27 +39,30 @@ async function shouldContinueOldSession(projectType) {
 
 async function createApp({ cacheData, useCache }) {
   clearConsole();
-  let answers;
+  let templateModel;
 
   if (useCache) {
-    answers = cacheData.answers;
+    templateModel = cacheData.templateModel;
   } else {
-    answers = await runPrompt();
+    templateModel = await runPrompt();
 
     clearConsole();
   }
 
   const workingDir = useCache
     ? cacheData.workingDir
-    : path.join(tempy.directory(), `generated-${answers.fullProjectType}`);
+    : path.join(tempy.directory(), `generated-${templateModel.getTitle()}`);
 
   fs.ensureDirSync(workingDir);
 
-  generateProject(answers, workingDir);
+  generateProject(templateModel, workingDir);
   // install(workingDir);
   // lintFix(workingDir);
 
-  cache.set(appCacheKey, { answers, workingDir });
+  cache.set(appCacheKey, {
+    templateModel: templateModel,
+    workingDir,
+  });
 
   console.log();
 
@@ -75,11 +78,11 @@ async function createApp({ cacheData, useCache }) {
 
   clipboardy.writeSync(workingDir);
 
-  return { answers, workingDir };
+  return { templateModel, workingDir };
 }
 
-function startWatcher(workingDir, answers) {
-  const templatePath = answers.templatePath;
+function startWatcher(workingDir, templateModel) {
+  const templatePath = templateModel.getPath();
 
   console.log(`Watching ${chalk.magenta(templatePath)} for changes...`);
   console.log();
@@ -91,7 +94,7 @@ function startWatcher(workingDir, answers) {
     cwd: templatePath,
   });
 
-  const valuesMap = getValuesMap(answers);
+  const valuesMap = getValuesMap(templateModel);
 
   const generateFile = relativePath => {
     const fullPath = path.join(templatePath, relativePath);
@@ -140,16 +143,19 @@ async function init() {
 
   if (cache.has(appCacheKey)) {
     cacheData = cache.get(appCacheKey);
-    cacheData.answers = new Answers(cacheData.answers);
+    cacheData.templateModel = TemplateModel.fromJSON(cacheData.templateModel);
 
-    if (await shouldContinueOldSession(cacheData.answers.fullProjectType)) {
+    if (await shouldContinueOldSession(cacheData.templateModel.getTitle())) {
       useCache = true;
     }
   }
 
-  const { answers, workingDir } = await createApp({ useCache, cacheData });
+  const { templateModel, workingDir } = await createApp({
+    useCache,
+    cacheData,
+  });
 
-  startWatcher(workingDir, answers);
+  startWatcher(workingDir, templateModel);
 }
 
 init();

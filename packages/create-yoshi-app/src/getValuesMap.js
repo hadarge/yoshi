@@ -1,11 +1,11 @@
 const constantCase = require('constant-case');
 
-module.exports = answers => {
+module.exports = ({ projectName, authorName, authorEmail, organization }) => {
   const valuesMap = {
-    projectName: answers.projectName,
-    authorName: answers.authorName,
-    authorEmail: answers.authorEmail,
-    organization: answers.organization,
+    projectName,
+    authorName,
+    authorEmail,
+    organization,
     gitignore: '.gitignore',
     packagejson: 'package.json',
   };

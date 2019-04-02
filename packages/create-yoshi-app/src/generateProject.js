@@ -4,9 +4,9 @@ const getFilesInDir = require('./getFilesInDir');
 const replaceTemplates = require('./replaceTemplates');
 const getValuesMap = require('./getValuesMap');
 
-module.exports = (answers, workingDir) => {
-  const valuesMap = getValuesMap(answers);
-  const files = getFilesInDir(answers.templatePath);
+module.exports = (templateModel, workingDir) => {
+  const valuesMap = getValuesMap(templateModel);
+  const files = getFilesInDir(templateModel.getPath());
 
   for (const fileName in files) {
     const fullPath = path.join(workingDir, fileName);

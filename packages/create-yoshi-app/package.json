@@ -49,6 +49,7 @@
     "expect": "^23.6.0",
     "find-cache-dir": "^2.0.0",
     "jest": "^24.1.0",
+    "lodash": "^4.17.11",
     "minimist": "^1.2.0",
     "mocha": "^5.2.0",
     "mocha-env-reporter": "^3.0.0",

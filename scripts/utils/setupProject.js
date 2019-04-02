@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const tempy = require('tempy');
 const execa = require('execa');
 const { authenticateToRegistry } = require('./publishMonorepo');
+const symlinkModules = require('./symlinkModules');
 
 const isCI = !!process.env.TEAMCITY_VERSION;
 
@@ -15,25 +16,7 @@ module.exports = async templateDirectory => {
 
   // Symlink modules locally for faster feedback
   if (!isCI) {
-    await fs.ensureSymlink(
-      path.join(__dirname, '../../packages/yoshi/node_modules'),
-      path.join(rootDirectory, 'node_modules'),
-    );
-
-    await fs.ensureSymlink(
-      path.join(__dirname, '../../packages/yoshi/bin/yoshi.js'),
-      path.join(rootDirectory, 'node_modules/.bin/yoshi'),
-    );
-
-    await fs.ensureSymlink(
-      path.join(__dirname, '../../packages/yoshi'),
-      path.join(testDirectory, 'node_modules/yoshi'),
-    );
-
-    await fs.ensureSymlink(
-      path.join(__dirname, '../../packages/jest-yoshi-preset'),
-      path.join(testDirectory, 'node_modules/jest-yoshi-preset'),
-    );
+    symlinkModules(rootDirectory, testDirectory);
   } else {
     // Authenticate and install from our fake registry on CI
     authenticateToRegistry(testDirectory);

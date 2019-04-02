@@ -14,7 +14,10 @@ const pkg = require('../package.json');
 
 program
   .version(pkg.version)
-  .option('--answers-file [filepath]', 'An answers file')
+  .option(
+    '--answers-file [filepath]',
+    'A path to a javascript file that returns an answers object',
+  )
   .arguments('[project-directory]')
   .usage(chalk.cyan('[project-directory]'))
   .parse(process.argv);
@@ -29,4 +32,8 @@ if (customProjectDir) {
   process.chdir(path.resolve(customProjectDir));
 }
 
-createApp(process.cwd(), customProjectDir, answersFile);
+createApp({
+  workingDir: process.cwd(),
+  projectDirName: customProjectDir,
+  answersFile,
+});

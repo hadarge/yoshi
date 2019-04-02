@@ -13,9 +13,9 @@ const verifyRegistry = require('./verifyRegistry');
 const verifyMinimumNodeVersion = require('yoshi-helpers/verifyMinimumNodeVersion');
 const { minimumNodeVersion } = require('./constants');
 const fs = require('fs-extra');
-const Answers = require('./Answers');
+const TemplateModel = require('./TemplateModel');
 
-module.exports = async (workingDir, projectDirName, answersFile) => {
+module.exports = async ({ workingDir, projectDirName, answersFile }) => {
   verifyWorkingDirectory(workingDir);
   verifyRegistry(workingDir);
   verifyMinimumNodeVersion(minimumNodeVersion);
@@ -44,6 +44,7 @@ module.exports = async (workingDir, projectDirName, answersFile) => {
   }
 
   install(workingDir);
+
   lintFix(workingDir);
 
   console.log(
@@ -79,5 +80,5 @@ module.exports = async (workingDir, projectDirName, answersFile) => {
 };
 
 function readAnswersFile(answersFilePath) {
-  return Answers.fromJSON(fs.readJSONSync(answersFilePath));
+  return TemplateModel.fromJSON(fs.readJSONSync(answersFilePath));
 }

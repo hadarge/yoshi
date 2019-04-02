@@ -1,7 +1,7 @@
 const tempy = require('tempy');
 const createApp = require('../src/createApp');
 const execa = require('execa');
-const Answers = require('../src/Answers');
+const TemplateModel = require('../src/TemplateModel');
 const path = require('path');
 const { gitInit } = require('../src/utils');
 const fs = require('fs-extra');
@@ -30,7 +30,7 @@ test('it should generate a git repo', async () => {
   const tempDir = tempy.directory();
   require('../src/runPrompt').mockReturnValue(minimalTemplateAnswers());
   require('../src/verifyRegistry').mockReturnValue(undefined);
-  await createApp(tempDir);
+  await createApp({ workingDir: tempDir });
 
   expect(() => {
     console.log('Checking git status...');
@@ -49,7 +49,7 @@ test('it should not create a git repo if the target directory is contained in a 
 
   gitInit(tempDir);
   fs.ensureDirSync(projectDir);
-  await createApp(projectDir);
+  await createApp({ workingDir: projectDir });
 
   expect(() => fs.statSync(path.join(projectDir, '.git'))).toThrow();
 });
@@ -63,7 +63,8 @@ test('it uses answers from a file', async () => {
 
   gitInit(tempDir);
   fs.ensureDirSync(projectDir);
-  await createApp(projectDir, undefined, answersFile);
+
+  await createApp({ workingDir: projectDir, answersFile });
 
   const packageJson = fs.readJSONSync(
     path.join(tempDir, 'project', 'package.json'),
@@ -72,12 +73,16 @@ test('it uses answers from a file', async () => {
 });
 
 function minimalTemplateAnswers() {
-  const answers = Answers.fromJSON({
+  const answers = TemplateModel.fromJSON({
     projectName: `test-project`,
     authorName: 'rany',
     authorEmail: 'rany@wix.com',
     organization: 'wix',
-    templatePath: path.join(__dirname, './__fixtures__/minimal-template/'),
+    transpiler: 'babel',
+    templateDefinition: {
+      name: 'minimal-template',
+      path: path.join(__dirname, './__fixtures__/minimal-template/'),
+    },
   });
 
   return answers;
