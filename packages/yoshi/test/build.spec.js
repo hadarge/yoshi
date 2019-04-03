@@ -244,7 +244,7 @@ describe('Aggregator: Build', () => {
 
       it('should not create `/es` directory if no `module` field in `package.json` was specified and no commonjs plugin added', () => {
         expect(test.list('dist')).to.not.include('es');
-        expect(test.content('dist/src/a.js')).to.contain('exports.default');
+        expect(test.content('dist/src/a.js')).to.contain('exports["default"]');
       });
     });
 
@@ -565,7 +565,7 @@ describe('Aggregator: Build', () => {
       expect(test.list('dist')).to.include.members(['src', 'statics', 'es']);
       expect(test.content('dist/es/src/a.js')).to.contain('export default');
       expect(test.list('dist/es/src/assets')).to.contain('file');
-      expect(test.content('dist/src/a.js')).to.contain('exports.default =');
+      expect(test.content('dist/src/a.js')).to.contain('exports["default"] =');
       expect(test.list('dist/src')).to.contain('a.scss');
     });
 
