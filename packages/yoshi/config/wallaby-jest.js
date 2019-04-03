@@ -14,7 +14,7 @@ module.exports = function(wallaby) {
     if (jestConfig.preset === 'jest-yoshi-preset') {
       const jestYoshiPreset = require('jest-yoshi-preset/jest-preset'); // eslint-disable-line import/no-unresolved
       jestConfig = jestYoshiPreset.projects.find(
-        project => project.displayName === 'component',
+        project => project.displayName === 'spec',
       );
     }
     wallaby.testFramework.configure(jestConfig);
