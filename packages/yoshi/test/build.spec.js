@@ -289,10 +289,10 @@ describe('Aggregator: Build', () => {
       it('should add myChunk.css if there is any common css/scss/less required, the common css should be in the myChunk.css chunk while not in the other chunks', () => {
         expect(test.list('dist/statics')).to.contain('first.css');
         expect(test.list('dist/statics')).to.contain('second.css');
-        expect(test.list('dist/statics')).to.contain('myChunk.css');
-        expect(test.list('dist/statics')).to.contain('myChunk.min.css');
-        expect(test.list('dist/statics')).to.contain('myChunk.css.map');
-        expect(test.content('dist/statics/myChunk.css')).to.contain(
+        expect(test.list('dist/statics')).to.contain('myChunk.chunk.css');
+        expect(test.list('dist/statics')).to.contain('myChunk.chunk.min.css');
+        expect(test.list('dist/statics')).to.contain('myChunk.chunk.css.map');
+        expect(test.content('dist/statics/myChunk.chunk.css')).to.contain(
           '{\n  color: red;\n}',
         );
         expect(test.content('dist/statics/first.css')).to.not.contain(

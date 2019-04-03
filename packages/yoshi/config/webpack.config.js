@@ -3,7 +3,9 @@ const path = require('path');
 const globby = require('globby');
 const webpack = require('webpack');
 const { isObject } = require('lodash');
+const buildUrl = require('build-url');
 const nodeExternals = require('webpack-node-externals');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -16,6 +18,7 @@ const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlPolyfillPlugin = require('./html-polyfill-plugin');
 const { localIdentName } = require('../src/constants');
 const EnvirnmentMarkPlugin = require('../src/webpack-plugins/environment-mark-plugin');
 const {
@@ -67,7 +70,7 @@ const computedSeparateCss =
 
 const artifactVersion = process.env.ARTIFACT_VERSION;
 
-const staticAssetName = 'media/[name].[ext]';
+const staticAssetName = addHashToAssetName('media/[name].[ext]');
 
 // default public path
 let publicPath = '/';
@@ -90,6 +93,14 @@ function exists(entry) {
       cwd: SRC_DIR,
     }).length > 0
   );
+}
+
+function addHashToAssetName(name) {
+  if (project.experimentalBuildHtml) {
+    return name.replace('[name]', '[name].[contenthash:8]');
+  }
+
+  return name;
 }
 
 // NOTE ABOUT PUBLIC PATH USING UNPKG SERVICE
@@ -278,8 +289,12 @@ function createCommonWebpackConfig({
       path: STATICS_DIR,
       publicPath,
       pathinfo: isDebug,
-      filename: isDebug ? '[name].bundle.js' : '[name].bundle.min.js',
-      chunkFilename: isDebug ? '[name].chunk.js' : '[name].chunk.min.js',
+      filename: isDebug
+        ? addHashToAssetName('[name].bundle.js')
+        : addHashToAssetName('[name].bundle.min.js'),
+      chunkFilename: isDebug
+        ? addHashToAssetName('[name].chunk.js')
+        : addHashToAssetName('[name].chunk.min.js'),
       hotUpdateMainFilename: 'updates/[hash].hot-update.json',
       hotUpdateChunkFilename: 'updates/[id].[hash].hot-update.js',
     },
@@ -438,13 +453,14 @@ function createCommonWebpackConfig({
                 test: /\.(j|t)sx?$/,
               },
               use: [
-                require.resolve('@svgr/webpack'),
+                '@svgr/webpack',
                 {
                   loader: 'svg-url-loader',
                   options: {
                     iesafe: true,
                     noquotes: true,
                     limit: 10000,
+                    name: staticAssetName,
                   },
                 },
               ],
@@ -457,6 +473,7 @@ function createCommonWebpackConfig({
                   options: {
                     iesafe: true,
                     limit: 10000,
+                    name: staticAssetName,
                   },
                 },
               ],
@@ -475,7 +492,7 @@ function createCommonWebpackConfig({
 
             // Rules for HTML
             {
-              test: /\.html$/,
+              test: /\.(html|ejs)$/,
               loader: 'html-loader',
             },
 
@@ -553,7 +570,7 @@ function createClientWebpackConfig({
 
     optimization: {
       minimize: !isDebug,
-      splitChunks: useSplitChunks ? splitChunksConfig : false,
+      // https://webpack.js.org/plugins/module-concatenation-plugin
       concatenateModules: isProduction && !disableModuleConcat,
       minimizer: [
         new TerserPlugin({
@@ -575,6 +592,9 @@ function createClientWebpackConfig({
         // https://github.com/NMFR/optimize-css-assets-webpack-plugin
         new OptimizeCSSAssetsPlugin(),
       ],
+
+      // https://webpack.js.org/plugins/split-chunks-plugin
+      splitChunks: useSplitChunks ? splitChunksConfig : false,
     },
 
     output: {
@@ -599,6 +619,47 @@ function createClientWebpackConfig({
     plugins: [
       ...config.plugins,
 
+      // https://github.com/jantimon/html-webpack-plugin
+      ...(project.experimentalBuildHtml && fs.pathExistsSync(config.context)
+        ? [
+            ...globby
+              .sync('**/*.+(ejs|vm)', { cwd: config.context })
+              .map(templatePath => {
+                const basename = path.basename(templatePath);
+
+                return new HtmlWebpackPlugin({
+                  // Generate a `filename.debug.ejs` for non-minified compilation
+                  filename: isDebug
+                    ? basename.replace(
+                        /\.[0-9a-z]+$/i,
+                        match => `.debug${match}`,
+                      )
+                    : basename,
+                  // Only use chunks from the entry with the same name as the template
+                  // file
+                  chunks: [basename.replace(/\.[0-9a-z]+$/i, '')],
+                  template: templatePath,
+                  minify: !isDebug,
+                });
+              }),
+
+            // Polyfill via https://polyfill.io
+            new HtmlPolyfillPlugin(HtmlWebpackPlugin, [
+              buildUrl(
+                'https://static.parastorage.com/polyfill/v2/polyfill.min.js',
+                {
+                  queryParams: {
+                    features: ['default', 'es6', 'es7', 'es2017'],
+                    flags: ['gated'],
+                    unknown: 'polyfill',
+                    rum: 0,
+                  },
+                },
+              ),
+            ]),
+          ]
+        : []),
+
       // https://github.com/gajus/write-file-webpack-plugin
       new WriteFilePlugin({
         exitOnErrors: false,
@@ -615,12 +676,23 @@ function createClientWebpackConfig({
         ? [
             // https://github.com/webpack-contrib/mini-css-extract-plugin
             new MiniCssExtractPlugin({
-              filename: isDebug ? '[name].css' : '[name].min.css',
+              filename: isDebug
+                ? addHashToAssetName('[name].css')
+                : addHashToAssetName('[name].min.css'),
+              chunkFilename: isDebug
+                ? addHashToAssetName('[name].chunk.css')
+                : addHashToAssetName('[name].chunk.min.css'),
             }),
             // https://github.com/wix-incubator/tpa-style-webpack-plugin
             ...(project.enhancedTpaStyle ? [new TpaStyleWebpackPlugin()] : []),
             // https://github.com/wix/rtlcss-webpack-plugin
-            new RtlCssPlugin(isDebug ? '[name].rtl.css' : '[name].rtl.min.css'),
+            ...(!project.experimentalBuildHtml
+              ? [
+                  new RtlCssPlugin(
+                    isDebug ? '[name].rtl.css' : '[name].rtl.min.css',
+                  ),
+                ]
+              : []),
           ]
         : []),
 

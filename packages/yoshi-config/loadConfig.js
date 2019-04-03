@@ -91,6 +91,7 @@ const loadConfig = ({ validate, useCache } = { validate: false }) => {
     resolveAlias: getConfig('resolveAlias', {}),
     keepFunctionNames: getConfig('keepFunctionNames', false),
     umdNamedDefine: getConfig('umdNamedDefine', true),
+    experimentalBuildHtml: getConfig('experimentalBuildHtml'),
     projectType: getConfig('projectType', null),
     unprocessedModules: p => {
       const allSourcesButExternalModules = function(filePath) {
