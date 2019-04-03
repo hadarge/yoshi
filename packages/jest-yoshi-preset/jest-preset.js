@@ -1,7 +1,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const globby = require('globby');
-const { envs } = require('./constants');
+const { envs, withLatestJSDom } = require('./constants');
 const globs = require('yoshi-config/globs');
 
 const modulePathIgnorePatterns = ['<rootDir>/dist/', '<rootDir>/target/'];
@@ -18,7 +18,9 @@ module.exports = {
     ...[
       {
         displayName: 'spec',
-        testEnvironment: 'jsdom',
+        testEnvironment: withLatestJSDom
+          ? require.resolve('jest-environment-jsdom-fourteen')
+          : 'jsdom',
         testURL: 'http://localhost',
         testMatch: [`<rootDir>/${globs.unitTests}`],
         setupFiles: [require.resolve('regenerator-runtime/runtime')],
