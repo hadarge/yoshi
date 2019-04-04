@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.2.1 (2019-04-04)
+
+#### :bug: Bug Fix
+
+- `yoshi-config`, `yoshi`
+  - [#1216](https://github.com/wix/yoshi/pull/1216) Webpack HTML plugin fixes ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`
+  - [#1213](https://github.com/wix/yoshi/pull/1213) Wrong `MATCH_ENV` in VS Code settings ([@bt4R9](https://github.com/bt4R9))
+
+#### :memo: Documentation
+
+- [#1194](https://github.com/wix/yoshi/pull/1194) Add versioned documentation 🎉🐉 ([@nktssh](https://github.com/nktssh))
+
 ## 4.2.0 (2019-04-04)
 
 #### :rocket: New Feature
