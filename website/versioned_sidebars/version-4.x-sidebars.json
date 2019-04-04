@@ -1,0 +1,34 @@
+{
+  "version-4.x-docs": {
+    "Getting Started": [
+      "version-4.x-getting-started/create-app",
+      "version-4.x-getting-started/usage",
+      "version-4.x-getting-started/project-types"
+    ],
+    "API": [
+      "version-4.x-api/configuration",
+      "version-4.x-api/cli"
+    ],
+    "Guides": [
+      "version-4.x-guides/ab-translate",
+      "version-4.x-guides/assets",
+      "version-4.x-guides/bundle-analyze",
+      "version-4.x-guides/debugging",
+      "version-4.x-guides/app-flow",
+      "version-4.x-guides/disable-css-modules",
+      "version-4.x-guides/enzyme-support",
+      "version-4.x-guides/jest-setup",
+      "version-4.x-guides/babel-setup",
+      "version-4.x-guides/stylelint-setup",
+      "version-4.x-guides/export-es-modules",
+      "version-4.x-guides/hmr",
+      "version-4.x-guides/momentjs-optimization",
+      "version-4.x-guides/split-chunks",
+      "version-4.x-guides/svg",
+      "version-4.x-guides/managing-dependencies"
+    ],
+    "Migration": [
+      "version-4.x-migration/version-4"
+    ]
+  }
+}

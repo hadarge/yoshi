@@ -1,0 +1,29 @@
+{
+  "version-3.x-docs": {
+    "Getting Started": [
+      "version-3.x-getting-started/create-app",
+      "version-3.x-getting-started/usage",
+      "version-3.x-getting-started/project-types"
+    ],
+    "API": [
+      "version-3.x-api/configuration",
+      "version-3.x-api/cli"
+    ],
+    "Guides": [
+      "version-3.x-guides/ab-translate",
+      "version-3.x-guides/assets",
+      "version-3.x-guides/bundle-analyze",
+      "version-3.x-guides/debugging",
+      "version-3.x-guides/disable-css-modules",
+      "version-3.x-guides/enzyme-support",
+      "version-3.x-guides/jest-setup",
+      "version-3.x-guides/babel-setup",
+      "version-3.x-guides/export-es-modules",
+      "version-3.x-guides/hmr",
+      "version-3.x-guides/momentjs-optimization",
+      "version-3.x-guides/split-chunks",
+      "version-3.x-guides/svg",
+      "version-3.x-guides/managing-dependencies"
+    ]
+  }
+}
