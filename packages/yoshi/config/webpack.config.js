@@ -96,7 +96,7 @@ function exists(entry) {
 }
 
 function addHashToAssetName(name) {
-  if (project.experimentalBuildHtml) {
+  if (project.experimentalBuildHtml && isProduction) {
     return name.replace('[name]', '[name].[contenthash:8]');
   }
 
@@ -478,6 +478,7 @@ function createCommonWebpackConfig({
                 },
               ],
             },
+
             // Rules for Markdown
             {
               test: /\.md$/,
@@ -492,7 +493,7 @@ function createCommonWebpackConfig({
 
             // Rules for HTML
             {
-              test: /\.(html|ejs)$/,
+              test: /\.html$/,
               loader: 'html-loader',
             },
 
@@ -501,6 +502,7 @@ function createCommonWebpackConfig({
               test: /\.(graphql|gql)$/,
               loader: 'graphql-tag/loader',
             },
+
             // Try to inline assets as base64 or return a public URL to it if it passes
             // the 10kb limit
             {
@@ -620,10 +622,10 @@ function createClientWebpackConfig({
       ...config.plugins,
 
       // https://github.com/jantimon/html-webpack-plugin
-      ...(project.experimentalBuildHtml && fs.pathExistsSync(config.context)
+      ...(project.experimentalBuildHtml
         ? [
             ...globby
-              .sync('**/*.+(ejs|vm)', { cwd: config.context })
+              .sync('**/*.+(ejs|vm)', { cwd: SRC_DIR, absolute: true })
               .map(templatePath => {
                 const basename = path.basename(templatePath);
 
@@ -638,7 +640,7 @@ function createClientWebpackConfig({
                   // Only use chunks from the entry with the same name as the template
                   // file
                   chunks: [basename.replace(/\.[0-9a-z]+$/i, '')],
-                  template: templatePath,
+                  template: `html-loader!${templatePath}`,
                   minify: !isDebug,
                 });
               }),

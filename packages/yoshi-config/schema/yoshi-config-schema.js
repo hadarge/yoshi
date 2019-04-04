@@ -179,6 +179,11 @@ const schema = {
         'An experimental way of running an app by creating a bundle specifically for the server.',
       enum: ['app', null],
     },
+    experimentalBuildHtml: {
+      description:
+        'An experimental way to let Yoshi inject the correct assets into your EJS/VM files.',
+      type: 'boolean',
+    },
   },
 };
 
