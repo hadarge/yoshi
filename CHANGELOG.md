@@ -1,5 +1,31 @@
 # Changelog
 
+## 4.2.0 (2019-04-04)
+
+#### :rocket: New Feature
+
+- `yoshi-config`, `yoshi-helpers`, `yoshi`
+  - [#1090](https://github.com/wix/yoshi/pull/1090) Html Webpack Plugin MVP (experimental) ([@ronami](https://github.com/ronami))
+- `jest-yoshi-preset`
+  - [#1193](https://github.com/wix/yoshi/pull/1193) Allow using JSDOM in v14 (experimental) ([@nktssh](https://github.com/nktssh))
+  - [#1160](https://github.com/wix/yoshi/pull/1160) Add to our Jest preset a graphql transform ([@yurynix](https://github.com/yurynix))
+- `create-yoshi-app`
+  - [#967](https://github.com/wix/yoshi/pull/967) Add sentry and fedops to client and fullstack apps ([@yaelhe](https://github.com/yaelhe))
+  - [#1190](https://github.com/wix/yoshi/pull/1190) Add the ability to use an answers json file instead of prompt ([@Schniz](https://github.com/Schniz))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1203](https://github.com/wix/yoshi/pull/1203) Wrong displayName in jest wallaby ([@bt4R9](https://github.com/bt4R9))
+
+#### :house: Internal
+
+- `yoshi`
+  - [#1205](https://github.com/wix/yoshi/pull/1205) Fix failing integration tests (Babel) ([@ronami](https://github.com/ronami))
+  - [#1198](https://github.com/wix/yoshi/pull/1198) Remove an unused and undocumented way to disable thread optimization in Typescript ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`
+  - [#1196](https://github.com/wix/yoshi/pull/1196) Refactor create yoshi app ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.1.2 (2019-04-01)
 
 #### :nail_care: Polish
