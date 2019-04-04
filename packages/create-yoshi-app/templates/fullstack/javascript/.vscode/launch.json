@@ -1,7 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [{
-    "name": "All Component Tests - Jest",
+    "name": "All Unit Tests - Jest",
     "type": "node",
     "request": "launch",
     "program": "${workspaceFolder}/node_modules/jest/bin/jest",
@@ -10,11 +10,11 @@
     ],
     "cwd": "${workspaceFolder}",
     "env": {
-      "MATCH_ENV": "component"
+      "MATCH_ENV": "spec"
     }
   },
   {
-    "name": "Current Component Tests - Jest",
+    "name": "Current Unit Tests - Jest",
     "type": "node",
     "request": "launch",
     "program": "${workspaceFolder}/node_modules/jest/bin/jest",
@@ -23,7 +23,7 @@
     ],
     "cwd": "${workspaceFolder}",
     "env": {
-      "MATCH_ENV": "component"
+      "MATCH_ENV": "spec"
     }
   },
   {
@@ -50,32 +50,6 @@
     "cwd": "${workspaceFolder}",
     "env": {
       "MATCH_ENV": "e2e"
-    }
-  },
-  {
-    "name": "All Server Tests - Jest",
-    "type": "node",
-    "request": "launch",
-    "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-    "args": [
-      "--runInBand"
-    ],
-    "cwd": "${workspaceFolder}",
-    "env": {
-      "MATCH_ENV": "server"
-    }
-  },
-  {
-    "name": "Current Server Tests - Jest",
-    "type": "node",
-    "request": "launch",
-    "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-    "args": [
-      "${relativeFile}"
-    ],
-    "cwd": "${workspaceFolder}",
-    "env": {
-      "MATCH_ENV": "server"
     }
   }]
 }
