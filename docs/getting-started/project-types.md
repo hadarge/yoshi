@@ -22,14 +22,6 @@ A [Node.js](https://docs.npmjs.com/getting-started/creating-node-modules) module
 
 Only Server project
 
-## Universal
-
-The server will handle the initial render when a user first requests your app. It will render all of the required components and send the response as a string back to the client ([server-side rendering](https://reactjs.org/docs/react-dom-server.html)). From that point on, the client takes over rendering duties.
-
-The server will also be responsible for making [RPC](https://github.com/wix-private/fed-handbook/blob/master/RPC.md) calls for different services and exposing a RESTful API for it's client application.
-
-**Important Note:** A universal project is significantly more complex than it's fullstack counterpart, unless you require any of these features, it is recommended to use the fullstack project instead.
-
 ## Business Manager Module
 
 A client project that integrate with business manager APIs.
