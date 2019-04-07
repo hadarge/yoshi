@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.2.2 (2019-04-07)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#1223](https://github.com/wix/yoshi/pull/1223) Node library template is added to the list ([@ranyitz](https://github.com/ranyitz))
+  - [#1217](https://github.com/wix/yoshi/pull/1217) Out of iframe template is added to the list ([@ranyitz](https://github.com/ranyitz))
+
+#### :memo: Documentation
+
+- [#1225](https://github.com/wix/yoshi/pull/1225) Remove universal template from project types documentation ([@ranyitz](https://github.com/ranyitz))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1222](https://github.com/wix/yoshi/pull/1222) Separate template tests into different status checks on CI ([@ranyitz](https://github.com/ranyitz))
+- Other
+  - [#1212](https://github.com/wix/yoshi/pull/1212) Adjust internal `createVersion` script to generate versioned docs ([@ronami](https://github.com/ronami))
+
 ## 4.2.1 (2019-04-04)
 
 #### :bug: Bug Fix
