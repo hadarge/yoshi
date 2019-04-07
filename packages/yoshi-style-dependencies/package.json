@@ -1,6 +1,6 @@
 {
   "name": "yoshi-style-dependencies",
-  "version": "4.1.0",
+  "version": "4.2.2",
   "description": "",
   "files": [
     "css-hot-loader.js",
