@@ -1,0 +1,13 @@
+{
+  "title": "Platform App Example Application",
+  "debug": true,
+  "experiments": {
+
+  },
+  "locale": "en",
+  "basename": "/",
+  "clientTopology": {
+    "staticsDomain": "static.parastorage.com",
+    "staticsBaseUrl": "https://localhost:3200/"
+  }
+}

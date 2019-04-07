@@ -22,6 +22,7 @@
     "test:fullstack": "npm run fullstack --prefix ./packages/create-yoshi-app",
     "test:server": "npm run server --prefix ./packages/create-yoshi-app",
     "test:bizmgr": "npm run bizmgr --prefix ./packages/create-yoshi-app",
+    "test:ooi": "npm run ooi --prefix ./packages/create-yoshi-app",
     "website:dev": "npm start --prefix './website'",
     "test-babel-plugin-transform-hmr-runtime": "npm test --prefix ./packages/babel-plugin-transform-hmr-runtime"
   },

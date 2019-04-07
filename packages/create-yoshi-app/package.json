@@ -20,6 +20,7 @@
     "fullstack": "npm run templates -- fullstack fullstack-typescript",
     "server": "npm run templates -- server server-typescript",
     "bizmgr": "npm run templates -- business-manager-module business-manager-module-typescript",
+    "ooi": "npm run templates -- out-of-iframe out-of-iframe-typescript",
     "dev": "node scripts/dev.js"
   },
   "jest": {
