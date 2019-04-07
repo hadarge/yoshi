@@ -45,7 +45,8 @@ Promise.resolve()
   // Update docs according to new version
   .then(() => {
     const lernaJson = require('../lerna.json');
-    const majorVersion = semver.major(lernaJson);
+    const monorepoVersion = lernaJson.version;
+    const majorVersion = semver.major(monorepoVersion);
 
     execa.shellSync(`npm run version "${majorVersion}.x"`, {
       cwd: websiteDirectory,
@@ -74,7 +75,7 @@ Promise.resolve()
   })
   .catch(error => {
     console.log(chalk.red('Version release failed.'));
-    console.log(chalk.red(error));
+    console.log(chalk.red(error.stack));
     console.log();
 
     process.exit(1);
