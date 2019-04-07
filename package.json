@@ -15,14 +15,15 @@
     "postinstall": "npm run bootstrap",
     "test": ":",
     "lint": "eslint . --max-warnings 0",
-    "test:templates": "npm run templates --prefix ./packages/create-yoshi-app",
-    "test:templates:1": "npm run templates:1 --prefix ./packages/create-yoshi-app",
-    "test:templates:2": "npm run templates:2 --prefix ./packages/create-yoshi-app",
-    "test:integration": "npm test --prefix ./packages/yoshi",
     "test:unit": "npx jest --config='./jest.unit.config.js'",
     "test:app-flow": "node scripts/runKitchensink.js",
-    "test-babel-plugin-transform-hmr-runtime": "npm test --prefix ./packages/babel-plugin-transform-hmr-runtime",
-    "website:dev": "npm start --prefix './website'"
+    "test:integration": "npm test --prefix ./packages/yoshi",
+    "test:client": "npm run client --prefix ./packages/create-yoshi-app",
+    "test:fullstack": "npm run fullstack --prefix ./packages/create-yoshi-app",
+    "test:server": "npm run server --prefix ./packages/create-yoshi-app",
+    "test:bizmgr": "npm run bizmgr --prefix ./packages/create-yoshi-app",
+    "website:dev": "npm start --prefix './website'",
+    "test-babel-plugin-transform-hmr-runtime": "npm test --prefix ./packages/babel-plugin-transform-hmr-runtime"
   },
   "husky": {
     "hooks": {
