@@ -1,6 +1,6 @@
-import { exampleWidgetControllerFactory } from './exampleWidgetController';
+import { createAppController } from './appController';
 import LaboratoryTestkit from '@wix/wix-experiments/dist/src/laboratory-testkit';
-import { EXPERIMENTS_SCOPE } from '../config';
+import { EXPERIMENTS_SCOPE } from '../../config/constants';
 
 export function mockExperiments(scope, experiments) {
   new LaboratoryTestkit()
@@ -10,7 +10,7 @@ export function mockExperiments(scope, experiments) {
     .start();
 }
 
-describe('exampleWidgetControllerFactory', () => {
+describe('createAppController', () => {
   it('should call setProps with data', async () => {
     mockExperiments(EXPERIMENTS_SCOPE, { someExperiment: 'true' });
     const setPropsSpy = jest.fn();
@@ -22,7 +22,7 @@ describe('exampleWidgetControllerFactory', () => {
     const locale = 'locale';
     const experiments = { someExperiment: 'true' };
 
-    const controller = await exampleWidgetControllerFactory({
+    const controller = await createAppController({
       appParams,
       setProps: setPropsSpy,
       wixCodeApi: {

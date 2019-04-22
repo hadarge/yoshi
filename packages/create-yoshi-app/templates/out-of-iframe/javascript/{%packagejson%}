@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start --entry-point=./test/fake-server.js",
+    "start": "yoshi start --entry-point=./test/fake-server.js --no-test",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test --jest",
@@ -70,17 +70,17 @@
       }
     },
     "entry": {
-      "settingsExampleWidget": "./settingsExampleWidget.entry.js",
-      "editorExampleWidget": "./editorExampleWidget.entry.js",
-      "viewerExampleWidget": "./viewerExampleWidget.entry.js",
-      "viewerScript": "./viewerScript.entry.js",
+      "settingsPanel": "./settingsPanel.js",
+      "editorApp": "./editorApp.js",
+      "viewerApp": "./viewerApp/viewerWidget.js",
+      "viewerScript": "./viewerApp/viewerScript.js",
       "wix-private-mock": "../test/wix-private.mock.js"
     },
     "servers": {
       "cdn": {
         "ssl": true
       }
-    },    
+    },
     "exports": "[name]",
     "umdNamedDefine": false,
     "enhancedTpaStyle": true

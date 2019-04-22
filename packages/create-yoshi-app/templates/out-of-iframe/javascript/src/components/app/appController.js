@@ -1,4 +1,4 @@
-import { EXPERIMENTS_SCOPE } from '../config/index';
+import { EXPERIMENTS_SCOPE } from '../../config/constants';
 import Experiments from '@wix/wix-experiments';
 
 function getLocale({ wixCodeApi }) {
@@ -13,7 +13,7 @@ async function getExperimentsByScope(scope) {
   return experiments.all();
 }
 
-export async function exampleWidgetControllerFactory(controllerConfig) {
+export async function createAppController(controllerConfig) {
   const { appParams, setProps } = controllerConfig;
   const locale = getLocale(controllerConfig);
   const experiments = await getExperimentsByScope(EXPERIMENTS_SCOPE);

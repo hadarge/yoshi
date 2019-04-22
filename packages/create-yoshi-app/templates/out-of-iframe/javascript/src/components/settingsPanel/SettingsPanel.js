@@ -1,6 +1,6 @@
 import React from 'react';
-import * as css from './ExampleWidgetSettings.scss';
-import './ExampleWidgetSettings.global.scss';
+import * as css from './SettingsPanel.scss';
+import './SettingsPanel.global.scss';
 import { get } from 'lodash';
 import {
   Slider,
@@ -14,7 +14,7 @@ const defaultSettingsValues = {
   fontSize: 14,
 };
 
-export class ExampleWidgetSettings extends React.Component {
+export default class SettingsPanel extends React.Component {
   state = defaultSettingsValues;
 
   componentDidMount() {

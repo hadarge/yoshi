@@ -1,7 +1,7 @@
-import { viewerScript } from './viewerScript';
-import { EXPERIMENTS_SCOPE } from '../config';
 import 'isomorphic-fetch';
-import { mockExperiments } from './exampleWidgetController.spec';
+import { createControllers } from './viewerScript';
+import { EXPERIMENTS_SCOPE } from '../config/constants';
+import { mockExperiments } from '../components/app/appController.spec';
 
 describe('createControllers', () => {
   let widgetConfig;
@@ -23,7 +23,7 @@ describe('createControllers', () => {
   it('should return controllers with pageReady method given widgets config', async () => {
     mockExperiments(EXPERIMENTS_SCOPE, { someExperiment: 'true' });
 
-    const result = viewerScript.createControllers([widgetConfig]);
+    const result = createControllers([widgetConfig]);
     expect(result).toHaveLength(1);
     expect((await result[0]).pageReady.call).toBeDefined();
   });

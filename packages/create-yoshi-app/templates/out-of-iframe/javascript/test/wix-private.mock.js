@@ -31,6 +31,9 @@ if (window.Wix && window.Wix.Utils.getViewMode() === 'standalone') {
       getCompId() {
         return 'compId';
       },
+      getUid() {
+        return '123';
+      },
       getLocale() {
         return 'en';
       },
