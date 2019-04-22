@@ -44,27 +44,13 @@ Once the plugin is active it will generate the following files if needed:
 Don't forget to add them into your html file before the entry point.
 
 ```html
-<script
-  src="commons.chunk<% if (!debug) { %>.min<% } %>.js"
-  charset="utf-8"
-></script>
-<script
-  src="entry.bundle<% if (!debug) { %>.min<% } %>.js"
-  charset="utf-8"
-></script>
+<script src="commons.chunk<% if (!debug) { %>.min<% } %>.js" charset="utf-8"></script>
+<script src="entry.bundle<% if (!debug) { %>.min<% } %>.js" charset="utf-8"></script>
 ```
 
 ```html
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="commons<% if (!debug) { %>.min<% } %>.css"
-/>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="app<% if (!debug) { %>.min<% } %>.css"
-/>
+<link rel="stylesheet" type="text/css" href="commons<% if (!debug) { %>.min<% } %>.css" />
+<link rel="stylesheet" type="text/css" href="app<% if (!debug) { %>.min<% } %>.css" />
 ```
 
 **Note:** since `1.1.0` version (webpack 4 support), if you're customizing `splitChunks` with _configuration object_, you should pass `splitChunks.chunks: "all" | "async" | "initial"` option.
