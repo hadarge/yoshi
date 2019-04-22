@@ -1,12 +1,21 @@
 # Changelog
 
+## 4.3.1 (2019-04-22)
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1230](https://github.com/wix/yoshi/pull/1230) Simplify ooi javascript src directory file structure ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.3.0 (2019-04-22)
 
 #### :house: Internal
+
 - `yoshi`
   - [2cb5ec0](https://github.com/wix/yoshi/commit/2cb5ec044ee9c505e74d0b5517b61fe0f167c55f) Bump `tpa-style-webpack-plugin`
 
 #### :bug: Bug Fix
+
 - `yoshi-angular-dependencies`, `yoshi`
   - [#1226](https://github.com/wix/yoshi/pull/1226) Provide `yoshi-runtime` by default ([@ronami](https://github.com/ronami))
 - `create-yoshi-app`
