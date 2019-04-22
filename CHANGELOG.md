@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.3.0 (2019-04-22)
+
+#### :house: Internal
+- `yoshi`
+  - [2cb5ec0](https://github.com/wix/yoshi/commit/2cb5ec044ee9c505e74d0b5517b61fe0f167c55f) Bump `tpa-style-webpack-plugin`
+
+#### :bug: Bug Fix
+- `yoshi-angular-dependencies`, `yoshi`
+  - [#1226](https://github.com/wix/yoshi/pull/1226) Provide `yoshi-runtime` by default ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`
+  - [539abe9](https://github.com/wix/yoshi/commit/539abe9aae31b40988ea6ad21998dff4531b420a) Add missing dev dependecy to biz-mgr templates
+
 ## 4.2.2 (2019-04-07)
 
 #### :rocket: New Feature
