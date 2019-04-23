@@ -52,6 +52,7 @@ module.exports = async () => {
       // defaults
       args: [
         '--no-sandbox',
+        ...(servers.cdn.ssl ? ['--ignore-certificate-errors'] : []),
         ...(shouldDeployToCDN()
           ? [
               '--no-sandbox',
