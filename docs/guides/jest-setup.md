@@ -98,8 +98,8 @@ This preset looks for a `jest-yoshi.config.js` file at the root of your project.
 
 example configurations:
 
-- [fullstack project](https://github.com/wix/yoshi/blob/master/packages/create-yoshi-app/templates/fullstack/jest-yoshi.config.js)
-- [client project](https://github.com/wix/yoshi/blob/master/packages/create-yoshi-app/templates/client/jest-yoshi.config.js)
+- [fullstack project](https://github.com/wix/yoshi/blob/master/packages/create-yoshi-app/templates/fullstack/typescript/jest-yoshi.config.js)
+- [client project](https://github.com/wix/yoshi/blob/master/packages/create-yoshi-app/templates/client/typescript/jest-yoshi.config.js)
 
 ```js
 module.exports = {
