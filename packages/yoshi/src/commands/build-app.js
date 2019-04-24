@@ -48,6 +48,39 @@ const copyTemplates = async () => {
   );
 };
 
+const prepareAssets = (optimizedStats, assetsDir) =>
+  optimizedStats
+    .toJson({ all: false, assets: true })
+    .assets.filter(asset => !asset.name.endsWith('.map'))
+    .map(asset => {
+      const fileContents = fs.readFileSync(path.join(assetsDir, asset.name));
+
+      return {
+        folder: path.join(
+          path.relative(ROOT_DIR, assetsDir),
+          path.dirname(asset.name),
+        ),
+        name: path.basename(asset.name),
+        gzipSize: gzipSize(fileContents),
+        size: asset.size,
+      };
+    })
+    .sort((a, b) => b.gzipSize - a.gzipSize);
+
+const printBuildResult = (assets, assetNameColor) =>
+  assets.forEach(asset => {
+    console.log(
+      '  ' +
+        filesize(asset.size) +
+        '  ' +
+        `(${filesize(asset.gzipSize)} GZIP)` +
+        '  ' +
+        `${chalk.dim(asset.folder + path.sep)}${chalk[assetNameColor](
+          asset.name,
+        )}`,
+    );
+  });
+
 module.exports = async () => {
   // Clean tmp folders
   await Promise.all([fs.emptyDir(BUILD_DIR), fs.emptyDir(TARGET_DIR)]);
@@ -126,38 +159,13 @@ module.exports = async () => {
     console.log(chalk.green('Compiled successfully.\n'));
   }
 
-  const clientOptimizedStats = webpackStats.stats[1];
-
   // Calculate assets sizes
-  const assets = clientOptimizedStats
-    .toJson({ all: false, assets: true })
-    .assets.filter(asset => !asset.name.endsWith('.map'))
-    .map(asset => {
-      const fileContents = fs.readFileSync(path.join(STATICS_DIR, asset.name));
-
-      return {
-        folder: path.join(
-          path.relative(ROOT_DIR, STATICS_DIR),
-          path.dirname(asset.name),
-        ),
-        name: path.basename(asset.name),
-        gzipSize: gzipSize(fileContents),
-        size: asset.size,
-      };
-    })
-    .sort((a, b) => b.gzipSize - a.gzipSize);
+  const clientAssets = prepareAssets(webpackStats.stats[1], STATICS_DIR);
+  const serverAssets = prepareAssets(webpackStats.stats[2], BUILD_DIR);
 
   // Print build result nicely
-  assets.forEach(asset => {
-    console.log(
-      '  ' +
-        filesize(asset.size) +
-        '  ' +
-        `(${filesize(asset.gzipSize)} GZIP)` +
-        '  ' +
-        `${chalk.dim(asset.folder + path.sep)}${chalk.cyan(asset.name)}`,
-    );
-  });
+  printBuildResult(clientAssets, 'cyan');
+  printBuildResult(serverAssets, 'yellow');
 
   console.log();
   console.log(chalk.dim('    Interested in reducing your bundle size?'));
