@@ -33,7 +33,7 @@ module.exports = async ({ workingDir, projectDirName, answersFile }) => {
 
   console.log(
     `\nCreating a new ${chalk.cyan(
-      results.projectType,
+      results.getTitle(),
     )} project in ${chalk.green(workingDir)}\n`,
   );
 

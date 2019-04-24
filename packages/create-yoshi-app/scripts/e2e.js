@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const expect = require('expect');
 const flatMap = require('lodash/flatMap');
 const prompts = require('prompts');
+const fs = require('fs');
 
 const { createApp, verifyRegistry } = require('../src/index');
 const TemplateModel = require('../src/TemplateModel');
@@ -56,7 +57,8 @@ filteredTemplates.forEach(({ title }) => console.log(`> ${chalk.cyan(title)}`));
 
 const testTemplate = mockedAnswers => {
   describe(mockedAnswers.getTitle(), () => {
-    const testDirectory = tempy.directory();
+    const testDirectory = `${tempy.directory()}/${mockedAnswers.projectName}`;
+    fs.mkdirSync(testDirectory);
 
     // Important Notice: this test case sets up the environment
     // for the following test cases. So test case execution order is important!

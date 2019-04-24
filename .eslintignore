@@ -3,4 +3,6 @@ node_modules
 dist
 packages/eslint-config-yoshi-base/__tests__/rules
 test/projects/*/src/errors
-packages/create-yoshi-app/templates/business-manager-module/test/e2e/drivers/app.driver.js
+packages/create-yoshi-app/templates/business-manager-module/javascript/__tests__/e2e/drivers/app.driver.js
+packages/create-yoshi-app/templates/business-manager-module/javascript/src/config.js
+packages/create-yoshi-app/templates/business-manager-module/typescript/src/config.ts

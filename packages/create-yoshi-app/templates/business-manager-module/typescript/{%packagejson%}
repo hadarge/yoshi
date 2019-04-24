@@ -65,8 +65,7 @@
     },
     "yoshi": {
       "entry": {
-        "{%projectName%}-module": "./module.tsx",
-        "{%projectName%}-app": "./client"
+        "module": "./module"
       },
       "externals": {
         "react": "React",
