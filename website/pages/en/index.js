@@ -93,7 +93,7 @@ const Features = () => (
   <Block layout="threeColumn" background="light">
     {[
       {
-        content: 'No configuraion required, just create and start working',
+        content: 'No configuration required, just create and start working',
         image: imgUrl('rocket.png'),
         imageAlign: 'top',
         title: 'Zero config',
