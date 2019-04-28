@@ -130,10 +130,10 @@ const possibleServerEntries = ['./server', '../dev/server'];
 const getStyleLoaders = ({
   embedCss,
   isDebug,
+  isHmr,
 
   // Allow overriding defaults
   separateCss = computedSeparateCss,
-  hmr = project.hmr,
   tpaStyle = project.tpaStyle,
 }) => {
   const cssLoaderOptions = {
@@ -157,7 +157,7 @@ const getStyleLoaders = ({
         ...(embedCss
           ? [
               // https://github.com/shepherdwind/css-hot-loader
-              ...(hmr
+              ...(isHmr
                 ? [{ loader: 'yoshi-style-dependencies/css-hot-loader' }]
                 : []),
 
@@ -550,7 +550,7 @@ function createCommonWebpackConfig({
 function createClientWebpackConfig({
   isAnalyze = false,
   isDebug = true,
-  isHmr = false,
+  isHmr,
   withLocalSourceMaps,
 } = {}) {
   const config = createCommonWebpackConfig({
@@ -559,7 +559,7 @@ function createClientWebpackConfig({
     withLocalSourceMaps,
   });
 
-  const styleLoaders = getStyleLoaders({ embedCss: true, isDebug });
+  const styleLoaders = getStyleLoaders({ embedCss: true, isHmr, isDebug });
 
   const clientConfig = {
     ...config,
@@ -776,7 +776,11 @@ function createClientWebpackConfig({
 function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
   const config = createCommonWebpackConfig({ isDebug, isHmr });
 
-  const styleLoaders = getStyleLoaders({ embedCss: false, isDebug });
+  const styleLoaders = getStyleLoaders({
+    embedCss: false,
+    isHmr: false,
+    isDebug,
+  });
 
   const serverConfig = {
     ...config,

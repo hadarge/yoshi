@@ -9,7 +9,7 @@ const styleLoaders = getStyleLoaders({
   embedCss: true,
   isDebug: true,
   separateCss: false,
-  hmr: false,
+  isHmr: false,
   tpaStyle: false,
 });
 

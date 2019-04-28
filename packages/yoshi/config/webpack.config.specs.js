@@ -7,9 +7,9 @@ const {
   getStyleLoaders,
 } = require('./webpack.config');
 const globs = require('yoshi-config/globs');
-const projectConfig = require('yoshi-config');
+const project = require('yoshi-config');
 
-const specsGlob = projectConfig.specs.browser || globs.specs;
+const specsGlob = project.specs.browser || globs.specs;
 const karmaSetupPath = path.join(process.cwd(), 'test', `karma-setup.js`);
 
 const entry = glob.sync(specsGlob).map(p => path.resolve(p));
@@ -24,6 +24,7 @@ const styleLoaders = getStyleLoaders({
   embedCss: false,
   isDebug: true,
   separateCss: false,
+  isHmr: project.hmr,
 });
 
 module.exports = {
@@ -55,7 +56,7 @@ module.exports = {
   ],
 
   externals: {
-    ...projectConfig.externals,
+    ...project.externals,
 
     cheerio: 'window',
     'react/addons': true,

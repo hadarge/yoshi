@@ -109,11 +109,13 @@ module.exports = async () => {
   const clientDebugConfig = createClientWebpackConfig({
     isDebug: true,
     isAnalyze: false,
+    isHmr: false,
   });
 
   const clientOptimizedConfig = createClientWebpackConfig({
     isDebug: false,
     isAnalyze: cliArgs.analyze,
+    isHmr: false,
   });
 
   const serverConfig = createServerWebpackConfig({
