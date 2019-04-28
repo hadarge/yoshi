@@ -838,26 +838,6 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
             };
           }
 
-          if (rule.loader === 'ts-loader') {
-            return {
-              ...rule,
-              options: {
-                ...rule.options,
-
-                compilerOptions: project.isAngularProject
-                  ? {}
-                  : {
-                      ...rule.options.compilerOptions,
-
-                      // allow using Promises, Array.prototype.includes, String.prototype.padStart, etc.
-                      lib: ['es2017'],
-                      // use async/await instead of embedding polyfills
-                      target: 'es2017',
-                    },
-              },
-            };
-          }
-
           return rule;
         }),
 
