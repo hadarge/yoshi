@@ -29,7 +29,6 @@
       "@types/react-i18next": "^7.8.2",
       "@wix/business-manager": "latest",
       "@wix/business-manager-api": "latest",
-      "@wix/react-test-wrappers": "^1.0.94",
       "enzyme": "^3.7.0",
       "enzyme-adapter-react-16": "^1.5.0",
       "husky": "^1.3.1",
