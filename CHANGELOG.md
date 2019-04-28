@@ -1,5 +1,32 @@
 # Changelog
 
+## 4.3.2 (2019-04-28)
+
+#### :rocket: New Feature
+
+- [#1200](https://github.com/wix/yoshi/pull/1200) Make deploy "website" to surge.sh conditional ([@nktssh](https://github.com/nktssh))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1253](https://github.com/wix/yoshi/pull/1253) Remove HMR from production bundle ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1252](https://github.com/wix/yoshi/pull/1252) Remove server `ts-loader` config ([@yairhaimo](https://github.com/yairhaimo))
+  - [#1244](https://github.com/wix/yoshi/pull/1244) Add server bundle on build logs ([@koretskiyav](https://github.com/koretskiyav))
+- `jest-environment-yoshi-puppeteer`
+  - [#1245](https://github.com/wix/yoshi/pull/1245) Make puppeteer ignore ssl errors if user run with flag ssl:true ([@dmfilipenko](https://github.com/dmfilipenko))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1249](https://github.com/wix/yoshi/pull/1249) Use major version in nvmrc, and not a specific one ([@jonathanadler](https://github.com/jonathanadler))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1197](https://github.com/wix/yoshi/pull/1197) Simplify biz-mgr babel template ([@yurynix](https://github.com/yurynix))
+- Other
+  - [#1247](https://github.com/wix/yoshi/pull/1247) Update docusaurus ([@dmfilipenko](https://github.com/dmfilipenko))
+
 ## 4.3.1 (2019-04-22)
 
 #### :nail_care: Polish
