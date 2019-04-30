@@ -110,12 +110,14 @@ module.exports = async () => {
     isDebug: true,
     isAnalyze: false,
     isHmr: false,
+    withLocalSourceMaps: cliArgs['source-map'],
   });
 
   const clientOptimizedConfig = createClientWebpackConfig({
     isDebug: false,
     isAnalyze: cliArgs.analyze,
     isHmr: false,
+    withLocalSourceMaps: cliArgs['source-map'],
   });
 
   const serverConfig = createServerWebpackConfig({

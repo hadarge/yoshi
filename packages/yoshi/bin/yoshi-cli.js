@@ -48,6 +48,7 @@ if (config.projectType === 'app') {
     .description('Experimental way of building an app to production')
     .option('--analyze', 'Run webpack-bundle-analyzer plugin')
     .option('--stats', 'Generate dist/webpack-stats.json file')
+    .option('--source-map', 'Explicitly emit bundle source maps')
     .action(() => runCLI('build-app'));
 
   prog
@@ -75,7 +76,7 @@ if (config.projectType === 'app') {
     .option('--analyze', 'Run webpack-bundle-analyzer plugin')
     .option('--stats', 'Generate dist/webpack-stats.json file')
     .option('--no-min', 'Do not output minified bundle')
-    .option('--source-map', 'Explictly emit bundle source maps')
+    .option('--source-map', 'Explicitly emit bundle source maps')
     .action(() => runCLI('build'));
 
   prog
