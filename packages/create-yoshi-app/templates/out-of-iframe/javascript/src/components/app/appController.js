@@ -19,7 +19,7 @@ export async function createAppController(controllerConfig) {
   const experiments = await getExperimentsByScope(EXPERIMENTS_SCOPE);
 
   return {
-    pageReady() {
+    async pageReady() {
       setProps({
         name: 'World',
         cssBaseUrl: appParams.baseUrls.staticsBaseUrl,

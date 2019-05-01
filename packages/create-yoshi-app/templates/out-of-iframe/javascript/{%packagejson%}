@@ -27,7 +27,6 @@
     "puppeteer": "^1.1.0",
     "react-test-renderer": "~15.6.0",
     "velocity": "~0.7.0",
-    "wix-ui-core": "^2.0.29",
     "yoshi": "^3.0.0",
     "yoshi-style-dependencies": "^3.0.0",
     "@wix/wix-http-testkit": "^1.0.997",
@@ -45,7 +44,8 @@
     "prop-types": "~15.6.0",
     "react": "~16.6.2",
     "react-dom": "~16.6.2",
-    "react-i18next": "^7.11.0"
+    "react-i18next": "^7.11.0",
+    "wix-ui-tpa": "^1.0.123"
   },
   "lint-staged": {
     "*.{js,scss,less}": "yoshi lint"

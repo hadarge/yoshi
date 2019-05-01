@@ -4,7 +4,7 @@ import {
   ExperimentsProvider,
   withExperiments,
 } from '@wix/wix-experiments-react';
-import { ButtonNext as Button } from 'wix-ui-core/button-next';
+import { Button } from 'wix-ui-tpa/Button';
 import i18n from '../../config/i18n';
 import styles from './App.st.css';
 

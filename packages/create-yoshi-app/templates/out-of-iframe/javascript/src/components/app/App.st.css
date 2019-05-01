@@ -1,5 +1,5 @@
 :import {
-  -st-from: 'wix-ui-core/dist/src/components/button-next/button-next.st.css';
+  -st-from: 'wix-ui-tpa/dist/src/components/Button/Button.st.css';
   -st-default: Button;
 }
 
@@ -18,7 +18,9 @@
 
 .mainButton {
   -st-extends: Button;
-  background-color: "color(color-6)";
+  -st-mixin: Button(
+    MainBackgroundColor '"--buttonBackgroundColor"'
+  );
   padding: 0 20px;
   height: 30px;
   margin-top: 20px;
