@@ -3,18 +3,7 @@ const fs = require('fs-extra');
 const execa = require('execa');
 const chalk = require('chalk');
 const Scripts = require('../../test/scripts');
-
-const ciEnv = {
-  BUILD_NUMBER: 1,
-  TEAMCITY_VERSION: 1,
-  ARTIFACT_VERSION: '1.0.0-SNAPSHOT',
-};
-
-const localEnv = {
-  BUILD_NUMBER: '',
-  TEAMCITY_VERSION: '',
-  ARTIFACT_VERSION: '',
-};
+const { ciEnv, localEnv } = require('./constants');
 
 module.exports = async ({
   templateDirectory,

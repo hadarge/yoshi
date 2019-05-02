@@ -212,6 +212,16 @@ const getProjectArtifactId = () => {
 
 module.exports.getProjectArtifactId = getProjectArtifactId;
 
+const getProjectArtifactVersion = () => {
+  return process.env.ARTIFACT_VERSION
+    ? // Dev CI
+      process.env.ARTIFACT_VERSION.replace('-SNAPSHOT', '')
+    : // PR CI won't have a version, only BUILD_NUMBER and BUILD_VCS_NUMBER
+      process.env.BUILD_VCS_NUMBER;
+};
+
+module.exports.getProjectArtifactVersion = getProjectArtifactVersion;
+
 /**
  * Gets the CDN base path for the project at the current working dir
  */
@@ -232,11 +242,7 @@ module.exports.getProjectCDNBasePath = () => {
     // Webpack's `publicUrl` to use the first option.
     artifactPath = 'dist';
   } else {
-    artifactPath = process.env.ARTIFACT_VERSION
-      ? // Dev CI
-        process.env.ARTIFACT_VERSION.replace('-SNAPSHOT', '')
-      : // PR CI won't have a version, only BUILD_NUMBER and BUILD_VCS_NUMBER
-        process.env.BUILD_VCS_NUMBER;
+    artifactPath = getProjectArtifactVersion();
   }
 
   return `${staticsDomain}/${artifactName}/${artifactPath}/`;
@@ -250,7 +256,7 @@ module.exports.killSpawnProcessAndHisChildren = child => {
 
     const pid = child.pid;
 
-    psTree(pid, (err /*eslint handle-callback-err: 0*/, children) => {
+    psTree(pid, (err, children) => {
       [pid].concat(children.map(p => p.PID)).forEach(tpid => {
         try {
           process.kill(tpid, 'SIGKILL');

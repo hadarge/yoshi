@@ -8,6 +8,7 @@
     "resolveJsonModule": true
   },
   "exclude": [
+    "src/cases",
     "src/errors"
   ],
   "files": [

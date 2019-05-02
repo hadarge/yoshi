@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`manifest generates manifest stat file 1`] = `
+Object {
+  "app": Object {
+    "css": Array [
+      "https://static.parastorage.com/services/kitchensink/1.0.0/app.min.css",
+    ],
+    "js": Array [
+      "https://static.parastorage.com/services/kitchensink/1.0.0/app.bundle.min.js",
+    ],
+  },
+  "other": Object {
+    "js": Array [
+      "https://static.parastorage.com/services/kitchensink/1.0.0/other.bundle.min.js",
+    ],
+  },
+}
+`;
