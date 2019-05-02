@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.3.3 (2019-05-02)
+
+#### :rocket: New Feature
+
+- `yoshi-helpers`, `yoshi`
+  - [#1224](https://github.com/wix/yoshi/pull/1224) Create manifest JSON file with mapping to initial assets ([@ronami](https://github.com/ronami))
+- `yoshi`
+  - [#1260](https://github.com/wix/yoshi/pull/1260) Enable `--source-map` option in app flow build ([@ronenst](https://github.com/ronenst))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1255](https://github.com/wix/yoshi/pull/1255) OOI generator best practices ([@jonathanadler](https://github.com/jonathanadler))
+
 ## 4.3.2 (2019-04-28)
 
 #### :rocket: New Feature
