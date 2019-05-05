@@ -16,6 +16,7 @@ const NODE_PLATFORM_DEFAULT_CONFIGS_DIR = resolvePath('test/configs');
 const POM_FILE = resolvePath('pom.xml');
 const STATS_FILE = resolvePath(TARGET_DIR, 'webpack-stats.json');
 const TSCONFIG_FILE = resolvePath('tsconfig.json');
+const SERVER_LOG_FILE = resolvePath(TARGET_DIR, 'server.log');
 
 module.exports = {
   ROOT_DIR,
@@ -28,6 +29,7 @@ module.exports = {
   POM_FILE,
   STATS_FILE,
   TSCONFIG_FILE,
+  SERVER_LOG_FILE,
 
   NODE_PLATFORM_DEFAULT_CONFIGS_DIR,
 };

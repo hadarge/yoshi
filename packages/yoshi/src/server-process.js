@@ -2,8 +2,10 @@ const chalk = require('chalk');
 const stream = require('stream');
 const waitPort = require('wait-port');
 const child_process = require('child_process');
+const fs = require('fs-extra');
 const { PORT } = require('./constants');
 const { getDevelopmentEnvVars } = require('yoshi-helpers/bootstrap-utils');
+const { SERVER_LOG_FILE } = require('yoshi-config/paths');
 
 const bootstrapEnvironmentParams = getDevelopmentEnvVars({
   port: PORT,
@@ -39,8 +41,14 @@ module.exports = class Server {
       },
     });
 
-    this.child.stdout.pipe(serverLogPrefixer()).pipe(process.stdout);
-    this.child.stderr.pipe(serverLogPrefixer()).pipe(process.stderr);
+    const serverLogWriteStream = fs.createWriteStream(SERVER_LOG_FILE);
+    const serverOutLogStream = this.child.stdout.pipe(serverLogPrefixer());
+    serverOutLogStream.pipe(serverLogWriteStream);
+    serverOutLogStream.pipe(process.stdout);
+
+    const serverErrorLogStream = this.child.stderr.pipe(serverLogPrefixer());
+    serverErrorLogStream.pipe(serverLogWriteStream);
+    serverErrorLogStream.pipe(process.stderr);
 
     this.child.on('message', this.onMessage.bind(this));
 

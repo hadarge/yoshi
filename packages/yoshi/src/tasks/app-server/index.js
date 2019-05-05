@@ -8,6 +8,7 @@ const debounce = require('lodash/debounce');
 const waitPort = require('wait-port');
 const { getDevelopmentEnvVars } = require('yoshi-helpers/bootstrap-utils');
 const { PORT } = require('../../constants');
+const { SERVER_LOG_FILE } = require('yoshi-config/paths');
 
 let server;
 let port;
@@ -138,7 +139,7 @@ module.exports = ({
   debugBrkPort = undefined,
 } = {}) => {
   function writeToServerLog(data) {
-    fs.appendFile(path.join(base, 'target', 'server.log'), data, () => {});
+    fs.appendFile(SERVER_LOG_FILE, data, () => {});
   }
 
   if (server && manualRestart) {
