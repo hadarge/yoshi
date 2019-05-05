@@ -1,10 +1,19 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const globby = require('globby');
-const { envs, withLatestJSDom } = require('./constants');
+const { envs, supportedEnvs, withLatestJSDom } = require('./constants');
 const globs = require('yoshi-config/globs');
 
 const modulePathIgnorePatterns = ['<rootDir>/dist/', '<rootDir>/target/'];
+
+if (envs && envs.some(env => !supportedEnvs.includes(env))) {
+  console.log();
+  console.log(chalk.red(`jest-yoshi-preset: invalid MATCH_ENV=${envs}`));
+  console.log(chalk.red(`supported envs: ${supportedEnvs.join(`, `)}`));
+  console.log();
+  process.exit(1);
+}
+
 module.exports = {
   globalSetup: require.resolve('jest-environment-yoshi-puppeteer/globalSetup'),
   globalTeardown: require.resolve(
