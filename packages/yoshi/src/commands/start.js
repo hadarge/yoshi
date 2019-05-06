@@ -61,8 +61,6 @@ module.exports = runner.command(
 
     const wixCdn = tasks[require.resolve('../tasks/cdn')];
     const babel = tasks[require.resolve('../tasks/babel')];
-    const migrateScopePackages =
-      tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
     const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
     const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
 
@@ -82,13 +80,7 @@ module.exports = runner.command(
       );
     };
 
-    await Promise.all([
-      clean({ pattern: `{dist,target}/*` }),
-      migrateScopePackages(
-        {},
-        { title: 'scope-packages-migration', log: false },
-      ),
-    ]);
+    await clean({ pattern: `{dist,target}/*` });
 
     const ssl = cliArgs.ssl || servers.cdn.ssl;
 

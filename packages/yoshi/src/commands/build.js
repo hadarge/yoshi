@@ -40,8 +40,6 @@ module.exports = runner.command(
 
     const { less, clean, copy, sass, webpack, typescript } = tasks;
 
-    const migrateScopePackages =
-      tasks[require.resolve('../tasks/migrate-to-scoped-packages')];
     const babel = tasks[require.resolve('../tasks/babel')];
     const wixPetriSpecs = tasks[require.resolve('../tasks/petri-specs')];
     const wixMavenStatics = tasks[require.resolve('../tasks/maven-statics')];
@@ -50,10 +48,6 @@ module.exports = runner.command(
 
     await Promise.all([
       clean({ pattern: `{dist,target}/*` }),
-      migrateScopePackages(
-        {},
-        { title: 'scope-packages-migration', log: false },
-      ),
       printAndExitOnErrors(() =>
         wixDepCheck({}, { title: 'dep-check', log: false }),
       ),

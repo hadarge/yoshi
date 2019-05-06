@@ -1,5 +1,4 @@
 module.exports = {
-  migrateToScopedPackages: { MIGRATE_TO_SCOPED_PACKAGES: 'true' },
   outsideTeamCity: {
     TEAMCITY_VERSION: '',
     BUILD_NUMBER: '',
