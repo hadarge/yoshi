@@ -1,5 +1,34 @@
 # Changelog
 
+## 4.4.0 (2019-05-06)
+
+#### :rocket: New Feature
+
+- `yoshi-config`, `yoshi`
+  - [#1206](https://github.com/wix/yoshi/pull/1206) Pipe output to `server.log` in App flow ([@ihork](https://github.com/ihork))
+
+#### :bug: Bug Fix
+
+- [#1271](https://github.com/wix/yoshi/pull/1271) Configure algolia to search according to the version specified ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+
+- `yoshi-config`
+  - [#1251](https://github.com/wix/yoshi/pull/1251) Improve error logging in jest setup error handling ([@rokasmik](https://github.com/rokasmik))
+- `yoshi-helpers`, `yoshi`
+  - [#1270](https://github.com/wix/yoshi/pull/1270) Remove migrate to scoped packages task ([@aarnoldaas](https://github.com/aarnoldaas))
+- `create-yoshi-app`
+  - [#1267](https://github.com/wix/yoshi/pull/1267) Add `spec-setup` with `react-testing-library/clean-after-each` ([@aarnoldaas](https://github.com/aarnoldaas))
+- `jest-yoshi-preset`
+  - [#1208](https://github.com/wix/yoshi/pull/1208) Throw an error in case `MATCH_ENV` was not used properly ([@orimwix](https://github.com/orimwix))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1269](https://github.com/wix/yoshi/pull/1269) Add another `100,000ms` timeout to verify there is no timeout problem in template tests ([@ranyitz](https://github.com/ranyitz))
+- `yoshi-config`
+  - [#964](https://github.com/wix/yoshi/pull/964) Add basic unit tests for `yoshi-config`'s `validateConfig` ([@cowchimp](https://github.com/cowchimp))
+
 ## 4.3.3 (2019-05-02)
 
 #### :rocket: New Feature
