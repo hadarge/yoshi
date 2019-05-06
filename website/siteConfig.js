@@ -47,6 +47,9 @@ const siteConfig = {
   algolia: {
     apiKey: '5807169f7e8a322a659ac4145a3e5d8a',
     indexName: 'wix_yoshi',
+    algoliaOptions: {
+      facetFilters: ['version:VERSION'],
+    },
   },
 
   // Add custom scripts here that would be placed in <script> tags.
