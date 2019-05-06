@@ -18,9 +18,10 @@ const loadConfig = () => {
   try {
     config = require(configPath);
   } catch (error) {
-    throw new Error(
-      `Config ${chalk.bold(configPath)} is invalid:\n  ${error.message}`,
-    );
+    error.message = `Config ${chalk.bold(configPath)} is invalid:\n  ${
+      error.message
+    }`;
+    throw error;
   }
 
   try {
