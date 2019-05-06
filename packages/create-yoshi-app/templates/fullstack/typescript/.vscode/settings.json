@@ -34,6 +34,6 @@
   "html.format.indentInnerHtml": true,
   "html.format.extraLiners": "",
   "files.insertFinalNewline": true,
-  "eslint.autoFixOnSave": true,
+  "tslint.jsEnable": true,
   "tslint.autoFixOnSave": true
 }

@@ -9,12 +9,17 @@
     "importHelpers": true,
     "target": "es5",
     "jsx": "react",
+    "allowJs": true,
     "lib": ["dom", "esnext"],
     "resolveJsonModule": true
   },
   "include": [
     "./__tests__/**/*.ts",
-    "./src/**/*.spec.tsx"
+    "./src/**/*.spec.tsx",
+    "./jest-yoshi.config.js",
+    "./environment.js",
+    "./index-dev.js",
+    "./index.js"
   ],
   "files": [
     "./node_modules/yoshi/types.d.ts",

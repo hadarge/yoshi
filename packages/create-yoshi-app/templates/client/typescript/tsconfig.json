@@ -2,17 +2,20 @@
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": false,
+    "outDir": "./dist/",
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
     "importHelpers": true,
     "noUnusedLocals": true,
+    "allowJs": true,
     "jsx": "react",
     "lib": ["dom", "esnext"],
     "resolveJsonModule": true
   },
   "include": [
     "./__tests__/**/*.ts",
+    "./jest-yoshi.config.js",
     "./src/**/*.spec.tsx"
   ],
   "files": [

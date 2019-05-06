@@ -8,13 +8,15 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es5",
+    "allowJs": true,
     "jsx": "react",
     "lib": ["dom", "esnext"],
     "resolveJsonModule": true
   },
   "include": [
     "./__tests__/**/*.ts",
-    "./src/**/*.spec.tsx"
+    "./src/**/*.spec.tsx",
+    "./jest-yoshi.config.js"
   ],
   "files": [
     "./node_modules/yoshi/types.d.ts",
