@@ -103,6 +103,10 @@ function addHashToAssetName(name) {
   return name;
 }
 
+function prependNameWith(filename, prefix) {
+  return filename.replace(/\.[0-9a-z]+$/i, match => `.${prefix}${match}`);
+}
+
 // NOTE ABOUT PUBLIC PATH USING UNPKG SERVICE
 // Projects that uses `wnpm-ci` have their package.json version field on a fixed version which is not their real version
 // These projects determine their version on the "release" step, which means they will have a wrong public path
@@ -625,18 +629,19 @@ function createClientWebpackConfig({
       ...(project.experimentalBuildHtml
         ? [
             ...globby
-              .sync('**/*.+(ejs|vm)', { cwd: SRC_DIR, absolute: true })
+              .sync('**/*.+(ejs|vm)', {
+                cwd: SRC_DIR,
+                absolute: true,
+                ignore: ['**/assets/**'],
+              })
               .map(templatePath => {
                 const basename = path.basename(templatePath);
 
                 return new HtmlWebpackPlugin({
                   // Generate a `filename.debug.ejs` for non-minified compilation
                   filename: isDebug
-                    ? basename.replace(
-                        /\.[0-9a-z]+$/i,
-                        match => `.debug${match}`,
-                      )
-                    : basename,
+                    ? prependNameWith(basename, 'debug')
+                    : prependNameWith(basename, 'prod'),
                   // Only use chunks from the entry with the same name as the template
                   // file
                   chunks: [basename.replace(/\.[0-9a-z]+$/i, '')],
