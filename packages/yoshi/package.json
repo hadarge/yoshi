@@ -58,6 +58,7 @@
     "eslint-plugin-prettier": "3.0.1",
     "eslint-plugin-react": "7.12.4",
     "eslint-plugin-wix-style-react": "1.0.18",
+    "eslint-plugin-react-hooks": "^1.6.0",
     "execa": "1.0.0",
     "express": "4.16.4",
     "externalize-relative-module-loader": "1.0.0",

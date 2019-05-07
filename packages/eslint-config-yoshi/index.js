@@ -1,7 +1,7 @@
 module.exports = {
   extends: require.resolve('eslint-config-yoshi-base'),
 
-  plugins: ['jsx-a11y', 'react', 'wix-style-react'],
+  plugins: ['jsx-a11y', 'react', 'react-hooks', 'wix-style-react'],
 
   env: {
     browser: true,
@@ -73,5 +73,9 @@ module.exports = {
 
     // https://github.com/wix/wix-ui/tree/master/packages/eslint-plugin-wix-style-react
     'wix-style-react/no-full-wsr-lib': 'error',
+
+    // https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };

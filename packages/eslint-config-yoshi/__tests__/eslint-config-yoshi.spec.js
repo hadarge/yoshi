@@ -22,7 +22,7 @@ const getRulesIds = results =>
       ),
   );
 
-describe('eslint-config-yoshi-base', () => {
+describe('eslint-config-yoshi', () => {
   describe('rules', () => {
     const eslintCli = new CLIEngine({
       configFile: require.resolve('../index'),

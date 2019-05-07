@@ -9,7 +9,8 @@ Install all peer dependencies:
   "eslint-plugin-jsx-a11y": "^6.0.2",
   "eslint-plugin-prettier": "^2.6.0",
   "eslint-plugin-react": "^7.7.0",
-  "prettier": "^1.11.1"
+  "prettier": "^1.11.1",
+  "eslint-plugin-react-hooks": "^1.6.0"
 ```
 
 Add the following to your `package.json`:
