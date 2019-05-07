@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.4.1 (2019-05-07)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1262](https://github.com/wix/yoshi/pull/1262) Add jest-cli as a direct yoshi dependency. ([@yavorsky](https://github.com/yavorsky))
+- `create-yoshi-app`
+  - [#1243](https://github.com/wix/yoshi/pull/1243) Fix issues with lint .js files in typescript environments ([@dmfilipenko](https://github.com/dmfilipenko))
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1275](https://github.com/wix/yoshi/pull/1275) Rename ejs production file for html webpack plugin ([@yanivefraim](https://github.com/yanivefraim))
+
 ## 4.4.0 (2019-05-06)
 
 #### :rocket: New Feature
