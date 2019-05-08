@@ -57,16 +57,33 @@ Promise.resolve()
     if (indexOfVersion !== -1) {
       versionsJson.splice(indexOfVersion, 1);
       fs.writeFileSync(versionsJsonPath, JSON.stringify(versionsJson, null, 2));
+      console.log();
+      console.log(`version "${majorVersion}" already exist, overriding...`);
+      console.log();
     }
 
-    execa.shellSync(`npm run version "${majorVersion}"`, {
+    const createVersionedDocsCommand = `npm run version "${majorVersion}"`;
+
+    execa.shellSync(createVersionedDocsCommand, {
       cwd: websiteDirectory,
       stdio: 'inherit',
     });
 
-    execa.shellSync(
-      `git commit -a -m "documentation for version ${majorVersion}" --allow-empty`,
-    );
+    const numberOfModifiedFiles = execa
+      .shellSync(`git ls-files -m | wc -l`)
+      .stdout.trim();
+
+    if (numberOfModifiedFiles === '0') {
+      console.log();
+      console.log(
+        `no changes created after running "${createVersionedDocsCommand}"`,
+      );
+      console.log();
+    } else {
+      execa.shellSync(
+        `git commit -a -m "documentation for version ${majorVersion}"`,
+      );
+    }
   })
   .then(() => {
     console.log();
