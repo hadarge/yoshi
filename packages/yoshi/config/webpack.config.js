@@ -70,7 +70,7 @@ const computedSeparateCss =
 
 const artifactVersion = process.env.ARTIFACT_VERSION;
 
-const staticAssetName = addHashToAssetName('media/[name].[ext]');
+const staticAssetName = addHashToAssetName('media/[name].[ext]', 'hash:8');
 
 // default public path
 let publicPath = '/';
@@ -95,9 +95,9 @@ function exists(entry) {
   );
 }
 
-function addHashToAssetName(name) {
+function addHashToAssetName(name, hash = 'contenthash:8') {
   if (project.experimentalBuildHtml && isProduction) {
-    return name.replace('[name]', '[name].[contenthash:8]');
+    return name.replace('[name]', `[name].[${hash}]`);
   }
 
   return name;
