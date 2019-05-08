@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const semver = require('semver');
 const prompts = require('prompts');
 const pkg = require('../package.json');
+const fs = require('fs');
 
 const websiteDirectory = path.resolve(__dirname, '../website');
 const lernaPath = path.resolve(__dirname, '../node_modules/.bin/lerna');
@@ -46,15 +47,25 @@ Promise.resolve()
   .then(() => {
     const lernaJson = require('../lerna.json');
     const monorepoVersion = lernaJson.version;
-    const majorVersion = semver.major(monorepoVersion);
+    const majorVersion = `${semver.major(monorepoVersion)}.x`;
 
-    execa.shellSync(`npm run version "${majorVersion}.x"`, {
+    // In case the index of the major version already exist in versions.json remove it
+    // https://github.com/wix/yoshi/issues/1228
+    const versionsJsonPath = require.resolve('../website/versions.json');
+    const versionsJson = require(versionsJsonPath);
+    const indexOfVersion = versionsJson.indexOf(majorVersion);
+    if (indexOfVersion !== -1) {
+      versionsJson.splice(indexOfVersion, 1);
+      fs.writeFileSync(versionsJsonPath, JSON.stringify(versionsJson, null, 2));
+    }
+
+    execa.shellSync(`npm run version "${majorVersion}"`, {
       cwd: websiteDirectory,
       stdio: 'inherit',
     });
 
     execa.shellSync(
-      `git commit -a -m "documentation for version ${majorVersion}"`,
+      `git commit -a -m "documentation for version ${majorVersion}" --allow-empty`,
     );
   })
   .then(() => {
