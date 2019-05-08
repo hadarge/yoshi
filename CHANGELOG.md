@@ -1,11 +1,23 @@
 # Changelog
 
+## 4.4.3 (2019-05-08)
+
+#### :rocket: New Feature
+
+- `tslint-config-yoshi-base`, `tslint-config-yoshi`, `yoshi`
+  - [#1278](https://github.com/wix/yoshi/pull/1278) Add React Hooks `ts-lint` rule ([@aarnoldaas](https://github.com/aarnoldaas))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1281](https://github.com/wix/yoshi/pull/1281) Fix OOI template `e2e` tests ([@gileck](https://github.com/gileck))
+
 ## 4.4.2 (2019-05-08)
 
 #### :rocket: New Feature
 
 - `eslint-config-yoshi-base`, `eslint-config-yoshi`, `yoshi`
-  - [#1274](https://github.com/wix/yoshi/pull/1274) Add React Hooks eslint rules ([@aarnoldaas](https://github.com/aarnoldaas))
+  - [#1274](https://github.com/wix/yoshi/pull/1274) Add React Hooks `eslint` rules ([@aarnoldaas](https://github.com/aarnoldaas))
 
 #### :bug: Bug Fix
 
