@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "4.4.2",
+  "version": "4.4.3",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -122,8 +122,8 @@
     "ts-loader": "5.3.3",
     "ts-node": "3.3.0",
     "tslint": "5.15.0",
-    "tslint-config-yoshi": "4.1.0",
-    "tslint-config-yoshi-base": "4.1.0",
+    "tslint-config-yoshi": "4.4.3",
+    "tslint-config-yoshi-base": "4.4.3",
     "tslint-plugin-wix-style-react": "1.0.6",
     "tslint-react-hooks": "^2.1.0",
     "url-loader": "1.1.2",
