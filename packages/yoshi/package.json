@@ -125,6 +125,7 @@
     "tslint-config-yoshi": "4.1.0",
     "tslint-config-yoshi-base": "4.1.0",
     "tslint-plugin-wix-style-react": "1.0.6",
+    "tslint-react-hooks": "^2.1.0",
     "url-loader": "1.1.2",
     "wait-port": "0.2.2",
     "webpack": "4.28.4",

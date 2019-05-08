@@ -8,7 +8,8 @@ Install all peer dependencies:
 
 ```
   "prettier": "^1.11.1",
-  "tslint": ">=5.10.0"
+  "tslint": ">=5.10.0",
+  "tslint-react-hooks": "^2.1.0"
 ```
 
 Add the following to your `tslint.json`:

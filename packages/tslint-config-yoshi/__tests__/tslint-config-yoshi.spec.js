@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved, import/no-extraneous-dependencies */
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
@@ -21,7 +22,7 @@ const rulesDir = path.join(__dirname, './rules');
 
 const rules = fs.readdirSync(rulesDir);
 
-describe('tslint-config-yoshi-base', () => {
+describe('tslint-config-yoshi', () => {
   rules.forEach(ruleName => {
     const find = pattern => {
       return glob.sync(path.join(rulesDir, ruleName, pattern));

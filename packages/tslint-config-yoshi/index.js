@@ -7,6 +7,7 @@ module.exports = addJsRules({
     'tslint-react',
     'tslint-config-yoshi-base',
     'tslint-plugin-wix-style-react',
+    'tslint-react-hooks',
   ],
 
   rules: {
@@ -20,5 +21,8 @@ module.exports = addJsRules({
 
     // https://github.com/wix/wix-ui/tree/master/packages/tslint-plugin-wix-style-react
     'no-full-wsr-lib': true,
+
+    // https://github.com/Gelio/tslint-react-hooks
+    'react-hooks-nesting': true,
   },
 });
