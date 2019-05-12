@@ -40,7 +40,8 @@ module.exports = async ({
     }
   }
 
-  console.log(`\tRunning cdn on port ${port}...`);
+  const protocol = ssl ? 'https' : 'http';
+  console.log(`\tRunning cdn on ${protocol}://localhost:${port}`);
 
   let middlewares = [];
 
