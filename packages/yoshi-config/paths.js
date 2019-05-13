@@ -1,4 +1,5 @@
 const path = require('path');
+const findUp = require('find-up');
 
 const ROOT_DIR = process.cwd();
 
@@ -10,6 +11,9 @@ const TARGET_DIR = resolvePath('target');
 const PUBLIC_DIR = path.join(SRC_DIR, 'assets');
 const STATICS_DIR = path.join(BUILD_DIR, 'statics');
 const ASSETS_DIR = path.join(STATICS_DIR, 'assets');
+
+const LERNA_JSON = findUp.sync('lerna.json');
+const MONOREPO_ROOT = LERNA_JSON && path.dirname(LERNA_JSON);
 
 const NODE_PLATFORM_DEFAULT_CONFIGS_DIR = resolvePath('test/configs');
 
@@ -30,6 +34,9 @@ module.exports = {
   STATS_FILE,
   TSCONFIG_FILE,
   SERVER_LOG_FILE,
+
+  LERNA_JSON,
+  MONOREPO_ROOT,
 
   NODE_PLATFORM_DEFAULT_CONFIGS_DIR,
 };

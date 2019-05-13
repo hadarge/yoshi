@@ -184,6 +184,10 @@ const schema = {
         'An experimental way to let Yoshi inject the correct assets into your EJS/VM files.',
       type: 'boolean',
     },
+    experimentalMonorepo: {
+      description: 'An experimental way to enable monorepo specific features.',
+      type: 'boolean',
+    },
   },
 };
 

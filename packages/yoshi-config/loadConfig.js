@@ -2,6 +2,7 @@ const path = require('path');
 const _ = require('lodash');
 const chalk = require('chalk');
 const globs = require('./globs');
+const { MONOREPO_ROOT } = require('./paths');
 const packagejson = require('./utils/get-project-pkg');
 const lookupConfig = require('./utils/lookup-config');
 const validateConfig = require('./utils/validate-config');
@@ -92,10 +93,19 @@ const loadConfig = ({ validate, useCache } = { validate: false }) => {
     keepFunctionNames: getConfig('keepFunctionNames', false),
     umdNamedDefine: getConfig('umdNamedDefine', true),
     experimentalBuildHtml: getConfig('experimentalBuildHtml'),
+    experimentalMonorepo: getConfig('experimentalMonorepo'),
     projectType: getConfig('projectType', null),
     unprocessedModules: p => {
       const allSourcesButExternalModules = function(filePath) {
         filePath = path.normalize(filePath);
+
+        if (process.env.EXPERIMENTAL_MONOREPO_SUB_PROCESS) {
+          return (
+            filePath.startsWith(MONOREPO_ROOT) &&
+            !filePath.includes('node_modules')
+          );
+        }
+
         return (
           filePath.startsWith(process.cwd()) &&
           !filePath.includes('node_modules')

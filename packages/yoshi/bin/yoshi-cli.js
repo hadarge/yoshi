@@ -42,7 +42,19 @@ prog
   .allowUnknownOption()
   .action(() => runCLI('test'));
 
-if (config.projectType === 'app') {
+if (config.experimentalMonorepo) {
+  prog
+    .command('build')
+    .description('Experimental way to build a Lerna monorepo for production')
+    .action(() => runCLI('build-monorepo'));
+
+  prog
+    .command('start')
+    .description(
+      'Experimental way to start a Lerna monorepo for local development',
+    )
+    .action(() => runCLI('start-monorepo'));
+} else if (config.projectType === 'app') {
   prog
     .command('build')
     .description('Experimental way of building an app to production')
@@ -100,13 +112,21 @@ if (config.projectType === 'app') {
     .action(() => runCLI('start'));
 }
 
-prog
-  .command('release')
-  .description(
-    'use wnpm-ci to bump a patch version if needed, should be used by CI',
-  )
-  .option('--minor', 'bump a minor version instead of a patch')
-  .action(() => runCLI('release'));
+if (config.experimentalMonorepo) {
+  prog
+    .command('release')
+    .description('Exprimental way to publish a Lerna monorepo in CI')
+    .option('--minor', 'bump a minor version instead of a patch')
+    .action(() => runCLI('release-monorepo'));
+} else {
+  prog
+    .command('release')
+    .description(
+      'use wnpm-ci to bump a patch version if needed, should be used by CI',
+    )
+    .option('--minor', 'bump a minor version instead of a patch')
+    .action(() => runCLI('release'));
+}
 
 prog
   .command('info')
