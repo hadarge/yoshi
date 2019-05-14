@@ -1,5 +1,28 @@
 # Changelog
 
+## 4.5.0 (2019-05-14)
+
+#### :rocket: New Feature
+
+- `yoshi-config`, `yoshi`
+  - [#1285](https://github.com/wix/yoshi/pull/1285) Basic monorepo support ([@ronami](https://github.com/ronami))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1279](https://github.com/wix/yoshi/pull/1279) Resolve symlinks to their symlinked locations in Webpack ([@ronami](https://github.com/ronami))
+
+#### :nail_care: Polish
+
+- `yoshi-config`, `yoshi`
+  - [#1291](https://github.com/wix/yoshi/pull/1291) Resolve symlinks only in monorepos ([@ronami](https://github.com/ronami))
+- `yoshi`
+  - [#1282](https://github.com/wix/yoshi/pull/1282) Log full URL to CDN, including scheme and port ([@danielagreen](https://github.com/danielagreen))
+
+#### :memo: Documentation
+
+- [#1290](https://github.com/wix/yoshi/pull/1290) Fix migration guide to Yoshi V4 ([@yanivefraim](https://github.com/yanivefraim))
+
 ## 4.4.3 (2019-05-08)
 
 #### :rocket: New Feature
