@@ -14,25 +14,25 @@ This is the migration guide from v3 to v4. If you're still using Yoshi v1 or v2,
 Inside any Yoshi project, run:
 
 ```
-npm install --save-dev yoshi@next
+npm install --save-dev yoshi
 ```
 
 If you depend on [yoshi-style-dependencies](https://github.com/wix/yoshi/tree/version_4.x/packages/yoshi-style-dependencies), [yoshi-angular-dependencies](https://github.com/wix/yoshi/tree/version_4.x/packages/yoshi-angular-dependencies) or [jest-yoshi-preset](https://github.com/wix/yoshi/tree/version_4.x/packages/jest-yoshi-preset), make sure to bump them too:
 
 ```
-npm install --save-dev yoshi-style-dependencies@next
+npm install --save-dev yoshi-style-dependencies
 ```
 
 And/or:
 
 ```
-npm install --save-dev yoshi-angular-dependencies@next
+npm install --save-dev yoshi-angular-dependencies
 ```
 
 And/or:
 
 ```
-npm install --save-dev jest-yoshi-preset@next
+npm install --save-dev jest-yoshi-preset
 ```
 
 **Finally, for TypeScript projects, Yoshi now requires TypeScript with a minimum version of 2.9.0.**
