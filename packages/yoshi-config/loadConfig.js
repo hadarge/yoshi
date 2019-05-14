@@ -94,12 +94,14 @@ const loadConfig = ({ validate, useCache } = { validate: false }) => {
     umdNamedDefine: getConfig('umdNamedDefine', true),
     experimentalBuildHtml: getConfig('experimentalBuildHtml'),
     experimentalMonorepo: getConfig('experimentalMonorepo'),
+    experimentalMonorepoSubProcess:
+      process.env.EXPERIMENTAL_MONOREPO_SUB_PROCESS === 'true',
     projectType: getConfig('projectType', null),
     unprocessedModules: p => {
       const allSourcesButExternalModules = function(filePath) {
         filePath = path.normalize(filePath);
 
-        if (process.env.EXPERIMENTAL_MONOREPO_SUB_PROCESS) {
+        if (projectConfig.experimentalMonorepoSubProcess) {
           return (
             filePath.startsWith(MONOREPO_ROOT) &&
             !filePath.includes('node_modules')

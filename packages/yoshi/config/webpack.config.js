@@ -309,6 +309,9 @@ function createCommonWebpackConfig({
       extensions,
 
       alias: project.resolveAlias,
+
+      // Whether to resolve symlinks to their symlinked location.
+      symlinks: project.experimentalMonorepoSubProcess,
     },
 
     // Since Yoshi doesn't depend on every loader it uses directly, we first look
