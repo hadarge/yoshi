@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.5.1 (2019-05-15)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1293](https://github.com/wix/yoshi/pull/1293) Verify typescript references before `build`/`start` ([@ronami](https://github.com/ronami))
+  - [#1292](https://github.com/wix/yoshi/pull/1292) Add `InterpolateHtmlPlugin` for `experimentalBuildHtml` ([@yanivefraim](https://github.com/yanivefraim))
+
 ## 4.5.0 (2019-05-14)
 
 #### :rocket: New Feature
