@@ -6,6 +6,7 @@ const { isObject } = require('lodash');
 const buildUrl = require('build-url');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -664,6 +665,10 @@ function createClientWebpackConfig({
                 },
               ),
             ]),
+
+            new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
+              PUBLIC_PATH: publicPath,
+            }),
           ]
         : []),
 
