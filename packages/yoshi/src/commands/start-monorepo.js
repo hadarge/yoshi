@@ -6,10 +6,10 @@ const fs = require('fs-extra');
 const chalk = require('chalk');
 const execa = require('execa');
 const chokidar = require('chokidar');
-const { splitPackagesPromise } = require('./utils');
+const { verifyTypeScriptReferences } = require('./utils');
 
 module.exports = async () => {
-  const [apps, libs] = await splitPackagesPromise;
+  const [apps, libs] = await verifyTypeScriptReferences();
 
   libs.forEach(lib => {
     const packageDirectory = lib.location;
