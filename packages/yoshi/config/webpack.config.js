@@ -458,7 +458,16 @@ function createCommonWebpackConfig({
                 test: /\.(j|t)sx?$/,
               },
               use: [
-                '@svgr/webpack',
+                {
+                  loader: '@svgr/webpack',
+                  options: {
+                    svgoConfig: {
+                      plugins: {
+                        removeViewBox: false,
+                      },
+                    },
+                  },
+                },
                 {
                   loader: 'svg-url-loader',
                   options: {
