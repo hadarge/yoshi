@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.5.2 (2019-05-16)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1288](https://github.com/wix/yoshi/pull/1288) Don't remove `viewBox` from `svg` when being loaded as react component ([@ipanasenko](https://github.com/ipanasenko))
+
 ## 4.5.1 (2019-05-15)
 
 #### :rocket: New Feature
