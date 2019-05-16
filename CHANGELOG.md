@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.5.3 (2019-05-16)
+
+#### :rocket: New Feature
+
+- `yoshi-template-intro`
+  - [#1258](https://github.com/wix/yoshi/pull/1258) Add `yoshi-template-intro` package to import it from all templates ([@yavorsky](https://github.com/yavorsky))
+
+#### :bug: Bug Fix
+
+- `yoshi-helpers`
+  - [#1263](https://github.com/wix/yoshi/pull/1263) Fix `babel-preset-yoshi` resolve path ([@yavorsky](https://github.com/yavorsky))
+
 ## 4.5.2 (2019-05-16)
 
 #### :bug: Bug Fix
