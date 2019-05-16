@@ -9,12 +9,9 @@
   },
   "scripts": {
     "start": "yoshi start",
-    "precommit": "lint-staged",
-    "pretest": "npm run build",
+    "prepublishOnly": "npm run build",
     "build": "yoshi build",
-    "test": "yoshi test --jest",
-    "posttest": "yoshi lint",
-    "release": "yoshi release"
+    "test": "yoshi test --jest"
   },
   "devDependencies": {
     "enzyme": "~2.9.0",
