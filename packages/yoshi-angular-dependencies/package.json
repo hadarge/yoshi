@@ -1,6 +1,6 @@
 {
   "name": "yoshi-angular-dependencies",
-  "version": "4.3.0",
+  "version": "4.6.0",
   "description": "",
   "files": [
     "ng-annotate-loader.js"
