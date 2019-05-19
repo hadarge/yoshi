@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.6.0 (2019-05-19)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#1284](https://github.com/wix/yoshi/pull/1284) Update `fullstack` & `client` templates to use lazy-loaded `<Intro />` component. ([@yavorsky](https://github.com/yavorsky))
+
 ## 4.5.3 (2019-05-16)
 
 #### :rocket: New Feature
