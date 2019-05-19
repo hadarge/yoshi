@@ -32,87 +32,97 @@ module.exports = async ({
 
   const failures = [];
 
-  // Test production build (CI env)
-  try {
-    console.log(chalk.blue(`> Building project for production`));
-    console.log();
-
-    await scripts.build(ciEnv);
-
-    console.log();
-    console.log(
-      chalk.blue(`> Running app's own tests against production build`),
-    );
-    console.log();
-
-    await scripts.test(ciEnv);
-
-    console.log();
-    console.log(chalk.blue(`> Running production integration tests`));
-    console.log();
-
-    const serveResult = await scripts.serve();
-
+  async function testProductionBuild() {
+    // Test production build (CI env)
     try {
-      await execa.shell(
-        `npx jest --config='jest.production.config.js' --no-cache --runInBand`,
-        options,
-      );
-    } finally {
-      await serveResult.done();
-    }
-  } catch (error) {
-    failures.push(error);
-  }
+      console.log(chalk.blue(`> Building project for production`));
+      console.log();
 
-  // Test local build (local env)
-  try {
-    console.log();
-    console.log(chalk.blue(`> Starting project for development`));
-    console.log();
+      await scripts.build(ciEnv);
 
-    const startResult = await scripts.start(localEnv);
-
-    try {
       console.log();
       console.log(
-        chalk.blue(`> Running app's own tests against development build`),
+        chalk.blue(`> Running app's own tests against production build`),
       );
       console.log();
 
-      await scripts.test(localEnv);
+      await scripts.test(ciEnv);
 
       console.log();
-      console.log(chalk.blue(`> Running development integration tests`));
+      console.log(chalk.blue(`> Running production integration tests`));
+      console.log();
+
+      const serveResult = await scripts.serve();
+
+      try {
+        await execa.shell(
+          `npx jest --config='jest.production.config.js' --no-cache --runInBand`,
+          options,
+        );
+      } finally {
+        await serveResult.done();
+      }
+    } catch (error) {
+      failures.push(error);
+    }
+  }
+
+  async function testLocalDevelopment() {
+    // Test local build (local env)
+    try {
+      console.log();
+      console.log(chalk.blue(`> Starting project for development`));
+      console.log();
+
+      const startResult = await scripts.start(localEnv);
+
+      try {
+        console.log();
+        console.log(
+          chalk.blue(`> Running app's own tests against development build`),
+        );
+        console.log();
+
+        await scripts.test(localEnv);
+
+        console.log();
+        console.log(chalk.blue(`> Running development integration tests`));
+        console.log();
+
+        await execa.shell(
+          `npx jest --config='jest.development.config.js' --no-cache --runInBand`,
+          options,
+        );
+      } finally {
+        await startResult.done();
+      }
+    } catch (error) {
+      failures.push(error);
+    }
+  }
+
+  async function runAdditionalTests() {
+    // Run additional tests (errors, analyze)
+    try {
+      console.log();
+      console.log(chalk.blue(`> Running additional integration tests`));
       console.log();
 
       await execa.shell(
-        `npx jest --config='jest.development.config.js' --no-cache --runInBand`,
+        `npx jest --config='jest.plain.config.js' --no-cache --runInBand`,
         options,
       );
-    } finally {
-      await startResult.done();
+    } catch (error) {
+      failures.push(error);
     }
-  } catch (error) {
-    failures.push(error);
+
+    // Clean eventually
+    await fs.remove(rootDirectory);
   }
 
-  // Run additional tests (errors, analyze)
-  try {
-    console.log();
-    console.log(chalk.blue(`> Running additional integration tests`));
-    console.log();
-
-    await execa.shell(
-      `npx jest --config='jest.plain.config.js' --no-cache --runInBand`,
-      options,
-    );
-  } catch (error) {
-    failures.push(error);
-  }
-
-  // Clean eventually
-  await fs.remove(rootDirectory);
+  await testProductionBuild();
+  await testLocalDevelopment();
+  await runAdditionalTests();
 
   // Fail testing this project if any errors happened
   if (failures.length > 0) {

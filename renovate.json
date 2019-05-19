@@ -25,7 +25,9 @@
         "packages/yoshi*/package.json"
       ],
       "excludePackageNames": [
-        "webpack"
+        "webpack",
+        "mini-css-extract-plugin",
+        "webpack-dev-server"
       ],
       "enabled": true
     }
