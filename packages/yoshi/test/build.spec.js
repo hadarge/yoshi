@@ -802,7 +802,7 @@ describe('Aggregator: Build', () => {
     });
   });
 
-  describe('simple development project with 1 entry point, ES modules, cssModules, typescript', () => {
+  describe.skip('simple development project with 1 entry point, ES modules, cssModules, typescript', () => {
     let resp;
     before(() => {
       test = tp.create();
