@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.6.1 (2019-05-20)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1301](https://github.com/wix/yoshi/pull/1301) Ignore monorepo hoisted dependencies in server bundle ([@ronami](https://github.com/ronami))
+
 ## 4.6.0 (2019-05-19)
 
 #### :rocket: New Feature
