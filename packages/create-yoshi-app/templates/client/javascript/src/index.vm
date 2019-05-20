@@ -13,8 +13,8 @@
     <script>
       fedopsLogger.reportAppLoadStarted("{%projectName%}");
     </script>
-    <script src="https://${clientTopology.staticsDomain}/unpkg/react@16.7.0/umd/react#if(!${debug}).production.min#{else}.development#{end}.js"></script>
-    <script src="https://${clientTopology.staticsDomain}/unpkg/react-dom@16.7.0/umd/react-dom#if(!${debug}).production.min#{else}.development#{end}.js"></script>
+    <script src="https://${clientTopology.staticsDomain}/unpkg/react@16.8.0/umd/react#if(!${debug}).production.min#{else}.development#{end}.js"></script>
+    <script src="https://${clientTopology.staticsDomain}/unpkg/react-dom@16.8.0/umd/react-dom#if(!${debug}).production.min#{else}.development#{end}.js"></script>
   </head>
   <body>
     <div id="visit-count">Visit count: ${visitCount}</div>
