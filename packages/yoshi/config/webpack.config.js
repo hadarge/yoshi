@@ -28,6 +28,7 @@ const {
   BUILD_DIR,
   STATICS_DIR,
   TSCONFIG_FILE,
+  MONOREPO_ROOT,
 } = require('yoshi-config/paths');
 const project = require('yoshi-config');
 const {
@@ -880,7 +881,12 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
       nodeExternals({
         modulesDir: path.resolve(__dirname, '../node_modules'),
       }),
-    ],
+      // Treat monorepo (hoisted) dependencies as external
+      project.experimentalMonorepoSubProcess &&
+        nodeExternals({
+          modulesDir: path.resolve(MONOREPO_ROOT, 'node_modules'),
+        }),
+    ].filter(Boolean),
 
     plugins: [
       ...config.plugins,
