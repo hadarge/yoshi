@@ -1,6 +1,6 @@
 {
   "name": "yoshi-template-intro",
-  "version": "4.6.0",
+  "version": "4.6.1",
   "license": "UNLICENSED",
   "main": "dist/statics/app.bundle.js",
   "author": {
@@ -21,7 +21,7 @@
     "node-sass": "^4.12.0",
     "puppeteer": "^1.15.0",
     "react-test-renderer": "~15.6.0",
-    "yoshi": "4.6.0",
+    "yoshi": "4.6.1",
     "yoshi-style-dependencies": "4.6.0"
   },
   "dependencies": {
