@@ -11,16 +11,12 @@ interface AppProps extends InjectedTranslateProps {}
 
 class App extends React.Component<AppProps> {
   /* <-- Feel free to remove this lifecycle hook and state */
+  /* <-- Please also remove `yoshi-template-intro` from your package.json */
   state = {
     TemplateIntro: () => null,
   };
   async componentDidMount() {
-    await import(
-      /* webpackIgnore: true */
-      // @ts-ignore
-      'https://unpkg.com/yoshi-template-intro@latest'
-    );
-    const { default: TemplateIntro } = (window as any).TemplateIntro;
+    const { default: TemplateIntro } = await import('yoshi-template-intro');
     this.setState({ TemplateIntro });
   } /* --> */
 
@@ -29,10 +25,10 @@ class App extends React.Component<AppProps> {
 
     return (
       <div className={s.root}>
-        {/* <-- Feel free to remove h2 and TemplateIntro */}
         <h2 className={s.title} data-testid="app-title">
           {t('app.title')}
         </h2>
+        {/* <-- Feel free to remove TemplateIntro */}
         <this.state.TemplateIntro />
         {/* --> */}
       </div>

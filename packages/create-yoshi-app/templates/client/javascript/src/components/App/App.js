@@ -14,14 +14,10 @@ class App extends React.Component {
   };
 
   /* <-- Feel free to remove this lifecycle hook */
+  /* <-- Please also remove `yoshi-template-intro` from your package.json */
   state = {};
   async componentDidMount() {
-    await import(
-      /* webpackIgnore: true */
-      // eslint-disable-next-line import/no-unresolved
-      'https://unpkg.com/yoshi-template-intro@latest'
-    );
-    const { default: TemplateIntro } = window.TemplateIntro;
+    const { default: TemplateIntro } = await import('yoshi-template-intro');
     this.setState({ TemplateIntro });
   } /* --> */
 
@@ -30,10 +26,10 @@ class App extends React.Component {
 
     return (
       <div className={s.root}>
-        {/* <-- Feel free to remove h2 and TemplateIntro */}
         <h2 className={s.title} data-testid="app-title">
           {t('app.title')}
         </h2>
+        {/* <-- Feel free to remove TemplateIntro */}
         {this.state.TemplateIntro &&
           React.createElement(this.state.TemplateIntro)}
         {/* --> */}
