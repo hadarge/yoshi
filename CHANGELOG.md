@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.6.2 (2019-05-21)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#1306](https://github.com/wix/yoshi/pull/1306) Change Bootstrap's testkit to use server, instead of app. ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1302](https://github.com/wix/yoshi/pull/1302) Upgrade react to 16.8. ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`, `yoshi-template-intro`
+  - [#1305](https://github.com/wix/yoshi/pull/1305) Update generators to use Webpack's dynamic import. ([@yanivefraim](https://github.com/yanivefraim))
+- `jest-environment-yoshi-puppeteer`, `yoshi`
+  - [#1053](https://github.com/wix/yoshi/pull/1053) Use sockjs instead of ipc for server HMR communication. ([@ronami](https://github.com/ronami))
+- `yoshi`
+  - [#1303](https://github.com/wix/yoshi/pull/1303) Remove https for opening browser, `npm start` ([@brumeregan](https://github.com/brumeregan))
+
 ## 4.6.1 (2019-05-20)
 
 #### :bug: Bug Fix
