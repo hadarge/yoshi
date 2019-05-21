@@ -21,7 +21,7 @@ function emitConfigs() {
 
 // start the server as an embedded app
 function bootstrapServer() {
-  return testkit.app('./index', {
+  return testkit.server('./index', {
     env: {
       PORT: 3100,
       MANAGEMENT_PORT: 3104,
