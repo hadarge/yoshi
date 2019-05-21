@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "4.6.1",
+  "version": "4.6.2",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -161,7 +161,7 @@
     "expect": "23.6.0",
     "generic-names": "1.0.3",
     "identity-obj-proxy": "3.0.0",
-    "jest-yoshi-preset": "4.6.0",
+    "jest-yoshi-preset": "4.6.2",
     "karma": "2.0.5",
     "karma-chrome-launcher": "2.2.0",
     "karma-jasmine": "1.1.2",
