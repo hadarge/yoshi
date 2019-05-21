@@ -11,7 +11,7 @@ module.exports = async () => {
     await global.BROWSER.close();
 
     if (global.SERVER) {
-      killSpawnProcessAndHisChildren(global.SERVER);
+      await killSpawnProcessAndHisChildren(global.SERVER);
     }
 
     await cdnProxy.stop();

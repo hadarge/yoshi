@@ -41,7 +41,7 @@ const {
   createDevServer,
   waitForCompilation,
 } = require('../webpack-utils');
-const Server = require('../server-process');
+const ServerProcess = require('../server-process');
 
 const host = '0.0.0.0';
 
@@ -99,7 +99,9 @@ module.exports = async () => {
   const [clientCompiler, serverCompiler] = multiCompiler.compilers;
 
   // Start up server process
-  const serverProcess = new Server({ serverFilePath: cliArgs.server });
+  const serverProcess = new ServerProcess({
+    serverFilePath: cliArgs.server,
+  });
 
   // Start up webpack dev server
   const devServer = await createDevServer(clientCompiler, {
