@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.6.3 (2019-05-22)
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1312](https://github.com/wix/yoshi/pull/1312) Generators: revert testkit `server`, back to using `app`. ([@yanivefraim](https://github.com/yanivefraim))
+- `jest-environment-yoshi-bootstrap`, `jest-environment-yoshi-puppeteer`, `yoshi-config`
+  - [#1307](https://github.com/wix/yoshi/pull/1307) Refresh jest's watch mode when updating jest-yoshi-config. ([@brumeregan](https://github.com/brumeregan))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+
+  - [#1311](https://github.com/wix/yoshi/pull/1311) create-yoshi-app: minor cleanups towards the perfection. ([@hugebdu](https://github.com/hugebdu))
+  - [#1286](https://github.com/wix/yoshi/pull/1286) Add wix-ui-tpa provider - for mobile mode. ([@jonathanadler](https://github.com/jonathanadler))
+
 ## 4.6.2 (2019-05-21)
 
 #### :rocket: New Feature
