@@ -1,6 +1,6 @@
 {
   "name": "create-yoshi-app",
-  "version": "4.6.2",
+  "version": "4.6.3",
   "description": "create yoshi powered apps",
   "keywords": [
     "create",
@@ -46,7 +46,7 @@
     "pascal-case": "^2.0.1",
     "prompts": "^1.1.1",
     "validate-npm-package-name": "^3.0.0",
-    "yoshi-helpers": "4.6.0"
+    "yoshi-helpers": "4.6.3"
   },
   "devDependencies": {
     "chokidar": "^2.0.4",
