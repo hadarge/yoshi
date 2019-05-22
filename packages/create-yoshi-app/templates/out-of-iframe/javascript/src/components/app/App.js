@@ -4,18 +4,21 @@ import {
   ExperimentsProvider,
   withExperiments,
 } from '@wix/wix-experiments-react';
+import { TPAComponentsProvider } from 'wix-ui-tpa/TPAComponentsConfig';
 import { Button } from 'wix-ui-tpa/Button';
 import i18n from '../../config/i18n';
 import styles from './App.st.css';
 
 export default class AppRoot extends React.Component {
   render() {
-    const { name, locale, experiments } = this.props;
+    const { name, locale, experiments, mobile } = this.props;
 
     return (
       <I18nextProvider i18n={i18n(locale)}>
         <ExperimentsProvider options={{ experiments }}>
-          <App name={name} />
+          <TPAComponentsProvider value={{ mobile }}>
+            <App name={name} />
+          </TPAComponentsProvider>
         </ExperimentsProvider>
       </I18nextProvider>
     );

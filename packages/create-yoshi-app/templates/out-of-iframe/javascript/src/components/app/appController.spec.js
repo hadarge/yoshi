@@ -20,7 +20,9 @@ describe('createAppController', () => {
       },
     };
     const locale = 'locale';
+    const formFactor = 'Desktop';
     const experiments = { someExperiment: 'true' };
+    const mobile = formFactor === 'Mobile';
 
     const controller = await createAppController({
       appParams,
@@ -28,6 +30,7 @@ describe('createAppController', () => {
       wixCodeApi: {
         window: {
           locale,
+          formFactor,
         },
       },
     });
@@ -39,6 +42,7 @@ describe('createAppController', () => {
       cssBaseUrl: appParams.baseUrls.staticsBaseUrl,
       locale,
       experiments,
+      mobile,
     });
   });
 });

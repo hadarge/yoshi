@@ -5,6 +5,10 @@ function getLocale({ wixCodeApi }) {
   return wixCodeApi.window.locale || 'en';
 }
 
+function isMobile({ wixCodeApi }) {
+  return wixCodeApi.window.formFactor === 'Mobile';
+}
+
 async function getExperimentsByScope(scope) {
   const experiments = new Experiments({
     scope,
@@ -16,6 +20,7 @@ async function getExperimentsByScope(scope) {
 export async function createAppController(controllerConfig) {
   const { appParams, setProps } = controllerConfig;
   const locale = getLocale(controllerConfig);
+  const mobile = isMobile(controllerConfig);
   const experiments = await getExperimentsByScope(EXPERIMENTS_SCOPE);
 
   return {
@@ -24,6 +29,7 @@ export async function createAppController(controllerConfig) {
         name: 'World',
         cssBaseUrl: appParams.baseUrls.staticsBaseUrl,
         locale,
+        mobile,
         experiments,
       });
     },
