@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const validateConfig = require('./utils/validate-config');
 const schema = require('./schema/jest-yoshi-config-schema.json');
 const YoshiOptionsValidationError = require('./utils/YoshiOptionsValidationError');
+const importFresh = require('import-fresh');
 
 const loadConfig = () => {
   const configPath = path.join(process.cwd(), 'jest-yoshi.config.js');
@@ -16,7 +17,7 @@ const loadConfig = () => {
   let config;
 
   try {
-    config = require(configPath);
+    config = importFresh(configPath);
   } catch (error) {
     error.message = `Config ${chalk.bold(configPath)} is invalid:\n  ${
       error.message
@@ -39,4 +40,4 @@ const loadConfig = () => {
   return config;
 };
 
-module.exports = loadConfig();
+module.exports = loadConfig;
