@@ -51,9 +51,7 @@ const app = bootstrap()
 -}
 +app.express('./dist/server');
 
-app.start({
-  disableCluster: process.env.NODE_ENV !== 'production',
-});
+app.start();
 ```
 
 We use Webpack to bundle our server code and it can't handle mixing `module.exports` and ECMAScript imports in the same file. To solve it, change your `server.js` file to use EcmaScript modules for both, importing and exporting:
