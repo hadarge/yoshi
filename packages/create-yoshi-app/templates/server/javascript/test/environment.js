@@ -23,8 +23,6 @@ function emitConfigs() {
 function bootstrapServer() {
   return testkit.server('./index', {
     env: {
-      PORT: 3100,
-      MANAGEMENT_PORT: 3104,
       NEW_RELIC_LOG_LEVEL: 'warn',
       DEBUG: '',
     },
