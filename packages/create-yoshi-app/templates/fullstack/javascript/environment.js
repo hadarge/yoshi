@@ -13,7 +13,7 @@ module.exports.emitConfigs = () => {
 
 // start the server as an embedded app
 module.exports.bootstrapServer = () => {
-  return testkit.server('./index', {
+  return testkit.app('./index', {
     env: process.env,
   });
 };

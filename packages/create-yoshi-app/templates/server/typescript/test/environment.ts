@@ -19,7 +19,6 @@ function emitConfigs() {
   }).emit();
 }
 
-// start the server as an embedded app
 function bootstrapServer() {
   return testkit.server('./index', {
     env: {
