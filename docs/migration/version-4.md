@@ -13,25 +13,25 @@ This is the migration guide from v3 to v4. If you're still using Yoshi v1 or v2,
 Inside any Yoshi project, run:
 
 ```
-npm install --save-dev yoshi
+npm install --save-dev yoshi@4
 ```
 
 If you depend on [yoshi-style-dependencies](https://github.com/wix/yoshi/tree/version_4.x/packages/yoshi-style-dependencies), [yoshi-angular-dependencies](https://github.com/wix/yoshi/tree/version_4.x/packages/yoshi-angular-dependencies) or [jest-yoshi-preset](https://github.com/wix/yoshi/tree/version_4.x/packages/jest-yoshi-preset), make sure to bump them too:
 
 ```
-npm install --save-dev yoshi-style-dependencies
+npm install --save-dev yoshi-style-dependencies@4
 ```
 
 And/or:
 
 ```
-npm install --save-dev yoshi-angular-dependencies
+npm install --save-dev yoshi-angular-dependencies@4
 ```
 
 And/or:
 
 ```
-npm install --save-dev jest-yoshi-preset
+npm install --save-dev jest-yoshi-preset@4
 ```
 
 **Finally, for TypeScript projects, Yoshi now requires TypeScript with a minimum version of 2.9.0.**
@@ -141,7 +141,7 @@ To make migration easier, please start by running a helper script, which will ch
 curl https://gist.githubusercontent.com/ronami/1608dc49efc166bb6e15a21f7073cb79/raw | node
 ```
 
-__Note:__ If you're using `MATCH_ENV=component` it should be replaced with `MATCH_ENV=spec`
+**Note:** If you're using `MATCH_ENV=component` it should be replaced with `MATCH_ENV=spec`
 
 ### Puppeteer actions in Jest have a shorter default timeout
 
