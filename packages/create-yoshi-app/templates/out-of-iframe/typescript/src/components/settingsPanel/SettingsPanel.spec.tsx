@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { mount } from 'enzyme/build';
-import { ExampleWidgetSettings } from './ExampleWidgetSettings';
+import SettingsPanel from './SettingsPanel';
 import { Slider, ColorPickerColorSpace } from '@wix/wix-base-ui';
 
-describe('Example Widget Settings', () => {
+describe('Settings Panel', () => {
   let wrapper;
 
   const styleParams = {
@@ -29,12 +29,12 @@ describe('Example Widget Settings', () => {
   afterEach(() => wrapper.unmount());
 
   it('should render a color picker component', () => {
-    wrapper = mount(<ExampleWidgetSettings />);
+    wrapper = mount(<SettingsPanel />);
     expect(wrapper.find(ColorPickerColorSpace).exists()).toBe(true);
   });
 
   it('should render a font size picker', () => {
-    wrapper = mount(<ExampleWidgetSettings />);
+    wrapper = mount(<SettingsPanel />);
     expect(wrapper.find(Slider).exists()).toBe(true);
   });
 });

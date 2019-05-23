@@ -14,18 +14,11 @@
   },
   "include": [
     "./test/**/*.tsx",
-    "./src/**/*.tsx",
     "./test/**/*.ts",
+    "./src/**/*.tsx",
     "./src/**/*.ts"
   ],
   "files": [
-    "./node_modules/jest-yoshi-preset/types.d.ts",
-    "./src/types/external-modules.d.ts",
-    "./src/types/external-types.d.ts",
-    "./src/types/stylable.d.ts",
-    "./src/editorExampleWidget.entry.tsx",
-    "./src/settingsExampleWidget.entry.tsx",
-    "./src/viewerScript.entry.ts",
-    "./src/viewerExampleWidget.entry.ts"
+    "./node_modules/jest-yoshi-preset/types.d.ts"
   ]
 }

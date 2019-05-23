@@ -31,6 +31,9 @@ if (window.Wix && window.Wix.Utils.getViewMode() === 'standalone') {
       getCompId() {
         return 'compId';
       },
+      getUid() {
+        return '123';
+      },
       getLocale() {
         return 'en';
       },
@@ -48,5 +51,5 @@ if (window.Wix && window.Wix.Utils.getViewMode() === 'standalone') {
       getStyleParams: cb => cb(this.styleParams),
       getStyleId: cb => cb('style-jp8ide5x'),
     };
-  }() as any;
+  }();
 }

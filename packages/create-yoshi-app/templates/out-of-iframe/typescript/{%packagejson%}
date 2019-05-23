@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start --entry-point=./test/fake-server.js",
+    "start": "yoshi start --entry-point=./test/fake-server.js --no-test",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test --jest",
@@ -46,7 +46,8 @@
     "prop-types": "~15.6.0",
     "react": "~16.6.2",
     "react-dom": "~16.6.2",
-    "react-i18next": "^7.11.0"
+    "react-i18next": "^7.11.0",
+    "wix-ui-tpa": "^1.0.123"
   },
   "lint-staged": {
     "*.{js,scss,less}": "yoshi lint"
@@ -71,17 +72,17 @@
       }
     },
     "entry": {
-      "settingsExampleWidget": "./settingsExampleWidget.entry.tsx",
-      "editorExampleWidget": "./editorExampleWidget.entry.tsx",
-      "viewerExampleWidget": "./viewerExampleWidget.entry.ts",
-      "viewerScript": "./viewerScript.entry.ts",
-      "wix-private-mock": "../test/wix-private.mock.ts"
+      "settingsPanel": "./settingsPanel.tsx",
+      "editorApp": "./editorApp.tsx",
+      "viewerApp": "./viewerApp/viewerWidget.tsx",
+      "viewerScript": "./viewerApp/viewerScript.ts",
+      "wix-private-mock": "../test/wix-private.mock.js"
     },
     "servers": {
       "cdn": {
         "ssl": true
       }
-    },    
+    },
     "exports": "[name]",
     "umdNamedDefine": false,
     "enhancedTpaStyle": true

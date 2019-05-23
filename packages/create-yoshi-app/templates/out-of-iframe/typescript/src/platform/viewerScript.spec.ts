@@ -1,7 +1,7 @@
 import { viewerScript } from './viewerScript';
-import { EXPERIMENTS_SCOPE } from '../config';
+import { EXPERIMENTS_SCOPE } from '../config/constants';
 import 'isomorphic-fetch';
-import { mockExperiments } from './exampleWidgetController.spec';
+import { mockExperiments } from '../components/app/appController.spec';
 
 describe('createControllers', () => {
   let widgetConfig;

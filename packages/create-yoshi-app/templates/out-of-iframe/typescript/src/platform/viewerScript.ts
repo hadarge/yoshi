@@ -1,4 +1,4 @@
-import { exampleWidgetControllerFactory } from './exampleWidgetController';
+import { createAppController } from '../components/app/appController';
 import {
   IWidgetController,
   IWidgetControllerConfig,
@@ -7,7 +7,7 @@ import {
 function createControllers(
   controllersConfig: IWidgetControllerConfig[],
 ): Promise<IWidgetController>[] {
-  return [exampleWidgetControllerFactory(controllersConfig[0])];
+  return [createAppController(controllersConfig[0])];
 }
 
 export const viewerScript: { createControllers } = {

@@ -1,9 +1,10 @@
+import { EXPERIMENTS_SCOPE } from '../../config/constants';
+import Experiments from '@wix/wix-experiments';
+
 import {
   IWidgetControllerConfig,
   IWidgetController,
 } from '@wix/native-components-infra/dist/src/types/types';
-import { EXPERIMENTS_SCOPE } from '../config/index';
-import Experiments from '@wix/wix-experiments';
 
 function getLocale({ wixCodeApi }): string {
   return wixCodeApi.window.locale || 'en';
@@ -17,7 +18,7 @@ async function getExperimentsByScope(scope: string) {
   return experiments.all();
 }
 
-export async function exampleWidgetControllerFactory(
+export async function createAppController(
   controllerConfig: IWidgetControllerConfig,
 ): Promise<IWidgetController> {
   const { appParams, setProps } = controllerConfig;

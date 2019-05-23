@@ -1,7 +1,7 @@
 import * as fakeTpaResponse from './fake-tpa-response.json';
 
 if (window.Wix && window.Wix.Utils.getViewMode() === 'standalone') {
-  window.Wix = new (class WixMock {
+  window.Wix = new class WixMock {
     modelCache = {};
     siteColors;
     siteTextPresets;
@@ -51,5 +51,5 @@ if (window.Wix && window.Wix.Utils.getViewMode() === 'standalone') {
       getStyleParams: cb => cb(this.styleParams),
       getStyleId: cb => cb('style-jp8ide5x'),
     };
-  })();
+  }();
 }

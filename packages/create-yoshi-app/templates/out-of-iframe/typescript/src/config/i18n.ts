@@ -1,5 +1,5 @@
-import memoize from 'lodash/memoize';
-import i18next from 'i18next';
+import * as memoize from 'lodash/memoize';
+import * as i18next from 'i18next';
 
 export const i18nInstance = i18next.createInstance();
 

@@ -26,12 +26,12 @@ app.get(
   },
 );
 
-app.use('/editorExampleWidget', (req, res) => {
-  res.send(renderVM('./src/editorExampleWidget.entry.vm'));
+app.use('/editorApp', (req, res) => {
+  res.send(renderVM('./src/templates/editorApp.vm'));
 });
 
-app.use('/settingsExampleWidget', (req, res) => {
-  res.send(renderVM('./src/settingsExampleWidget.entry.vm'));
+app.use('/settingsPanel', (req, res) => {
+  res.send(renderVM('./src/templates/settingsPanel.vm'));
 });
 
 // Launch the server
