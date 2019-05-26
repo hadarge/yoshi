@@ -7,8 +7,8 @@ const fs = require('fs');
 const server = httpTestkit.server({
   port: process.env.PORT,
   ssl: {
-    cert: fs.readFileSync('./test/certificates/cert.pem', 'utf-8'),
-    key: fs.readFileSync('./test/certificates/key.pem', 'utf-8'),
+    cert: fs.readFileSync('dev/certificates/cert.pem', 'utf-8'),
+    key: fs.readFileSync('dev/certificates/key.pem', 'utf-8'),
     passphrase: '1234',
   },
 });

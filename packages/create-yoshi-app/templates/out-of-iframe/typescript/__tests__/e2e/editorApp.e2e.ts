@@ -6,5 +6,3 @@ describe('React application', () => {
     expect(await page.$eval('h2', (e: any) => e.innerText)).toEqual('Hello World!');
   });
 });
-
-//todo check (window as any)

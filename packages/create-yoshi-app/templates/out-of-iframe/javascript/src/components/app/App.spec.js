@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { App } from './App';
 import { I18nextProvider } from 'react-i18next';
-import i18n from '../../../test/helpers/i18n.mock';
+import i18n from '../../../__tests__/helpers/i18n.mock';
 import { ExperimentsProvider } from '@wix/wix-experiments-react';
 
 describe('App', () => {
