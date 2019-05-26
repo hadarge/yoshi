@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.6.5 (2019-05-26)
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1326](https://github.com/wix/yoshi/pull/1326) Reuse `createApp` from `dev` script and move relevant parts to the `bin` directory ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.6.4 (2019-05-26)
 
 #### :bug: Bug Fix
