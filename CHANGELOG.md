@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.6.6 (2019-05-26)
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1327](https://github.com/wix/yoshi/pull/1327) Add support for multiple projects in `create-yoshi-app:dev` ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.6.5 (2019-05-26)
 
 #### :house: Internal
