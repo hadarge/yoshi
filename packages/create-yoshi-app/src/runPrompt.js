@@ -17,7 +17,7 @@ module.exports = async (workingDir = process.cwd()) => {
   if (promptAborted) {
     console.log();
     console.log('Aborting ...');
-    process.exit(1);
+    process.exit(0);
   }
 
   // use the basename of the current working directory if projectName wasn't supplied

@@ -6,31 +6,17 @@ const fs = require('fs-extra');
 const path = require('path');
 const tempy = require('tempy');
 const chalk = require('chalk');
+const map = require('lodash/map');
+const reverse = require('lodash/reverse');
+const sortBy = require('lodash/sortBy');
 const prompts = require('prompts');
 const chokidar = require('chokidar');
 const clipboardy = require('clipboardy');
 const { replaceTemplates, getValuesMap } = require('../src/index');
-const cache = require('./cache');
-const TemplateModel = require('../src/TemplateModel');
 const { appCacheKey } = require('../src/constants');
+const cache = require('./cache')(appCacheKey);
+const TemplateModel = require('../src/TemplateModel');
 const createApp = require('../src/createApp');
-
-async function shouldContinueOldSession(templateTitle) {
-  const response = await prompts({
-    type: 'confirm',
-    name: 'value',
-    message: `we've found an old session when you worked on a ${chalk.magenta(
-      templateTitle,
-    )} template.\n\n Answer ${chalk.cyan(
-      'Yes',
-    )} if you would like to continue working on it, or ${chalk.cyan(
-      'No',
-    )} to start a new session`,
-    initial: true,
-  });
-
-  return response.value;
-}
 
 function startWatcher(workingDir, templateModel) {
   const templatePath = templateModel.getPath();
@@ -86,24 +72,84 @@ function startWatcher(workingDir, templateModel) {
   });
 }
 
+async function askShouldContinueFromCache(cachedProjects) {
+  const abortConstant = '__new_project__';
+  let canceled;
+
+  const projectsChoices = reverse(
+    sortBy(
+      map(cachedProjects, (value, title) => {
+        const lastModified = new Date(value.lastModified);
+
+        return {
+          title: `${title}${chalk.dim(` [${lastModified}]`)}`,
+          value,
+        };
+      }),
+      'value.lastModified',
+    ),
+  );
+
+  const response = await prompts(
+    {
+      type: 'select',
+      name: 'value',
+      message: `We've found an old session when you worked on, choose them to continue from the last project`,
+      choices: [
+        { title: 'I want to start a new session', value: abortConstant },
+        ...projectsChoices,
+      ],
+    },
+    {
+      onCancel: () => {
+        canceled = true;
+      },
+    },
+  );
+
+  if (response.value === abortConstant || canceled) {
+    return false;
+  }
+
+  response.value.templateModel = TemplateModel.fromJSON(
+    response.value.templateModel,
+  );
+
+  return response.value;
+}
+
+function upsertProjectInCache(templateModel, workingDir) {
+  const templateCacheObj = {
+    [templateModel.getTitle()]: {
+      templateModel,
+      workingDir,
+      lastModified: Date.now(),
+    },
+  };
+
+  if (!cache.has()) {
+    cache.set(templateCacheObj);
+  } else {
+    const cachedTemplates = cache.get();
+
+    cache.set({ ...cachedTemplates, ...templateCacheObj });
+  }
+}
+
 async function init() {
   let templateModel;
   let workingDir;
-  let cacheData;
-  let readFromCache;
+  let chosenProject;
 
-  if (cache.has(appCacheKey)) {
-    cacheData = cache.get(appCacheKey);
-    cacheData.templateModel = TemplateModel.fromJSON(cacheData.templateModel);
+  if (cache.has()) {
+    const cachedProjects = cache.get();
 
-    if (await shouldContinueOldSession(cacheData.templateModel.getTitle())) {
-      readFromCache = true;
-    }
+    chosenProject = await askShouldContinueFromCache(cachedProjects);
   }
 
-  if (readFromCache) {
-    templateModel = cacheData.templateModel;
-    workingDir = cacheData.workingDir;
+  if (!!chosenProject) {
+    workingDir = chosenProject.workingDir;
+    templateModel = chosenProject.templateModel;
 
     await createApp({
       workingDir,
@@ -119,12 +165,9 @@ async function init() {
       install: false,
       lint: false,
     });
-
-    cache.set(appCacheKey, {
-      templateModel,
-      workingDir,
-    });
   }
+
+  upsertProjectInCache(templateModel, workingDir);
 
   clipboardy.writeSync(workingDir);
 
