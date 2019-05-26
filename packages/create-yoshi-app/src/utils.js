@@ -3,7 +3,7 @@ const execa = require('execa');
 
 module.exports.clearConsole = () => process.stdout.write('\x1Bc');
 
-module.exports.install = dir => {
+module.exports.npmInstall = dir => {
   console.log(
     `Running ${chalk.magenta(
       'npm install',

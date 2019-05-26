@@ -10,8 +10,6 @@ jest.mock('../src/runPrompt');
 jest.mock('../src/verifyRegistry');
 jest.mock('../src/utils', () => ({
   ...require.requireActual('../src/utils'),
-  install: jest.fn(),
-  lintFix: jest.fn(),
   clearConsole: jest.fn(),
 }));
 
@@ -28,9 +26,9 @@ afterEach(() => {
 
 test('it should generate a git repo', async () => {
   const tempDir = tempy.directory();
-  require('../src/runPrompt').mockReturnValue(minimalTemplateAnswers());
+  require('../src/runPrompt').mockReturnValue(minimalTemplateModel());
   require('../src/verifyRegistry').mockReturnValue(undefined);
-  await createApp({ workingDir: tempDir });
+  await createApp({ workingDir: tempDir, install: false, lint: false });
 
   expect(() => {
     console.log('Checking git status...');
@@ -41,7 +39,7 @@ test('it should generate a git repo', async () => {
 });
 
 test('it should not create a git repo if the target directory is contained in a git repo', async () => {
-  require('../src/runPrompt').mockReturnValue(minimalTemplateAnswers());
+  require('../src/runPrompt').mockReturnValue(minimalTemplateModel());
   require('../src/verifyRegistry').mockReturnValue(undefined);
 
   const tempDir = tempy.directory();
@@ -49,22 +47,25 @@ test('it should not create a git repo if the target directory is contained in a 
 
   gitInit(tempDir);
   fs.ensureDirSync(projectDir);
-  await createApp({ workingDir: projectDir });
+  await createApp({ workingDir: projectDir, install: false, lint: false });
 
   expect(() => fs.statSync(path.join(projectDir, '.git'))).toThrow();
 });
 
-test('it uses answers from a file', async () => {
-  const answersFile = tempy.file();
-  fs.outputFileSync(answersFile, JSON.stringify(minimalTemplateAnswers()));
+test('it uses a template model', async () => {
+  const templateModel = minimalTemplateModel();
 
   const tempDir = tempy.directory();
   const projectDir = path.join(tempDir, 'project');
 
-  gitInit(tempDir);
   fs.ensureDirSync(projectDir);
 
-  await createApp({ workingDir: projectDir, answersFile });
+  await createApp({
+    workingDir: projectDir,
+    templateModel,
+    install: false,
+    lint: false,
+  });
 
   const packageJson = fs.readJSONSync(
     path.join(tempDir, 'project', 'package.json'),
@@ -72,8 +73,8 @@ test('it uses answers from a file', async () => {
   expect(packageJson.name).toBe('minimal-template');
 });
 
-function minimalTemplateAnswers() {
-  const answers = TemplateModel.fromJSON({
+function minimalTemplateModel() {
+  return TemplateModel.fromJSON({
     projectName: `test-project`,
     authorName: 'rany',
     authorEmail: 'rany@wix.com',
@@ -84,6 +85,4 @@ function minimalTemplateAnswers() {
       path: path.join(__dirname, './__fixtures__/minimal-template/'),
     },
   });
-
-  return answers;
 }

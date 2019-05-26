@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs-extra');
 
 module.exports = class TemplateModel {
   constructor({
@@ -31,5 +32,9 @@ module.exports = class TemplateModel {
 
   static fromJSON(options) {
     return new TemplateModel(options);
+  }
+
+  static fromFilePath(answersFilePath) {
+    this.fromJSON(fs.readJSONSync(answersFilePath));
   }
 };

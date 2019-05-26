@@ -9,16 +9,11 @@ const chalk = require('chalk');
 const prompts = require('prompts');
 const chokidar = require('chokidar');
 const clipboardy = require('clipboardy');
-const {
-  runPrompt,
-  generateProject,
-  replaceTemplates,
-  getValuesMap,
-} = require('../src/index');
-const { clearConsole } = require('../src/utils');
+const { replaceTemplates, getValuesMap } = require('../src/index');
 const cache = require('./cache');
 const TemplateModel = require('../src/TemplateModel');
 const { appCacheKey } = require('../src/constants');
+const createApp = require('../src/createApp');
 
 async function shouldContinueOldSession(templateTitle) {
   const response = await prompts({
@@ -35,50 +30,6 @@ async function shouldContinueOldSession(templateTitle) {
   });
 
   return response.value;
-}
-
-async function createApp({ cacheData, useCache }) {
-  clearConsole();
-  let templateModel;
-
-  if (useCache) {
-    templateModel = cacheData.templateModel;
-  } else {
-    templateModel = await runPrompt();
-
-    clearConsole();
-  }
-
-  const workingDir = useCache
-    ? cacheData.workingDir
-    : path.join(tempy.directory(), `generated-${templateModel.getTitle()}`);
-
-  fs.ensureDirSync(workingDir);
-
-  generateProject(templateModel, workingDir);
-  // install(workingDir);
-  // lintFix(workingDir);
-
-  cache.set(appCacheKey, {
-    templateModel: templateModel,
-    workingDir,
-  });
-
-  console.log();
-
-  if (useCache) {
-    console.log(`continue working on ${chalk.green(workingDir)}`);
-  } else {
-    console.log(`project created on ${chalk.green(workingDir)}`);
-  }
-
-  console.log();
-  console.log('> ', chalk.cyan('directory path has copied to clipboard 📋'));
-  console.log();
-
-  clipboardy.writeSync(workingDir);
-
-  return { templateModel, workingDir };
 }
 
 function startWatcher(workingDir, templateModel) {
@@ -133,27 +84,52 @@ function startWatcher(workingDir, templateModel) {
     fs.removeSync(destinationPath);
     console.log(chalk.red('removed ') + chalk.cyan(destinationPath));
   });
-
-  // TODO: listen to directories events
 }
 
 async function init() {
-  let useCache = false;
+  let templateModel;
+  let workingDir;
   let cacheData;
+  let readFromCache;
 
   if (cache.has(appCacheKey)) {
     cacheData = cache.get(appCacheKey);
     cacheData.templateModel = TemplateModel.fromJSON(cacheData.templateModel);
 
     if (await shouldContinueOldSession(cacheData.templateModel.getTitle())) {
-      useCache = true;
+      readFromCache = true;
     }
   }
 
-  const { templateModel, workingDir } = await createApp({
-    useCache,
-    cacheData,
-  });
+  if (readFromCache) {
+    templateModel = cacheData.templateModel;
+    workingDir = cacheData.workingDir;
+
+    await createApp({
+      workingDir,
+      templateModel,
+      install: false,
+      lint: false,
+    });
+  } else {
+    workingDir = tempy.directory();
+
+    templateModel = await createApp({
+      workingDir,
+      install: false,
+      lint: false,
+    });
+
+    cache.set(appCacheKey, {
+      templateModel,
+      workingDir,
+    });
+  }
+
+  clipboardy.writeSync(workingDir);
+
+  console.log('> ', chalk.cyan('directory path has copied to clipboard 📋'));
+  console.log();
 
   startWatcher(workingDir, templateModel);
 }
