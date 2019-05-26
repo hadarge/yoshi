@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.6.4 (2019-05-26)
+
+#### :bug: Bug Fix
+
+- [#1320](https://github.com/wix/yoshi/pull/1320) Fix the migration guide of version 4 ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1322](https://github.com/wix/yoshi/pull/1322) Yoshi 4 migration `ooi` template ([@ranyitz](https://github.com/ranyitz))
+  - [#1316](https://github.com/wix/yoshi/pull/1316) Refactor `src` file structure for `ooi` TypeScript template ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.6.3 (2019-05-22)
 
 #### :bug: Bug Fix
