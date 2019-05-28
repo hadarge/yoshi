@@ -9,7 +9,14 @@ module.exports = class SocketServer extends EventEmitter {
     this.connections = [];
 
     this.server = http.createServer();
-    this.socket = sockjs.createServer();
+    this.socket = sockjs.createServer({
+      // Limit useless logs
+      log(severity, line) {
+        if (severity === 'error') {
+          console.error(line);
+        }
+      },
+    });
 
     this.socket.installHandlers(this.server, { prefix: '/_yoshi_server_hmr_' });
 
