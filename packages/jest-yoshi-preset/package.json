@@ -1,6 +1,6 @@
 {
   "name": "jest-yoshi-preset",
-  "version": "4.6.4",
+  "version": "4.7.0",
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
   "keywords": [
