@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.7.0 (2019-05-28)
+
+#### :rocket: New Feature
+
+- `jest-yoshi-preset`
+  - [#1330](https://github.com/wix/yoshi/pull/1330) Add `@types/jest` dependency for better autocompletions in tests ([@litalwix](https://github.com/litalwix))
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1331](https://github.com/wix/yoshi/pull/1331) Limit useless server HMR logs ([@ronami](https://github.com/ronami))
+
 ## 4.6.6 (2019-05-26)
 
 #### :house: Internal
