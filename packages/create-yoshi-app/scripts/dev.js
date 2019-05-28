@@ -17,6 +17,7 @@ const { appCacheKey } = require('../src/constants');
 const cache = require('./cache')(appCacheKey);
 const TemplateModel = require('../src/TemplateModel');
 const createApp = require('../src/createApp');
+const { clearConsole } = require('../src/utils');
 
 function startWatcher(workingDir, templateModel) {
   const templatePath = templateModel.getPath();
@@ -82,7 +83,9 @@ async function askShouldContinueFromCache(cachedProjects) {
         const lastModified = new Date(value.lastModified);
 
         return {
-          title: `${title}${chalk.dim(` [${lastModified}]`)}`,
+          title: `${title}${chalk.dim.italic(
+            ` (${lastModified.toLocaleString()})`,
+          )}`,
           value,
         };
       }),
@@ -90,11 +93,13 @@ async function askShouldContinueFromCache(cachedProjects) {
     ),
   );
 
+  clearConsole();
+
   const response = await prompts(
     {
       type: 'select',
       name: 'value',
-      message: `We've found an old session when you worked on, choose them to continue from the last project`,
+      message: `You can choose to continue an old session or start a new one`,
       choices: [
         { title: 'I want to start a new session', value: abortConstant },
         ...projectsChoices,
