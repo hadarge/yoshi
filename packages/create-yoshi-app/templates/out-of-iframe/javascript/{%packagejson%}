@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "yoshi start --entry-point=dist/server.js --url=https://gileck5.wixsite.com/ooi-dev",
+    "start:editor": "yoshi start --entry-point=dist/server.js --url=https://editor.wix.com/html/editor/web/renderer/edit/b9d9cf23-cb0a-4b45-9a68-480736b6aaf0?metaSiteId=3154eb7d-784e-4056-a1da-4ab36bee981f",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test --jest",
