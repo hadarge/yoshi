@@ -1,6 +1,6 @@
 {
   "name": "jest-environment-yoshi-bootstrap",
-  "version": "4.7.1",
+  "version": "4.7.2",
   "description": "bootstrap environment for jest",
   "main": "index.js",
   "keywords": [
@@ -14,8 +14,8 @@
     "jest": "^24.1.0"
   },
   "dependencies": {
-    "yoshi-config": "4.6.3",
-    "yoshi-helpers": "4.7.1"
+    "yoshi-config": "4.7.2",
+    "yoshi-helpers": "4.7.2"
   },
   "devDependencies": {
     "jest-environment-node": "^24.0.0"
