@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.7.2 (2019-05-29)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#1342](https://github.com/wix/yoshi/pull/1342) `ooi` templates have a `"start:editor"` script in npm scripts ([@ranyitz](https://github.com/ranyitz))
+  - [#1337](https://github.com/wix/yoshi/pull/1337) Work against production when running `npm start` ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+
+- `yoshi-config`
+  - [#1340](https://github.com/wix/yoshi/pull/1340) Remove the unused configuration option - `universalProject` ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.7.1 (2019-05-29)
 
 #### :bug: Bug Fix
