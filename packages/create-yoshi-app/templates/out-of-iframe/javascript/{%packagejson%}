@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start --entry-point=dist/server.js",
+    "start": "yoshi start --entry-point=dist/server.js --url=https://gileck5.wixsite.com/ooi-dev",
     "precommit": "lint-staged",
     "pretest": "yoshi build",
     "test": "yoshi test --jest",
@@ -73,7 +73,7 @@
     "entry": {
       "settingsPanel": "./settingsPanel.js",
       "editorApp": "./editorApp.js",
-      "viewerApp": "./viewerApp/viewerWidget.js",
+      "viewerApp": "./viewerApp/viewerApp.js",
       "viewerScript": "./viewerApp/viewerScript.js",
       "wix-private-mock": "../dev/wix-private.mock.js"
     },
