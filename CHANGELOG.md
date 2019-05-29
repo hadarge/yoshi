@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.7.1 (2019-05-29)
+
+#### :bug: Bug Fix
+
+- `yoshi-helpers`, `yoshi`
+  - [#1338](https://github.com/wix/yoshi/pull/1338) Fix `MANAGEMENT_PORT` default and introduce `GRPC_PORT` ([@alexandervain](https://github.com/alexandervain))
+- `create-yoshi-app`
+  - [#1336](https://github.com/wix/yoshi/pull/1336) Use wallaby jest setup instead of mocha in library template ([@yurynix](https://github.com/yurynix))
+
 ## 4.7.0 (2019-05-28)
 
 #### :rocket: New Feature
