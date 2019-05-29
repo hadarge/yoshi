@@ -255,9 +255,3 @@ Next time you'll run `yoshi lint`, this command will execute and only then the l
 
 If option is `true` AMD modules of the UMD build will have names. Otherwise an anonymous define is used(the same as in [webpack](https://webpack.js.org/configuration/output/#output-umdnameddefine)).
 By default it is `true`.
-
-## universalProject
-
-`Boolean`
-
-Indicates whether the current project is a universal project.

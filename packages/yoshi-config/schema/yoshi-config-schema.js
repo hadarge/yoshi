@@ -169,11 +169,6 @@ const schema = {
     },
     umdNamedDefine:
       webpackOptions.definitions.OutputOptions.properties.umdNamedDefine,
-    universalProject: {
-      description:
-        'Indicates whether the current project is a universal project.',
-      type: 'boolean',
-    },
     projectType: {
       description:
         'An experimental way of running an app by creating a bundle specifically for the server.',
