@@ -3,13 +3,15 @@ const { NODE_PLATFORM_DEFAULT_CONFIGS_DIR } = require('yoshi-config/paths');
 
 const getEnvVars = ({ port, appConfDir, appLogDir, appPersistentDir }) => {
   const PORT = Number(port) || 3000;
-  const MANAGEMENT_PORT = PORT + 1;
+  const GRPC_PORT = PORT + 1;
+  const MANAGEMENT_PORT = PORT + 4;
   const WNP_TEST_RPC_PORT = PORT + 2;
   const WNP_TEST_PETRI_PORT = PORT + 3;
   const WIX_BOOT_LABORATORY_URL = `http://localhost:${WNP_TEST_PETRI_PORT}`;
 
   return {
     PORT,
+    GRPC_PORT,
     MANAGEMENT_PORT,
     WNP_TEST_RPC_PORT,
     WNP_TEST_PETRI_PORT,
