@@ -62,7 +62,7 @@ module.exports = runner.command(async () => {
     const jsFilesToLint =
       shouldRunOnSpecificFiles && jsFiles.length
         ? jsFiles
-        : ['*.js', `${globs.base}/**/*.js`];
+        : [...globs.baseDirs.map(dir => `${dir}/**/*.js`), '*.js'];
 
     try {
       await runEsLint(jsFilesToLint);

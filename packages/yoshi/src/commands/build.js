@@ -140,9 +140,9 @@ module.exports = runner.command(
       return copy(
         {
           pattern: [
-            `${globs.base}/assets/**/*`,
-            `${globs.base}/**/*.{ejs,html,vm}`,
-            `${globs.base}/**/*.{css,json,d.ts}`,
+            ...globs.baseDirs.map(dir => `${dir}/assets/**/*`),
+            ...globs.baseDirs.map(dir => `${dir}/**/*.{ejs,html,vm}`),
+            ...globs.baseDirs.map(dir => `${dir}/**/*.{css,json,d.ts}`),
           ],
           target: globs.dist({ esTarget }),
         },
@@ -154,8 +154,10 @@ module.exports = runner.command(
       return copy(
         {
           pattern: [
-            `${globs.assetsLegacyBase}/assets/**/*`,
-            `${globs.assetsLegacyBase}/**/*.{ejs,html,vm}`,
+            ...globs.assetsLegacyBaseDirs.map(dir => `${dir}/assets/**/*`),
+            ...globs.assetsLegacyBaseDirs.map(
+              dir => `${dir}/**/*.{ejs,html,vm}`,
+            ),
           ],
           target: 'dist/statics',
         },
@@ -224,7 +226,9 @@ module.exports = runner.command(
       if (isAngularProject) {
         return ngAnnotate(
           {
-            pattern: path.join(globs.dist(), globs.base, '**', '*.js'),
+            pattern: globs.baseDirs.map(dir =>
+              path.join(globs.dist(), dir, '**', '*.js'),
+            ),
             target: './',
           },
           { title: 'ng-annotate' },

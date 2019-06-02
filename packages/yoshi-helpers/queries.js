@@ -46,9 +46,8 @@ module.exports.shouldRunStylelint = () => {
 
 module.exports.shouldRunSass = () => {
   return (
-    globby
-      .sync(`${globs.base}/**/*.scss`)
-      .filter(file => path.basename(file)[0] !== '_').length > 0
+    globby.sync(globs.scss).filter(file => path.basename(file)[0] !== '_')
+      .length > 0
   );
 };
 
@@ -61,7 +60,7 @@ module.exports.shouldExportModule = () => {
 };
 
 module.exports.shouldRunLess = () => {
-  return globby.sync(`${globs.base}/**/*.less`).length > 0;
+  return globby.sync(globs.less).length > 0;
 };
 
 module.exports.hasE2ETests = () => {

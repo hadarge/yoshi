@@ -90,9 +90,9 @@ module.exports = runner.command(
       copy(
         {
           pattern: [
-            `${globs.base}/assets/**/*`,
-            `${globs.base}/**/*.{ejs,html,vm}`,
-            `${globs.base}/**/*.{css,json,d.ts}`,
+            ...globs.baseDirs.map(dir => `${dir}/assets/**/*`),
+            ...globs.baseDirs.map(dir => `${dir}/**/*.{ejs,html,vm}`),
+            ...globs.baseDirs.map(dir => `${dir}/**/*.{css,json,d.ts}`),
           ],
           target: 'dist',
         },
@@ -101,8 +101,10 @@ module.exports = runner.command(
       copy(
         {
           pattern: [
-            `${globs.assetsLegacyBase}/assets/**/*`,
-            `${globs.assetsLegacyBase}/**/*.{ejs,html,vm}`,
+            ...globs.assetsLegacyBaseDirs.map(dir => `${dir}/assets/**/*`),
+            ...globs.assetsLegacyBaseDirs.map(
+              dir => `${dir}/**/*.{ejs,html,vm}`,
+            ),
           ],
           target: 'dist/statics',
         },
@@ -162,9 +164,9 @@ module.exports = runner.command(
     watch(
       {
         pattern: [
-          `${globs.base}/assets/**/*`,
-          `${globs.base}/**/*.{ejs,html,vm}`,
-          `${globs.base}/**/*.{css,json,d.ts}`,
+          ...globs.baseDirs.map(dir => `${dir}/assets/**/*`),
+          ...globs.baseDirs.map(dir => `${dir}/**/*.{ejs,html,vm}`),
+          ...globs.baseDirs.map(dir => `${dir}/**/*.{css,json,d.ts}`),
         ],
       },
       changed => copy({ pattern: changed, target: 'dist' }),
@@ -173,8 +175,8 @@ module.exports = runner.command(
     watch(
       {
         pattern: [
-          `${globs.assetsLegacyBase}/assets/**/*`,
-          `${globs.assetsLegacyBase}/**/*.{ejs,html,vm}`,
+          ...globs.assetsLegacyBaseDirs.map(dir => `${dir}/assets/**/*`),
+          ...globs.assetsLegacyBaseDirs.map(dir => `${dir}/**/*.{ejs,html,vm}`),
         ],
       },
       changed => copy({ pattern: changed, target: 'dist/statics' }),
@@ -264,23 +266,20 @@ module.exports = runner.command(
         target: 'dist',
       };
 
-      watch(
-        { pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'] },
-        async changed => {
-          await babel(
-            {
-              pattern: changed,
-              ...babelConfig,
-            },
-            { title: 'babel' },
-          );
-          return appServer();
-        },
-      );
+      watch({ pattern: globs.babel }, async changed => {
+        await babel(
+          {
+            pattern: changed,
+            ...babelConfig,
+          },
+          { title: 'babel' },
+        );
+        return appServer();
+      });
 
       await babel(
         {
-          pattern: [path.join(globs.base, '**', '*.js{,x}'), 'index.js'],
+          pattern: globs.babel,
           ...babelConfig,
         },
         { title: 'babel' },

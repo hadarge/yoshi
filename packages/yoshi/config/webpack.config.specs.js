@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const glob = require('glob');
+const globby = require('globby');
 const StylableWebpackPlugin = require('@stylable/webpack-plugin');
 const {
   createCommonWebpackConfig,
@@ -12,7 +12,7 @@ const project = require('yoshi-config');
 const specsGlob = project.specs.browser || globs.specs;
 const karmaSetupPath = path.join(process.cwd(), 'test', `karma-setup.js`);
 
-const entry = glob.sync(specsGlob).map(p => path.resolve(p));
+const entry = globby.sync(specsGlob).map(p => path.resolve(p));
 
 if (fs.existsSync(karmaSetupPath)) {
   entry.unshift(karmaSetupPath);

@@ -31,13 +31,13 @@ module.exports = {
           ? require.resolve('jest-environment-jsdom-fourteen')
           : 'jsdom',
         testURL: 'http://localhost',
-        testMatch: [`<rootDir>/${globs.unitTests}`],
+        testMatch: globs.unitTests.map(glob => `<rootDir>/${glob}`),
         setupFiles: [require.resolve('regenerator-runtime/runtime')],
       },
       {
         displayName: 'e2e',
         testEnvironment: require.resolve('jest-environment-yoshi-puppeteer'),
-        testMatch: [`<rootDir>/${globs.e2eTests}`],
+        testMatch: globs.e2eTests.map(glob => `<rootDir>/${glob}`),
         setupFiles: [
           require.resolve(
             'jest-environment-yoshi-bootstrap/environment-setup.js',

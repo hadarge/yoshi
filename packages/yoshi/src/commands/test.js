@@ -18,6 +18,7 @@ const { createRunner } = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('yoshi-config/globs');
 const chalk = require('chalk');
+const globby = require('globby');
 const projectConfig = require('yoshi-config');
 const {
   watchMode,
@@ -60,7 +61,7 @@ module.exports = runner.command(
     const { karma, webpack } = tasks;
 
     const wixCdn = tasks[require.resolve('../tasks/cdn/index')];
-    const specsPattern = [projectConfig.specs.node || globs.specs];
+    const specsPattern = [].concat(projectConfig.specs.node || globs.specs);
 
     function bootstrapCdn() {
       if (!hasBundleInStaticsDir()) {
@@ -92,7 +93,7 @@ module.exports = runner.command(
 
     if (cliArgs.mocha) {
       if (shouldRunPuppeteer) {
-        specsPattern.push(globs.e2eTests);
+        specsPattern.push(...globby.sync(globs.e2eTests));
         await bootstrapCdn();
       }
 
@@ -125,7 +126,7 @@ module.exports = runner.command(
       };
 
       if (shouldWatch) {
-        watch({ pattern: [globs.testFilesWatch] }, async () => {
+        watch({ pattern: globs.testFilesWatch }, async () => {
           await runMocha(); // fail silently
         });
 
@@ -167,8 +168,10 @@ module.exports = runner.command(
         watch(
           {
             pattern: [
-              globs.specs,
-              path.join(globs.base, '**', '*.{js,jsx,ts,tsx}'),
+              ...globs.specs,
+              ...globs.baseDirs.map(dir =>
+                path.join(dir, '**', '*.{js,jsx,ts,tsx}'),
+              ),
               'index.js',
             ],
           },
