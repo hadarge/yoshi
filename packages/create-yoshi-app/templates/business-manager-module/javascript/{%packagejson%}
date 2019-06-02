@@ -37,7 +37,7 @@
     "yoshi-style-dependencies": "^4.1.0"
   },
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.19.0",
     "i18next": "~8.4.0",
     "i18next-xhr-backend": "~1.4.0",
     "react-i18next": "~4.8.0",

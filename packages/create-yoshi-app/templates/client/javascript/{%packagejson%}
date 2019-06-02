@@ -33,7 +33,7 @@
     "yoshi-style-dependencies": "^4.1.0"
   },
   "dependencies": {
-    "axios": "~0.16.0",
+    "axios": "^0.19.0",
     "i18next": "^11.6.0",
     "prop-types": "~15.6.0",
     "react": "16.8.0",
