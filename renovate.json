@@ -11,7 +11,7 @@
     "enabled": false
   },
   "schedule": [
-    "after 3:00am and before 7:00am on thursday"
+    "after 3:00am and before 7:00am on sunday"
   ],
   "packageRules": [
     {
