@@ -11,6 +11,7 @@ const baseDirs = [
   '__tests__',
   'testkit',
   'stories',
+  'packages',
 ];
 const assetsLegacyBaseDirs = ['app', 'bin', 'test', 'testkit', 'stories'];
 const assetsBase = 'src';
