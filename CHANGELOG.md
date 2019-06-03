@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.7.3 (2019-06-03)
+
+#### :nail_care: Polish
+
+- `yoshi-config`
+  - [#1349](https://github.com/wix/yoshi/pull/1349) Add `packages` directory to the base glob pattern ([@ronami](https://github.com/ronami))
+- `jest-yoshi-preset`, `yoshi-config`, `yoshi-helpers`, `yoshi`
+  - [#1348](https://github.com/wix/yoshi/pull/1348) Use multi glob patterns instead of a glob set ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`
+  - [#1346](https://github.com/wix/yoshi/pull/1346) Bump Axios to v0.19.0 ([@ronami](https://github.com/ronami))
+
 ## 4.7.2 (2019-05-29)
 
 #### :rocket: New Feature
