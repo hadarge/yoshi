@@ -150,6 +150,14 @@ Prevent bundling of certain imported packages and instead retrieve these externa
 }
 ```
 
+## startUrl
+
+> Similar to `yoshi start --url` cli option
+> If both are specificied `--url` will be used.
+
+opens the browser on the specified url.
+Supports a url string or an array of url strings.
+
 ## specs
 
 Specs globs are configurable. `browser` is for karma, `node` is for mocha and jasmine.

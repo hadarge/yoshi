@@ -90,6 +90,7 @@ const loadConfig = ({ validate, useCache } = { validate: false }) => {
     petriSpecsConfig: getConfig('petriSpecs', {}),
     performanceBudget: getConfig('performance'),
     resolveAlias: getConfig('resolveAlias', {}),
+    startUrl: getConfig('startUrl', null),
     keepFunctionNames: getConfig('keepFunctionNames', false),
     umdNamedDefine: getConfig('umdNamedDefine', true),
     experimentalBuildHtml: getConfig('experimentalBuildHtml'),

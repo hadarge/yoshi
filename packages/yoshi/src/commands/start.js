@@ -27,6 +27,7 @@ const {
   liveReload,
   petriSpecsConfig,
   clientProjectName,
+  startUrl,
 } = require('yoshi-config');
 const globs = require('yoshi-config/globs');
 const {
@@ -43,7 +44,7 @@ const {
 } = require('yoshi-helpers/utils');
 const { debounce } = require('lodash');
 const wixAppServer = require('../tasks/app-server');
-const openBrowser = require('react-dev-utils/openBrowser');
+const openBrowser = require('./utils/open-browser');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -149,7 +150,11 @@ module.exports = runner.command(
       ),
     ]);
 
-    openBrowser(cliArgs.url || localUrlForBrowser);
+    const urlToOpen = cliArgs.url || startUrl || localUrlForBrowser;
+
+    if (urlToOpen) {
+      openBrowser(urlToOpen);
+    }
 
     if (shouldRunTests && !isProduction()) {
       crossSpawn('npm', ['test', '--silent'], {

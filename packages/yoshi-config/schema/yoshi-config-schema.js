@@ -183,6 +183,24 @@ const schema = {
       description: 'An experimental way to enable monorepo specific features.',
       type: 'boolean',
     },
+    startUrl: {
+      description:
+        'Opens the browser on the specified url/s after running yoshi start',
+      anyOf: [
+        {
+          description:
+            'A url string or multiple url string seperated by commas',
+          type: 'string',
+        },
+        {
+          type: 'array',
+          items: {
+            description: 'A url string',
+            type: 'string',
+          },
+        },
+      ],
+    },
   },
 };
 

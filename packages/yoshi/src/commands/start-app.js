@@ -22,7 +22,7 @@ if (cliArgs.production) {
 const path = require('path');
 const fs = require('fs-extra');
 const chalk = require('chalk');
-const openBrowser = require('react-dev-utils/openBrowser');
+const openBrowser = require('./utils/open-browser');
 const chokidar = require('chokidar');
 const project = require('yoshi-config');
 const {
@@ -199,8 +199,7 @@ module.exports = async () => {
     process.exit(1);
   }
 
-  // Once it started, open up the browser
-  openBrowser(cliArgs.url || `http://localhost:${PORT}`);
+  openBrowser(cliArgs.url || project.startUrl || `http://localhost:${PORT}`);
 
   return {
     persistent: true,
