@@ -1,19 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app/App';
 import { ViewerScriptWrapper, withStyles } from '@wix/native-components-infra';
-import { viewerScript } from './platform/viewerScript';
+import viewerScript from '../viewerApp/viewerScript';
+import App from '../components/App';
 
-const WrappedExampleWidget = ViewerScriptWrapper(
+const EditorApp = ViewerScriptWrapper(
   withStyles(App, {
     cssPath: ['editorApp.stylable.bundle.css'],
   }),
   {
     viewerScript,
     Wix: window.Wix,
-    widgetConfig: {
-      widgetId: '',
-    },
+    widgetConfig: {},
     overrides: {
       platform: {
         baseUrls: {
@@ -24,4 +22,4 @@ const WrappedExampleWidget = ViewerScriptWrapper(
   },
 );
 
-ReactDOM.render(<WrappedExampleWidget />, document.getElementById('root'));
+ReactDOM.render(<EditorApp />, document.getElementById('root'));

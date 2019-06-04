@@ -1,5 +1,5 @@
-import App from '../components/app/App';
 import { withStyles } from '@wix/native-components-infra';
+import App from '../components/App';
 
 export default {
   component: withStyles(App, {

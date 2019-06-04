@@ -74,8 +74,8 @@
       }
     },
     "entry": {
-      "settingsPanel": "./settingsPanel.tsx",
-      "editorApp": "./editorApp.tsx",
+      "settingsPanel": "./settingsPanel/settingsPanel.tsx",
+      "editorApp": "./editorApp/editorApp.tsx",
       "viewerApp": "./viewerApp/viewerApp.tsx",
       "viewerScript": "./viewerApp/viewerScript.ts",
       "wix-private-mock": "../dev/wix-private.mock.js"

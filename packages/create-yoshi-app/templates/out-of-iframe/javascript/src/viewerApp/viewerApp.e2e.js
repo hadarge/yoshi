@@ -1,5 +1,5 @@
-describe('React application', () => {
-  it('should display title', async () => {
+describe('Viewer App', () => {
+  it('should display the title text', async () => {
     await page.goto('https://gileck5.wixsite.com/ooi-dev');
     await page.waitForSelector('h2');
 

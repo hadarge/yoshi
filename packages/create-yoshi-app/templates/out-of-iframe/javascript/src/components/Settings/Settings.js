@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as css from './SettingsPanel.scss';
-import './SettingsPanel.global.scss';
+import React from 'react';
+import * as css from './Settings.scss';
+import './Settings.global.scss';
 import { get } from 'lodash';
 import {
   Slider,
@@ -9,22 +9,13 @@ import {
   TextLabel,
 } from '@wix/wix-base-ui';
 
-interface ISettingsPanelState {
-  backgroundColor: string;
-  buttonBackgroundColor: string;
-  fontSize: number;
-}
-
-const defaultSettingsValues: ISettingsPanelState = {
+const defaultSettingsValues = {
   backgroundColor: '#ffffff',
   buttonBackgroundColor: '#ffffff',
   fontSize: 14,
 };
 
-export default class SettingsPanel extends React.Component<
-{},
-ISettingsPanelState
-> {
+export default class Settings extends React.Component {
   state = defaultSettingsValues;
 
   componentDidMount() {

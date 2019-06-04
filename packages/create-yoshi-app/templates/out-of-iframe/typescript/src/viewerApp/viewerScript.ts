@@ -1,13 +1,17 @@
-import { createAppController } from '../components/app/appController';
+import { createAppController } from '../components/App/appController';
 
-import { ICreateControllers } from '@wix/native-components-infra/dist/src/types/types';
-// TODO assign this type
+import {
+  IWidgetControllerConfig,
+  IViewerScript,
+} from '@wix/native-components-infra/dist/src/types/types';
 
-export const createControllers = ([appControllerConfig]) => {
+export const createControllers = ([
+  appControllerConfig,
+]: IWidgetControllerConfig[]) => {
   return [createAppController(appControllerConfig)];
 };
 
-const viewerScript = {
+const viewerScript: IViewerScript = {
   createControllers,
 };
 
