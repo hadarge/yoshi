@@ -4,6 +4,7 @@ const path = require('path');
 const sh = require('shelljs');
 const spawn = require('cross-spawn');
 const stripAnsi = require('strip-ansi');
+const tempy = require('tempy');
 
 const yoshiCliBin = path.resolve(__dirname, '../packages/yoshi/bin/yoshi.js');
 const { insideTeamCity } = require('./env-variables');
@@ -17,10 +18,8 @@ class Test {
     this.child = null;
     this.stdout = '';
     this.stderr = '';
-    this.tmp = path.join(
-      sh.tempdir().toString(),
-      new Date().getTime().toString(),
-    );
+    this.tmp = path.join(tempy.directory(), 'yoshi-test');
+
     this.silent = !this.env.VERBOSE_TESTS;
 
     // create a symlink from node_modules one level above testing directory to yoshi's node_modules
