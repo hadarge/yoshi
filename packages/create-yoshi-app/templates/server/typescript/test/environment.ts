@@ -6,8 +6,17 @@ import * as configEmitter from '@wix/wix-config-emitter';
 export const app = bootstrapServer();
 
 export function beforeAndAfter() {
-  before(() => emitConfigs());
-  app.beforeAndAfter();
+
+  before(async () => {
+    // start other testkits/collaborators (if any) *before* the application starts
+    await emitConfigs();
+    await app.start();
+  });
+
+  after(async () => {
+    // don't forget to tear down other testkits/collaborators if any
+    await app.stop();
+  });
 }
 
 // take erb configurations from source folder, replace values/functions,

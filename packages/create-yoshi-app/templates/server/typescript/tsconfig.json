@@ -17,6 +17,7 @@
   ],
   "files": [
     "./src/external-types.d.ts",
-    "./src/server.ts"
+    "./src/server.ts",
+    "./src/config.ts"
   ]
 }

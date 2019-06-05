@@ -39,6 +39,7 @@
     "ejs": "~2.5.0",
     "express": "~4.15.0",
     "@wix/wix-bootstrap-ng": "latest",
+    "@wix/wix-config": "latest",
     "@wix/wix-express-csrf": "latest",
     "@wix/wix-express-require-https": "latest",
     "@wix/wix-run-mode": "latest"
