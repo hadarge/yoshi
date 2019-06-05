@@ -1,12 +1,11 @@
 const constantCase = require('constant-case');
 const pascalCase = require('pascal-case');
 
-module.exports = ({ projectName, authorName, authorEmail, organization }) => {
+module.exports = ({ projectName, authorName, authorEmail }) => {
   const valuesMap = {
     projectName,
     authorName,
     authorEmail,
-    organization,
     gitignore: '.gitignore',
     packagejson: 'package.json',
   };

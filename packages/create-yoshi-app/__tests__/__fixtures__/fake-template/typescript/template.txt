@@ -1,9 +1,7 @@
 {%projectName%}
 {%authorName%}
 {%authorEmail%}
-{%organization%}
 
 {%PROJECT_NAME%}
 {%AUTHOR_NAME%}
 {%AUTHOR_EMAIL%}
-{%ORGANIZATION%}

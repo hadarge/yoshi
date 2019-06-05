@@ -112,7 +112,6 @@ describe('create-yoshi-app + yoshi e2e tests', () => {
           projectName: `test-${templateDefinition.title}`,
           authorName: 'rany',
           authorEmail: 'rany@wix.com',
-          organization: 'wix',
           templateDefinition,
           transpiler: templateDefinition.title.endsWith('-typescript')
             ? 'typescript'

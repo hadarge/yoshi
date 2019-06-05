@@ -10,12 +10,10 @@ Object {
   "template.txt": "test-project
 rany
 rany@wix.com
-wix
 
 TEST_PROJECT
 RANY
 RANY_WIX_COM
-WIX
 ",
 }
 `;

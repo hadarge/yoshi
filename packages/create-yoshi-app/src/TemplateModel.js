@@ -7,14 +7,12 @@ module.exports = class TemplateModel {
     templateDefinition,
     authorName,
     authorEmail,
-    organization,
     transpiler,
   }) {
     this.templateDefinition = templateDefinition;
     this.projectName = projectName;
     this.authorName = authorName;
     this.authorEmail = authorEmail;
-    this.organization = organization;
     this.transpiler = transpiler;
   }
 

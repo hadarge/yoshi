@@ -78,7 +78,6 @@ function minimalTemplateModel() {
     projectName: `test-project`,
     authorName: 'rany',
     authorEmail: 'rany@wix.com',
-    organization: 'wix',
     transpiler: 'babel',
     templateDefinition: {
       name: 'minimal-template',

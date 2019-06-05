@@ -10,7 +10,6 @@ test('verify generation works as expected', () => {
     projectName: `test-project`,
     authorName: 'rany',
     authorEmail: 'rany@wix.com',
-    organization: 'wix',
     transpiler: 'typescript',
     templateDefinition: {
       name: 'fake-template',

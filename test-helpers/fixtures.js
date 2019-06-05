@@ -198,10 +198,6 @@ const fx = {
       <description>app-description</description>
       <version>1.0.0-SNAPSHOT</version>
 
-      <organization>
-          <name>app-organization</name>
-      </organization>
-
       <parent>
           <groupId>com.wixpress.common</groupId>
           <artifactId>wix-master-parent</artifactId>

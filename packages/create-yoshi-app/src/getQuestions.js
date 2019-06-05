@@ -24,11 +24,6 @@ module.exports = () => {
         value.endsWith('@wix.com') ? true : 'Please enter a @wix.com email',
     },
     {
-      type: 'text',
-      name: 'organization',
-      message: 'Organization (for pom.xml)',
-    },
-    {
       type: 'select',
       name: 'templateDefinition',
       message: 'Choose project type',

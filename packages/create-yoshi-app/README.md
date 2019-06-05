@@ -13,21 +13,18 @@ In order to use dynamic values in the template, you can choose one of the follow
 - `projectName`
 - `authorName`
 - `authorEmail`
-- `organization`
 
 You can also use CONSTANT_CASE to get the same values in the constant case format:
 
 - `PROJECT_NAME`
 - `AUTHOR_NAME`
 - `AUTHOR_EMAIL`
-- `ORGANIZATION`
 
 You can also use PascalCase to get the same values in the pascal case format:
 
 - `ProjectName`
 - `AuthorName`
 - `AuthorEmail`
-- `Organization`
 
 Use `{%%}` to wrap each key and get the dynamic value.
 
