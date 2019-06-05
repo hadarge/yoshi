@@ -18,6 +18,7 @@ const cache = require('./cache')(appCacheKey);
 const TemplateModel = require('../src/TemplateModel');
 const createApp = require('../src/createApp');
 const { clearConsole } = require('../src/utils');
+const symlinkModules = require('../../../scripts/utils/symlinkModules');
 
 function startWatcher(workingDir, templateModel) {
   const templatePath = templateModel.getPath();
@@ -163,7 +164,7 @@ async function init() {
       lint: false,
     });
   } else {
-    workingDir = tempy.directory();
+    workingDir = path.join(tempy.directory(), 'generated');
 
     templateModel = await createApp({
       workingDir,
@@ -171,6 +172,9 @@ async function init() {
       lint: false,
     });
   }
+
+  // symlink yoshi's packages
+  symlinkModules(workingDir);
 
   upsertProjectInCache(templateModel, workingDir);
 

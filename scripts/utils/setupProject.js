@@ -16,7 +16,7 @@ module.exports = async templateDirectory => {
 
   // Symlink modules locally for faster feedback
   if (!isCI) {
-    symlinkModules(rootDirectory, testDirectory);
+    symlinkModules(testDirectory);
   } else {
     // Authenticate and install from our fake registry on CI
     authenticateToRegistry(testDirectory);
