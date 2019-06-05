@@ -783,7 +783,11 @@ function createClientWebpackConfig({
   if (isHmr) {
     addEntry(clientConfig, [
       require.resolve('webpack/hot/dev-server'),
-      require.resolve('webpack-dev-server/client'),
+      // Adding the query param with the CDN URL allows HMR when working with a production site
+      // because the bundle is requested from "parastorage" we need to specify to open the socket to localhost
+      `${require.resolve('webpack-dev-server/client')}?${
+        project.servers.cdn.url
+      }`,
     ]);
   }
 
