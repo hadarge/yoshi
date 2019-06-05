@@ -16,8 +16,6 @@ This has a few advantages:
 
 In the future, we plan on providing many features specifically for apps. We want to encourage applications to use the new flow.
 
-Watch [Ronen's talk](https://drive.google.com/file/d/1u05-l27kSY1l6YaSqScXNe2_Hp0V7gkh/view?t=17m58s) to see how it is to work with it.
-
 ![A terminal showing the new app flow](../assets/24-app-flow.png)
 
 The purpose of this document is to explain how to opt-into this new feature. See https://github.com/wix/yoshi/pull/586 for more information on the changes it introduces.
