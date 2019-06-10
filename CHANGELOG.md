@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.9.0 (2019-06-10)
+
+#### :rocket: New Feature
+
+- `yoshi-config`, `yoshi-helpers`, `yoshi`
+  - [#1369](https://github.com/wix/yoshi/pull/1369) Run minimal number of tests on PR CI ([@ronami](https://github.com/ronami))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1373](https://github.com/wix/yoshi/pull/1373) Adjust to deprecated autoprefixer API ([@ronami](https://github.com/ronami))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1367](https://github.com/wix/yoshi/pull/1367) Custom entry point for server project templates ([@hugebdu](https://github.com/hugebdu))
+
 ## 4.8.2 (2019-06-10)
 
 #### :bug: Bug Fix
