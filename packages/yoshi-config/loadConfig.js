@@ -97,6 +97,7 @@ const loadConfig = ({ validate, useCache } = { validate: false }) => {
     experimentalMonorepo: getConfig('experimentalMonorepo'),
     experimentalMonorepoSubProcess:
       process.env.EXPERIMENTAL_MONOREPO_SUB_PROCESS === 'true',
+    experimentalMinimalPRBuild: getConfig('experimentalMinimalPRBuild'),
     projectType: getConfig('projectType', null),
     unprocessedModules: p => {
       const allSourcesButExternalModules = function(filePath) {

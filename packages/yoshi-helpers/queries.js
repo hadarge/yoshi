@@ -27,6 +27,9 @@ module.exports.watchMode = value => {
 module.exports.inTeamCity = () =>
   process.env.BUILD_NUMBER || process.env.TEAMCITY_VERSION;
 
+module.exports.inPRTeamCity = () =>
+  module.exports.inTeamCity() && process.env.agentType === 'pullrequest';
+
 module.exports.isProduction = () =>
   (process.env.NODE_ENV || '').toLowerCase() === 'production';
 

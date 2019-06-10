@@ -13,22 +13,27 @@ process.env.SHORT_CSS_PATTERN = 'true';
 const fs = require('fs');
 const path = require('path');
 const execa = require('execa');
+const minimatch = require('minimatch');
 const minimist = require('minimist');
 const { createRunner } = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('yoshi-config/globs');
+const { ROOT_DIR } = require('yoshi-config/paths');
 const chalk = require('chalk');
 const globby = require('globby');
 const projectConfig = require('yoshi-config');
+const { getChangedFilesForRoots } = require('jest-changed-files');
 const {
   watchMode,
   hasProtractorConfigFile,
   hasE2ETests,
   hasBundleInStaticsDir,
+  inPRTeamCity,
 } = require('yoshi-helpers/queries');
 const { getMochaReporter, watch } = require('yoshi-helpers/utils');
 const protractor = require('../../src/tasks/protractor');
 const { printAndExitOnErrors } = require('../error-handler');
+const getDependencyResolver = require('./utils/dependency-resolver');
 
 const runner = createRunner({
   logger: new LoggerPlugin(),
@@ -212,6 +217,48 @@ module.exports = runner.command(
         jestCliOptions.unshift(`--inspect=${debugPort}`);
         !jestForwardedOptions.includes('--runInBand') &&
           jestCliOptions.push('--runInBand');
+      }
+
+      // Run minimal tests on PR CI
+      if (
+        inPRTeamCity() &&
+        projectConfig.experimentalMinimalPRBuild &&
+        // Run only if this project is using `jest-yoshi-preset`
+        projectConfig.jestConfig.preset === 'jest-yoshi-preset'
+      ) {
+        const { changedFiles } = await getChangedFilesForRoots([ROOT_DIR], {
+          changedSince: 'master',
+        });
+
+        const rootChanges = Array.from(changedFiles).filter(
+          filename => path.dirname(filename) === ROOT_DIR,
+        );
+
+        // Only optimize this run if none of the root files have changed
+        //
+        // Root files can be `package.json`, `.nvmrc` and others which
+        // require us to run the entire suite
+        if (rootChanges.length === 0) {
+          const resolver = await getDependencyResolver();
+
+          // Filter files to only include unit test files
+          const unitTests = resolver.resolveInverse(changedFiles, filename =>
+            globs.unitTests.some(pattern =>
+              minimatch(path.relative(ROOT_DIR, filename), pattern),
+            ),
+          );
+
+          // Find all e2e tests
+          const e2eTests = await globby(globs.e2eTests, { gitignore: true });
+
+          jestCliOptions.push(
+            '--runTestsByPath',
+            // Push minimal unit tests
+            ...unitTests,
+            // Push all e2e tests
+            ...e2eTests,
+          );
+        }
       }
 
       try {
