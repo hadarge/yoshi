@@ -3,6 +3,6 @@ import Widget from '../components/Widget';
 
 export default {
   component: withStyles(Widget, {
-    cssPath: ['viewerApp.stylable.bundle.css'],
+    cssPath: ['viewerWidget.stylable.bundle.css'],
   }),
 };
