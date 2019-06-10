@@ -81,9 +81,7 @@ function release(pkg) {
 
   if (!shouldPublishPackage(pkg)) {
     console.log(
-      `> ${pkg.name}@${pkg.version} - skip publish (version exist on registry ${
-        pkg.registry
-      })`,
+      `> ${pkg.name}@${pkg.version} - skip publish (version exist on registry ${pkg.registry})`,
     );
 
     return;

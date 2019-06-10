@@ -29,9 +29,7 @@ module.exports = async ({
 
     if (currentCwd !== processOnPort.cwd) {
       throw new Error(
-        `Unable to run cdn! port ${port} is already in use by another process in another project (pid=${
-          processOnPort.pid
-        }, path=${processOnPort.cwd})`,
+        `Unable to run cdn! port ${port} is already in use by another process in another project (pid=${processOnPort.pid}, path=${processOnPort.cwd})`,
       );
     } else {
       console.log(`\tcdn is already running on ${port}, skipping...`);
