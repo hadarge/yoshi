@@ -218,7 +218,7 @@ const getStyleLoaders = ({
                   plugins: [
                     require('autoprefixer')({
                       // https://github.com/browserslist/browserslist
-                      browsers: [
+                      overrideBrowserslist: [
                         '> 0.5%',
                         'last 2 versions',
                         'Firefox ESR',
