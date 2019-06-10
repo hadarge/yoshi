@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { mount } from 'enzyme';
-import { App } from './App';
+import { Widget } from './Widget';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../../__tests__/helpers/i18n.mock';
 import { ExperimentsProvider } from '@wix/wix-experiments-react';
 
-describe('App', () => {
+describe('Widget', () => {
   let wrapper;
 
   afterEach(() => wrapper.unmount());
@@ -16,7 +16,7 @@ describe('App', () => {
     wrapper = mount(
       <I18nextProvider i18n={i18n}>
         <ExperimentsProvider options={{ experiments: {} }}>
-          <App name={name} />
+          <Widget name={name} />
         </ExperimentsProvider>
       </I18nextProvider>,
     );

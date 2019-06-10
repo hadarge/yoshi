@@ -1,8 +1,8 @@
 import { withStyles } from '@wix/native-components-infra';
-import App from '../components/App';
+import Widget from '../components/Widget';
 
 export default {
-  component: withStyles(App, {
+  component: withStyles(Widget, {
     cssPath: ['viewerApp.stylable.bundle.css'],
   }),
 };

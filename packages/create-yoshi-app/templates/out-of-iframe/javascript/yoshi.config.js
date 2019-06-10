@@ -25,7 +25,7 @@ module.exports = {
   entry: {
     settingsPanel: './settingsPanel/settingsPanel.js',
     editorApp: './editorApp/editorApp.js',
-    viewerApp: './viewerApp/viewerApp.js',
+    viewerWidget: './viewerApp/viewerWidget.js',
     viewerScript: './viewerApp/viewerScript.js',
     'wix-private-mock': '../dev/wix-private.mock.js',
   },

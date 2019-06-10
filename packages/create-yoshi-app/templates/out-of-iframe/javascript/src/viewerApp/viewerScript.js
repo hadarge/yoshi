@@ -1,4 +1,4 @@
-import { createAppController } from '../components/App/appController';
+import { createAppController } from '../components/Widget/appController';
 
 export const createControllers = ([appControllerConfig]) => {
   return [createAppController(appControllerConfig)];

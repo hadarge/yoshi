@@ -1,31 +1,38 @@
-import React from 'react';
+import * as React from 'react';
 import { I18nextProvider, translate } from 'react-i18next';
 import {
   ExperimentsProvider,
   withExperiments,
 } from '@wix/wix-experiments-react';
-import { TPAComponentsProvider } from 'wix-ui-tpa/TPAComponentsConfig';
 import { Button } from 'wix-ui-tpa/Button';
 import i18n from '../../config/i18n';
-import styles from './App.st.css';
+import styles from './Widget.st.css';
 
-export default class AppRoot extends React.Component {
+// import { IHostProps } from '@wix/native-components-infra/dist/src/types/types';
+import { ExperimentsBag } from '@wix/wix-experiments';
+
+interface IWidgetRootProps {
+  name: string;
+  locale: string;
+  experiments: ExperimentsBag;
+  host?: any;
+}
+
+export default class WidgetRoot extends React.Component<IWidgetRootProps, {}> {
   render() {
-    const { name, locale, experiments, mobile } = this.props;
+    const { name, locale, experiments } = this.props;
 
     return (
       <I18nextProvider i18n={i18n(locale)}>
         <ExperimentsProvider options={{ experiments }}>
-          <TPAComponentsProvider value={{ mobile }}>
-            <App name={name} />
-          </TPAComponentsProvider>
+          <Widget name={name} />
         </ExperimentsProvider>
       </I18nextProvider>
     );
   }
 }
 
-export const App = withExperiments(
+export const Widget = withExperiments<any>(
   translate()(({ name, t, ...rest }) => {
     return (
       <div {...styles('root', {}, rest)}>

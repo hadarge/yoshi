@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ViewerScriptWrapper, withStyles } from '@wix/native-components-infra';
 import viewerScript from '../viewerApp/viewerScript';
-import App from '../components/App';
+import Widget from '../components/Widget';
 
 const EditorApp = ViewerScriptWrapper(
-  withStyles(App, {
+  withStyles(Widget, {
     cssPath: ['editorApp.stylable.bundle.css'],
   }),
   {

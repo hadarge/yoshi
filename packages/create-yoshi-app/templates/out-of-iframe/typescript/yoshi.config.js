@@ -25,7 +25,7 @@ module.exports = {
   entry: {
     settingsPanel: './settingsPanel/settingsPanel.tsx',
     editorApp: './editorApp/editorApp.tsx',
-    viewerApp: './viewerApp/viewerApp.tsx',
+    viewerWidget: './viewerApp/viewerWidget.tsx',
     viewerScript: './viewerApp/viewerScript.ts',
     'wix-private-mock': '../dev/wix-private.mock.js',
   },
