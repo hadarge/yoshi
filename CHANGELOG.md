@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.8.1 (2019-06-10)
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1350](https://github.com/wix/yoshi/pull/1350) refactor of the out-of-iframe template readme (app -> widget) ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.8.0 (2019-06-05)
 
 #### :rocket: New Feature
