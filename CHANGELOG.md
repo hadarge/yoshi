@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.8.2 (2019-06-10)
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1371](https://github.com/wix/yoshi/pull/1371) Fix a bug with `ooi` viewer app css path ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.8.1 (2019-06-10)
 
 #### :nail_care: Polish
