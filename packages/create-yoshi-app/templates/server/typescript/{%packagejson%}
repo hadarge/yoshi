@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start",
+    "start": "yoshi start --entry-point=index-dev.js",
     "pretest": "yoshi build",
     "test": "yoshi test --mocha",
     "posttest": "yoshi lint",
