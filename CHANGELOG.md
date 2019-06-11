@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.9.1 (2019-06-11)
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1374](https://github.com/wix/yoshi/pull/1374) Improve the `ooi` templates readme ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.9.0 (2019-06-10)
 
 #### :rocket: New Feature
