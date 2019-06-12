@@ -1,4 +1,4 @@
-# Out of Iframe App
+# Out of IFrame App
 
 - [Overview](#overview)
 - [Initial Setup](#initial-setup)
@@ -56,9 +56,9 @@ npm start
 
 This command runs `yoshi start` and opens two tabs:
 
-1. Production **viewer** with a site that has the [ooi develpment app](#ooi-development-app), it points to your local _viewer script_ and _viewer widget_.
+1. Production **viewer** with a site that has the [ooi development app](#ooi-development-app), it points to your local _viewer script_ and _viewer widget_.
 
-2. Production **editor** with a site that has the [ooi develpment app](#ooi-development-app), It points to your local _editor app_ and _settings panel_.
+2. Production **editor** with a site that has the [ooi development app](#ooi-development-app), It points to your local _editor app_ and _settings panel_.
 
 ## Testing
 
@@ -104,7 +104,7 @@ Configure your app in the dev center, follow the step-by-step [instructions](htt
 
 ## OOI Development App
 
-While there are multiple ways to test your app locally, we find that having a Wix app that points to the your local machine is the best one.
+While there are multiple ways to test your app locally, we find that having a Wix app that points to your local machine is the best one.
 
 It's configured as follows:
 
