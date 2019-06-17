@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.9.2 (2019-06-17)
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1381](https://github.com/wix/yoshi/pull/1381)
+    Server TypeScript template - bump target to `es6` ([@hugebdu](https://github.com/hugebdu))
+  - [#1378](https://github.com/wix/yoshi/pull/1378)
+    Update `ooi` development site ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.9.1 (2019-06-11)
 
 #### :nail_care: Polish
