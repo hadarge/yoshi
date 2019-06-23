@@ -4,12 +4,16 @@ const execa = require('execa');
 const wnpm = require('wnpm-ci');
 const parseArgs = require('minimist');
 const { splitPackagesPromise } = require('./utils');
-const { inTeamCity: checkInTeamCity } = require('yoshi-helpers/queries');
+const {
+  inTeamCity: checkInTeamCity,
+  inPRTeamCity: checkInPRTeamCity,
+} = require('yoshi-helpers/queries');
 
 const cliArgs = parseArgs(process.argv.slice(2));
 
 const shouldBumpMinor = cliArgs.minor;
 const inTeamCity = checkInTeamCity();
+const inPRTeamCity = checkInPRTeamCity();
 
 module.exports = async () => {
   const [, libs] = await splitPackagesPromise;
@@ -36,7 +40,7 @@ module.exports = async () => {
   // This part is inconsistent with how non-monorepo apps work:
   // Here we publish packages as part of `yoshi release` while in most apps
   // CI does the publishinng
-  if (inTeamCity) {
+  if (inTeamCity && !inPRTeamCity) {
     await Promise.all(
       libs.map(lib => {
         console.log(`Publishing ${lib.name}...`);
