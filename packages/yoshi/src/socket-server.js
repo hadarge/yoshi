@@ -3,10 +3,12 @@ const http = require('http');
 const sockjs = require('sockjs');
 
 module.exports = class SocketServer extends EventEmitter {
-  constructor() {
+  constructor({ hmrPort }) {
     super();
 
     this.connections = [];
+
+    this.hmrPort = hmrPort;
 
     this.server = http.createServer();
     this.socket = sockjs.createServer({
@@ -46,7 +48,9 @@ module.exports = class SocketServer extends EventEmitter {
   async initialize() {
     if (!this.server.listening) {
       await new Promise((resolve, reject) => {
-        this.server.listen(9318, err => (err ? reject(err) : resolve()));
+        this.server.listen(this.hmrPort, err =>
+          err ? reject(err) : resolve(),
+        );
       });
     }
   }

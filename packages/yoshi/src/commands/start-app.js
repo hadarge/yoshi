@@ -42,6 +42,7 @@ const {
   waitForCompilation,
 } = require('../webpack-utils');
 const ServerProcess = require('../server-process');
+const detect = require('detect-port');
 
 const host = '0.0.0.0';
 
@@ -81,6 +82,9 @@ module.exports = async () => {
     watchPublicFolder();
   }
 
+  // Generate an available port for server HMR
+  const hmrPort = await detect();
+
   const clientConfig = createClientWebpackConfig({
     isDebug: true,
     isAnalyze: false,
@@ -90,6 +94,7 @@ module.exports = async () => {
   const serverConfig = createServerWebpackConfig({
     isDebug: true,
     isHmr: true,
+    hmrPort,
   });
 
   // Configure compilation
@@ -101,6 +106,7 @@ module.exports = async () => {
   // Start up server process
   const serverProcess = new ServerProcess({
     serverFilePath: cliArgs.server,
+    hmrPort,
   });
 
   // Start up webpack dev server

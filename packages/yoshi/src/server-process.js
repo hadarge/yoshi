@@ -24,8 +24,8 @@ function serverLogPrefixer() {
 const inspectArg = process.argv.find(arg => arg.includes('--debug'));
 
 module.exports = class ServerProcess {
-  constructor({ serverFilePath }) {
-    this.socketServer = new SocketServer();
+  constructor({ serverFilePath, hmrPort }) {
+    this.socketServer = new SocketServer({ hmrPort });
     this.serverFilePath = serverFilePath;
   }
 

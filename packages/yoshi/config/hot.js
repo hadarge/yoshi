@@ -1,8 +1,11 @@
+/* global __resourceQuery */
+
 if (module.hot) {
   const log = require('webpack/hot/log');
   const SockJS = require('sockjs-client');
 
-  const socket = new SockJS('http://localhost:9318/_yoshi_server_hmr_');
+  const port = __resourceQuery.substr(1);
+  const socket = new SockJS(`http://localhost:${port}/_yoshi_server_hmr_`);
 
   socket.onmessage = function checkForUpdate(fromUpdate) {
     if (module.hot.status() === 'idle') {

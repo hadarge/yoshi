@@ -797,7 +797,11 @@ function createClientWebpackConfig({
 //
 // Configuration for the server-side bundle (server.js)
 // -----------------------------------------------------------------------------
-function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
+function createServerWebpackConfig({
+  isDebug = true,
+  isHmr = false,
+  hmrPort,
+} = {}) {
   const config = createCommonWebpackConfig({ isDebug, isHmr });
 
   const styleLoaders = getStyleLoaders({
@@ -931,7 +935,7 @@ function createServerWebpackConfig({ isDebug = true, isHmr = false } = {}) {
   };
 
   if (isHmr) {
-    addEntry(serverConfig, [require.resolve('./hot')]);
+    addEntry(serverConfig, [`${require.resolve('./hot')}?${hmrPort}`]);
   }
 
   return serverConfig;
