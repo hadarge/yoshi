@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.9.3 (2019-06-23)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1391](https://github.com/wix/yoshi/pull/1391) Publish monorepo libs only in master CI ([@yairhaimo](https://github.com/yairhaimo))
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1390](https://github.com/wix/yoshi/pull/1390) Detect an available port for server HMR ([@ronami](https://github.com/ronami))
+  - [#1384](https://github.com/wix/yoshi/pull/1384) Remove the dependency on `@stylable/cli` ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.9.2 (2019-06-17)
 
 #### :nail_care: Polish
