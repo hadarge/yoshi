@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "jest",
-    "templates": "DISABLE_SENTRY=1 node scripts/runE2E.js",
+    "templates": "node scripts/runE2E.js",
     "client": "npm run templates -- client client-typescript",
     "fullstack": "npm run templates -- fullstack fullstack-typescript",
     "server": "npm run templates -- server server-typescript",

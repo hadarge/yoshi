@@ -10,7 +10,7 @@
     "url": "https://github.com/wix/yoshi"
   },
   "scripts": {
-    "test": "DISABLE_SENTRY=1 mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js' --retries=$([ -z \"$TEAMCITY_VERSION\" ] && echo 0 || echo 1)"
+    "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js' --retries=$([ -z \"$TEAMCITY_VERSION\" ] && echo 0 || echo 1)"
   },
   "files": [
     "src",
@@ -22,7 +22,6 @@
     "@babel/code-frame": "7.0.0",
     "@babel/core": "7.4.5",
     "@babel/plugin-transform-modules-commonjs": "7.4.4",
-    "@sentry/node": "4.6.6",
     "@stylable/core": "1.0.6",
     "@stylable/jest": "1.0.7",
     "@stylable/node": "1.0.7",

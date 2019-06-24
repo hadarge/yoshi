@@ -3,7 +3,6 @@ const runCLI = require('../src/cli');
 const { version } = require('../package');
 const infoCommand = require('../src/commands/info');
 const config = require('yoshi-config');
-const { configureSentry, handleError } = require('../src/sentry');
 const chalk = require('chalk');
 const { inTeamCity } = require('yoshi-helpers/queries');
 
@@ -133,12 +132,6 @@ prog
   .description('Get your local environment information')
   .action(infoCommand);
 
-try {
-  if (!process.env.DISABLE_SENTRY) {
-    configureSentry();
-  }
-} catch (_) {} // ignore errors of configuring sentry
-
 function handleUncaughtError(error) {
   if (prog.verbose || inTeamCity()) {
     console.error(
@@ -158,11 +151,7 @@ function handleUncaughtError(error) {
     console.error(chalk.red(`  ${error.message ? error.message : error}`));
   }
 
-  if (!process.env.DISABLE_SENTRY) {
-    handleError(error);
-  } else {
-    process.exit(1);
-  }
+  process.exit(1);
 }
 
 process.on('unhandledRejection', handleUncaughtError);
