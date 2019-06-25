@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-testing-library';
+import { render } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import App from './App';
 import i18n from '../__mocks__/i18n';
