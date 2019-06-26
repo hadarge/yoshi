@@ -624,7 +624,7 @@ describe('Aggregator: Start', () => {
       });
 
       describe('when using no transpile', () => {
-        it(`should restart server after a file has been changed`, () => {
+        it.skip(`should restart server after a file has been changed`, () => {
           child = test
             .setup({
               'src/server.js': fx.httpServer('hello'),
