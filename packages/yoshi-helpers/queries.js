@@ -7,20 +7,13 @@ const globs = require('yoshi-config/globs');
 const { tryRequire } = require('./utils');
 const { POM_FILE } = require('yoshi-config/paths');
 
-const readDir = patterns =>
-  []
-    .concat(patterns)
-    .reduce((acc, pattern) => acc.concat(globby.sync(pattern)), []);
-
-const exists = (module.exports.exists = patterns => !!readDir(patterns).length);
+const exists = (module.exports.exists = (patterns, options) =>
+  !!globby.sync(patterns, options).length);
 
 module.exports.isSingleEntry = entry =>
   typeof entry === 'string' || Array.isArray(entry);
 
-module.exports.watchMode = value => {
-  if (value !== undefined) {
-    process.env.WIX_NODE_BUILD_WATCH_MODE = value;
-  }
+module.exports.watchMode = () => {
   return !!process.env.WIX_NODE_BUILD_WATCH_MODE;
 };
 
@@ -63,11 +56,11 @@ module.exports.shouldExportModule = () => {
 };
 
 module.exports.shouldRunLess = () => {
-  return globby.sync(globs.less).length > 0;
+  return exists(globs.less);
 };
 
 module.exports.hasE2ETests = () => {
-  return globby.sync(globs.e2eTests, { gitignore: true }).length > 0;
+  return exists(globs.e2eTests, { gitignore: true });
 };
 
 module.exports.hasProtractorConfigFile = () => {

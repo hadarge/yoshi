@@ -12,20 +12,6 @@ const { POM_FILE } = require('yoshi-config/paths');
 const xmldoc = require('xmldoc');
 const { staticsDomain } = require('./constants');
 
-module.exports.copyFile = (source, target) =>
-  new Promise((resolve, reject) => {
-    const done = err => (err ? reject(err) : resolve());
-
-    const rd = fs.createReadStream(source).on('error', err => done(err));
-
-    const wr = fs
-      .createWriteStream(target)
-      .on('error', err => done(err))
-      .on('close', err => done(err));
-
-    rd.pipe(wr);
-  });
-
 function logIfAny(log) {
   if (log) {
     console.log(log);
@@ -50,8 +36,6 @@ module.exports.createBabelConfig = (presetOptions = {}) => {
     configFile: false,
   };
 };
-
-module.exports.noop = () => {};
 
 module.exports.logIfAny = logIfAny;
 
@@ -194,17 +178,6 @@ module.exports.tryRequire = name => {
 
   return require(absolutePath);
 };
-
-// NOTE: We don't use "mergeByConcat" function in our codebase anymore,
-// it's here only for legacy reasons.
-// Versions 3.10.0 -> 3.13.1 would not work after the deletion of this function
-function concatCustomizer(objValue, srcValue) {
-  if (Array.isArray(objValue)) {
-    return objValue.concat(srcValue);
-  }
-}
-
-module.exports.mergeByConcat = require('lodash/fp').mergeWith(concatCustomizer);
 
 /**
  * Gets the artifact id of the project at the current working dir
