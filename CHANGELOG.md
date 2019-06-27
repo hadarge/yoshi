@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.9.4 (2019-06-27)
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1370](https://github.com/wix/yoshi/pull/1370) Bump node to v10 for library generator and kitchensink tests ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1398](https://github.com/wix/yoshi/pull/1398) Dependencies: replace `react-testing-library` with `@testing-library/react` ([@sidoruk-sv](https://github.com/sidoruk-sv))
+- `yoshi`
+  - [#1399](https://github.com/wix/yoshi/pull/1399) Run `wnpm-ci` `prepareForRelase()` only in master CI ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+
+- Other
+  - [#1400](https://github.com/wix/yoshi/pull/1400) Bump Lerna to v3 ([@ronami](https://github.com/ronami))
+- `yoshi`
+  - [#1402](https://github.com/wix/yoshi/pull/1402) Skip a flaky test which fails very often ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`, `yoshi`
+  - [#1396](https://github.com/wix/yoshi/pull/1396) Remove Sentry from the code base ([@ronami](https://github.com/ronami))
+
 ## 4.9.3 (2019-06-23)
 
 #### :bug: Bug Fix
