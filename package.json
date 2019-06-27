@@ -5,7 +5,7 @@
     "url": "git+https://github.com/wix/yoshi.git"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --no-ci",
     "build": ":",
     "bumpDocs": "npm run version --prefix './website' --",
     "createVersion": "node scripts/createVersion",
