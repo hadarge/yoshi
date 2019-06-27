@@ -10,7 +10,12 @@
     "url": "https://github.com/wix/yoshi"
   },
   "scripts": {
-    "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js' --retries=$([ -z \"$TEAMCITY_VERSION\" ] && echo 0 || echo 1)"
+    "mocha": "mocha --retries=$([ -z \"$TEAMCITY_VERSION\" ] && echo 0 || echo 1)",
+    "test": "mocha './+(test|src)/{,!(fixtures)/**/}/*.spec.js'",
+    "test:build": "npm run mocha -- 'test/{build,loaders}.spec.js'",
+    "test:start": "npm run mocha -- 'test/start.spec.js'",
+    "test:test": "npm run mocha -- 'test/{test,jasmine,e2e}.spec.js'",
+    "test:others": "npm run mocha -- 'test/{webpack-config-storybook,webpack-config,config,lint}.spec.js' 'src/**/*.spec.js' 'test/tasks/**/*.spec.js'"
   },
   "files": [
     "src",
