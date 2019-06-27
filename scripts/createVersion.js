@@ -39,7 +39,7 @@ Promise.resolve()
   })
   // Create new tag/bump versions in `package.json` files
   .then(() => {
-    execa.shellSync(`${lernaPath} version --exact`, {
+    execa.shellSync(`${lernaPath} version --exact --no-push`, {
       stdio: 'inherit',
     });
   })
