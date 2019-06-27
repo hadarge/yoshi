@@ -19,7 +19,7 @@ function publishMonorepo() {
   );
 
   execa.shellSync(
-    `npx lerna publish --yes --force-publish=* --skip-git --cd-version=minor --exact --npm-tag=latest --registry="${testRegistry}" --allow-branch=*`,
+    `npx lerna publish minor --yes --force-publish=* --no-git-tag-version --no-push --exact --dist-tag=latest --registry="${testRegistry}"`,
     {
       stdio: 'inherit',
     },
