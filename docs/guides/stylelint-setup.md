@@ -39,6 +39,6 @@ Add the following to your `package.json`:
 }
 ```
 
-## Usage
+Finally, configure your `package.json` to run Stylelint after `yoshi lint`:
 
-Now that `stylelint` is configured with `stylelint-config-yoshi`, every [`yoshi lint`](api/cli.md#lint) execution will also lint your stylesheets.
+```yoshi lint && stylelint```
