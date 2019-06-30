@@ -1,4 +1,4 @@
-const webpackOptions = require('webpack/schemas/WebpackOptions.json');
+const webpackOptions = require('./WebpackOptions.json');
 
 const schema = {
   additionalProperties: false,
