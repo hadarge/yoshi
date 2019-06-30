@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const execa = require('execa');
+const { privateRegistry } = require('./constants');
 
 module.exports.clearConsole = () => process.stdout.write('\x1Bc');
 
@@ -16,19 +17,22 @@ module.exports.npmInstall = dir => {
     extendEnv: false,
     env: {
       PATH: process.env.PATH,
-      npm_config_registry: process.env['npm_config_registry'],
+      npm_config_registry: privateRegistry,
     },
   });
 };
 
-module.exports.getRegistry = dir => {
-  // TODO: change to npm ping to the private registry when it will be fixed with the CI team
-  const { stdout } = execa.shellSync('npm config get registry', {
-    cwd: dir,
-    stdio: 'pipe',
-  });
+module.exports.isPrivateRegistryReachable = dir => {
+  try {
+    execa.shellSync(`curl ${privateRegistry}/v1`, {
+      cwd: dir,
+      stdio: 'pipe',
+    });
 
-  return stdout;
+    return true;
+  } catch (_error) {
+    return false;
+  }
 };
 
 module.exports.lintFix = dir => {
