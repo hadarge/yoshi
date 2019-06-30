@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.9.6 (2019-06-30)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1417](https://github.com/wix/yoshi/pull/1417) Lock `terser-webpack-plugin` ([@ronami](https://github.com/ronami))
+
 ## 4.9.5 (2019-06-30)
 
 #### :bug: Bug Fix
