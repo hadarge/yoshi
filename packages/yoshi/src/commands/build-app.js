@@ -19,8 +19,12 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const {
   createClientWebpackConfig,
   createServerWebpackConfig,
+  createWebWorkerWebpackConfig,
 } = require('../../config/webpack.config');
-const { inTeamCity: checkInTeamCity } = require('yoshi-helpers/queries');
+const {
+  inTeamCity: checkInTeamCity,
+  isWebWorkerBundle,
+} = require('yoshi-helpers/queries');
 const { getProjectArtifactVersion } = require('yoshi-helpers/utils');
 const {
   ROOT_DIR,
@@ -127,15 +131,32 @@ module.exports = async () => {
     isDebug: true,
   });
 
+  let webWorkerConfig;
+  let webWorkerOptimizeConfig;
+
+  if (isWebWorkerBundle) {
+    webWorkerConfig = createWebWorkerWebpackConfig({
+      isDebug: true,
+    });
+
+    webWorkerOptimizeConfig = createWebWorkerWebpackConfig({
+      isDebug: false,
+    });
+  }
+
   let webpackStats;
   let messages;
 
   try {
-    const compiler = webpack([
-      clientDebugConfig,
-      clientOptimizedConfig,
-      serverConfig,
-    ]);
+    const compiler = webpack(
+      [
+        clientDebugConfig,
+        clientOptimizedConfig,
+        serverConfig,
+        webWorkerConfig,
+        webWorkerOptimizeConfig,
+      ].filter(Boolean),
+    );
 
     webpackStats = await new Promise((resolve, reject) => {
       compiler.run((err, stats) => (err ? reject(err) : resolve(stats)));

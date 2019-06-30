@@ -2,8 +2,6 @@ const { editorUrl, viewerUrl } = require('./dev/sites');
 
 module.exports = {
   projectType: 'app',
-  liveReload: false,
-  hmr: false,
   startUrl: [editorUrl, viewerUrl],
   externals: {
     react: {
@@ -25,8 +23,19 @@ module.exports = {
     settingsPanel: './settingsPanel/settingsPanel.tsx',
     editorApp: './editorApp/editorApp.tsx',
     viewerWidget: './viewerApp/viewerWidget.tsx',
-    viewerScript: './viewerApp/viewerScript.ts',
     'wix-private-mock': '../dev/wix-private.mock.js',
+  },
+  webWorker: {
+    entry: {
+      viewerScript: './viewerApp/viewerScript.ts',
+    },
+    externals: {
+      lodash: {
+        commonjs: 'lodash',
+        amd: 'lodash',
+        root: '_',
+      },
+    },
   },
   servers: {
     cdn: {

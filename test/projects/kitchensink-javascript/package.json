@@ -43,6 +43,14 @@
       "react-dom": "ReactDOM",
       "externals": "externals"
     },
+    "webWorker": {
+      "entry": {
+        "worker": "./worker"
+      },
+      "externals": {
+        "worker-externals": "worker-externals"
+      }
+    },
     "hmr": "auto"
   }
 }

@@ -31,10 +31,12 @@ const {
   ASSETS_DIR,
   TARGET_DIR,
 } = require('yoshi-config/paths');
+const { isWebWorkerBundle } = require('yoshi-helpers/queries');
 const { PORT } = require('../constants');
 const {
   createClientWebpackConfig,
   createServerWebpackConfig,
+  createWebWorkerWebpackConfig,
 } = require('../../config/webpack.config');
 const {
   createCompiler,
@@ -97,11 +99,28 @@ module.exports = async () => {
     hmrPort,
   });
 
+  let webWorkerConfig;
+
+  if (isWebWorkerBundle) {
+    webWorkerConfig = createWebWorkerWebpackConfig({
+      isDebug: true,
+      isHmr: true,
+    });
+  }
+
   // Configure compilation
-  const multiCompiler = createCompiler([clientConfig, serverConfig], { https });
+  const multiCompiler = createCompiler(
+    [clientConfig, serverConfig, webWorkerConfig].filter(Boolean),
+    { https },
+  );
+
   const compilationPromise = waitForCompilation(multiCompiler);
 
-  const [clientCompiler, serverCompiler] = multiCompiler.compilers;
+  const [
+    clientCompiler,
+    serverCompiler,
+    webWorkerCompiler,
+  ] = multiCompiler.compilers;
 
   // Start up server process
   const serverProcess = new ServerProcess({
@@ -117,11 +136,41 @@ module.exports = async () => {
     host,
   });
 
+  if (isWebWorkerBundle) {
+    webWorkerCompiler.watch(
+      { 'info-verbosity': 'none' },
+      async (error, stats) => {
+        // We save the result of this build to webpack-dev-server's internal state so the last
+        // worker build results are sent to the browser on every refresh.
+        // It also affects the error overlay
+        //
+        // https://github.com/webpack/webpack-dev-server/blob/143762596682d8da4fdc73555880be05255734d7/lib/Server.js#L722
+        devServer._stats = stats;
+
+        const jsonStats = stats.toJson();
+
+        if (!error && !stats.hasErrors()) {
+          // Send the browser an instruction to refresh
+          await devServer.send('hash', jsonStats.hash);
+          await devServer.send('ok');
+        } else {
+          // If there are errors, show them on the browser
+          if (jsonStats.errors.length > 0) {
+            await devServer.send('errors', jsonStats.errors);
+          } else if (jsonStats.warnings.length > 0) {
+            await devServer.send('warnings', jsonStats.warnings);
+          }
+        }
+      },
+    );
+  }
+
   serverCompiler.watch({ 'info-verbosity': 'none' }, async (error, stats) => {
     // We save the result of this build to webpack-dev-server's internal state so the last
-    // server build results are sent to the browser on every refresh
+    // server build results are sent to the browser on every refresh.
+    // It also affects the error overlay
     //
-    // https://github.com/webpack/webpack-dev-server/blob/master/lib/Server.js#L144
+    // https://github.com/webpack/webpack-dev-server/blob/143762596682d8da4fdc73555880be05255734d7/lib/Server.js#L722
     devServer._stats = stats;
 
     const jsonStats = stats.toJson();

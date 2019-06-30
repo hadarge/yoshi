@@ -78,3 +78,5 @@ module.exports.shouldDeployToCDN = () => {
     fs.existsSync(POM_FILE)
   );
 };
+
+module.exports.isWebWorkerBundle = !!project.webWorkerEntry;

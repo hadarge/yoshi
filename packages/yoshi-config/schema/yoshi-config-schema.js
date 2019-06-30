@@ -169,6 +169,14 @@ const schema = {
     },
     umdNamedDefine:
       webpackOptions.definitions.OutputOptions.properties.umdNamedDefine,
+    webWorker: {
+      type: 'object',
+      description: 'Configuration for web worker bundle',
+      properties: {
+        entry: webpackOptions.properties.entry,
+        externals: webpackOptions.properties.externals,
+      },
+    },
     projectType: {
       description:
         'An experimental way of running an app by creating a bundle specifically for the server.',
