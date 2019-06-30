@@ -1,5 +1,23 @@
 # Changelog
 
+## 4.9.5 (2019-06-30)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1416](https://github.com/wix/yoshi/pull/1416) Bump `tpa-style-webpack-plugin` ([@ronami](https://github.com/ronami))
+- `eslint-config-yoshi`, `yoshi-config`, `yoshi`
+  - [#1414](https://github.com/wix/yoshi/pull/1414) Lock terser to v4.0.0 to fix a bug in v4.0.1 ([@ronami](https://github.com/ronami))
+
+#### :memo: Documentation
+
+- [#1406](https://github.com/wix/yoshi/pull/1406) Fix out-dated Stylelint docs ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+
+- `yoshi-helpers`, `yoshi`
+  - [#1405](https://github.com/wix/yoshi/pull/1405) Remove unused/dead code ([@ronami](https://github.com/ronami))
+
 ## 4.9.4 (2019-06-27)
 
 #### :nail_care: Polish
