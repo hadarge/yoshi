@@ -237,6 +237,7 @@ const getStyleLoaders = ({
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
                   plugins: [
+                    project.experimentalRtlCss && require('postcss-rtl')(),
                     require('autoprefixer')({
                       // https://github.com/browserslist/browserslist
                       overrideBrowserslist: [
@@ -248,7 +249,7 @@ const getStyleLoaders = ({
                       ].join(','),
                       flexbox: 'no-2009',
                     }),
-                  ],
+                  ].filter(Boolean),
                   sourceMap: isDebug,
                 },
               },
@@ -725,7 +726,7 @@ function createClientWebpackConfig({
             // https://github.com/wix-incubator/tpa-style-webpack-plugin
             ...(project.enhancedTpaStyle ? [new TpaStyleWebpackPlugin()] : []),
             // https://github.com/wix/rtlcss-webpack-plugin
-            ...(!project.experimentalBuildHtml
+            ...(!project.experimentalBuildHtml && !project.experimentalRtlCss
               ? [
                   new RtlCssPlugin(
                     isDebug ? '[name].rtl.css' : '[name].rtl.min.css',

@@ -65,6 +65,7 @@ export default (initialConfig: InitialConfig, pkgJson: PackageJson): Config => {
     experimentalBuildHtml: get(c => c.experimentalBuildHtml, false),
     experimentalMonorepo: get(c => c.experimentalMonorepo, false),
     experimentalMinimalPRBuild: get(c => c.experimentalBuildHtml, false),
+    experimentalRtlCss: get(c => c.experimentalRtlCss, false),
     projectType: get(c => c.projectType, null),
     webWorkerEntry: get(c => c.webWorker.entry, undefined),
     webWorkerExternals: get(c => c.webWorker.externals, undefined),

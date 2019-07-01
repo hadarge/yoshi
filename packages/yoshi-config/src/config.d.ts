@@ -62,6 +62,7 @@ export type InitialConfig = {
   experimentalBuildHtml?: boolean;
   experimentalMonorepo?: boolean;
   experimentalMinimalPRBuild?: boolean;
+  experimentalRtlCss?: boolean;
   startUrl?: string | Array<string>;
   webWorker?: {
     entry?: WebpackEntry;
@@ -104,6 +105,7 @@ export type Config = {
   experimentalBuildHtml: boolean;
   experimentalMonorepo: boolean;
   experimentalMinimalPRBuild: boolean;
+  experimentalRtlCss: boolean;
   experimentalMonorepoSubProcess: boolean;
   projectType: ProjectType | null;
   webWorkerEntry?: WebpackEntry;
