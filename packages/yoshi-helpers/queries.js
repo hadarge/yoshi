@@ -6,6 +6,7 @@ const project = require('yoshi-config');
 const globs = require('yoshi-config/globs');
 const { tryRequire } = require('./utils');
 const { POM_FILE } = require('yoshi-config/paths');
+const { defaultEntry } = require('./constants');
 
 const exists = (module.exports.exists = (patterns, options) =>
   !!globby.sync(patterns, options).length);
@@ -27,10 +28,7 @@ module.exports.isProduction = () =>
   (process.env.NODE_ENV || '').toLowerCase() === 'production';
 
 module.exports.shouldRunWebpack = webpackConfig => {
-  const defaultEntryPath = path.join(
-    webpackConfig.context,
-    project.defaultEntry,
-  );
+  const defaultEntryPath = path.join(webpackConfig.context, defaultEntry);
   return project.entry || exists(`${defaultEntryPath}.{js,jsx,ts,tsx}`);
 };
 

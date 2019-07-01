@@ -12,7 +12,7 @@ describe('API', () => {
     expect(response.data).to.deep.include({
       success: true,
       payload: 'Hello world!',
-      petriScopes: ['foo', 'bar']
+      petriScopes: ['foo', 'bar'],
     });
   });
 });

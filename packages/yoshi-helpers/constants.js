@@ -1,1 +1,8 @@
-module.exports.staticsDomain = 'https://static.parastorage.com/services';
+const staticsDomain = 'https://static.parastorage.com/services';
+
+const defaultEntry = './client';
+
+module.exports = {
+  staticsDomain,
+  defaultEntry,
+};

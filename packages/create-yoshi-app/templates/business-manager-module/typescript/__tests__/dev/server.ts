@@ -8,7 +8,7 @@ const testKitEnv = require('./environment')
 // We need to stop the testkit explicitly, since it's running in a different process
 const stopTestKit = () => testKitEnv.then(tk => tk.stop());
 
-const signals: ('SIGINT' | 'SIGUSR1' | 'SIGUSR2')[] = [
+const signals: Array<'SIGINT' | 'SIGUSR1' | 'SIGUSR2'> = [
   'SIGINT',
   'SIGUSR1',
   'SIGUSR2',

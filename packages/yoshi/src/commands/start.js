@@ -22,7 +22,6 @@ const {
   clientFilesPath,
   servers,
   entry,
-  defaultEntry,
   hmr,
   liveReload,
   petriSpecsConfig,
@@ -36,6 +35,7 @@ const {
   shouldRunSass,
   isProduction,
 } = require('yoshi-helpers/queries');
+const { defaultEntry } = require('yoshi-helpers/constants');
 const {
   shouldTransformHMRRuntime,
   suffix,

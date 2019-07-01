@@ -8,7 +8,7 @@ const childProcess = require('child_process');
 const detect = require('detect-port');
 const project = require('yoshi-config');
 const queries = require('./queries');
-const { POM_FILE } = require('yoshi-config/paths');
+const { POM_FILE, MONOREPO_ROOT } = require('yoshi-config/paths');
 const xmldoc = require('xmldoc');
 const { staticsDomain } = require('./constants');
 
@@ -17,6 +17,35 @@ function logIfAny(log) {
     console.log(log);
   }
 }
+
+module.exports.unprocessedModules = p => {
+  const allSourcesButExternalModules = function(filePath) {
+    filePath = path.normalize(filePath);
+
+    if (project.experimentalMonorepoSubProcess) {
+      return (
+        filePath.startsWith(MONOREPO_ROOT) && !filePath.includes('node_modules')
+      );
+    }
+
+    return (
+      filePath.startsWith(process.cwd()) && !filePath.includes('node_modules')
+    );
+  };
+
+  const externalUnprocessedModules = ['wix-style-react/src'].concat(
+    project.externalUnprocessedModules,
+  );
+
+  const externalRegexList = externalUnprocessedModules.map(
+    m => new RegExp(`node_modules/${m}`),
+  );
+
+  return (
+    externalRegexList.some(regex => regex.test(p)) ||
+    allSourcesButExternalModules(p)
+  );
+};
 
 module.exports.createBabelConfig = (presetOptions = {}) => {
   const pathsToResolve = [__filename];

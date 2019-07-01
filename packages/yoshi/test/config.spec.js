@@ -85,7 +85,10 @@ describe('Lookup and read configuration', () => {
           })
           .spawn(command);
 
-        return checkStderr(test, 'Warning: Invalid configuration object');
+        return checkStderr(
+          test,
+          'Unknown option "nonexistingproperty" with value true was found.',
+        );
       });
     });
   });

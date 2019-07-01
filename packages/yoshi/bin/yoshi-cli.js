@@ -1,3 +1,5 @@
+require('source-map-support/register');
+
 const prog = require('commander');
 const runCLI = require('../src/cli');
 const { version } = require('../package');

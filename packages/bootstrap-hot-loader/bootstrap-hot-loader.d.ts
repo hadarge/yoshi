@@ -3,6 +3,6 @@ declare module 'bootstrap-hot-loader' {
 
   export function hot(
     module: any,
-    wrappedFunction: (router: Router, context?: any) => Router
-  ): (router: Router, context?: any) => Router
+    wrappedFunction: (router: Router, context?: any) => Router,
+  ): (router: Router, context?: any) => Router;
 }

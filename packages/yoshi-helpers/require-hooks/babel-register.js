@@ -1,5 +1,4 @@
-const { unprocessedModules } = require('yoshi-config');
-const { createBabelConfig } = require('../utils');
+const { unprocessedModules, createBabelConfig } = require('../utils');
 
 const babelConfig = createBabelConfig();
 

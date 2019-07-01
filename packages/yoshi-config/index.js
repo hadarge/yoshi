@@ -1,3 +1,1 @@
-const loadConfig = require('./loadConfig');
-
-module.exports = loadConfig({ validate: true });
+module.exports = require('./build/index').default;

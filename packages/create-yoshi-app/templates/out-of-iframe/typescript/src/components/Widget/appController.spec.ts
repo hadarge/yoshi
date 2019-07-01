@@ -1,8 +1,8 @@
-import { createAppController } from './appController';
 import LaboratoryTestkit from '@wix/wix-experiments/dist/src/laboratory-testkit';
+import { ExperimentsBag } from '@wix/wix-experiments';
 import { EXPERIMENTS_SCOPE } from '../../config/constants';
 
-import { ExperimentsBag } from '@wix/wix-experiments';
+import { createAppController } from './appController';
 
 export function mockExperiments(
   scope: string,

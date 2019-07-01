@@ -8,13 +8,20 @@
   ],
   "author": "Ronen Amiel & Ran Yitzhaki",
   "license": "ISC",
+  "devDependencies": {
+    "@types/cosmiconfig": "5.0.3",
+    "@types/find-up": "2.1.1",
+    "@types/lodash": "4.14.134",
+    "@types/webpack": "4.4.33",
+    "@types/puppeteer": "1.12.4"
+  },
   "dependencies": {
-    "ajv": "6.10.0",
-    "ajv-keywords": "3.4.0",
     "chalk": "2.4.2",
-    "cosmiconfig": "4.0.0",
+    "cosmiconfig": "5.2.1",
     "find-up": "3.0.0",
+    "read-pkg": "5.1.1",
     "import-fresh": "3.0.0",
+    "jest-validate": "24.8.0",
     "lodash": "4.17.11"
   }
 }

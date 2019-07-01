@@ -7,3 +7,5 @@ dist
 .DS_Store
 lerna-debug.log
 .changelog
+build
+tsconfig.tsbuildinfo

@@ -4,4 +4,4 @@ declare global {
   const app: BootstrapServer;
 }
 
-export { };
+export {};

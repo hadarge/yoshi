@@ -7,9 +7,36 @@
   "settings": {
     "react": {
       "version": "latest"
+    },
+    "import/resolver": {
+      "eslint-import-resolver-typescript": true
     }
   },
   "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint/eslint-plugin"],
+      "rules": {
+        "@typescript-eslint/array-type": ["error", "generic"],
+        "@typescript-eslint/ban-types": "error",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {"argsIgnorePattern": "^_"}
+        ],
+        "import/order": "error",
+        "no-dupe-class-members": "off",
+        "no-unused-vars": "off",
+        "no-useless-constructor": "off"
+      }
+    },
+    {
+      "files": ["*.d.ts"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off",
+        "import/no-unresolved": "off"
+      }
+    },
     {
       "files": ["**/*.spec.js", "**/*.test.js", "**/*.e2e.js", "**/*.it.js"],
       "rules": {

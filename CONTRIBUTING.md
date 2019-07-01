@@ -18,6 +18,7 @@ Please **ask first** if somebody else is already working on this or the core dev
 
 1.  Clone the repo `git clone git@github.com:wix/yoshi.git`.
 2.  Run `npm install` in the yoshi directory.
+3.  Run `npm run watch` to continuously transpile files with TypeScript.
 
 That's it, you're good to go.
 

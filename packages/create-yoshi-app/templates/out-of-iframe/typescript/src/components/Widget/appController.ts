@@ -1,10 +1,10 @@
-import { EXPERIMENTS_SCOPE } from '../../config/constants';
 import Experiments from '@wix/wix-experiments';
 
 import {
   IWidgetControllerConfig,
   IWidgetController,
 } from '@wix/native-components-infra/dist/src/types/types';
+import { EXPERIMENTS_SCOPE } from '../../config/constants';
 
 function getLocale({ wixCodeApi }): string {
   return wixCodeApi.window.locale || 'en';
