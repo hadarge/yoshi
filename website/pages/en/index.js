@@ -64,7 +64,7 @@ class HomeSplash extends React.Component {
   render() {
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl('yoshi.webp')} />
+        <Logo img_src={imgUrl('yoshi.png')} />
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
