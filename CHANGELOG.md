@@ -1,5 +1,26 @@
 # Changelog
 
+## 4.10.0 (2019-07-01)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`, `yoshi-config`, `yoshi-helpers`, `yoshi`
+  - [#1377](https://github.com/wix/yoshi/pull/1377) Support web-worker bundle in Yoshi ([@ranyitz](https://github.com/ranyitz))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1419](https://github.com/wix/yoshi/pull/1419) Update `verifyRegistry` to check if wix's private registry is reachable (#1403) ([@drorl-wix](https://github.com/drorl-wix))
+
+#### :house: Internal
+
+- `bootstrap-hot-loader`, `create-yoshi-app`, `jest-yoshi-preset`, `yoshi-config`, `yoshi-helpers`, `yoshi`
+  - [#1401](https://github.com/wix/yoshi/pull/1401) [RFC] Migrate to TypeScript ([@ronami](https://github.com/ronami))
+- Other
+  - [#1422](https://github.com/wix/yoshi/pull/1422) Make `lint-staged` fail on warnings ([@ranyitz](https://github.com/ranyitz))
+- `create-yoshi-app`
+  - [#1423](https://github.com/wix/yoshi/pull/1423) Install published version on templates tests rather than `latest` ([@ronami](https://github.com/ronami))
+
 ## 4.9.6 (2019-06-30)
 
 #### :bug: Bug Fix
