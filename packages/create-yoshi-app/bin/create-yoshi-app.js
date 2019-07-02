@@ -13,7 +13,7 @@ const TemplateModel = require('../src/TemplateModel');
 const verifyDirectoryName = require('../src/verifyDirectoryName');
 const verifyWorkingDirectory = require('../src/verifyWorkingDirectory');
 const verifyRegistry = require('../src/verifyRegistry');
-const verifyMinimumNodeVersion = require('yoshi-helpers/verifyMinimumNodeVersion');
+const verifyMinimumNodeVersion = require('../src/verifyMinimumNodeVersion');
 const { minimumNodeVersion } = require('../src/constants');
 const pkg = require('../package.json');
 
