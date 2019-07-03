@@ -128,6 +128,21 @@ function createTerserPlugin() {
     },
   });
 }
+
+function createDefinePlugin(isDebug) {
+  // https://webpack.js.org/plugins/define-plugin/
+  return new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(
+      isProduction ? 'production' : 'development',
+    ),
+    'process.env.IS_MINIFIED': isDebug ? 'false' : 'true',
+    'window.__CI_APP_VERSION__': JSON.stringify(
+      artifactVersion ? artifactVersion : '0.0.0',
+    ),
+    'process.env.ARTIFACT_ID': JSON.stringify(getProjectArtifactId()),
+  });
+}
+
 // NOTE ABOUT PUBLIC PATH USING UNPKG SERVICE
 // Projects that uses `wnpm-ci` have their package.json version field on a fixed version which is not their real version
 // These projects determine their version on the "release" step, which means they will have a wrong public path
@@ -347,17 +362,6 @@ function createCommonWebpackConfig({
     },
 
     plugins: [
-      // https://webpack.js.org/plugins/define-plugin/
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(
-          isProduction ? 'production' : 'development',
-        ),
-        'process.env.IS_MINIFIED': isDebug ? 'false' : 'true',
-        'window.__CI_APP_VERSION__': JSON.stringify(
-          artifactVersion ? artifactVersion : '0.0.0',
-        ),
-        'process.env.ARTIFACT_ID': JSON.stringify(getProjectArtifactId()),
-      }),
       // This gives some necessary context to module not found errors, such as
       // the requesting resource
       new ModuleNotFoundPlugin(ROOT_DIR),
@@ -653,6 +657,8 @@ function createClientWebpackConfig({
 
     plugins: [
       ...config.plugins,
+
+      createDefinePlugin(isDebug),
 
       // https://github.com/jantimon/html-webpack-plugin
       ...(project.experimentalBuildHtml
@@ -980,6 +986,8 @@ function createWebWorkerWebpackConfig({ isDebug = true, isHmr = false }) {
       libraryTarget: 'umd',
       globalObject: 'self',
     },
+
+    plugins: [...config.plugins, createDefinePlugin(isDebug)],
 
     externals: [project.webWorkerExternals].filter(Boolean),
   };
