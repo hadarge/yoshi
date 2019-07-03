@@ -49,7 +49,6 @@ export type InitialConfig = {
   specs?: SpecsConfig;
   petriSpecs?: PetriOptions;
   transpileTests?: boolean;
-  jest: unknown;
   externalUnprocessedModules?: Array<string>;
   exports?: string;
   hmr?: boolean | 'auto';

@@ -26,6 +26,7 @@ export default ({ validate = true } = {}): Config => {
   if (validate) {
     validateConfig(initialConfig, {
       exampleConfig: validConfig,
+      recursiveBlacklist: ['resolveAlias'],
     });
   }
 

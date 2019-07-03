@@ -1,15 +1,11 @@
 import { multipleValidOptions } from 'jest-validate';
 import { InitialConfig } from './config';
+import { RequiredRecursively } from './utils';
 
-const validConfig: InitialConfig = {
+const validConfig: RequiredRecursively<InitialConfig> = {
   extends: 'preset',
-  // See https://github.com/facebook/jest/pull/8435
-  // Relevant for the other @ts-ignores in this file.
-  //
-  // @ts-ignore
-  separateCss: multipleValidOptions(true, 'prod'),
-  // @ts-ignore
-  splitChunks: multipleValidOptions({}, false),
+  separateCss: multipleValidOptions(true, 'prod') as any,
+  splitChunks: multipleValidOptions({}, false) as any,
   cssModules: true,
   tpaStyle: false,
   enhancedTpaStyle: false,
@@ -18,7 +14,6 @@ const validConfig: InitialConfig = {
   },
   clientProjectName: 'project',
   keepFunctionNames: false,
-  // @ts-ignore
   entry: multipleValidOptions('index.js', ['one.js', { two: 'two.js' }], {
     app: 'index.js',
   }),
@@ -30,7 +25,9 @@ const validConfig: InitialConfig = {
       ssl: false,
     },
   },
-  // @ts-ignore
+  resolveAlias: {
+    hello: 'world',
+  },
   externals: multipleValidOptions(['React'], { react: 'React' }),
   specs: {
     browser: 'test/**/*.spec.js',
@@ -43,11 +40,9 @@ const validConfig: InitialConfig = {
   transpileTests: true,
   externalUnprocessedModules: ['react'],
   exports: '[name]',
-  // @ts-ignore
-  hmr: multipleValidOptions(true, 'auto'),
+  hmr: multipleValidOptions(true, 'auto') as any,
   liveReload: false,
-  // @ts-ignore
-  performance: multipleValidOptions({}, false),
+  performance: multipleValidOptions({}, false) as any,
   hooks: {
     prelint: 'npm run stuff',
   },
@@ -57,17 +52,14 @@ const validConfig: InitialConfig = {
   experimentalMonorepo: false,
   experimentalMinimalPRBuild: false,
   experimentalRtlCss: false,
-  // @ts-ignore
   startUrl: multipleValidOptions('http://localhost:3000', [
     'http://localhost:3000/hello',
     'http://localhost:3000/world',
   ]),
   webWorker: {
-    // @ts-ignore
     entry: multipleValidOptions('index.js', ['one.js', { two: 'two.js' }], {
       app: 'index.js',
     }),
-    // @ts-ignore
     externals: multipleValidOptions(['React'], { react: 'React' }),
   },
 };

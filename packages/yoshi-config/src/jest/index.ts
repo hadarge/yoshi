@@ -17,7 +17,7 @@ export default (): Config => {
   let config;
 
   try {
-    config = importFresh(configPath);
+    config = importFresh(configPath) as any;
   } catch (error) {
     error.message = `Config ${chalk.bold(configPath)} is invalid:\n  ${
       error.message

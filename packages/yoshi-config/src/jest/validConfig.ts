@@ -1,6 +1,6 @@
 import { Config } from './config';
 
-const validConfig: Config = {
+const validConfig: Required<Config> = {
   puppeteer: {},
   bootstrap: {
     setup: async () => {},
