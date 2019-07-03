@@ -1,7 +1,7 @@
 const path = require('path');
 const chalk = require('chalk');
 const semver = require('semver');
-const importCwd = require('import-cwd');
+const resolveCwd = require('resolve-cwd');
 
 const { version: yoshiVersion } = require('../package.json');
 
@@ -14,13 +14,21 @@ const relatedPackages = [
 module.exports = async () => {
   const outdatedPackages = relatedPackages
     .map(packageName => path.join(packageName, 'package.json'))
-    .map(packageJsonPath => importCwd.silent(packageJsonPath))
-    .filter(pkg => {
-      const diff = pkg && semver.diff(pkg.version, yoshiVersion);
+    .map(packageJsonPath => resolveCwd.silent(packageJsonPath))
+    .filter(Boolean)
+    .map(packageJsonFullPath => {
+      const pkg = require(packageJsonFullPath);
 
-      if (diff) {
-        return diff.includes('major');
-      }
+      return {
+        packageJsonFullPath,
+        packageName: pkg.name,
+        packageVersion: pkg.version,
+      };
+    })
+    .filter(({ packageVersion }) => {
+      const diff = semver.diff(packageVersion, yoshiVersion);
+
+      return diff && diff.includes('major');
     });
 
   if (outdatedPackages.length > 0) {
@@ -30,9 +38,15 @@ module.exports = async () => {
         'Packages related to Yoshi should be installed with the same major version as Yoshi:\n',
       ),
     );
-    outdatedPackages.forEach(({ name, version: pkgVersion }) => {
-      console.log(`  - ${chalk.bold.red(`${name} (${pkgVersion})`)}`);
-    });
+    outdatedPackages.forEach(
+      ({ packageJsonFullPath, packageName, packageVersion }) => {
+        console.log(
+          `  - ${chalk.bold.red(
+            `${packageName} (${packageVersion}) at ${packageJsonFullPath}`,
+          )}`,
+        );
+      },
+    );
     console.log(
       chalk.red(
         `Please install them in the version ${chalk.bold(yoshiVersion)}.\n`,
