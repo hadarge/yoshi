@@ -5,7 +5,13 @@ process.env.NODE_ENV = 'development';
 const parseArgs = require('minimist');
 
 const cliArgs = parseArgs(process.argv.slice(2), {
+  alias: {
+    https: 'ssl',
+  },
   boolean: ['with-tests'],
+  default: {
+    https: false,
+  },
 });
 
 if (cliArgs.production) {

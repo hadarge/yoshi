@@ -532,18 +532,20 @@ describe('Aggregator: Start', () => {
           return cdnIsServing('assets/test.json', 5005, 'https', { agent });
         });
 
-        it('should enable ssl when ran --ssl', () => {
-          child = test
-            .setup({
-              'src/assets/test.json': '{a: 1}',
-              'src/index.js': 'var a = 1;',
-              'package.json': fx.packageJson({
-                servers: { cdn: { port: 5005, dir: 'dist/statics' } },
-              }),
-            })
-            .spawn('start', '--ssl');
+        ['--ssl', '--https'].forEach(option => {
+          it(`should enable ssl when ran ${option}`, () => {
+            child = test
+              .setup({
+                'src/assets/test.json': '{a: 1}',
+                'src/index.js': 'var a = 1;',
+                'package.json': fx.packageJson({
+                  servers: { cdn: { port: 5005, dir: 'dist/statics' } },
+                }),
+              })
+              .spawn('start', option);
 
-          return cdnIsServing('assets/test.json', 5005, 'https', { agent });
+            return cdnIsServing('assets/test.json', 5005, 'https', { agent });
+          });
         });
       });
     });

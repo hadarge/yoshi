@@ -110,6 +110,7 @@ if (config.experimentalMonorepo) {
       "Allow app-server debugging, process won't start until debugger will be attached",
     )
     .option('--ssl', 'Serve the app bundle on https')
+    .option('--https', 'Serve the app bundle on https')
     .action(() => runCLI('start'));
 }
 
