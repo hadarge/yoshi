@@ -117,7 +117,7 @@ run webpack-bundle-analyzer plugin.
 
 #### `--stats`
 
-output webpack stats file to `dist/webpack-stats.json` (see also [bundle analysis](../guides/bundle-analyze.md))|
+output webpack stats file to `target/webpack-stats.json` (see also [bundle analysis](../guides/bundle-analyze.md))|
 
 #### `--source-map`
 
