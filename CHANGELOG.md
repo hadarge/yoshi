@@ -1,16 +1,48 @@
 # Changelog
 
+## 4.10.1 (2019-07-03)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+
+  - [#1439](https://github.com/wix/yoshi/pull/1439) Fix Wallaby Mocha config ([@netanelgilad](https://github.com/netanelgilad))
+  - [#1437](https://github.com/wix/yoshi/pull/1437) Adjust Wallaby to version 4 changes ([@ronami](https://github.com/ronami))
+  - [#1436](https://github.com/wix/yoshi/pull/1436) Fix server not getting `process.env.NODE_ENV` and others ([@ronami](https://github.com/ronami))
+  - [#1431](https://github.com/wix/yoshi/pull/1431) Support `--https` CLI option in `yoshi start` command ([@agankarin](https://github.com/agankarin))
+
+- `yoshi-config`
+  - [#1434](https://github.com/wix/yoshi/pull/1434) Fix yoshi-config validation/schema ([@ronami](https://github.com/ronami))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1428](https://github.com/wix/yoshi/pull/1428) Remove "yoshi-helpers" dependency to improve performance ([@drorl-wix](https://github.com/drorl-wix))
+
+#### :memo: Documentation
+
+- [#1425](https://github.com/wix/yoshi/pull/1425) Add version-3 migration to the website ([@gilmeir](https://github.com/gilmeir))
+- [#1435](https://github.com/wix/yoshi/pull/1435) Fix wrong path for Webpack's stats file ([@shilomagen](https://github.com/shilomagen))
+- [#1430](https://github.com/wix/yoshi/pull/1430) Update docs about project types (add OOI app) ([@drorl-wix](https://github.com/drorl-wix))
+
+#### :house: Internal
+
+- [#1438](https://github.com/wix/yoshi/pull/1438) Build packages in travis before running scripts ([@ronami](https://github.com/ronami))
+
 ## 4.10.0 (2019-07-01)
 
 #### :rocket: New Feature
 
 - `create-yoshi-app`, `yoshi-config`, `yoshi-helpers`, `yoshi`
-  - [#1377](https://github.com/wix/yoshi/pull/1377) Support web-worker bundle in Yoshi ([@ranyitz](https://github.com/ranyitz))
+  - [#1377](https://github.com/wix/yoshi/pull/1377) Support `web-worker` bundle in Yoshi ([@ranyitz](https://github.com/ranyitz))
+  * [#1395](https://github.com/wix/yoshi/pull/1395) Rtl css ([@liatash](https://github.com/liatash))
 
 #### :bug: Bug Fix
 
 - `create-yoshi-app`
   - [#1419](https://github.com/wix/yoshi/pull/1419) Update `verifyRegistry` to check if wix's private registry is reachable (#1403) ([@drorl-wix](https://github.com/drorl-wix))
+- `yoshi`
+  - [#1421](https://github.com/wix/yoshi/pull/1421) Add Wallaby support with "**tests**" folder ([@drorl-wix](https://github.com/drorl-wix))
 
 #### :house: Internal
 
