@@ -67,6 +67,14 @@ Serve the app bundle on https
 
 Default: `false`
 
+#### `--https`
+
+> An alias for `ssl` configuration option.
+
+Serve the app bundle on https
+
+Default: `false`
+
 #### `--debug`
 
 Allow server debugging, debugger will be available at 127.0.0.1:[port]
@@ -117,7 +125,7 @@ run webpack-bundle-analyzer plugin.
 
 #### `--stats`
 
-output webpack stats file to `target/webpack-stats.json` (see also [bundle analysis](../guides/bundle-analyze.md))|
+output webpack stats file to `dist/webpack-stats.json` (see also [bundle analysis](../guides/bundle-analyze.md))|
 
 #### `--source-map`
 
