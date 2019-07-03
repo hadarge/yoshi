@@ -28,6 +28,7 @@
       "guides/managing-dependencies"
     ],
     "Migration": [
+      "migration/version-3",
       "migration/version-4"
     ]
   }
