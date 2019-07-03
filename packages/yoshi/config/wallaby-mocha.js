@@ -10,7 +10,7 @@ module.exports = function(wallaby) {
     '**/*.js{,x}': wallaby.compilers.babel({
       babel: require('@babel/core'),
       babelrc: false,
-      plugins: [require.resolve('babel-preset-yoshi')],
+      presets: [require.resolve('babel-preset-yoshi')],
     }),
   };
 
