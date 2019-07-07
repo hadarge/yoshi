@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = function(wallaby: any) {
+module.exports = function(wallaby) {
   process.env.NODE_PATH += `:${path.join(
     wallaby.localProjectDir,
     'node_modules',
@@ -24,7 +24,7 @@ module.exports = function(wallaby: any) {
       { pattern: 'src/**/*.+(spec|it).ts*' },
     ],
     testFramework: 'mocha',
-    setup(config: any) {
+    setup(config) {
       const mocha = config.testFramework;
       mocha.timeout(30000);
       process.env.IN_WALLABY = 'true';

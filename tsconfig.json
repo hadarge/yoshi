@@ -24,6 +24,7 @@
   "exclude": [
     "**/__tests__/**/*",
     "**/build/**/*",
-    "**/templates/**/*"
+    "**/templates/**/*",
+    "packages/yoshi/config/wallaby-mocha-ts.ts"
   ]
 }
