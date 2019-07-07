@@ -27,36 +27,87 @@ jobs:
         - git config --global user.email "${GH_EMAIL}"
         - echo "machine github.com login ${GH_NAME} password ${GH_TOKEN}" > ~/.netrc
         - cd website && yarn install && GIT_USER="${GH_NAME}" yarn run publish-gh-pages
+
     - name: "website:preview"
       if: type = pull_request AND WEBSITE_CHANGED
       script:
         - yarn --cwd './website'
         - yarn --cwd './website' run build
         - npx surge --project ./website/build --domain wix-yoshi-${TRAVIS_PULL_REQUEST}.surge.sh
-    - name: "test:integration"
+
+    - name: "test:integration:build"
       if: type != pull_request
-      before_script: 
+      before_script:
         # Puppeteer setup
         - "sysctl kernel.unprivileged_userns_clone=1"
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
         # Install
-        - npm install 
+        - npm install
       script:
           - npm run build
-          - npm run test:integration
+          - npm run test:integration:build
+
+    - name: "test:integration:start"
+      if: type != pull_request
+      before_script:
+        # Puppeteer setup
+        - "sysctl kernel.unprivileged_userns_clone=1"
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+        # Install
+        - npm install
+      script:
+          - npm run build
+          - npm run test:integration:start
+
+    - name: "test:integration:test"
+      if: type != pull_request
+      before_script:
+        # Puppeteer setup
+        - "sysctl kernel.unprivileged_userns_clone=1"
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+        # Install
+        - npm install
+      script:
+          - npm run build
+          - npm run test:integration:test
+
+    - name: "test:integration:others"
+      if: type != pull_request
+      before_script:
+        # Puppeteer setup
+        - "sysctl kernel.unprivileged_userns_clone=1"
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+        # Install
+        - npm install
+      script:
+          - npm run build
+          - npm run test:integration:others
+
     - name: "test:unit"
       if: type != pull_request
       before_script: npm install
       script:
           - npm run build
           - npm run test:unit
-    - name: "test:app-flow"
+
+    - name: "test:app-flow:js"
       if: type != pull_request
       before_script: npm install
       script:
         - npm run build
-        - npm run test:app-flow
+        - npm run test:app-flow:js
+
+    - name: "test:app-flow:ts"
+      if: type != pull_request
+      before_script: npm install
+      script:
+        - npm run build
+        - npm run test:app-flow:ts
+
     - name: "lint"
       if: type != pull_request
       before_script: npm install
