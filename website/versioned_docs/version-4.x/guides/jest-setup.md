@@ -51,7 +51,7 @@ Run a specific test
 npx jest my-specific-test
 ```
 
-Run all tests of a spcific type (different [jest project](https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig)).
+Run all tests of a specific type (different [jest project](https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig)).
 
 You can filter the tests using the display name (`e2e`, `spec`)
 

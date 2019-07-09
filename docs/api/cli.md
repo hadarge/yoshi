@@ -108,7 +108,7 @@ The following are the default values for the CDN server's port, mount directory 
 
 #### `--url`
 
-> Similar to the `startUrl` configuration option. If both are specificied `--url` will be used.
+> Similar to the `startUrl` configuration option. If both are specified `--url` will be used.
 
 Opens the browser on a supplied url, also supports multiple urls separated by comma.
 
@@ -128,7 +128,7 @@ output webpack stats file to `dist/webpack-stats.json` (see also [bundle analysi
 
 #### `--source-map`
 
-Explictly emit bundle source maps.
+Explicitly emit bundle source maps.
 
 This task will perform the following:
 

@@ -89,7 +89,7 @@ function release(pkg) {
 
   publish(pkg);
   console.log(
-    `> ${pkg.name}@${pkg.version} - published succesfully to ${pkg.registry}`,
+    `> ${pkg.name}@${pkg.version} - published successfully to ${pkg.registry}`,
   );
 }
 

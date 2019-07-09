@@ -43,7 +43,7 @@ Previously, every project needed to configure their own Babel presets and rules.
 
 If your project is a Babel project, please make sure to remove your `.babelrc` file.
 
-### `yoshi start` doesn't run tests by default
+### `yoshi start` does not run tests by default
 
 Jest is now the default test runner. Running its immersive watch mode along with `npm start` hides the dev server output. We recommend that you use `yoshi start` to start your local development environment and that you run your tests in a separate terminal.
 

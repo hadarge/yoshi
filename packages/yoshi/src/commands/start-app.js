@@ -186,7 +186,7 @@ module.exports = async () => {
     // If it's alive, send it a message to trigger HMR
     else {
       // If there are no errors and the server can be refreshed
-      // then send it a signal and wait for a responsne
+      // then send it a signal and wait for a response
       if (serverProcess.child && !error && !stats.hasErrors()) {
         const { success } = await serverProcess.send({});
 

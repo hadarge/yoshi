@@ -117,7 +117,7 @@ if (config.experimentalMonorepo) {
 if (config.experimentalMonorepo) {
   prog
     .command('release')
-    .description('Exprimental way to publish a Lerna monorepo in CI')
+    .description('Experimental way to publish a Lerna monorepo in CI')
     .option('--minor', 'bump a minor version instead of a patch')
     .action(() => runCLI('release-monorepo'));
 } else {

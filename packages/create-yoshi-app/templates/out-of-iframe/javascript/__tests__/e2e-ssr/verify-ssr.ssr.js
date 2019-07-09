@@ -2,7 +2,7 @@ import { withSsr } from '@wix/santa-site-renderer-testkit';
 
 jest.setTimeout(100000);
 
-// We should verify our viewerScript doesn't break user's site SSR
+// We should verify our viewerScript does not break user's site SSR
 // In order to do that, we need to run the viewer (santa) with our app.
 // However, we don't want it to point to the production version (what we defined in dev center)
 // we want it to point to our local dev env - https://localhost:3200/viewerScript.bundle.min.js

@@ -13,27 +13,27 @@ module.exports = ({ cwd = process.cwd() } = {}) => {
 };
 
 function logFail(deps) {
-  const formatedDeps = deps
+  const formattedDeps = deps
     .map(
       ({ name, version, minimal }) =>
         chalk`${name}{redBright @${version}} must be at least {greenBright @${minimal}}`,
     )
     .join('\n');
 
-  const message = chalk`{red ERROR: the following dependencies must be updated:\n}${formatedDeps}`;
+  const message = chalk`{red ERROR: the following dependencies must be updated:\n}${formattedDeps}`;
 
   return Promise.reject(message);
 }
 
 function logWarn(deps) {
-  const formatedDeps = deps
+  const formattedDeps = deps
     .map(
       ({ name, version, minimal }) =>
         chalk`${name}{yellowBright @${version}} should be {greenBright @${minimal}}`,
     )
     .join('\n');
 
-  const message = chalk`{yellow WARNING: some dependencies are a bit behind:\n}${formatedDeps}`;
+  const message = chalk`{yellow WARNING: some dependencies are a bit behind:\n}${formattedDeps}`;
 
   console.log(message);
 

@@ -10,7 +10,7 @@ This guide will help you get started with debugging. There are multiple things y
 2. **Debug your server code** - `yoshi start --debug`
 3. **Debug your tests** - `yoshi test --debug`
 
-When debugging your server/tests you'll need to configure the debugger, depend on your prefered way to debug.
+When debugging your server/tests you'll need to configure the debugger, depend on your preferred way to debug.
 
 ## Enable Inspector
 
@@ -51,7 +51,7 @@ Several commercial and open source tools can connect to Node's Inspector and the
 #### [JetBrains WebStorm](https://www.jetbrains.com/webstorm/) [2017.1+ and other JetBrains IDEs](https://nodejs.org/en/docs/guides/debugging-getting-started/#jetbrains-webstorm-2017-1-and-other-jetbrains-ides)
 
 - Create a new Node.js debug configuration
-  ![Webstorm > new "Run/Debug configuration" popup](../assets/debug.png)
+  ![WebStorm > new "Run/Debug configuration" popup](../assets/debug.png)
 - In order to manually tell WebStorm the debugging port, create another configuration, use type 'Attach to Node.js/Chrome'
-  ![Webstorm > Attach to Node.js/Chrome](../assets/remotedebug.png)
+  ![WebStorm > Attach to Node.js/Chrome](../assets/remotedebug.png)
 - Press debug in order to start the remote debugger configuration then start (without debugging) the 'Node.js' configuration

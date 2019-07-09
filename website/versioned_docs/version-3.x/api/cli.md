@@ -105,7 +105,7 @@ output webpack stats file to `dist/webpack-stats.json` (see also [bundle analysi
 
 #### `--source-map`
 
-Explictly emit bundle source maps.
+Explicitly emit bundle source maps.
 
 This task will perform the following:
 

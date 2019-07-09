@@ -82,7 +82,7 @@ describe('output', () => {
     }
   });
 
-  it("fails when client entry doesn't exist", async () => {
+  it('fails when client entry does not exist', async () => {
     expect.assertions(1);
 
     await fs.remove(originalFilePath);
@@ -96,7 +96,7 @@ describe('output', () => {
     }
   });
 
-  it("fails when server entry doesn't exist", async () => {
+  it('fails when server entry does not exist', async () => {
     expect.assertions(1);
 
     await fs.remove(originalServerFilePath);

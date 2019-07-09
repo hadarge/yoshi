@@ -138,7 +138,7 @@ module.exports = async () => {
               jestYoshiConfig.server.filename,
             )}' but couldn't find a server on port '${chalk.cyan(
               jestYoshiConfig.server.port,
-            )}' after ${chalk.cyan(timeout)} miliseconds.`,
+            )}' after ${chalk.cyan(timeout)} milliseconds.`,
           );
         }
       }

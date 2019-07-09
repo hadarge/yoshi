@@ -51,7 +51,7 @@ Run a specific test
 npx jest my-specific-test
 ```
 
-Run all tests of a spcific type (different [jest project](https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig)).
+Run all tests of a specific type (different [jest project](https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig)).
 
 You can filter the tests using the display name (`e2e`, `component`, `server`) and choose more than one, separated by commas.
 
@@ -89,9 +89,9 @@ It's configured for every file under `<rootDir>/src/**/*.spec.js`.
 
 ### Bootstrap (server)
 
-An environment for testing your server (API) code. It starts up a different instance of your server ([wix-ng-bootstarp based](https://github.com/wix-platform/wix-node-platform)) for every test file.
+An environment for testing your server (API) code. It starts up a different instance of your server ([wix-ng-bootstrap based](https://github.com/wix-platform/wix-node-platform)) for every test file.
 
-You sohuld define setup and teardown functions to start/stop your server and relevant mocks (learn more: [wix-bootstrap-testkit](https://github.com/wix-platform/wix-node-platform/tree/master/bootstrap/wix-bootstrap-testkit), [wix-rpc-testkit](https://github.com/wix-platform/wix-node-platform/tree/master/rpc/wix-rpc-testkit)).
+You should define setup and teardown functions to start/stop your server and relevant mocks (learn more: [wix-bootstrap-testkit](https://github.com/wix-platform/wix-node-platform/tree/master/bootstrap/wix-bootstrap-testkit), [wix-rpc-testkit](https://github.com/wix-platform/wix-node-platform/tree/master/rpc/wix-rpc-testkit)).
 
 Runs for every test file matching `<rootDir>/test/server/**/*.spec.js`.
 

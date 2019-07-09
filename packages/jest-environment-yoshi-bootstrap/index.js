@@ -27,7 +27,7 @@ module.exports = class BootstrapEnvironment extends NodeEnvironment {
       ...bootstrapEnvironmentParams,
     });
 
-    // errors from environment setup/teardown are catched silently
+    // errors from environment setup/teardown are caught silently
     try {
       if (this.global.__setup__) {
         await this.global.__setup__({

@@ -40,7 +40,7 @@ module.exports.hot = (sourceModule, _wrappedFunction_) => {
   // Return a wrapped function for `wix-bootstrap-ng` to use.
   // Note that this function will only run once.
   return async (app, _context_) => {
-    // Update the internal reference to `cotnext`.
+    // Update the internal reference to `context`.
     context = _context_;
 
     // Run the user's code with an empty router.

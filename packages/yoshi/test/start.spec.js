@@ -720,7 +720,7 @@ describe('Aggregator: Start', () => {
       });
     });
 
-    it('should print application ready message only after the server port is avaialble', async () => {
+    it('should print application ready message only after the server port is available', async () => {
       const port = await detect(3005);
 
       // Intentionally start listening after a timeout, to check that we indeed wait for the port
@@ -760,7 +760,7 @@ describe('Aggregator: Start', () => {
       );
     });
 
-    it('should pring waiting for app server to start message if the server did not start in time', async () => {
+    it('should print waiting for app server to start message if the server did not start in time', async () => {
       const port = await detect(3005);
 
       // Intentionally start listening after a timeout, to check that we indeed wait for the port

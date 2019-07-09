@@ -73,7 +73,7 @@ module.exports = function(api, opts = {}) {
         // Add helpers for generators and async/await.
         requireDefault('@babel/plugin-transform-runtime'),
         {
-          // 2 options blow are usualy handled by pollyfil.io.
+          // 2 options blow are usually handled by pollyfil.io.
           helpers: false,
           regenerator: true,
         },

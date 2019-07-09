@@ -985,7 +985,7 @@ describe('Aggregator: Test', () => {
             'module.exports = { browsers: ["PhantomJS"], frameworks: ["jasmine"], plugins: [require("karma-jasmine"), require("karma-phantomjs-launcher")], files: ["a.js", "test.spec.js"], exclude: ["excluded.spec.js"]}',
           'test/karma-setup.js': 'console.log("setup karma")',
           'a.js': '"use strict";var a = 2; var b = 3;',
-          // The file contains a require of 'fs' to make sure webpack takes care of it propertly
+          // The file contains a require of 'fs' to make sure webpack takes care of it properly
           'src/test.spec.js': `
             require('fs');
             it("pass result", function () { expect(1).toBe(1); });
@@ -1244,7 +1244,7 @@ describe('Aggregator: Test', () => {
         .execute('test', ['--mocha']);
 
       expect(res.stderr).to.contain(
-        `● Warning:\n\n   you are running e2e tests and doesn't have any bundle located in the statics directory`,
+        `● Warning:\n\n   you are running e2e tests and does not have any bundle located in the statics directory`,
       );
     });
   });

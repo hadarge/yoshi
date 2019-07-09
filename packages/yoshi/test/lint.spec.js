@@ -85,7 +85,7 @@ describe('Aggregator: Lint', () => {
         .execute('lint', ['--format json']);
 
       expect(res.code).to.equal(1);
-      // endPoisition is a json only parameter
+      // endPosition is a json only parameter
       expect(res.stdout).to.contain('endPosition');
       expect(res.stdout).to.contain('Missing radix parameter');
     });

@@ -1,6 +1,6 @@
 module.exports = function(wallaby) {
   const wallabyCommon = require('./wallaby-common')(wallaby);
-  // We need to add a wallaby compiler, because apparently wallaby doesn't
+  // We need to add a wallaby compiler, because apparently wallaby does not
   // use the transform configuration of jest
   wallabyCommon.compilers = {
     '**/*.js{,x}': wallaby.compilers.babel({

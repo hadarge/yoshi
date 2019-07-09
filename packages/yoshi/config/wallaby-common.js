@@ -16,7 +16,7 @@ if (!process.env.WALLABY_NODE_PATH && process.platform !== 'win32') {
     nvmOutput.status === 1 &&
     nvmOutput.stderr.includes('is not yet installed')
   ) {
-    // if .nvmrc's version isnt installed, get default version
+    // if .nvmrc's version is not installed, get default version
     nvmOutput = spawnSync(
       '/bin/sh',
       ['-c', `. ${homeDir}/.nvm/nvm.sh && nvm which default`],

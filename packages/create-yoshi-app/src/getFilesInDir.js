@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const globby = require('globby');
 
-module.exports = absoulteDirPath => {
+module.exports = absoluteDirPath => {
   const filesPaths = globby.sync(['**/*', '!node_modules'], {
-    cwd: absoulteDirPath,
+    cwd: absoluteDirPath,
     dot: true,
     gitignore: true,
   });
@@ -13,7 +13,7 @@ module.exports = absoulteDirPath => {
 
   filesPaths.forEach(filePath => {
     const content = fs.readFileSync(
-      path.join(absoulteDirPath, filePath),
+      path.join(absoluteDirPath, filePath),
       'utf-8',
     );
 

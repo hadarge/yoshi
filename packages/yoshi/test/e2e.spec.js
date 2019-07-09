@@ -25,7 +25,7 @@ describe('Aggregator: e2e', () => {
   describe('should run protractor with a cdn server', function() {
     this.timeout(60000);
 
-    it('should download chromedriver 2.29 and use it (when there is environement param IS_BUILD_AGENT and no CHROMEDRIVER_VERSION supplied)', () => {
+    it('should download chromedriver 2.29 and use it (when there is environment param IS_BUILD_AGENT and no CHROMEDRIVER_VERSION supplied)', () => {
       const res = test
         .setup({
           'protractor.conf.js': '',

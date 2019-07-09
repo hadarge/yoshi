@@ -21,7 +21,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlPolyfillPlugin = require('./html-polyfill-plugin');
 const { localIdentName } = require('../src/constants');
-const EnvirnmentMarkPlugin = require('../src/webpack-plugins/environment-mark-plugin');
+const EnvironmentMarkPlugin = require('../src/webpack-plugins/environment-mark-plugin');
 const {
   ROOT_DIR,
   SRC_DIR,
@@ -353,7 +353,7 @@ function createCommonWebpackConfig({
       symlinks: project.experimentalMonorepoSubProcess,
     },
 
-    // Since Yoshi doesn't depend on every loader it uses directly, we first look
+    // Since Yoshi does not depend on every loader it uses directly, we first look
     // for loaders in Yoshi's `node_modules` and then look at the root `node_modules`
     //
     // See https://github.com/wix/yoshi/pull/392
@@ -369,7 +369,7 @@ function createCommonWebpackConfig({
       new CaseSensitivePathsPlugin(),
       // Way of communicating to `babel-preset-yoshi` or `babel-preset-wix` that
       // it should optimize for Webpack
-      new EnvirnmentMarkPlugin(),
+      new EnvironmentMarkPlugin(),
       // https://github.com/Realytics/fork-ts-checker-webpack-plugin
       ...(isTypescriptProject && project.projectType === 'app' && isDebug
         ? [
@@ -582,7 +582,7 @@ function createCommonWebpackConfig({
     },
 
     // https://webpack.js.org/configuration/devtool
-    // If we are in CI or requested explictly we create full source maps
+    // If we are in CI or requested explicitly we create full source maps
     // Once we are in a local build, we create cheap eval source map only
     // for a development build (hence the !isProduction)
     devtool:

@@ -242,7 +242,7 @@ describe('Webpack basic configs', () => {
   });
 
   describe('Case sensitive plugin', () => {
-    it('Should fail on wrong file referance casing not matching', () => {
+    it('Should fail on wrong file reference casing not matching', () => {
       res = test
         .setup({
           'src/client.js': `require('./casesensivitetest')`,

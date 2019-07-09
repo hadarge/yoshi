@@ -74,7 +74,7 @@ module.exports = runner.command(
         console.error(
           chalk.red(
             ' ● Warning:\n\n' +
-              "   you are running e2e tests and doesn't have any bundle located in the statics directory\n" +
+              '   you are running e2e tests and does not have any bundle located in the statics directory\n' +
               '   you probably need to run ' +
               chalk.bold('npx yoshi build') +
               ' before running the tests',

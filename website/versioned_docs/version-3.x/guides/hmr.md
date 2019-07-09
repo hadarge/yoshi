@@ -10,7 +10,7 @@ HMR is a way to speed up development built with webpack. You could retain local 
 ## `hmr: true` (default)
 
 In most cases enabling it in the config is not enough.
-[You should configure it in a propper way](https://webpack.js.org/api/hot-module-replacement/)
+[You should configure it in a proper way](https://webpack.js.org/api/hot-module-replacement/)
 
 Moreover, for React application you should also use [react-hot-loader](https://github.com/gaearon/react-hot-loader) with `react-hot-loader/babel` plugin:
 
@@ -71,5 +71,5 @@ Using this option, you opt out from using hot module replacement.
 
 ### Caveats:
 
-- It doesn't work yet with `render(React.createElement('div'), el)`. Just with JSX elements. But we are working on this.
+- It does not work yet with `render(React.createElement('div'), el)`. Just with JSX elements. But we are working on this.
 - Despite that it isn't somehow affect production, it's not stable yet. So you could try it and [open an issue](https://github.com/wix/yoshi/issues) in case of bugs. 🙏

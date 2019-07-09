@@ -34,7 +34,7 @@ _package.json_
 }
 ```
 
-This will create 2 ouput targets:
+This will create 2 output targets:
 
 ```
 dist

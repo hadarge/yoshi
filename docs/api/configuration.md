@@ -89,7 +89,7 @@ You also use the `prod` keyword to only separate css on CI and production, this 
 }
 ```
 
-Disabling cssModules on a specific css file is possible by adding `.global` before file extention.
+Disabling cssModules on a specific css file is possible by adding `.global` before file extension.
 For example:
 
 `./Counter.global.scss` //no css modules for this file
@@ -153,7 +153,7 @@ Prevent bundling of certain imported packages and instead retrieve these externa
 ## startUrl
 
 > Similar to `yoshi start --url` cli option
-> If both are specificied `--url` will be used.
+> If both are specified `--url` will be used.
 
 opens the browser on the specified url.
 Supports a url string or an array of url strings.
@@ -230,14 +230,14 @@ For more info, you can read the [webpack docs](https://webpack.js.org/configurat
 ## resolveAlias
 
 Allows you to use the Webpack Resolve Alias feature.
-The configuration object is the same as in Webpack, note that the paths are relative to Webpacks context.
+The configuration object is the same as in Webpack, note that the paths are relative to Webpack's context.
 For more info, you can read the [webpack docs](https://webpack.js.org/configuration/resolve/#resolve-alias).
 
 ## hooks
 
 Run a shell script at a specific time in yoshi's execution.
 
-For exmaple:
+For example:
 
 ```json
 {

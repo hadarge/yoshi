@@ -20,9 +20,9 @@ Transpiling code with `tsc -b -w` with Webpack watching the output creates sub-o
 
 - Webpack's watch is triggered multiple times if a package that is shared across multiple ones is changed.
 - Output and errors are inconsistent: Sometimes showing from Webpack and other times from the background `tsc` process.
-- Debugging can be harder as Webpack consumes transpiled code and doesn't treat the `.map` files (requires `source-map-loader`).
+- Debugging can be harder as Webpack consumes transpiled code and does not treat the `.map` files (requires `source-map-loader`).
 
-Finally, it will watch non-js library assets and copy them to `dist`, similarily to `build`.
+Finally, it will watch non-js library assets and copy them to `dist`, similarly to `build`.
 
 #### Test
 
