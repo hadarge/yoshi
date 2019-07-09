@@ -37,8 +37,8 @@
     "axios": "^0.19.0",
     "i18next": "^11.6.0",
     "prop-types": "~15.6.0",
-    "react": "16.8.0",
-    "react-dom": "16.8.0",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "react-i18next": "^7.11.0",
     "yoshi-template-intro": "^4.1.0"
   },
