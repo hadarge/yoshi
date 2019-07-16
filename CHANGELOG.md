@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.10.3 (2019-07-16)
+
+#### :bug: Bug Fix
+
+- `jest-yoshi-preset`, `yoshi`
+  - [#1457](https://github.com/wix/yoshi/pull/1457) When using jest, do not ignore the transformation of svg assets from `node_modules` ([@amiryonatan](https://github.com/amiryonatan))
+
 ## 4.10.2 (2019-07-16)
 
 #### :rocket: New Feature
