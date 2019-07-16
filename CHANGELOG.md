@@ -1,5 +1,29 @@
 # Changelog
 
+## 4.10.2 (2019-07-16)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#1452](https://github.com/wix/yoshi/pull/1452) Update react version in the templates to `16.8.6` ([@ranyitz](https://github.com/ranyitz))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1459](https://github.com/wix/yoshi/pull/1459) `out-of-iframe` `typescript` template: Fix button color dynamic change in settings panel ([@eran-gottlieb](https://github.com/eran-gottlieb))
+- `yoshi`
+  - [#1449](https://github.com/wix/yoshi/pull/1449) Fix `wallaby.ts` file to not include types ([@ronami](https://github.com/ronami))
+  - [#1433](https://github.com/wix/yoshi/pull/1433) Print full path of dependencies with different major version ([@agankarin](https://github.com/agankarin))
+
+#### :memo: Documentation
+
+- `babel-preset-yoshi`, `bootstrap-hot-loader`, `create-yoshi-app`, `jest-environment-yoshi-bootstrap`, `jest-environment-yoshi-puppeteer`, `yoshi-template-intro`, `yoshi`
+  - [#1446](https://github.com/wix/yoshi/pull/1446) Fix typos throughout the project ([@sidoruk-sv](https://github.com/sidoruk-sv))
+
+#### :house: Internal
+
+- [#1441](https://github.com/wix/yoshi/pull/1441) Adjust travis config to recent split in test commands ([@ronami](https://github.com/ronami))
+
 ## 4.10.1 (2019-07-03)
 
 #### :bug: Bug Fix
