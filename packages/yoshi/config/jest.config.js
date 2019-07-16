@@ -13,7 +13,7 @@ const config = merge(jestProjectConfig, {
 });
 
 config.transformIgnorePatterns = (config.transformIgnorePatterns || []).concat([
-  '/node_modules/(?!(.*?\\.st\\.css$))',
+  '/node_modules/(?!(.*?\\.(st\\.css|svg)$))',
 ]);
 
 if (inTeamCity()) {
