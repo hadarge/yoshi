@@ -28,7 +28,7 @@
 
 > Both `EditorApp` and `SettingsPanel` are still being run inside an iframe, which means that a separate server will have to read [`editorApp.vm`](./src/templates/editorApp.vm) and [`settingsPanel.vm`](./src/templates/editorApp.vm) files and serve them as `HTML`.
 
-`out-of-iframe` is a code name for a platform that enables creating Wix Apps that lives in the Viewer's main frame. It's similar to the old TPA but should be more performant. For more information head to the [official docs](https://bo.wix.com/wix-docs/rest/client-frameworks#out-of-iframe).
+`out-of-iframe` is a code name for a platform that enables creating Wix Apps that lives in the Viewer's main frame. It's similar to the old TPA but should be more performant. For more information head to the [official docs](https://bo.wix.com/wix-docs/client/client-frameworks#out-of-iframe).
 
 ## Initial Setup
 
