@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.10.4 (2019-07-21)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1235](https://github.com/wix/yoshi/pull/1235) Add an option to add a custom protractor config ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :memo: Documentation
+
+- `create-yoshi-app`
+  - [#1460](https://github.com/wix/yoshi/pull/1460) Fix links to `out-of-iframe` docs on their templates readme ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.10.3 (2019-07-16)
 
 #### :bug: Bug Fix
