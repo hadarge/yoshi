@@ -210,6 +210,20 @@ describe('Aggregator: e2e', () => {
     expect(res.stdout).to.contain('1 spec, 0 failures');
   });
 
+  it('should support custom protrctor config location', function() {
+    this.timeout(60000);
+    const res = test
+      .setup(singleModuleWithCustomMochaProtractorConfig())
+      .execute('test', ['--protractor'], {
+        ...outsideTeamCity,
+        YOSHI_PROTRACTOR_CONFIG: 'protractor1.conf.js',
+      });
+
+    expect(res.code).to.equal(0);
+    expect(res.stdout).to.contain('protractor');
+    expect(res.stdout).to.contain('1 passing (');
+  });
+
   it("should extend project's afterLaunch", function() {
     this.timeout(60000);
     const res = test
@@ -302,5 +316,15 @@ describe('Aggregator: e2e', () => {
     return Object.assign(singleModuleWithJasmine(), {
       'protractor.conf.js': fx.protractorConfWithBeforeLaunch(),
     });
+  }
+
+  function singleModuleWithCustomMochaProtractorConfig() {
+    return {
+      'protractor1.conf.js': fx.protractorConf({ framework: 'mocha' }),
+      'protractor.conf.js': fx.protractorConf(),
+      'dist/test/some.e2e.js': fx.e2eTestMocha(),
+      'dist/statics/app.bundle.js': fx.e2eClient(),
+      'package.json': fx.packageJson(Object.assign(cdnConfigurations())),
+    };
   }
 });
