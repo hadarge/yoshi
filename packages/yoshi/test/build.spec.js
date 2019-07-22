@@ -333,7 +333,7 @@ describe('Aggregator: Build', () => {
 
     it('should load JSON file correctly', () => {
       expect(test.content('dist/statics/first.bundle.js')).to.contain(
-        `"json-content":1`,
+        `\\"json-content\\":1`,
       );
     });
 
