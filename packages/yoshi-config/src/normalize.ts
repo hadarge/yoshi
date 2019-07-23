@@ -33,6 +33,8 @@ export default (initialConfig: InitialConfig, pkgJson: PackageJson): Config => {
     name,
     unpkg,
 
+    pkgJson,
+
     servers: {
       cdn: {
         port: cdnPort,

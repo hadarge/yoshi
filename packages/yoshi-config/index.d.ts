@@ -1,1 +1,1 @@
-export * from './build/index.d';
+export { default } from './build/index.d';

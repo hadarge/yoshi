@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-unresolved
 import { Entry, EntryFunc, ExternalsElement, Options } from 'webpack';
+import { PackageJson } from 'read-pkg';
 
 type ProjectType = 'app';
 
@@ -72,6 +74,7 @@ export type InitialConfig = {
 export type Config = {
   name?: string;
   unpkg: string | unknown;
+  pkgJson: PackageJson;
   specs: SpecsConfig;
   hmr: boolean | 'auto';
   hooks: HooksConfig;
