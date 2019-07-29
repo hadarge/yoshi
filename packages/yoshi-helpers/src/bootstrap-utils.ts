@@ -44,7 +44,7 @@ export const getDevelopmentEnvVars = ({ port }: { port: number }) => {
 
   const envVars = getEnvVars({
     port,
-    appConfDir: './target/dev/configs',
+    appConfDir: process.env.APP_CONF_DIR || './target/dev/configs',
     appLogDir: './target/dev/logs',
     appPersistentDir: './target/dev/persistent',
   });

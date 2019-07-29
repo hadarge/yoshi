@@ -123,6 +123,26 @@ describe('Aggregator: Start', () => {
         return checkServerLogContainsJson(expected);
       });
 
+      it('should override default "APP_CONF_DIR" value', () => {
+        const userAppConfDir = './foo/bar';
+        const expected = {
+          APP_CONF_DIR: userAppConfDir,
+        };
+
+        child = test
+          .setup({
+            'src/client.js': '',
+            'index.js': `console.log(JSON.stringify(process.env))`,
+            'package.json': fx.packageJson(),
+            'pom.xml': fx.pom(),
+          })
+          .spawn('start', undefined, {
+            APP_CONF_DIR: userAppConfDir,
+          });
+
+        return checkServerLogContainsJson(expected);
+      });
+
       it('should override values', () => {
         const expected = {
           DEBUG: 'wixstores:*',
