@@ -145,7 +145,7 @@
     "webpack-hot-middleware": "2.25.0",
     "webpack-node-externals": "1.7.2",
     "wix-tpa-style-loader": "1.0.13",
-    "wnpm-ci": "7.0.107",
+    "wnpm-ci": "8.0.0",
     "write-file-webpack-plugin": "4.5.0",
     "xmldoc": "1.1.2",
     "yoshi-config": "4.10.2",
