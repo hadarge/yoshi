@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.10.5 (2019-07-29)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1458](https://github.com/wix/yoshi/pull/1458) Remove webpack lock from yoshi ([@matveyok](https://github.com/matveyok))
+
+#### :bug: Bug Fix
+
+- `yoshi-helpers`, `yoshi`
+  - [#1475](https://github.com/wix/yoshi/pull/1475) Add user defined `process.env.APP_CONF_DIR` ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :house: Internal
+
+- `yoshi`
+  - [#1474](https://github.com/wix/yoshi/pull/1474) Bump 'wnpm-ci' to v8 ([@yanivefraim](https://github.com/yanivefraim))
+- `yoshi-config`, `yoshi-helpers`
+  - [#1463](https://github.com/wix/yoshi/pull/1463) Migrate `yoshi-helpers` to TypeScript ([@ronami](https://github.com/ronami))
+
 ## 4.10.4 (2019-07-21)
 
 #### :rocket: New Feature
