@@ -16,8 +16,6 @@ async function getEnvInfo() {
           'babel-preset-yoshi',
           'eslint-config-yoshi',
           'eslint-config-yoshi-base',
-          'jest-environment-yoshi-bootstrap',
-          'jest-environment-yoshi-puppeteer',
           'jest-yoshi-preset',
           'tslint-config-yoshi',
           'tslint-config-yoshi-base',

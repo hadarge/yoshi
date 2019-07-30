@@ -15,9 +15,11 @@ if (envs && envs.some(env => !supportedEnvs.includes(env))) {
 }
 
 module.exports = {
-  globalSetup: require.resolve('jest-environment-yoshi-puppeteer/globalSetup'),
+  globalSetup: require.resolve(
+    './jest-environment-yoshi-puppeteer/globalSetup',
+  ),
   globalTeardown: require.resolve(
-    'jest-environment-yoshi-puppeteer/globalTeardown',
+    './jest-environment-yoshi-puppeteer/globalTeardown',
   ),
   watchPlugins: [
     require.resolve('jest-watch-typeahead/filename'),
@@ -36,11 +38,11 @@ module.exports = {
       },
       {
         displayName: 'e2e',
-        testEnvironment: require.resolve('jest-environment-yoshi-puppeteer'),
+        testEnvironment: require.resolve('./jest-environment-yoshi-puppeteer'),
         testMatch: globs.e2eTests.map(glob => `<rootDir>/${glob}`),
         setupFiles: [
           require.resolve(
-            'jest-environment-yoshi-bootstrap/environment-setup.js',
+            './jest-environment-yoshi-bootstrap/environment-setup.js',
           ),
           require.resolve('regenerator-runtime/runtime'),
         ],
