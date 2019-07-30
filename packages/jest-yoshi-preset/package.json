@@ -3,6 +3,7 @@
   "version": "4.10.5",
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
+  "types": "types.d.ts",
   "keywords": [
     "jest",
     "yoshi",
