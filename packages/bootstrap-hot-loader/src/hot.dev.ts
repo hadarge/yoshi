@@ -1,10 +1,15 @@
-const { Router } = require('express');
+import { Router } from 'express';
+import {
+  BootstrapFunction,
+  BootstrapContext,
+  BootstrapHotFunction,
+} from './types';
 
-let context;
-let router;
-let wrappedFunction;
+let context: BootstrapContext;
+let router: Router;
+let wrappedFunction: BootstrapFunction;
 
-module.exports.hot = (sourceModule, _wrappedFunction_) => {
+export const hot: BootstrapHotFunction = (sourceModule, _wrappedFunction_) => {
   // When HMR triggers `sourceModule` will be re-evaluated.
   //
   // That will trigger a call to this function, updating our
@@ -51,8 +56,11 @@ module.exports.hot = (sourceModule, _wrappedFunction_) => {
     //
     // When HMR triggers and the `router` reference is updated, this
     // app will start delegating to the new `router`.
-    return app.use((req, res, next) => {
+    app.use((req, res, next) => {
+      // @ts-ignore
       router.handle(req, res, next);
     });
+
+    return app;
   };
 };
