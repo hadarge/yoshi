@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-hot-loader",
-  "version": "4.10.2",
+  "version": "4.11.0",
   "description": "update a bootstrap server without restarting the node js process",
   "main": "index.js",
   "types": "build/hot.dev.d.ts",
@@ -15,8 +15,8 @@
     "express": "^4.0.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "1.13.9",
     "@types/express": "4.11.1",
+    "@types/webpack-env": "1.13.9",
     "express": "^4.0.0"
   }
 }

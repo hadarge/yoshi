@@ -1,6 +1,6 @@
 {
   "name": "yoshi-helpers",
-  "version": "4.10.5",
+  "version": "4.11.0",
   "keywords": [
     "helpers",
     "yoshi",
@@ -22,7 +22,7 @@
     "server-destroy": "1.0.1",
     "ts-node": "3.3.0",
     "xmldoc": "1.1.2",
-    "yoshi-config": "4.10.5"
+    "yoshi-config": "4.11.0"
   },
   "peerDependencies": {
     "@babel/core": "^7.1.2",
