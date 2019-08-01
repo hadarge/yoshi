@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.11.0 (2019-08-01)
+
+#### :rocket: New Feature
+
+- `jest-yoshi-preset`, `yoshi-config`
+  - [#1467](https://github.com/wix/yoshi/pull/1467) Jest yoshi preset overrides ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :nail_care: Polish
+
+- `jest-yoshi-preset`
+  - [#1470](https://github.com/wix/yoshi/pull/1470) Added jest preset types pointer ([@amiryonatan](https://github.com/amiryonatan))
+
+#### :house: Internal
+
+- `bootstrap-hot-loader`
+  - [#1447](https://github.com/wix/yoshi/pull/1447) Migrate `bootstrap-hot-loader` to TypeScript ([@ronami](https://github.com/ronami))
+- `jest-environment-yoshi-bootstrap`, `jest-environment-yoshi-puppeteer`, `jest-yoshi-preset`, `yoshi`
+  - [#1471](https://github.com/wix/yoshi/pull/1471) Combine Jest preset and related packages into 1 package ([@yanivefraim](https://github.com/yanivefraim))
+
 ## 4.10.5 (2019-07-29)
 
 #### :rocket: New Feature
