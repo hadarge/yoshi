@@ -1,8 +1,15 @@
 const fs = require('fs');
+const pick = require('lodash/pick');
 const chalk = require('chalk');
 const globby = require('globby');
 const { envs, supportedEnvs, withLatestJSDom } = require('./constants');
+const { setupRequireHooks } = require('yoshi-helpers/require-hooks');
 const globs = require('yoshi-config/globs');
+const loadJestYoshiConfig = require('yoshi-config/jest');
+
+// the user's config is loaded outside of a jest runtime and should be transpiled
+// with babel/typescript, this may be run separately for every worker
+setupRequireHooks();
 
 const modulePathIgnorePatterns = ['<rootDir>/dist/', '<rootDir>/target/'];
 
@@ -14,7 +21,25 @@ if (envs && envs.some(env => !supportedEnvs.includes(env))) {
   process.exit(1);
 }
 
-module.exports = {
+const jestYoshiConfig = loadJestYoshiConfig();
+
+const projectOverrideMapping = {
+  e2e: 'e2eOptions',
+  spec: 'specOptions',
+};
+const supportedProjectOverrideKeys = ['globals'];
+const supportedGlobalOverrideKeys = [
+  'collectCoverage',
+  'collectCoverageFrom',
+  'coverageReporters',
+  'coverageDirectory',
+  'coveragePathIgnorePatterns',
+  'coverageThreshold',
+];
+
+const globalValidOverrides = pick(jestYoshiConfig, supportedGlobalOverrideKeys);
+
+const config = {
   globalSetup: require.resolve(
     './jest-environment-yoshi-puppeteer/globalSetup',
   ),
@@ -25,6 +50,7 @@ module.exports = {
     require.resolve('jest-watch-typeahead/filename'),
     require.resolve('jest-watch-typeahead/testname'),
   ],
+  ...globalValidOverrides,
   projects: [
     ...[
       {
@@ -56,6 +82,13 @@ module.exports = {
         return true;
       })
       .map(project => {
+        const projectOverrideKey = projectOverrideMapping[project.displayName];
+        const projectOverrides = jestYoshiConfig[projectOverrideKey];
+
+        const projectValidOverrides = projectOverrides
+          ? pick(projectOverrides, supportedProjectOverrideKeys)
+          : {};
+
         // We recommend projects use the `__tests__` directory But we support `test`
         // too
         const setupFilePaths = globby.sync(
@@ -97,7 +130,6 @@ module.exports = {
 
         return {
           ...project,
-
           modulePathIgnorePatterns,
 
           transformIgnorePatterns: [
@@ -124,6 +156,7 @@ module.exports = {
           },
 
           setupFilesAfterEnv,
+          ...projectValidOverrides,
         };
       }),
     // workaround for https://github.com/facebook/jest/issues/5866
@@ -134,3 +167,5 @@ module.exports = {
     },
   ],
 };
+
+module.exports = config;

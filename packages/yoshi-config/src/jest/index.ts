@@ -27,7 +27,12 @@ export default (): Config => {
 
   validate(config, {
     exampleConfig: validConfig,
-    recursiveBlacklist: ['puppeteer'],
+    recursiveBlacklist: [
+      'puppeteer',
+      'specOptions.globals',
+      'e2eOptions.globals',
+      'coverageThreshold',
+    ],
   });
 
   return config;

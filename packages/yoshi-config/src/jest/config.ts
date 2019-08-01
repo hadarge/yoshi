@@ -26,4 +26,12 @@ export type Config = {
     command: string;
     port: number;
   };
+  specOptions?: any;
+  e2eOptions?: any;
+  collectCoverage?: boolean;
+  collectCoverageFrom?: [string];
+  coverageReporters?: [string];
+  coverageDirectory?: string;
+  coveragePathIgnorePatterns?: [string];
+  coverageThreshold?: any;
 };

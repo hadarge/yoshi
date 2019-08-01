@@ -94,6 +94,24 @@ Has a default test timeout of 10 seconds.
 
 ## Configuration
 
+#### API
+
+- `puppeteer` - a configuration object to be passed as [options](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions) to Puppeteer's launch method
+- `bootstrap` - node platform bootstrap setup:
+  - `setup` - environment setup function which is called before each test file
+  - `teardown` - environment teardown function which called after each test file
+- `server` - server to be bootstraped
+  - `command` - runs a command which bootstrap the server
+  - `port` - wait for a server to start listening on this port before running the tests. This port will be available in your server script as an environment variable (PORT)
+- `e2eOptions` - overrides for `e2e` environment. For now, only `globals` is available
+- `specOptions` - overrides for `spec` environment. For now, only `globals` is available
+- `collectCoverage` - Jest's [collectCoverage](https://jestjs.io/docs/en/configuration#collectcoverage-boolean)
+- `coveragePathIgnorePatterns` - Jest's [coveragePathIgnorePatterns](https://jestjs.io/docs/en/configuration#coveragepathignorepatterns-array-string)
+- `collectCoverageFrom` - Jest's [collectCoverageFrom](https://jestjs.io/docs/en/configuration#collectcoveragefrom-array)
+- `coverageReporters` - Jest's [coverageReporters](https://jestjs.io/docs/en/configuration#coveragereporters-array-string)
+- `coverageDirectory` - Jest's [coverageDirectory](https://jestjs.io/docs/en/configuration#coveragedirectory-string)
+- `coverageThreshold` - Jest's [coverageThreshold](https://jestjs.io/docs/en/configuration#coveragethreshold-object)
+
 This preset looks for a `jest-yoshi.config.js` file at the root of your project. The exported object is used to configure different parts of the preset.
 
 example configurations:
@@ -113,7 +131,7 @@ module.exports = {
     // runs a command which bootstrap the server
     command: "node server.js",
     // wait for a server to start listening on this port before running the tests
-    // this port will be available in you server script as an environment variable (PORT)
+    // this port will be available in your server script as an environment variable (PORT)
     port: 3000
   },
   puppeteer: {
