@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { LaunchOptions } from 'puppeteer';
+import { InitialOptions } from '@jest/types/build/Config';
 
 type BootstrapSetupOptions = {
   globalObject: any;
@@ -19,19 +20,25 @@ type BootstrapOptions = {
   teardown?: (options: BootstrapTeardownOptions) => Promise<any>;
 };
 
-export type Config = {
+type WhitelistedProjectOptions = Pick<InitialOptions, 'globals'>;
+
+type WhitelistedGlobalOptions = Pick<
+  InitialOptions,
+  | 'collectCoverage'
+  | 'collectCoverageFrom'
+  | 'coverageReporters'
+  | 'coverageDirectory'
+  | 'coveragePathIgnorePatterns'
+  | 'coverageThreshold'
+>;
+
+export type Config = Partial<WhitelistedGlobalOptions> & {
   puppeteer?: LaunchOptions;
   bootstrap?: BootstrapOptions;
   server?: {
     command: string;
     port: number;
   };
-  specOptions?: any;
-  e2eOptions?: any;
-  collectCoverage?: boolean;
-  collectCoverageFrom?: [string];
-  coverageReporters?: [string];
-  coverageDirectory?: string;
-  coveragePathIgnorePatterns?: [string];
-  coverageThreshold?: any;
+  specOptions?: WhitelistedProjectOptions;
+  e2eOptions?: WhitelistedProjectOptions;
 };

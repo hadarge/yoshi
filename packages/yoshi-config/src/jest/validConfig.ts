@@ -21,7 +21,7 @@ const validConfig: Required<Config> = {
   coverageReporters: ['json'],
   coverageDirectory: 'bla',
   coveragePathIgnorePatterns: ['/node_modules/'],
-  coverageThreshold: {},
+  coverageThreshold: { global: { key: 1 } },
 };
 
 export default validConfig;
