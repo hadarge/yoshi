@@ -11,9 +11,9 @@
   "devDependencies": {
     "@types/cosmiconfig": "5.0.3",
     "@types/find-up": "2.1.1",
-    "@types/lodash": "4.14.134",
-    "@types/puppeteer": "1.12.4",
-    "@types/webpack": "4.4.33"
+    "@types/lodash": "4.14.136",
+    "@types/puppeteer": "1.19.0",
+    "@types/webpack": "4.32.1"
   },
   "dependencies": {
     "chalk": "2.4.2",
@@ -21,7 +21,7 @@
     "find-up": "3.0.0",
     "import-fresh": "3.1.0",
     "jest-validate": "24.8.0",
-    "lodash": "4.17.13",
-    "read-pkg": "5.1.1"
+    "lodash": "4.17.15",
+    "read-pkg": "5.2.0"
   }
 }
