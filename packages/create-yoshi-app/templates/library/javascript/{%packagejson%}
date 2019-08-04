@@ -8,6 +8,7 @@
   },
   "main": "dist/src/index.js",
   "module": "dist/es/src/index.js",
+  "sideEffects": false,
   "files": [
     "dist"
   ],
@@ -38,10 +39,10 @@
   "module": "dist/es/src/index.js",
   "babel": {
     "presets": [
-      "yoshi"
+      ["yoshi", { "ignoreReact": true }]
     ]
   },
   "eslintConfig": {
-    "extends": "yoshi"
+    "extends": "yoshi-base"
   }
 }
