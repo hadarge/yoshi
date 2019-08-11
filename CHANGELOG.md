@@ -1,5 +1,27 @@
 # Changelog
 
+## Unreleased (2019-08-11)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#1482](https://github.com/wix/yoshi/pull/1482) Better guesstimation of user's wix email ([@yavorsky](https://github.com/yavorsky))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1479](https://github.com/wix/yoshi/pull/1479) Optimize `eslint` and `babel` configs for `server` and `library` templates ([@yavorsky](https://github.com/yavorsky))
+
+#### :house: Internal
+
+- `create-yoshi-app`, `eslint-config-yoshi`, `tslint-config-yoshi`, `yoshi-helpers`
+  - [#1484](https://github.com/wix/yoshi/pull/1484) Update unit test files pattern to `*.test.js` ([@yavorsky](https://github.com/yavorsky))
+- `yoshi-config`
+  - [#1481](https://github.com/wix/yoshi/pull/1481) Move `@jest/types` to be devDependency ([@yanivefraim](https://github.com/yanivefraim))
+  - [#1478](https://github.com/wix/yoshi/pull/1478) Add types to jest config ([@yanivefraim](https://github.com/yanivefraim))
+- `create-yoshi-app`
+  - [#1480](https://github.com/wix/yoshi/pull/1480) Increase template tests timeout from 30s to 60s ([@ronami](https://github.com/ronami))
+
 ## 4.11.0 (2019-08-01)
 
 #### :rocket: New Feature
