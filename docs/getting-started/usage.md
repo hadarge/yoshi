@@ -17,4 +17,4 @@ Runs your unit and e2e tests. Run `npm test --watch` to run the tests in watch m
 
 ---
 
-See [CLI reference](../api/cli) for more information
+See [CLI reference](../api/cli.md) for more information
