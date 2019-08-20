@@ -8,7 +8,11 @@ const eslint = require('../tasks/eslint');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('yoshi-config/globs');
 
-const { isTypescriptProject, watchMode } = require('yoshi-helpers/queries');
+const {
+  isTypescriptProject,
+  watchMode,
+  isUsingTSLint,
+} = require('yoshi-helpers/queries');
 
 const { hooks } = require('yoshi-config');
 
@@ -47,7 +51,7 @@ module.exports = runner.command(async () => {
     await execa.shell(prelint, { stdio: 'inherit' });
   }
 
-  if (isTypescriptProject()) {
+  if (isTypescriptProject() && isUsingTSLint()) {
     const tsFilesToLint =
       shouldRunOnSpecificFiles && (tsFiles.length || jsFiles.length)
         ? [...tsFiles, ...jsFiles]
@@ -58,12 +62,22 @@ module.exports = runner.command(async () => {
     } catch (error) {
       lintErrors.push(error);
     }
+  } else if (isTypescriptProject()) {
+    const tsFilesToLint =
+      shouldRunOnSpecificFiles && (tsFiles.length || jsFiles.length)
+        ? [...tsFiles, ...jsFiles]
+        : [...globs.baseDirs.map(dir => `${dir}/**/*.ts`), '*.ts'];
+
+    try {
+      await runEsLint(tsFilesToLint);
+    } catch (error) {
+      lintErrors.push(error);
+    }
   } else {
     const jsFilesToLint =
       shouldRunOnSpecificFiles && jsFiles.length
         ? jsFiles
         : [...globs.baseDirs.map(dir => `${dir}/**/*.js`), '*.js'];
-
     try {
       await runEsLint(jsFilesToLint);
     } catch (error) {

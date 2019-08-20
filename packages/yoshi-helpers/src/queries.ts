@@ -47,6 +47,8 @@ export const shouldRunSass = () => {
 export const isTypescriptProject = () =>
   fs.existsSync(path.resolve('tsconfig.json'));
 
+export const isUsingTSLint = () => exists('tslint.*');
+
 export const shouldExportModule = () => {
   return !!config.pkgJson.module;
 };
