@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased (2019-08-11)
+## 4.11.2 (2019-08-20)
+
+#### :rocket: New Feature
+
+- `yoshi-helpers`, `yoshi`
+  - [#1500](https://github.com/wix/yoshi/pull/1500) Support `eslint` for linting TypeScript files ([@eranshabi](https://github.com/eranshabi))
+
+## 4.11.1 (2019-08-11)
 
 #### :rocket: New Feature
 
