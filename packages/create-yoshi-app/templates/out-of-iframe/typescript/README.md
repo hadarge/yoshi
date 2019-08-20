@@ -21,7 +21,7 @@
 
 1. **Viewer App**
 
-> Consists of 2 assets, the `viewerWidget` is the React component and the `viewerScript` is the "controller" part which runs in a web worker.
+> Consists of 2 assets, the `Widget` is the React component and the `viewerScript` is the "controller" part which runs in a web worker.
 
 2. **Editor App**
 3. **Settings Panel**
