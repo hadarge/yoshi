@@ -4,7 +4,7 @@ import { RequiredRecursively } from './utils';
 
 const validConfig: RequiredRecursively<InitialConfig> = {
   extends: 'preset',
-  separateCss: multipleValidOptions(true, 'prod') as any,
+  separateCss: multipleValidOptions(true, 'prod' as 'prod'),
   splitChunks: multipleValidOptions({}, false) as any,
   cssModules: true,
   tpaStyle: false,
@@ -14,9 +14,14 @@ const validConfig: RequiredRecursively<InitialConfig> = {
   },
   clientProjectName: 'project',
   keepFunctionNames: false,
-  entry: multipleValidOptions('index.js', ['one.js', { two: 'two.js' }], {
-    app: 'index.js',
-  }),
+  entry: multipleValidOptions(
+    'index.js',
+    ['one.js'],
+    { two: 'two.js' },
+    {
+      app: 'index.js',
+    },
+  ),
   servers: {
     cdn: {
       url: 'http://localhost:3200',
@@ -40,7 +45,7 @@ const validConfig: RequiredRecursively<InitialConfig> = {
   transpileTests: true,
   externalUnprocessedModules: ['react'],
   exports: '[name]',
-  hmr: multipleValidOptions(true, 'auto') as any,
+  hmr: multipleValidOptions(true, 'auto' as 'auto'),
   liveReload: false,
   performance: multipleValidOptions({}, false) as any,
   hooks: {
@@ -57,9 +62,14 @@ const validConfig: RequiredRecursively<InitialConfig> = {
     'http://localhost:3000/world',
   ]),
   webWorker: {
-    entry: multipleValidOptions('index.js', ['one.js', { two: 'two.js' }], {
-      app: 'index.js',
-    }),
+    entry: multipleValidOptions(
+      'index.js',
+      ['one.js'],
+      { two: 'two.js' },
+      {
+        app: 'index.js',
+      },
+    ),
     externals: multipleValidOptions(['React'], { react: 'React' }),
   },
 };
