@@ -103,8 +103,8 @@ Has a default test timeout of 10 seconds.
 - `server` - server to be bootstraped
   - `command` - runs a command which bootstrap the server
   - `port` - wait for a server to start listening on this port before running the tests. This port will be available in your server script as an environment variable (PORT)
-- `e2eOptions` - overrides for `e2e` environment. For now, only `globals` is available
-- `specOptions` - overrides for `spec` environment. For now, only `globals` is available
+- `e2eOptions` - overrides for `e2e` environment. For now, only `globals` and `testURL` are available
+- `specOptions` - overrides for `spec` environment. For now, only `globals` and `testURL` are available
 - `collectCoverage` - Jest's [collectCoverage](https://jestjs.io/docs/en/configuration#collectcoverage-boolean)
 - `coveragePathIgnorePatterns` - Jest's [coveragePathIgnorePatterns](https://jestjs.io/docs/en/configuration#coveragepathignorepatterns-array-string)
 - `collectCoverageFrom` - Jest's [collectCoverageFrom](https://jestjs.io/docs/en/configuration#collectcoveragefrom-array)

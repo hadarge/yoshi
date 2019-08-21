@@ -20,7 +20,7 @@ type BootstrapOptions = {
   teardown?: (options: BootstrapTeardownOptions) => Promise<any>;
 };
 
-type WhitelistedProjectOptions = Pick<InitialOptions, 'globals'>;
+type WhitelistedProjectOptions = Pick<InitialOptions, 'globals' | 'testURL'>;
 
 type WhitelistedGlobalOptions = Pick<
   InitialOptions,

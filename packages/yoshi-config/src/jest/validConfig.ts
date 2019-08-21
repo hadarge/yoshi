@@ -12,9 +12,11 @@ const validConfig: Required<Config> = {
   },
   specOptions: {
     globals: {},
+    testURL: '',
   },
   e2eOptions: {
     globals: {},
+    testURL: '',
   },
   collectCoverage: true,
   collectCoverageFrom: ['__tests__'],

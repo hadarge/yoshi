@@ -27,7 +27,7 @@ const projectOverrideMapping = {
   e2e: 'e2eOptions',
   spec: 'specOptions',
 };
-const supportedProjectOverrideKeys = ['globals'];
+const supportedProjectOverrideKeys = ['globals', 'testURL'];
 const supportedGlobalOverrideKeys = [
   'collectCoverage',
   'collectCoverageFrom',
