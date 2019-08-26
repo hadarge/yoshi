@@ -26,6 +26,7 @@
       ],
       "excludePackageNames": [
         "mini-css-extract-plugin",
+        "sass-loader",
         "webpack-dev-server"
       ],
       "enabled": true
