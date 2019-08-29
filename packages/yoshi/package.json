@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "4.11.2",
+  "version": "4.12.0",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -39,7 +39,7 @@
     "babel-jest": "24.9.0",
     "babel-loader": "8.0.6",
     "babel-plugin-transform-hmr-runtime": "4.1.0",
-    "babel-preset-yoshi": "4.10.2",
+    "babel-preset-yoshi": "4.12.0",
     "bfj": "6.1.1",
     "build-url": "1.3.3",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
@@ -148,8 +148,8 @@
     "wnpm-ci": "8.0.24",
     "write-file-webpack-plugin": "4.5.1",
     "xmldoc": "1.1.2",
-    "yoshi-config": "4.11.2",
-    "yoshi-helpers": "4.11.2",
+    "yoshi-config": "4.12.0",
+    "yoshi-helpers": "4.12.0",
     "yoshi-runtime": "1.0.243"
   },
   "devDependencies": {
@@ -168,7 +168,7 @@
     "expect": "23.6.0",
     "generic-names": "1.0.3",
     "identity-obj-proxy": "3.0.0",
-    "jest-yoshi-preset": "4.11.2",
+    "jest-yoshi-preset": "4.12.0",
     "karma": "2.0.5",
     "karma-chrome-launcher": "2.2.0",
     "karma-jasmine": "1.1.2",
@@ -196,7 +196,7 @@
     "strip-ansi": "4.0.0",
     "tempy": "0.3.0",
     "typescript": "3.5.3",
-    "yoshi-angular-dependencies": "4.11.2",
+    "yoshi-angular-dependencies": "4.12.0",
     "yoshi-style-dependencies": "4.11.1"
   }
 }
