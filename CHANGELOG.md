@@ -1,5 +1,28 @@
 # Changelog
 
+## 4.12.0 (2019-08-29)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1515](https://github.com/wix/yoshi/pull/1515) Adds `deviantart.lan` to allowedhosts for hmr on that project ([@carl-e](https://github.com/carl-e))
+- `jest-yoshi-preset`, `yoshi-config`
+  - [#1506](https://github.com/wix/yoshi/pull/1506) Jest `testURL` config option override ([@jonohayon](https://github.com/jonohayon))
+
+#### :nail_care: Polish
+
+- `babel-preset-yoshi`
+  - [#1513](https://github.com/wix/yoshi/pull/1513) Transpile development bundle to last chrome version ([@netanelgilad](https://github.com/netanelgilad))
+
+#### :memo: Documentation
+
+- `create-yoshi-app`
+  - [#1505](https://github.com/wix/yoshi/pull/1505) Fix typo in `ooi` readme ([@ronnyrin](https://github.com/ronnyrin))
+
+#### :house: Internal
+
+- [#1516](https://github.com/wix/yoshi/pull/1516) Fix TypeScript version to `~3.5` ([@ronami](https://github.com/ronami))
+
 ## 4.11.2 (2019-08-20)
 
 #### :rocket: New Feature
