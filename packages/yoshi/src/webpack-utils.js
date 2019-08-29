@@ -167,7 +167,12 @@ function createDevServer(clientCompiler, { publicPath, https, host }) {
     host,
     overlay: true,
     // https://github.com/wix/yoshi/pull/1191
-    allowedHosts: ['.wix.com', '.wixsite.com', '.ooidev.com'],
+    allowedHosts: [
+      '.wix.com',
+      '.wixsite.com',
+      '.ooidev.com',
+      '.deviantart.lan',
+    ],
     before(app) {
       // Send cross origin headers
       app.use(cors());
