@@ -41,7 +41,11 @@ module.exports = function(api, opts = {}) {
           // We don't need to be fully spec compatible, bundle size is more important.
           loose: true,
           // Allow users to provide its own targets and supply target node for test environment by default.
-          targets: options.targets || (isTest && 'current node'),
+          targets:
+            options.targets ||
+            (isDevelopment &&
+              'last 2 chrome versions, last 2 firefox versions') ||
+            (isTest && 'current node'),
         },
       ],
       !options.ignoreReact && [
