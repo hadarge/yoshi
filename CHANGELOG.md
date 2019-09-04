@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.12.1 (2019-09-04)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1514](https://github.com/wix/yoshi/pull/1514) Update `tpa-style-webpack-plugin` version to `1.3.11` ([@ronnyrin](https://github.com/ronnyrin))
+
 ## 4.12.0 (2019-08-29)
 
 #### :rocket: New Feature
