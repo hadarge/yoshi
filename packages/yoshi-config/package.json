@@ -1,6 +1,6 @@
 {
   "name": "yoshi-config",
-  "version": "4.12.0",
+  "version": "4.12.1",
   "main": "index.js",
   "keywords": [
     "config",
