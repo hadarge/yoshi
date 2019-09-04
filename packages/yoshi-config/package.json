@@ -12,7 +12,7 @@
     "@jest/types": "24.9.0",
     "@types/cosmiconfig": "5.0.3",
     "@types/find-up": "2.1.1",
-    "@types/lodash": "4.14.137",
+    "@types/lodash": "4.14.138",
     "@types/puppeteer": "1.19.1",
     "@types/webpack": "4.39.1"
   },

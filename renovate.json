@@ -27,7 +27,8 @@
       "excludePackageNames": [
         "mini-css-extract-plugin",
         "sass-loader",
-        "webpack-dev-server"
+        "webpack-dev-server",
+        "typescript"
       ],
       "enabled": true
     }
