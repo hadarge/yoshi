@@ -84,7 +84,7 @@ module.exports = function(api, opts = {}) {
       ],
       requireDefault('@babel/plugin-syntax-dynamic-import'),
       // https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27
-      !inWebpack && requireDefault('babel-plugin-dynamic-import-node'),
+      modules && requireDefault('babel-plugin-dynamic-import-node'),
       // Current Node and new browsers (in development environment) already implement it so
       // just add the syntax of Object { ...rest, ...spread }
       (isDevelopment || isTest) &&
