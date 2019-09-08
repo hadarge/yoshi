@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.13.0 (2019-09-08)
+
+#### :rocket: New Feature
+
+- `babel-preset-yoshi`
+  - [#1519](https://github.com/wix/yoshi/pull/1519) Keep dynamic `import()` if `modules: false` (e.g. ECMAScript build) ([@zemlanin](https://github.com/zemlanin))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1497](https://github.com/wix/yoshi/pull/1497) Fix tests with `chalk`ed snapshots in color terms ([@zemlanin](https://github.com/zemlanin))
+
 ## 4.12.1 (2019-09-04)
 
 #### :rocket: New Feature
