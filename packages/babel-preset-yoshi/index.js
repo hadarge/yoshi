@@ -83,6 +83,10 @@ module.exports = function(api, opts = {}) {
         },
       ],
       requireDefault('@babel/plugin-syntax-dynamic-import'),
+      // The `modules` variable can be `false` for ESmodules and `commonjs` for CommonJS
+      // modules: Webpack (server & client) & library ES build
+      // CommonJS: Tests & old flow (server & library)
+      //
       // https://github.com/airbnb/babel-plugin-dynamic-import-node/issues/27
       modules && requireDefault('babel-plugin-dynamic-import-node'),
       // Current Node and new browsers (in development environment) already implement it so
