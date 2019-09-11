@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.15.1 (2019-09-11)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1539](https://github.com/wix/yoshi/pull/1539) Inject HMR entries to the correct Webpack configuration ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+
+- [#1532](https://github.com/wix/yoshi/pull/1532) Temporarily skip flaky HMR tests ([@ronami](https://github.com/ronami))
+- [#1531](https://github.com/wix/yoshi/pull/1531) separate kitchensink app-flow and yoshi-server tests ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.15.0 (2019-09-11)
 
 #### :rocket: New Feature
