@@ -1,5 +1,23 @@
 # Changelog
 
+## 4.14.0 (2019-09-11)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1529](https://github.com/wix/yoshi/pull/1529) `jest.config.js` - Allow overriding transformers from local config ([@NitayRabi](https://github.com/NitayRabi))
+- `create-yoshi-app`
+  - [#1486](https://github.com/wix/yoshi/pull/1486) Update `business-manager-module` template with `notifyViewStartLoading` ([@ronenst](https://github.com/ronenst))
+- `babel-preset-yoshi`
+  - [#1519](https://github.com/wix/yoshi/pull/1519) Keep dynamic `import()` if `modules: false` (e.g. ECMAScript build) ([@zemlanin](https://github.com/zemlanin))
+
+#### :house: Internal
+
+- `babel-preset-yoshi`
+  - [#1527](https://github.com/wix/yoshi/pull/1527) Add comment regarding `babel-plugin-dynamic-import` to babel preset yoshi ([@ranyitz](https://github.com/ranyitz))
+- `create-yoshi-app`
+  - [#1497](https://github.com/wix/yoshi/pull/1497) Fix tests with `chalk`ed snapshots in color terms ([@zemlanin](https://github.com/zemlanin))
+
 ## 4.13.0 (2019-09-08)
 
 #### :rocket: New Feature
