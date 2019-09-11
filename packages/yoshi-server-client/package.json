@@ -1,0 +1,22 @@
+{
+  "name": "yoshi-server-client",
+  "version": "4.14.0",
+  "main": "build/index.js",
+  "sideEffects": false,
+  "keywords": [
+    "yoshi",
+    "server"
+  ],
+  "author": "Ronen Amiel",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node-fetch": "1.6.9",
+    "isomorphic-unfetch": "3.0.0"
+  },
+  "peerDependencies": {
+    "yoshi-server": "^4.14.0"
+  },
+  "devDependencies": {
+    "yoshi-server": "^4.14.0"
+  }
+}

@@ -64,6 +64,7 @@ export type InitialConfig = {
   experimentalMonorepo?: boolean;
   experimentalMinimalPRBuild?: boolean;
   experimentalRtlCss?: boolean;
+  yoshiServer: boolean;
   startUrl?: string | Array<string>;
   webWorker?: {
     entry?: WebpackEntry;
@@ -75,6 +76,7 @@ export type Config = {
   name?: string;
   unpkg: string | unknown;
   pkgJson: PackageJson;
+
   specs: SpecsConfig;
   hmr: boolean | 'auto';
   hooks: HooksConfig;
@@ -109,6 +111,7 @@ export type Config = {
   experimentalMinimalPRBuild: boolean;
   experimentalRtlCss: boolean;
   experimentalMonorepoSubProcess: boolean;
+  yoshiServer: boolean;
   projectType: ProjectType | null;
   webWorkerEntry?: WebpackEntry;
   webWorkerExternals?: WebpackExternals;

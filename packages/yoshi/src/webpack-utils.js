@@ -1,14 +1,18 @@
+const path = require('path');
 const cors = require('cors');
+const fs = require('fs-extra');
 const chalk = require('chalk');
 const webpack = require('webpack');
+const globby = require('globby');
 const clearConsole = require('react-dev-utils/clearConsole');
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const project = require('yoshi-config');
-const { STATICS_DIR } = require('yoshi-config/paths');
+const { STATICS_DIR, ROUTES_DIR, SRC_DIR } = require('yoshi-config/paths');
 const { PORT } = require('./constants');
 const { redirectMiddleware } = require('../src/tasks/cdn/server-api');
 const WebpackDevServer = require('webpack-dev-server');
+const Watchpack = require('watchpack');
 
 const isInteractive = process.stdout.isTTY;
 
@@ -119,20 +123,26 @@ function createCompiler(config, { https }) {
   return compiler;
 }
 
-function addEntry(config, hotEntries) {
+function addEntry(entry, hotEntries) {
   let newEntry = {};
 
-  if (!Array.isArray(config.entry) && typeof config.entry === 'object') {
-    const keys = Object.keys(config.entry);
+  if (typeof entry === 'function') {
+    const originalEntry = entry;
+
+    newEntry = async () => {
+      return addEntry(await originalEntry(), hotEntries);
+    };
+  } else if (!Array.isArray(entry) && typeof entry === 'object') {
+    const keys = Object.keys(entry);
 
     for (const entryName of keys) {
-      newEntry[entryName] = hotEntries.concat(config.entry[entryName]);
+      newEntry[entryName] = hotEntries.concat(entry[entryName]);
     }
   } else {
-    newEntry = hotEntries.concat(config.entry);
+    newEntry = hotEntries.concat(entry);
   }
 
-  config.entry = newEntry;
+  return newEntry;
 }
 
 function overrideRules(rules, patch) {
@@ -198,10 +208,48 @@ function waitForCompilation(compiler) {
   });
 }
 
+function createServerEntries(context) {
+  const serverFunctions = fs.pathExistsSync(SRC_DIR)
+    ? globby.sync('**/*.api.(js|ts)', { cwd: SRC_DIR, absolute: true })
+    : [];
+
+  const serverRoutes = fs.pathExistsSync(ROUTES_DIR)
+    ? globby.sync('**/*.(js|ts)', { cwd: ROUTES_DIR, absolute: true })
+    : [];
+
+  // Normalize to an object with short entry names
+  const entries = [...serverFunctions, ...serverRoutes].reduce(
+    (acc, filepath) => {
+      return {
+        ...acc,
+        [path.relative(context, filepath).replace(/\.[^/.]+$/, '')]: filepath,
+      };
+    },
+    {},
+  );
+
+  // Add custom entries for `yoshi-server`
+  entries['routes/_api_'] = 'yoshi-server/build/routes/api';
+
+  return entries;
+}
+
+function watchDynamicEntries(watching) {
+  const wp = new Watchpack();
+
+  wp.on('aggregated', () => {
+    watching.invalidate();
+  });
+
+  wp.watch([], [SRC_DIR, ROUTES_DIR]);
+}
+
 module.exports = {
   createDevServer,
   createCompiler,
   waitForCompilation,
   addEntry,
   overrideRules,
+  createServerEntries,
+  watchDynamicEntries,
 };

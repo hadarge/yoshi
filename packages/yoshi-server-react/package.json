@@ -1,0 +1,23 @@
+{
+  "name": "yoshi-server-react",
+  "version": "4.14.0",
+  "main": "build/index.js",
+  "sideEffects": false,
+  "keywords": [
+    "yoshi",
+    "server"
+  ],
+  "author": "Ronen Amiel",
+  "license": "ISC",
+  "peerDependencies": {
+    "yoshi-server": "^4.14.0",
+    "yoshi-server-client": "^4.14.0",
+    "react": "^16.9.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.0",
+    "yoshi-server": "^4.14.0",
+    "yoshi-server-client": "^4.14.0",
+    "react": "^16.9.0"
+  }
+}

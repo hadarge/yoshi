@@ -30,6 +30,7 @@ export default (): Config => {
     recursiveBlacklist: [
       'puppeteer',
       'specOptions.globals',
+      'specOptions.moduleNameMapper',
       'e2eOptions.globals',
       'coverageThreshold',
     ],

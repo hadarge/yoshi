@@ -137,6 +137,7 @@
     "tslint-react-hooks": "^2.1.0",
     "url-loader": "1.1.2",
     "wait-port": "0.2.2",
+    "watchpack": "1.6.0",
     "webpack": "4.39.3",
     "webpack-bundle-analyzer": "3.4.1",
     "webpack-dev-middleware": "3.7.1",
@@ -144,13 +145,15 @@
     "webpack-hot-client": "4.1.2",
     "webpack-hot-middleware": "2.25.0",
     "webpack-node-externals": "1.7.2",
+    "webpack-sources": "1.4.3",
     "wix-tpa-style-loader": "1.0.13",
     "wnpm-ci": "8.0.35",
     "write-file-webpack-plugin": "4.5.1",
     "xmldoc": "1.1.2",
     "yoshi-config": "4.12.1",
     "yoshi-helpers": "4.14.0",
-    "yoshi-runtime": "1.0.260"
+    "yoshi-runtime": "1.0.260",
+    "yoshi-server-tools": "4.14.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "7.2.0",
@@ -163,6 +166,8 @@
     "@types/puppeteer": "1.19.1",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "@wix/wix-bootstrap-testkit": "latest",
+    "@wix/wix-config-emitter": "latest",
     "chai": "4.2.0",
     "ejs": "2.7.1",
     "expect": "23.6.0",

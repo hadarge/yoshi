@@ -8,8 +8,12 @@ const resolvePath = (...args: Array<string>) => path.resolve(ROOT_DIR, ...args);
 export const SRC_DIR = resolvePath('src');
 export const BUILD_DIR = resolvePath('dist');
 export const TARGET_DIR = resolvePath('target');
+export const ROUTES_DIR = path.join(SRC_DIR, 'routes');
+export const TEMPLATES_DIR = path.join(SRC_DIR, 'templates');
 export const PUBLIC_DIR = path.join(SRC_DIR, 'assets');
 export const STATICS_DIR = path.join(BUILD_DIR, 'statics');
+export const ROUTES_BUILD_DIR = path.join(BUILD_DIR, 'routes');
+export const TEMPLATES_BUILD_DIR = path.join(STATICS_DIR, 'templates');
 export const ASSETS_DIR = path.join(STATICS_DIR, 'assets');
 
 export const LERNA_JSON = findUp.sync('lerna.json');

@@ -25,6 +25,7 @@ const inspectArg = process.argv.find(arg => arg.includes('--debug'));
 
 module.exports = class ServerProcess {
   constructor({ serverFilePath, hmrPort }) {
+    this.hmrPort = hmrPort;
     this.socketServer = new SocketServer({ hmrPort });
     this.serverFilePath = serverFilePath;
   }
@@ -41,6 +42,7 @@ module.exports = class ServerProcess {
         ...process.env,
         NODE_ENV: 'development',
         PORT,
+        HMR_PORT: this.hmrPort,
         ...bootstrapEnvironmentParams,
       },
     });

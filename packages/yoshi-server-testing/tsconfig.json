@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "build",
+    "jsx": "react"
+  },
+  "include": [
+    "src/**/*",
+    "src/**/*.json"
+  ],
+  "references": [
+    { "path": "../yoshi-server" },
+    { "path": "../yoshi-server-client" }
+  ]
+}

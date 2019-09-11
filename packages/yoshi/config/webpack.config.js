@@ -22,6 +22,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlPolyfillPlugin = require('./html-polyfill-plugin');
 const { localIdentName } = require('../src/constants');
 const EnvironmentMarkPlugin = require('../src/webpack-plugins/environment-mark-plugin');
+const ExportDefaultPlugin = require('../src/webpack-plugins/export-default-plugin');
 const {
   ROOT_DIR,
   SRC_DIR,
@@ -29,6 +30,8 @@ const {
   STATICS_DIR,
   TSCONFIG_FILE,
   MONOREPO_ROOT,
+  TEMPLATES_DIR,
+  TEMPLATES_BUILD_DIR,
 } = require('yoshi-config/paths');
 const project = require('yoshi-config');
 const {
@@ -47,7 +50,11 @@ const {
   unprocessedModules,
 } = require('yoshi-helpers/utils');
 const { defaultEntry } = require('yoshi-helpers/constants');
-const { addEntry, overrideRules } = require('../src/webpack-utils');
+const {
+  addEntry,
+  overrideRules,
+  createServerEntries,
+} = require('../src/webpack-utils');
 
 const reScript = /\.js?$/;
 const reStyle = /\.(css|less|scss|sass)$/;
@@ -665,18 +672,18 @@ function createClientWebpackConfig({
         ? [
             ...globby
               .sync('**/*.+(ejs|vm)', {
-                cwd: SRC_DIR,
+                cwd: TEMPLATES_DIR,
                 absolute: true,
-                ignore: ['**/assets/**'],
               })
               .map(templatePath => {
                 const basename = path.basename(templatePath);
+                const filename = path.resolve(TEMPLATES_BUILD_DIR, basename);
 
                 return new HtmlWebpackPlugin({
                   // Generate a `filename.debug.ejs` for non-minified compilation
                   filename: isDebug
-                    ? prependNameWith(basename, 'debug')
-                    : prependNameWith(basename, 'prod'),
+                    ? prependNameWith(filename, 'debug')
+                    : prependNameWith(filename, 'prod'),
                   // Only use chunks from the entry with the same name as the template
                   // file
                   chunks: [basename.replace(/\.[0-9a-z]+$/i, '')],
@@ -777,6 +784,11 @@ function createClientWebpackConfig({
 
         // Rules for Style Sheets
         ...styleLoaders,
+
+        {
+          test: /\.api\.(js|ts)$/,
+          loader: require.resolve('yoshi-server-tools/loader'),
+        },
       ],
     },
 
@@ -793,7 +805,7 @@ function createClientWebpackConfig({
   };
 
   if (isHmr) {
-    addEntry(clientConfig, [
+    config.entry = addEntry(clientConfig.entry, [
       require.resolve('webpack/hot/dev-server'),
       // Adding the query param with the CDN URL allows HMR when working with a production site
       // because the bundle is requested from "parastorage" we need to specify to open the socket to localhost
@@ -829,8 +841,19 @@ function createServerWebpackConfig({
 
     target: 'node',
 
-    entry: {
-      server: possibleServerEntries.find(exists) || possibleServerEntries[0],
+    entry: async () => {
+      const serverEntry = possibleServerEntries.find(exists);
+
+      return {
+        ...(project.yoshiServer && createServerEntries(config.context)),
+
+        ...{
+          // If `yoshi-server` isn't being used we should show an error if no server entry exists
+          ...(serverEntry || !project.yoshiServer
+            ? { server: serverEntry || possibleServerEntries[0] }
+            : {}),
+        },
+      };
     },
 
     output: {
@@ -839,7 +862,6 @@ function createServerWebpackConfig({
       filename: '[name].js',
       chunkFilename: 'chunks/[name].js',
       libraryTarget: 'umd',
-      libraryExport: 'default',
       globalObject: "(typeof self !== 'undefined' ? self : this)",
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: info =>
@@ -887,6 +909,14 @@ function createServerWebpackConfig({
 
         // Rules for Style Sheets
         ...styleLoaders,
+
+        {
+          test: /\.api\.(js|ts)$/,
+          // The loader shouldn't be applied to entry files, only to files that
+          // are imported by other files and passed to `yoshi-server/client`
+          issuer: () => true,
+          loader: require.resolve('yoshi-server-tools/loader'),
+        },
       ],
     },
 
@@ -894,12 +924,18 @@ function createServerWebpackConfig({
       // Treat node modules as external for a small (and fast) server
       // bundle
       nodeExternals({
-        whitelist: [reStyle, reAssets, /bootstrap-hot-loader/],
+        whitelist: [reStyle, reAssets, /bootstrap-hot-loader/, /yoshi-server/],
       }),
       // Here for local integration tests as Yoshi's `node_modules`
       // are symlinked locally
       nodeExternals({
         modulesDir: path.resolve(__dirname, '../node_modules'),
+      }),
+      // Here for local integration tests as `yoshi-server` `node_modules`
+      // is symlinked locally and isn't a Yoshi dependency
+      nodeExternals({
+        modulesDir: path.resolve(__dirname, '../../yoshi-server/node_modules'),
+        whitelist: [/yoshi-server/],
       }),
       // Treat monorepo (hoisted) dependencies as external
       project.experimentalMonorepoSubProcess &&
@@ -910,6 +946,10 @@ function createServerWebpackConfig({
 
     plugins: [
       ...config.plugins,
+
+      // Export the server's default export (without a `default` prop) only if
+      // it exists, for backward compatibilty
+      new ExportDefaultPlugin(),
 
       // https://webpack.js.org/plugins/banner-plugin/
       new webpack.BannerPlugin({
@@ -947,7 +987,9 @@ function createServerWebpackConfig({
   };
 
   if (isHmr) {
-    addEntry(serverConfig, [`${require.resolve('./hot')}?${hmrPort}`]);
+    config.entry = addEntry(serverConfig.entry, [
+      `${require.resolve('./hot')}?${hmrPort}`,
+    ]);
   }
 
   return serverConfig;

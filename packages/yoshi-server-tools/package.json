@@ -1,0 +1,17 @@
+{
+  "name": "yoshi-server-tools",
+  "version": "4.14.0",
+  "keywords": [
+    "yoshi",
+    "server"
+  ],
+  "author": "Ronen Amiel",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/parser": "7.5.5",
+    "@babel/traverse": "7.5.5",
+    "@types/babel__traverse": "7.0.7",
+    "@types/webpack": "4.39.0",
+    "yoshi-config": "4.12.1"
+  }
+}

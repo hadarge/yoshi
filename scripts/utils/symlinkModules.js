@@ -4,6 +4,14 @@ const path = require('path');
 module.exports = repoDirectory => {
   const parentDirectory = path.dirname(repoDirectory);
 
+  const symlinkPackage = packageName => {
+    fs.removeSync(path.join(repoDirectory, 'node_modules', packageName));
+    fs.ensureSymlinkSync(
+      path.join(__dirname, '../../packages', packageName),
+      path.join(repoDirectory, 'node_modules', packageName),
+    );
+  };
+
   // Link yoshi's node_modules to the parent directory of the tested module
   fs.ensureSymlinkSync(
     path.join(__dirname, '../../packages/yoshi/node_modules'),
@@ -16,17 +24,13 @@ module.exports = repoDirectory => {
     path.join(parentDirectory, 'node_modules/.bin/yoshi'),
   );
 
-  // Link yoshi to the node_modules of the tested module
-  fs.removeSync(path.join(repoDirectory, 'node_modules/yoshi'));
-  fs.ensureSymlinkSync(
-    path.join(__dirname, '../../packages/yoshi'),
-    path.join(repoDirectory, 'node_modules/yoshi'),
-  );
-
-  // Link jest-yoshi-preset to the node_modules of the tested module
-  fs.removeSync(path.join(repoDirectory, 'node_modules/jest-yoshi-preset'));
-  fs.ensureSymlinkSync(
-    path.join(__dirname, '../../packages/jest-yoshi-preset'),
-    path.join(repoDirectory, 'node_modules/jest-yoshi-preset'),
-  );
+  [
+    'yoshi',
+    'jest-yoshi-preset',
+    'yoshi-server',
+    'yoshi-server-client',
+    'yoshi-server-tools',
+    'yoshi-server-react',
+    'yoshi-server-testing',
+  ].forEach(symlinkPackage);
 };

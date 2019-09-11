@@ -27,7 +27,7 @@ const projectOverrideMapping = {
   e2e: 'e2eOptions',
   spec: 'specOptions',
 };
-const supportedProjectOverrideKeys = ['globals', 'testURL'];
+const supportedProjectOverrideKeys = ['globals', 'testURL', 'moduleNameMapper'];
 const supportedGlobalOverrideKeys = [
   'collectCoverage',
   'collectCoverageFrom',
@@ -141,7 +141,7 @@ const config = {
 
           transform: {
             '^.+\\.jsx?$': require.resolve('./transforms/babel'),
-            '^.+\\.tsx?$': require.resolve('ts-jest'),
+            '^.+\\.tsx?$': require.resolve('./transforms/typescript'),
             '\\.st.css?$': require.resolve('@stylable/jest'),
             '\\.(gql|graphql)$': require.resolve('jest-transform-graphql'),
             '\\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3|html|md)$': require.resolve(

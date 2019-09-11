@@ -32,10 +32,12 @@ module.exports = async templateDirectory => {
   }
 
   // Copy mocked `node_modules`
-  await fs.copy(
-    path.join(templateDirectory, '__node_modules__'),
-    path.join(testDirectory, 'node_modules'),
-  );
+  if (await fs.pathExists(path.join(templateDirectory, '__node_modules__'))) {
+    await fs.copy(
+      path.join(templateDirectory, '__node_modules__'),
+      path.join(testDirectory, 'node_modules'),
+    );
+  }
 
   return {
     testDirectory,

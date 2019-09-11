@@ -1,0 +1,49 @@
+{
+  "name": "kitchensink",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "sideEffects": false,
+  "author": {
+    "name": "me",
+    "email": "me@wix.com"
+  },
+  "scripts": {
+    "start": "yoshi start",
+    "build": "yoshi build",
+    "test": "yoshi test"
+  },
+  "dependencies": {
+    "@types/jest": "^24.0.0",
+    "@types/node": "^8.9.4",
+    "@types/puppeteer": "1.12.1",
+    "@types/react": "^16.7.20",
+    "@types/react-dom": "^16.0.11",
+    "@wix/wix-bootstrap-testkit": "latest",
+    "@wix/wix-config-emitter": "latest",
+    "jest-puppeteer": "^3.4.0",
+    "jest-yoshi-preset": "latest",
+    "puppeteer": "^1.13.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "typescript": "^3.0.0",
+    "yoshi": "latest",
+    "yoshi-server": "latest",
+    "yoshi-server-client": "latest",
+    "yoshi-server-react": "latest",
+    "yoshi-server-testing": "latest",
+    "yoshi-style-dependencies": "latest"
+  },
+  "jest": {
+    "preset": "jest-yoshi-preset"
+  },
+  "yoshi": {
+    "projectType": "app",
+    "experimentalBuildHtml": true,
+    "yoshiServer": true,
+    "externals": {
+      "react": "React",
+      "react-dom": "ReactDOM"
+    }
+  }
+}

@@ -1,3 +1,5 @@
+const { parastorageCdnUrl } = require('../../constants');
+
 module.exports = {
   preset: 'jest-puppeteer',
   testMatch: [
@@ -14,5 +16,8 @@ module.exports = {
     '**/optimize.test.js',
   ],
   testEnvironment: require.resolve('../../config/buildEnvironment'),
+  testEnvironmentOptions: {
+    parastorageCdnUrl,
+  },
   transformIgnorePatterns: ['/node_modules/', '/test/'],
 };

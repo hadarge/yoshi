@@ -42,6 +42,7 @@ const {
   createCompiler,
   createDevServer,
   waitForCompilation,
+  watchDynamicEntries,
 } = require('../webpack-utils');
 const ServerProcess = require('../server-process');
 const detect = require('detect-port');
@@ -74,6 +75,8 @@ function watchPublicFolder() {
 }
 
 module.exports = async () => {
+  console.log(chalk.cyan('Starting development environment...\n'));
+
   // Clean tmp folders
   await Promise.all([fs.emptyDir(BUILD_DIR), fs.emptyDir(TARGET_DIR)]);
 
@@ -165,51 +168,57 @@ module.exports = async () => {
     );
   }
 
-  serverCompiler.watch({ 'info-verbosity': 'none' }, async (error, stats) => {
-    // We save the result of this build to webpack-dev-server's internal state so the last
-    // server build results are sent to the browser on every refresh.
-    // It also affects the error overlay
-    //
-    // https://github.com/webpack/webpack-dev-server/blob/143762596682d8da4fdc73555880be05255734d7/lib/Server.js#L722
-    devServer._stats = stats;
+  const watching = serverCompiler.watch(
+    { 'info-verbosity': 'none' },
+    async (error, stats) => {
+      // We save the result of this build to webpack-dev-server's internal state so the last
+      // server build results are sent to the browser on every refresh.
+      // It also affects the error overlay
+      //
+      // https://github.com/webpack/webpack-dev-server/blob/143762596682d8da4fdc73555880be05255734d7/lib/Server.js#L722
+      devServer._stats = stats;
 
-    const jsonStats = stats.toJson();
+      const jsonStats = stats.toJson();
 
-    // If the spawned server process has died, restart it
-    if (serverProcess.child && serverProcess.child.exitCode !== null) {
-      await serverProcess.restart();
-
-      // Send the browser an instruction to refresh
-      await devServer.send('hash', jsonStats.hash);
-      await devServer.send('ok');
-    }
-    // If it's alive, send it a message to trigger HMR
-    else {
-      // If there are no errors and the server can be refreshed
-      // then send it a signal and wait for a response
-      if (serverProcess.child && !error && !stats.hasErrors()) {
-        const { success } = await serverProcess.send({});
-
-        // HMR wasn't successful, restart the server process
-        if (!success) {
-          await serverProcess.restart();
-        }
+      // If the spawned server process has died, restart it
+      if (serverProcess.child && serverProcess.child.exitCode !== null) {
+        await serverProcess.restart();
 
         // Send the browser an instruction to refresh
         await devServer.send('hash', jsonStats.hash);
         await devServer.send('ok');
-      } else {
-        // If there are errors, show them on the browser
-        if (jsonStats.errors.length > 0) {
-          await devServer.send('errors', jsonStats.errors);
-        } else if (jsonStats.warnings.length > 0) {
-          await devServer.send('warnings', jsonStats.warnings);
+      }
+      // If it's alive, send it a message to trigger HMR
+      else {
+        // If there are no errors and the server can be refreshed
+        // then send it a signal and wait for a response
+        if (serverProcess.child && !error && !stats.hasErrors()) {
+          const { success } = await serverProcess.send({});
+
+          // HMR wasn't successful, restart the server process
+          if (!success) {
+            await serverProcess.restart();
+          }
+
+          // Send the browser an instruction to refresh
+          await devServer.send('hash', jsonStats.hash);
+          await devServer.send('ok');
+        } else {
+          // If there are errors, show them on the browser
+          if (jsonStats.errors.length > 0) {
+            await devServer.send('errors', jsonStats.errors);
+          } else if (jsonStats.warnings.length > 0) {
+            await devServer.send('warnings', jsonStats.warnings);
+          }
         }
       }
-    }
-  });
+    },
+  );
 
-  console.log(chalk.cyan('Starting development environment...\n'));
+  // Re-run Webpack with new entries as they're added
+  if (project.yoshiServer) {
+    watchDynamicEntries(watching);
+  }
 
   // Start up webpack dev server
   await new Promise((resolve, reject) => {

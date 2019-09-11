@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "src/cases",
+    "src/errors"
+  ],
+  "files": [
+    "./node_modules/yoshi/types.d.ts",
+    "./node_modules/jest-yoshi-preset/types.d.ts"
+  ],
+  "include": [
+    "src"
+  ]
+}
