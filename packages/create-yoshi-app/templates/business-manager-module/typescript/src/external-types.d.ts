@@ -9,6 +9,10 @@ declare module 'react-module-container' {
     resolve?(): Promise<any>;
   }
   export class ReactLazyComponent<P, S = {}> extends React.Component<P, S> {}
+  export const ReactLoadableComponent: (
+    name: string,
+    resolve: () => Promise<{ default: React.ComponentType }>,
+  ) => typeof ReactLazyComponent;
   export const ModuleRegistry: {
     registerComponent(
       pageComponentId: PageComponentId,
