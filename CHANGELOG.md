@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.15.0 (2019-09-11)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`, `jest-yoshi-preset`, `yoshi-config`, `yoshi-server-client`, `yoshi-server-react`, `yoshi-server-testing`, `yoshi-server-tools`, `yoshi-server`, `yoshi`
+  - [#1476](https://github.com/wix/yoshi/pull/1476) Yoshi server ([@ronami](https://github.com/ronami))
+
+#### :house: Internal
+
+- [#1530](https://github.com/wix/yoshi/pull/1530) Remove travis configuration for Yoshi tests ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.14.0 (2019-09-11)
 
 #### :rocket: New Feature
