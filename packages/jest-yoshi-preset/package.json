@@ -1,6 +1,6 @@
 {
   "name": "jest-yoshi-preset",
-  "version": "4.14.0",
+  "version": "4.15.0",
   "description": "jest configuration for a yoshi fullstack project",
   "main": "index.js",
   "types": "types.d.ts",
@@ -20,7 +20,6 @@
     "yoshi": "^4.1.0"
   },
   "dependencies": {
-    "yoshi-server-tools": "4.14.0",
     "@types/jest": "^24.0.13",
     "babel-jest": "^24.1.0",
     "chalk": "2.4.2",
@@ -36,8 +35,9 @@
     "regenerator-runtime": "^0.12.0",
     "ts-jest": "^24.0.0",
     "wait-port": "^0.2.2",
-    "yoshi-config": "4.12.1",
-    "yoshi-helpers": "4.14.0"
+    "yoshi-config": "4.15.0",
+    "yoshi-helpers": "4.15.0",
+    "yoshi-server-tools": "4.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
