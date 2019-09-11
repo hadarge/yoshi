@@ -17,7 +17,7 @@ const workerFilePath = path.join(process.env.TEST_DIRECTORY, 'src/worker.js');
 
 const originalServerContent = fs.readFileSync(serverFilePath, 'utf-8');
 
-describe.skip('hmr', () => {
+describe('hmr', () => {
   describe('client side', () => {
     it('reloads the browser on javascript changes', async () => {
       await initTest('css-inclusion');
