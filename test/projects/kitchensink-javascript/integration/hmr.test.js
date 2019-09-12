@@ -98,7 +98,7 @@ describe('hmr', () => {
     });
   });
 
-  describe('web worker side', () => {
+  describe.skip('web worker side', () => {
     it('refresh the browser after changes in the web-worker', async () => {
       const originalLog = 'hello from a web worker';
       const overriddenLog = 'hello from the other side';
