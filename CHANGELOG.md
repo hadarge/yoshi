@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.15.2 (2019-09-12)
+
+#### :bug: Bug Fix
+
+- `jest-yoshi-preset`, `yoshi`
+  - [#1541](https://github.com/wix/yoshi/pull/1541) Transform `.api` files only for those who opt-in ([@ronami](https://github.com/ronami))
+
 ## 4.15.1 (2019-09-11)
 
 #### :bug: Bug Fix
