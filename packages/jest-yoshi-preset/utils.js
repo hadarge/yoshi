@@ -1,3 +1,4 @@
+const project = require('yoshi-config');
 const transform = require('yoshi-server-tools/jest-transform');
 
 function withServerTransformer(transformer) {
@@ -6,7 +7,7 @@ function withServerTransformer(transformer) {
     process(source, filename, config, transformOptions) {
       let result = source;
 
-      if (/\.api\.(js|tsx?)$/.test(filename)) {
+      if (project.yoshiServer && /\.api\.(js|tsx?)$/.test(filename)) {
         result = transform.process(source, filename);
       }
 

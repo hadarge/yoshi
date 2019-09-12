@@ -785,10 +785,14 @@ function createClientWebpackConfig({
         // Rules for Style Sheets
         ...styleLoaders,
 
-        {
-          test: /\.api\.(js|ts)$/,
-          loader: require.resolve('yoshi-server-tools/loader'),
-        },
+        ...(project.yoshiServer
+          ? [
+              {
+                test: /\.api\.(js|ts)$/,
+                loader: require.resolve('yoshi-server-tools/loader'),
+              },
+            ]
+          : []),
       ],
     },
 
@@ -910,13 +914,17 @@ function createServerWebpackConfig({
         // Rules for Style Sheets
         ...styleLoaders,
 
-        {
-          test: /\.api\.(js|ts)$/,
-          // The loader shouldn't be applied to entry files, only to files that
-          // are imported by other files and passed to `yoshi-server/client`
-          issuer: () => true,
-          loader: require.resolve('yoshi-server-tools/loader'),
-        },
+        ...(project.yoshiServer
+          ? [
+              {
+                test: /\.api\.(js|ts)$/,
+                // The loader shouldn't be applied to entry files, only to files that
+                // are imported by other files and passed to `yoshi-server/client`
+                issuer: () => true,
+                loader: require.resolve('yoshi-server-tools/loader'),
+              },
+            ]
+          : []),
       ],
     },
 
