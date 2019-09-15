@@ -9,3 +9,4 @@ lerna-debug.log
 .changelog
 build
 tsconfig.tsbuildinfo
+*_backup
