@@ -9,7 +9,7 @@ describe('analyze', () => {
     try {
       await waitForPort(8888, { timeout: 20000 });
       expect(await request('http://localhost:8888')).toMatch(
-        '<title>Webpack Bundle Analyzer</title>',
+        '<title>yoshi-monorepo',
       );
     } finally {
       await build.done();
