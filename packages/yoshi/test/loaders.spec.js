@@ -12,7 +12,9 @@ function createAboveTheLimitFile() {
 }
 
 function fileAboveTheLimit(name) {
-  return `__webpack_require__.p + "media/${name}`;
+  return new RegExp(
+    `__webpack_require__\\.p \\+ "media\\/${name.replace('.', '\\..{8}\\.')}`,
+  );
 }
 
 function installHaml(cwd) {
@@ -256,32 +258,32 @@ describe('Loaders', () => {
       });
 
       it('should write a separate image above 10kb', () => {
-        expect(test.content('dist/statics/app.bundle.js')).to.contain(
+        expect(test.content('dist/statics/app.bundle.js')).to.match(
           fileAboveTheLimit('largeImage.png'),
         );
       });
 
       it('should load images', () => {
         const content = test.content('dist/statics/app.bundle.js');
-        expect(content).to.contain(fileAboveTheLimit('img.png'));
-        expect(content).to.contain(fileAboveTheLimit('img.jpg'));
-        expect(content).to.contain(fileAboveTheLimit('img.jpeg'));
-        expect(content).to.contain(fileAboveTheLimit('img.gif'));
+        expect(content).to.match(fileAboveTheLimit('img.png'));
+        expect(content).to.match(fileAboveTheLimit('img.jpg'));
+        expect(content).to.match(fileAboveTheLimit('img.jpeg'));
+        expect(content).to.match(fileAboveTheLimit('img.gif'));
       });
 
       it('should load fonts', () => {
         const content = test.content('dist/statics/app.bundle.js');
-        expect(content).to.contain(fileAboveTheLimit('font.ttf'));
-        expect(content).to.contain(fileAboveTheLimit('font.woff'));
-        expect(content).to.contain(fileAboveTheLimit('font.woff2'));
-        expect(content).to.contain(fileAboveTheLimit('font.eot'));
-        expect(content).to.contain(fileAboveTheLimit('font.otf'));
+        expect(content).to.match(fileAboveTheLimit('font.ttf'));
+        expect(content).to.match(fileAboveTheLimit('font.woff'));
+        expect(content).to.match(fileAboveTheLimit('font.woff2'));
+        expect(content).to.match(fileAboveTheLimit('font.eot'));
+        expect(content).to.match(fileAboveTheLimit('font.otf'));
       });
 
       it('should load wav and mp3 files', () => {
         const content = test.content('dist/statics/app.bundle.js');
-        expect(content).to.contain(fileAboveTheLimit('beep.wav'));
-        expect(content).to.contain(fileAboveTheLimit('beep.mp3'));
+        expect(content).to.match(fileAboveTheLimit('beep.wav'));
+        expect(content).to.match(fileAboveTheLimit('beep.mp3'));
       });
     });
   });

@@ -160,8 +160,8 @@ describe('Aggregator: Build', () => {
       });
 
       it('should output relative paths in css url statements', () => {
-        expect(test.content('./dist/statics/third.css')).to.contain(
-          'url(media/image.jpg',
+        expect(test.content('./dist/statics/third.css')).to.match(
+          /url\(media\/image\..{8}\.jpg/,
         );
       });
     });
