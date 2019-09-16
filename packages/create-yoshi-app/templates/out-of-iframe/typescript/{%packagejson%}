@@ -30,7 +30,7 @@
     "react-test-renderer": "~15.6.0",
     "velocity": "~0.7.0",
     "wix-ui-core": "^2.0.29",
-    "typescript": "^3.2.2",
+    "typescript": "~3.6.0",
     "yoshi": "^4.6.3",
     "yoshi-style-dependencies": "^4.6.0"
   },

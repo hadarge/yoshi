@@ -36,7 +36,7 @@
     "jest-yoshi-preset": "^4.1.0",
     "lint-staged": "^8.1.5",
     "puppeteer": "^1.1.0",
-    "typescript": "~3.0.1",
+    "typescript": "~3.6.0",
     "velocity": "~0.7.0",
     "yoshi": "^4.1.0",
     "yoshi-style-dependencies": "^4.1.0"
