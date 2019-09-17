@@ -3,7 +3,7 @@ describe('Editor App', () => {
     await page.goto('https://localhost:3100/editorApp');
     await page.waitForSelector('h2');
 
-    expect(await page.$eval('h2', (e: any) => e.innerText)).toEqual(
+    expect(await page.$eval('h2', (e: any) => e.textContent)).toEqual(
       'Hello World!',
     );
   });

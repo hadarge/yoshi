@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { translate, InjectedTranslateProps } from 'react-i18next';
-import * as s from './App.scss';
+import s from './App.scss';
 
 /* <-- To remove demo stuff just copy-paste:
   \{?/\*\s?<--([\n\n]|.)*?-->\s?\*\/\}?

@@ -5,6 +5,6 @@ describe('Viewer App', () => {
     await page.goto(viewerUrl);
     await page.waitForSelector('h2');
 
-    expect(await page.$eval('h2', e => e.innerText)).toEqual('Hello World!');
+    expect(await page.$eval('h2', e => e.textContent)).toEqual('Hello World!');
   });
 });

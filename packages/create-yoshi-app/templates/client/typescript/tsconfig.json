@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
     "sourceMap": true,
-    "noImplicitAny": false,
-    "outDir": "./dist/",
+    "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
-    "importHelpers": true,
-    "noUnusedLocals": true,
     "allowJs": true,
     "jsx": "react",
-    "lib": ["dom", "esnext"],
-    "resolveJsonModule": true
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "resolveJsonModule": true,
+    "noEmit": true
   },
   "include": [
     "./__tests__/**/*.ts",

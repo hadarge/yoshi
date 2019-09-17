@@ -4,7 +4,6 @@ dist
 build
 packages/eslint-config-yoshi/__tests__/rules
 test/projects/*/src/errors
-packages/create-yoshi-app/templates/business-manager-module/javascript/__tests__/e2e/drivers/app.driver.js
 packages/create-yoshi-app/templates/business-manager-module/javascript/src/config.js
 packages/create-yoshi-app/templates/out-of-iframe/typescript/dev/wix-private.mock.js
 packages/create-yoshi-app/templates/out-of-iframe/javascript/dev/wix-private.mock.js

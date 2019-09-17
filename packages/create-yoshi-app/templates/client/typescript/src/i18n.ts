@@ -1,10 +1,17 @@
-import * as i18next from 'i18next';
+import i18next from 'i18next';
 
-export default function i18n(locale) {
+export default function i18n(locale: string) {
   return i18next
     .use({
       type: 'backend',
-      read: (language, namespace, callback) => {
+      read: (
+        language: string,
+        namespace: string,
+        callback: (
+          err: any | null,
+          translations?: Record<string, string>,
+        ) => void,
+      ) => {
         // We configure how i18next should fetch a translation resource when it
         // needs it: We use Webpack's dynamic imports to fetch resources without
         // increasing our bundle size.
@@ -12,7 +19,9 @@ export default function i18n(locale) {
         // See https://webpack.js.org/guides/code-splitting/#dynamic-imports for
         // more information.
         return import(`./locales/messages_${language}.json`)
-          .then(translation => callback(null, translation))
+          .then((translation: Record<string, string>) =>
+            callback(null, translation),
+          )
           .catch(error => callback(error));
       },
     })
