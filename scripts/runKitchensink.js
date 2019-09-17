@@ -26,27 +26,27 @@ if (filterProject) {
   });
 }
 
-const done = projects.reduce(async (promise, templateDirectory) => {
-  const failures = await promise;
+(async () => {
+  const failedTemplates = [];
 
-  const { testDirectory, rootDirectory } = await setupProject(
-    templateDirectory,
-  );
+  for (const templateDirectory of projects) {
+    const { testDirectory, rootDirectory } = await setupProject(
+      templateDirectory,
+    );
 
-  try {
-    await testProject({ testDirectory, templateDirectory, rootDirectory });
-  } catch (error) {
-    console.log();
-    console.log(error.stack);
-    console.log();
+    try {
+      await testProject({ testDirectory, templateDirectory, rootDirectory });
+    } catch (error) {
+      console.log();
+      console.log(error.stack);
+      console.log();
 
-    return [...failures, templateDirectory];
+      failedTemplates.push(templateDirectory);
+    }
+
+    return failedTemplates;
   }
-
-  return failures;
-}, Promise.resolve([]));
-
-done
+})()
   .then(failures => {
     if (failures.length > 0) {
       console.log();
