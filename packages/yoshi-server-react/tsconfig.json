@@ -3,7 +3,8 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "build",
-    "jsx": "react"
+    "jsx": "react",
+    "target": "es5"
   },
   "include": [
     "src/**/*",
