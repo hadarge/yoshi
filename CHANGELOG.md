@@ -1,5 +1,28 @@
 # Changelog
 
+## 4.16.0 (2019-09-18)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`, `jest-yoshi-preset`
+  - [#1554](https://github.com/wix/yoshi/pull/1554) Client stricter config ([@amitdahan](https://github.com/amitdahan))
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1549](https://github.com/wix/yoshi/pull/1549) Add hash to assets name ([@deanshub](https://github.com/deanshub))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1552](https://github.com/wix/yoshi/pull/1552) Update TypeScript version in templates to `~3.6.0` ([@amitdahan](https://github.com/amitdahan))
+
+#### :house: Internal
+
+- [#1557](https://github.com/wix/yoshi/pull/1557) Exit on setup when setup is failing during kitchensink tests ([@ranyitz](https://github.com/ranyitz))
+- [#1550](https://github.com/wix/yoshi/pull/1550) Ignore lerna backup files ([@deanshub](https://github.com/deanshub))
+- [#1542](https://github.com/wix/yoshi/pull/1542) Unskip TypeScript HMR tests and skip web worker (specifically) flaky tests ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.15.2 (2019-09-12)
 
 #### :bug: Bug Fix
