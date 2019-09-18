@@ -10,8 +10,8 @@ const explorer = cosmiconfig('yoshi', {
   searchPlaces: ['package.json', 'yoshi.config.js'],
 });
 
-export default ({ validate = true } = {}): Config => {
-  const result = explorer.searchSync();
+export default ({ validate = true, cwd = process.cwd() } = {}): Config => {
+  const result = explorer.searchSync(cwd);
   const initialConfig = <InitialConfig>(result ? result.config : {});
 
   // Load and copy values from a file that extends the config
@@ -31,7 +31,7 @@ export default ({ validate = true } = {}): Config => {
   }
 
   // Load package.json
-  const pkgJson = readPkg.sync({ cwd: process.cwd() });
+  const pkgJson = readPkg.sync({ cwd });
 
   // Normalize values
   const config = normalize(initialConfig, pkgJson);

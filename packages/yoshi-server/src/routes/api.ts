@@ -3,14 +3,14 @@ import importFresh from 'import-fresh';
 import { send, json as parseBodyAsJson } from 'micro';
 import { PathReporter } from 'io-ts/lib/PathReporter';
 import { isLeft } from 'fp-ts/lib/Either';
-import { BUILD_DIR } from 'yoshi-config/paths';
+import rootApp from 'yoshi-config/root-app';
 import serializeError from 'serialize-error';
 import { requestPayloadCodec, DSL } from '../types';
 import { relativeFilePath, get } from '../utils';
 import { route } from '..';
 
 const serverChunks = globby.sync('**/*.api.js', {
-  cwd: BUILD_DIR,
+  cwd: rootApp.BUILD_DIR,
   absolute: true,
 });
 
@@ -20,7 +20,7 @@ const functions: {
     | undefined;
 } = serverChunks.reduce((acc, absolutePath) => {
   const chunk = importFresh(absolutePath);
-  const filename = relativeFilePath(BUILD_DIR, absolutePath);
+  const filename = relativeFilePath(rootApp.BUILD_DIR, absolutePath);
 
   return {
     ...acc,

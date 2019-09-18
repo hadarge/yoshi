@@ -29,8 +29,8 @@ A client project that integrate with business manager APIs.
 ## Out Of Iframe
 
 An application that has it's view components written in React and run in the viewer.
-The application business logic runs inside the platform worker. 
-For more information head to the [official docs](https://bo.wix.com/wix-docs/client/client-frameworks#viewer-platform-(ooi)).
+The application business logic runs inside the platform worker.
+For more information head to the [official docs](<https://bo.wix.com/wix-docs/client/client-frameworks#viewer-platform-(ooi)>).
 
 ---
 

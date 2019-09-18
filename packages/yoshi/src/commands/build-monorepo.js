@@ -1,64 +1,44 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
-const path = require('path');
-const fs = require('fs-extra');
+const parseArgs = require('minimist');
+
+const cliArgs = parseArgs(process.argv.slice(2));
+
 const chalk = require('chalk');
-const globby = require('globby');
-const execa = require('execa');
-const { verifyTypeScriptReferences } = require('./utils');
+const loadPackages = require('yoshi-config/load-packages');
+const {
+  printBundleSizeSuggestion,
+  printBuildResult,
+} = require('./utils/print-build-results');
+const buildApps = require('./utils/build-apps');
+const buildLibs = require('./utils/build-libs');
 
 module.exports = async () => {
-  const [apps, libs] = await verifyTypeScriptReferences();
+  const { apps, libs } = await loadPackages();
 
-  console.log(chalk.bold.cyan('Building packages...'));
-  console.log();
+  // Build all libs
+  await buildLibs(libs);
 
-  const libsLocations = libs.map(lib => lib.location);
+  // Build all apps;
+  const { getAppData } = await buildApps(apps, cliArgs);
 
-  await execa.shell(`npx tsc -b ${libsLocations.join(' ')}`, {
-    stdio: 'inherit',
-  });
-
-  console.log(chalk.bold.cyan('Copying non-js files...'));
-  console.log();
-
-  libsLocations.forEach(packageDirectory => {
-    const assets = globby.sync('src/**/*', {
-      cwd: packageDirectory,
-      ignore: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.json'],
-    });
-
-    assets.forEach(assetPath => {
-      fs.copyFileSync(
-        path.join(packageDirectory, assetPath),
-        path.join(packageDirectory, 'dist', assetPath),
-      );
-    });
-  });
-
-  console.log(chalk.bold.cyan('Building bundle...'));
-  console.log();
-
-  if (apps.length !== 1) {
-    console.log(
-      chalk.bold.red('Currently, Yoshi only support monorepos with one app.'),
-    );
+  // Print a nice output
+  apps.forEach(app => {
+    console.log(chalk.bold.underline(app.name));
     console.log();
 
-    process.exit(1);
-  }
+    const [, clientOptimizedStats, serverStats] = getAppData(app).stats;
 
-  await execa.shell(`npx lerna exec --scope ${apps[0].name} -- npm run build`, {
-    stdio: 'inherit',
-    env: {
-      ...process.env,
-      EXPERIMENTAL_MONOREPO_SUB_PROCESS: true,
-    },
+    printBuildResult({
+      app,
+      webpackStats: [clientOptimizedStats, serverStats],
+    });
+
+    console.log();
   });
 
-  console.log();
-  console.log(chalk.bold.green('Done!'));
+  printBundleSizeSuggestion();
 
   return {
     persistent: false,

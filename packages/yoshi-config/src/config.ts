@@ -110,7 +110,6 @@ export type Config = {
   experimentalMonorepo: boolean;
   experimentalMinimalPRBuild: boolean;
   experimentalRtlCss: boolean;
-  experimentalMonorepoSubProcess: boolean;
   yoshiServer: boolean;
   projectType: ProjectType | null;
   webWorkerEntry?: WebpackEntry;

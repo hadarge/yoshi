@@ -1,5 +1,5 @@
 import path from 'path';
-import { SRC_DIR } from 'yoshi-config/paths';
+import rootApp from 'yoshi-config/root-app';
 import traverse from '@babel/traverse';
 import { parse } from '@babel/parser';
 
@@ -26,7 +26,7 @@ function collectExportNames(source: string) {
 
 export function transform(source: string, fullFileName: string) {
   const fileName = path
-    .relative(SRC_DIR, fullFileName)
+    .relative(rootApp.SRC_DIR, fullFileName)
     .replace(/\.[^/.]+$/, '');
 
   const headers = [`import { dsl } from 'yoshi-server/build/wrap';`];

@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import psTree from 'ps-tree';
 import detect from 'detect-port';
 import config from 'yoshi-config';
-import { MONOREPO_ROOT, POM_FILE } from 'yoshi-config/paths';
+import rootApp from 'yoshi-config/root-app';
 import xmldoc from 'xmldoc';
 // eslint-disable-next-line import/no-unresolved
 import { Stats } from 'webpack';
@@ -23,13 +23,6 @@ export function logIfAny(log: any) {
 export const unprocessedModules = (p: string) => {
   const allSourcesButExternalModules = (filePath: string) => {
     filePath = path.normalize(filePath);
-
-    if (config.experimentalMonorepoSubProcess) {
-      return (
-        filePath.startsWith(MONOREPO_ROOT as string) &&
-        !filePath.includes('node_modules')
-      );
-    }
 
     return (
       filePath.startsWith(process.cwd()) && !filePath.includes('node_modules')
@@ -226,8 +219,8 @@ export const tryRequire = (name: string) => {
 
 // Gets the artifact id of the project at the current working dir
 export const getProjectArtifactId = () => {
-  if (fs.existsSync(POM_FILE)) {
-    const content = fs.readFileSync(POM_FILE, 'utf-8');
+  if (fs.existsSync(rootApp.POM_FILE)) {
+    const content = fs.readFileSync(rootApp.POM_FILE, 'utf-8');
     const artifactId = new xmldoc.XmlDocument(content).valueWithPath(
       'artifactId',
     );

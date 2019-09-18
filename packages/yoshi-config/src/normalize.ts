@@ -78,9 +78,6 @@ export default (initialConfig: InitialConfig, pkgJson: PackageJson): Config => {
     clientProjectName,
     clientFilesPath,
 
-    experimentalMonorepoSubProcess:
-      process.env.EXPERIMENTAL_MONOREPO_SUB_PROCESS === 'true',
-
     isAngularProject: !!dependencies.angular || !!peerDependencies.angular,
     isReactProject: !!dependencies.react || !!peerDependencies.react,
   };

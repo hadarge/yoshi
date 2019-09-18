@@ -5,7 +5,7 @@ import globby from 'globby';
 import SockJS from 'sockjs-client';
 import { send } from 'micro';
 import importFresh from 'import-fresh';
-import { ROUTES_BUILD_DIR } from 'yoshi-config/paths';
+import rootApp from 'yoshi-config/root-app';
 import { RouteFunction } from './types';
 import { relativeFilePath, pathMatch } from './utils';
 
@@ -71,14 +71,14 @@ export default class Server {
 
   private createRoutes(): Array<Route> {
     const serverChunks = globby.sync('**/*.js', {
-      cwd: ROUTES_BUILD_DIR,
+      cwd: rootApp.ROUTES_BUILD_DIR,
       absolute: true,
     });
 
     return serverChunks.map(absolutePath => {
       const chunk = importFresh(absolutePath) as RouteFunction<any>;
       const relativePath = `/${relativeFilePath(
-        ROUTES_BUILD_DIR,
+        rootApp.ROUTES_BUILD_DIR,
         absolutePath,
       )}`;
       const routePath = relativePath.replace(/\[(\w+)\]/g, ':$1');

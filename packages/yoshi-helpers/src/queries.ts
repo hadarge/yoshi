@@ -3,7 +3,6 @@ import fs from 'fs';
 import globby from 'globby';
 import config from 'yoshi-config';
 import * as globs from 'yoshi-config/globs';
-import { POM_FILE } from 'yoshi-config/paths';
 import { defaultEntry } from './constants';
 
 export const exists = (
@@ -57,23 +56,25 @@ export const shouldRunLess = () => {
   return exists(globs.less);
 };
 
-export const hasE2ETests = () => {
-  return exists(globs.e2eTests, { gitignore: true });
+export const hasE2ETests = (cwd = process.cwd()) => {
+  return exists(globs.e2eTests, { gitignore: true, cwd });
 };
 
 export const hasProtractorConfigFile = () => {
   return exists(path.resolve('protractor.conf.js'));
 };
 
-export const hasBundleInStaticsDir = () => {
-  return globby.sync(path.resolve(globs.statics, '*.bundle.js')).length > 0;
+export const hasBundleInStaticsDir = (cwd = process.cwd()) => {
+  return (
+    globby.sync(path.resolve(globs.statics, '*.bundle.js'), { cwd }).length > 0
+  );
 };
 
-export const shouldDeployToCDN = () => {
+export const shouldDeployToCDN = (app: any) => {
   return (
     inTeamCity() &&
     (process.env.ARTIFACT_VERSION || process.env.BUILD_VCS_NUMBER) &&
-    fs.existsSync(POM_FILE)
+    fs.existsSync(app.POM_FILE)
   );
 };
 

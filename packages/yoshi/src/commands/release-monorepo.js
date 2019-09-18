@@ -3,7 +3,7 @@ const path = require('path');
 const execa = require('execa');
 const wnpm = require('wnpm-ci');
 const parseArgs = require('minimist');
-const { splitPackagesPromise } = require('./utils');
+const loadPackages = require('yoshi-config/load-packages');
 const {
   inTeamCity: checkInTeamCity,
   inPRTeamCity: checkInPRTeamCity,
@@ -16,9 +16,9 @@ const inTeamCity = checkInTeamCity();
 const inPRTeamCity = checkInPRTeamCity();
 
 module.exports = async () => {
-  if (inTeamCity && !inPRTeamCity) {
-    const [, libs] = await splitPackagesPromise;
+  const { libs } = await loadPackages();
 
+  if (inTeamCity && !inPRTeamCity) {
     // Patch libraries' `package.json` main field to point to `dist`
     await Promise.all(
       libs.map(async lib => {

@@ -7,7 +7,7 @@ const parseArgs = require('minimist');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('yoshi-config/globs');
 const path = require('path');
-const { STATS_FILE } = require('yoshi-config/paths');
+const rootApp = require('yoshi-config/root-app');
 const {
   petriSpecsConfig,
   clientProjectName,
@@ -97,7 +97,7 @@ module.exports = runner.command(
             {
               ...defaultOptions,
               callbackPath: productionCallbackPath,
-              statsFilename: cliArgs.stats ? STATS_FILE : false,
+              statsFilename: cliArgs.stats ? rootApp.STATS_FILE : false,
               configParams: {
                 isDebug: false,
                 isAnalyze: cliArgs.analyze,

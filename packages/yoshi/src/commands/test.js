@@ -18,7 +18,7 @@ const minimist = require('minimist');
 const { createRunner } = require('haste-core');
 const LoggerPlugin = require('../plugins/haste-plugin-yoshi-logger');
 const globs = require('yoshi-config/globs');
-const { ROOT_DIR } = require('yoshi-config/paths');
+const rootApp = require('yoshi-config/root-app');
 const chalk = require('chalk');
 const globby = require('globby');
 const projectConfig = require('yoshi-config');
@@ -226,12 +226,15 @@ module.exports = runner.command(
         // Run only if this project is using `jest-yoshi-preset`
         projectConfig.jestConfig.preset === 'jest-yoshi-preset'
       ) {
-        const { changedFiles } = await getChangedFilesForRoots([ROOT_DIR], {
-          changedSince: 'master',
-        });
+        const { changedFiles } = await getChangedFilesForRoots(
+          [rootApp.ROOT_DIR],
+          {
+            changedSince: 'master',
+          },
+        );
 
         const rootChanges = Array.from(changedFiles).filter(
-          filename => path.dirname(filename) === ROOT_DIR,
+          filename => path.dirname(filename) === rootApp.ROOT_DIR,
         );
 
         // Only optimize this run if none of the root files have changed
@@ -244,7 +247,7 @@ module.exports = runner.command(
           // Filter files to only include unit test files
           const unitTests = resolver.resolveInverse(changedFiles, filename =>
             globs.unitTests.some(pattern =>
-              minimatch(path.relative(ROOT_DIR, filename), pattern),
+              minimatch(path.relative(rootApp.ROOT_DIR, filename), pattern),
             ),
           );
 

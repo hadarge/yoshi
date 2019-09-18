@@ -15,7 +15,7 @@ const {
 const { setupRequireHooks } = require('yoshi-helpers/require-hooks');
 const startRewriteForwardProxy = require('yoshi-helpers/rewrite-forward-proxy');
 const globs = require('yoshi-config/globs');
-const project = require('yoshi-config');
+const rootApp = require('yoshi-config/root-app');
 
 setupRequireHooks();
 
@@ -40,7 +40,7 @@ const merged = ld.mergeWith(
     exclude: [],
     directConnect: true,
 
-    ...(shouldDeployToCDN() && {
+    ...(shouldDeployToCDN(rootApp) && {
       capabilities: {
         browserName: 'chrome',
         chromeOptions: {
@@ -65,10 +65,10 @@ const merged = ld.mergeWith(
           }).css,
       });
 
-      if (shouldDeployToCDN()) {
+      if (shouldDeployToCDN(rootApp)) {
         startRewriteForwardProxy({
           search: getProjectCDNBasePath(),
-          rewrite: project.servers.cdn.url,
+          rewrite: rootApp.servers.cdn.url,
           port: forwardProxyPort,
         });
       }

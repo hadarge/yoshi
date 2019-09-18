@@ -50,9 +50,22 @@ if (config.experimentalMonorepo) {
     .action(() => runCLI('build-monorepo'));
 
   prog
-    .command('start')
+    .command('start <app>')
     .description(
       'Experimental way to start a Lerna monorepo for local development',
+    )
+    .option('--url', 'Opens the browser with the supplied URL')
+    .option('--server', 'The main file to start your server')
+    // Backward compatibility
+    .option('-e --entry-point', 'The main file to start your server')
+    .option('--production', 'Start using unminified production build')
+    // Backward compatibility
+    .option('--ssl', 'Serve the app bundle on https')
+    .option('--https', 'Serve the app bundle on https')
+    .option('--debug', 'Allow app-server debugging')
+    .option(
+      '--debug-brk',
+      "Allow app-server debugging, process won't start until debugger will be attached",
     )
     .action(() => runCLI('start-monorepo'));
 } else if (config.projectType === 'app') {

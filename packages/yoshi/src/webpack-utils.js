@@ -7,8 +7,7 @@ const globby = require('globby');
 const clearConsole = require('react-dev-utils/clearConsole');
 const { prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const project = require('yoshi-config');
-const { STATICS_DIR, ROUTES_DIR, SRC_DIR } = require('yoshi-config/paths');
+const rootApp = require('yoshi-config/root-app');
 const { PORT } = require('./constants');
 const { redirectMiddleware } = require('../src/tasks/cdn/server-api');
 const WebpackDevServer = require('webpack-dev-server');
@@ -52,7 +51,7 @@ function createCompiler(config, { https }) {
         const devServerUrls = prepareUrls(
           https ? 'https' : 'http',
           '0.0.0.0',
-          project.servers.cdn.port,
+          rootApp.servers.cdn.port,
         );
 
         console.log();
@@ -161,12 +160,15 @@ function overrideRules(rules, patch) {
   });
 }
 
-function createDevServer(clientCompiler, { publicPath, https, host }) {
+function createDevServer(
+  clientCompiler,
+  { publicPath, https, host, app = rootApp },
+) {
   const devServer = new WebpackDevServer(clientCompiler, {
     // Enable gzip compression for everything served
     compress: true,
     clientLogLevel: 'error',
-    contentBase: STATICS_DIR,
+    contentBase: app.STATICS_DIR,
     watchContentBase: true,
     hot: true,
     publicPath,
@@ -183,11 +185,11 @@ function createDevServer(clientCompiler, { publicPath, https, host }) {
       '.ooidev.com',
       '.deviantart.lan',
     ],
-    before(app) {
+    before(expressApp) {
       // Send cross origin headers
-      app.use(cors());
+      expressApp.use(cors());
       // Redirect `.min.(js|css)` to `.(js|css)`
-      app.use(redirectMiddleware(host, project.servers.cdn.port));
+      expressApp.use(redirectMiddleware(host, rootApp.servers.cdn.port));
     },
   });
 
@@ -208,13 +210,13 @@ function waitForCompilation(compiler) {
   });
 }
 
-function createServerEntries(context) {
-  const serverFunctions = fs.pathExistsSync(SRC_DIR)
-    ? globby.sync('**/*.api.(js|ts)', { cwd: SRC_DIR, absolute: true })
+function createServerEntries(context, app) {
+  const serverFunctions = fs.pathExistsSync(app.SRC_DIR)
+    ? globby.sync('**/*.api.(js|ts)', { cwd: app.SRC_DIR, absolute: true })
     : [];
 
-  const serverRoutes = fs.pathExistsSync(ROUTES_DIR)
-    ? globby.sync('**/*.(js|ts)', { cwd: ROUTES_DIR, absolute: true })
+  const serverRoutes = fs.pathExistsSync(app.ROUTES_DIR)
+    ? globby.sync('**/*.(js|ts)', { cwd: app.ROUTES_DIR, absolute: true })
     : [];
 
   // Normalize to an object with short entry names
@@ -234,14 +236,14 @@ function createServerEntries(context) {
   return entries;
 }
 
-function watchDynamicEntries(watching) {
+function watchDynamicEntries(watching, app) {
   const wp = new Watchpack();
 
   wp.on('aggregated', () => {
     watching.invalidate();
   });
 
-  wp.watch([], [SRC_DIR, ROUTES_DIR]);
+  wp.watch([], [app.SRC_DIR, app.ROUTES_DIR]);
 }
 
 module.exports = {

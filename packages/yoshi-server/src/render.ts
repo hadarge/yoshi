@@ -1,6 +1,6 @@
 import path from 'path';
 import ejs from 'ejs';
-import { TEMPLATES_BUILD_DIR } from 'yoshi-config/paths';
+import rootApp from 'yoshi-config/root-app';
 
 export default async (templateName: string, data: any = {}) => {
   // When running tests, we use the development environment in watch mode
@@ -10,7 +10,7 @@ export default async (templateName: string, data: any = {}) => {
       ? `${templateName}.debug.ejs`
       : `${templateName}.prod.ejs`;
 
-  const absolutePath = path.resolve(TEMPLATES_BUILD_DIR, fileName);
+  const absolutePath = path.resolve(rootApp.TEMPLATES_BUILD_DIR, fileName);
 
   const html: string = await ejs.renderFile(absolutePath, data);
 

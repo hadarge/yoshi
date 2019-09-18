@@ -1,58 +1,58 @@
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
-const path = require('path');
-const fs = require('fs-extra');
+const parseArgs = require('minimist');
+
+const cliArgs = parseArgs(process.argv.slice(2), {
+  alias: {
+    server: 'entry-point',
+    https: 'ssl',
+  },
+  default: {
+    server: 'index.js',
+    https: false,
+  },
+});
+
+if (cliArgs.production) {
+  process.env.BABEL_ENV = 'production';
+  process.env.NODE_ENV = 'production';
+}
+
 const chalk = require('chalk');
-const execa = require('execa');
-const chokidar = require('chokidar');
-const { verifyTypeScriptReferences } = require('./utils');
+const loadPackages = require('yoshi-config/load-packages');
+const startSingleApp = require('./utils/start-single-app');
+
+const [, appName] = cliArgs._;
 
 module.exports = async () => {
-  const [apps, libs] = await verifyTypeScriptReferences();
+  const { apps } = await loadPackages();
 
-  libs.forEach(lib => {
-    const packageDirectory = lib.location;
+  let app;
 
-    const watcher = chokidar.watch('src/**/*', {
-      cwd: packageDirectory,
-      ignored: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.json'],
-    });
-
-    const copyAsset = assetPath => {
-      const targetFilePath = path.join(packageDirectory, 'dist', assetPath);
-
-      fs.ensureFileSync(targetFilePath);
-
-      fs.copyFileSync(path.join(packageDirectory, assetPath), targetFilePath);
-    };
-
-    watcher
-      .on('add', copyAsset)
-      .on('rename', copyAsset)
-      .on('change', copyAsset);
-
-    watcher.on('unlink', assetPath => {
-      fs.removeSync(path.join(packageDirectory, 'dist', assetPath));
-    });
-  });
-
-  if (apps.length !== 1) {
+  // Find a specific app if a name was passed
+  if (appName) {
+    app = apps.find(lernaApp => lernaApp.name === appName);
+  }
+  // If there's only one app, start that
+  else if (apps.length === 1) {
+    app = apps[0];
+  }
+  // Otherwise, fail with an error
+  else {
+    console.log();
+    console.log(chalk.red(`Couldn't find an app to start`));
     console.log(
-      chalk.bold.red('Currently, Yoshi only support monorepos with one app.'),
+      chalk.red(
+        `Please choose which app to start by running \`npx yoshi start <appName>\``,
+      ),
     );
     console.log();
-
+    console.log(chalk.red('Aborting'));
     process.exit(1);
   }
 
-  execa.shell(`lerna exec --scope=${apps[0].name} -- yarn start`, {
-    stdio: 'inherit',
-    env: {
-      ...process.env,
-      EXPERIMENTAL_MONOREPO_SUB_PROCESS: true,
-    },
-  });
+  await startSingleApp(app, cliArgs);
 
   return {
     persistent: true,
