@@ -6,11 +6,11 @@ import { notifyViewFinishedLoading } from '@wix/business-manager-api';
 import { create } from '@wix/fedops-logger';
 import { COMPONENT_NAME } from '../../config';
 
-interface IAppProps extends InjectedTranslateProps { }
+interface IAppProps extends InjectedTranslateProps {}
 
 class App extends React.Component<IAppProps> {
   static propTypes = {
-    t: PropTypes.func,
+    t: PropTypes.func.isRequired,
   };
 
   componentDidMount() {

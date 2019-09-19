@@ -30,8 +30,8 @@
     "lint-staged": "^8.1.5",
     "prop-types": "~15.5.0",
     "puppeteer": "^1.10.0",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
     "react-module-container": "~1.0.0",
     "yoshi": "^4.1.0",
     "yoshi-style-dependencies": "^4.1.0"
