@@ -42,4 +42,4 @@ Add the following to your `package.json`:
 
 Finally, configure your `package.json` to run Stylelint after `yoshi lint`:
 
-```yoshi lint && stylelint```
+`yoshi lint && stylelint`
