@@ -1,5 +1,25 @@
 # Changelog
 
+## 4.16.1 (2019-09-22)
+
+#### :rocket: New Feature
+
+- `create-yoshi-app`
+  - [#1556](https://github.com/wix/yoshi/pull/1556) Update BizMgr template react versions ([@amitdahan](https://github.com/amitdahan))
+- `jest-yoshi-preset`, `yoshi-config`, `yoshi-helpers`, `yoshi-server-tools`, `yoshi-server`, `yoshi`
+  - [#1555](https://github.com/wix/yoshi/pull/1555) Top commands ([@ranyitz](https://github.com/ranyitz))
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1566](https://github.com/wix/yoshi/pull/1566) Adjustments to monorepo setup ([@ronami](https://github.com/ronami))
+- `yoshi-server-client`, `yoshi-server-react`
+  - [#1559](https://github.com/wix/yoshi/pull/1559) Transpile `yoshi-server-client` and `yoshi-server-react` to run on all browsers (ES5) ([@ronami](https://github.com/ronami))
+
+#### :memo: Documentation
+
+- [#1562](https://github.com/wix/yoshi/pull/1562) Update SVG usage ([@nktssh](https://github.com/nktssh))
+
 ## 4.16.0 (2019-09-18)
 
 #### :rocket: New Feature
