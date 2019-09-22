@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.16.2 (2019-09-22)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1567](https://github.com/wix/yoshi/pull/1567) Fix a bug with passing incorrect arguments to Lerna's APIs ([@ronami](https://github.com/ronami))
+
 ## 4.16.1 (2019-09-22)
 
 #### :rocket: New Feature
