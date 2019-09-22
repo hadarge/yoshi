@@ -22,10 +22,13 @@ if (cliArgs.production) {
 const chalk = require('chalk');
 const loadPackages = require('yoshi-config/load-packages');
 const startSingleApp = require('./utils/start-single-app');
+const { verifyTypeScriptReferences } = require('./utils/index');
 
 const [, appName] = cliArgs._;
 
 module.exports = async () => {
+  await verifyTypeScriptReferences();
+
   const { apps } = await loadPackages();
 
   let app;

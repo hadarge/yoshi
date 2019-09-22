@@ -13,12 +13,20 @@ const {
 } = require('./utils/print-build-results');
 const buildApps = require('./utils/build-apps');
 const buildLibs = require('./utils/build-libs');
+const { verifyTypeScriptReferences } = require('./utils/index');
 
 module.exports = async () => {
+  await verifyTypeScriptReferences();
+
   const { apps, libs } = await loadPackages();
 
-  // Build all libs
+  console.log(chalk.bold.cyan('Building packages...'));
+  console.log();
+
   await buildLibs(libs);
+
+  console.log(chalk.bold.cyan('Building bundle...'));
+  console.log();
 
   // Build all apps;
   const { getAppData } = await buildApps(apps, cliArgs);
