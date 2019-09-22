@@ -6,15 +6,20 @@
 
 - `yoshi`
   - [#1567](https://github.com/wix/yoshi/pull/1567) Fix a bug with passing incorrect arguments to Lerna's APIs ([@ronami](https://github.com/ronami))
-
-## 4.16.1 (2019-09-22)
+  - [#1549](https://github.com/wix/yoshi/pull/1549) Add hash to assets name ([@deanshub](https://github.com/deanshub))
 
 #### :rocket: New Feature
 
 - `create-yoshi-app`
   - [#1556](https://github.com/wix/yoshi/pull/1556) Update BizMgr template react versions ([@amitdahan](https://github.com/amitdahan))
+- `create-yoshi-app`, `jest-yoshi-preset`
+  - [#1554](https://github.com/wix/yoshi/pull/1554) Client stricter config ([@amitdahan](https://github.com/amitdahan))
 - `jest-yoshi-preset`, `yoshi-config`, `yoshi-helpers`, `yoshi-server-tools`, `yoshi-server`, `yoshi`
   - [#1555](https://github.com/wix/yoshi/pull/1555) Top commands ([@ranyitz](https://github.com/ranyitz))
+
+#### :memo: Documentation
+
+- [#1562](https://github.com/wix/yoshi/pull/1562) Update SVG usage ([@nktssh](https://github.com/nktssh))
 
 #### :nail_care: Polish
 
@@ -22,25 +27,6 @@
   - [#1566](https://github.com/wix/yoshi/pull/1566) Adjustments to monorepo setup ([@ronami](https://github.com/ronami))
 - `yoshi-server-client`, `yoshi-server-react`
   - [#1559](https://github.com/wix/yoshi/pull/1559) Transpile `yoshi-server-client` and `yoshi-server-react` to run on all browsers (ES5) ([@ronami](https://github.com/ronami))
-
-#### :memo: Documentation
-
-- [#1562](https://github.com/wix/yoshi/pull/1562) Update SVG usage ([@nktssh](https://github.com/nktssh))
-
-## 4.16.0 (2019-09-18)
-
-#### :rocket: New Feature
-
-- `create-yoshi-app`, `jest-yoshi-preset`
-  - [#1554](https://github.com/wix/yoshi/pull/1554) Client stricter config ([@amitdahan](https://github.com/amitdahan))
-
-#### :bug: Bug Fix
-
-- `yoshi`
-  - [#1549](https://github.com/wix/yoshi/pull/1549) Add hash to assets name ([@deanshub](https://github.com/deanshub))
-
-#### :nail_care: Polish
-
 - `create-yoshi-app`
   - [#1552](https://github.com/wix/yoshi/pull/1552) Update TypeScript version in templates to `~3.6.0` ([@amitdahan](https://github.com/amitdahan))
 
