@@ -3,17 +3,13 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const importCwd = require('import-cwd');
-const { isEqual, partition } = require('lodash');
+const { isEqual } = require('lodash');
 
 const { getPackages } = importCwd('@lerna/project');
 const PackageGraph = importCwd('@lerna/package-graph');
 
 const verifyTypeScriptReferences = async () => {
-  const packagesPromise = getPackages(process.cwd());
-
-  const pkgs = await packagesPromise.then(packages => {
-    return partition(packages, pkg => pkg.private);
-  });
+  const pkgs = await getPackages(process.cwd());
 
   const graph = new PackageGraph(pkgs);
 
