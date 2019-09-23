@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.16.3 (2019-09-23)
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1572](https://github.com/wix/yoshi/pull/1572) Run type-check based on app's tsconfig rather than the root tsconfig ([@ronami](https://github.com/ronami))
+
 ## 4.16.2 (2019-09-22)
 
 #### :bug: Bug Fix
