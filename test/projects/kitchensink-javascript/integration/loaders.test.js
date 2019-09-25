@@ -262,6 +262,17 @@ describe('webpack', () => {
       expect(imageSource).toMatch(/^.+media\/large-bart-simpson\..{8}\.gif$/);
     });
 
+    it('external image inclusion', async () => {
+      await initTest('large-external-image-inclusion');
+
+      const imageSource = await page.$eval(
+        '#large-external-image-inclusion',
+        elm => elm.src,
+      );
+
+      expect(imageSource).toMatch(/^.+media\/large-bart-simpson\..{8}\.gif$/);
+    });
+
     it('inline svg inclusion', async () => {
       await initTest('inline-svg-inclusion');
 

@@ -128,12 +128,40 @@ const config = {
           setupTestsFile,
         ].filter(Boolean);
 
+        const staticAssetsExtensions = [
+          'png',
+          'jpg',
+          'jpeg',
+          'gif',
+          'svg',
+          'woff',
+          'woff2',
+          'ttf',
+          'otf',
+          'eot',
+          'wav',
+          'mp3',
+          'html',
+          'md',
+        ];
+
+        const reStaticAssets = staticAssetsExtensions.join('|');
+
         return {
           ...project,
           modulePathIgnorePatterns,
 
           transformIgnorePatterns: [
-            '/node_modules/(?!(.*?\\.(st\\.css|svg)$))',
+            // 🚨🚨🚨 DANGER 🚨🚨🚨
+            // This regex is matching against modules
+            // which    *ARE*    inside node_modules
+            // and
+            // which  *ARE NOT*  of the mentioned extensions.
+            //
+            // This is essentially whitelisting static asset extension
+            // imports within node_modules, if they're of a supported extension.
+            `/node_modules/(?!(.*?\\.(st\\.css|${reStaticAssets})$))`,
+
             // Locally `babel-preset-yoshi` is symlinked, which causes jest to try and run babel on it.
             // See here for more details: https://github.com/facebook/jest/blob/6af2f677e5c48f71f526d4be82d29079c1cdb658/packages/jest-core/src/runGlobalHook.js#L61
             '/babel-preset-yoshi/',
@@ -144,9 +172,7 @@ const config = {
             '^.+\\.tsx?$': require.resolve('./transforms/typescript'),
             '\\.st.css?$': require.resolve('@stylable/jest'),
             '\\.(gql|graphql)$': require.resolve('jest-transform-graphql'),
-            '\\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf|eot|wav|mp3|html|md)$': require.resolve(
-              './transforms/file',
-            ),
+            [`\\.(${reStaticAssets})$`]: require.resolve('./transforms/file'),
           },
 
           moduleNameMapper: {
