@@ -104,9 +104,7 @@ describe('output', () => {
     try {
       await global.scripts.build();
     } catch (error) {
-      expect(error.stderr).toMatch(
-        "(server) Entry module not found: Error: Can't resolve './server'",
-      );
+      expect(error.stderr).toMatch("We couldn't find your server entry");
     }
   });
 });

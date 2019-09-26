@@ -14,6 +14,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const Watchpack = require('watchpack');
 
 const isInteractive = process.stdout.isTTY;
+const possibleServerEntries = ['./server', '../dev/server'];
 
 function createCompiler(config, { https }) {
   let compiler;
@@ -246,6 +247,27 @@ function watchDynamicEntries(watching, app) {
   wp.watch([], [app.SRC_DIR, app.ROUTES_DIR]);
 }
 
+const exists = (app, extensions) => entry => {
+  return (
+    globby.sync(`${entry}(${extensions.join('|')})`, {
+      cwd: app.SRC_DIR,
+    }).length > 0
+  );
+};
+
+function validateServerEntry(app, extensions) {
+  const serverEntry = possibleServerEntries.find(exists(app, extensions));
+
+  if (!serverEntry && !app.yoshiServer) {
+    throw new Error(
+      `We couldn't find your server entry. Please use one of the defaults:
+          - "src/server": for a fullstack project
+          - "dev/server": for a client only project`,
+    );
+  }
+  return serverEntry;
+}
+
 module.exports = {
   createDevServer,
   createCompiler,
@@ -254,4 +276,5 @@ module.exports = {
   overrideRules,
   createServerEntries,
   watchDynamicEntries,
+  validateServerEntry,
 };

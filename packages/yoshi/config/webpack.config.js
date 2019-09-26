@@ -45,6 +45,7 @@ const {
   addEntry,
   overrideRules,
   createServerEntries,
+  validateServerEntry,
 } = require('../src/webpack-utils');
 
 const { defaultEntry } = require('yoshi-helpers/constants');
@@ -91,14 +92,6 @@ if (!inTeamCity || isDevelopment) {
 if (shouldDeployToCDN(rootApp)) {
   publicPath = getProjectCDNBasePath();
 }
-
-const exists = app => entry => {
-  return (
-    globby.sync(`${entry}(${extensions.join('|')})`, {
-      cwd: app.SRC_DIR,
-    }).length > 0
-  );
-};
 
 function addHashToAssetName(name, hash = 'contenthash:8') {
   if (rootApp.experimentalBuildHtml && isProduction) {
@@ -162,8 +155,6 @@ const useSplitChunks = rootApp.splitChunks;
 const splitChunksConfig = isObject(useSplitChunks)
   ? useSplitChunks
   : defaultSplitChunksConfig;
-
-const possibleServerEntries = ['./server', '../dev/server'];
 
 // Common function to get style loaders
 const getStyleLoaders = ({
@@ -847,18 +838,17 @@ function createServerWebpackConfig({
     target: 'node',
 
     entry: async () => {
-      const serverEntry = possibleServerEntries.find(exists(app));
+      const serverEntry = validateServerEntry(app, extensions);
 
-      return {
-        ...(app.yoshiServer && createServerEntries(config.context, app)),
+      let entryConfig = app.yoshiServer
+        ? createServerEntries(config.context, app)
+        : {};
 
-        ...{
-          // If `yoshi-server` isn't being used we should show an error if no server entry exists
-          ...(serverEntry || !app.yoshiServer
-            ? { server: serverEntry || possibleServerEntries[0] }
-            : {}),
-        },
-      };
+      if (serverEntry) {
+        entryConfig = { ...entryConfig, server: serverEntry };
+      }
+
+      return entryConfig;
     },
 
     output: {
