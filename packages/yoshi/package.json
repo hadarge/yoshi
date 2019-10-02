@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "4.16.3",
+  "version": "4.16.4",
   "main": "./src/index.js",
   "bin": {
     "yoshi": "./bin/yoshi.js"
@@ -150,10 +150,10 @@
     "wnpm-ci": "8.0.60",
     "write-file-webpack-plugin": "4.5.1",
     "xmldoc": "1.1.2",
-    "yoshi-config": "4.16.1",
-    "yoshi-helpers": "4.16.1",
+    "yoshi-config": "4.16.4",
+    "yoshi-helpers": "4.16.4",
     "yoshi-runtime": "1.0.288",
-    "yoshi-server-tools": "4.16.1"
+    "yoshi-server-tools": "4.16.4"
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "7.2.0",
@@ -173,7 +173,7 @@
     "expect": "23.6.0",
     "generic-names": "1.0.3",
     "identity-obj-proxy": "3.0.0",
-    "jest-yoshi-preset": "4.16.1",
+    "jest-yoshi-preset": "4.16.4",
     "karma": "2.0.5",
     "karma-chrome-launcher": "2.2.0",
     "karma-jasmine": "1.1.2",
@@ -201,7 +201,7 @@
     "strip-ansi": "4.0.0",
     "tempy": "0.3.0",
     "typescript": "3.5.3",
-    "yoshi-angular-dependencies": "4.16.1",
+    "yoshi-angular-dependencies": "4.16.4",
     "yoshi-style-dependencies": "4.11.1"
   }
 }
