@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.16.4 (2019-10-02)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1561](https://github.com/wix/yoshi/pull/1561) Show an explicit error on missing server entry ([@deanshub](https://github.com/deanshub))
+- `jest-yoshi-preset`, `yoshi`
+  - [#1573](https://github.com/wix/yoshi/pull/1573) Support transforming static assets in `jest-yoshi-preset` ([@amitdahan](https://github.com/amitdahan))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1558](https://github.com/wix/yoshi/pull/1558) Stricter `tsconfig.json` in Business Manager template ([@amitdahan](https://github.com/amitdahan))
+  - [#1570](https://github.com/wix/yoshi/pull/1570) Stricter `tsconfig.json` in fullstack template ([@amitdahan](https://github.com/amitdahan))
+
 ## 4.16.3 (2019-09-23)
 
 #### :nail_care: Polish
