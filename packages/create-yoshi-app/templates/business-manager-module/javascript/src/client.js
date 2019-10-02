@@ -27,7 +27,7 @@ export default class AppContainer extends React.Component {
     const { locale, config } = this.props;
     const baseUrl = config.topology.staticsUrl;
     return (
-      <I18nextProvider i18n={i18n({ locale, baseUrl })}>
+      <I18nextProvider i18n={i18n(locale, baseUrl)}>
         <App />
       </I18nextProvider>
     );

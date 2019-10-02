@@ -1,22 +1,21 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "outDir": "./dist/",
+    "strict": true,
+    "esModuleInterop": true,
     "sourceMap": true,
-    "noImplicitAny": false,
+    "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es5",
     "allowJs": true,
     "jsx": "react",
-    "lib": ["dom", "esnext"],
-    "resolveJsonModule": true
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "resolveJsonModule": true,
+    "noEmit": true
   },
   "include": [
     "./__tests__/**/*.ts",
-    "./src/**/*.spec.tsx",
-    "./jest-yoshi.config.js"
+    "./jest-yoshi.config.js",
+    "./src/**/*.spec.tsx"
   ],
   "files": [
     "./node_modules/yoshi/types.d.ts",

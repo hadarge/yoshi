@@ -1,5 +1,5 @@
 declare module 'react-module-container' {
-  import * as React from 'react';
+  import React from 'react';
   import { PageComponentId } from '@wix/business-manager-api';
 
   export interface ReactLazyComponentOptions {
@@ -8,11 +8,14 @@ declare module 'react-module-container' {
     unloadStylesOnDestroy?: boolean;
     resolve?(): Promise<any>;
   }
+
   export class ReactLazyComponent<P, S = {}> extends React.Component<P, S> {}
-  export const ReactLoadableComponent: (
+
+  export const ReactLoadableComponent: <P extends {}>(
     name: string,
-    resolve: () => Promise<{ default: React.ComponentType }>,
-  ) => typeof ReactLazyComponent;
+    resolve: () => Promise<{ default: React.ComponentType<P> }>,
+  ) => ReactLazyComponent<P>;
+
   export const ModuleRegistry: {
     registerComponent(
       pageComponentId: PageComponentId,
@@ -27,3 +30,6 @@ declare module 'react-module-container' {
     notifyListeners(eventName: string, viewID: string): void;
   };
 }
+
+declare module '@wix/business-manager/dist/testkit';
+declare module 'i18next-xhr-backend';

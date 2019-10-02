@@ -30,5 +30,5 @@ const getTestKitConfig = async (
   return builder.build();
 };
 
-export const environment = async envConfig =>
+export const environment = async (envConfig?: TestKitConfigOptions) =>
   createTestkit(await getTestKitConfig(envConfig));

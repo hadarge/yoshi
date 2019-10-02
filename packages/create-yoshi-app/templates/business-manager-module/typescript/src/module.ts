@@ -1,12 +1,13 @@
 import {
   BusinessManagerModule,
   registerModule,
+  ModuleId,
 } from '@wix/business-manager-api';
 import { ReactLoadableComponent } from 'react-module-container';
 import { MODULE_ID, COMPONENT_NAME } from './config';
 
 class BMModule extends BusinessManagerModule {
-  constructor(moduleId) {
+  constructor(moduleId: ModuleId) {
     super(moduleId);
     this.registerPageComponent(
       COMPONENT_NAME,

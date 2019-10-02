@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { mount } from 'enzyme';
+import React from 'react';
+import { mount, ReactWrapper } from 'enzyme';
 import { I18nextProvider } from 'react-i18next';
-import App from './App';
 import i18n from '../__mocks__/i18n';
+import App from './App';
 
 describe('App', () => {
-  let wrapper;
+  let wrapper: ReactWrapper;
 
   afterEach(() => wrapper.detach());
 

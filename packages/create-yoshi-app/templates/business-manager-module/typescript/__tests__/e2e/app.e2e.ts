@@ -1,7 +1,7 @@
-import { appDriver } from './drivers/app.driver';
+import { appDriver, AppDriver } from './drivers/app.driver';
 
 describe('React application', () => {
-  let driver;
+  let driver: AppDriver;
 
   beforeEach(() => {
     driver = appDriver();

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { I18nextProvider } from 'react-i18next';
 import { notifyViewStartLoading } from '@wix/business-manager-api';
 import { wixAxiosConfig } from '@wix/wix-axios-config';
@@ -13,12 +12,7 @@ wixAxiosConfig(axios, {
 });
 
 export default class AppContainer extends React.Component<IBMModuleParams> {
-  static propTypes = {
-    locale: PropTypes.string,
-    config: PropTypes.object,
-  };
-
-  constructor(props) {
+  constructor(props: IBMModuleParams) {
     super(props);
     notifyViewStartLoading(COMPONENT_NAME);
   }
@@ -27,7 +21,7 @@ export default class AppContainer extends React.Component<IBMModuleParams> {
     const { locale, config } = this.props;
     const baseUrl = config.topology.staticsUrl;
     return (
-      <I18nextProvider i18n={i18n({ locale, baseUrl })}>
+      <I18nextProvider i18n={i18n(locale, baseUrl)}>
         <App />
       </I18nextProvider>
     );
