@@ -1,4 +1,4 @@
-import * as i18next from 'i18next';
+import i18next from 'i18next';
 
 // We initialize i18next once with configuration for component tests.
 export default i18next.init({

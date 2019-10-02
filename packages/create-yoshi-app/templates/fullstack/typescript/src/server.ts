@@ -1,7 +1,7 @@
-import { Router } from 'express';
+import { Router, Request } from 'express';
 import { hot } from 'bootstrap-hot-loader';
-import * as wixExpressCsrf from '@wix/wix-express-csrf';
-import * as wixExpressRequireHttps from '@wix/wix-express-require-https';
+import wixExpressCsrf from '@wix/wix-express-csrf';
+import wixExpressRequireHttps from '@wix/wix-express-require-https';
 
 // This function is the main entry for our server. It accepts an express Router
 // (see http://expressjs.com) and attaches routes and middlewares to it.
@@ -33,7 +33,7 @@ export default hot(module, (app: Router, context) => {
     res.renderView('./index.ejs', renderModel);
   });
 
-  function getRenderModel(req) {
+  function getRenderModel(req: Request) {
     const { language, basename, debug } = req.aspects['web-context'];
 
     return {
