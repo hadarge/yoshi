@@ -9,8 +9,7 @@
     "allowJs": true,
     "jsx": "react",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "resolveJsonModule": true,
-    "noEmit": true
+    "resolveJsonModule": true
   },
   "include": [
     "./__tests__/**/*.ts",
