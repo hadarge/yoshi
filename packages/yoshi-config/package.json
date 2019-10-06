@@ -13,13 +13,13 @@
     "@types/cosmiconfig": "5.0.3",
     "@types/find-up": "2.1.1",
     "@types/lodash": "4.14.141",
-    "@types/puppeteer": "1.20.0",
+    "@types/puppeteer": "1.20.1",
     "@types/webpack": "4.39.2"
   },
   "dependencies": {
     "chalk": "2.4.2",
     "cosmiconfig": "5.2.1",
-    "execa": "2.0.4",
+    "execa": "2.0.5",
     "find-up": "3.0.0",
     "import-fresh": "3.1.0",
     "jest-validate": "24.9.0",
