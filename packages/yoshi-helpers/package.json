@@ -30,7 +30,7 @@
     "typescript": "^2.9.0 || ^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.6.2",
+    "@babel/core": "7.6.4",
     "@babel/plugin-transform-modules-commonjs": "7.6.0",
     "@types/detect-port": "1.1.0",
     "@types/http-proxy": "1.17.0",
@@ -38,7 +38,7 @@
     "@types/ps-tree": "1.1.0",
     "@types/semver": "6.0.2",
     "@types/server-destroy": "1.0.0",
-    "@types/webpack": "4.39.2",
+    "@types/webpack": "4.39.3",
     "@types/xmldoc": "1.1.4",
     "babel-preset-yoshi": "4.14.0",
     "typescript": "3.5.3"
