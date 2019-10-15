@@ -1,11 +1,14 @@
 import React from 'react';
-import { mount } from 'enzyme/build';
-import { Slider, ColorPickerColorSpace } from '@wix/wix-base-ui';
+import { render } from '@testing-library/react';
 import Settings from './Settings';
 
-describe('Settings', () => {
-  let wrapper;
+jest.mock('@wix/wix-base-ui', () => ({
+  ...jest.requireActual('@wix/wix-base-ui'),
+  Slider: () => <div data-testid="base-ui-slider" />,
+  ColorPickerColorSpace: () => <div data-testid="base-ui-color-picker" />,
+}));
 
+describe('Settings', () => {
   const styleParams = {
     colors: {
       backgroundColor: {
@@ -26,15 +29,13 @@ describe('Settings', () => {
     },
   };
 
-  afterEach(() => wrapper.unmount());
-
   it('should render a color picker component', () => {
-    wrapper = mount(<Settings />);
-    expect(wrapper.find(ColorPickerColorSpace).exists()).toBe(true);
+    const { getAllByTestId } = render(<Settings />);
+    expect(getAllByTestId('base-ui-color-picker')).not.toBeNull();
   });
 
   it('should render a font size picker', () => {
-    wrapper = mount(<Settings />);
-    expect(wrapper.find(Slider).exists()).toBe(true);
+    const { getByTestId } = render(<Settings />);
+    expect(getByTestId('base-ui-slider')).not.toBeNull();
   });
 });

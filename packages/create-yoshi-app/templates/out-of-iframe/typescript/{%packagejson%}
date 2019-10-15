@@ -16,11 +16,11 @@
     "release": "yoshi release"
   },
   "devDependencies": {
+    "@testing-library/react": "^9.3.0",
     "@wix/wix-http-testkit": "^1.0.997",
     "@types/react": "^16.7.18",
     "@types/jest": "^23.3.12",
-    "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.7.1",
+    "@types/testing-library__react": "^9.1.2",
     "husky": "~0.14.0",
     "isomorphic-fetch": "^2.2.1",
     "jest-yoshi-preset": "^4.6.3",

@@ -37,7 +37,7 @@ export const Widget = withExperiments<any>(
     return (
       <div {...styles('root', {}, rest)}>
         <div className={styles.header}>
-          <h2>
+          <h2 data-testid="app-title">
             {t('app.hello')} {name}!
           </h2>
         </div>

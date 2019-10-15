@@ -1,19 +1,15 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Widget } from './Widget';
+import { render } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
-import i18n from '../../../__tests__/helpers/i18n.mock';
 import { ExperimentsProvider } from '@wix/wix-experiments-react';
+import i18n from '../../../__tests__/helpers/i18n.mock';
+import { Widget } from './Widget';
 
 describe('Widget', () => {
-  let wrapper;
-
-  afterEach(() => wrapper.unmount());
-
   it('should render a title correctly', async () => {
     const name = 'World';
 
-    wrapper = mount(
+    const { getByTestId } = render(
       <I18nextProvider i18n={i18n}>
         <ExperimentsProvider options={{ experiments: {} }}>
           <Widget name={name} />
@@ -23,7 +19,6 @@ describe('Widget', () => {
 
     const key = 'app.hello';
 
-    expect(wrapper.find('h2').exists()).toBe(true);
-    expect(wrapper.find('h2').text()).toBe(`${key} ${name}!`);
+    expect(getByTestId('app-title').textContent).toBe(`${key} ${name}!`);
   });
 });
