@@ -30,9 +30,9 @@ module.exports = class PuppeteerEnvironment extends ParentEnvironment {
 
     this.global.page = await this.global.browser.newPage();
 
-    this.global.page.setDefaultTimeout(5000);
+    this.global.page.setDefaultTimeout(10 * 1000);
 
-    this.global.page.setDefaultNavigationTimeout(5000);
+    this.global.page.setDefaultNavigationTimeout(10 * 1000);
 
     this.global.page.on('pageerror', error => {
       console.warn(`Puppeteer page error: ${error.message}`);
