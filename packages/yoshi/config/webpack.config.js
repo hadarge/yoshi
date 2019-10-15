@@ -4,6 +4,7 @@ const globby = require('globby');
 const webpack = require('webpack');
 const { isObject } = require('lodash');
 const buildUrl = require('build-url');
+const importCwd = require('import-cwd');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
@@ -51,7 +52,7 @@ const reScript = /\.js?$/;
 const reStyle = /\.(css|less|scss|sass)$/;
 const reAssets = /\.(png|jpg|jpeg|gif|woff|woff2|ttf|otf|eot|wav|mp3)$/;
 
-const extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
+const extensions = ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.svelte', '.json'];
 
 const babelConfig = createBabelConfig({ modules: false });
 
@@ -74,6 +75,8 @@ const staticAssetName = addHashToAssetName(
   'media/[name].[hash:8].[ext]',
   'hash:8',
 );
+
+const sassIncludePaths = ['node_modules', 'node_modules/compass-mixins/lib'];
 
 function addHashToAssetName(name, hash = 'contenthash:8') {
   if (rootApp.experimentalBuildHtml && isProduction) {
@@ -130,6 +133,22 @@ const defaultSplitChunksConfig = {
   chunks: 'all',
   name: 'commons',
   minChunks: 2,
+};
+
+const svelteOptions = {
+  // Supress redundant CSS warnings on development
+  // https://github.com/sveltejs/svelte-loader/issues/67
+  onwarn: (warning, onwarn) => {
+    warning.code === 'css-unused-selector' || onwarn(warning);
+  },
+  // https://github.com/ls-age/svelte-preprocess-sass
+  preprocess: {
+    style:
+      importCwd.silent('svelte-preprocess-sass') &&
+      importCwd.silent('svelte-preprocess-sass').sass({
+        includePaths: sassIncludePaths,
+      }),
+  },
 };
 
 const useSplitChunks = rootApp.splitChunks;
@@ -277,7 +296,7 @@ const getStyleLoaders = ({
           options: {
             sourceMap: embedCss,
             implementation: tryRequire('yoshi-style-dependencies/node-sass'),
-            includePaths: ['node_modules', 'node_modules/compass-mixins/lib'],
+            includePaths: sassIncludePaths,
           },
         },
       ],
@@ -320,6 +339,8 @@ function createCommonWebpackConfig({
       extensions,
 
       alias: app.resolveAlias,
+
+      mainFields: ['svelte', 'browser', 'module', 'main'],
 
       // Whether to resolve symlinks to their symlinked location.
       symlinks: rootApp.experimentalMonorepo,
@@ -762,6 +783,21 @@ function createClientWebpackConfig({
       rules: [
         ...config.module.rules,
 
+        {
+          test: /\.svelte$/,
+          // Both, `svelte-loader` and `svelte-preprocess-sass` should be installed
+          // by the project that needs it.
+          //
+          // If more users use `svelte` we'll consider adding it to everyone by default.
+          loader: 'svelte-loader',
+          options: {
+            ...svelteOptions,
+            dev: isDebug,
+            // https://github.com/sveltejs/svelte-loader#extracting-css
+            emitCss: true,
+          },
+        },
+
         // Rules for Style Sheets
         ...styleLoaders,
 
@@ -861,6 +897,21 @@ function createServerWebpackConfig({
       ...config.module,
 
       rules: [
+        {
+          test: /\.svelte$/,
+          // Both, `svelte-loader` and `svelte-preprocess-sass` should be installed
+          // by the project that needs it.
+          //
+          // If more users use `svelte` we'll consider adding it to everyone by default.
+          loader: 'svelte-loader',
+          options: {
+            ...svelteOptions,
+            dev: isDebug,
+            // Generate SSR specific code
+            generate: 'ssr',
+          },
+        },
+
         ...overrideRules(config.module.rules, rule => {
           // Override paths to static assets
           if (rule.loader === 'file-loader' || rule.loader === 'url-loader') {
