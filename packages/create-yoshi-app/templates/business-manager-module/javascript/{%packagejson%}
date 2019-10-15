@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "PORT=5000 yoshi start --entry-point ./dist/__tests__/dev/server.js --url http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91/{%projectName%}",
+    "start": "PORT=5000 yoshi start --server ./dist/server.js --url http://localhost:5000/business-manager/3fdba72b-c9e7-4529-9219-807ad4b36d91/{%projectName%}",
     "pretest": "yoshi build",
     "test": "yoshi test",
     "posttest": "yoshi lint",
@@ -51,6 +51,7 @@
     "preset": "jest-yoshi-preset"
   },
   "yoshi": {
+    "projectType": "app",
     "entry": {
       "module": "./module"
     },

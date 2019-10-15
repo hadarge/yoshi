@@ -9,17 +9,19 @@
     "allowJs": true,
     "jsx": "react",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noEmit": true
   },
   "include": [
     "./__tests__/**/*.ts",
-    "./jest-yoshi.config.js",
     "./src/**/*.spec.tsx"
   ],
   "files": [
+    "./jest-yoshi.config.js",
     "./node_modules/yoshi/types.d.ts",
     "./node_modules/jest-yoshi-preset/types.d.ts",
     "./src/external-types.d.ts",
-    "./src/module.ts"
+    "./src/module.ts",
+    "./dev/server.ts"
   ]
 }

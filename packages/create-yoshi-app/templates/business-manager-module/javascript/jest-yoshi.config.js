@@ -1,4 +1,4 @@
-const { environment } = require('./__tests__/dev/environment');
+const { environment } = require('./dev/environment');
 
 // The purpose of this file is to start your server and possibly additional servers
 // like RPC/Petri servers.
