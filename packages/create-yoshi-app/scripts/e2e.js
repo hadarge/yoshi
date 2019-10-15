@@ -12,15 +12,8 @@ const { publishMonorepo } = require('../../../scripts/utils/publishMonorepo');
 const { testRegistry } = require('../../../scripts/utils/constants');
 const templates = require('../templates');
 
-// verbose logs and output
-const verbose = process.env.VERBOSE_TESTS;
-
 // A regex pattern to run a focus test on the matched projects types
 const focusProjects = process.env.FOCUS_PROJECTS;
-
-verbose && console.log(`using ${chalk.yellow('VERBOSE')} mode`);
-
-const stdio = verbose ? 'inherit' : 'pipe';
 
 verifyRegistry();
 
@@ -66,7 +59,7 @@ const testTemplate = mockedAnswers => {
     // in the describe block will run first!
     it('should generate project successfully', async () => {
       prompts.inject(mockedAnswers);
-      verbose && console.log(chalk.cyan(testDirectory));
+      console.log(chalk.cyan(testDirectory));
 
       // This sets the local registry as the NPM registry to use, so templates are installed from local registry
       process.env['npm_config_registry'] = testRegistry;
@@ -77,19 +70,24 @@ const testTemplate = mockedAnswers => {
     if (mockedAnswers.transpiler === 'typescript') {
       it('should not have errors on typescript strict check', () => {
         console.log('checking strict typescript...');
-        execa.shellSync('./node_modules/.bin/tsc --noEmit --strict', {
-          cwd: testDirectory,
-          stdio,
-        });
+        const { all: tscOutput } = execa.shellSync(
+          './node_modules/.bin/tsc --noEmit --strict',
+          {
+            cwd: testDirectory,
+          },
+        );
+
+        console.log(tscOutput);
       });
     }
 
     it(`should run npm test with no configuration warnings`, () => {
       console.log('running npm test...');
-      const { stderr } = execa.shellSync('npm test', {
+      const { stderr, all: testOutput } = execa.shellSync('npm test', {
         cwd: testDirectory,
-        stdio,
       });
+
+      console.log(testOutput);
 
       expect(stderr).not.toContain('Warning: Invalid configuration object');
     });
