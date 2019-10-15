@@ -76,15 +76,12 @@ module.exports = runner.command(
         return;
       }
 
-      return wixAppServer(
-        {
-          entryPoint,
-          debugPort,
-          debugBrkPort,
-          manualRestart: cliArgs['manual-restart'],
-        },
-        { title: 'app-server' },
-      );
+      return wixAppServer({
+        entryPoint,
+        debugPort,
+        debugBrkPort,
+        manualRestart: cliArgs['manual-restart'],
+      });
     };
 
     await clean({ pattern: `{dist,target}/*` });

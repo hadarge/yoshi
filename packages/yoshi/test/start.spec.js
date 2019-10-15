@@ -819,10 +819,10 @@ describe('Aggregator: Start', () => {
       child = test
         .setup({
           'dist/src/old.js': `const hello = "world!";`,
-          'src/new.js': 'const world = "hello!";',
+          'src/new.js': 'const world = "hello!"; console.log(1);',
           'package.json': fx.packageJson(),
         })
-        .spawn('start');
+        .spawn('start', '--entry-point=dist/src/new.js');
 
       return checkServerLogCreated().then(() => {
         expect(test.stdout).to.contains(`Finished 'clean'`);
