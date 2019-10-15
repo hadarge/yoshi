@@ -521,6 +521,14 @@ function createCommonWebpackConfig({
               ],
             },
 
+            {
+              test: /\.carmi.js$/,
+              exclude: /node_modules/,
+              // Not installed by Yoshi and should be installed by the project that needs it.
+              // https://github.com/wix-incubator/carmi
+              loader: 'carmi/loader',
+            },
+
             // Rules for Markdown
             {
               test: /\.md$/,
