@@ -75,18 +75,15 @@ Then, change your `tsconfig.json`:
 +    "resolveJsonModule": true,
     "..."
   },
-  "files": [
-+    "./node_modules/yoshi/types.d.ts",
-    "..."
-  ]
 }
 ```
 
-Finally, remove any old types you had on assets handled by Yoshi (normally in `src/external-types.d.ts`):
+Finally, replace old types you had on assets (normally in `src/external-types.d.ts`) to [the ones provided by Yoshi](https://github.com/wix/yoshi/blob/v4.11.1/packages/yoshi/types.d.ts):
 
 ```diff
 -declare module '*.scss';
 -declare module '*.json';
++import "yoshi/types";
 
 interface Window {
   __BASEURL__: string;
