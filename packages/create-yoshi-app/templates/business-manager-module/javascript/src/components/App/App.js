@@ -23,7 +23,7 @@ class App extends React.Component {
     return (
       <div className={s.root}>
         <div className={s.header}>
-          <h2 data-hook="app-title">{t('app.title')}</h2>
+          <h2 data-testid="app-title">{t('app.title')}</h2>
         </div>
         <p className={s.intro}>{t('app.intro')}</p>
       </div>
