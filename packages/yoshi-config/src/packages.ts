@@ -3,8 +3,8 @@ import { partition } from 'lodash';
 import { getPaths } from './paths';
 import loadConfig from './loadConfig';
 
-export default async () => {
-  const { stdout } = await execa('npx lerna list --all --json', {
+function loadPackages() {
+  const { stdout } = execa.sync('npx lerna list --all --json', {
     shell: true,
   });
 
@@ -25,4 +25,6 @@ export default async () => {
     apps,
     libs,
   };
-};
+}
+
+export default loadPackages();

@@ -6,7 +6,7 @@ const parseArgs = require('minimist');
 const cliArgs = parseArgs(process.argv.slice(2));
 
 const chalk = require('chalk');
-const loadPackages = require('yoshi-config/load-packages');
+const { apps, libs } = require('yoshi-config/packages');
 const {
   printBundleSizeSuggestion,
   printBuildResult,
@@ -17,8 +17,6 @@ const { verifyTypeScriptReferences } = require('./utils/index');
 
 module.exports = async () => {
   await verifyTypeScriptReferences();
-
-  const { apps, libs } = await loadPackages();
 
   console.log(chalk.bold.cyan('Building packages...'));
   console.log();

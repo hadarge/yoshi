@@ -962,7 +962,17 @@ function createServerWebpackConfig({
       // Treat node modules as external for a small (and fast) server
       // bundle
       nodeExternals({
-        whitelist: [reStyle, reAssets, /bootstrap-hot-loader/, /yoshi-server/],
+        whitelist: [
+          reStyle,
+          reAssets,
+          /bootstrap-hot-loader/,
+          /yoshi-server/,
+          ...(rootApp.experimentalMonorepo
+            ? require('yoshi-config/packages').libs.map(
+                lib => new RegExp(lib.name),
+              )
+            : []),
+        ],
       }),
       // Here for local integration tests as Yoshi's `node_modules`
       // are symlinked locally
