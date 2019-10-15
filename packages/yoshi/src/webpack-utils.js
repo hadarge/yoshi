@@ -12,11 +12,15 @@ const { PORT } = require('./constants');
 const { redirectMiddleware } = require('../src/tasks/cdn/server-api');
 const WebpackDevServer = require('webpack-dev-server');
 const Watchpack = require('watchpack');
+const { shouldDeployToCDN, inTeamCity } = require('yoshi-helpers/queries');
+const { getProjectCDNBasePath } = require('yoshi-helpers/utils');
+
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 const isInteractive = process.stdout.isTTY;
 const possibleServerEntries = ['./server', '../dev/server'];
 
-function createCompiler(config, { https }) {
+function createCompiler(app, config, { https }) {
   let compiler;
 
   try {
@@ -52,7 +56,7 @@ function createCompiler(config, { https }) {
         const devServerUrls = prepareUrls(
           https ? 'https' : 'http',
           '0.0.0.0',
-          rootApp.servers.cdn.port,
+          app.servers.cdn.port,
         );
 
         console.log();
@@ -190,7 +194,7 @@ function createDevServer(
       // Send cross origin headers
       expressApp.use(cors());
       // Redirect `.min.(js|css)` to `.(js|css)`
-      expressApp.use(redirectMiddleware(host, rootApp.servers.cdn.port));
+      expressApp.use(redirectMiddleware(host, app.servers.cdn.port));
     },
   });
 
@@ -268,6 +272,25 @@ function validateServerEntry(app, extensions) {
   return serverEntry;
 }
 
+function calculatePublicPath(app) {
+  // default public path
+  let publicPath = '/';
+
+  if (!inTeamCity() || isDevelopment) {
+    // When on local machine or on dev environment,
+    // set the local dev-server url as the public path
+    publicPath = app.servers.cdn.url;
+  }
+
+  // In case we are running in CI and there is a pom.xml file, change the public path according to the path on the cdn
+  // The path is created using artifactName from pom.xml and artifact version from an environment param.
+  if (shouldDeployToCDN(rootApp)) {
+    publicPath = getProjectCDNBasePath();
+  }
+
+  return publicPath;
+}
+
 module.exports = {
   createDevServer,
   createCompiler,
@@ -277,4 +300,5 @@ module.exports = {
   createServerEntries,
   watchDynamicEntries,
   validateServerEntry,
+  calculatePublicPath,
 };
