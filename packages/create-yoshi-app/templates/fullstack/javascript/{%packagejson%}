@@ -40,7 +40,7 @@
     "yoshi-template-intro": "^4.1.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^8.0.2",
+    "@testing-library/react": "^9.3.0",
     "@wix/fedops-logger": "^5.0.0",
     "@wix/wix-bootstrap-testkit": "latest",
     "@wix/wix-config-emitter": "latest",

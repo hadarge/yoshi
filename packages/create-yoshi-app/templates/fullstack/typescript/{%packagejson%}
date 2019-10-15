@@ -38,7 +38,7 @@
     "yoshi-template-intro": "^4.1.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^8.0.2",
+    "@testing-library/react": "^9.3.0",
     "@types/express": "~4.0.0",
     "@types/i18next": "^8.4.5",
     "@types/jest": "^24.0.0",
