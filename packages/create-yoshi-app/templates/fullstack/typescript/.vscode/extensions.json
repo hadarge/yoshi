@@ -3,6 +3,7 @@
     "gabrielgrinberg.auto-run-command",
     "dbaeumer.vscode-eslint",
     "WallabyJs.wallaby-vscode",
-    "shinnn.stylelint"
+    "shinnn.stylelint",
+    "EditorConfig.EditorConfig"
   ]
 }
