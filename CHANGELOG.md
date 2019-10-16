@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.17.1 (2019-10-16)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1610](https://github.com/wix/yoshi/pull/1610) Copy public folder to correct location for monorepos ([@ronami](https://github.com/ronami))
+
+#### :nail_care: Polish
+
+- `yoshi`
+  - [#1609](https://github.com/wix/yoshi/pull/1609) Set Svelte's `hydratable` to `true` by default ([@ronami](https://github.com/ronami))
+
 ## 4.17.0 (2019-10-16)
 
 #### :rocket: New Feature
