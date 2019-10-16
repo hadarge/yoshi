@@ -1,5 +1,44 @@
 # Changelog
 
+## 4.17.0 (2019-10-16)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1597](https://github.com/wix/yoshi/pull/1597) Show a warning if no server entry point was found ([@amitdahan](https://github.com/amitdahan))
+  - [#1591](https://github.com/wix/yoshi/pull/1591) Add support for Svelte as a Webpack loader ([@ronami](https://github.com/ronami))
+  - [#1590](https://github.com/wix/yoshi/pull/1590) Add support for Carmi as a Webpack loader ([@ronami](https://github.com/ronami))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1583](https://github.com/wix/yoshi/pull/1583) Fix BM template by emitting TS src files again ([@amitdahan](https://github.com/amitdahan))
+
+#### :nail_care: Polish
+
+- `jest-yoshi-preset`
+  - [#1607](https://github.com/wix/yoshi/pull/1607) Increase E2E test timeout and Puppeteer navigation timeout ([@ronami](https://github.com/ronami))
+- `yoshi-config`, `yoshi`
+  - [#1606](https://github.com/wix/yoshi/pull/1606) Don't handle local dependencies on the same monorepo as external for server bundle ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`
+  - [#1595](https://github.com/wix/yoshi/pull/1595) Migrate OOI templates to `@testing-library/react` ([@amitdahan](https://github.com/amitdahan))
+  - [#1593](https://github.com/wix/yoshi/pull/1593) Migrate BM templates to App Flow ([@amitdahan](https://github.com/amitdahan))
+  - [#1596](https://github.com/wix/yoshi/pull/1596) Update templates to 9.3 `@testing-library/react` ([@amitdahan](https://github.com/amitdahan))
+  - [#1594](https://github.com/wix/yoshi/pull/1594) BM Template migration to `@testing-library/react` ([@amitdahan](https://github.com/amitdahan))
+  - [#1585](https://github.com/wix/yoshi/pull/1585) Add EditorConfig extension as recommended for VSCode ([@simast](https://github.com/simast))
+- `yoshi`
+  - [#1603](https://github.com/wix/yoshi/pull/1603) Support starting multiple apps with different dev-server/hmr settings ([@ronami](https://github.com/ronami))
+
+#### :memo: Documentation
+
+- [#1492](https://github.com/wix/yoshi/pull/1492) Fix migration guide version 4 for Yarn workspaces ([@zemlanin](https://github.com/zemlanin))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1604](https://github.com/wix/yoshi/pull/1604) Always run template E2E tests with verbose output ([@ronami](https://github.com/ronami))
+  - [#1601](https://github.com/wix/yoshi/pull/1601) Bump template E2E test timeout from 10 minutes to 20 minutes ([@ronami](https://github.com/ronami))
+
 ## 4.16.4 (2019-10-02)
 
 #### :bug: Bug Fix
