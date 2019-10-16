@@ -32,7 +32,7 @@ module.exports = async (app, options) => {
   if (await fs.pathExists(app.PUBLIC_DIR)) {
     // all files in `PUBLIC_DIR` are copied initially as Chokidar's `ignoreInitial`
     // option is set to false
-    watchPublicFolder();
+    watchPublicFolder(app);
   }
 
   // Generate an available port for server HMR
