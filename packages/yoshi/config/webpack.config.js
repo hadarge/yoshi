@@ -136,6 +136,9 @@ const defaultSplitChunksConfig = {
 };
 
 const svelteOptions = {
+  // enables the hydrate: true runtime option, which allows a component to
+  // upgrade existing DOM rather than creating new DOM from scratch
+  hydratable: true,
   // Supress redundant CSS warnings on development
   // https://github.com/sveltejs/svelte-loader/issues/67
   onwarn: (warning, onwarn) => {
