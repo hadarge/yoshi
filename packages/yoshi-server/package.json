@@ -1,6 +1,6 @@
 {
   "name": "yoshi-server",
-  "version": "4.16.4",
+  "version": "4.17.0",
   "main": "build/index.js",
   "sideEffects": false,
   "keywords": [
@@ -30,7 +30,7 @@
     "serialize-error": "4.1.0",
     "sockjs-client": "1.4.0",
     "type-fest": "0.8.1",
-    "yoshi-config": "4.16.4",
+    "yoshi-config": "4.17.0",
     "youch": "2.0.10"
   }
 }

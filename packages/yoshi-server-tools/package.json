@@ -1,6 +1,6 @@
 {
   "name": "yoshi-server-tools",
-  "version": "4.16.4",
+  "version": "4.17.0",
   "keywords": [
     "yoshi",
     "server"
@@ -12,6 +12,6 @@
     "@babel/traverse": "7.6.3",
     "@types/babel__traverse": "7.0.7",
     "@types/webpack": "4.39.3",
-    "yoshi-config": "4.16.4"
+    "yoshi-config": "4.17.0"
   }
 }
