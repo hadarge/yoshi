@@ -38,7 +38,7 @@
     "@types/ps-tree": "1.1.0",
     "@types/semver": "6.0.2",
     "@types/server-destroy": "1.0.0",
-    "@types/webpack": "4.39.3",
+    "@types/webpack": "4.39.4",
     "@types/xmldoc": "1.1.4",
     "babel-preset-yoshi": "4.14.0",
     "typescript": "3.5.3"
