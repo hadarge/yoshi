@@ -67,7 +67,7 @@ const testTemplate = mockedAnswers => {
       await createApp({ workingDir: testDirectory });
     });
 
-    if (mockedAnswers.transpiler === 'typescript') {
+    if (mockedAnswers.language === 'typescript') {
       it('should not have errors on typescript strict check', () => {
         console.log('checking strict typescript...');
         const { all: tscOutput } = execa.sync(
@@ -108,15 +108,15 @@ describe('create-yoshi-app + yoshi e2e tests', () => {
   filteredTemplates
     .map(
       templateDefinition =>
-        new TemplateModel(
-          `test-${templateDefinition.title}`,
+        new TemplateModel({
+          projectName: `test-${templateDefinition.title}`,
           templateDefinition,
-          'rany',
-          'rany@wix.com',
-          templateDefinition.title.endsWith('-typescript')
+          authorName: 'rany',
+          authorEmail: 'rany@wix.com',
+          language: templateDefinition.title.endsWith('-typescript')
             ? 'typescript'
-            : 'babel',
-        ),
+            : 'javascript',
+        }),
     )
     .forEach(testTemplate);
 });

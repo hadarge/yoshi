@@ -6,6 +6,7 @@ module.exports = {
     '/node_modules/',
     '/test/',
   ],
+  watchPathIgnorePatterns: ['node_modules'],
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
     '^.+\\.tsx?$': 'ts-jest',

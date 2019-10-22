@@ -77,11 +77,11 @@ test('it uses a template model', async () => {
 });
 
 function minimalTemplateModel() {
-  return TemplateModel.fromJSON({
+  return new TemplateModel({
     projectName: `test-project`,
     authorName: 'rany',
     authorEmail: 'rany@wix.com',
-    transpiler: 'babel',
+    language: 'javascript',
     templateDefinition: {
       name: 'minimal-template',
       path: path.join(__dirname, './__fixtures__/minimal-template/'),

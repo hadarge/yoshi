@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 
-export type Transpiler = 'typescript' | 'babel';
+export type Language = 'javascript' | 'typescript';
 
 export interface TemplateDefinition {
   name: string;
@@ -13,24 +13,26 @@ export default class TemplateModel {
   readonly authorName: string;
   readonly authorEmail: string;
   readonly templateDefinition: TemplateDefinition;
-  readonly transpiler: Transpiler;
+  readonly language: Language;
 
-  constructor(
-    projectName: string,
-    templateDefinition: TemplateDefinition,
-    authorName: string,
-    authorEmail: string,
-    transpiler: Transpiler,
-  ) {
+  constructor({
+    projectName,
+    templateDefinition,
+    authorName,
+    authorEmail,
+    language,
+  }: {
+    projectName: string;
+    templateDefinition: TemplateDefinition;
+    authorName: string;
+    authorEmail: string;
+    language: Language;
+  }) {
     this.templateDefinition = templateDefinition;
     this.projectName = projectName;
     this.authorName = authorName;
     this.authorEmail = authorEmail;
-    this.transpiler = transpiler;
-  }
-
-  get language() {
-    return this.transpiler === 'typescript' ? 'typescript' : 'javascript';
+    this.language = language;
   }
 
   getPath() {
@@ -41,23 +43,7 @@ export default class TemplateModel {
     return `${this.templateDefinition.name}-${this.language}`;
   }
 
-  static fromJSON({
-    projectName,
-    templateDefinition,
-    authorName,
-    authorEmail,
-    transpiler,
-  }: any) {
-    return new TemplateModel(
-      projectName,
-      templateDefinition,
-      authorName,
-      authorEmail,
-      transpiler,
-    );
-  }
-
   static fromFilePath(answersFilePath: string) {
-    return this.fromJSON(fs.readJSONSync(answersFilePath));
+    return new TemplateModel(fs.readJSONSync(answersFilePath));
   }
 }

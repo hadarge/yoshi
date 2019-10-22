@@ -6,16 +6,16 @@ import getFilesInDir from '../src/getFilesInDir';
 
 test('verify generation works as expected', () => {
   const tempDir = tempy.directory();
-  const templateModel = new TemplateModel(
-    `test-project`,
-    {
+  const templateModel = new TemplateModel({
+    projectName: `test-project`,
+    templateDefinition: {
       name: 'fake-template',
       path: path.join(__dirname, './__fixtures__/fake-template/'),
     },
-    'rany',
-    'rany@wix.com',
-    'typescript',
-  );
+    authorName: 'rany',
+    authorEmail: 'rany@wix.com',
+    language: 'typescript',
+  });
 
   generateProject(templateModel, tempDir);
 

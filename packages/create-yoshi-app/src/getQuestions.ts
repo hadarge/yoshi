@@ -64,11 +64,11 @@ export default (): Array<PromptObject<string>> => {
     },
     {
       type: 'select',
-      name: 'transpiler',
+      name: 'language',
       message: 'Choose JavaScript Transpiler',
       choices: [
         { title: 'Typescript', value: 'typescript' },
-        { title: 'Babel', value: 'babel' },
+        { title: 'Babel', value: 'javascript' },
       ],
     },
   ];

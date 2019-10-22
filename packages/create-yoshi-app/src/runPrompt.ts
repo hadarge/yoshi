@@ -3,7 +3,7 @@ import prompts from 'prompts';
 import TemplateModel from './TemplateModel';
 import getQuestions from './getQuestions';
 
-export default async (workingDir: string = process.cwd()) => {
+export default async (workingDir = process.cwd()) => {
   const questions = getQuestions();
 
   let promptAborted = false;
@@ -23,5 +23,5 @@ export default async (workingDir: string = process.cwd()) => {
   // use the basename of the current working directory if projectName wasn't supplied
   answers.projectName = answers.projectName || path.basename(workingDir);
 
-  return TemplateModel.fromJSON(answers);
+  return new TemplateModel(answers as any);
 };

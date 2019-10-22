@@ -4,7 +4,7 @@ import { TemplateDefinition } from './TemplateModel';
 const toTemplatePath = (templateName: string) =>
   resolve(__dirname, '../templates', templateName);
 
-export default [
+const templates: Array<TemplateDefinition> = [
   { name: 'fullstack', path: toTemplatePath('fullstack') },
   { name: 'client', path: toTemplatePath('client') },
   {
@@ -17,4 +17,6 @@ export default [
     name: 'out-of-iframe',
     path: toTemplatePath('out-of-iframe'),
   },
-] as Array<TemplateDefinition>;
+];
+
+export default templates;
