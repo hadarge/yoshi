@@ -7,8 +7,7 @@ import TemplateModel from '../TemplateModel';
 import verifyDirectoryName from '../verifyDirectoryName';
 import verifyWorkingDirectory from '../verifyWorkingDirectory';
 import verifyRegistry from '../verifyRegistry';
-import verifyMinimumNodeVersion from '../verifyMinimumNodeVersion';
-import { minimumNodeVersion } from '../constants';
+import verifyNodeVersion from '../verifyNodeVersion';
 
 // Cannot be `import` as it's not under TS root dir
 const pkg = require('../../package.json');
@@ -41,7 +40,7 @@ if (customProjectDir) {
 
 verifyWorkingDirectory(workingDir);
 verifyRegistry(workingDir);
-verifyMinimumNodeVersion(minimumNodeVersion);
+verifyNodeVersion();
 
 const templateModel = answersFile
   ? TemplateModel.fromFilePath(answersFile)
