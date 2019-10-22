@@ -9,7 +9,8 @@ import verifyWorkingDirectory from '../verifyWorkingDirectory';
 import verifyRegistry from '../verifyRegistry';
 import verifyMinimumNodeVersion from '../verifyMinimumNodeVersion';
 import { minimumNodeVersion } from '../constants';
-import pkg from '../../package.json';
+
+const pkg = require('../../package.json');
 
 process.on('unhandledRejection', error => {
   throw error;
