@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.17.2 (2019-10-22)
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1617](https://github.com/wix/yoshi/pull/1617) Fix TS importing project's own `package.json` and causing it to be copied ([@amitdahan](https://github.com/amitdahan))
+  - [#1616](https://github.com/wix/yoshi/pull/1616) TypeScript tweaks ([@amitdahan](https://github.com/amitdahan))
+  - [#1504](https://github.com/wix/yoshi/pull/1504) Server templates: use `wix-test-env` for environment setup ([@hugebdu](https://github.com/hugebdu))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1598](https://github.com/wix/yoshi/pull/1598) Migrate `create-yoshi-app` to TypeScript ([@amitdahan](https://github.com/amitdahan))
+
 ## 4.17.1 (2019-10-16)
 
 #### :bug: Bug Fix
