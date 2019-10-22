@@ -3,23 +3,12 @@ import * as testkit from '@wix/wix-bootstrap-testkit';
 // https://github.com/wix-platform/wix-node-platform/tree/master/config/wix-config-emitter
 import * as configEmitter from '@wix/wix-config-emitter';
 
-export const app = bootstrapServer();
+import * as TestEnv from '@wix/wix-test-env';
 
-export async function start() {
-  // start other testkits/collaborators (if any) *before* the application starts
-  await emitConfigs();
-  await app.start();
-}
-
-export async function stop() {
-  // don't forget to tear down other testkits/collaborators if any
-  await app.stop();
-}
-
-export function beforeAndAfter() {
-  before(start);
-  after(stop);
-}
+export const env = TestEnv.builder()
+  .withConfigurer(emitConfigs)
+  .withMainApp(bootstrapServer())
+  .build();
 
 // take erb configurations from source folder, replace values/functions,
 // remove the ".erb" extension and emit files inside the target folder

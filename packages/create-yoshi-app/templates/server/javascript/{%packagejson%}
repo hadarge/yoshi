@@ -27,7 +27,7 @@
     "yoshi": "^4.1.0",
     "@wix/wix-bootstrap-testkit": "latest",
     "@wix/wix-config-emitter": "latest",
-    "@wix/wix-rpc-testkit": "latest"
+    "@wix/wix-test-env": "latest"
   },
   "dependencies": {
     "ejs": "~2.5.0",
