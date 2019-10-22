@@ -10,6 +10,7 @@ import verifyRegistry from '../verifyRegistry';
 import verifyMinimumNodeVersion from '../verifyMinimumNodeVersion';
 import { minimumNodeVersion } from '../constants';
 
+// Cannot be `import` as it's not under TS root dir
 const pkg = require('../../package.json');
 
 process.on('unhandledRejection', error => {
