@@ -1,17 +1,19 @@
-const tempy = require('tempy');
-const verifyRegistry = require('../src/verifyRegistry');
-const { isPrivateRegistryReachable } = require('../src/utils');
+import tempy from 'tempy';
+import verifyRegistry from '../src/verifyRegistry';
+import { isPrivateRegistryReachable } from '../src/utils';
 
 jest.mock('../src/utils', () => ({
   isPrivateRegistryReachable: jest.fn(),
 }));
 
 describe('verifyRegistry', () => {
-  let tempDir, exitSpy, errorSpy;
+  let tempDir: string, exitSpy: jest.SpyInstance, errorSpy: jest.SpyInstance;
 
   beforeEach(() => {
     tempDir = tempy.directory();
-    exitSpy = jest.spyOn(process, 'exit').mockImplementation(() => {});
+    exitSpy = jest
+      .spyOn(process, 'exit')
+      .mockImplementation(() => undefined as never);
     errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
@@ -21,7 +23,7 @@ describe('verifyRegistry', () => {
   });
 
   test('should fail when user does not connect to VPN', () => {
-    isPrivateRegistryReachable.mockReturnValue(false);
+    (isPrivateRegistryReachable as jest.Mock).mockReturnValue(false);
 
     verifyRegistry(tempDir);
 
@@ -30,7 +32,7 @@ describe('verifyRegistry', () => {
   });
 
   test('should not fail when user is using VPN', () => {
-    isPrivateRegistryReachable.mockReturnValue(true);
+    (isPrivateRegistryReachable as jest.Mock).mockReturnValue(true);
 
     verifyRegistry(tempDir);
 

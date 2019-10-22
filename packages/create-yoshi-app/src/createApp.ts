@@ -1,20 +1,28 @@
-const chalk = require('chalk');
-const {
+import chalk from 'chalk';
+import {
   clearConsole,
-  npmInstall,
-  lintFix,
   gitInit,
   isInsideGitRepo,
-} = require('./utils');
-const runPrompt = require('./runPrompt');
-const generateProject = require('./generateProject');
+  lintFix,
+  npmInstall,
+} from './utils';
+import runPrompt from './runPrompt';
+import generateProject from './generateProject';
+import TemplateModel from './TemplateModel';
 
-module.exports = async ({
+export interface CreateAppOptions {
+  workingDir: string;
+  templateModel?: TemplateModel;
+  install?: boolean;
+  lint?: boolean;
+}
+
+export default async ({
   workingDir,
   templateModel,
   install = true,
   lint = true,
-}) => {
+}: CreateAppOptions) => {
   clearConsole();
 
   if (!templateModel) {

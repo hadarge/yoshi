@@ -1,9 +1,10 @@
-const { join } = require('path');
+import { resolve } from 'path';
+import { TemplateDefinition } from './TemplateModel';
 
-const toTemplatePath = templateName =>
-  join(__dirname, 'templates', templateName);
+const toTemplatePath = (templateName: string) =>
+  resolve(__dirname, '../templates', templateName);
 
-module.exports = [
+export default [
   { name: 'fullstack', path: toTemplatePath('fullstack') },
   { name: 'client', path: toTemplatePath('client') },
   {
@@ -16,4 +17,4 @@ module.exports = [
     name: 'out-of-iframe',
     path: toTemplatePath('out-of-iframe'),
   },
-];
+] as Array<TemplateDefinition>;

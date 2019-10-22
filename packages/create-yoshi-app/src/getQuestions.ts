@@ -1,10 +1,11 @@
-const getGitConfig = require('parse-git-config');
-const templates = require('../templates');
+import getGitConfig from 'parse-git-config';
+import { PromptObject } from 'prompts';
+import templates from './templates';
 
 const WIX_EMAIL_PATTERN = '@wix.com';
 
 // Use email from git config | OS username or empty string as an initial value.
-const getInitialEmail = gitEmail => {
+const getInitialEmail = (gitEmail: string) => {
   const processUser = process.env.USER;
   if (gitEmail.endsWith(WIX_EMAIL_PATTERN)) {
     return gitEmail;
@@ -15,7 +16,7 @@ const getInitialEmail = gitEmail => {
 };
 
 // Format `value` to `value@wix.com` or use original value if it's already contains @wix.com.
-const formatEmail = email => {
+const formatEmail = (email: string) => {
   if (!email.endsWith(WIX_EMAIL_PATTERN)) {
     return `${email}@wix.com`;
   }
@@ -23,9 +24,9 @@ const formatEmail = email => {
 };
 
 // Check if string is not in an email format.
-const withoutEmail = value => value.length && !/@+/.test(value);
+const withoutEmail = (value: string) => value.length && !/@+/.test(value);
 
-module.exports = () => {
+export default (): Array<PromptObject<string>> => {
   const gitConfig = getGitConfig.sync({ include: true, type: 'global' });
 
   const gitUser = gitConfig.user || {};
@@ -45,7 +46,7 @@ module.exports = () => {
       message: 'Author @wix.com email',
       initial: getInitialEmail(gitEmail),
       format: formatEmail,
-      validate: value =>
+      validate: (value: string) =>
         // We can add @wix.com if no email pattern detected or force user to write @wix email if different one specified.
         withoutEmail(value) || value.endsWith(WIX_EMAIL_PATTERN)
           ? true
@@ -57,7 +58,8 @@ module.exports = () => {
       message: 'Choose project type',
       choices: templates.map(project => ({
         title: project.name,
-        value: project,
+        // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/39269
+        value: project as any,
       })),
     },
     {

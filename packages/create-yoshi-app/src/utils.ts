@@ -1,17 +1,18 @@
-const chalk = require('chalk');
-const execa = require('execa');
-const { privateRegistry } = require('./constants');
+import chalk from 'chalk';
+import execa from 'execa';
+import { privateRegistry } from './constants';
 
-module.exports.clearConsole = () => process.stdout.write('\x1Bc');
+export const clearConsole = () => process.stdout.write('\x1Bc');
 
-module.exports.npmInstall = dir => {
+export const npmInstall = (dir: string) => {
   console.log(
     `Running ${chalk.magenta(
       'npm install',
     )}, that might take a few minutes... ⌛ \n`,
   );
 
-  execa.shellSync('npm install', {
+  execa.sync('npm install', {
+    shell: true,
     cwd: dir,
     stdio: 'inherit',
     extendEnv: false,
@@ -25,9 +26,10 @@ module.exports.npmInstall = dir => {
   });
 };
 
-module.exports.isPrivateRegistryReachable = dir => {
+export const isPrivateRegistryReachable = (dir: string) => {
   try {
-    execa.shellSync(`curl ${privateRegistry}/v1`, {
+    execa.sync(`curl ${privateRegistry}/v1`, {
+      shell: true,
       cwd: dir,
       stdio: 'pipe',
     });
@@ -38,18 +40,20 @@ module.exports.isPrivateRegistryReachable = dir => {
   }
 };
 
-module.exports.lintFix = dir => {
+export const lintFix = (dir: string) => {
   console.log(`\nRunning ${chalk.magenta('yoshi lint --fix')}\n`);
-  execa.shellSync('npx yoshi lint --fix', {
+  execa.sync('npx yoshi lint --fix', {
+    shell: true,
     cwd: dir,
     stdio: 'inherit',
   });
 };
 
-module.exports.gitInit = dir => {
+export const gitInit = (dir: string) => {
   console.log(`\nRunning ${chalk.magenta('git init')}\n`);
 
-  const { stdout } = execa.shellSync('git init', {
+  const { stdout } = execa.sync('git init', {
+    shell: true,
     cwd: dir,
     stdio: 'pipe',
   });
@@ -57,9 +61,10 @@ module.exports.gitInit = dir => {
   console.log(stdout + '\n');
 };
 
-module.exports.isInsideGitRepo = dir => {
+export const isInsideGitRepo = (dir: string) => {
   try {
-    execa.shellSync('git rev-parse --is-inside-work-tree', {
+    execa.sync('git rev-parse --is-inside-work-tree', {
+      shell: true,
       cwd: dir,
       stdio: 'pipe',
     });

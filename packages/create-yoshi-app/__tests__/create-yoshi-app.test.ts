@@ -1,9 +1,10 @@
-const execa = require('execa');
-const tempy = require('tempy');
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import execa from 'execa';
+import tempy from 'tempy';
+import { bin } from '../package.json';
 
-const createYoshiAppBin = path.join(__dirname, '../bin/create-yoshi-app.js');
+const createYoshiAppBin = path.resolve(__dirname, '..', bin);
 
 test('it should throw if the repository name is not validated by npm', async () => {
   expect.assertions(1);

@@ -1,8 +1,9 @@
-const constantCase = require('constant-case');
-const pascalCase = require('pascal-case');
+import constantCase from 'constant-case';
+import pascalCase from 'pascal-case';
+import TemplateModel from './TemplateModel';
 
-module.exports = ({ projectName, authorName, authorEmail }) => {
-  const valuesMap = {
+export default ({ projectName, authorName, authorEmail }: TemplateModel) => {
+  const valuesMap: Record<string, string> = {
     projectName,
     authorName,
     authorEmail,
@@ -10,13 +11,13 @@ module.exports = ({ projectName, authorName, authorEmail }) => {
     packagejson: 'package.json',
   };
 
-  for (const key in valuesMap) {
+  Object.keys(valuesMap).forEach(key => {
     // create CONSTANT_CASE entries for values map
     valuesMap[constantCase(key)] = constantCase(valuesMap[key]);
 
     // create PascalCase entries for values map
     valuesMap[pascalCase(key)] = pascalCase(valuesMap[key]);
-  }
+  });
 
   return valuesMap;
 };

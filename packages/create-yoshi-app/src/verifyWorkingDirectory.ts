@@ -1,8 +1,8 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const hiddenFilesRegex = /(^|\/)\.[^/.]/;
 
-module.exports = function verifyWorkingDirectory(workingDir) {
+export default function verifyWorkingDirectory(workingDir: string) {
   const emptyDirectory =
     fs.readdirSync(workingDir).filter(entry => !hiddenFilesRegex.test(entry))
       .length === 0;
@@ -13,4 +13,4 @@ module.exports = function verifyWorkingDirectory(workingDir) {
 
     process.exit(1);
   }
-};
+}

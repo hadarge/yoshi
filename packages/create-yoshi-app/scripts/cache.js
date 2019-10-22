@@ -1,6 +1,6 @@
 const findCacheDir = require('find-cache-dir');
 const fs = require('fs-extra');
-const { appCacheDirname } = require('../src/constants.js');
+const { appCacheDirname } = require('../src/constants');
 
 // '/some/path/node_modules/.cache/create-yoshi-app'
 const thunk = findCacheDir({ name: appCacheDirname, thunk: true });

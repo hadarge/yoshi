@@ -1,7 +1,7 @@
-const chalk = require('chalk');
-const { isPrivateRegistryReachable } = require('../src/utils');
+import chalk from 'chalk';
+import { isPrivateRegistryReachable } from './utils';
 
-module.exports = function verifyRegistry(workingDir) {
+export default function verifyRegistry(workingDir: string) {
   if (!isPrivateRegistryReachable(workingDir)) {
     console.error(
       chalk.red(
@@ -10,4 +10,4 @@ module.exports = function verifyRegistry(workingDir) {
     );
     process.exit(1);
   }
-};
+}

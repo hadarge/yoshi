@@ -7,10 +7,10 @@ const prompts = require('prompts');
 const fs = require('fs');
 
 const { createApp, verifyRegistry } = require('../src/index');
-const TemplateModel = require('../src/TemplateModel');
+const TemplateModel = require('../src/TemplateModel').default;
 const { publishMonorepo } = require('../../../scripts/utils/publishMonorepo');
 const { testRegistry } = require('../../../scripts/utils/constants');
-const templates = require('../templates');
+const templates = require('../src/templates').default;
 
 // A regex pattern to run a focus test on the matched projects types
 const focusProjects = process.env.FOCUS_PROJECTS;
@@ -70,9 +70,10 @@ const testTemplate = mockedAnswers => {
     if (mockedAnswers.transpiler === 'typescript') {
       it('should not have errors on typescript strict check', () => {
         console.log('checking strict typescript...');
-        const { all: tscOutput } = execa.shellSync(
+        const { all: tscOutput } = execa.sync(
           './node_modules/.bin/tsc --noEmit --strict',
           {
+            shell: true,
             cwd: testDirectory,
           },
         );
@@ -83,7 +84,8 @@ const testTemplate = mockedAnswers => {
 
     it(`should run npm test with no configuration warnings`, () => {
       console.log('running npm test...');
-      const { stderr, all: testOutput } = execa.shellSync('npm test', {
+      const { stderr, all: testOutput } = execa.sync('npm test', {
+        shell: true,
         cwd: testDirectory,
       });
 
@@ -106,15 +108,15 @@ describe('create-yoshi-app + yoshi e2e tests', () => {
   filteredTemplates
     .map(
       templateDefinition =>
-        new TemplateModel({
-          projectName: `test-${templateDefinition.title}`,
-          authorName: 'rany',
-          authorEmail: 'rany@wix.com',
+        new TemplateModel(
+          `test-${templateDefinition.title}`,
           templateDefinition,
-          transpiler: templateDefinition.title.endsWith('-typescript')
+          'rany',
+          'rany@wix.com',
+          templateDefinition.title.endsWith('-typescript')
             ? 'typescript'
             : 'babel',
-        }),
+        ),
     )
     .forEach(testTemplate);
 });

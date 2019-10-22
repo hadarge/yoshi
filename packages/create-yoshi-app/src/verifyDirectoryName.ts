@@ -1,8 +1,8 @@
-const chalk = require('chalk');
-const validateProjectName = require('validate-npm-package-name');
-const path = require('path');
+import path from 'path';
+import chalk from 'chalk';
+import validateProjectName from 'validate-npm-package-name';
 
-function printValidationResults(results) {
+function printValidationResults(results?: Array<string>) {
   if (typeof results !== 'undefined') {
     results.forEach(error => {
       console.error(chalk.red(`  *  ${error}`));
@@ -10,7 +10,7 @@ function printValidationResults(results) {
   }
 }
 
-module.exports = function verifyDirectoryName(workingDir) {
+export default function verifyDirectoryName(workingDir: string) {
   const projectName = path.basename(workingDir);
   const validationResult = validateProjectName(projectName);
 
@@ -25,4 +25,4 @@ module.exports = function verifyDirectoryName(workingDir) {
     printValidationResults(validationResult.warnings);
     process.exit(1);
   }
-};
+}

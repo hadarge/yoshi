@@ -1,6 +1,6 @@
-const semver = require('semver');
+import semver from 'semver';
 
-module.exports = function verifyMinimumNodeVersion(requiredVersion) {
+export default function verifyMinimumNodeVersion(requiredVersion: string) {
   if (!semver.satisfies(process.version, `>=v${requiredVersion}`)) {
     console.log(
       `Node version ${process.version} is less than the required version of v${requiredVersion}\n`,
@@ -9,4 +9,4 @@ module.exports = function verifyMinimumNodeVersion(requiredVersion) {
 
     process.exit(1);
   }
-};
+}

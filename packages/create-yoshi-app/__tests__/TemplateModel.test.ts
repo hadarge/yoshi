@@ -1,9 +1,9 @@
-const path = require('path');
-const TemplateModel = require('../src/TemplateModel');
+import path from 'path';
+import TemplateModel from '../src/TemplateModel';
 
 describe('TemplateModel', () => {
   describe('transpiler is babel', () => {
-    const model = new TemplateModel({
+    const model = TemplateModel.fromJSON({
       templateDefinition: {
         name: 'client',
         path: path.join(__dirname, '../templates/client'),
@@ -19,7 +19,7 @@ describe('TemplateModel', () => {
   });
 
   describe('transpiler is typescript', () => {
-    const model = new TemplateModel({
+    const model = TemplateModel.fromJSON({
       templateDefinition: {
         name: 'client',
         path: path.join(__dirname, '../templates/client'),

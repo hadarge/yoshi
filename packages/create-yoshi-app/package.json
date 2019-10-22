@@ -9,13 +9,11 @@
     "generate"
   ],
   "author": "Ran Yitzhaki & Ronen Amiel",
-  "main": "src/index.js",
-  "bin": {
-    "create-yoshi-app": "bin/create-yoshi-app.js"
-  },
+  "main": "build/src/index.js",
+  "bin": "build/src/bin/create-yoshi-app.js",
   "scripts": {
     "test": "jest",
-    "templates": "node scripts/runE2E.js",
+    "templates": "ts-node scripts/runE2E.js",
     "client": "npm run templates -- client client-typescript",
     "fullstack": "npm run templates -- fullstack fullstack-typescript",
     "server": "npm run templates -- server server-typescript",
@@ -39,7 +37,7 @@
     "chalk": "^2.4.1",
     "commander": "^2.16.0",
     "constant-case": "^2.0.0",
-    "execa": "^1.0.0",
+    "execa": "^2.1.0",
     "fs-extra": "^7.0.0",
     "globby": "^9.0.0",
     "parse-git-config": "^2.0.2",
@@ -49,6 +47,11 @@
     "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^8.0.0",
+    "@types/parse-git-config": "^3.0.0",
+    "@types/prompts": "^2.0.1",
+    "@types/semver": "^6.0.2",
+    "@types/validate-npm-package-name": "^3.0.0",
     "chokidar": "^2.0.4",
     "clipboardy": "^1.2.3",
     "expect": "^23.6.0",
@@ -58,6 +61,7 @@
     "minimist": "^1.2.0",
     "mocha": "^5.2.0",
     "mocha-env-reporter": "^3.0.0",
-    "tempy": "^0.2.1"
+    "tempy": "^0.3.0",
+    "ts-node": "^8.4.1"
   }
 }

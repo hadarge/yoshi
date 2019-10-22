@@ -1,7 +1,11 @@
 const templateRegex = /{%\w+%}/g;
 
-module.exports = (content, map, { graceful } = {}) => {
-  function replacer(match) {
+export default (
+  content: string,
+  map: Record<string, string>,
+  { graceful }: { graceful?: boolean } = {},
+) =>
+  content.replace(templateRegex, match => {
     const key = match.slice(2, -2);
 
     if (!map.hasOwnProperty(key)) {
@@ -17,7 +21,4 @@ module.exports = (content, map, { graceful } = {}) => {
     }
 
     return map[key];
-  }
-
-  return content.replace(templateRegex, replacer);
-};
+  });

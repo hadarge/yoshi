@@ -1,9 +1,9 @@
-const path = require('path');
-const prompts = require('prompts');
-const TemplateModel = require('./TemplateModel');
-const getQuestions = require('./getQuestions');
+import path from 'path';
+import prompts from 'prompts';
+import TemplateModel from './TemplateModel';
+import getQuestions from './getQuestions';
 
-module.exports = async (workingDir = process.cwd()) => {
+export default async (workingDir: string = process.cwd()) => {
   const questions = getQuestions();
 
   let promptAborted = false;
@@ -23,5 +23,5 @@ module.exports = async (workingDir = process.cwd()) => {
   // use the basename of the current working directory if projectName wasn't supplied
   answers.projectName = answers.projectName || path.basename(workingDir);
 
-  return new TemplateModel(answers);
+  return TemplateModel.fromJSON(answers);
 };

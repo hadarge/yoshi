@@ -1,23 +1,21 @@
-const fs = require('fs');
-const path = require('path');
-const globby = require('globby');
+import fs from 'fs';
+import path from 'path';
+import globby from 'globby';
 
-module.exports = absoluteDirPath => {
+export default (absoluteDirPath: string) => {
   const filesPaths = globby.sync(['**/*', '!node_modules'], {
     cwd: absoluteDirPath,
     dot: true,
     gitignore: true,
   });
 
-  const files = {};
+  const files: Record<string, string> = {};
 
   filesPaths.forEach(filePath => {
-    const content = fs.readFileSync(
+    files[filePath] = fs.readFileSync(
       path.join(absoluteDirPath, filePath),
       'utf-8',
     );
-
-    files[filePath] = content;
   });
 
   return files;

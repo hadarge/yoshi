@@ -1,15 +1,17 @@
-const tempy = require('tempy');
-const createApp = require('../src/createApp');
-const execa = require('execa');
-const TemplateModel = require('../src/TemplateModel');
-const path = require('path');
-const { gitInit } = require('../src/utils');
-const fs = require('fs-extra');
+import path from 'path';
+import tempy from 'tempy';
+import execa from 'execa';
+import fs from 'fs-extra';
+import createApp from '../src/createApp';
+import TemplateModel from '../src/TemplateModel';
+import { gitInit } from '../src/utils';
+import runPrompt from '../src/runPrompt';
+import verifyRegistry from '../src/verifyRegistry';
 
 jest.mock('../src/runPrompt');
 jest.mock('../src/verifyRegistry');
 jest.mock('../src/utils', () => ({
-  ...require.requireActual('../src/utils'),
+  ...jest.requireActual('../src/utils'),
   clearConsole: jest.fn(),
 }));
 
@@ -26,21 +28,22 @@ afterEach(() => {
 
 test('it should generate a git repo', async () => {
   const tempDir = tempy.directory();
-  require('../src/runPrompt').mockReturnValue(minimalTemplateModel());
-  require('../src/verifyRegistry').mockReturnValue(undefined);
+  (runPrompt as jest.Mock).mockReturnValue(minimalTemplateModel());
+  (verifyRegistry as jest.Mock).mockReturnValue(undefined);
   await createApp({ workingDir: tempDir, install: false, lint: false });
 
   expect(() => {
     console.log('Checking git status...');
-    execa.shellSync('git status', {
+    execa.sync('git status', {
+      shell: true,
       cwd: tempDir,
     });
   }).not.toThrow();
 });
 
 test('it should not create a git repo if the target directory is contained in a git repo', async () => {
-  require('../src/runPrompt').mockReturnValue(minimalTemplateModel());
-  require('../src/verifyRegistry').mockReturnValue(undefined);
+  (runPrompt as jest.Mock).mockReturnValue(minimalTemplateModel());
+  (verifyRegistry as jest.Mock).mockReturnValue(undefined);
 
   const tempDir = tempy.directory();
   const projectDir = path.join(tempDir, 'project');

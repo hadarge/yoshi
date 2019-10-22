@@ -1,21 +1,19 @@
-#! /usr/bin/env node
+import path from 'path';
+import program from 'commander';
+import chalk from 'chalk';
+import { ensureDirSync } from 'fs-extra';
+import createApp from '../createApp';
+import TemplateModel from '../TemplateModel';
+import verifyDirectoryName from '../verifyDirectoryName';
+import verifyWorkingDirectory from '../verifyWorkingDirectory';
+import verifyRegistry from '../verifyRegistry';
+import verifyMinimumNodeVersion from '../verifyMinimumNodeVersion';
+import { minimumNodeVersion } from '../constants';
+import pkg from '../../package.json';
 
 process.on('unhandledRejection', error => {
   throw error;
 });
-
-const fs = require('fs-extra');
-const path = require('path');
-const program = require('commander');
-const chalk = require('chalk');
-const createApp = require('../src/createApp');
-const TemplateModel = require('../src/TemplateModel');
-const verifyDirectoryName = require('../src/verifyDirectoryName');
-const verifyWorkingDirectory = require('../src/verifyWorkingDirectory');
-const verifyRegistry = require('../src/verifyRegistry');
-const verifyMinimumNodeVersion = require('../src/verifyMinimumNodeVersion');
-const { minimumNodeVersion } = require('../src/constants');
-const pkg = require('../package.json');
 
 program
   .version(pkg.version)
@@ -34,7 +32,7 @@ const answersFile = program.answersFile;
 verifyDirectoryName(customProjectDir || workingDir);
 
 if (customProjectDir) {
-  fs.ensureDirSync(customProjectDir);
+  ensureDirSync(customProjectDir);
   workingDir = path.resolve(customProjectDir);
   process.chdir(workingDir);
 }
@@ -45,16 +43,16 @@ verifyMinimumNodeVersion(minimumNodeVersion);
 
 const templateModel = answersFile
   ? TemplateModel.fromFilePath(answersFile)
-  : null;
+  : undefined;
 
 createApp({
   workingDir,
   templateModel,
-}).then(results => {
+}).then(({ projectName }) => {
   console.log(
-    `\nSuccess! 🙌  Created ${chalk.magenta(
-      results.projectName,
-    )} at ${chalk.green(workingDir)}`,
+    `\nSuccess! 🙌  Created ${chalk.magenta(projectName)} at ${chalk.green(
+      workingDir,
+    )}`,
   );
 
   console.log('You can run the following commands:\n');

@@ -1,24 +1,26 @@
-const tempy = require('tempy');
-const path = require('path');
-const fs = require('fs');
-const verifyWorkingDirectory = require('../src/verifyWorkingDirectory');
+import path from 'path';
+import fs from 'fs';
+import tempy from 'tempy';
+import verifyWorkingDirectory from '../src/verifyWorkingDirectory';
 
-function createDirectory(dirPath, dirName) {
+function createDirectory(dirPath: string, dirName: string) {
   const newPath = path.join(dirPath, dirName);
   fs.mkdirSync(newPath);
   return newPath;
 }
 
-function createFile(dirPath, name, content) {
+function createFile(dirPath: string, name: string, content: string) {
   fs.writeFileSync(path.join(dirPath, name), content);
 }
 
 describe('verifyWorkingDirectory', () => {
-  let tempDir, exitSpy, logSpy;
+  let tempDir: string, exitSpy: jest.SpyInstance, logSpy: jest.SpyInstance;
 
   beforeEach(() => {
     tempDir = tempy.directory();
-    exitSpy = jest.spyOn(process, 'exit').mockImplementation(() => {});
+    exitSpy = jest
+      .spyOn(process, 'exit')
+      .mockImplementation(() => undefined as never);
     logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
   });
 
