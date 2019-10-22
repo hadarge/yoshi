@@ -1,6 +1,6 @@
 {
   "name": "yoshi-server-client",
-  "version": "4.17.0",
+  "version": "4.17.2",
   "main": "build/index.js",
   "sideEffects": false,
   "keywords": [
@@ -17,6 +17,6 @@
     "yoshi-server": "^4.14.0"
   },
   "devDependencies": {
-    "yoshi-server": "4.17.0"
+    "yoshi-server": "4.17.2"
   }
 }
