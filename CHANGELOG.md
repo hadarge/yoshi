@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.17.3 (2019-10-23)
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1620](https://github.com/wix/yoshi/pull/1620) Fix removal of CYA's shebang ([@amitdahan](https://github.com/amitdahan))
+
+#### :nail_care: Polish
+
+- `create-yoshi-app`
+  - [#1614](https://github.com/wix/yoshi/pull/1614) Fail template generation if node version does not match ours ([@amitdahan](https://github.com/amitdahan))
+
 ## 4.17.2 (2019-10-22)
 
 #### :nail_care: Polish
