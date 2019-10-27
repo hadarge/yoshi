@@ -58,8 +58,7 @@ export default (): Array<PromptObject<string>> => {
       message: 'Choose project type',
       choices: templates.map(project => ({
         title: project.name,
-        // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/39269
-        value: project as any,
+        value: project,
       })),
     },
     {
