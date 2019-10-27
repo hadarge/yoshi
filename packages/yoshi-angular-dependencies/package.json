@@ -20,6 +20,6 @@
     "ng-annotate-loader": "0.6.1",
     "protractor": "5.4.2",
     "protractor-browser-logs": "1.0.456",
-    "screenshot-reporter": "1.1.167"
+    "screenshot-reporter": "1.1.174"
   }
 }

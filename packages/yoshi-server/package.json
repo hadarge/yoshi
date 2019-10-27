@@ -21,7 +21,7 @@
     "@wix/wix-express-require-https": "latest",
     "ejs": "2.7.1",
     "express": "4.17.1",
-    "fp-ts": "2.1.0",
+    "fp-ts": "2.1.1",
     "globby": "10.0.1",
     "import-fresh": "3.1.0",
     "io-ts": "2.0.1",
