@@ -168,8 +168,8 @@ async function init() {
 
     templateModel = await createApp({
       workingDir,
-      install: false,
-      lint: false,
+      install: true,
+      lint: true,
     });
   }
 
