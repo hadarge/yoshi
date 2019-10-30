@@ -130,13 +130,13 @@ It's configured as follows:
 **Editor App (Widget URL)**
 
 ```
-https://localhost:3000/settingsPanel
+https://localhost:3000/editorApp
 ```
 
 **Settings Panel (App Settings URL)**
 
 ```
-https://localhost:3000/editorApp
+https://localhost:3000/settingsPanel
 ```
 
 > While you can create your own app, we think it is easier to just reuse the same app between sites.
