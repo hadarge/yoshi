@@ -30,6 +30,7 @@ const {
   isProduction: checkIsProduction,
   inTeamCity: checkInTeamCity,
   isTypescriptProject: checkIsTypescriptProject,
+  exists,
 } = require('yoshi-helpers/queries');
 const {
   tryRequire,
@@ -71,15 +72,10 @@ const computedSeparateCss = app =>
 
 const artifactVersion = process.env.ARTIFACT_VERSION;
 
-const staticAssetName = addHashToAssetName(
-  'media/[name].[hash:8].[ext]',
-  'hash:8',
-);
-
 const sassIncludePaths = ['node_modules', 'node_modules/compass-mixins/lib'];
 
-function addHashToAssetName(name, hash = 'contenthash:8') {
-  if (rootApp.experimentalBuildHtml && isProduction) {
+function addHashToAssetName({ name, hash = 'contenthash:8', app = rootApp }) {
+  if (app.experimentalBuildHtml && isProduction) {
     return name.replace('[name]', `[name].[${hash}]`);
   }
 
@@ -317,6 +313,12 @@ function createCommonWebpackConfig({
   isHmr = false,
   withLocalSourceMaps,
 } = {}) {
+  const staticAssetName = addHashToAssetName({
+    name: 'media/[name].[hash:8].[ext]',
+    hash: 'hash:8',
+    app,
+  });
+
   const config = {
     context: app.SRC_DIR,
 
@@ -327,11 +329,11 @@ function createCommonWebpackConfig({
       publicPath: calculatePublicPath(app),
       pathinfo: isDebug,
       filename: isDebug
-        ? addHashToAssetName('[name].bundle.js')
-        : addHashToAssetName('[name].bundle.min.js'),
+        ? addHashToAssetName({ name: '[name].bundle.js', app })
+        : addHashToAssetName({ name: '[name].bundle.min.js', app }),
       chunkFilename: isDebug
-        ? addHashToAssetName('[name].chunk.js')
-        : addHashToAssetName('[name].chunk.min.js'),
+        ? addHashToAssetName({ name: '[name].chunk.js', app })
+        : addHashToAssetName({ name: '[name].chunk.min.js', app }),
       hotUpdateMainFilename: 'updates/[hash].hot-update.json',
       hotUpdateChunkFilename: 'updates/[id].[hash].hot-update.js',
     },
@@ -669,7 +671,7 @@ function createClientWebpackConfig({
       createDefinePlugin(isDebug),
 
       // https://github.com/jantimon/html-webpack-plugin
-      ...(rootApp.experimentalBuildHtml
+      ...(app.experimentalBuildHtml && exists(app.TEMPLATES_DIR)
         ? [
             ...globby
               .sync('**/*.+(ejs|vm)', {
@@ -734,16 +736,16 @@ function createClientWebpackConfig({
             // https://github.com/webpack-contrib/mini-css-extract-plugin
             new MiniCssExtractPlugin({
               filename: isDebug
-                ? addHashToAssetName('[name].css')
-                : addHashToAssetName('[name].min.css'),
+                ? addHashToAssetName({ name: '[name].css', app })
+                : addHashToAssetName({ name: '[name].min.css', app }),
               chunkFilename: isDebug
-                ? addHashToAssetName('[name].chunk.css')
-                : addHashToAssetName('[name].chunk.min.css'),
+                ? addHashToAssetName({ name: '[name].chunk.css', app })
+                : addHashToAssetName({ name: '[name].chunk.min.css', app }),
             }),
             // https://github.com/wix-incubator/tpa-style-webpack-plugin
             ...(app.enhancedTpaStyle ? [new TpaStyleWebpackPlugin()] : []),
             // https://github.com/wix/rtlcss-webpack-plugin
-            ...(!rootApp.experimentalBuildHtml && !rootApp.experimentalRtlCss
+            ...(!app.experimentalBuildHtml && !rootApp.experimentalRtlCss
               ? [
                   new RtlCssPlugin(
                     isDebug ? '[name].rtl.css' : '[name].rtl.min.css',
