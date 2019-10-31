@@ -70,26 +70,21 @@ const testTemplate = mockedAnswers => {
     if (mockedAnswers.language === 'typescript') {
       it('should not have errors on typescript strict check', () => {
         console.log('checking strict typescript...');
-        const { all: tscOutput } = execa.sync(
-          './node_modules/.bin/tsc --noEmit --strict',
-          {
-            shell: true,
-            cwd: testDirectory,
-          },
-        );
-
-        console.log(tscOutput);
+        execa.sync('./node_modules/.bin/tsc --noEmit --strict', {
+          shell: true,
+          cwd: testDirectory,
+          stdio: 'inherit',
+        });
       });
     }
 
     it(`should run npm test with no configuration warnings`, () => {
       console.log('running npm test...');
-      const { stderr, all: testOutput } = execa.sync('npm test', {
+      const { stderr } = execa.sync('npm test', {
         shell: true,
         cwd: testDirectory,
+        stdio: 'inherit',
       });
-
-      console.log(testOutput);
 
       expect(stderr).not.toContain('Warning: Invalid configuration object');
     });
