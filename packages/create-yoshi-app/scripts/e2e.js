@@ -84,14 +84,30 @@ const testTemplate = mockedAnswers => {
 
     it(`should run npm test with no configuration warnings`, () => {
       console.log('running npm test...');
-      const { stderr, all: testOutput } = execa.sync('npm test', {
-        shell: true,
-        cwd: testDirectory,
-      });
 
-      console.log(testOutput);
+      let result;
 
-      expect(stderr).not.toContain('Warning: Invalid configuration object');
+      try {
+        result = execa.sync('npm test', {
+          shell: true,
+          cwd: testDirectory,
+        });
+        console.log(result.all);
+      } catch (error) {
+        class NpmTestFailureError extends Error {
+          constructor(m) {
+            super(m);
+            this.message = `\n  ${error.message}\n\n  stdout: ${error.stdout}\n  stderr: ${error.stderr}`;
+            this.stack = '';
+          }
+        }
+
+        throw new NpmTestFailureError();
+      }
+
+      expect(result.stderr).not.toContain(
+        'Warning: Invalid configuration object',
+      );
     });
   });
 };
