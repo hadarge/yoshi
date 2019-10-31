@@ -50,8 +50,8 @@
   },
   "devDependencies": {
     "@types/jest": "24.0.15",
-    "@typescript-eslint/parser": "^1.10.2",
     "@typescript-eslint/eslint-plugin": "^1.10.2",
+    "@typescript-eslint/parser": "^1.10.2",
     "async-retry": "^1.2.3",
     "babel-eslint": "^10.0.0",
     "chai": "^4.1.2",
@@ -102,6 +102,7 @@
     "tslint": "^5.16.0",
     "tslint-plugin-wix-style-react": "^1.0.6",
     "tslint-react-hooks": "^2.1.0",
+    "type-fest": "^0.8.1",
     "typescript": "~3.5.0",
     "verdaccio": "^4.0.4",
     "wait-for-expect": "^1.2.0",

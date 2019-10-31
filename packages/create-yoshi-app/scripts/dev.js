@@ -18,7 +18,12 @@ const cache = require('./cache')(appCacheKey);
 const TemplateModel = require('../src/TemplateModel').default;
 const createApp = require('../src/createApp').default;
 const { clearConsole } = require('../src/utils');
-const symlinkModules = require('../../../scripts/utils/symlinkModules');
+const {
+  symlinkModules,
+  getYoshiModulesList,
+} = require('../../../scripts/utils/symlinkModules');
+const installExternalDependencies = require('../src/installExternalDependnecies')
+  .default;
 
 function startWatcher(workingDir, templateModel) {
   const templatePath = templateModel.getPath();
@@ -168,9 +173,13 @@ async function init() {
 
     templateModel = await createApp({
       workingDir,
-      install: true,
-      lint: true,
+      install: false,
+      lint: false,
     });
+
+    const yoshiModulesList = getYoshiModulesList();
+
+    installExternalDependencies(workingDir, yoshiModulesList);
   }
 
   // symlink yoshi's packages
