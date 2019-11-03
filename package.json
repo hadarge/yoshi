@@ -1,19 +1,20 @@
 {
   "name": "yoshi-monorepo",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wix/yoshi.git"
   },
+  "workspaces": ["packages/*"],
   "scripts": {
-    "bootstrap": "lerna bootstrap --no-ci",
     "build": "node scripts/build.js",
     "watch": "node scripts/build.js --watch",
+    "clean": "rm -rf node_modules && lerna clean",
     "bumpDocs": "npm run version --prefix './website' --",
     "createVersion": "node scripts/createVersion",
     "create-yoshi-app:dev": "npm run dev --prefix ./packages/create-yoshi-app",
     "customPublish": "lerna exec 'node ../../scripts/customPublish.js'",
     "changelog": "lerna-changelog",
-    "postinstall": "npm run bootstrap",
     "test": ":",
     "lint": "eslint . --ext js,ts --max-warnings 0",
     "test:unit": "npx jest --config='./jest.unit.config.js'",
