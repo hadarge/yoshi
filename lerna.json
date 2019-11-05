@@ -1,7 +1,8 @@
 {
   "lerna": "3.15.0",
-  "npmClient": "yarn",
-  "useWorkspaces": true,
+  "packages": [
+    "packages/*"
+  ],
   "changelog": {
     "repo": "wix/yoshi",
     "cacheDir": ".changelog",

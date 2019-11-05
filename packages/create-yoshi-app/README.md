@@ -52,4 +52,5 @@ When running the development script, you will be presented with the regular `cre
 
 When you'll finished answering the questions, this project will be automatically created in a temporary directory. Now every change you'll do in the original templates will be viewed in the temporary project.
 
+- It will not run `npm install` for you, so make sure to run it yourself.
 - You'll be able to return to the last project you've worked on. (It will ask you the next time you'll try to run `npm run dev`)
