@@ -1,5 +1,23 @@
 # Changelog
 
+## 4.18.0 (2019-11-06)
+
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1626](https://github.com/wix/yoshi/pull/1626) Fix `HtmlWebpackPlugin` to work inside monorepo ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1646](https://github.com/wix/yoshi/pull/1646) Update `wix-private.mock.js` ([@ranyitz](https://github.com/ranyitz))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#1631](https://github.com/wix/yoshi/pull/1631) Improve symlinking strategy ([@ranyitz](https://github.com/ranyitz))
+  - [#1625](https://github.com/wix/yoshi/pull/1625) Remove TS workaround for `@types/prompts` ([@amitdahan](https://github.com/amitdahan))
+
 ## 4.17.3 (2019-10-23)
 
 #### :bug: Bug Fix
