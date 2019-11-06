@@ -11,6 +11,8 @@
 
 - `create-yoshi-app`
   - [#1646](https://github.com/wix/yoshi/pull/1646) Update `wix-private.mock.js` ([@ranyitz](https://github.com/ranyitz))
+- `jest-yoshi-preset`
+  - [#1641](https://github.com/wix/yoshi/pull/1641) Page close error level ([@rokasmik](https://github.com/rokasmik))
 
 #### :house: Internal
 
