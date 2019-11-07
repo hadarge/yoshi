@@ -59,6 +59,8 @@ const babelConfig = createBabelConfig({ modules: false });
 
 const disableModuleConcat = process.env.DISABLE_MODULE_CONCATENATION === 'true';
 
+const disableSvelteDevMode = process.env.DISABLE_SVELTE_DEV_MODE === 'true';
+
 const isProduction = checkIsProduction();
 
 const inTeamCity = checkInTeamCity();
@@ -797,7 +799,7 @@ function createClientWebpackConfig({
           loader: 'svelte-loader',
           options: {
             ...svelteOptions,
-            dev: isDebug,
+            dev: isDebug && !disableSvelteDevMode,
             // https://github.com/sveltejs/svelte-loader#extracting-css
             emitCss: true,
           },
@@ -911,7 +913,7 @@ function createServerWebpackConfig({
           loader: 'svelte-loader',
           options: {
             ...svelteOptions,
-            dev: isDebug,
+            dev: isDebug && !disableSvelteDevMode,
             // Generate SSR specific code
             generate: 'ssr',
           },
