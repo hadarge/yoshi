@@ -241,9 +241,10 @@ describe('Aggregator: Start', () => {
           )
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
-          content => expect(content).to.match(/reload\\?":false/),
-        );
+        return checkServerIsServing({
+          port: 3200,
+          file: 'app.bundle.js',
+        }).then(content => expect(content).to.match(/reload\\?":false/));
       });
     });
 
@@ -256,9 +257,10 @@ describe('Aggregator: Start', () => {
           })
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
-          content => expect(content).to.match(/hmr\\?":true/),
-        );
+        return checkServerIsServing({
+          port: 3200,
+          file: 'app.bundle.js',
+        }).then(content => expect(content).to.match(/hmr\\?":true/));
       });
 
       it('should create bundle with enabled hot module replacement with multiple entry points', async () => {
@@ -298,9 +300,10 @@ describe('Aggregator: Start', () => {
           )
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
-          content => expect(content).to.match(/hmr\\?":false/),
-        );
+        return checkServerIsServing({
+          port: 3200,
+          file: 'app.bundle.js',
+        }).then(content => expect(content).to.match(/hmr\\?":false/));
       });
 
       it('should wrap react root element with react-hot-loader HOC', () => {
@@ -359,11 +362,13 @@ describe('Aggregator: Start', () => {
           })
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
-          content =>
-            expect(content).to.contain(
-              `__webpack_require__.p = "http://localhost:3200/";`,
-            ),
+        return checkServerIsServing({
+          port: 3200,
+          file: 'app.bundle.js',
+        }).then(content =>
+          expect(content).to.contain(
+            `__webpack_require__.p = "http://localhost:3200/";`,
+          ),
         );
       });
 
@@ -377,9 +382,11 @@ describe('Aggregator: Start', () => {
           })
           .spawn('start');
 
-        return checkServerIsServing({ port: 3200, file: 'app.bundle.js' }).then(
-          content =>
-            expect(content).to.contain(`__webpack_require__.p = "some.url";`),
+        return checkServerIsServing({
+          port: 3200,
+          file: 'app.bundle.js',
+        }).then(content =>
+          expect(content).to.contain(`__webpack_require__.p = "some.url";`),
         );
       });
     });

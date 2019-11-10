@@ -177,11 +177,13 @@ describe('Webpack basic configs', () => {
       it('should use local dev-server url for public path on local dev environment', () => {
         test.spawn('start');
 
-        return fetchClientBundle({ port: 3200, file: 'app.bundle.js' }).then(
-          bundle =>
-            expect(bundle).to.contain(
-              '__webpack_require__.p = "http://localhost:3200/"',
-            ),
+        return fetchClientBundle({
+          port: 3200,
+          file: 'app.bundle.js',
+        }).then(bundle =>
+          expect(bundle).to.contain(
+            '__webpack_require__.p = "http://localhost:3200/"',
+          ),
         );
       });
 
@@ -324,9 +326,10 @@ describe('Webpack basic configs', () => {
     it('should disable scope hoisting when running start (development bundle)', () => {
       child = test.spawn('start');
 
-      return fetchClientBundle({ port: 3200, file: 'app.bundle.js' }).then(
-        bundle => expect(bundle).to.not.contain('CONCATENATED MODULE'),
-      );
+      return fetchClientBundle({
+        port: 3200,
+        file: 'app.bundle.js',
+      }).then(bundle => expect(bundle).to.not.contain('CONCATENATED MODULE'));
     });
   });
 
