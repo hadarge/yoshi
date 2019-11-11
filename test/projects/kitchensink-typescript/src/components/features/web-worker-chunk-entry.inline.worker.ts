@@ -1,0 +1,1 @@
+(postMessage as any)('halo');

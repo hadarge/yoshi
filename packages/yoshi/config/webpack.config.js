@@ -412,6 +412,18 @@ function createCommonWebpackConfig({
             ]
           : []),
 
+        {
+          test: /\.inline\.worker\.(js|tsx?)$/,
+          use: [
+            {
+              loader: 'worker-loader',
+              options: {
+                inline: true,
+              },
+            },
+          ],
+        },
+
         // Rules for TS / TSX
         {
           test: /\.(ts|tsx)$/,
@@ -456,10 +468,12 @@ function createCommonWebpackConfig({
           ],
         },
 
-        // Rules for JS
+        // Optimize JS processing
+        // Worker stuff excluded due to https://github.com/webpack-contrib/worker-loader/issues/177
         {
           test: reScript,
           include: unprocessedModules,
+          exclude: /\.inline\.worker\.js/,
           use: [
             {
               loader: 'thread-loader',
@@ -467,6 +481,14 @@ function createCommonWebpackConfig({
                 workers: require('os').cpus().length - 1,
               },
             },
+          ],
+        },
+
+        // Rules for JS
+        {
+          test: reScript,
+          include: unprocessedModules,
+          use: [
             {
               loader: 'babel-loader',
               options: {

@@ -107,3 +107,8 @@ declare module '*.graphql' {
   const value: DocumentNode;
   export = value;
 }
+
+declare module '*.inline.worker.ts' {
+  const value: any;
+  export = value;
+}

@@ -324,4 +324,21 @@ describe('webpack', () => {
       expect(result).toBe('This is an abstract.');
     });
   });
+
+  describe('web worker', () => {
+    it('web worker inclusion', async () => {
+      await initTest('web-worker-chunk-container');
+
+      await page.waitFor(
+        () => !!document.querySelector('#worker-text').textContent,
+      );
+
+      const result = await page.$eval(
+        '#worker-text',
+        ({ textContent }) => textContent,
+      );
+
+      expect(result).toBe('event from web worker');
+    });
+  });
 });
