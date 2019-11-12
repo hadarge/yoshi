@@ -1,5 +1,16 @@
 # Changelog
 
+#### :rocket: New Feature
+
+- `yoshi`
+  - [#1657](https://github.com/wix/yoshi/pull/1657) Support browser env var ([@roymiloh](https://github.com/roymiloh))
+  - [#1650](https://github.com/wix/yoshi/pull/1650) Support importing web-workers ([@roymiloh](https://github.com/roymiloh))
+
+#### :house: Internal
+
+- `yoshi-server-react`, `yoshi`
+  - [#1654](https://github.com/wix/yoshi/pull/1654) Prettier version update ([@deanshub](https://github.com/deanshub))
+
 ## 4.18.0 (2019-11-06)
 
 #### :rocket: New Feature
