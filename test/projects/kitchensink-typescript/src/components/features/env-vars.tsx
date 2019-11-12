@@ -4,5 +4,6 @@ export default () => (
   <div id="env-vars">
     <p id="node-env">{process.env.NODE_ENV}</p>
     <p id="ci-app-version">{window.__CI_APP_VERSION__}</p>
+    <p id="browser">{JSON.stringify(process.env.browser)}</p>
   </div>
 );

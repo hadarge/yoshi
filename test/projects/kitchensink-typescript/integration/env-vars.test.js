@@ -1,4 +1,5 @@
-const { initTest } = require('../../../utils');
+const axios = require('axios');
+const { initTest, getUrl } = require('../../../utils');
 
 describe('env vars', () => {
   it('supports NODE_ENV', async () => {
@@ -29,5 +30,22 @@ describe('env vars', () => {
     } else {
       expect(result).toEqual('1.0.0-SNAPSHOT');
     }
+  });
+
+  it('supports browser env var on browser side', async () => {
+    await initTest('env-vars');
+
+    const result = await page.$eval(
+      '#env-vars #browser',
+      elm => elm.textContent,
+    );
+
+    expect(result).toEqual('true');
+  });
+
+  it('supports browser env var on server side', async () => {
+    const { data } = await axios.get(getUrl('env-var-browser'));
+
+    expect(data).toEqual(false);
   });
 });

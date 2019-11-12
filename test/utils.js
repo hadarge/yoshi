@@ -80,7 +80,11 @@ async function waitForPort(port, { timeout = 20000 } = {}) {
 }
 
 const initTest = async feature => {
-  await page.goto(`http://localhost:${process.env.PORT}/${feature}`);
+  await page.goto(getUrl(feature));
+};
+
+const getUrl = path => {
+  return `http://localhost:${process.env.PORT}/${path}`;
 };
 
 function isPortTaken(port) {
@@ -112,6 +116,7 @@ module.exports = {
   matchJS,
   matchCSS,
   initTest,
+  getUrl,
   waitForPort,
   waitForPortToFree,
 };

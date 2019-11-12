@@ -118,6 +118,12 @@ function createDefinePlugin(isDebug) {
   });
 }
 
+function browserDefinePlugin({ isServer }) {
+  return new webpack.DefinePlugin({
+    'process.env.browser': JSON.stringify(!isServer),
+  });
+}
+
 // NOTE ABOUT PUBLIC PATH USING UNPKG SERVICE
 // Projects that uses `wnpm-ci` have their package.json version field on a fixed version which is not their real version
 // These projects determine their version on the "release" step, which means they will have a wrong public path
@@ -692,6 +698,8 @@ function createClientWebpackConfig({
 
       createDefinePlugin(isDebug),
 
+      browserDefinePlugin({ isServer: false }),
+
       // https://github.com/jantimon/html-webpack-plugin
       ...(app.experimentalBuildHtml && exists(app.TEMPLATES_DIR)
         ? [
@@ -1036,6 +1044,8 @@ function createServerWebpackConfig({
         raw: true,
         entryOnly: false,
       }),
+
+      browserDefinePlugin({ isServer: true }),
     ],
 
     // https://webpack.js.org/configuration/optimization
@@ -1108,7 +1118,11 @@ function createWebWorkerWebpackConfig({
       globalObject: 'self',
     },
 
-    plugins: [...config.plugins, createDefinePlugin(isDebug)],
+    plugins: [
+      ...config.plugins,
+      createDefinePlugin(isDebug),
+      browserDefinePlugin({ isServer: false }),
+    ],
 
     externals: [app.webWorkerExternals].filter(Boolean),
   };

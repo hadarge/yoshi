@@ -16,6 +16,10 @@ app.get('/web-worker.js', async (req, res) => {
   res.sendFile(path.join(__dirname, '../src/web-worker-wrapper.js'));
 });
 
+app.get('/env-var-browser', async (req, res) => {
+  res.send(process.env.browser);
+});
+
 app.get('*', async (req, res) => {
   res.send(
     await ejs.renderFile('./src/index.ejs', {
