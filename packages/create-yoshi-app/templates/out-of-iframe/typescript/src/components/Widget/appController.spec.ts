@@ -24,7 +24,7 @@ describe('createAppController', () => {
         staticsBaseUrl: 'http://some-static-url.com',
       },
     };
-    const locale = 'locale';
+    const language = 'en-US';
     const experiments = { someExperiment: 'true' };
 
     const controller = await createAppController({
@@ -32,7 +32,12 @@ describe('createAppController', () => {
       setProps: setPropsSpy,
       wixCodeApi: {
         window: {
-          locale,
+          multilingual: {
+            isEnabled: false,
+          },
+        },
+        site: {
+          language,
         },
       },
     } as any);
@@ -42,7 +47,7 @@ describe('createAppController', () => {
     expect(setPropsSpy).toBeCalledWith({
       name: 'World',
       cssBaseUrl: appParams.baseUrls.staticsBaseUrl,
-      locale,
+      language,
       experiments,
     });
   });

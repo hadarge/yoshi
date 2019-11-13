@@ -6,8 +6,13 @@ import {
 } from '@wix/native-components-infra/dist/src/types/types';
 import { EXPERIMENTS_SCOPE } from '../../config/constants';
 
-function getLocale({ wixCodeApi }): string {
-  return wixCodeApi.window.locale || 'en';
+function getSiteLanguage({ wixCodeApi }: IWidgetControllerConfig): string {
+  if (wixCodeApi.window.multilingual.isEnabled) {
+    return wixCodeApi.window.multilingual.currentLanguage;
+  }
+
+  // NOTE: language can be null (see WEED-18001)
+  return wixCodeApi.site.language || 'en';
 }
 
 async function getExperimentsByScope(scope: string) {
@@ -22,7 +27,7 @@ export async function createAppController(
   controllerConfig: IWidgetControllerConfig,
 ): Promise<IWidgetController> {
   const { appParams, setProps } = controllerConfig;
-  const locale = getLocale(controllerConfig);
+  const language = getSiteLanguage(controllerConfig);
   const experiments = await getExperimentsByScope(EXPERIMENTS_SCOPE);
 
   return {
@@ -30,7 +35,7 @@ export async function createAppController(
       setProps({
         name: 'World',
         cssBaseUrl: appParams.baseUrls.staticsBaseUrl,
-        locale,
+        language,
         experiments,
       });
     },

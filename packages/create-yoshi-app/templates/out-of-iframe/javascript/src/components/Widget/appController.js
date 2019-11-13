@@ -1,8 +1,13 @@
 import { EXPERIMENTS_SCOPE } from '../../config/constants';
 import Experiments from '@wix/wix-experiments';
 
-function getLocale({ wixCodeApi }) {
-  return wixCodeApi.window.locale || 'en';
+function getSiteLanguage({ wixCodeApi }) {
+  if (wixCodeApi.window.multilingual.isEnabled) {
+    return wixCodeApi.window.multilingual.currentLanguage;
+  }
+
+  // NOTE: language can be null (see WEED-18001)
+  return wixCodeApi.site.language || 'en';
 }
 
 function isMobile({ wixCodeApi }) {
@@ -19,7 +24,7 @@ async function getExperimentsByScope(scope) {
 
 export async function createAppController(controllerConfig) {
   const { appParams, setProps } = controllerConfig;
-  const locale = getLocale(controllerConfig);
+  const language = getSiteLanguage(controllerConfig);
   const mobile = isMobile(controllerConfig);
   const experiments = await getExperimentsByScope(EXPERIMENTS_SCOPE);
 
@@ -28,7 +33,7 @@ export async function createAppController(controllerConfig) {
       setProps({
         name: 'World',
         cssBaseUrl: appParams.baseUrls.staticsBaseUrl,
-        locale,
+        language,
         mobile,
         experiments,
       });

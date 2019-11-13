@@ -19,7 +19,7 @@ describe('createAppController', () => {
         staticsBaseUrl: 'http://some-static-url.com',
       },
     };
-    const locale = 'locale';
+    const language = 'en-US';
     const formFactor = 'Desktop';
     const experiments = { someExperiment: 'true' };
     const mobile = formFactor === 'Mobile';
@@ -29,8 +29,13 @@ describe('createAppController', () => {
       setProps: setPropsSpy,
       wixCodeApi: {
         window: {
-          locale,
           formFactor,
+          multilingual: {
+            isEnabled: false,
+          },
+        },
+        site: {
+          language,
         },
       },
     });
@@ -40,7 +45,7 @@ describe('createAppController', () => {
     expect(setPropsSpy).toBeCalledWith({
       name: 'World',
       cssBaseUrl: appParams.baseUrls.staticsBaseUrl,
-      locale,
+      language,
       experiments,
       mobile,
     });

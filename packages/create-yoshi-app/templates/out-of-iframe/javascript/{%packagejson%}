@@ -32,7 +32,7 @@
     "yoshi-style-dependencies": "^4.6.0"
   },
   "dependencies": {
-    "@wix/native-components-infra": "^1.0.0",
+    "@wix/native-components-infra": "^1.0.603",
     "@wix/wix-axios-config": "latest",
     "@wix/wix-base-ui": "^3.70.0",
     "@wix/wix-experiments": "^2.0.5",

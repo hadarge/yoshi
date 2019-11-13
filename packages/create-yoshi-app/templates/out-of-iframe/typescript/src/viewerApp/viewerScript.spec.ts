@@ -14,7 +14,12 @@ describe('createControllers', () => {
       },
       wixCodeApi: {
         window: {
-          locale: 'en',
+          multilingual: {
+            isEnabled: false,
+          },
+        },
+        site: {
+          language: 'en',
         },
       },
     };

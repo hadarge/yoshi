@@ -13,17 +13,17 @@ import { ExperimentsBag } from '@wix/wix-experiments';
 
 interface IWidgetRootProps {
   name: string;
-  locale: string;
+  language: string;
   experiments: ExperimentsBag;
   host?: any;
 }
 
 export default class WidgetRoot extends React.Component<IWidgetRootProps, {}> {
   render() {
-    const { name, locale, experiments } = this.props;
+    const { name, language, experiments } = this.props;
 
     return (
-      <I18nextProvider i18n={i18n(locale)}>
+      <I18nextProvider i18n={i18n(language)}>
         <ExperimentsProvider options={{ experiments }}>
           <Widget name={name} />
         </ExperimentsProvider>

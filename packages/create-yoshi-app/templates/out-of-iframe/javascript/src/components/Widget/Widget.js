@@ -11,10 +11,10 @@ import styles from './Widget.st.css';
 
 export default class WidgetRoot extends React.Component {
   render() {
-    const { name, locale, experiments, mobile } = this.props;
+    const { name, language, experiments, mobile } = this.props;
 
     return (
-      <I18nextProvider i18n={i18n(locale)}>
+      <I18nextProvider i18n={i18n(language)}>
         <ExperimentsProvider options={{ experiments }}>
           <TPAComponentsProvider value={{ mobile }}>
             <Widget name={name} />
