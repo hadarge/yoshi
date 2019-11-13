@@ -15,9 +15,11 @@
   ],
   "author": "Ronen Amiel",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "@types/fs-extra": "8.0.1",
-    "@types/webpack": "4.39.8",
+    "@types/webpack": "4.39.8"
+  },
+  "dependencies": {
     "arg": "4.1.1",
     "bfj": "6.1.2",
     "chalk": "2.4.2",
