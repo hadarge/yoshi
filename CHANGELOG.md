@@ -1,5 +1,7 @@
 # Changelog
 
+## 4.19.0 (2019-12-06)
+
 #### :rocket: New Feature
 
 - `yoshi`
