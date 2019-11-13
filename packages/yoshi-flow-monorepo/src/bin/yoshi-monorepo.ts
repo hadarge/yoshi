@@ -99,5 +99,8 @@ Promise.resolve().then(async () => {
 
   const runCommand = (await commands[command]()).default;
 
-  runCommand(forwardedArgs, rootConfig, graphResult);
+  // legacy flow commands doen't need to be run
+  if (typeof runCommand === 'function') {
+    await runCommand(forwardedArgs, rootConfig, graphResult);
+  }
 });
