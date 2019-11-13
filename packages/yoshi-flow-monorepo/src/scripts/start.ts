@@ -28,18 +28,7 @@ const start: cliCommand = async function(argv, rootConfig, { apps }) {
     { argv },
   );
 
-  const {
-    '--help': help,
-    '--server': serverEntry = 'index.js',
-    '--url': url,
-    // '--production': shouldRunAsProduction,
-    '--https': shouldUseHttps = rootConfig.servers.cdn.ssl,
-    _: extraArgs,
-  } = args;
-
-  const [appName] = extraArgs;
-
-  if (help) {
+  if (args['--help']) {
     console.log(
       `
       Description
@@ -61,6 +50,8 @@ const start: cliCommand = async function(argv, rootConfig, { apps }) {
 
     process.exit(0);
   }
+
+  const [appName] = args._;
 
   if (!appName) {
     console.log(
@@ -86,6 +77,13 @@ const start: cliCommand = async function(argv, rootConfig, { apps }) {
     return process.exit(1);
   }
 
+  const {
+    '--server': serverEntry = 'index.js',
+    '--url': url,
+    // '--production': shouldRunAsProduction,
+    '--https': shouldUseHttps = pkg.config.servers.cdn.ssl,
+  } = args;
+
   const clientConfig = createClientWebpackConfig(rootConfig, pkg, {
     isDev: true,
     isHot: pkg.config.hmr as boolean,
@@ -98,11 +96,11 @@ const start: cliCommand = async function(argv, rootConfig, { apps }) {
 
   const devEnvironment = await DevEnvironment.create({
     webpackConfigs: [clientConfig, serverConfig],
-    publicPath: rootConfig.servers.cdn.url,
+    publicPath: pkg.config.servers.cdn.url,
     https: shouldUseHttps,
-    port: rootConfig.servers.cdn.port,
+    port: pkg.config.servers.cdn.port,
     serverFilePath: serverEntry,
-    enableClientHotUpdates: Boolean(rootConfig.hmr),
+    enableClientHotUpdates: Boolean(pkg.config.hmr),
   });
 
   devEnvironment.store.subscribe(state => {
