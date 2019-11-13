@@ -1,6 +1,6 @@
 {
   "name": "yoshi-flow-app",
-  "version": "4.20.0",
+  "version": "4.20.2",
   "bin": {
     "yoshi-app": "./build/bin/yoshi-app.js"
   },
