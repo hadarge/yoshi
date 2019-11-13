@@ -1,6 +1,6 @@
 {
   "name": "yoshi-flow-monorepo",
-  "version": "4.20.2",
+  "version": "4.20.3",
   "bin": {
     "yoshi-monorepo": "./build/bin/yoshi-monorepo.js"
   },
@@ -29,9 +29,9 @@
     "import-cwd": "^3.0.0",
     "lodash": "^4.17.15",
     "wnpm-ci": "8.0.87",
-    "yoshi-common": "4.20.0",
+    "yoshi-common": "4.20.3",
     "yoshi-config": "4.20.0",
-    "yoshi-flow-legacy": "4.20.0",
+    "yoshi-flow-legacy": "4.20.3",
     "yoshi-helpers": "4.20.0"
   }
 }
