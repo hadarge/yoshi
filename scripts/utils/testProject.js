@@ -22,6 +22,7 @@ module.exports = async ({
 
   const options = {
     stdio: 'inherit',
+    shell: true,
     env: {
       ...process.env,
       TEST_DIRECTORY: testDirectory,
@@ -55,7 +56,7 @@ module.exports = async ({
       const serveResult = await scripts.serve();
 
       try {
-        await execa.shell(
+        await execa(
           `npx jest --config='jest.production.config.js' --no-cache --runInBand`,
           options,
         );
@@ -89,7 +90,7 @@ module.exports = async ({
         console.log(chalk.blue(`> Running development integration tests`));
         console.log();
 
-        await execa.shell(
+        await execa(
           `npx jest --config='jest.development.config.js' --no-cache --runInBand`,
           options,
         );
@@ -113,7 +114,7 @@ module.exports = async ({
         console.log(chalk.blue(`> Running additional integration tests`));
         console.log();
 
-        await execa.shell(
+        await execa(
           `npx jest --config='jest.plain.config.js' --no-cache --runInBand`,
           options,
         );

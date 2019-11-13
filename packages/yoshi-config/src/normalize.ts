@@ -58,6 +58,10 @@ export default (initialConfig: InitialConfig, pkgJson: PackageJson): Config => {
     externals: get(c => c.externals, []),
     transpileTests: get(c => c.transpileTests, true),
     externalUnprocessedModules: get(c => c.externalUnprocessedModules, []),
+    externalizeRelativeLodash: get(
+      c => c.features.externalizeRelativeLodash,
+      false,
+    ),
     petriSpecsConfig: get(c => c.petriSpecs, {}),
     performanceBudget: get(c => c.performance, false),
     resolveAlias: get(c => c.resolveAlias, {}),

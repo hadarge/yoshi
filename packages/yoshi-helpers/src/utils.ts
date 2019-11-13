@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import psTree from 'ps-tree';
 import detect from 'detect-port';
 import config from 'yoshi-config';
-import rootApp from 'yoshi-config/root-app';
+import { POM_FILE } from 'yoshi-config/paths';
 import xmldoc from 'xmldoc';
 // eslint-disable-next-line import/no-unresolved
 import { Stats } from 'webpack';
@@ -68,7 +68,7 @@ export const suffix = (ending: string) => (str: string) => {
 };
 
 export const reportWebpackStats = (
-  buildType: 'development' | 'production',
+  buildType: 'debug' | 'production',
   stats: Stats,
 ) => {
   console.log(chalk.magenta(`Webpack summary for ${buildType} build:`));
@@ -218,9 +218,9 @@ export const tryRequire = (name: string) => {
 };
 
 // Gets the artifact id of the project at the current working dir
-export const getProjectArtifactId = () => {
-  if (fs.existsSync(rootApp.POM_FILE)) {
-    const content = fs.readFileSync(rootApp.POM_FILE, 'utf-8');
+export const getProjectArtifactId = (cwd = process.cwd()) => {
+  if (fs.existsSync(path.join(cwd, POM_FILE))) {
+    const content = fs.readFileSync(path.join(cwd, POM_FILE), 'utf-8');
     const artifactId = new xmldoc.XmlDocument(content).valueWithPath(
       'artifactId',
     );

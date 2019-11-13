@@ -100,6 +100,7 @@ export type Config = {
   transpileTests: boolean;
   jestConfig: unknown;
   externalUnprocessedModules: Array<string>;
+  externalizeRelativeLodash: boolean;
   petriSpecsConfig: PetriOptions;
   performanceBudget: Options.Performance | false;
   resolveAlias: { [key: string]: string };

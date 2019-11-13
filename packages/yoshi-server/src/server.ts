@@ -1,3 +1,4 @@
+import path from 'path';
 import { parse as parseUrl } from 'url';
 import { RequestHandler, Request, Response } from 'express';
 import Youch from 'youch';
@@ -5,7 +6,7 @@ import globby from 'globby';
 import SockJS from 'sockjs-client';
 import { send } from 'micro';
 import importFresh from 'import-fresh';
-import rootApp from 'yoshi-config/root-app';
+import { ROUTES_BUILD_DIR } from 'yoshi-config/paths';
 import { RouteFunction } from './types';
 import { relativeFilePath, pathMatch } from './utils';
 
@@ -70,17 +71,16 @@ export default class Server {
   };
 
   private createRoutes(): Array<Route> {
+    const routesBuildDir = path.resolve(ROUTES_BUILD_DIR);
+
     const serverChunks = globby.sync('**/*.js', {
-      cwd: rootApp.ROUTES_BUILD_DIR,
+      cwd: routesBuildDir,
       absolute: true,
     });
 
     return serverChunks.map(absolutePath => {
       const chunk = importFresh(absolutePath) as RouteFunction<any>;
-      const relativePath = `/${relativeFilePath(
-        rootApp.ROUTES_BUILD_DIR,
-        absolutePath,
-      )}`;
+      const relativePath = `/${relativeFilePath(routesBuildDir, absolutePath)}`;
       const routePath = relativePath.replace(/\[(\w+)\]/g, ':$1');
 
       return {

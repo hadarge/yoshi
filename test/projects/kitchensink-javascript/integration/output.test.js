@@ -35,6 +35,7 @@ describe('output', () => {
     const result = await global.scripts.build();
 
     expect(result.stdout).toMatch('Compiled successfully.');
+    expect(result.stdout).toMatch('Interested in reducing your bundle size?');
   });
 
   it('fails with babel syntax errors', async () => {

@@ -1,9 +1,8 @@
-const union = require('lodash/union');
 const StylableWebpackPlugin = require('@stylable/webpack-plugin');
 const {
-  createCommonWebpackConfig,
+  createClientWebpackConfig,
   getStyleLoaders,
-} = require('./webpack.config');
+} = require('yoshi-flow-legacy/config/webpack.config.js');
 
 const styleLoaders = getStyleLoaders({
   embedCss: true,
@@ -14,15 +13,18 @@ const styleLoaders = getStyleLoaders({
 });
 
 module.exports = config => {
-  const webpackCommonConfig = createCommonWebpackConfig({ isDebug: true });
+  const webpackClientConfig = createClientWebpackConfig({
+    isDebug: true,
+    includeStyleLoaders: false,
+  });
 
-  config.resolve.extensions = union(
-    config.resolve.extensions,
-    webpackCommonConfig.resolve.extensions,
-  );
+  config.resolve.extensions = [
+    ...config.resolve.extensions,
+    ...webpackClientConfig.resolve.extensions,
+  ];
 
   config.module.rules = [
-    ...webpackCommonConfig.module.rules,
+    ...webpackClientConfig.module.rules,
 
     // Rules for Style Sheets
     ...styleLoaders,
@@ -30,7 +32,7 @@ module.exports = config => {
 
   config.plugins = [...(config.plugins || []), new StylableWebpackPlugin()];
 
-  config.node = { ...webpackCommonConfig.node, ...config.node };
+  config.node = { ...webpackClientConfig.node, ...config.node };
 
   return config;
 };

@@ -18,7 +18,6 @@ const { getProcessOnPort } = require('yoshi-helpers/utils');
 const { setupRequireHooks } = require('yoshi-helpers/require-hooks');
 const cdnProxy = require('./cdnProxy');
 const loadJestYoshiConfig = require('yoshi-config/jest');
-const rootApp = require('yoshi-config/root-app');
 
 // the user's config is loaded outside of a jest runtime and should be transpiled
 // with babel/typescript, this may be run separately for every worker
@@ -43,7 +42,7 @@ module.exports = async () => {
 
     const forwardProxyPort = process.env.FORWARD_PROXY_PORT || 3333;
 
-    if (shouldDeployToCDN(rootApp)) {
+    if (shouldDeployToCDN()) {
       await cdnProxy.start(forwardProxyPort);
     }
 
@@ -55,7 +54,7 @@ module.exports = async () => {
       args: [
         '--no-sandbox',
         ...(servers.cdn.ssl ? ['--ignore-certificate-errors'] : []),
-        ...(shouldDeployToCDN(rootApp)
+        ...(shouldDeployToCDN()
           ? [
               '--no-sandbox',
               '--disable-setuid-sandbox',

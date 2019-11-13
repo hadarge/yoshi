@@ -6,7 +6,10 @@ const spawn = require('cross-spawn');
 const stripAnsi = require('strip-ansi');
 const tempy = require('tempy');
 
-const yoshiCliBin = path.resolve(__dirname, '../packages/yoshi/bin/yoshi.js');
+const yoshiCliBin = path.resolve(
+  __dirname,
+  '../packages/yoshi/bin/yoshi-cli.js',
+);
 const { insideTeamCity } = require('./env-variables');
 
 class Test {
@@ -26,11 +29,11 @@ class Test {
     const tmpNodeModules = path.join(this.tmp, '../node_modules');
     const yoshiNodeModulesPath = path.resolve(
       __dirname,
-      '../packages/yoshi/node_modules',
+      '../packages/yoshi-flow-legacy/node_modules',
     );
     // remove current tmp/node_modules directory
     rimraf.sync(tmpNodeModules);
-    // creates a symlink from tmp/node_modules to yoshi/node_modules
+    // creates a symlink from tmp/node_modules to yoshi-flow-legacy/node_modules
     fs.symlinkSync(yoshiNodeModulesPath, tmpNodeModules);
   }
 

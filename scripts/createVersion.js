@@ -39,8 +39,9 @@ Promise.resolve()
   })
   // Create new tag/bump versions in `package.json` files
   .then(() => {
-    execa.shellSync(`${lernaPath} version --exact --no-push`, {
+    execa.sync(`${lernaPath} version --exact --no-push`, {
       stdio: 'inherit',
+      shell: true,
     });
   })
   // Update docs according to new version
@@ -64,13 +65,14 @@ Promise.resolve()
 
     const createVersionedDocsCommand = `npm run version "${majorVersion}"`;
 
-    execa.shellSync(createVersionedDocsCommand, {
+    execa.sync(createVersionedDocsCommand, {
       cwd: websiteDirectory,
       stdio: 'inherit',
+      shell: true,
     });
 
     const numberOfModifiedFiles = execa
-      .shellSync(`git ls-files -m | wc -l`)
+      .sync(`git ls-files -m | wc -l`, { shell: true })
       .stdout.trim();
 
     if (numberOfModifiedFiles === '0') {
@@ -80,8 +82,9 @@ Promise.resolve()
       );
       console.log();
     } else {
-      execa.shellSync(
+      execa.sync(
         `git commit -a -m "documentation for version ${majorVersion}"`,
+        { shell: true },
       );
     }
   })

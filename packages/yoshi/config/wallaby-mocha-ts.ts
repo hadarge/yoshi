@@ -1,6 +1,6 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = function(wallaby) {
+module.exports = function(wallaby: any) {
   process.env.NODE_PATH += `:${path.join(
     wallaby.localProjectDir,
     'node_modules',
@@ -29,7 +29,7 @@ module.exports = function(wallaby) {
       mocha.timeout(30000);
       process.env.IN_WALLABY = 'true';
       // eslint-disable-next-line
-      require('yoshi/config/test-setup');
+      require('yoshi-flow-legacy/config/test-setup');
     },
     env: {
       type: 'node',

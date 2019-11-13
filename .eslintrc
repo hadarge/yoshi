@@ -3,7 +3,8 @@
   "rules": {
     "import/no-extraneous-dependencies": "error",
     "array-callback-return": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "no-shadow": "off"
   },
   "settings": {
     "react": {
@@ -28,7 +29,8 @@
         "import/order": "error",
         "no-dupe-class-members": "off",
         "no-unused-vars": "off",
-        "no-useless-constructor": "off"
+        "no-useless-constructor": "off",
+        "default-case": "off"
       }
     },
     {

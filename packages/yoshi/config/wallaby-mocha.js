@@ -20,7 +20,7 @@ module.exports = function(wallaby) {
     const mocha = wallaby.testFramework;
     mocha.timeout(30000);
     process.env.IN_WALLABY = true;
-    require('yoshi/config/test-setup'); // eslint-disable-line import/no-unresolved
+    require('yoshi-flow-legacy/config/test-setup'); // eslint-disable-line import/no-unresolved
   };
 
   return wallabyCommon;
