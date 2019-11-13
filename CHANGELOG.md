@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.20.2 (2019-11-13)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - [#1663](https://github.com/wix/yoshi/pull/1663) Correct the path of yoshi's `jest.config.js` in `wallaby-jest` file ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.20.1 (2019-11-13)
 
 #### :bug: Bug Fix
