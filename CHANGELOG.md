@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.20.4 (2019-11-13)
+
+#### :bug: Bug Fix
+
+- `yoshi-common`, `yoshi-flow-monorepo`
+  - [#1666](https://github.com/wix/yoshi/pull/1666) Whitelist external monorepo packages in node bundle ([@ronami](https://github.com/ronami))
+- `yoshi-flow-app`, `yoshi-flow-monorepo`
+  - [#1667](https://github.com/wix/yoshi/pull/1667) Fix `cssModules` config not having any effect ([@ronami](https://github.com/ronami))
+- `yoshi-flow-monorepo`
+
+  - [#1665](https://github.com/wix/yoshi/pull/1665) Take Dev Server/HMR configuration values per app over rootConfig ([@ronami](https://github.com/ronami))
+
 ## 4.20.3 (2019-11-13)
 
 #### :bug: Bug Fix
