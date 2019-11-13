@@ -51,10 +51,7 @@ export default async function writeManifest(
 
   // Write file to disc
   await fs.writeJSON(
-    path.resolve(
-      path.join(cwd, STATICS_DIR),
-      `manifest.${artifactVersion}.json`,
-    ),
+    path.join(cwd, STATICS_DIR, `manifest.${artifactVersion}.json`),
     assetsJson,
     { spaces: 2 },
   );

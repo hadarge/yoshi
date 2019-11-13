@@ -133,7 +133,11 @@ const build: cliCommand = async function(argv, rootConfig, { apps, libs }) {
         const [, clientOptimizedConfig] = configs;
         const [, clientOptimizedStats] = stats;
 
-        await writeManifest(clientOptimizedConfig, clientOptimizedStats);
+        await writeManifest(
+          clientOptimizedConfig,
+          clientOptimizedStats,
+          app.location,
+        );
       }),
     );
   }
