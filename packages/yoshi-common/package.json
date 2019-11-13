@@ -8,9 +8,9 @@
   "author": "Ronen Amiel",
   "license": "ISC",
   "dependencies": {
-    "@stylable/core": "1.0.7",
-    "@stylable/node": "1.0.8",
-    "@stylable/webpack-plugin": "1.1.5",
+    "@stylable/core": "1.1.0",
+    "@stylable/node": "1.1.0",
+    "@stylable/webpack-plugin": "1.2.0",
     "@svgr/webpack": "4.3.3",
     "@types/case-sensitive-paths-webpack-plugin": "2.1.3",
     "@types/copy-webpack-plugin": "5.0.0",
