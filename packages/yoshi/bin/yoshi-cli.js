@@ -2,11 +2,10 @@
 
 const config = require('yoshi-config');
 
-const passedArgv = process.argv.slice(2);
-const command = passedArgv[0];
-
-if (['build', 'start'].includes(command) && config.projectType === 'app') {
+if (config.projectType === 'app') {
   require('yoshi-flow-app/build/bin/yoshi-app');
+} else if (config.experimentalMonorepo) {
+  require('yoshi-flow-monorepo/build/bin/yoshi-monorepo');
 } else {
   require('yoshi-flow-legacy/bin/yoshi-legacy');
 }

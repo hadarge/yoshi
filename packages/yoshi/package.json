@@ -26,6 +26,7 @@
     "@stylable/webpack-plugin": "1.1.5",
     "yoshi-config": "4.20.0",
     "yoshi-flow-app": "4.20.0",
-    "yoshi-flow-legacy": "4.20.0"
+    "yoshi-flow-legacy": "4.20.0",
+    "yoshi-flow-monorepo": "4.20.0"
   }
 }
