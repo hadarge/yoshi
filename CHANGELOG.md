@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.20.1 (2019-11-13)
+
+#### :bug: Bug Fix
+
+- `yoshi`
+  - Add support for monorepo flow
+
 ## 4.20.0 (2019-11-13)
 
 #### :bug: Bug Fix
