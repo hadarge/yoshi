@@ -29,6 +29,7 @@ const createDefaultOptions = (rootConfig: Config, pkg: PackageGraphNode) => {
     typeCheckTypeScript: false, // useTypeScript,
     useAngular: pkg.config.isAngularProject,
     devServerUrl: pkg.config.servers.cdn.url,
+    cssModules: pkg.config.cssModules,
     separateCss,
   };
 };

@@ -58,6 +58,7 @@ export function createClientWebpackConfig(
     isAnalyze,
     forceEmitSourceMaps,
     exportAsLibraryName: config.exports,
+    cssModules: config.cssModules,
     ...defaultOptions,
   });
 
