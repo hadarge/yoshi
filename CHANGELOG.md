@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.20.5 (2019-11-13)
+
+#### :bug: Bug Fix
+
+- `yoshi-common`, `yoshi-flow-monorepo`
+  - [#1669](https://github.com/wix/yoshi/pull/1669) Write manifest file to correct app directory in monorepos ([@ronami](https://github.com/ronami))
+- `yoshi-common`, `yoshi-flow-app`, `yoshi-flow-monorepo`, `yoshi-server-tools`
+  - [#1668](https://github.com/wix/yoshi/pull/1668) Move types to `devDependencies` ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.20.4 (2019-11-13)
 
 #### :bug: Bug Fix
