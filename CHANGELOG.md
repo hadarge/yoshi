@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.20.3 (2019-11-13)
+
+#### :bug: Bug Fix
+
+- `yoshi-common`, `yoshi-flow-legacy`, `yoshi`
+  - [#1664](https://github.com/wix/yoshi/pull/1664) Use latest `stylable@1` ([@AviVahl](https://github.com/AviVahl))
+
 ## 4.20.2 (2019-11-13)
 
 #### :bug: Bug Fix
