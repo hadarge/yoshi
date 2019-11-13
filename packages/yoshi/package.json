@@ -1,6 +1,6 @@
 {
   "name": "yoshi",
-  "version": "4.19.0",
+  "version": "4.20.0",
   "bin": {
     "yoshi": "./bin/yoshi-cli.js"
   },
@@ -24,8 +24,8 @@
   "dependencies": {
     "@babel/core": "7.6.4",
     "@stylable/webpack-plugin": "1.1.5",
-    "yoshi-config": "4.18.0",
-    "yoshi-flow-app": "4.18.0",
-    "yoshi-flow-legacy": "4.18.0"
+    "yoshi-config": "4.20.0",
+    "yoshi-flow-app": "4.20.0",
+    "yoshi-flow-legacy": "4.20.0"
   }
 }
