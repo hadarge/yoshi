@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.20.0 (2019-11-13)
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#1544](https://github.com/wix/yoshi/pull/1544) Update i18n for OOI templates ([@bodia-uz](https://github.com/bodia-uz))
+
+#### :house: Internal
+
+- `create-yoshi-app`, `jest-yoshi-preset`, `yoshi-common`, `yoshi-config`, `yoshi-flow-app`, `yoshi-flow-legacy`, `yoshi-flow-monorepo`, `yoshi-helpers`, `yoshi-server-tools`, `yoshi-server`, `yoshi`
+  - [#1647](https://github.com/wix/yoshi/pull/1647) Prepare code-base for multiple flows and migrate most of it to TypeScript ([@ronami](https://github.com/ronami))
+
 ## 4.19.0 (2019-12-06)
 
 #### :rocket: New Feature
