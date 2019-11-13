@@ -8,7 +8,7 @@ import {
   createServerWebpackConfig,
 } from '../webpack.config';
 
-const start: cliCommand = async function(argv, rootConfig, { apps }) {
+const start: cliCommand = async function(argv, rootConfig, { apps, libs }) {
   const args = arg(
     {
       // Types
@@ -89,7 +89,7 @@ const start: cliCommand = async function(argv, rootConfig, { apps }) {
     isHot: pkg.config.hmr as boolean,
   });
 
-  const serverConfig = createServerWebpackConfig(rootConfig, pkg, {
+  const serverConfig = createServerWebpackConfig(rootConfig, libs, pkg, {
     isDev: true,
     isHot: true,
   });

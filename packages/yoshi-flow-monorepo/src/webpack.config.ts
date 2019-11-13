@@ -74,6 +74,7 @@ export function createClientWebpackConfig(
 
 export function createServerWebpackConfig(
   rootConfig: Config,
+  libs: Array<PackageGraphNode>,
   pkg: PackageGraphNode,
   { isDev, isHot }: { isDev?: boolean; isHot?: boolean } = {},
 ): webpack.Configuration {
@@ -85,6 +86,7 @@ export function createServerWebpackConfig(
     target: 'node',
     isDev,
     isHot,
+    nodeExternalsWhitelist: libs.map(pkg => new RegExp(pkg.name)),
     ...defaultOptions,
   });
 

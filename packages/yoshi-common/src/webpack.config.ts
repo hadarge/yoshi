@@ -36,7 +36,7 @@ import globby from 'globby';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import InterpolateHtmlPlugin from 'react-dev-utils/InterpolateHtmlPlugin';
 import buildUrl from 'build-url';
-import nodeExternals from 'webpack-node-externals';
+import nodeExternals, { WhitelistOption } from 'webpack-node-externals';
 import RtlCssPlugin from 'rtlcss-webpack-plugin';
 import TpaStyleWebpackPlugin from 'tpa-style-webpack-plugin';
 import { localIdentName } from './utils/constants';
@@ -236,6 +236,7 @@ export function createBaseWebpackConfig({
   tpaStyle = false,
   forceEmitSourceMaps = false,
   exportAsLibraryName,
+  nodeExternalsWhitelist = [],
 }: {
   name: string;
   configName: 'client' | 'server' | 'web-worker';
@@ -262,6 +263,7 @@ export function createBaseWebpackConfig({
   tpaStyle?: boolean;
   forceEmitSourceMaps?: boolean;
   exportAsLibraryName?: string;
+  nodeExternalsWhitelist?: Array<WhitelistOption>;
 }): webpack.Configuration {
   const join = (...dirs: Array<string>) => path.join(cwd, ...dirs);
 
@@ -804,6 +806,7 @@ export function createBaseWebpackConfig({
                 reAssets,
                 /bootstrap-hot-loader/,
                 /yoshi-server/,
+                ...nodeExternalsWhitelist,
               ],
             }),
             // Local integration tests as Yoshi's `node_modules` are symlinked locally

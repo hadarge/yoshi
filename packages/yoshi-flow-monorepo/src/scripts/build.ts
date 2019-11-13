@@ -113,7 +113,7 @@ const build: cliCommand = async function(argv, rootConfig, { apps, libs }) {
       forceEmitSourceMaps,
     });
 
-    const serverConfig = createServerWebpackConfig(rootConfig, pkg, {
+    const serverConfig = createServerWebpackConfig(rootConfig, libs, pkg, {
       isDev: true,
     });
 
