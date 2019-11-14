@@ -37,6 +37,7 @@ const args = arg(
     // Types
     '--version': Boolean,
     '--help': Boolean,
+    '--verbose': Boolean,
 
     // Aliases
     '-v': '--version',
