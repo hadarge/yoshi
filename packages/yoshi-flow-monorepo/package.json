@@ -1,6 +1,6 @@
 {
   "name": "yoshi-flow-monorepo",
-  "version": "4.20.5",
+  "version": "4.20.6",
   "bin": {
     "yoshi-monorepo": "./build/bin/yoshi-monorepo.js"
   },
