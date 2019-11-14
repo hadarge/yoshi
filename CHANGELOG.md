@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.20.6 (2019-11-14)
+
+#### :bug: Bug Fix
+
+- `yoshi-flow-app`, `yoshi-flow-monorepo`
+  - [#1670](https://github.com/wix/yoshi/pull/1670) Don't crash if `--verbose` is passed to app/monorepo ([@ronami](https://github.com/ronami))
+
 ## 4.20.5 (2019-11-13)
 
 #### :bug: Bug Fix
