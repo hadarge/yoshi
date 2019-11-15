@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.20.7 (2019-11-15)
+
+#### :bug: Bug Fix
+
+- `yoshi-common`
+  - [#1677](https://github.com/wix/yoshi/pull/1677) Transpile TypeScript to latest browsers only on local development ([@ronami](https://github.com/ronami))
+- `create-yoshi-app`
+  - [#1674](https://github.com/wix/yoshi/pull/1674) Server templates: fix `index-dev.js` ([@hugebdu](https://github.com/hugebdu))
+
 ## 4.20.6 (2019-11-14)
 
 #### :bug: Bug Fix
