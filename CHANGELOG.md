@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.20.9 (2019-11-15)
+
+#### :bug: Bug Fix
+
+- `yoshi-flow-app`, `yoshi-flow-monorepo`
+  - [#1676](https://github.com/wix/yoshi/pull/1676) Pass `tpaStyle` and `enhancedTpaStyle` config options to the webpack config ([@ranyitz](https://github.com/ranyitz))
+
 ## 4.20.8 (2019-11-15)
 
 #### :bug: Bug Fix
