@@ -47,8 +47,6 @@ import HtmlPolyfillPlugin from './html-polyfill-plugin';
 const isProduction = checkIsProduction();
 const inTeamCity = checkInTeamCity();
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 const disableModuleConcat = process.env.DISABLE_MODULE_CONCATENATION === 'true';
 
 const reScript = /\.js?$/;
@@ -641,7 +639,7 @@ export function createBaseWebpackConfig({
                   : {
                       module: 'esnext',
                       moduleResolution: 'node',
-                      ...(isDevelopment
+                      ...(process.env.NODE_ENV === 'development'
                         ? {
                             lib: ['es2017'],
                             target: 'es2017',
