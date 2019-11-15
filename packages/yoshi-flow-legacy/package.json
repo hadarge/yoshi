@@ -1,6 +1,6 @@
 {
   "name": "yoshi-flow-legacy",
-  "version": "4.20.5",
+  "version": "4.20.7",
   "bin": {
     "yoshi-legacy": "./bin/yoshi-legacy.js"
   },
@@ -110,7 +110,7 @@
     "wnpm-ci": "8.0.87",
     "word-wrap": "1.2.3",
     "xmldoc": "1.1.2",
-    "yoshi-common": "4.20.5",
+    "yoshi-common": "4.20.7",
     "yoshi-config": "4.20.0",
     "yoshi-helpers": "4.20.0",
     "yoshi-runtime": "1.0.314",
