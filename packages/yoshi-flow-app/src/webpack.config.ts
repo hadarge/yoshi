@@ -59,6 +59,8 @@ export function createClientWebpackConfig(
     forceEmitSourceMaps,
     exportAsLibraryName: config.exports,
     cssModules: config.cssModules,
+    enhancedTpaStyle: config.enhancedTpaStyle,
+    tpaStyle: config.tpaStyle,
     ...defaultOptions,
   });
 

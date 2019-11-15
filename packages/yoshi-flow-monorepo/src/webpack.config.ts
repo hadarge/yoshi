@@ -62,6 +62,8 @@ export function createClientWebpackConfig(
     isAnalyze,
     forceEmitSourceMaps,
     exportAsLibraryName: pkg.config.exports,
+    enhancedTpaStyle: pkg.config.enhancedTpaStyle,
+    tpaStyle: pkg.config.tpaStyle,
     ...defaultOptions,
   });
 
