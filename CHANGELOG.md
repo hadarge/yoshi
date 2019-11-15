@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.20.8 (2019-11-15)
+
+#### :bug: Bug Fix
+
+- `yoshi-common`
+  - [#1679](https://github.com/wix/yoshi/pull/1679) Transpile TypeScript according to `--production` ([@ronami](https://github.com/ronami))
+
 ## 4.20.7 (2019-11-15)
 
 #### :bug: Bug Fix
