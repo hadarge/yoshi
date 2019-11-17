@@ -9,11 +9,11 @@
   "license": "ISC",
   "devDependencies": {
     "@types/babel__traverse": "7.0.7",
-    "@types/webpack": "4.39.8"
+    "@types/webpack": "4.41.0"
   },
   "dependencies": {
-    "@babel/parser": "7.6.4",
-    "@babel/traverse": "7.6.3",
+    "@babel/parser": "7.7.3",
+    "@babel/traverse": "7.7.2",
     "yoshi-config": "4.20.0"
   }
 }

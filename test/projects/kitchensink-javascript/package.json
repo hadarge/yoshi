@@ -23,8 +23,8 @@
     "jest-puppeteer": "^3.4.0",
     "jest-yoshi-preset": "latest",
     "puppeteer": "^1.13.0",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
+    "react": "15.6.2",
+    "react-dom": "15.6.2",
     "yoshi": "latest",
     "yoshi-style-dependencies": "latest"
   },

@@ -12,16 +12,16 @@
     "@jest/types": "24.9.0",
     "@types/cosmiconfig": "5.0.3",
     "@types/find-up": "2.1.1",
-    "@types/lodash": "4.14.144",
+    "@types/lodash": "4.14.148",
     "@types/puppeteer": "1.20.2",
-    "@types/webpack": "4.39.8"
+    "@types/webpack": "4.41.0"
   },
   "dependencies": {
     "chalk": "2.4.2",
     "cosmiconfig": "5.2.1",
     "execa": "2.1.0",
     "find-up": "3.0.0",
-    "import-fresh": "3.1.0",
+    "import-fresh": "3.2.1",
     "jest-validate": "24.9.0",
     "lodash": "4.17.15",
     "read-pkg": "5.2.0"

@@ -22,16 +22,16 @@
     "node-sass": "^4.12.0",
     "prop-types": "~15.7.0",
     "puppeteer": "^1.15.0",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
+    "react": "15.6.2",
+    "react-dom": "15.6.2",
     "react-test-renderer": "~15.6.0",
     "yoshi": "4.21.0",
     "yoshi-style-dependencies": "4.18.0"
   },
   "peerDependencies": {
     "prop-types": "~15.7.0",
-    "react": "15.6.1",
-    "react-dom": "15.6.1"
+    "react": "15.6.2",
+    "react-dom": "15.6.2"
   },
   "lint-staged": {
     "*.{js,scss,less}": "yoshi lint"
