@@ -1,7 +1,7 @@
 const execa = require('execa');
 const terminate = require('terminate');
 const { promisify } = require('util');
-const { waitForPort } = require('./utils');
+const { waitForPort, waitForStdout } = require('./utils');
 
 const terminateAsync = promisify(terminate);
 
@@ -34,6 +34,7 @@ module.exports = class Scripts {
       Promise.all([
         waitForPort(this.serverProcessPort, { timeout: 60 * 1000 }),
         waitForPort(this.staticsServerPort, { timeout: 60 * 1000 }),
+        waitForStdout(startProcess, 'Compiled successfully!'),
       ]),
       startProcess,
     ]);

@@ -10,6 +10,7 @@ const localEnv = {
   BUILD_NUMBER: '',
   TEAMCITY_VERSION: '',
   ARTIFACT_VERSION: '',
+  BUILD_VCS_NUMBER: '',
 };
 
 module.exports = { testRegistry, ciEnv, localEnv };

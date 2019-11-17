@@ -1,19 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`manifest generates manifest stat file 1`] = `
+exports[`manifest build generates manifest stat file for non optimized 1`] = `
 Object {
-  "app": Object {
-    "css": Array [
-      "https://static.parastorage.com/services/kitchensink/1.0.0/app.min.css",
-    ],
-    "js": Array [
-      "https://static.parastorage.com/services/kitchensink/1.0.0/app.bundle.min.js",
-    ],
-  },
-  "other": Object {
-    "js": Array [
-      "https://static.parastorage.com/services/kitchensink/1.0.0/other.bundle.min.js",
-    ],
-  },
+  "app.css": "https://static.parastorage.com/services/kitchensink/1.0.0/app.css",
+  "app.js": "https://static.parastorage.com/services/kitchensink/1.0.0/app.bundle.js",
+  "other.js": "https://static.parastorage.com/services/kitchensink/1.0.0/other.bundle.js",
+}
+`;
+
+exports[`manifest build generates manifest stat file for optimized 1`] = `
+Object {
+  "app.css": "https://static.parastorage.com/services/kitchensink/1.0.0/app.min.css",
+  "app.js": "https://static.parastorage.com/services/kitchensink/1.0.0/app.bundle.min.js",
+  "other.js": "https://static.parastorage.com/services/kitchensink/1.0.0/other.bundle.min.js",
+}
+`;
+
+exports[`manifest start generates manifest stat file 1`] = `
+Object {
+  "app.css": "http://localhost:3200/app.css",
+  "app.js": "http://localhost:3200/app.bundle.js",
+  "other.js": "http://localhost:3200/other.bundle.js",
 }
 `;

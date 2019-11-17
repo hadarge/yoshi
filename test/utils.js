@@ -111,6 +111,17 @@ function waitForPortToFree(port) {
   });
 }
 
+function waitForStdout(spawnedProcess, stringToMatch) {
+  new Promise(resolve => {
+    spawnedProcess.stdout.on('data', function listener(buffer) {
+      if (buffer.toString().includes(stringToMatch)) {
+        spawnedProcess.stdout.off('data', listener);
+        resolve();
+      }
+    });
+  });
+}
+
 module.exports = {
   request,
   matchJS,
@@ -119,4 +130,5 @@ module.exports = {
   getUrl,
   waitForPort,
   waitForPortToFree,
+  waitForStdout,
 };

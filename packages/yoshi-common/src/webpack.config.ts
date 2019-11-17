@@ -23,8 +23,10 @@ import {
   createBabelConfig,
   toIdentifier,
   getProjectArtifactId,
+  getProjectArtifactVersion,
 } from 'yoshi-helpers/utils';
 import TerserPlugin from 'terser-webpack-plugin';
+import ManifestPlugin from 'webpack-manifest-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import { resolveNamespaceFactory } from '@stylable/node';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -56,6 +58,8 @@ const reAssets = /\.(png|jpg|jpeg|gif|woff|woff2|ttf|otf|eot|wav|mp3)$/;
 const staticAssetName = 'media/[name].[hash:8].[ext]';
 
 const sassIncludePaths = ['node_modules', 'node_modules/compass-mixins/lib'];
+
+const artifactVersion = getProjectArtifactVersion();
 
 function prependNameWith(filename: string, prefix: string) {
   return filename.replace(/\.[0-9a-z]+$/i, match => `.${prefix}${match}`);
@@ -505,6 +509,28 @@ export function createBaseWebpackConfig({
                 runtimeStylesheetId: 'namespace',
               },
               resolveNamespace: resolveNamespaceFactory(name),
+            }),
+
+            new ManifestPlugin({
+              fileName: inTeamCity
+                ? `${artifactVersion}/manifest.${isDev ? 'debug' : 'prod'}.json`
+                : `manifest.dev.json`,
+              filter: ({
+                isModuleAsset,
+                isInitial,
+                path: filePath,
+              }: {
+                isModuleAsset: boolean;
+                isInitial: boolean;
+                path: string;
+              }) =>
+                // Do not include assets
+                !isModuleAsset &&
+                // Only initial chunks included
+                isInitial &&
+                !filePath.endsWith('.rtl.min.css') &&
+                !filePath.endsWith('.rtl.css') &&
+                !filePath.endsWith('.map'),
             }),
           ]
         : []),

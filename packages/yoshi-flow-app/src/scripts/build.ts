@@ -4,7 +4,6 @@ import fs from 'fs-extra';
 import bfj from 'bfj';
 import { BUILD_DIR, TARGET_DIR, STATS_FILE } from 'yoshi-config/paths';
 import { runWebpack } from 'yoshi-common/webpack-utils';
-import writeManifest from 'yoshi-common/write-manifest';
 import {
   printBuildResult,
   printBundleSizeSuggestion,
@@ -119,10 +118,6 @@ const build: cliCommand = async function(argv, config) {
   ]);
 
   const [, clientOptimizedStats, serverStats] = stats;
-
-  if (inTeamCity()) {
-    await writeManifest(clientOptimizedConfig, clientOptimizedStats);
-  }
 
   if (shouldEmitWebpackStats) {
     const statsFilePath = join(STATS_FILE);

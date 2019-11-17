@@ -7,7 +7,6 @@ import {
 } from 'yoshi-common/print-build-results';
 import bfj from 'bfj';
 import WebpackManager from 'yoshi-common/webpack-manager';
-import writeManifest from 'yoshi-common/write-manifest';
 import { BUILD_DIR, TARGET_DIR, STATS_FILE } from 'yoshi-config/paths';
 import chalk from 'chalk';
 import { inTeamCity as checkInTeamCity } from 'yoshi-helpers/queries';
@@ -125,22 +124,6 @@ const build: cliCommand = async function(argv, rootConfig, { apps, libs }) {
   });
 
   const { getAppData } = await webpackManager.run();
-
-  if (inTeamCity) {
-    await Promise.all(
-      apps.map(async app => {
-        const { configs, stats } = getAppData(app.pkg.name);
-        const [, clientOptimizedConfig] = configs;
-        const [, clientOptimizedStats] = stats;
-
-        await writeManifest(
-          clientOptimizedConfig,
-          clientOptimizedStats,
-          app.location,
-        );
-      }),
-    );
-  }
 
   if (shouldEmitWebpackStats) {
     await Promise.all(

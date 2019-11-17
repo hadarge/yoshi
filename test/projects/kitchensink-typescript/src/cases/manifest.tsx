@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CssInclusion from './components/features/css-inclusion';
+import styles from './components/features/assets/style.css';
 
-ReactDOM.render(<CssInclusion />, document.getElementById('root'));
+console.log(styles);
+
+import('./components/features/css-inclusion').then(CssInclusion => {
+  ReactDOM.render(<CssInclusion.default />, document.getElementById('root'));
+});
