@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.21.0 (2019-11-17)
+
+#### :rocket: New Feature
+
+- `yoshi-common`, `yoshi-flow-app`, `yoshi-flow-monorepo`
+  - [#1681](https://github.com/wix/yoshi/pull/1681) Create a `manifest.json` for local development ([@yanivefraim](https://github.com/yanivefraim))
+
+#### :bug: Bug Fix
+
+- `yoshi-flow-app`, `yoshi-flow-monorepo`
+  - [#1683](https://github.com/wix/yoshi/pull/1683) Pass through `experimentalBuildHtml` flag ([@roymiloh](https://github.com/roymiloh))
+
 ## 4.20.10 (2019-11-17)
 
 #### :bug: Bug Fix
