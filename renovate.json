@@ -1,36 +1,23 @@
 {
-  "automerge": true,
-  "enabledManagers": [
-    "npm"
+  "extends": [
+    ":separateMajorReleases",
+    ":combinePatchMinorReleases"
   ],
+  "masterIssue": true,
   "groupName": "dependencies (weekly)",
   "labels": [
     "PR: Chore :construction_worker:"
   ],
-  "major": {
-    "enabled": false
-  },
+  "enabledManagers": [
+    "npm"
+  ],
   "schedule": [
     "after 3:00am and before 7:00am on sunday"
   ],
-  "packageRules": [
-    {
-      "packagePatterns": [
-        "*"
-      ],
-      "enabled": false
-    },
-    {
-      "paths": [
-        "packages/yoshi*/package.json"
-      ],
-      "excludePackageNames": [
-        "mini-css-extract-plugin",
-        "sass-loader",
-        "webpack-dev-server",
-        "typescript"
-      ],
-      "enabled": true
-    }
+  "ignoreDeps": [
+    "mini-css-extract-plugin",
+    "sass-loader",
+    "webpack-dev-server",
+    "typescript"
   ]
 }
