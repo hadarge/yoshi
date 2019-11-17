@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.20.10 (2019-11-17)
+
+#### :bug: Bug Fix
+
+- `yoshi-flow-app`
+  - [#1680](https://github.com/wix/yoshi/pull/1680) Pass missing configurations to webpack config ([@ronami](https://github.com/ronami))
+
 ## 4.20.9 (2019-11-15)
 
 #### :bug: Bug Fix
