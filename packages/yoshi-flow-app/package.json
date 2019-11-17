@@ -17,6 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "8.0.1",
+    "@types/lodash": "4.14.148",
     "@types/webpack": "4.39.8"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "bfj": "6.1.2",
     "chalk": "2.4.2",
     "fs-extra": "8.1.0",
+    "lodash": "4.17.15",
     "yoshi-common": "4.20.8",
     "yoshi-config": "4.20.0",
     "yoshi-flow-legacy": "4.20.8",

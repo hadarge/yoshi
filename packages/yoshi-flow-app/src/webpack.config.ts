@@ -13,6 +13,7 @@ import {
   inTeamCity,
   isProduction,
 } from 'yoshi-helpers/queries';
+import { isObject } from 'lodash';
 
 const useTypeScript = isTypescriptProject();
 
@@ -30,6 +31,12 @@ const createDefaultOptions = (config: Config) => {
     devServerUrl: config.servers.cdn.url,
     separateCss,
   };
+};
+
+const defaultSplitChunksConfig = {
+  chunks: 'all',
+  name: 'commons',
+  minChunks: 2,
 };
 
 export function createClientWebpackConfig(
@@ -59,14 +66,29 @@ export function createClientWebpackConfig(
     forceEmitSourceMaps,
     exportAsLibraryName: config.exports,
     cssModules: config.cssModules,
+    performanceBudget: config.performanceBudget as webpack.PerformanceOptions,
     enhancedTpaStyle: config.enhancedTpaStyle,
     tpaStyle: config.tpaStyle,
+    keepFunctionNames: config.keepFunctionNames,
+    stylableSeparateCss: config.enhancedTpaStyle,
+    experimentalRtlCss: config.experimentalRtlCss,
+    externalizeRelativeLodash: config.externalizeRelativeLodash,
     ...defaultOptions,
   });
 
   clientConfig.entry = isSingleEntry(entry) ? { app: entry as string } : entry;
   clientConfig.resolve!.alias = config.resolveAlias;
   clientConfig.externals = config.externals;
+
+  const useSplitChunks = config.splitChunks;
+
+  if (useSplitChunks) {
+    const splitChunksConfig = isObject(useSplitChunks)
+      ? useSplitChunks
+      : defaultSplitChunksConfig;
+
+    clientConfig!.optimization!.splitChunks = splitChunksConfig as webpack.Options.SplitChunksOptions;
+  }
 
   return clientConfig;
 }
