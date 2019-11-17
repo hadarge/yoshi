@@ -73,6 +73,8 @@ export function createClientWebpackConfig(
     stylableSeparateCss: config.enhancedTpaStyle,
     experimentalRtlCss: config.experimentalRtlCss,
     externalizeRelativeLodash: config.externalizeRelativeLodash,
+    contentHash: config.experimentalBuildHtml,
+    createEjsTemplates: config.experimentalBuildHtml,
     ...defaultOptions,
   });
 
