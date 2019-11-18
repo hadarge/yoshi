@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.21.1 (2019-11-18)
+
+#### :bug: Bug Fix
+
+- `yoshi-flow-monorepo`
+  - [#1512](https://github.com/wix/yoshi/pull/1512) Don't publish from monorepo release command ([@netanelgilad](https://github.com/netanelgilad))
+
 ## 4.21.0 (2019-11-17)
 
 #### :rocket: New Feature
