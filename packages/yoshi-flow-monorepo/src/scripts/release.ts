@@ -1,7 +1,6 @@
 import path from 'path';
 import arg from 'arg';
 import fs from 'fs-extra';
-import execa from 'execa';
 import wnpm from 'wnpm-ci';
 import {
   inTeamCity as checkInTeamCity,
@@ -39,19 +38,6 @@ const release: cliCommand = async function(argv, rootConfig, { libs }) {
     await Promise.all(
       libs.map(lib => {
         return wnpm.prepareForRelease({ shouldBumpMinor, cwd: lib.location });
-      }),
-    );
-
-    // This part is inconsistent with how non-monorepo apps work:
-    // Here we publish packages as part of `yoshi release` while in most apps
-    // CI does the publishinng
-    await Promise.all(
-      libs.map(lib => {
-        console.log(`Publishing ${lib.name}...`);
-        console.log();
-
-        // `npm-ci` is installed globally on CI
-        return execa('npx npm-ci publish', { cwd: lib.location, shell: true });
       }),
     );
   }
